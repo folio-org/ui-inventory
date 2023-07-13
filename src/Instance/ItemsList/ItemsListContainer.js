@@ -1,4 +1,4 @@
-import React, { useContext, memo } from 'react';
+import React, { useContext, memo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import {
@@ -22,10 +22,14 @@ const ItemsListContainer = ({
     activeDropZone,
     isItemsDroppable,
   } = useContext(DnDContext);
+
+  const [offset, setOffset] = useState(0);
   const searchParams = {
-    limit: 50000,
+    limit: 200,
+    offset,
   };
-  const { isFetching, items } = useHoldingItemsQuery(holding.id, { searchParams });
+
+  const { isFetching, items, totalRecords } = useHoldingItemsQuery(holding.id, { searchParams });
 
   if (isFetching) {
     return <Loading size="large" />;
@@ -39,7 +43,10 @@ const ItemsListContainer = ({
       activeDropZone={activeDropZone}
       isItemsDroppable={isItemsDroppable}
       holding={holding}
+      offset={offset}
+      setOffset={setOffset}
       items={items}
+      total={totalRecords}
       draggable={draggable}
       droppable={droppable}
     />

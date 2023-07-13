@@ -16,6 +16,7 @@ import {
   Checkbox,
   Icon,
   MultiColumnList,
+  MCLPagingTypes,
 } from '@folio/stripes/components';
 
 import { noValue } from '../../constants';
@@ -34,7 +35,6 @@ const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
 const getFormatter = (
   intl,
   locationsById,
-  holding,
   holdingsMapById,
   selectItemsForDrag,
   ifItemsSelected,
@@ -142,7 +142,10 @@ const pageAmount = 200;
 const ItemsList = ({
   holding,
   items,
+  setOffset,
+  total,
   draggable,
+  offset,
   isItemsDragSelected,
   selectItemsForDrag,
   getDraggingItems,
@@ -155,8 +158,10 @@ const ItemsList = ({
     column: 'barcode',
   });
   const [records, setRecords] = useState([]);
-  const [paginatedItems, setPaginatedItems] = useState([]);
+
   const { locationsById } = useContext(DataContext);
+  const pagingCanGoPrevious = offset > 0;
+  const pagingCanGoNext = offset < total;
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
@@ -173,25 +178,14 @@ const ItemsList = ({
     getDraggingItems,
   }), [draggable, isItemsDragSelected, getDraggingItems]);
 
-  const onNeedMoreData = (amount, index) => {
-    const data = new Array(index);
-    // slice original records array to extract 'pageAmount' of records
-    const recordSlice = records.slice(index, index + amount);
-    // push it at the end of the sparse array
-    data.push(...recordSlice);
-
-    setPaginatedItems(data);
+  const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
+    const amount = (direction === 'next') ? askAmount : -askAmount;
+    setOffset(offset + amount);
   };
 
   useEffect(() => {
     setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
   }, [items, itemsSorting]);
-
-  useEffect(() => {
-    if (records?.length) {
-      setPaginatedItems(records.slice(0, pageAmount));
-    }
-  }, [records]);
 
   // NOTE: in order to sort on a particular column, it must be registered
   // as a sorter in '../utils'. If it's not, there won't be any errors;
@@ -215,7 +209,7 @@ const ItemsList = ({
     <MultiColumnList
       id={`list-items-${holding.id}`}
       columnIdPrefix={`list-items-${holding.id}`}
-      contentData={paginatedItems}
+      contentData={items}
       rowMetadata={rowMetadata}
       formatter={formatter}
       visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
@@ -223,14 +217,16 @@ const ItemsList = ({
       ariaLabel={ariaLabel}
       interactive={false}
       onNeedMoreData={onNeedMoreData}
-      pagingType="prev-next"
-      totalCount={items.length}
+      pagingType={MCLPagingTypes.PREV_NEXT}
+      totalCount={total}
       onHeaderClick={onHeaderClick}
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}
       rowFormatter={ItemsListRow}
       pageAmount={pageAmount}
       rowProps={rowProps}
+      pagingCanGoPrevious={pagingCanGoPrevious}
+      pagingCanGoNext={pagingCanGoNext}
     />
   );
 };
@@ -238,7 +234,9 @@ const ItemsList = ({
 ItemsList.propTypes = {
   holding: PropTypes.object.isRequired,
   items: PropTypes.arrayOf(PropTypes.object),
-
+  setOffset: PropTypes.func.isRequired,
+  offset: PropTypes.number,
+  total: PropTypes.number,
   draggable: PropTypes.bool,
   selectItemsForDrag: PropTypes.func.isRequired,
   isItemsDragSelected: PropTypes.func.isRequired,
