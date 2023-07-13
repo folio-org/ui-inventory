@@ -45,6 +45,7 @@
 * Restrict modifying and deleting system call number types. Refs UIIN-2385.
 * Prevent editing of shared settings from outside "Consortium manager". Refs UIIN-2482.
 * Add new browse options to limit browse by call number type. Fixes UIIN-2467.
+* Introduce server side pagination for large volume of items. Fixes UIIN-2478.
 
 ## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.7...v9.4.8)
