@@ -32,6 +32,7 @@ import useBoundWithHoldings from '../../Holding/ViewHolding/HoldingBoundWith/use
 import { DataContext } from '../../contexts';
 
 const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
+
 const getFormatter = (
   intl,
   locationsById,
@@ -169,8 +170,8 @@ const ItemsList = ({
     [holding.id, records, isItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(intl, locationsById, holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected),
-    [holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected],
+    () => getFormatter(intl, locationsById, holdingsMapById, selectItemsForDrag, isItemsDragSelected),
+    [holdingsMapById, selectItemsForDrag, isItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
     draggable,
