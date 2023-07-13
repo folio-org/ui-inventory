@@ -227,6 +227,7 @@ const ItemsList = ({
       rowProps={rowProps}
       pagingCanGoPrevious={pagingCanGoPrevious}
       pagingCanGoNext={pagingCanGoNext}
+      hidePageIndices
     />
   );
 };
