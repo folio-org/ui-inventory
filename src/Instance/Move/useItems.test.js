@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
 import { CalloutContext } from '@folio/stripes/core';
 import { useMoveItemsMutation } from '../../common';
 import * as RemoteStorage from '../../RemoteStorageService';
