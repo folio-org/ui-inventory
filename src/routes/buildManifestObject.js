@@ -6,6 +6,7 @@ import {
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 import {
   CQL_FIND_ALL,
+  fieldSearchConfigurations,
   queryIndexes
 } from '../constants';
 import {
@@ -19,6 +20,53 @@ const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
+const getAdvancedSearchQueryTemplate = (queryIndex, matchOption) => fieldSearchConfigurations[queryIndex]?.[matchOption];
+
+const getAdvancedSearchTemplate = (queryValue) => {
+  const splitIntoRowsRegex = /(?=\sor\s|\sand\s|\snot\s)/g;
+
+  // split will return array of strings:
+  // ['keyword==test', 'or issn=123', ...]
+  const rows = queryValue.split(splitIntoRowsRegex).map(i => i.trim());
+
+  return rows.map((match, index) => {
+    let bool = '';
+    let query = match;
+
+    // first row doesn't have a bool operator
+    if (index !== 0) {
+      bool = match.substr(0, match.indexOf(' '));
+      query = match.substr(bool.length);
+    }
+
+    const splitIndexAndQueryRegex = /([^=]+)(exactPhrase|containsAll|startsWith)(.+)/g;
+
+
+    const rowParts = [...query.matchAll(splitIndexAndQueryRegex)]?.[0] || [];
+    // eslint-disable-next-line no-unused-vars
+    const [, option, _match, value] = rowParts
+      .map(i => i.trim())
+      .map(i => i.replaceAll('"', ''));
+
+    return {
+      query: value,
+      bool,
+      searchOption: option,
+      match: _match,
+    };
+  }).reduce((acc, row) => {
+    const rowTemplate = getAdvancedSearchQueryTemplate(row.searchOption, row.match);
+
+    if (!rowTemplate) {
+      return acc;
+    }
+
+    const rowQuery = rowTemplate.replaceAll('%{query.query}', row.query);
+
+    const formattedRow = `${row.bool} ${rowQuery}`.trim();
+    return `${acc} ${formattedRow}`;
+  }, '').trim();
+};
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
@@ -35,6 +83,10 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     }
 
     query.selectedBrowseResult = null; // reset this parameter so the next search uses `=` instead of `==/string`
+  }
+
+  if (queryIndex === queryIndexes.ADVANCED_SEARCH) {
+    queryTemplate = getAdvancedSearchTemplate(queryValue);
   }
 
   if (queryIndex.match(/isbn|issn/)) {
