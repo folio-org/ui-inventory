@@ -374,7 +374,7 @@ describe('InstancesList', () => {
       });
 
       it('should set advanced search query in search input', () => {
-        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword all "test"');
+        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
       });
     });
   });

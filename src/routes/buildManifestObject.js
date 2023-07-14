@@ -36,7 +36,7 @@ const getAdvancedSearchTemplate = (queryValue) => {
     // first row doesn't have a bool operator
     if (index !== 0) {
       bool = match.substr(0, match.indexOf(' '));
-      query = match.replace(/(or|and|not)\s+/g, '');
+      query = match.substr(bool.length);
     }
 
     const splitIndexAndQueryRegex = /([^=]+)(exactPhrase|containsAll|startsWith)(.+)/g;
