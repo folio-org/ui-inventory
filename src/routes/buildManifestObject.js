@@ -56,6 +56,11 @@ const getAdvancedSearchTemplate = (queryValue) => {
     };
   }).reduce((acc, row) => {
     const rowTemplate = getAdvancedSearchQueryTemplate(row.searchOption, row.match);
+
+    if (!rowTemplate) {
+      return acc;
+    }
+
     const rowQuery = rowTemplate.replaceAll('%{query.query}', row.query);
 
     const formattedRow = `${row.bool} ${rowQuery}`.trim();

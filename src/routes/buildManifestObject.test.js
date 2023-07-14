@@ -68,6 +68,34 @@ describe('buildQuery', () => {
         });
       });
     });
+
+    describe('Advanced search option', () => {
+      it('should build query with correct format', () => {
+        const qindex = queryIndexes.ADVANCED_SEARCH;
+        const queryParams = {
+          qindex,
+          query: 'keyword containsAll test or title exactPhrase hello',
+        };
+        const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+        expect(cql).toContain(
+          '(keyword all "test" or title==/string "hello")'
+        );
+      });
+
+      describe('when not valid query is passed', () => {
+        const qindex = queryIndexes.ADVANCED_SEARCH;
+        const queryParams = {
+          qindex,
+          query: 'keyword containsAll test or invalidOption exactPhrase hello',
+        };
+        const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+        expect(cql).toContain(
+          '(keyword all "test")'
+        );
+      });
+    });
   });
 
   describe('build query based on selected browse record', () => {
