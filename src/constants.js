@@ -107,15 +107,36 @@ export const segments = {
 
 export const browseModeOptions = {
   CALL_NUMBERS: 'callNumbers',
+  DEWEY: 'dewey',
+  LIBRARY_OF_CONGRESS: 'lc',
+  LOCAL: 'local',
+  NATIONAL_LIBRARY_OF_MEDICINE: 'nlm',
+  OTHER: 'other',
+  SUPERINTENDENT: 'sudoc',
   CONTRIBUTORS: 'contributors',
   SUBJECTS: 'browseSubjects',
 };
 
 export const browseModeMap = {
   callNumbers: 'callNumbers',
+  dewey: 'dewey',
+  lc: 'lc',
+  local: 'local',
+  nlm: 'nlm',
+  other: 'other',
+  sudoc: 'sudoc',
   contributors: 'contributors',
   browseSubjects: 'browseSubjects',
 };
+
+export const INDEXES_WITH_CALL_NUMBER_TYPE_PARAM = [
+  browseModeOptions.DEWEY,
+  browseModeOptions.LIBRARY_OF_CONGRESS,
+  browseModeOptions.LOCAL,
+  browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE,
+  browseModeOptions.OTHER,
+  browseModeOptions.SUPERINTENDENT,
+];
 
 export const undefinedAsString = 'undefined';
 
@@ -170,7 +191,14 @@ export const queryIndexes = {
   SUBJECT: 'subject',
   QUERY_SEARCH: 'querySearch',
   CALL_NUMBER: 'callNumber',
+  DEWEY: 'dewey',
+  LIBRARY_OF_CONGRESS: 'lc',
+  LOCAL: 'local',
+  NATIONAL_LIBRARY_OF_MEDICINE: 'nlm',
+  OTHER: 'other',
+  SUPERINTENDENT: 'sudoc',
   CONTRIBUTOR: 'contributor',
+  ADVANCED_SEARCH: 'advancedSearch',
 };
 
 export const indentifierTypeNames = {
@@ -438,4 +466,165 @@ export const SINGLE_ITEM_QUERY_TEMPLATES = {
   issn: 'issn==%{query}',
   itemHrid: 'hrid==%{query}',
   iid: 'id==%{query}',
+};
+
+export const fieldSearchConfigurations = {
+  keyword: {
+    exactPhrase: 'keyword==/string "%{query.query}"',
+    containsAll: 'keyword all "%{query.query}"',
+    startsWith: 'keyword all "%{query.query}*"',
+  },
+  contributor: {
+    exactPhrase: 'contributors.name==/string "%{query.query}"',
+    containsAll: 'contributors.name="*%{query.query}*"',
+    startsWith: 'contributors.name="%{query.query}*"',
+  },
+  title: {
+    exactPhrase: 'title==/string "%{query.query}"',
+    containsAll: 'title all "%{query.query}"',
+    startsWith: 'title all "%{query.query}*"',
+  },
+  isbn: {
+    exactPhrase: 'isbn=="%{query.query}"',
+    containsAll: 'isbn="*%{query.query}*"',
+    startsWith: 'isbn="%{query.query}*"',
+  },
+  issn: {
+    exactPhrase: 'issn=="%{query.query}"',
+    containsAll: 'issn="*%{query.query}*"',
+    startsWith: 'issn="%{query.query}*"',
+  },
+  identifier: {
+    exactPhrase: 'identifiers.value=="%{query.query}" or isbn=="%{query.query}"',
+    containsAll: 'identifiers.value="*%{query.query}*" or isbn="*%{query.query}*"',
+    startsWith: 'identifiers.value="%{query.query}*" or isbn="%{query.query}*"',
+  },
+  oclc: {
+    exactPhrase: 'oclc=="%{query.query}"',
+    containsAll: 'oclc="*%{query.query}*"',
+    startsWith: 'oclc="%{query.query}*"',
+  },
+  instanceNotes: {
+    exactPhrase: 'notes.note==/string "%{query.query}" or administrativeNotes==/string "%{query.query}"',
+    containsAll: 'notes.note all "%{query.query}" or administrativeNotes all "%{query.query}"',
+    startsWith: 'notes.note all "%{query.query}*" or administrativeNotes all "%{query.query}*"',
+  },
+  instanceAdministrativeNotes: {
+    exactPhrase: 'administrativeNotes==/string "%{query.query}"',
+    containsAll: 'administrativeNotes all "%{query.query}"',
+    startsWith: 'administrativeNotes all "%{query.query}*"',
+  },
+  subject: {
+    exactPhrase: 'subjects.value==/string "%{query.query}"',
+    containsAll: 'subjects.value all "%{query.query}"',
+    startsWith: 'subjects.value==/string "%{query.query}*"',
+  },
+  callNumber: {
+    exactPhrase: 'itemEffectiveShelvingOrder==/string "%{query.query}"',
+    containsAll: 'itemEffectiveShelvingOrder all "%{query.query}"',
+    startsWith: 'itemEffectiveShelvingOrder==/string "%{query.query}*"',
+  },
+  hrid: {
+    exactPhrase: 'hrid=="%{query.query}"',
+    containsAll: 'hrid=="*%{query.query}*"',
+    startsWith: 'hrid=="%{query.query}*"',
+  },
+  id: {
+    exactPhrase: 'id=="%{query.query}"',
+    containsAll: 'id="*%{query.query}*"',
+    startsWith: 'id="%{query.query}*"',
+  },
+  authorityId: {
+    exactPhrase: 'authorityId == %{query.query}',
+    containsAll: 'authorityId=="*%{query.query}*"',
+    startsWith: 'authorityId=="%{query.query}*"',
+  },
+  allFields: {
+    exactPhrase: 'cql.all==/string "%{query.query}"',
+    containsAll: 'cql.all all "%{query.query}"',
+    startsWith: 'cql.all all "%{query.query}*"',
+  },
+  holdingsFullCallNumbers: {
+    exactPhrase: 'holdingsFullCallNumbers=="%{query.query}"',
+    containsAll: 'holdingsFullCallNumbers="*%{query.query}*"',
+    startsWith: 'holdingsFullCallNumbers="%{query.query}*"',
+  },
+  holdingsNormalizedCallNumbers: {
+    exactPhrase: 'holdingsNormalizedCallNumbers=="%{query.query}"',
+    containsAll: 'holdingsNormalizedCallNumbers="*%{query.query}*"',
+    startsWith: 'holdingsNormalizedCallNumbers="%{query.query}*"',
+  },
+  holdingsNotes: {
+    exactPhrase: 'holdings.notes.note==/string "%{query.query}" or holdings.administrativeNotes==/string "%{query.query}"',
+    containsAll: 'holdings.notes.note all "%{query.query}" or holdings.administrativeNotes all "%{query.query}"',
+    startsWith: 'holdings.notes.note all "%{query.query}*" or holdings.administrativeNotes all "%{query.query}*"',
+  },
+  holdingsAdministrativeNotes: {
+    exactPhrase: 'holdings.administrativeNotes==/string "%{query.query}"',
+    containsAll: 'holdings.administrativeNotes all "%{query.query}"',
+    startsWith: 'holdings.administrativeNotes all "%{query.query}*"',
+  },
+  holdingsHrid: {
+    exactPhrase: 'holdings.hrid=="%{query.query}"',
+    containsAll: 'holdings.hrid=="*%{query.query}*"',
+    startsWith: 'holdings.hrid=="%{query.query}*"',
+  },
+  hid: {
+    exactPhrase: 'holdings.id=="%{query.query}"',
+    containsAll: 'holdings.id="*%{query.query}*"',
+    startsWith: 'holdings.id="%{query.query}*"',
+  },
+  barcode: {
+    exactPhrase: 'items.barcode=="%{query.query}"',
+    containsAll: 'items.barcode="*%{query.query}*"',
+    startsWith: 'items.barcode="%{query.query}*"',
+  },
+  itemFullCallNumbers: {
+    exactPhrase: 'itemFullCallNumbers=="%{query.query}"',
+    containsAll: 'itemFullCallNumbers="*%{query.query}*"',
+    startsWith: 'itemFullCallNumbers="%{query.query}*"',
+  },
+  itemNormalizedCallNumbers: {
+    exactPhrase: 'itemNormalizedCallNumbers=="%{query.query}"',
+    containsAll: 'itemNormalizedCallNumbers="*%{query.query}*"',
+    startsWith: 'itemNormalizedCallNumbers="%{query.query}*"',
+  },
+  itemNotes: {
+    exactPhrase: 'item.notes.note==/string "%{query.query}" or item.administrativeNotes==/string "%{query.query}"',
+    containsAll: 'item.notes.note all "%{query.query}" or item.administrativeNotes all "%{query.query}"',
+    startsWith: 'item.notes.note all "%{query.query}*" or item.administrativeNotes all "%{query.query}*"',
+  },
+  itemAdministrativeNotes: {
+    exactPhrase: 'item.administrativeNotes==/string "%{query.query}"',
+    containsAll: 'item.administrativeNotes all "%{query.query}"',
+    startsWith: 'item.administrativeNotes all "%{query.query}*"',
+  },
+  itemCirculationNotes: {
+    exactPhrase: 'item.circulationNotes.note==/string "%{query.query}"',
+    containsAll: 'item.circulationNotes.note all "%{query.query}"',
+    startsWith: 'item.circulationNotes.note all "%{query.query}*"',
+  },
+  itemHrid: {
+    exactPhrase: 'items.hrid=="%{query.query}"',
+    containsAll: 'items.hrid="*%{query.query}*"',
+    startsWith: 'items.hrid="%{query.query}*"',
+  },
+  iid: {
+    exactPhrase: 'item.id=="%{query.query}"',
+    containsAll: 'item.id="*%{query.query}*"',
+    startsWith: 'item.id="%{query.query}*"',
+  },
+};
+
+export const RECORD_SOURCE = {
+  CONSORTIUM: 'consortium',
+  FOLIO: 'folio',
+  INN_REACH: 'inn-reach',
+  LOCAL: 'local',
+  MARC_RELATOR: 'marcrelator',
+  RDA_CARRIER: 'rdacarrier',
+  RDA_CONTENT: 'rdacontent',
+  RDA_MODE_ISSUE: 'rdamodeissue',
+  SYSTEM: 'system',
+  UC: 'UC',
 };
