@@ -813,5 +813,6 @@
     "browse.local": "Local",
     "browse.natLibOfMed": "National Library of Medicine classification",
     "browse.other": "Other scheme",
-    "browse.superintendent": "Superintendent of Documents classification"
+    "browse.superintendent": "Superintendent of Documents classification",
+    "advancedSearch": "Advanced search"
 }
