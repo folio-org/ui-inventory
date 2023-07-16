@@ -813,5 +813,6 @@
     "browse.local": "Local",
     "browse.natLibOfMed": "Classificação da Biblioteca Nacional de Medicina (NLM)",
     "browse.other": "Outro esquema",
-    "browse.superintendent": "Superintendente de Classificação de Documentos"
+    "browse.superintendent": "Superintendente de Classificação de Documentos",
+    "advancedSearch": "Busca avançada"
 }
