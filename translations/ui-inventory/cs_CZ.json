@@ -349,7 +349,7 @@
     "isbn": "ISBN",
     "issn": "ISSN",
     "marcSourceRecord.notFoundError": "Nelze najít MARC bibliografický záznam pro titul \"{name}\"!",
-    "instanceNoteTypes": "Typy poznámek k titulu",
+    "instanceNoteTypes": "Typy poznámek titulů",
     "modesOfIssuance": "Způsoby vydání",
     "resourceIdentifierTypes": "Typy identifikátorů zdrojů",
     "classificationIdentifierTypes": "Typy identifikátorů klasifikace",
@@ -503,10 +503,10 @@
     "permission.settings.instance-statuses": "Nastavení (Katalog): Vytvoření, úprava, smazání typů stavu titulu",
     "permission.settings.statistical-codes": "Nastavení (Katalog): Vytváření, úpravy, mazání statistických kódů",
     "permission.settings.alternative-title-types": "Nastavení (Katalog): Vytváření, úpravy, mazání alternativních typů názvů",
-    "permission.settings.instance-types": "Nastavení (Katalog): Vytvoření, úprava, smazání místně definovaných typů prostředků",
+    "permission.settings.instance-types": "Nastavení (Katalog): Vytvoření, úprava, smazání místně definovaných typů zdrojů",
     "permission.settings.nature-of-content-terms": "Nastavení (Katalog): Vytváření, úpravy, mazání povahy obsahu",
     "permission.settings.modes-of-issuance": "Nastavení (Katalog): Vytvoření, úprava, mazání místně definovaných režimů vystavování",
-    "permission.settings.instance-note-types": "Nastavení (Katalog): Vytváření, úpravy a smazání typů poznámek k titulům",
+    "permission.settings.instance-note-types": "Nastavení (Katalog): Vytváření, úpravy a mazání typů poznámek titulů",
     "permission.settings.ill-policies": "Nastavení (Katalog): Vytváření, úpravy, mazání pravidel MVS",
     "permission.settings.contributor-types": "Nastavení (Katalog): Vytváření, úpravy, mazání typů autorů",
     "permission.settings.call-number-types": "Nastavení (Katalog): Vytvoření, úprava a smazání typů signatur",
@@ -813,5 +813,6 @@
     "browse.local": "Místní",
     "browse.natLibOfMed": "Klasifikace Národní lékařské knihovny",
     "browse.other": "Jiné schéma",
-    "browse.superintendent": "Vedoucí klasifikace dokumentů"
+    "browse.superintendent": "Vedoucí klasifikace dokumentů",
+    "advancedSearch": "Advanced search"
 }

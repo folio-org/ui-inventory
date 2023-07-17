@@ -813,5 +813,6 @@
     "browse.local": "Local",
     "browse.natLibOfMed": "Clasificación de la Biblioteca Nacional de Medicina",
     "browse.other": "Otro régimen",
-    "browse.superintendent": "Clasificación del Superintendente de Documentos"
+    "browse.superintendent": "Clasificación del Superintendente de Documentos",
+    "advancedSearch": "Advanced search"
 }
