@@ -1,15 +1,15 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import {
   act,
+  cleanup,
   fireEvent,
   screen,
-  waitFor,
-  cleanup,
-} from '@testing-library/react';
+  within,
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -20,6 +20,8 @@ import translationsProperties from '../../../test/jest/helpers/translationsPrope
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
+import { setItem } from '../../storage';
+import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 
 const updateMock = jest.fn();
 const mockQueryReplace = jest.fn();
@@ -28,8 +30,19 @@ const mockStoreLastSearch = jest.fn();
 const mockRecordsReset = jest.fn();
 const mockGetLastSearchOffset = jest.fn();
 const mockStoreLastSearchOffset = jest.fn();
+const mockGetLastSearch = jest.fn();
 
-jest.mock('../../storage');
+jest.mock('../../storage', () => ({
+  ...jest.requireActual('../../storage'),
+  setItem: jest.fn(),
+}));
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useLastSearchTerms: () => ({
+    getLastSearch: mockGetLastSearch,
+  }),
+}));
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -116,6 +129,7 @@ const renderInstancesList = ({
             getLastSearchOffset={mockGetLastSearchOffset}
             storeLastSearch={mockStoreLastSearch}
             storeLastSearchOffset={mockStoreLastSearchOffset}
+            storeLastSegment={noop}
             {...rest}
           />
         </ModuleHierarchyProvider>
@@ -141,7 +155,7 @@ describe('InstancesList', () => {
       it('should write location.search to the session storage', () => {
         const search = '?qindex=title&query=book&sort=title';
         history.push({ search });
-        expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+        expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
       });
 
       describe('and browse result was selected', () => {
@@ -183,7 +197,7 @@ describe('InstancesList', () => {
           const search = '?qindex=title&query=book&sort=title';
           mockStoreLastSearch.mockClear();
           history.push({ search });
-          expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+          expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
         });
       });
 
@@ -202,7 +216,7 @@ describe('InstancesList', () => {
             },
           }, rerender);
 
-          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset);
+          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
         });
       });
     });
@@ -217,20 +231,37 @@ describe('InstancesList', () => {
       });
     });
 
-    it('should pass the correct search by clicking on the `Browse` tab', () => {
-      cleanup();
-      const search = '?qindex=subjects&query=book';
+    describe('when clicking on the `Browse` tab', () => {
+      it('should pass the correct search by clicking on the `Browse` tab', () => {
+        cleanup();
+        const search = '?qindex=subject&query=book';
 
-      jest.spyOn(history, 'push');
+        jest.spyOn(history, 'push');
 
-      renderInstancesList({
-        segment: 'instances',
-        getLastBrowse: () => search,
+        renderInstancesList({
+          segment: 'instances',
+          getLastBrowse: () => search,
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+        expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ search }));
       });
 
-      fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+      it('should store last opened record id', () => {
+        cleanup();
+        history = createMemoryHistory({ initialEntries: [{
+          pathname: '/inventory/view/test-id',
+        }] });
 
-      expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ search }));
+        renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+        expect(setItem).toHaveBeenCalledWith('@folio/inventory.instances.lastOpenRecord', 'test-id');
+      });
     });
 
     it('should have proper list results size', () => {
@@ -260,10 +291,9 @@ describe('InstancesList', () => {
 
           const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
 
-          waitFor(() => {
-            fireEvent.click(button);
-            expect(history.push).toHaveBeenCalledWith('/?layer=create-bib');
-          });
+          fireEvent.click(button);
+
+          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bib?');
         });
       });
 
@@ -274,6 +304,45 @@ describe('InstancesList', () => {
 
         it('should hide contributors column', () => {
           expect(document.querySelector('#clickable-list-column-contributors')).not.toBeInTheDocument();
+        });
+      });
+
+      describe('select sort by', () => {
+        it('should render menu option', () => {
+          expect(screen.getByTestId('menu-section-sort-by')).toBeInTheDocument();
+        });
+
+        it('should render select', () => {
+          expect(screen.getByTestId('sort-by-selection')).toBeInTheDocument();
+        });
+
+        it('should render as many options as defined plus Relevance', () => {
+          const options = within(screen.getByTestId('sort-by-selection')).getAllByRole('option');
+          expect(options).toHaveLength(Object.keys(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).length + 1);
+        });
+      });
+
+      describe('select proper sort options', () => {
+        it('should select Title as default selected sort option', () => {
+          const search = '?segment=instances&sort=title';
+          history.push({ search });
+
+          const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Title' });
+          expect(option.selected).toBeTruthy();
+        });
+
+        it('should select Contributors option', () => {
+          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          userEvent.selectOptions(screen.getByTestId('sort-by-selection'), 'contributors');
+
+          const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Contributors' });
+          expect(option.selected).toBeTruthy();
+        });
+
+        it('should select option value "Contributors" after column "Contributors" click', async () => {
+          await act(async () => fireEvent.click(document.querySelector('#clickable-list-column-contributors')));
+
+          expect((screen.getByRole('option', { name: 'Contributors' })).selected).toBeTruthy();
         });
       });
     });
@@ -290,6 +359,22 @@ describe('InstancesList', () => {
         userEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
         expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
+      });
+    });
+
+    describe('when using advanced search', () => {
+      beforeEach(() => {
+        userEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+          target: { value: 'test' }
+        });
+
+        const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+        userEvent.click(advancedSearchSubmit);
+      });
+
+      it('should set advanced search query in search input', () => {
+        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
       });
     });
   });

@@ -69,8 +69,12 @@ jobs:
         run: yarn lint
         continue-on-error: true
 
+      - name: Get number of CPU cores
+        id: cpu-cores
+        uses: SimenB/github-actions-cpu-cores@v1
+
       - name: Run yarn test
-        run: xvfb-run --server-args="-screen 0 1024x768x24" yarn test $YARN_TEST_OPTIONS
+        run: xvfb-run --server-args="-screen 0 1024x768x24" yarn test $YARN_TEST_OPTIONS --max-workers ${{ steps.cpu-cores.outputs.count }}
 
       - name: Run yarn formatjs-compile
         if: ${{ env.COMPILE_TRANSLATION_FILES == 'true' }}
@@ -168,6 +172,7 @@ jobs:
       - name: Exclude some CI-generated artifacts in package
         if: ${{ github.ref == 'refs/heads/master' || github.ref  == 'refs/heads/main' }}
         run: |
+          echo "artifacts" >> .npmignore
           echo ".github" >> .npmignore
           echo ".scannerwork" >> .npmignore
           cat .npmignore

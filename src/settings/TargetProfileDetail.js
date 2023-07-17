@@ -11,216 +11,203 @@ import {
   Row,
   TextLink,
 } from '@folio/stripes/components';
-
-import { LIMIT_MAX } from '../constants';
+import {
+  useAllowedJobProfiles,
+  useDefaultJobProfile,
+} from '../common/hooks';
 
 const JOB_PROFILES_COLUMNS_NAME = {
   ID: 'id',
   IS_DEFAULT: 'isDefault',
 };
 
-class TargetProfileDetail extends React.Component {
-  static propTypes = {
-    initialValues: PropTypes.object.isRequired,
-    resources: PropTypes.shape({
-      identifierType: PropTypes.shape({
-        records: PropTypes.arrayOf(
-          PropTypes.shape({
-            name: PropTypes.string,
-          }).isRequired,
-        ),
-      }).isRequired,
-      jobProfiles: PropTypes.shape({
-        records: PropTypes.arrayOf(
-          PropTypes.shape({
-            id: PropTypes.string.isRequired,
-            name: PropTypes.string.isRequired,
-          }).isRequired,
-        ),
-      }).isRequired,
-    }).isRequired,
+const getJobProfilesFormatter = defaultProfileId => ({
+  [JOB_PROFILES_COLUMNS_NAME.ID]: jobProfile => (
+    <>
+      <TextLink
+        to={`/settings/data-import/job-profiles/view/${jobProfile.id}`}
+        target="_blank"
+      >
+        {jobProfile.name}
+      </TextLink>
+      <span>{`(${jobProfile.id})`}</span>
+    </>
+  ),
+  [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: jobProfile => {
+    return defaultProfileId === jobProfile.id
+      ? <FormattedMessage id="ui-inventory.defaultJobProfile" />
+      : null;
+  },
+});
+
+const TargetProfileDetail = props => {
+  const {
+    initialValues,
+    initialValues: {
+      createJobProfileId = '',
+      updateJobProfileId = '',
+      allowedCreateJobProfileIds = [],
+      allowedUpdateJobProfileIds = [],
+    }
+  } = props;
+
+  const { allowedJobProfiles: allowedCreateJobProfiles = [] } = useAllowedJobProfiles(allowedCreateJobProfileIds);
+  const { allowedJobProfiles: allowedUpdateJobProfiles = [] } = useAllowedJobProfiles(allowedUpdateJobProfileIds);
+  const { defaultJobProfile: defaultCreateJobProfile } = useDefaultJobProfile(createJobProfileId);
+  const { defaultJobProfile: defaultUpdateJobProfile } = useDefaultJobProfile(updateJobProfileId);
+
+  const getJobProfilesContent = (defaultJobProfileRecord, allowedJobProfilesRecords) => {
+    const content = [
+      defaultJobProfileRecord,
+      ...allowedJobProfilesRecords.filter(jobProfile => jobProfile?.id !== defaultJobProfileRecord?.id),
+    ];
+
+    return content.map(jobProfile => ({
+      id: jobProfile?.id,
+      name: jobProfile?.name,
+    }));
   };
 
-  static manifest = Object.freeze({
-    identifierType: {
-      type: 'okapi',
-      path: 'identifier-types?query=id=!{initialValues.externalIdentifierType}',
-      records: 'identifierTypes',
-    },
-    jobProfiles: {
-      type: 'okapi',
-      records: 'jobProfiles',
-      path: `data-import-profiles/jobProfiles?limit=${LIMIT_MAX}&query=dataType==("MARC") sortBy name`,
-    },
-  });
+  const t = initialValues.targetOptions;
+  const targetOptions = !t ? null : (
+    <ul>
+      {Object.keys(t).sort().map(key => <li key={key}>{key}: {t[key]}</li>)}
+    </ul>
+  );
 
-  getJobProfilesContent = (profileIds, defaultProfileId) => {
-    const { resources: { jobProfiles } } = this.props;
+  const jobProfilesVisibleColumns = [JOB_PROFILES_COLUMNS_NAME.ID, JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT];
+  const createJobProfilesContent = getJobProfilesContent(defaultCreateJobProfile, allowedCreateJobProfiles);
+  const updateJobProfilesContent = getJobProfilesContent(defaultUpdateJobProfile, allowedUpdateJobProfiles);
+  const createJobProfilesFormatter = getJobProfilesFormatter(createJobProfileId);
+  const updateJobProfilesFormatter = getJobProfilesFormatter(updateJobProfileId);
 
-    const content = [...profileIds];
-    const indexOfDefault = content.indexOf(defaultProfileId);
+  return (
+    <div>
+      <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.name" />}
+            value={initialValues.name}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.url" />}
+            value={initialValues.url}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.authentication" />}
+            value={initialValues.authentication}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.externalIdQueryMap" />}
+            value={initialValues.externalIdQueryMap}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.internalIdEmbedPath" />}
+            value={initialValues.internalIdEmbedPath}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          {isEmpty(createJobProfilesContent)
+            ? <KeyValue label={<FormattedMessage id="ui-inventory.createJobProfileIds" />} />
+            : (
+              <MultiColumnList
+                contentData={createJobProfilesContent}
+                columnMapping={{
+                  [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.createJobProfileIds" />,
+                  [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
+                }}
+                formatter={createJobProfilesFormatter}
+                visibleColumns={jobProfilesVisibleColumns}
+                columnIdPrefix="create-job-profiles"
+              />
+            )
+          }
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          {isEmpty(updateJobProfilesContent)
+            ? <KeyValue label={<FormattedMessage id="ui-inventory.updateJobProfileIds" />} />
+            : (
+              <MultiColumnList
+                contentData={updateJobProfilesContent}
+                columnMapping={{
+                  [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.updateJobProfileIds" />,
+                  [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
+                }}
+                formatter={updateJobProfilesFormatter}
+                visibleColumns={jobProfilesVisibleColumns}
+                columnIdPrefix="update-job-profiles"
+              />
+            )
+          }
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.targetOptions" />}
+            value={targetOptions}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
+            value={props.resources.identifierType.records?.[0]?.name}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.enabled" />}
+            value={initialValues.enabled ? '✓' : '✕'}
+          />
+        </Col>
+      </Row>
+    </div>
+  );
+};
 
-    if (indexOfDefault > -1) {
-      content.splice(indexOfDefault, 1);
-      content.unshift(defaultProfileId);
-    }
+TargetProfileDetail.manifest = Object.freeze({
+  identifierType: {
+    type: 'okapi',
+    path: 'identifier-types?query=id=!{initialValues.externalIdentifierType}',
+    records: 'identifierTypes',
+  },
+});
 
-    return content.map(id => ({
-      id,
-      name: jobProfiles?.records.find(jobProfile => jobProfile.id === id)?.name,
-    }));
-  }
-
-  getJobProfilesFormatter = defaultProfileId => ({
-    [JOB_PROFILES_COLUMNS_NAME.ID]: ({ name, id }) => (
-      <>
-        <TextLink
-          to={`/settings/data-import/job-profiles/view/${id}`}
-          target="_blank"
-        >
-          {name}
-        </TextLink>
-        <span>{`(${id})`}</span>
-      </>
-    ),
-    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: ({ id }) => {
-      return defaultProfileId === id
-        ? <FormattedMessage id="ui-inventory.defaultJobProfile" />
-        : null;
-    },
-  });
-
-  render() {
-    const {
-      initialValues,
-      initialValues: {
-        allowedCreateJobProfileIds = [],
-        allowedUpdateJobProfileIds = [],
-        createJobProfileId = '',
-        updateJobProfileId = '',
-      },
-    } = this.props;
-
-    const t = initialValues.targetOptions;
-    const targetOptions = !t ? null : (
-      <ul>
-        {Object.keys(t).sort().map(key => <li key={key}>{key}: {t[key]}</li>)}
-      </ul>
-    );
-
-    const jobProfilesVisibleColumns = [JOB_PROFILES_COLUMNS_NAME.ID, JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT];
-    const createJobProfilesContent = this.getJobProfilesContent(allowedCreateJobProfileIds, createJobProfileId);
-    const updateJobProfilesContent = this.getJobProfilesContent(allowedUpdateJobProfileIds, updateJobProfileId);
-    const createJobProfilesFormatter = this.getJobProfilesFormatter(createJobProfileId);
-    const updateJobProfilesFormatter = this.getJobProfilesFormatter(updateJobProfileId);
-
-    return (
-      <div>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.name" />}
-              value={initialValues.name}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.url" />}
-              value={initialValues.url}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.authentication" />}
-              value={initialValues.authentication}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.externalIdQueryMap" />}
-              value={initialValues.externalIdQueryMap}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.internalIdEmbedPath" />}
-              value={initialValues.internalIdEmbedPath}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            {isEmpty(createJobProfilesContent)
-              ? <KeyValue label={<FormattedMessage id="ui-inventory.createJobProfileIds" />} />
-              : (
-                <MultiColumnList
-                  contentData={createJobProfilesContent}
-                  columnMapping={{
-                    [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.createJobProfileIds" />,
-                    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
-                  }}
-                  formatter={createJobProfilesFormatter}
-                  visibleColumns={jobProfilesVisibleColumns}
-                  columnIdPrefix="create-job-profiles"
-                />
-              )
-            }
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            {isEmpty(updateJobProfilesContent)
-              ? <KeyValue label={<FormattedMessage id="ui-inventory.updateJobProfileIds" />} />
-              : (
-                <MultiColumnList
-                  contentData={updateJobProfilesContent}
-                  columnMapping={{
-                    [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.updateJobProfileIds" />,
-                    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
-                  }}
-                  formatter={updateJobProfilesFormatter}
-                  visibleColumns={jobProfilesVisibleColumns}
-                  columnIdPrefix="update-job-profiles"
-                />
-              )
-            }
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.targetOptions" />}
-              value={targetOptions}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
-              value={this.props.resources.identifierType.records?.[0]?.name}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12}>
-            <KeyValue
-              label={<FormattedMessage id="ui-inventory.enabled" />}
-              value={initialValues.enabled ? '✓' : '✕'}
-            />
-          </Col>
-        </Row>
-      </div>
-    );
-  }
-}
+TargetProfileDetail.propTypes = {
+  initialValues: PropTypes.object.isRequired,
+  resources: PropTypes.shape({
+    identifierType: PropTypes.shape({
+      records: PropTypes.arrayOf(
+        PropTypes.shape({
+          name: PropTypes.string,
+        }).isRequired,
+      ),
+    }).isRequired,
+  }).isRequired,
+};
 
 export default stripesConnect(TargetProfileDetail);

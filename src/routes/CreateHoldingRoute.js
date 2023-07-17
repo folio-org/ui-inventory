@@ -10,7 +10,7 @@ const CreateHoldingRoute = ({ match }) => {
 
   return (
     <CreateHolding
-      referenceData={referenceData}
+      referenceData={referenceData || {}}
       instanceId={match.params.id}
     />
   );

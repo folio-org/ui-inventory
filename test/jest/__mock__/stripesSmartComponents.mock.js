@@ -4,7 +4,7 @@ jest.mock('@folio/stripes/smart-components', () => ({
   ...jest.requireActual('@folio/stripes/smart-components'),
   LocationLookup: () => <div>LocationLookup</div>,
   ViewMetaData: () => <div>ViewMetaData</div>,
-  ControlledVocab: () => <div>ControlledVocab</div>,
+  ControlledVocab: jest.fn(() => <div>ControlledVocab</div>),
   ConfigManager: (props) => {
     const { getInitialValues, onBeforeSave, children } = props;
     const component =

@@ -7,9 +7,13 @@ import { FormattedMessage } from 'react-intl';
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
 import { IntlConsumer } from '@folio/stripes/core';
+import { getSourceSuppressor } from '@folio/stripes/util';
 
+import { RECORD_SOURCE } from '../constants';
 import validateNameAndCode from './validateNameAndCode';
 
+const suppress = getSourceSuppressor(RECORD_SOURCE.CONSORTIUM);
+const actionSuppressor = { edit: suppress, delete: suppress };
 
 export const validate = (item, index, items) => {
   const errors = validateNameAndCode(item);
@@ -130,6 +134,7 @@ class StatisticalCodeSettings extends React.Component {
               statisticalCodeTypeId: intl.formatMessage({ id: 'ui-inventory.statisticalCodeTypes' }),
               source: intl.formatMessage({ id: 'ui-inventory.source' }),
             }}
+            actionSuppressor={actionSuppressor}
             readOnlyFields={['source']}
             itemTemplate={{ source: 'local' }}
             hiddenFields={['description', 'numberOfObjects']}

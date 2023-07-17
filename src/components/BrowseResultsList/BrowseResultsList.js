@@ -100,7 +100,7 @@ const BrowseResultsList = ({
 };
 
 BrowseResultsList.propTypes = {
-  browseData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  browseData: PropTypes.arrayOf(PropTypes.object),
   isEmptyMessage: PropTypes.node.isRequired,
   isLoading: PropTypes.bool,
   pagination: PropTypes.shape({

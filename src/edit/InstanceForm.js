@@ -8,7 +8,10 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
 
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  AppIcon,
+  stripesConnect,
+} from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   Accordion,
@@ -57,6 +60,7 @@ import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
 import {
+  getDate,
   handleKeyCommand,
   psTitleRelationshipId,
   validateOptionalField,
@@ -70,6 +74,7 @@ import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields'
 import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
 
 import styles from './InstanceForm.css';
+import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
 
 function validate(values) {
   const errors = {};
@@ -86,7 +91,7 @@ function validate(values) {
   }
 
   // Language not required, but must be not null if supplied
-  if (values.languages && values.languages.length) {
+  if (!isEmpty(values.languages)) {
     const errorList = [];
     values.languages.forEach((item, i) => {
       if (!item) {
@@ -97,7 +102,7 @@ function validate(values) {
   }
 
 
-  if (values.alternativeTitles && values.alternativeTitles.length) {
+  if (!isEmpty(values.alternativeTitles)) {
     const errorList = [];
     values.alternativeTitles.forEach((item, i) => {
       const error = {};
@@ -178,11 +183,48 @@ class InstanceForm extends React.Component {
       initialValues,
     } = this.props;
 
-    const titleTranslationKey = initialValues.id ? 'ui-inventory.edit' : 'ui-inventory.newInstance';
+    const newInstanceTitle = <FormattedMessage id="ui-inventory.newInstance" />;
+
+    const getEditInstanceTitle = () => {
+      const publishingInfo = getPublishingInfo(initialValues);
+
+      return (
+        <>
+          <AppIcon app="inventory" iconKey="instance" size="small" />
+          {' '}
+          <FormattedMessage
+            id="ui-inventory.editInstance.title"
+            values={{ title: initialValues.title }}
+          />
+          {publishingInfo}
+        </>
+      );
+    };
 
     return (
       <span data-test-header-title>
-        <FormattedMessage id={titleTranslationKey} />
+        {initialValues.id ? getEditInstanceTitle() : newInstanceTitle}
+      </span>
+    );
+  }
+
+  getPaneSubTitle() {
+    const {
+      initialValues: {
+        hrid,
+        metadata: { updatedDate },
+      }
+    } = this.props;
+
+    return (
+      <span data-test-header-sub-title>
+        <FormattedMessage
+          id="ui-inventory.instanceRecordSubtitle"
+          values={{
+            hrid,
+            updatedDate: getDate(updatedDate),
+          }}
+        />
       </span>
     );
   }
@@ -235,7 +277,7 @@ class InstanceForm extends React.Component {
 
     const { records } = instanceBlockedFields;
 
-    if (!records || !records.length) return false;
+    if (isEmpty(records)) return false;
 
     const { blockedFields } = records[0];
 
@@ -261,6 +303,14 @@ class InstanceForm extends React.Component {
     };
 
     const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.instanceTypeId,
+      }),
+    ) : [];
+
+    const instanceNoteTypeOptions = referenceTables.instanceNoteTypes ? referenceTables.instanceNoteTypes.map(
       it => ({
         label: it.name,
         value: it.id,
@@ -344,6 +394,7 @@ class InstanceForm extends React.Component {
               onClose={onCancel}
               footer={this.getFooter()}
               paneTitle={this.getPaneTitle()}
+              paneSub={initialValues?.id ? this.getPaneSubTitle() : null}
               actionMenu={this.getActionMenu}
               id={id}
             >
@@ -370,7 +421,7 @@ class InstanceForm extends React.Component {
                       }
                       id="instanceSection01"
                     >
-                      {(initialValues.metadata && initialValues.metadata.createdDate) &&
+                      {(initialValues.metadata?.createdDate) &&
                         <this.cViewMetaData metadata={initialValues.metadata} />
                       }
                       <Row>
@@ -664,7 +715,8 @@ class InstanceForm extends React.Component {
                         canAdd={!this.isFieldBlocked('notes')}
                         canEdit={!this.isFieldBlocked('notes')}
                         canDelete={!this.isFieldBlocked('notes')}
-                        instanceNoteTypes={referenceTables.instanceNoteTypes}
+                        noteTypeOptions={instanceNoteTypeOptions}
+                        noteTypeIdField="instanceNoteTypeId"
                       />
                     </Accordion>
                     <Accordion

@@ -106,7 +106,58 @@ export const instanceFilterConfig = [
     cql: FACETS_CQL.SEARCH_CONTRIBUTORS,
     values: [],
   },
+  {
+    name: FACETS.AUTHORITY_ID,
+    cql: FACETS_CQL.AUTHORITY_ID,
+    values: [],
+  },
 ];
+
+export const advancedSearchIndexes = {
+  instances: [
+    { label: 'ui-inventory.search.all', value: 'keyword' },
+    { label: 'ui-inventory.contributor', value: 'contributor' },
+    { label: 'ui-inventory.title', value: 'title' },
+    { label: 'ui-inventory.identifierAll', value: 'identifier' },
+    { label: 'ui-inventory.isbn', value: 'isbn' },
+    { label: 'ui-inventory.issn', value: 'issn' },
+    { label: 'ui-inventory.search.oclc', value: 'oclc' },
+    { label: 'ui-inventory.search.instanceNotes', value: 'isntanceNotes' },
+    { label: 'ui-inventory.search.instanceAdministrativeNotes', value: 'instanceAdministrativeNotes' },
+    { label: 'ui-inventory.subject', value: 'subject' },
+    { label: 'ui-inventory.effectiveCallNumberShelving', value: 'callNumber' },
+    { label: 'ui-inventory.instanceHrid', value: 'hrid' },
+    { label: 'ui-inventory.instanceId', value: 'id' },
+    { label: 'ui-inventory.authorityId', value: 'authorityId' },
+    { label: 'ui-inventory.search.allFields', value: 'allFields' },
+  ],
+  holdings: [
+    { label: 'ui-inventory.search.all', value: 'keyword' },
+    { label: 'ui-inventory.isbn', value: 'isbn' },
+    { label: 'ui-inventory.issn', value: 'issn' },
+    { label: 'ui-inventory.callNumberEyeReadable', value: 'holdingsFullCallNumbers' },
+    { label: 'ui-inventory.callNumberNormalized', value: 'callNumberNormalized' },
+    { label: 'ui-inventory.search.holdingsNotes', value: 'holdingsNotes' },
+    { label: 'ui-inventory.search.holdingsAdministrativeNotes', value: 'holdingsAdministrativeNotes' },
+    { label: 'ui-inventory.holdingsHrid', value: 'hrid' },
+    { label: 'ui-inventory.search.holdings.uuid', value: 'hid' },
+    { label: 'ui-inventory.search.allFields', value: 'allFields' },
+  ],
+  items: [
+    { label: 'ui-inventory.search.all', value: 'keyword' },
+    { label: 'ui-inventory.barcode', value: 'barcode' },
+    { label: 'ui-inventory.isbn', value: 'isbn' },
+    { label: 'ui-inventory.issn', value: 'issn' },
+    { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable', value: 'itemFullCallNumbers' },
+    { label: 'ui-inventory.itemEffectiveCallNumberNormalized', value: 'itemNormalizedCallNumbers' },
+    { label: 'ui-inventory.search.itemNotes', value: 'itemNotes' },
+    { label: 'ui-inventory.search.itemAdministrativeNotes', value: 'itemAdministrativeNotes' },
+    { label: 'ui-inventory.search.itemCirculationNotes', value: 'itemCirculationNotes' },
+    { label: 'ui-inventory.itemHrid', value: 'itemHrid' },
+    { label: 'ui-inventory.search.item.uuid', value: 'iid' },
+    { label: 'ui-inventory.search.allFields', value: 'allFields' },
+  ],
+};
 
 export const instanceIndexes = [
   // NOTE: the 'all' value was first used for a 'keyword all' query, but then
@@ -122,13 +173,14 @@ export const instanceIndexes = [
   { label: 'ui-inventory.search.oclc', value: 'oclc', queryTemplate: 'oclc="%{query.query}"' },
   { label: 'ui-inventory.search.instanceNotes', value: 'instanceNotes', queryTemplate: 'notes.note all "%{query.query}" or administrativeNotes all "%{query.query}"' },
   { label: 'ui-inventory.search.instanceAdministrativeNotes', value: 'instanceAdministrativeNotes', queryTemplate: 'administrativeNotes all "%{query.query}"' },
-  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: ({ query, authorityId }) => `subjects.value==/string "${query}"${authorityId ? ` and authorityId=="${authorityId}"` : ''}` },
+  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects.value==/string "%{query.query}"' },
   { label: 'ui-inventory.effectiveCallNumberShelving', value: 'callNumber', queryTemplate: 'itemEffectiveShelvingOrder==/string "%{query.query}"' },
   { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
   { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
   { label: 'ui-inventory.authorityId', value: 'authorityId', queryTemplate: 'authorityId == %{query.query}' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
 ];
 
 export const browseFiltersConfig = [
@@ -145,7 +197,19 @@ export const browseFiltersConfig = [
 ];
 
 export const browseInstanceIndexes = [
-  { label: 'ui-inventory.browse.callNumbers', value: `${browseModeOptions.CALL_NUMBERS}`, queryTemplate: '%{query.query}' },
+  {
+    label: 'ui-inventory.browse.callNumbers',
+    queryTemplate: '%{query.query}',
+    subIndexes: [
+      { label: 'ui-inventory.browse.callNumbersAll', value: browseModeOptions.CALL_NUMBERS },
+      { label: 'ui-inventory.browse.dewey', value: browseModeOptions.DEWEY },
+      { label: 'ui-inventory.browse.libOfCongress', value: browseModeOptions.LIBRARY_OF_CONGRESS },
+      { label: 'ui-inventory.browse.local', value: browseModeOptions.LOCAL },
+      { label: 'ui-inventory.browse.natLibOfMed', value: browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE },
+      { label: 'ui-inventory.browse.other', value: browseModeOptions.OTHER },
+      { label: 'ui-inventory.browse.superintendent', value: browseModeOptions.SUPERINTENDENT },
+    ],
+  },
   { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
@@ -179,6 +243,7 @@ export const holdingIndexes = [
   { label: 'ui-inventory.search.holdings.uuid', value: 'hid', queryTemplate: 'holdings.id=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
 ];
 
 export const holdingSortMap = {};
@@ -248,10 +313,11 @@ export const itemIndexes = [
   { label: 'ui-inventory.search.itemNotes', value: 'holdingsNotes', queryTemplate: 'item.notes.note all "%{query.query}" or item.administrativeNotes all "%{query.query}"' },
   { label: 'ui-inventory.search.itemAdministrativeNotes', value: 'itemAdministrativeNotes', queryTemplate: 'item.administrativeNotes all "%{query.query}"' },
   { label: 'ui-inventory.search.itemCirculationNotes', value: 'itemCirculationNotes', queryTemplate: 'item.circulationNotes.note all "%{query.query}"' },
-  { label: 'ui-inventory.itemHrid', value: 'hrid', queryTemplate: 'items.hrid=="%{query.query}"' },
+  { label: 'ui-inventory.itemHrid', value: 'itemHrid', queryTemplate: 'items.hrid=="%{query.query}"' },
   { label: 'ui-inventory.search.item.uuid', value: 'iid', queryTemplate: 'item.id=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
 ];
 
 export const itemFilterConfig = [

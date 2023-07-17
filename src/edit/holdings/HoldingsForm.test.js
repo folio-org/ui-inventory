@@ -1,8 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
 import '../../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
