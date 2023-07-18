@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import React, {
   createRef,
 } from 'react';
