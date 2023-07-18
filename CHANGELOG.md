@@ -47,6 +47,7 @@
 * Add new browse options to limit browse by call number type. Fixes UIIN-2467.
 * Implement Advanced search modal. Refs UIIN-1920.
 * Remove override CSS for TextLink. Refs UIIN-2365.
+* Remove BigTest infrastructure including tests, deps, config. Refs UIIN-2317.
 * Hide Inventory actions related to Local records in Central tenant. Refs UIIN-2491.
 
 ## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
