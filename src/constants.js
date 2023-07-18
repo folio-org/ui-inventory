@@ -628,3 +628,5 @@ export const RECORD_SOURCE = {
   SYSTEM: 'system',
   UC: 'UC',
 };
+
+export const CONSORTIUM_PREFIX = 'CONSORTIUM-';

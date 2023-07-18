@@ -33,6 +33,7 @@ import {
   LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
+  CONSORTIUM_PREFIX,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -772,4 +773,8 @@ export const buildSingleItemQuery = (qindex, query) => {
   }
 
   return template(queryTemplate, { interpolate: /%{([\s\S]+?)}/g })({ query });
+};
+
+export const isMARCSource = (source) => {
+  return ['MARC', `${CONSORTIUM_PREFIX}MARC`].includes(source);
 };
