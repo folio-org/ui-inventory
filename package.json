@@ -851,7 +851,7 @@
     "@babel/preset-react": "^7.9.0",
     "@folio/eslint-config-stripes": "^6.0.0",
     "@folio/jest-config-stripes": "^1.0.0",
-    "@folio/stripes": "^8.0.0",
+    "@folio/stripes": "^8.1.0",
     "@folio/stripes-cli": "^2.0.0",
     "@folio/stripes-components": "^11.0.0",
     "@folio/stripes-connect": "^8.1.0",
