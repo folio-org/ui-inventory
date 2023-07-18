@@ -241,7 +241,7 @@ class InstancesList extends React.Component {
       return false;
     }
 
-    return stripes.okapi.tenant === stripes.user.user.consortium.centralTenantId;
+    return stripes.okapi.tenant === stripes.user.user.consortium?.centralTenantId;
   }
 
   clearStorage = () => {
