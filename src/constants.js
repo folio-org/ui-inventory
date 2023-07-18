@@ -495,9 +495,9 @@ export const fieldSearchConfigurations = {
     startsWith: 'issn="%{query.query}*"',
   },
   identifier: {
-    exactPhrase: 'identifiers.value=="%{query.query}" or isbn=="%{query.query}"',
-    containsAll: 'identifiers.value="*%{query.query}*" or isbn="*%{query.query}*"',
-    startsWith: 'identifiers.value="%{query.query}*" or isbn="%{query.query}*"',
+    exactPhrase: 'identifiers.value=="%{query.query}"',
+    containsAll: 'identifiers.value="*%{query.query}*"',
+    startsWith: 'identifiers.value="%{query.query}*"',
   },
   oclc: {
     exactPhrase: 'oclc=="%{query.query}"',
@@ -521,7 +521,7 @@ export const fieldSearchConfigurations = {
   },
   callNumber: {
     exactPhrase: 'itemEffectiveShelvingOrder==/string "%{query.query}"',
-    containsAll: 'itemEffectiveShelvingOrder all "%{query.query}"',
+    containsAll: 'itemEffectiveShelvingOrder="*%{query.query}*"',
     startsWith: 'itemEffectiveShelvingOrder==/string "%{query.query}*"',
   },
   hrid: {
