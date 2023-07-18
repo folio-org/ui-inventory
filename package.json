@@ -88,6 +88,7 @@
       "users": "15.0 16.0"
     },
     "optionalOkapiInterfaces": {
+      "consortia": "1.0",
       "copycat-imports": "1.1",
       "copycat-profiles": "1.2",
       "remote-storage-mappings": "1.0 2.0",

@@ -237,7 +237,7 @@ class InstancesList extends React.Component {
   get isUserInCentralTenant() {
     const { stripes } = this.props;
 
-    if (!stripes.user.user.consortium) {
+    if (!stripes.hasInterface('consortia')) {
       return false;
     }
 
