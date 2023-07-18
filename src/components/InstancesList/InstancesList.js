@@ -20,7 +20,6 @@ import {
   Pluggable,
   AppIcon,
   IfPermission,
-  IfInterface,
   CalloutContext,
   stripesConnect,
   withNamespace,
@@ -39,6 +38,7 @@ import {
   DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
 
+import { withSingleRecordImport } from '..';
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
@@ -92,13 +92,16 @@ const ALL_COLUMNS = Array.from(new Set([
 ]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
+@withSingleRecordImport
 class InstancesList extends React.Component {
   static defaultProps = {
+    canUseSingleRecordImport: false,
     showSingleResult: true,
     segment: segments.instances,
   };
 
   static propTypes = {
+    canUseSingleRecordImport: PropTypes.bool,
     data: PropTypes.object,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object,
@@ -660,7 +663,12 @@ class InstancesList extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { parentResources, intl, segment } = this.props;
+    const {
+      canUseSingleRecordImport,
+      parentResources,
+      intl,
+      segment,
+    } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
@@ -800,16 +808,12 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(this.triggerQuickExport),
             isDisabled: !selectedRowsCount,
           })}
-          <IfInterface name="copycat-imports">
-            <IfPermission perm="copycat.profiles.collection.get">
-              {this.getActionItem({
-                id: 'dropdown-clickable-import-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.copycat.import',
-                onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
-              })}
-            </IfPermission>
-          </IfInterface>
+          {canUseSingleRecordImport && this.getActionItem({
+            id: 'dropdown-clickable-import-record',
+            icon: 'lightning',
+            messageId: 'ui-inventory.copycat.import',
+            onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+          })}
           {this.getActionItem({
             id: 'dropdown-clickable-show-selected-records',
             icon: 'eye-open',
@@ -1032,6 +1036,7 @@ class InstancesList extends React.Component {
 
   render() {
     const {
+      canUseSingleRecordImport,
       disableRecordCreation,
       intl,
       data,
@@ -1266,16 +1271,14 @@ class InstancesList extends React.Component {
           onSave={this.handleSelectedRecordsModalSave}
           onCancel={this.handleSelectedRecordsModalCancel}
         />
-        <IfInterface name="copycat-imports">
-          <IfPermission perm="copycat.profiles.collection.get">
-            <ImportRecordModal
-              isOpen={isImportRecordModalOpened}
-              currentExternalIdentifier={undefined}
-              handleSubmit={this.handleImportRecordModalSubmit}
-              handleCancel={this.handleImportRecordModalCancel}
-            />
-          </IfPermission>
-        </IfInterface>
+        {canUseSingleRecordImport && (
+          <ImportRecordModal
+            isOpen={isImportRecordModalOpened}
+            currentExternalIdentifier={undefined}
+            handleSubmit={this.handleImportRecordModalSubmit}
+            handleCancel={this.handleImportRecordModalCancel}
+          />
+        )}
       </HasCommand>
     );
   }
