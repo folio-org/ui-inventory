@@ -48,6 +48,7 @@
 * Introduce server side pagination for large volume of items. Fixes UIIN-2478.
 * Implement Advanced search modal. Refs UIIN-1920.
 * Remove override CSS for TextLink. Refs UIIN-2365.
+* Remove BigTest infrastructure including tests, deps, config. Refs UIIN-2317.
 
 ## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.7...v9.4.8)
