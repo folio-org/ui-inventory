@@ -1,10 +1,4 @@
-import {
-  flowRight,
-  get,
-} from 'lodash';
-import React, {
-  createRef,
-} from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -12,6 +6,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+import { flowRight } from 'lodash';
 
 import {
   AppIcon,
@@ -39,6 +34,7 @@ import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import {
   getDate,
   handleKeyCommand,
+  isMARCSource,
 } from './utils';
 import {
   indentifierTypeNames,
@@ -179,9 +175,10 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
-    const isMARCSource = this.isMARCSource(this.props.selectedInstance);
+    const { selectedInstance } = this.props;
+    const isMARCSourceRecord = isMARCSource(selectedInstance?.source);
 
-    if (isMARCSource) {
+    if (isMARCSourceRecord) {
       this.getMARCRecord();
     }
 
@@ -201,12 +198,12 @@ class ViewInstance extends React.Component {
     } = this.props;
     const instanceRecordsId = instance?.id;
     const prevInstanceRecordsId = prevInstance?.id;
-    const prevIsMARCSource = this.isMARCSource(prevInstance);
-    const isMARCSource = this.isMARCSource(instance);
+    const prevIsMARCSource = isMARCSource(prevInstance?.source);
+    const isMARCSourceRecord = isMARCSource(instance?.source);
     const isViewingAnotherRecord = instanceRecordsId !== prevInstanceRecordsId;
-    const recordSourceWasChanged = isMARCSource !== prevIsMARCSource;
+    const recordSourceWasChanged = isMARCSourceRecord !== prevIsMARCSource;
 
-    if (isMARCSource && (isViewingAnotherRecord || recordSourceWasChanged)) {
+    if (isMARCSourceRecord && (isViewingAnotherRecord || recordSourceWasChanged)) {
       this.getMARCRecord();
     }
 
@@ -229,12 +226,6 @@ class ViewInstance extends React.Component {
   componentWillUnmount() {
     this.props.mutator.allInstanceItems.reset();
   }
-
-  isMARCSource = (instance) => {
-    const instanceRecordsSource = instance?.source;
-
-    return instanceRecordsSource === 'MARC';
-  };
 
   getMARCRecord = () => {
     const { mutator } = this.props;
@@ -458,7 +449,7 @@ class ViewInstance extends React.Component {
       titleLevelRequestsFeatureEnabled,
     } = this.state;
 
-    const isSourceMARC = get(instance, ['source'], '') === 'MARC';
+    const isSourceMARC = isMARCSource(instance?.source);
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
