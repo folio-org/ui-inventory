@@ -11,8 +11,9 @@ const useHoldingItemsQuery = (
 ) => {
   const ky = useOkapiKy().extend({ timeout: false });
   const [namespace] = useNamespace();
-  const queryKey = [namespace, options.key, holdingsRecordId];
+
   const defaultSearchParams = {
+    offset: 0,
     limit: LIMIT_MAX,
     query: `holdingsRecordId==${holdingsRecordId}`,
   };
@@ -22,6 +23,7 @@ const useHoldingItemsQuery = (
     ...options.searchParams,
   };
 
+  const queryKey = [namespace, options.key, holdingsRecordId, searchParams.offset];
   const queryFn = () => ky.get('inventory/items-by-holdings-id', { searchParams }).json();
   const { data, isLoading, isFetching } = useQuery({ queryKey, queryFn, ...omit(options, ['searchParams']) });
 

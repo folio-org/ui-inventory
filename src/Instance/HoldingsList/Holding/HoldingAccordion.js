@@ -26,7 +26,8 @@ const HoldingAccordion = ({
   withMoveDropdown,
 }) => {
   const searchParams = {
-    limit: 0,
+    limit: 1,
+    offset: 0,
   };
 
   const { locationsById } = useContext(DataContext);
