@@ -8,6 +8,22 @@
   margin-right: 5px;
 }
 
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.sharedIcon {
+  justify-content: start;
+  color: rgb(100, 100, 100);
+  stroke: rgb(100, 100, 100);
+}
+
+.sharedIconLight {
+  color: rgb(255, 255, 255);
+  stroke: rgb(255, 255, 255);
+}
+
 .boundWithIcon {
   background-color: transparent !important;
   margin-left: var(--gutter-static-one-third);
