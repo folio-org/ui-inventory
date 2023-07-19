@@ -92,7 +92,6 @@ const ALL_COLUMNS = Array.from(new Set([
 ]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
-@withSingleRecordImport
 class InstancesList extends React.Component {
   static defaultProps = {
     canUseSingleRecordImport: false,
@@ -1287,4 +1286,5 @@ class InstancesList extends React.Component {
 export default withNamespace(flowRight(
   injectIntl,
   withLocation,
+  withSingleRecordImport,
 )(stripesConnect(InstancesList)));

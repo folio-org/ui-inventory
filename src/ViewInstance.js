@@ -1,4 +1,7 @@
-import { get } from 'lodash';
+import {
+  flowRight,
+  get,
+} from 'lodash';
 import React, {
   createRef,
 } from 'react';
@@ -76,7 +79,6 @@ const getTlrSettings = (settings) => {
 const requestOpenStatuses = Object.values(REQUEST_OPEN_STATUSES);
 const instanceRequestsQuery = requestOpenStatuses.map(status => `status=="${status}"`).join(' OR ');
 
-@withSingleRecordImport
 class ViewInstance extends React.Component {
   static manifest = Object.freeze({
     query: {},
@@ -962,4 +964,8 @@ ViewInstance.propTypes = {
   updateLocation: PropTypes.func.isRequired,
 };
 
-export default injectIntl(withLocation(stripesConnect(ViewInstance)));
+export default flowRight(
+  injectIntl,
+  withLocation,
+  withSingleRecordImport,
+)(stripesConnect(ViewInstance));
