@@ -1128,8 +1128,9 @@ class InstancesList extends React.Component {
             {shared &&
               <Icon
                 size="medium"
-                icon="share"
-                iconRootClass={classnames(
+                icon="graph"
+                iconRootClass={css.sharedIconRoot}
+                iconClassName={classnames(
                   css.sharedIcon,
                   { [css.sharedIconLight]: getItem(`${namespace}.${segment}.lastOpenRecord`) === id }
                 )}
