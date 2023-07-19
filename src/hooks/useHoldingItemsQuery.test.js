@@ -47,6 +47,7 @@ describe('useHoldingItemsQuery', () => {
       'inventory/items-by-holdings-id',
       {
         searchParams: {
+          offset: 0,
           limit,
           query: `holdingsRecordId==${id}`
         }
