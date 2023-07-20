@@ -24,6 +24,7 @@ import {
   CalloutContext,
   stripesConnect,
   withNamespace,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -233,16 +234,6 @@ class InstancesList extends React.Component {
     selectedBrowseResult: false,
     authorityId: '',
   };
-
-  get isUserInCentralTenant() {
-    const { stripes } = this.props;
-
-    if (!stripes.hasInterface('consortia')) {
-      return false;
-    }
-
-    return stripes.okapi.tenant === stripes.user.user.consortium?.centralTenantId;
-  }
 
   clearStorage = () => {
     const {
@@ -670,7 +661,7 @@ class InstancesList extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { parentResources, intl, segment } = this.props;
+    const { parentResources, intl, segment, stripes } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
@@ -739,7 +730,7 @@ class InstancesList extends React.Component {
               <FormattedMessage id="stripes-smart-components.new" />
             </Button>
           </IfPermission>
-          {!this.isUserInCentralTenant && (
+          {!checkIfUserInCentralTenant(stripes) && (
             <Pluggable
               id="clickable-create-inventory-records"
               onClose={this.toggleNewFastAddModal}
@@ -777,7 +768,7 @@ class InstancesList extends React.Component {
               icon: 'report',
               messageId: 'ui-inventory.exportInProgress',
             }) :
-            !this.isUserInCentralTenant && this.getActionItem({
+            !checkIfUserInCentralTenant(stripes) && this.getActionItem({
               id: 'dropdown-clickable-get-report',
               icon: 'report',
               messageId: 'ui-inventory.inTransitReport',
