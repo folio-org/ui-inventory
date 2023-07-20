@@ -113,6 +113,52 @@ export const instanceFilterConfig = [
   },
 ];
 
+export const advancedSearchIndexes = {
+  instances: [
+    { label: 'ui-inventory.search.all', value: 'keyword' },
+    { label: 'ui-inventory.contributor', value: 'contributor' },
+    { label: 'ui-inventory.title', value: 'title' },
+    { label: 'ui-inventory.identifierAll', value: 'identifier' },
+    { label: 'ui-inventory.isbn', value: 'isbn' },
+    { label: 'ui-inventory.issn', value: 'issn' },
+    { label: 'ui-inventory.search.oclc', value: 'oclc' },
+    { label: 'ui-inventory.search.instanceNotes', value: 'isntanceNotes' },
+    { label: 'ui-inventory.search.instanceAdministrativeNotes', value: 'instanceAdministrativeNotes' },
+    { label: 'ui-inventory.subject', value: 'subject' },
+    { label: 'ui-inventory.effectiveCallNumberShelving', value: 'callNumber' },
+    { label: 'ui-inventory.instanceHrid', value: 'hrid' },
+    { label: 'ui-inventory.instanceId', value: 'id' },
+    { label: 'ui-inventory.authorityId', value: 'authorityId' },
+    { label: 'ui-inventory.search.allFields', value: 'allFields' },
+  ],
+  holdings: [
+    { label: 'ui-inventory.search.all', value: 'keyword' },
+    { label: 'ui-inventory.isbn', value: 'isbn' },
+    { label: 'ui-inventory.issn', value: 'issn' },
+    { label: 'ui-inventory.callNumberEyeReadable', value: 'holdingsFullCallNumbers' },
+    { label: 'ui-inventory.callNumberNormalized', value: 'holdingsNormalizedCallNumbers' },
+    { label: 'ui-inventory.search.holdingsNotes', value: 'holdingsNotes' },
+    { label: 'ui-inventory.search.holdingsAdministrativeNotes', value: 'holdingsAdministrativeNotes' },
+    { label: 'ui-inventory.holdingsHrid', value: 'holdingsHrid' },
+    { label: 'ui-inventory.search.holdings.uuid', value: 'hid' },
+    { label: 'ui-inventory.search.allFields', value: 'allFields' },
+  ],
+  items: [
+    { label: 'ui-inventory.search.all', value: 'keyword' },
+    { label: 'ui-inventory.barcode', value: 'barcode' },
+    { label: 'ui-inventory.isbn', value: 'isbn' },
+    { label: 'ui-inventory.issn', value: 'issn' },
+    { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable', value: 'itemFullCallNumbers' },
+    { label: 'ui-inventory.itemEffectiveCallNumberNormalized', value: 'itemNormalizedCallNumbers' },
+    { label: 'ui-inventory.search.itemNotes', value: 'itemNotes' },
+    { label: 'ui-inventory.search.itemAdministrativeNotes', value: 'itemAdministrativeNotes' },
+    { label: 'ui-inventory.search.itemCirculationNotes', value: 'itemCirculationNotes' },
+    { label: 'ui-inventory.itemHrid', value: 'itemHrid' },
+    { label: 'ui-inventory.search.item.uuid', value: 'iid' },
+    { label: 'ui-inventory.search.allFields', value: 'allFields' },
+  ],
+};
+
 export const instanceIndexes = [
   // NOTE: the 'all' value was first used for a 'keyword all' query, but then
   // a *real* 'all' query option was added ('allInstances any'). That was given the value `allFields`
@@ -134,6 +180,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.authorityId', value: 'authorityId', queryTemplate: 'authorityId == %{query.query}' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
 ];
 
 export const browseFiltersConfig = [
@@ -196,6 +243,7 @@ export const holdingIndexes = [
   { label: 'ui-inventory.search.holdings.uuid', value: 'hid', queryTemplate: 'holdings.id=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
 ];
 
 export const holdingSortMap = {};
@@ -269,6 +317,7 @@ export const itemIndexes = [
   { label: 'ui-inventory.search.item.uuid', value: 'iid', queryTemplate: 'item.id=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all all "%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
 ];
 
 export const itemFilterConfig = [
