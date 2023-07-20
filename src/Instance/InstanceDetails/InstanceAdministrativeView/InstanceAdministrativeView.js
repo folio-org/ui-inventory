@@ -10,7 +10,8 @@ import {
   Row,
   Col,
   KeyValue,
-  Highlighter
+  Highlighter,
+  NoValue
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -27,7 +28,23 @@ import {
 } from '../../../components';
 
 import StatisticalCodesList from './StatisticalCodesList';
-import { QUERY_INDEXES } from '../../../constants';
+import { QUERY_INDEXES, SOURCE_VALUES } from '../../../constants';
+
+const getSourceValue = (source) => {
+  if (!source || source === '-') {
+    return <NoValue />;
+  }
+
+  if (source === SOURCE_VALUES.CONSORTIUM_FOLIO) {
+    return <FormattedMessage id="ui-inventory.folioShared" />;
+  }
+
+  if (source === SOURCE_VALUES.CONSORTIUM_MARC) {
+    return <FormattedMessage id="ui-inventory.marcShared" />;
+  }
+
+  return source;
+};
 
 const InstanceAdministrativeView = ({
   id,
@@ -117,7 +134,7 @@ const InstanceAdministrativeView = ({
         <Col xs={3}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.metadataSource" />}
-            value={checkIfElementIsEmpty(instance.source)}
+            value={getSourceValue(instance.source)}
           />
         </Col>
 

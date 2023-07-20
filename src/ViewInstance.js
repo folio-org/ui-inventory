@@ -42,6 +42,7 @@ import {
   indentifierTypeNames,
   layers,
   REQUEST_OPEN_STATUSES,
+  SOURCE_VALUES,
 } from './constants';
 import { DataContext } from './contexts';
 
@@ -230,7 +231,7 @@ class ViewInstance extends React.Component {
   isMARCSource = (instance) => {
     const instanceRecordsSource = instance?.source;
 
-    return instanceRecordsSource === 'MARC';
+    return instanceRecordsSource === SOURCE_VALUES.MARC;
   };
 
   getMARCRecord = () => {
@@ -454,7 +455,10 @@ class ViewInstance extends React.Component {
       titleLevelRequestsFeatureEnabled,
     } = this.state;
 
-    const isSourceMARC = get(instance, ['source'], '') === 'MARC';
+    const isSourceMARC = get(instance, ['source'], '') === SOURCE_VALUES.MARC;
+    const isSourceConsortiumFolio = get(instance, ['source'], '') === SOURCE_VALUES.CONSORTIUM_FOLIO;
+    const isSourceConsortiumMARC = get(instance, ['source'], '') === SOURCE_VALUES.CONSORTIUM_MARC;
+
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
@@ -484,6 +488,8 @@ class ViewInstance extends React.Component {
       };
     };
 
+    const isInstanceShared = isSourceConsortiumFolio || isSourceConsortiumMARC;
+
     const showInventoryMenuSection = (
       canEditInstance
       || canViewSource
@@ -511,7 +517,7 @@ class ViewInstance extends React.Component {
       <>
         {showInventoryMenuSection && (
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.inventory.label' })} id="inventory-menu-section">
-            {canEditInstance && (
+            {canEditInstance && !isInstanceShared && (
               <Button
                 id="edit-instance"
                 onClick={() => {
