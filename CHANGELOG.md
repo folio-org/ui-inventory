@@ -45,6 +45,10 @@
 * Restrict modifying and deleting system call number types. Refs UIIN-2385.
 * Prevent editing of shared settings from outside "Consortium manager". Refs UIIN-2482.
 * Add new browse options to limit browse by call number type. Fixes UIIN-2467.
+* Introduce server side pagination for large volume of items. Fixes UIIN-2478.
+* Implement Advanced search modal. Refs UIIN-1920.
+* Remove override CSS for TextLink. Refs UIIN-2365.
+* Remove BigTest infrastructure including tests, deps, config. Refs UIIN-2317.
 * Allow for new source values for shadow Instances. Refs UIIN-2459.
 
 ## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)

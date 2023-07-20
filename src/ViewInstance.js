@@ -1,4 +1,3 @@
-import { get } from 'lodash';
 import React, {
   createRef,
 } from 'react';
@@ -37,6 +36,7 @@ import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import {
   getDate,
   handleKeyCommand,
+  isMARCSource,
 } from './utils';
 import {
   indentifierTypeNames,
@@ -177,9 +177,10 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
-    const isMARCSource = this.isMARCSource(this.props.selectedInstance);
+    const { selectedInstance } = this.props;
+    const isMARCSourceRecord = isMARCSource(selectedInstance?.source);
 
-    if (isMARCSource) {
+    if (isMARCSourceRecord) {
       this.getMARCRecord();
     }
 
@@ -199,12 +200,12 @@ class ViewInstance extends React.Component {
     } = this.props;
     const instanceRecordsId = instance?.id;
     const prevInstanceRecordsId = prevInstance?.id;
-    const prevIsMARCSource = this.isMARCSource(prevInstance);
-    const isMARCSource = this.isMARCSource(instance);
+    const prevIsMARCSource = isMARCSource(prevInstance?.source);
+    const isMARCSourceRecord = isMARCSource(instance?.source);
     const isViewingAnotherRecord = instanceRecordsId !== prevInstanceRecordsId;
-    const recordSourceWasChanged = isMARCSource !== prevIsMARCSource;
+    const recordSourceWasChanged = isMARCSourceRecord !== prevIsMARCSource;
 
-    if (isMARCSource && (isViewingAnotherRecord || recordSourceWasChanged)) {
+    if (isMARCSourceRecord && (isViewingAnotherRecord || recordSourceWasChanged)) {
       this.getMARCRecord();
     }
 
