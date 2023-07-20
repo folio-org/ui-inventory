@@ -9,6 +9,8 @@ import {
   injectIntl,
 } from 'react-intl';
 
+import { get } from 'lodash';
+
 import {
   AppIcon,
   IfPermission,
