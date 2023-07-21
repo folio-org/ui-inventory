@@ -51,6 +51,7 @@
 * Remove BigTest infrastructure including tests, deps, config. Refs UIIN-2317.
 * Hide Inventory actions related to Local records in Central tenant. Refs UIIN-2491.
 * Add Shared icon to inventory instance results. Refs UIIN-2491.
+* Add `Shared` facet to Instance/Holdings/Items search. Refs UIIN-2393.
 
 ## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.7...v9.4.8)
