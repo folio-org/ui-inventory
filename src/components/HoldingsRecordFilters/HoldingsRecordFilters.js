@@ -8,6 +8,10 @@ import {
   FilterAccordionHeader,
   AccordionSet,
 } from '@folio/stripes/components';
+import {
+  checkIfUserInMemberTenant,
+  useStripes,
+} from '@folio/stripes/core';
 
 import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
@@ -15,6 +19,7 @@ import CheckboxFacet from '../CheckboxFacet';
 import { useFacets } from '../../common/hooks';
 import {
   getSourceOptions,
+  getSharedOptions,
   getSuppressedOptions,
   processFacetOptions,
   processStatisticalCodes,
@@ -44,7 +49,10 @@ const HoldingsRecordFilters = (props) => {
     onClear,
   } = props;
 
+  const stripes = useStripes();
+
   const segmentAccordions = {
+    [FACETS.SHARED]: false,
     [FACETS.EFFECTIVE_LOCATION]: false,
     [FACETS.HOLDINGS_PERMANENT_LOCATION]: false,
     [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: false,
@@ -57,6 +65,7 @@ const HoldingsRecordFilters = (props) => {
   };
 
   const segmentOptions = {
+    [FACETS_OPTIONS.SHARED_OPTIONS]: [],
     [FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]: [],
     [FACETS_OPTIONS.HOLDINGS_PERMANENT_LOCATION_OPTIONS]: [],
     [FACETS_OPTIONS.HOLDINGS_DISCOVERY_SUPPRESS_OPTIONS]: [],
@@ -67,6 +76,7 @@ const HoldingsRecordFilters = (props) => {
   };
 
   const selectedFacetFilters = {
+    [FACETS.SHARED]: activeFilters[FACETS.SHARED],
     [FACETS.EFFECTIVE_LOCATION]: activeFilters[FACETS.EFFECTIVE_LOCATION],
     [FACETS.HOLDINGS_PERMANENT_LOCATION]: activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION],
     [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: activeFilters[FACETS.HOLDINGS_DISCOVERY_SUPPRESS],
@@ -83,6 +93,9 @@ const HoldingsRecordFilters = (props) => {
         const commonProps = [recordValues, accum, name];
 
         switch (recordName) {
+          case FACETS_CQL.SHARED:
+            accum[name] = getSharedOptions(activeFilters[FACETS.SOURCE], recordValues);
+            break;
           case FACETS_CQL.EFFECTIVE_LOCATION:
             processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
             break;
@@ -126,8 +139,30 @@ const HoldingsRecordFilters = (props) => {
     props.data
   );
 
+  const showSharedFacet = checkIfUserInMemberTenant(stripes);
+
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
+      {showSharedFacet && (
+        <Accordion
+          label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
+          id={FACETS.SHARED}
+          name={FACETS.SHARED}
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={activeFilters[FACETS.SHARED]?.length > 0}
+          onClearFilter={() => onClear(FACETS.SHARED)}
+        >
+          <CheckboxFacet
+            data-test-filter-instance-shared
+            name={FACETS.SHARED}
+            dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS]}
+            selectedValues={activeFilters[FACETS.SHARED]}
+            isPending={getIsPending(FACETS.SHARED)}
+            onChange={onChange}
+          />
+        </Accordion>
+      )}
       <Accordion
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
         id={FACETS.EFFECTIVE_LOCATION}

@@ -8,6 +8,10 @@ import {
   AccordionSet,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
+import {
+  checkIfUserInMemberTenant,
+  useStripes,
+} from '@folio/stripes/core';
 
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
@@ -50,6 +54,7 @@ const InstanceFilters = props => {
     onClear,
   } = props;
 
+  const stripes = useStripes();
   const intl = useIntl();
 
   const segmentAccordions = {
@@ -172,26 +177,30 @@ const InstanceFilters = props => {
     props.data
   );
 
+  const showSharedFacet = checkIfUserInMemberTenant(stripes);
+
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
-        id={FACETS.SHARED}
-        name={FACETS.SHARED}
-        separator={false}
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.SHARED]?.length > 0}
-        onClearFilter={() => onClear(FACETS.SHARED)}
-      >
-        <CheckboxFacet
-          data-test-filter-instance-shared
+      {showSharedFacet && (
+        <Accordion
+          label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
+          id={FACETS.SHARED}
           name={FACETS.SHARED}
-          dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS]}
-          selectedValues={activeFilters[FACETS.SHARED]}
-          isPending={getIsPending(FACETS.SHARED)}
-          onChange={onChange}
-        />
-      </Accordion>
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={activeFilters[FACETS.SHARED]?.length > 0}
+          onClearFilter={() => onClear(FACETS.SHARED)}
+        >
+          <CheckboxFacet
+            data-test-filter-instance-shared
+            name={FACETS.SHARED}
+            dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS]}
+            selectedValues={activeFilters[FACETS.SHARED]}
+            isPending={getIsPending(FACETS.SHARED)}
+            onChange={onChange}
+          />
+        </Accordion>
+      )}
       <Accordion
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
         id={FACETS.EFFECTIVE_LOCATION}
