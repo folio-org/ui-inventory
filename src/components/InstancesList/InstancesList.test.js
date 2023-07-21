@@ -5,9 +5,9 @@ import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { createMemoryHistory } from 'history';
-import {
-  screen
-} from '@folio/jest-config-stripes/testing-library/react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
+
+import '../../../test/jest/__mock__/stripesConnect.mock';
 import '../../../test/jest/__mock__/stripesConfig.mock';
 import '../../../test/jest/__mock__/currencyData.mock';
 import '../../../test/jest/__mock__/documentCreateRange.mock';
@@ -313,7 +313,6 @@ const renderInstancesList = ({ segment, ...rest }, rerender) => {
               getLastSearchOffset={mockGetLastSearchOffset}
               storeLastSearch={mockStoreLastSearch}
               storeLastSearchOffset={mockStoreLastSearchOffset}
-              storeLastSegment={jest.fn()}
               {...rest}
             />
           </ModuleHierarchyProvider>
@@ -341,7 +340,7 @@ describe('InstancesList', () => {
       it('should write location.search to the session storage', () => {
         const search = '?qindex=title&query=book&sort=title';
         history.push({ search });
-        expect(mockStoreLastSearch).toHaveBeenCalledWith(search, "instances");
+        expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
       });
 
       describe('browse result was selected', () => {
@@ -383,13 +382,13 @@ describe('InstancesList', () => {
           const search = '?qindex=title&query=book&sort=title';
           mockStoreLastSearch.mockClear();
           history.push({ search });
-          expect(mockStoreLastSearch).toHaveBeenCalledWith(search, "instances");
+          expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
         });
         it('should write location.search to the session storage', () => {
           const search = '?qindex=title&query=book&sort=title&reset=true';
           mockStoreLastSearch.mockClear();
           history.push({ search });
-          expect(mockStoreLastSearch).toHaveBeenCalledWith(search, "instances");
+          expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
         });
       });
 
@@ -411,7 +410,7 @@ describe('InstancesList', () => {
             rerender
           );
 
-          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, "instances");
+          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset);
         });
       });
     });
@@ -451,6 +450,7 @@ describe('rendering InstancesList with holdings segment', () => {
 
   it('should show Save Holdings UUIDs button', () => {
     renderInstancesList({ segment: 'holdings' });
+
     userEvent.click(screen.getAllByRole('button', { name: 'Call Row' })[0]);
     userEvent.click(screen.getAllByRole('button', { name: 'Call Filter' })[0]);
     userEvent.click(screen.getAllByRole('button', { name: 'Call Reset' })[0]);
