@@ -33,6 +33,12 @@ const mockStoreLastSearch = jest.fn();
 const mockRecordsReset = jest.fn();
 const mockGetLastSearchOffset = jest.fn();
 const mockStoreLastSearchOffset = jest.fn();
+const mockGetLastSearch = jest.fn();
+
+jest.mock('../../storage', () => ({
+  ...jest.requireActual('../../storage'),
+  setItem: jest.fn(),
+}));
 
 jest.useFakeTimers();
 jest.mock('@folio/stripes-util');
@@ -340,7 +346,7 @@ describe('InstancesList', () => {
       it('should write location.search to the session storage', () => {
         const search = '?qindex=title&query=book&sort=title';
         history.push({ search });
-        expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+        expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
       });
 
       describe('browse result was selected', () => {
@@ -382,7 +388,7 @@ describe('InstancesList', () => {
           const search = '?qindex=title&query=book&sort=title';
           mockStoreLastSearch.mockClear();
           history.push({ search });
-          expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+          expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
         });
         it('should write location.search to the session storage', () => {
           const search = '?qindex=title&query=book&sort=title&reset=true';
@@ -410,7 +416,7 @@ describe('InstancesList', () => {
             rerender
           );
 
-          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset);
+          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
         });
       });
     });
@@ -436,6 +442,22 @@ describe('InstancesList', () => {
           'search query'
         );
         expect(screen.getByText('Cancel Import')).toBeInTheDocument();
+      });
+    });
+
+    describe('when using advanced search', () => {
+      beforeEach(() => {
+        userEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+          target: { value: 'test' }
+        });
+
+        const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+        userEvent.click(advancedSearchSubmit);
+      });
+
+      it('should set advanced search query in search input', () => {
+        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
       });
     });
   });

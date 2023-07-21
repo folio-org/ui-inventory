@@ -34,6 +34,31 @@
 * Escape quotes to search for Subjects and Contributor. Refs UIIN-2445.
 * Fix Search and Browse navigation and determining if the button is active. Refs UIIN-2444.
 * Scrolling within Inventory facets. Refs UIIN-2377.
+* When removing the dead icons in the Item record, then the displayed text looks inconsistent. Fixes UIIN-1392.
+* Adjust the sentence case for some Inventory action options. Refs UIIN-2436.
+* Adjust the Instance Edit screen header. Refs UIIN-2437.
+* Inventory: Retain Search/Browse query/options/filter and facet selections UNLESS user resets/clear selections. Refs UIIN-2433.
+* Statistical Code dropdown "contains" type ahead functionality needed (Instance/Holdings/Items). Refs UIIN-2466.
+* Fix problem with a large number of items on a single holdings record. Refs UIIN-2478.
+* Decrease rerenders for TargetProfileDetail component to avoid errors when view the target profile. Fixes UIIN-2467.
+* leverage cookie-based authentication in all API requests. Refs UIIN-2282.
+* Restrict modifying and deleting system call number types. Refs UIIN-2385.
+* Prevent editing of shared settings from outside "Consortium manager". Refs UIIN-2482.
+* Add new browse options to limit browse by call number type. Fixes UIIN-2467.
+* Introduce server side pagination for large volume of items. Fixes UIIN-2478.
+* Implement Advanced search modal. Refs UIIN-1920.
+* Remove override CSS for TextLink. Refs UIIN-2365.
+* Remove BigTest infrastructure including tests, deps, config. Refs UIIN-2317.
+
+## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.7...v9.4.8)
+
+* Fix useBoundWithHoldings for 100+ items. Fixes UIIN-2478.
+
+## [9.4.7](https://github.com/folio-org/ui-inventory/tree/v9.4.7) (2023-06-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.6...v9.4.7)
+
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2469.
 
 ## [9.4.6](https://github.com/folio-org/ui-inventory/tree/v9.4.6) (2023-06-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)
@@ -157,6 +182,12 @@
 * Move @testing-library/* to dev-deps. Refs UIIN-2309.
 * Rename `hrid` qindex for item to avoid collisions with holdings and instances. Fixes UIIN-2443.
 * Reset `<BoundWithModal>` when modal is closed. Fixes UIIN-2401.
+
+## [9.2.9](https://github.com/folio-org/ui-inventory/tree/v9.2.9) (2023-06-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.8...v9.2.9)
+
+* Use correct reference to item resource. Fixes UIIN-2418.
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2470.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)

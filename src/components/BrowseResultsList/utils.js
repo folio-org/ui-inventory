@@ -20,6 +20,30 @@ export const getSearchParams = (row, qindex) => {
       qindex: queryIndexes.CALL_NUMBER,
       query: row.shelfKey,
     },
+    [browseModeOptions.DEWEY]: {
+      qindex: queryIndexes.CALL_NUMBER,
+      query: row.shelfKey,
+    },
+    [browseModeOptions.LIBRARY_OF_CONGRESS]: {
+      qindex: queryIndexes.CALL_NUMBER,
+      query: row.shelfKey,
+    },
+    [browseModeOptions.LOCAL]: {
+      qindex: queryIndexes.CALL_NUMBER,
+      query: row.shelfKey,
+    },
+    [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: {
+      qindex: queryIndexes.CALL_NUMBER,
+      query: row.shelfKey,
+    },
+    [browseModeOptions.OTHER]: {
+      qindex: queryIndexes.CALL_NUMBER,
+      query: row.shelfKey,
+    },
+    [browseModeOptions.SUPERINTENDENT]: {
+      qindex: queryIndexes.CALL_NUMBER,
+      query: row.shelfKey,
+    },
     [browseModeOptions.CONTRIBUTORS]: {
       qindex: queryIndexes.CONTRIBUTOR,
       query: row.name,

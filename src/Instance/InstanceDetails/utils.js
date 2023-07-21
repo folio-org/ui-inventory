@@ -11,9 +11,10 @@ export const getPublishingInfo = instance => {
   const publication = instance.publication && instance.publication[0];
 
   if (publication) {
+    const publisherStr = publication.publisher ? ` • ${publication.publisher}` : '';
     const publishDateStr = publication.dateOfPublication ? ` • ${publication.dateOfPublication}` : '';
 
-    return `${publication.publisher ?? ''}${publishDateStr}`;
+    return `${publisherStr}${publishDateStr}`;
   }
 
   return undefined;

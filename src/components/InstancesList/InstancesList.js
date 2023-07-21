@@ -54,11 +54,12 @@ import {
   omitFromArray,
   isTestEnv,
   handleKeyCommand,
-  buildSingleItemQuery
+  buildSingleItemQuery,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
+  queryIndexes,
   segments,
 } from '../../constants';
 import {
@@ -69,13 +70,14 @@ import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
 import SelectedRecordsModal from '../SelectedRecordsModal';
 import ImportRecordModal from '../ImportRecordModal';
-
 import { buildQuery } from '../../routes/buildManifestObject';
 import {
   getItem,
   setItem,
 } from '../../storage';
 import facetsStore from '../../stores/facetsStore';
+import registerLogoutListener from '../../hooks/useLogout/utils';
+import { advancedSearchIndexes } from '../../filterConfig';
 
 import css from './instances.css';
 
@@ -123,6 +125,7 @@ class InstancesList extends React.Component {
     location: PropTypes.shape({
       search: PropTypes.string,
       state: PropTypes.object,
+      pathname: PropTypes.string,
     }),
     stripes: PropTypes.object.isRequired,
     history: PropTypes.shape({
@@ -133,6 +136,7 @@ class InstancesList extends React.Component {
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSegment: PropTypes.func.isRequired,
   };
 
   static contextType = CalloutContext;
@@ -167,6 +171,7 @@ class InstancesList extends React.Component {
     const {
       history,
       getParams,
+      namespace,
     } = this.props;
     const params = getParams();
 
@@ -188,6 +193,8 @@ class InstancesList extends React.Component {
       openedFromBrowse: params.selectedBrowseResult === 'true',
       optionSelected: '',
     });
+
+    registerLogoutListener(this.clearStorage, namespace, 'instances-list-logout', history);
   }
 
   componentDidUpdate(prevProps) {
@@ -208,6 +215,12 @@ class InstancesList extends React.Component {
     if (this.state.segmentsSortBy.find(x => x.name === this.props.segment && x.sort !== sortBy)) {
       this.setSegmentSortBy(sortBy);
     }
+
+    const id = this.props.location.pathname.split('/')[3];
+
+    if (id) {
+      setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, id);
+    }
   }
 
   componentWillUnmount() {
@@ -221,6 +234,16 @@ class InstancesList extends React.Component {
     authorityId: '',
   };
 
+  clearStorage = () => {
+    const {
+      namespace,
+    } = this.props;
+
+    Object.values(segments).forEach((segment) => {
+      setItem(`${namespace}.${segment}.lastOpenRecord`, null);
+    });
+  }
+
   processLastSearchTerms = () => {
     const {
       getParams,
@@ -228,12 +251,13 @@ class InstancesList extends React.Component {
       parentMutator,
       getLastSearchOffset,
       storeLastSearch,
+      segment,
     } = this.props;
     const params = getParams();
-    const lastSearchOffset = getLastSearchOffset();
+    const lastSearchOffset = getLastSearchOffset(segment);
     const offset = params.selectedBrowseResult === 'true' ? 0 : lastSearchOffset;
 
-    storeLastSearch(location.search);
+    storeLastSearch(location.search, segment);
     parentMutator.resultOffset.replace(offset);
   }
 
@@ -243,14 +267,15 @@ class InstancesList extends React.Component {
       parentResources,
       storeLastSearch,
       storeLastSearchOffset,
+      segment,
     } = this.props;
 
     if (prevProps.location.search !== location.search) {
-      storeLastSearch(location.search);
+      storeLastSearch(location.search, segment);
     }
 
     if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
-      storeLastSearchOffset(parentResources.resultOffset);
+      storeLastSearchOffset(parentResources.resultOffset, segment);
     }
   }
 
@@ -371,6 +396,8 @@ class InstancesList extends React.Component {
   }
 
   refocusOnInputSearch = (segment) => {
+    const { storeLastSegment } = this.props;
+
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
@@ -379,18 +406,33 @@ class InstancesList extends React.Component {
         optionSelected: ''
       });
     }
+    storeLastSegment(segment);
     facetsStore.getState().resetFacetSettings();
     document.getElementById('input-inventory-search').focus();
+  }
+
+  onSearchModeSwitch = () => {
+    const {
+      namespace,
+      location: { pathname },
+      segment,
+    } = this.props;
+
+    const id = pathname.split('/')[3];
+
+    if (id) {
+      setItem(`${namespace}.${segment}.lastOpenRecord`, id);
+    }
   }
 
   renderNavigation = () => (
     <>
       <SearchModeNavigation
         search={this.props.getLastBrowse()}
+        onSearchModeSwitch={this.onSearchModeSwitch}
       />
       <FilterNavigation
         segment={this.props.segment}
-        segmentsSortBy={this.state.segmentsSortBy}
         onChange={this.refocusOnInputSearch}
       />
     </>
@@ -927,6 +969,18 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  formatSearchableIndex = (index) => {
+    const { intl } = this.props;
+
+    const { prefix = '' } = index;
+    let label = index.label;
+    if (index.label.includes('ui-inventory')) {
+      label = prefix + intl.formatMessage({ id: index.label });
+    }
+
+    return { ...index, label };
+  }
+
   findAndOpenItem = async (instance) => {
     const {
       parentResources,
@@ -990,6 +1044,7 @@ class InstancesList extends React.Component {
       },
       namespace,
       stripes,
+      segment,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
@@ -1072,7 +1127,6 @@ class InstancesList extends React.Component {
       this.setState({ optionSelected: qindex });
 
       parentMutator.query.update({
-        qindex,
         filters: '',
         ...this.extraParamsToReset,
       });
@@ -1080,15 +1134,28 @@ class InstancesList extends React.Component {
       this.setState({ isSingleResult: true });
     };
 
-    const formattedSearchableIndexes = searchableIndexes.map(index => {
-      const { prefix = '' } = index;
-      let label = index.label;
-      if (index.label.includes('ui-inventory')) {
-        label = prefix + intl.formatMessage({ id: index.label });
-      }
+    const formattedSearchableIndexes = searchableIndexes.map(this.formatSearchableIndex);
 
-      return { ...index, label };
-    });
+    const advancedSearchOptions = advancedSearchIndexes[segment].map(this.formatSearchableIndex);
+
+    const advancedSearchQueryBuilder = (rows) => {
+      const formatRowCondition = (row) => {
+        // use default row formatter, but wrap each search term with parentheses
+
+        const query = `${row.searchOption} ${row.match} ${row.query}`;
+        return query;
+      };
+
+      return rows.reduce((formattedQuery, row, index) => {
+        const rowCondition = formatRowCondition(row);
+
+        if (index === 0) {
+          return rowCondition;
+        }
+
+        return `${formattedQuery} ${row.bool} ${rowCondition}`;
+      }, '');
+    };
 
     const shortcuts = [
       {
@@ -1116,9 +1183,13 @@ class InstancesList extends React.Component {
             maxSortKeys={1}
             renderNavigation={this.renderNavigation}
             searchableIndexes={formattedSearchableIndexes}
+            advancedSearchIndex={queryIndexes.ADVANCED_SEARCH}
+            advancedSearchOptions={advancedSearchOptions}
+            advancedSearchQueryBuilder={advancedSearchQueryBuilder}
             selectedIndex={get(data.query, 'qindex')}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
+            initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
