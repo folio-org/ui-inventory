@@ -15,6 +15,7 @@ import {
 } from 'react-intl';
 import saveAs from 'file-saver';
 import moment from 'moment';
+import classnames from 'classnames';
 
 import {
   Pluggable,
@@ -234,6 +235,16 @@ class InstancesList extends React.Component {
     selectedBrowseResult: false,
     authorityId: '',
   };
+
+  get isUserInCentralTenant() {
+    const { stripes } = this.props;
+
+    if (!stripes.hasInterface('consortia')) {
+      return false;
+    }
+
+    return stripes.okapi.tenant === stripes.user.user.consortium?.centralTenantId;
+  }
 
   clearStorage = () => {
     const {
@@ -1080,39 +1091,53 @@ class InstancesList extends React.Component {
         title,
         discoverySuppress,
         isBoundWith,
+        shared,
         staffSuppress,
         id,
       }) => {
         return (
-          <AppIcon
-            size="small"
-            app="inventory"
-            iconKey="instance"
-            iconAlignment="baseline"
-          >
-            <TextLink
-              to={this.getRowURL(id)}
-            >
-              {title}
-            </TextLink>
-            {(isBoundWith) &&
+          <div className={css.titleContainer}>
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
-        }
-            {(discoverySuppress || staffSuppress) &&
-            <span className={css.warnIcon}>
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              <TextLink
+                to={this.getRowURL(id)}
+              >
+                {title}
+              </TextLink>
+              {(isBoundWith) &&
+                <AppIcon
+                  size="small"
+                  app="@folio/inventory"
+                  iconKey="bound-with"
+                  iconClassName={css.boundWithIcon}
+                />
+              }
+              {(discoverySuppress || staffSuppress) &&
+                <span className={css.warnIcon}>
+                  <Icon
+                    size="medium"
+                    icon="exclamation-circle"
+                    status="warn"
+                  />
+                </span>
+              }
+            </AppIcon>
+            {shared &&
               <Icon
                 size="medium"
-                icon="exclamation-circle"
-                status="warn"
+                icon="graph"
+                iconRootClass={css.sharedIconRoot}
+                iconClassName={classnames(
+                  css.sharedIcon,
+                  { [css.sharedIconLight]: getItem(`${namespace}.${segment}.lastOpenRecord`) === id }
+                )}
               />
-            </span>
-        }
-          </AppIcon>
+            }
+          </div>
         );
       },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
