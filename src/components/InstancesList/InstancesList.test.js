@@ -3,9 +3,9 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { screen } from '@testing-library/react';
 
 import '../../../test/jest/__mock__/stripesConnect.mock';
 import '../../../test/jest/__mock__/stripesConfig.mock';
