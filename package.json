@@ -877,6 +877,7 @@
     "zustand": "^4.1.1"
   },
   "dependencies": {
+    "classnames": "^2.3.2",
     "@folio/quick-marc": "^7.0.0",
     "@folio/stripes-acq-components": "^4.0.0",
     "file-saver": "^2.0.0",
