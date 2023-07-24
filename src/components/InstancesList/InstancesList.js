@@ -15,6 +15,7 @@ import {
 } from 'react-intl';
 import saveAs from 'file-saver';
 import moment from 'moment';
+import classnames from 'classnames';
 
 import {
   Pluggable,
@@ -235,6 +236,16 @@ class InstancesList extends React.Component {
     selectedBrowseResult: false,
     authorityId: '',
   };
+
+  get isUserInCentralTenant() {
+    const { stripes } = this.props;
+
+    if (!stripes.hasInterface('consortia')) {
+      return false;
+    }
+
+    return stripes.okapi.tenant === stripes.user.user.consortium?.centralTenantId;
+  }
 
   clearStorage = () => {
     const {
@@ -736,20 +747,22 @@ class InstancesList extends React.Component {
               <FormattedMessage id="stripes-smart-components.new" />
             </Button>
           </IfPermission>
-          <Pluggable
-            id="clickable-create-inventory-records"
-            onClose={this.toggleNewFastAddModal}
-            open={this.state.showNewFastAddModal} // control the open modal via state var
-            renderTrigger={() => (
-              this.getActionItem({
-                id: 'new-fast-add-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.newFastAddRecord',
-                onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-              })
-            )}
-            type="create-inventory-records"
-          />
+          {!this.isUserInCentralTenant && (
+            <Pluggable
+              id="clickable-create-inventory-records"
+              onClose={this.toggleNewFastAddModal}
+              open={this.state.showNewFastAddModal} // control the open modal via state var
+              renderTrigger={() => (
+                this.getActionItem({
+                  id: 'new-fast-add-record',
+                  icon: 'lightning',
+                  messageId: 'ui-inventory.newFastAddRecord',
+                  onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+                })
+              )}
+              type="create-inventory-records"
+            />
+          )}
           <IfPermission perm="ui-quick-marc.quick-marc-editor.create">
             <Button
               buttonStyle="dropdownItem"
@@ -772,7 +785,7 @@ class InstancesList extends React.Component {
               icon: 'report',
               messageId: 'ui-inventory.exportInProgress',
             }) :
-            this.getActionItem({
+            !this.isUserInCentralTenant && this.getActionItem({
               id: 'dropdown-clickable-get-report',
               icon: 'report',
               messageId: 'ui-inventory.inTransitReport',
@@ -1081,39 +1094,53 @@ class InstancesList extends React.Component {
         title,
         discoverySuppress,
         isBoundWith,
+        shared,
         staffSuppress,
         id,
       }) => {
         return (
-          <AppIcon
-            size="small"
-            app="inventory"
-            iconKey="instance"
-            iconAlignment="baseline"
-          >
-            <TextLink
-              to={this.getRowURL(id)}
-            >
-              {title}
-            </TextLink>
-            {(isBoundWith) &&
+          <div className={css.titleContainer}>
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
-        }
-            {(discoverySuppress || staffSuppress) &&
-            <span className={css.warnIcon}>
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              <TextLink
+                to={this.getRowURL(id)}
+              >
+                {title}
+              </TextLink>
+              {(isBoundWith) &&
+                <AppIcon
+                  size="small"
+                  app="@folio/inventory"
+                  iconKey="bound-with"
+                  iconClassName={css.boundWithIcon}
+                />
+              }
+              {(discoverySuppress || staffSuppress) &&
+                <span className={css.warnIcon}>
+                  <Icon
+                    size="medium"
+                    icon="exclamation-circle"
+                    status="warn"
+                  />
+                </span>
+              }
+            </AppIcon>
+            {shared &&
               <Icon
                 size="medium"
-                icon="exclamation-circle"
-                status="warn"
+                icon="graph"
+                iconRootClass={css.sharedIconRoot}
+                iconClassName={classnames(
+                  css.sharedIcon,
+                  { [css.sharedIconLight]: getItem(`${namespace}.${segment}.lastOpenRecord`) === id }
+                )}
               />
-            </span>
-        }
-          </AppIcon>
+            }
+          </div>
         );
       },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
