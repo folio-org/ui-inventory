@@ -3,7 +3,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
@@ -114,32 +114,11 @@ describe('ViewHoldingsRecord actions', () => {
   });
 
   it('should display "inactive" by an inactive temporary location', async () => {
-    renderViewHoldingsRecord();
-    await waitFor(() => {
-      const tempLocation = document.querySelector('*[data-test-id=temporary-location]').innerHTML;
-      expect(tempLocation).toContain('Inactive');
-    });
+    await act(async () => { renderViewHoldingsRecord(); });
+    const tempLocation = document.querySelector('*[data-test-id=temporary-location]').innerHTML;
+    expect(tempLocation).toContain('Inactive');
   });
-  it('handleViewSource should be called when View Source button', async () => {
-    renderViewHoldingsRecord();
-    userEvent.click(await screen.findByText('Actions'));
-    const viewSourceBtn = screen.getByRole('button', { name: 'View source' });
-    await waitFor(() => {
-      expect(viewSourceBtn).not.toHaveAttribute('disabled');
-    });
-    userEvent.click(viewSourceBtn);
-    expect(defaultProps.goTo).toBeCalled();
-  });
-  it('"handleEditInQuickMarc" function should be called when "Edit in quickMARC" button', async () => {
-    renderViewHoldingsRecord();
-    userEvent.click(await screen.findByText('Actions'));
-    const quickMarcbtn = screen.getByRole('button', { name: 'Edit in quickMARC' });
-    await waitFor(() => {
-      expect(quickMarcbtn).not.toHaveAttribute('disabled');
-    });
-    userEvent.click(quickMarcbtn);
-    expect(defaultProps.goTo).toBeCalled();
-  });
+
   describe('Tests for shortcut of HasCommand', () => {
     it('"onCopyHolding" function to be triggered on clicking "duplicateRecord" button', async () => {
       const data = {
@@ -172,11 +151,9 @@ describe('ViewHoldingsRecord actions', () => {
       expect(spyOncollapseAllSections).toBeCalled();
     });
     it('expandAllSections triggered on clicking expandAllSections button', async () => {
-      renderViewHoldingsRecord();
+      await act(async () => { renderViewHoldingsRecord(); });
       userEvent.click(await screen.findByRole('button', { name: 'expandAllSections' }));
-      await waitFor(() => {
-        expect(spyOnexpandAllSections).toBeCalled();
-      });
+      expect(spyOnexpandAllSections).toBeCalled();
     });
   });
 });

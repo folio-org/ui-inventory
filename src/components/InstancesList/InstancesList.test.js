@@ -168,7 +168,7 @@ describe('InstancesList', () => {
     describe('when the component is mounted', () => {
       it('should write location.search to the session storage', () => {
         const search = '?qindex=title&query=book&sort=title';
-        history.push({ search });
+        act(() => { history.push({ search }); });
         expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
       });
 
@@ -210,7 +210,7 @@ describe('InstancesList', () => {
         it('should write location.search to the session storage', () => {
           const search = '?qindex=title&query=book&sort=title';
           mockStoreLastSearch.mockClear();
-          history.push({ search });
+          act(() => { history.push({ search }); });
           expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
         });
       });
@@ -339,7 +339,7 @@ describe('InstancesList', () => {
       describe('select proper sort options', () => {
         it('should select Title as default selected sort option', () => {
           const search = '?segment=instances&sort=title';
-          history.push({ search });
+          act(() => { history.push({ search }); });
 
           const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Title' });
           expect(option.selected).toBeTruthy();

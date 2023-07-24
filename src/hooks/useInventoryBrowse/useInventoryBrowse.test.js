@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { act, renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -58,20 +58,27 @@ describe('useInventoryBrowse', () => {
   });
 
   it('should fetches browse data based on query and filters', async () => {
-    const { result, waitFor } = renderHook(() => useInventoryBrowse({ filters, pageParams }), { wrapper });
+    let result;
 
-    await waitFor(() => !result.current.isFetching);
+    await act(async () => {
+      const hookResult = renderHook(() => useInventoryBrowse({ filters, pageParams }), { wrapper });
+      result = hookResult.result;
+    });
 
     expect(mockGet).toHaveBeenCalled();
     expect(result.current.data).toEqual(items);
   });
 
   it('should provide updated page config state', async () => {
-    const { result, waitFor } = renderHook(() => useInventoryBrowse({ filters, pageParams }), { wrapper });
+    let result;
+
+    await act(async () => {
+      const hookResult = renderHook(() => useInventoryBrowse({ filters, pageParams }), { wrapper });
+      result = hookResult.result;
+    });
 
     const direction = PAGE_DIRECTIONS.next;
 
-    await waitFor(() => !result.current.isFetching);
     await act(async () => result.current.pagination.onNeedMoreData(null, null, null, direction));
 
     const initPageConfig = pageParams.pageConfig;
@@ -81,7 +88,7 @@ describe('useInventoryBrowse', () => {
   });
 
   it('should fetch browse data based on current anchor and direction', async () => {
-    const { result, waitFor } = renderHook(() => useInventoryBrowse({
+    const { result } = renderHook(() => useInventoryBrowse({
       filters,
       pageParams: {
         ...pageParams,
@@ -100,7 +107,7 @@ describe('useInventoryBrowse', () => {
   });
 
   it('should not fetch browse data when filters are empty', async () => {
-    const { result, waitFor } = renderHook(() => useInventoryBrowse({
+    const { result } = renderHook(() => useInventoryBrowse({
       filters: { qindex: filters.qindex },
       pageParams: {
         ...pageParams,
