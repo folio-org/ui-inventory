@@ -1,7 +1,5 @@
 import { get } from 'lodash';
-import React, {
-  createRef,
-} from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -9,6 +7,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+import { flowRight } from 'lodash';
 
 import {
   AppIcon,
@@ -51,6 +50,7 @@ import {
   InstanceDetails,
 } from './Instance';
 import {
+  withSingleRecordImport,
   CalloutRenderer,
   NewOrderModal,
 } from './components';
@@ -404,6 +404,7 @@ class ViewInstance extends React.Component {
 
   createActionMenuGetter = instance => ({ onToggle }) => {
     const {
+      canUseSingleRecordImport,
       onCopy,
       stripes,
       intl,
@@ -516,18 +517,20 @@ class ViewInstance extends React.Component {
 
           <IfInterface name="copycat-imports">
             <IfPermission perm="copycat.profiles.collection.get">
-              <Button
-                id="dropdown-clickable-reimport-record"
-                onClick={() => {
-                  onToggle();
-                  this.setState({ isImportRecordModalOpened: true });
-                }}
-                buttonStyle="dropdownItem"
-              >
-                <Icon icon="lightning">
-                  <FormattedMessage id="ui-inventory.copycat.overlaySourceBib" />
-                </Icon>
-              </Button>
+              {canUseSingleRecordImport && (
+                <Button
+                  id="dropdown-clickable-reimport-record"
+                  onClick={() => {
+                    onToggle();
+                    this.setState({ isImportRecordModalOpened: true });
+                  }}
+                  buttonStyle="dropdownItem"
+                >
+                  <Icon icon="lightning">
+                    <FormattedMessage id="ui-inventory.copycat.overlaySourceBib" />
+                  </Icon>
+                </Button>
+              )}
             </IfPermission>
           </IfInterface>
 
@@ -685,6 +688,7 @@ class ViewInstance extends React.Component {
       paneWidth,
       tagsEnabled,
       updateLocation,
+      canUseSingleRecordImport,
       intl,
     } = this.props;
     const ci = makeConnectedInstance(this.props, stripes.logger);
@@ -808,6 +812,15 @@ class ViewInstance extends React.Component {
               />
             )
           }
+          {canUseSingleRecordImport && (
+            <ImportRecordModal
+              isOpen={this.state.isImportRecordModalOpened}
+              currentExternalIdentifier={undefined}
+              handleSubmit={this.handleImportRecordModalSubmit}
+              handleCancel={this.handleImportRecordModalCancel}
+              id={id}
+            />
+          )}
 
           <IfInterface name="copycat-imports">
             <IfPermission perm="copycat.profiles.collection.get">
@@ -833,6 +846,7 @@ class ViewInstance extends React.Component {
 }
 
 ViewInstance.propTypes = {
+  canUseSingleRecordImport: PropTypes.bool,
   selectedInstance:  PropTypes.object,
   goTo: PropTypes.func.isRequired,
   location: PropTypes.shape({
@@ -892,4 +906,8 @@ ViewInstance.propTypes = {
   updateLocation: PropTypes.func.isRequired,
 };
 
-export default injectIntl(withLocation(stripesConnect(ViewInstance)));
+export default flowRight(
+  injectIntl,
+  withLocation,
+  withSingleRecordImport,
+)(stripesConnect(ViewInstance));

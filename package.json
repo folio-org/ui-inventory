@@ -57,6 +57,7 @@
       "contributor-name-types": "1.2",
       "contributor-types": "2.0",
       "data-export": "5.0",
+      "data-import-converter-storage": "1.3 1.4",
       "electronic-access-relationships": "1.0",
       "holdings-note-types": "1.0",
       "holdings-sources": "1.0",
@@ -412,7 +413,8 @@
           "copycat.profiles.item.get",
           "copycat.profiles.item.post",
           "copycat.profiles.item.put",
-          "copycat.profiles.item.delete"
+          "copycat.profiles.item.delete",
+          "converter-storage.jobprofile.get"
         ],
         "visible": true
       },
@@ -825,7 +827,8 @@
         "subPermissions": [
           "ui-inventory.instance.view",
           "copycat.profiles.collection.get",
-          "copycat.imports.post"
+          "copycat.imports.post",
+          "converter-storage.jobprofile.get"
         ],
         "visible": true
       }
