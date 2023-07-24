@@ -11,7 +11,7 @@ import {
   Col,
   KeyValue,
   Highlighter,
-  NoValue
+  NoValue,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -27,24 +27,12 @@ import {
   AdministrativeNoteList,
 } from '../../../components';
 
+import {
+  QUERY_INDEXES,
+  SOURCE_VALUES,
+} from '../../../constants';
+
 import StatisticalCodesList from './StatisticalCodesList';
-import { QUERY_INDEXES, SOURCE_VALUES } from '../../../constants';
-
-const getSourceValue = (source) => {
-  if (!source || source === '-') {
-    return <NoValue />;
-  }
-
-  if (source === SOURCE_VALUES.CONSORTIUM_FOLIO) {
-    return <FormattedMessage id="ui-inventory.folioShared" />;
-  }
-
-  if (source === SOURCE_VALUES.CONSORTIUM_MARC) {
-    return <FormattedMessage id="ui-inventory.marcShared" />;
-  }
-
-  return source;
-};
 
 const InstanceAdministrativeView = ({
   id,
@@ -82,6 +70,14 @@ const InstanceAdministrativeView = ({
 
     return (instance.statisticalCodeIds || []).map(codeId => statisticalCodesMap[codeId]);
   }, [instance, statisticalCodeTypes, statisticalCodes]);
+
+  const getSourceValue = (source) => {
+    if (!source || source === '-') {
+      return <NoValue />;
+    }
+
+    return SOURCE_VALUES[source] ?? source;
+  };
 
   const queryHRID = queryString.parse(search)?.query;
   const isQueryByHRID = queryString.parse(search)?.qindex === QUERY_INDEXES.INSTANCE_HRID;

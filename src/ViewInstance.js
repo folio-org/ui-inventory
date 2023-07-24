@@ -41,6 +41,7 @@ import {
   isMARCSource,
 } from './utils';
 import {
+  CONSORTIUM_PREFIX,
   indentifierTypeNames,
   layers,
   REQUEST_OPEN_STATUSES,
@@ -230,12 +231,6 @@ class ViewInstance extends React.Component {
   componentWillUnmount() {
     this.props.mutator.allInstanceItems.reset();
   }
-
-  isMARCSource = (instance) => {
-    const instanceRecordsSource = instance?.source;
-
-    return instanceRecordsSource === SOURCE_VALUES.MARC;
-  };
 
   getMARCRecord = () => {
     const { mutator } = this.props;
@@ -459,9 +454,6 @@ class ViewInstance extends React.Component {
     } = this.state;
 
     const isSourceMARC = get(instance, ['source'], '') === SOURCE_VALUES.MARC;
-    const isSourceConsortiumFolio = get(instance, ['source'], '') === SOURCE_VALUES.CONSORTIUM_FOLIO;
-    const isSourceConsortiumMARC = get(instance, ['source'], '') === SOURCE_VALUES.CONSORTIUM_MARC;
-
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
@@ -491,7 +483,7 @@ class ViewInstance extends React.Component {
       };
     };
 
-    const isInstanceShared = isSourceConsortiumFolio || isSourceConsortiumMARC;
+    const isInstanceShared = instance?.source.startWith(CONSORTIUM_PREFIX);
 
     const showInventoryMenuSection = (
       canEditInstance
