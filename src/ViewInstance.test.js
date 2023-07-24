@@ -5,6 +5,7 @@ import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+import { useStripes } from '@folio/stripes/core';
 import { instances } from '../test/fixtures/instances';
 import { DataContext } from './contexts';
 import StripesConnectedInstance from './ConnectedInstance/StripesConnectedInstance';
@@ -12,14 +13,12 @@ import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewInstance from './ViewInstance';
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
-
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
 
 jest.mock('@folio/stripes-core', () => ({
   ...jest.requireActual('@folio/stripes-core'),
   TitleManager: ({ children }) => <>{children}</>
 }));
-
 jest.mock('./components/ImportRecordModal/ImportRecordModal', () => (props) => {
   const { isOpen, handleSubmit, handleCancel } = props;
   if (isOpen) {
@@ -38,7 +37,6 @@ jest.mock('./components/ImportRecordModal/ImportRecordModal', () => (props) => {
   }
   return null;
 });
-
 jest.mock('./components/InstancePlugin/InstancePlugin', () => ({ onSelect, onClose }) => {
   return (
     <div>
@@ -48,7 +46,6 @@ jest.mock('./components/InstancePlugin/InstancePlugin', () => ({ onSelect, onClo
     </div>
   );
 });
-
 jest.mock('./RemoteStorageService/Check', () => ({
   ...jest.requireActual('./RemoteStorageService/Check'),
   useByLocation: jest.fn(() => false),
@@ -214,6 +211,10 @@ describe('ViewInstance', () => {
   });
   describe('Action Menu', () => {
     it('should not be displayed', () => {
+      const stripes = useStripes();
+      stripes.hasPerm.mockImplementationOnce(() => false);
+      stripes.hasInterface.mockImplementationOnce(() => false);
+
       renderViewInstance({
         stripes: {
           ...defaultProp.stripes,
@@ -341,7 +342,7 @@ describe('ViewInstance', () => {
       renderViewInstance();
       userEvent.click(screen.getByRole('button', { name: 'Actions' }));
       userEvent.click(screen.getByRole('button', { name: 'New order' }));
-	  expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
       userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
       await waitFor(() => {
         expect(screen.queryByText(/Create order/i)).not.toBeInTheDocument();

@@ -51,6 +51,7 @@
 * Remove BigTest infrastructure including tests, deps, config. Refs UIIN-2317.
 * Hide Inventory actions related to Local records in Central tenant. Refs UIIN-2491.
 * Add Shared icon to inventory instance results. Refs UIIN-2491.
+* User with limited permissions gets an error modal when navigating to the Inventory app. Fixes UIIN-2490.
 * Allow for new source values for shadow Instances. Refs UIIN-2459.
 
 ## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
