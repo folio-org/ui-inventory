@@ -778,3 +778,5 @@ export const buildSingleItemQuery = (qindex, query) => {
 export const isMARCSource = (source) => {
   return ['MARC', `${CONSORTIUM_PREFIX}MARC`].includes(source);
 };
+
+export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');

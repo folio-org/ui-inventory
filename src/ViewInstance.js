@@ -15,6 +15,8 @@ import {
   IfInterface,
   Pluggable,
   stripesConnect,
+  checkIfUserInCentralTenant,
+  checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -37,8 +39,10 @@ import {
   getDate,
   handleKeyCommand,
   isMARCSource,
+  isUserInConsortiumMode,
 } from './utils';
 import {
+  CONSORTIUM_PREFIX,
   indentifierTypeNames,
   layers,
   REQUEST_OPEN_STATUSES,
@@ -735,6 +739,24 @@ class ViewInstance extends React.Component {
     );
   };
 
+  renderPaneTitle = (instance) => {
+    const { stripes } = this.props;
+
+    const isInstanceShared = checkIfUserInCentralTenant(stripes)
+      || (checkIfUserInMemberTenant(stripes) && instance?.source.startsWith(CONSORTIUM_PREFIX));
+
+    return (
+      <FormattedMessage
+        id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
+        values={{
+          isShared: isInstanceShared,
+          title: instance?.title,
+          publisherAndDate: getPublishingInfo(instance),
+        }}
+      />
+    );
+  };
+
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
@@ -780,7 +802,6 @@ class ViewInstance extends React.Component {
       },
     ];
 
-
     if (!instance) {
       return (
         <Pane
@@ -811,15 +832,7 @@ class ViewInstance extends React.Component {
           >
             <InstanceDetails
               id="pane-instancedetails"
-              paneTitle={
-                <FormattedMessage
-                  id="ui-inventory.instanceRecordTitle"
-                  values={{
-                    title: instance?.title,
-                    publisherAndDate: getPublishingInfo(instance),
-                  }}
-                />
-              }
+              paneTitle={this.renderPaneTitle(instance)}
               paneSubtitle={
                 <FormattedMessage
                   id="ui-inventory.instanceRecordSubtitle"
