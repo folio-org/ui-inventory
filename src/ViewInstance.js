@@ -6,9 +6,10 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import { flowRight } from 'lodash';
-
-import { get } from 'lodash';
+import {
+  flowRight,
+  get,
+} from 'lodash';
 
 import {
   AppIcon,
@@ -482,7 +483,7 @@ class ViewInstance extends React.Component {
       };
     };
 
-    const isInstanceShared = instance?.source.startWith(CONSORTIUM_PREFIX);
+    const isInstanceShared = instance?.source.startsWith(CONSORTIUM_PREFIX);
 
     const showInventoryMenuSection = (
       canEditInstance
