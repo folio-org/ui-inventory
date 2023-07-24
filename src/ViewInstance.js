@@ -232,6 +232,16 @@ class ViewInstance extends React.Component {
     this.props.mutator.allInstanceItems.reset();
   }
 
+  get checkIfUserInMemberTenant() {
+    const { stripes } = this.props;
+
+    if (!stripes.hasInterface('consortia')) {
+      return false;
+    }
+
+    return stripes.okapi.tenant !== stripes.user.user?.consortium?.centralTenantId;
+  }
+
   getMARCRecord = () => {
     const { mutator } = this.props;
     mutator.marcRecord.GET()
@@ -483,7 +493,7 @@ class ViewInstance extends React.Component {
       };
     };
 
-    const isInstanceShared = instance?.source.startsWith(CONSORTIUM_PREFIX);
+    const canMemberLibraryEditInstance = instance?.source.startsWith(CONSORTIUM_PREFIX) && this.checkIfUserInMemberTenant;
 
     const showInventoryMenuSection = (
       canEditInstance
@@ -512,7 +522,7 @@ class ViewInstance extends React.Component {
       <>
         {showInventoryMenuSection && (
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.inventory.label' })} id="inventory-menu-section">
-            {canEditInstance && !isInstanceShared && (
+            {canEditInstance && !canMemberLibraryEditInstance && (
               <Button
                 id="edit-instance"
                 onClick={() => {

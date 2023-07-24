@@ -633,8 +633,8 @@ export const RECORD_SOURCE = {
 export const SOURCE_VALUES = {
   MARC: <FormattedMessage id="ui-inventory.marc" />,
   FOLIO: <FormattedMessage id="ui-inventory.folio" />,
-  CONSORTIUM_MARC: <FormattedMessage id="ui-inventory.marcShared" />,
-  CONSORTIUM_FOLIO: <FormattedMessage id="ui-inventory.folioShared" />,
+  'CONSORTIUM-MARC': <FormattedMessage id="ui-inventory.marcShared" />,
+  'CONSORTIUM-FOLIO': <FormattedMessage id="ui-inventory.folioShared" />,
 };
 
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';
