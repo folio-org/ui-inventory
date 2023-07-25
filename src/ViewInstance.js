@@ -13,6 +13,7 @@ import {
   IfPermission,
   Pluggable,
   stripesConnect,
+  checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -226,16 +227,6 @@ class ViewInstance extends React.Component {
 
   componentWillUnmount() {
     this.props.mutator.allInstanceItems.reset();
-  }
-
-  get checkIfUserInMemberTenant() {
-    const { stripes } = this.props;
-
-    if (!stripes.hasInterface('consortia')) {
-      return false;
-    }
-
-    return stripes.okapi.tenant !== stripes.user.user?.consortium?.centralTenantId;
   }
 
   getMARCRecord = () => {
@@ -489,7 +480,7 @@ class ViewInstance extends React.Component {
       };
     };
 
-    const canMemberLibraryEditInstance = instance?.source.startsWith(CONSORTIUM_PREFIX) && this.checkIfUserInMemberTenant;
+    const canMemberLibraryEditInstance = instance?.source.startsWith(CONSORTIUM_PREFIX) && checkIfUserInMemberTenant(stripes);
 
     const showInventoryMenuSection = (
       canEditInstance
