@@ -480,7 +480,7 @@ class ViewInstance extends React.Component {
       };
     };
 
-    const canMemberLibraryEditInstance = instance?.source.startsWith(CONSORTIUM_PREFIX) && checkIfUserInMemberTenant(stripes);
+    const suppressEditInstanceForMemberTenant = checkIfUserInMemberTenant(stripes) && instance?.source.startsWith(CONSORTIUM_PREFIX);
 
     const showInventoryMenuSection = (
       canEditInstance
@@ -509,7 +509,7 @@ class ViewInstance extends React.Component {
       <>
         {showInventoryMenuSection && (
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.inventory.label' })} id="inventory-menu-section">
-            {canEditInstance && !canMemberLibraryEditInstance && (
+            {canEditInstance && !suppressEditInstanceForMemberTenant && (
               <Button
                 id="edit-instance"
                 onClick={() => {
