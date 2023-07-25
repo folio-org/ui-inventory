@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
@@ -631,10 +630,10 @@ export const RECORD_SOURCE = {
 };
 
 export const SOURCE_VALUES = {
-  MARC: <FormattedMessage id="ui-inventory.marc" />,
-  FOLIO: <FormattedMessage id="ui-inventory.folio" />,
-  'CONSORTIUM-MARC': <FormattedMessage id="ui-inventory.marcShared" />,
-  'CONSORTIUM-FOLIO': <FormattedMessage id="ui-inventory.folioShared" />,
+  MARC: 'MARC',
+  FOLIO: 'FOLIO',
+  'CONSORTIUM-MARC': 'MARC-shared',
+  'CONSORTIUM-FOLIO': 'FOLIO-shared',
 };
 
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';

@@ -464,7 +464,7 @@ class ViewInstance extends React.Component {
       titleLevelRequestsFeatureEnabled,
     } = this.state;
 
-    const isSourceMARC = get(instance, ['source'], '') === SOURCE_VALUES.MARC;
+    const isSourceMARC = isMARCSource(instance?.source);
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
