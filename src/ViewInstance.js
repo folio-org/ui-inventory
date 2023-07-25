@@ -6,10 +6,7 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import {
-  flowRight,
-  get,
-} from 'lodash';
+import { flowRight } from 'lodash';
 
 import {
   AppIcon,
@@ -44,7 +41,6 @@ import {
   indentifierTypeNames,
   layers,
   REQUEST_OPEN_STATUSES,
-  SOURCE_VALUES,
 } from './constants';
 import { DataContext } from './contexts';
 
