@@ -854,7 +854,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.9.0",
     "@folio/eslint-config-stripes": "^7.0.0",
-    "@folio/jest-config-stripes": "^1.0.0",
+    "@folio/jest-config-stripes": "^2.0.0",
     "@folio/stripes": "^9.0.0",
     "@folio/stripes-cli": "^3.0.0",
     "@folio/stripes-components": "^12.0.0",
@@ -914,8 +914,6 @@
     "@folio/plugin-find-instance": "^6.0.0"
   },
   "resolutions": {
-    "moment": "~2.29.4",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/dom": "^9.3.1"
+    "moment": "~2.29.4"
   }
 }
