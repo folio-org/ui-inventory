@@ -75,6 +75,7 @@ import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
 
 import styles from './InstanceForm.css';
 import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
+import { CONSORTIUM_PREFIX } from '../constants';
 
 function validate(values) {
   const errors = {};
@@ -178,12 +179,34 @@ class InstanceForm extends React.Component {
     this.accordionStatusRef = createRef();
   }
 
+  get checkIfUserInCentralTenant() {
+    const { stripes } = this.props;
+    if (!stripes.hasInterface('consortia')) {
+      return false;
+    }
+
+    return stripes.okapi.tenant === stripes.user.user?.consortium?.centralTenantId;
+  }
+
+  get checkIfUserInMemberTenant() {
+    const { stripes } = this.props;
+    if (!stripes.hasInterface('consortia')) {
+      return false;
+    }
+
+    return stripes.okapi.tenant !== stripes.user.user?.consortium?.centralTenantId;
+  }
+
   getPaneTitle() {
     const {
       initialValues,
     } = this.props;
 
     const newInstanceTitle = <FormattedMessage id="ui-inventory.newInstance" />;
+
+    const isInstanceShared = this.checkIfUserInCentralTenant || initialValues?.source.startsWith(CONSORTIUM_PREFIX);
+    const isInstanceLocal = this.checkIfUserInMemberTenant && (initialValues?.source === 'MARC' || initialValues?.source === 'FOLIO');
+    const instanceType = isInstanceShared ? 'shared' : (isInstanceLocal ? 'local' : '');
 
     const getEditInstanceTitle = () => {
       const publishingInfo = getPublishingInfo(initialValues);
@@ -194,7 +217,10 @@ class InstanceForm extends React.Component {
           {' '}
           <FormattedMessage
             id="ui-inventory.editInstance.title"
-            values={{ title: initialValues.title }}
+            values={{
+              title: initialValues.title,
+              instanceType,
+            }}
           />
           {publishingInfo}
         </>
