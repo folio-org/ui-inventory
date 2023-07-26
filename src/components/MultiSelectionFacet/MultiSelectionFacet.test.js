@@ -27,7 +27,7 @@ const renderMultiSelectionFacet = (props = {}) => render(
       label="filter-label"
       closedByDefault
       formatter={mockFacetOptionFormatter}
-      valueFormatter
+      valueFormatter={() => {}}
       onClearFilter={mockOnClearFilter}
       onFilterChange={mockOnFilterChange}
       displayClearButton

@@ -2,8 +2,8 @@ import React from 'react';
 import {
   render,
   screen,
+  fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import '../../../../test/jest/__mock__';
 import Harness from '../../../../test/jest/helpers/Harness';
@@ -67,7 +67,7 @@ describe('Given PrimaryToggleButton component', () => {
     it('then fields `change` function should be called', () => {
       renderPrimaryToggleButton(props);
 
-      userEvent.click(screen.getByTestId('primaryToggleButton'));
+      fireEvent.click(screen.getByTestId('primaryToggleButton'));
 
       expect(mockOnChange).toHaveBeenCalledTimes(1);
 

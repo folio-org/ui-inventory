@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import '../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
@@ -37,7 +36,7 @@ describe('PublicationFrequencyFields', () => {
     expect(screen.getByText('Publication frequency')).toBeInTheDocument();
     const addButton = screen.getByRole('button', { name: /add frequency/i });
     expect(addButton).toBeInTheDocument();
-    userEvent.click(addButton);
+    fireEvent.click(addButton);
     const deleteButton = document.querySelector('[aria-label="Delete this item"]');
     expect(addButton).toBeEnabled();
     expect(deleteButton).toBeEnabled();
@@ -68,7 +67,7 @@ describe('PublicationFrequencyFields', () => {
     expect(screen.getByText('Publication frequency')).toBeInTheDocument();
     const addButton = screen.getByRole('button', { name: /add frequency/i });
     expect(addButton).toBeInTheDocument();
-    userEvent.click(addButton);
+    fireEvent.click(addButton);
     expect(screen.getByRole('textbox')).toBeDisabled();
   });
   it('disables add publication frequency button when canAdd is false', () => {
@@ -95,7 +94,7 @@ describe('PublicationFrequencyFields', () => {
     renderPublicationFrequencyFields();
     const addButton = screen.getByRole('button', { name: /add frequency/i });
     expect(addButton).toBeInTheDocument();
-    userEvent.click(addButton);
+    fireEvent.click(addButton);
     expect(addButton).toBeDisabled();
   });
   it('disables delete publication frequency button when canDelete is false', () => {
@@ -122,7 +121,7 @@ describe('PublicationFrequencyFields', () => {
     renderPublicationFrequencyFields();
     const addButton = screen.getByRole('button', { name: /add frequency/i });
     expect(addButton).toBeInTheDocument();
-    userEvent.click(addButton);
+    fireEvent.click(addButton);
     const deleteButton = document.querySelector('[aria-label="Delete this item"]');
     expect(deleteButton).toBeDisabled();
   });

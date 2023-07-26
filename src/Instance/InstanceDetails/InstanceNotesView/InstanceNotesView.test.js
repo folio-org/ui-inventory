@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
@@ -42,7 +41,7 @@ describe('InstanceNotesView', () => {
   it('Should renders correctly and click the button', () => {
     const { getByText, getByRole } = renderInstanceNotesView(props1);
     const instanceButton = getByRole('button', { name: 'ui-inventory.instanceNotes' });
-    userEvent.click(instanceButton);
+    fireEvent.click(instanceButton);
     expect(instanceButton).toHaveAttribute('aria-expanded', 'false');
     expect(getByText('ui-inventory.staffOnly')).toBeInTheDocument();
     expect(getByText('Note Type 1')).toBeInTheDocument();

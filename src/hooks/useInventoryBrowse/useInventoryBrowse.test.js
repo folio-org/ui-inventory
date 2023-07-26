@@ -58,24 +58,18 @@ describe('useInventoryBrowse', () => {
   });
 
   it('should fetches browse data based on query and filters', async () => {
-    let result;
+    const { result } = renderHook(() => useInventoryBrowse({ filters, pageParams }), { wrapper });
 
-    await act(async () => {
-      const hookResult = renderHook(() => useInventoryBrowse({ filters, pageParams }), { wrapper });
-      result = hookResult.result;
-    });
+    await act(() => !result.current.isFetching);
 
     expect(mockGet).toHaveBeenCalled();
     expect(result.current.data).toEqual(items);
   });
 
   it('should provide updated page config state', async () => {
-    let result;
+    const { result } = renderHook(() => useInventoryBrowse({ filters, pageParams }), { wrapper });
 
-    await act(async () => {
-      const hookResult = renderHook(() => useInventoryBrowse({ filters, pageParams }), { wrapper });
-      result = hookResult.result;
-    });
+    await act(() => !result.current.isFetching);
 
     const direction = PAGE_DIRECTIONS.next;
 

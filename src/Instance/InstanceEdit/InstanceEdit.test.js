@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import '../../../test/jest/__mock__';
@@ -75,8 +74,8 @@ describe('InstanceEdit', () => {
   describe('saving instance', () => {
     beforeEach(async () => {
       await act(async () => {
-        await userEvent.type(screen.getByRole('textbox', { name: /resource title/i }), 'new title');
-        userEvent.click(screen.getByText(/Save & close/i));
+        await fireEvent.change(screen.getByRole('textbox', { name: /resource title/i }), { target: { value: 'new title' } });
+        fireEvent.click(screen.getByText(/Save & close/i));
       });
     });
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import '../../../../test/jest/__mock__';
@@ -13,7 +12,7 @@ import InstanceMovementDetails from './InstanceMovementDetails';
 jest.mock('../../InstanceDetails', () => ({
   InstanceDetails: jest.fn(({ onClose, actionMenu, children }) => (
     <div>
-      <button onClick={onClose}>Close</button>
+      <button type="button" onClick={onClose}>Close</button>
       {actionMenu({ onToggle: jest.fn() })}
       {children}
     </div>
@@ -62,12 +61,11 @@ describe('InstanceMovementDetails', () => {
   });
   it('render DOM', () => {
     renderInstanceMovementDetails();
-    screen.debug();
   });
   it('click Close button', () => {
     renderInstanceMovementDetails();
     const closeButton = screen.getByRole('button', { name: /Close/i });
-    userEvent.click(closeButton);
+    fireEvent.click(closeButton);
     expect(onClose).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledWith(instance);
   });

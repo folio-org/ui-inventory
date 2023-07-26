@@ -31,12 +31,9 @@ describe('useBoundWithHoldings', () => {
   it('should fetch bound-with holdings', async () => {
     const boundWithItems = [{ hrid: 'BW-ITEM-1', holdingsRecordId: '9e8dc8ce-68f3-4e75-8479-d548ce521157' }];
 
-    let result;
+    const { result } = renderHook(() => useBoundWithHoldings(boundWithItems), { wrapper });
 
-    await act(async () => {
-      const hookResult = renderHook(() => useBoundWithHoldings(boundWithItems), { wrapper });
-      result = hookResult.result;
-    });
+    await act(() => !result.current.isLoading);
 
     expect(result.current.boundWithHoldings).toEqual(boundWithHoldingsRecords);
   });

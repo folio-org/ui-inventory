@@ -11,6 +11,7 @@ import { DataContext } from '../../../contexts';
 import { renderWithIntl, translationsProperties } from '../../../../test/jest/helpers';
 
 import InstanceSubjectView from './InstanceSubjectView';
+import { segments } from '../../../constants';
 
 const history = createMemoryHistory();
 
@@ -22,7 +23,11 @@ const defaultProps = {
 const renderInstanceSubjectView = (props) => renderWithIntl(
   <Router history={history}>
     <DataContext.Provider value="Subject">
-      <InstanceSubjectView {...props} />
+      <InstanceSubjectView
+        source="MARC"
+        segment={segments.instances}
+        {...props}
+      />
     </DataContext.Provider>
   </Router>,
   translationsProperties

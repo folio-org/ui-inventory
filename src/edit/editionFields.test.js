@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -43,7 +42,7 @@ describe('EditionFields', () => {
     renderEditionFields();
     expect(screen.getByText(/Editions/i)).toBeInTheDocument();
     const editButton = screen.getByText(/Add edition/i);
-    userEvent.click(editButton);
+    fireEvent.click(editButton);
     const textFields = screen.getAllByText('Edition');
     expect(textFields).toHaveLength(1);
   });

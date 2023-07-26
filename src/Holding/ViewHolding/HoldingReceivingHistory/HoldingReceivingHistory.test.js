@@ -1,7 +1,6 @@
 import React from 'react';
 
-import user from '@folio/jest-config-stripes/testing-library/user-event';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
@@ -37,10 +36,10 @@ describe('HoldingReceivingHistory', () => {
     const captionHeader = screen.getAllByRole('columnheader')[0];
     const btn = screen.getByRole('button', { name: 'ui-inventory.caption' });
 
-    user.click(btn);
+    fireEvent.click(btn);
     expect(captionHeader.getAttribute('aria-sort')).toBe(SORT_DIRECTION.ASCENDING);
 
-    user.click(btn);
+    fireEvent.click(btn);
     expect(captionHeader.getAttribute('aria-sort')).toBe(SORT_DIRECTION.DESCENDING);
   });
 });
