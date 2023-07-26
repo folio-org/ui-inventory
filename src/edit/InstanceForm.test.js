@@ -20,20 +20,35 @@ import { DataContext } from '../contexts';
 import InstanceForm from './InstanceForm';
 
 const mockInitialValues = {
+  title: 'test title',
   instanceTypeId: '',
   instanceFormatId: 'instanceFormatId',
   statisticalCodeId: 'statisticalCodeId',
   instanceSource: 'MARC',
   alternativeTitles: [''],
   publication: [{ publisher: '', dateOfPublication: '', place: '' }],
-  languages: ['']
+  languages: [''],
+  source: 'MARC',
+  id: 'testId',
+  metadata: { updatedDate: '11-11-2022' },
+  hrid: 'test hrid',
 };
 
 const mockReferenceTables = {
   instanceTypes: [{ id: 'instanceTypesId', name: 'instanceTypesId' }],
   instanceStatuses: [],
   modesOfIssuance: [{ id: 'modesOfIssuanceId', name: 'modesOfIssuanceId' }],
-  statisticalCodes: [],
+  statisticalCodes: [{
+    id: 'testId1',
+    statisticalCodeTypeId: 'testStatisticalCodeTypeId1',
+    code: 'testCode1',
+    name: 'testName1',
+  }, {
+    id: 'testId2',
+    statisticalCodeTypeId: 'testStatisticalCodeTypeId2',
+    code: 'testCode2',
+    name: 'testName2',
+  }],
   instanceRelationshipTypes: [{ id: 'instanceRelationshipTypesId', name: 'instanceRelationshipTypesId' }],
   alternativeTitleTypes: [{ id: 'alternativeTitleTypesId', name: 'statisticalCodeId', code: 'alternativeTitleTypescode' }],
   identifierTypes: [],
@@ -145,6 +160,57 @@ describe('InstanceForm', () => {
       expect(screen.getByRole('group', { name: 'Classification' })).toBeInTheDocument();
       expect(screen.getByRole('group', { name: 'Child instances' })).toBeInTheDocument();
       expect(screen.getByRole('group', { name: 'Parent instances' })).toBeInTheDocument();
+    });
+  });
+
+  describe('Instance form header', () => {
+    describe('when user is central tenant', () => {
+      it('should render correct title', () => {
+        const { getByText } = renderInstanceForm({
+          stripes: {
+            ...stripesStub,
+            okapi: { tenant: 'consortium' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          },
+        });
+
+        expect(getByText('Edit shared instance • test title')).toBeInTheDocument();
+      });
+    });
+
+    describe('when user is member library tenant', () => {
+      it('should render correct title', () => {
+        const { getByText } = renderInstanceForm({
+          stripes: {
+            ...stripesStub,
+            okapi: { tenant: 'university' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          },
+        });
+
+        expect(getByText('Edit local instance • test title')).toBeInTheDocument();
+      });
+    });
+
+    describe('when user is non-consortial tenant', () => {
+      it('should render correct title', () => {
+        const { getByText } = renderInstanceForm({
+          stripes: {
+            ...stripesStub,
+            hasInterface: () => false,
+          },
+        });
+
+        expect(getByText('Edit instance • test title')).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Instance subheader', () => {
+    it('should render hrid and last update date', () => {
+      const { getByText } = renderInstanceForm();
+
+      expect(getByText('test hrid • Last updated: 11/10/2022')).toBeInTheDocument();
     });
   });
 });

@@ -11,6 +11,8 @@ import { withRouter } from 'react-router';
 import {
   AppIcon,
   stripesConnect,
+  checkIfUserInCentralTenant,
+  checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
@@ -179,37 +181,20 @@ class InstanceForm extends React.Component {
     this.accordionStatusRef = createRef();
   }
 
-  get checkIfUserInCentralTenant() {
-    const { stripes } = this.props;
-    if (!stripes.hasInterface('consortia')) {
-      return false;
-    }
-
-    return stripes.okapi.tenant === stripes.user.user?.consortium?.centralTenantId;
-  }
-
-  get checkIfUserInMemberTenant() {
-    const { stripes } = this.props;
-    if (!stripes.hasInterface('consortia')) {
-      return false;
-    }
-
-    return stripes.okapi.tenant !== stripes.user.user?.consortium?.centralTenantId;
-  }
-
   getPaneTitle() {
     const {
       initialValues,
+      stripes,
     } = this.props;
 
     const newInstanceTitle = <FormattedMessage id="ui-inventory.newInstance" />;
 
-    const isInstanceShared = this.checkIfUserInCentralTenant || initialValues?.source.startsWith(CONSORTIUM_PREFIX);
-    const isInstanceLocal = this.checkIfUserInMemberTenant && (initialValues?.source === 'MARC' || initialValues?.source === 'FOLIO');
-    const instanceType = isInstanceShared ? 'shared' : (isInstanceLocal ? 'local' : '');
-
     const getEditInstanceTitle = () => {
       const publishingInfo = getPublishingInfo(initialValues);
+
+      const isInstanceShared = checkIfUserInCentralTenant(stripes) || initialValues?.source.startsWith(CONSORTIUM_PREFIX);
+      const isInstanceLocal = checkIfUserInMemberTenant(stripes) && ['MARC', 'FOLIO'].includes(initialValues?.source);
+      const instanceType = isInstanceShared ? 'shared' : (isInstanceLocal ? 'local' : '');
 
       return (
         <>
