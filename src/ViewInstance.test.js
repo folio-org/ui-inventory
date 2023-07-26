@@ -157,6 +157,8 @@ const defaultProp = {
     logger: {
       log: jest.fn()
     },
+    okapi: { tenant: 'diku' },
+    user: { user: {} },
   },
   tagsEnabled: true,
   updateLocation: jest.fn(),
@@ -212,7 +214,71 @@ describe('ViewInstance', () => {
     expect(screen.queryByText('Move items within an instance')).not.toBeInTheDocument();
     expect(screen.queryByText('Move holdings/items to another instance')).not.toBeInTheDocument();
   });
+  describe('instance header', () => {
+    describe('for non-consortia users', () => {
+      it('should render instance title, publisher, and publication date', () => {
+        defaultProp.stripes.hasInterface.mockReturnValue(false);
+
+        const { getByText } = renderViewInstance();
+        const expectedTitle = 'Instance • #youthaction • Information Age Publishing, Inc. • 2015';
+
+        expect(getByText(expectedTitle)).toBeInTheDocument();
+      });
+    });
+
+    describe('for consortia central tenant', () => {
+      it('should render instance shared, title, publisher, and publication date for all instances', () => {
+        defaultProp.stripes.hasInterface.mockReturnValue(true);
+        const stripes = {
+          ...defaultProp.stripes,
+          okapi: { tenant: 'consortium' },
+          user: { user: { consortium: { centralTenantId: 'consortium' } } },
+        };
+
+        const { getByText } = renderViewInstance({ stripes });
+        const expectedTitle = 'Shared instance • #youthaction • Information Age Publishing, Inc. • 2015';
+
+        expect(getByText(expectedTitle)).toBeInTheDocument();
+      });
+    });
+
+    describe('for member library tenant', () => {
+      const stripes = {
+        ...defaultProp.stripes,
+        okapi: { tenant: 'university' },
+        user: { user: { consortium: { centralTenantId: 'consortium' } } },
+      };
+
+      describe('local instance', () => {
+        it('should render instance local, title, publisher, and publication date', () => {
+          const { getByText } = renderViewInstance({ stripes });
+          const expectedTitle = 'Local instance • #youthaction • Information Age Publishing, Inc. • 2015';
+
+          expect(getByText(expectedTitle)).toBeInTheDocument();
+        });
+      });
+
+      describe('shadow instance', () => {
+        it('should render instance shared, title, publisher, and publication date', () => {
+          const selectedInstance = {
+            ...instance,
+            source: 'CONSORTIUM-FOLIO'
+          };
+          StripesConnectedInstance.prototype.instance.mockImplementation(() => selectedInstance);
+
+          const { getByText } = renderViewInstance({ stripes, selectedInstance });
+          const expectedTitle = 'Shared instance • #youthaction • Information Age Publishing, Inc. • 2015';
+
+          expect(getByText(expectedTitle)).toBeInTheDocument();
+        });
+      });
+    });
+  });
   describe('Action Menu', () => {
+    beforeAll(() => {
+      StripesConnectedInstance.prototype.instance.mockImplementation(() => instance);
+    });
+
     it('should not be displayed', () => {
       renderViewInstance({
         stripes: {
