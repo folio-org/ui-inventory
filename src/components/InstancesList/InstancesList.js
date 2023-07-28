@@ -15,12 +15,12 @@ import {
 } from 'react-intl';
 import saveAs from 'file-saver';
 import moment from 'moment';
+import classnames from 'classnames';
 
 import {
   Pluggable,
   AppIcon,
   IfPermission,
-  IfInterface,
   CalloutContext,
   stripesConnect,
   withNamespace,
@@ -39,6 +39,7 @@ import {
   DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
 
+import { withSingleRecordImport } from '..';
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
@@ -94,11 +95,13 @@ const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
 class InstancesList extends React.Component {
   static defaultProps = {
+    canUseSingleRecordImport: false,
     showSingleResult: true,
     segment: segments.instances,
   };
 
   static propTypes = {
+    canUseSingleRecordImport: PropTypes.bool,
     data: PropTypes.object,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object,
@@ -233,6 +236,16 @@ class InstancesList extends React.Component {
     selectedBrowseResult: false,
     authorityId: '',
   };
+
+  get isUserInCentralTenant() {
+    const { stripes } = this.props;
+
+    if (!stripes.hasInterface('consortia')) {
+      return false;
+    }
+
+    return stripes.okapi.tenant === stripes.user.user.consortium?.centralTenantId;
+  }
 
   clearStorage = () => {
     const {
@@ -660,7 +673,12 @@ class InstancesList extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { parentResources, intl, segment } = this.props;
+    const {
+      canUseSingleRecordImport,
+      parentResources,
+      intl,
+      segment,
+    } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
@@ -729,20 +747,22 @@ class InstancesList extends React.Component {
               <FormattedMessage id="stripes-smart-components.new" />
             </Button>
           </IfPermission>
-          <Pluggable
-            id="clickable-create-inventory-records"
-            onClose={this.toggleNewFastAddModal}
-            open={this.state.showNewFastAddModal} // control the open modal via state var
-            renderTrigger={() => (
-              this.getActionItem({
-                id: 'new-fast-add-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.newFastAddRecord',
-                onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-              })
-            )}
-            type="create-inventory-records"
-          />
+          {!this.isUserInCentralTenant && (
+            <Pluggable
+              id="clickable-create-inventory-records"
+              onClose={this.toggleNewFastAddModal}
+              open={this.state.showNewFastAddModal} // control the open modal via state var
+              renderTrigger={() => (
+                this.getActionItem({
+                  id: 'new-fast-add-record',
+                  icon: 'lightning',
+                  messageId: 'ui-inventory.newFastAddRecord',
+                  onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+                })
+              )}
+              type="create-inventory-records"
+            />
+          )}
           <IfPermission perm="ui-quick-marc.quick-marc-editor.create">
             <Button
               buttonStyle="dropdownItem"
@@ -765,7 +785,7 @@ class InstancesList extends React.Component {
               icon: 'report',
               messageId: 'ui-inventory.exportInProgress',
             }) :
-            this.getActionItem({
+            !this.isUserInCentralTenant && this.getActionItem({
               id: 'dropdown-clickable-get-report',
               icon: 'report',
               messageId: 'ui-inventory.inTransitReport',
@@ -800,16 +820,12 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(this.triggerQuickExport),
             isDisabled: !selectedRowsCount,
           })}
-          <IfInterface name="copycat-imports">
-            <IfPermission perm="copycat.profiles.collection.get">
-              {this.getActionItem({
-                id: 'dropdown-clickable-import-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.copycat.import',
-                onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
-              })}
-            </IfPermission>
-          </IfInterface>
+          {canUseSingleRecordImport && this.getActionItem({
+            id: 'dropdown-clickable-import-record',
+            icon: 'lightning',
+            messageId: 'ui-inventory.copycat.import',
+            onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+          })}
           {this.getActionItem({
             id: 'dropdown-clickable-show-selected-records',
             icon: 'eye-open',
@@ -1032,6 +1048,7 @@ class InstancesList extends React.Component {
 
   render() {
     const {
+      canUseSingleRecordImport,
       disableRecordCreation,
       intl,
       data,
@@ -1077,39 +1094,53 @@ class InstancesList extends React.Component {
         title,
         discoverySuppress,
         isBoundWith,
+        shared,
         staffSuppress,
         id,
       }) => {
         return (
-          <AppIcon
-            size="small"
-            app="inventory"
-            iconKey="instance"
-            iconAlignment="baseline"
-          >
-            <TextLink
-              to={this.getRowURL(id)}
-            >
-              {title}
-            </TextLink>
-            {(isBoundWith) &&
+          <div className={css.titleContainer}>
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
-        }
-            {(discoverySuppress || staffSuppress) &&
-            <span className={css.warnIcon}>
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              <TextLink
+                to={this.getRowURL(id)}
+              >
+                {title}
+              </TextLink>
+              {(isBoundWith) &&
+                <AppIcon
+                  size="small"
+                  app="@folio/inventory"
+                  iconKey="bound-with"
+                  iconClassName={css.boundWithIcon}
+                />
+              }
+              {(discoverySuppress || staffSuppress) &&
+                <span className={css.warnIcon}>
+                  <Icon
+                    size="medium"
+                    icon="exclamation-circle"
+                    status="warn"
+                  />
+                </span>
+              }
+            </AppIcon>
+            {shared &&
               <Icon
                 size="medium"
-                icon="exclamation-circle"
-                status="warn"
+                icon="graph"
+                iconRootClass={css.sharedIconRoot}
+                iconClassName={classnames(
+                  css.sharedIcon,
+                  { [css.sharedIconLight]: getItem(`${namespace}.${segment}.lastOpenRecord`) === id }
+                )}
               />
-            </span>
-        }
-          </AppIcon>
+            }
+          </div>
         );
       },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
@@ -1266,16 +1297,14 @@ class InstancesList extends React.Component {
           onSave={this.handleSelectedRecordsModalSave}
           onCancel={this.handleSelectedRecordsModalCancel}
         />
-        <IfInterface name="copycat-imports">
-          <IfPermission perm="copycat.profiles.collection.get">
-            <ImportRecordModal
-              isOpen={isImportRecordModalOpened}
-              currentExternalIdentifier={undefined}
-              handleSubmit={this.handleImportRecordModalSubmit}
-              handleCancel={this.handleImportRecordModalCancel}
-            />
-          </IfPermission>
-        </IfInterface>
+        {canUseSingleRecordImport && (
+          <ImportRecordModal
+            isOpen={isImportRecordModalOpened}
+            currentExternalIdentifier={undefined}
+            handleSubmit={this.handleImportRecordModalSubmit}
+            handleCancel={this.handleImportRecordModalCancel}
+          />
+        )}
       </HasCommand>
     );
   }
@@ -1284,4 +1313,5 @@ class InstancesList extends React.Component {
 export default withNamespace(flowRight(
   injectIntl,
   withLocation,
+  withSingleRecordImport,
 )(stripesConnect(InstancesList)));

@@ -234,6 +234,20 @@ const stripesStub = {
   logger: { log: noop },
   locale: 'en-US',
   plugins: {},
+  okapi: {
+    tenant: 'university',
+    url: 'https://folio-testing-okapi.dev.folio.org',
+  },
+  user: {
+    perms: {},
+    user: {
+      id: 'b1add99d-530b-5912-94f3-4091b4d87e2c',
+      username: 'diku_admin',
+      consortium: {
+        centralTenantId: 'consortia',
+      },
+    },
+  },
 };
 const data = {
   contributorTypes: [],
