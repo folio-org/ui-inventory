@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 9.4.10 IN PROGRESS
+## [9.4.10](https://github.com/folio-org/ui-inventory/tree/v9.4.10) (2023-07-28)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.9...v9.4.10)
 
 * Introduce server side pagination for large volume of items. Fixes UIIN-2478.
 
