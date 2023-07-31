@@ -21,10 +21,12 @@ jest.mock('../../facetUtils', () => ({
 }));
 
 const activeFilters = {
+  [FACETS.SHARED]: ['SHARED1'],
   [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
   [FACETS.ITEM_STATUS]: ['ITEM_STATUS1'],
   [FACETS.RESOURCE]: ['RESOURCE1'],
   [FACETS.FORMAT]: ['Format1'],
+  [FACETS.LANGUAGE]: ['languages'],
   [FACETS.MODE]: ['Mode1'],
   [FACETS.NATURE_OF_CONTENT]: ['NATUREOFCONTENT1'],
   [FACETS.STAFF_SUPPRESS]: ['STAFFSUPPRESS1'],
@@ -41,18 +43,19 @@ const resources = {
     hasLoaded: true,
     resource: 'facets',
     records: [{
-      'items.effectiveLocationId': 'effectiveLocationId1',
-      'languages': 'languages',
-      'statisticalCodeIds': 'statisticalCodeIds1',
-      'discoverySuppress': 'discoverySuppress1',
-      'source': 'source1',
-      'instanceTags': 'instanceTags1',
-      'statusId': 'statusId1',
-      'staffSuppress': 'staffSuppress1',
-      'natureOfContentTermIds': 'natureOfContentTermIds1',
-      'modeOfIssuanceId': 'modeOfIssuanceId1',
-      'instanceFormatIds': 'instanceFormatIds1',
-      'instanceTypeId': 'instanceTypeId1',
+      'shared': { values: ['shared1'] },
+      'items.effectiveLocationId': { values: ['effectiveLocationId1'] },
+      'languages': { values: ['languages'] },
+      'statisticalCodeIds': { values: ['statisticalCodeIds1'] },
+      'discoverySuppress': { values: ['discoverySuppress1'] },
+      'source': { values: ['source1'] },
+      'instanceTags': { values: ['instanceTags1'] },
+      'statusId': { values: ['statusId1'] },
+      'staffSuppress': { values: ['staffSuppress1'] },
+      'natureOfContentTermIds': { values: ['natureOfContentTermIds1'] },
+      'modeOfIssuanceId': { values: ['modeOfIssuanceId1'] },
+      'instanceFormatIds': { values: ['instanceFormatIds1'] },
+      'instanceTypeId': { values: ['instanceTypeId1'] },
     }],
     other: { totalRecords: 0 }
   },
@@ -90,119 +93,132 @@ const renderInstanceFilters = () => {
 };
 
 describe('InstanceFilters', () => {
-  it('Should Clear selected filters for effective Location', async () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('Should Clear selected filters for shared', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[1]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.SHARED);
+    });
+  });
+  it('Should Clear selected filters for effective Location', async () => {
+    renderInstanceFilters();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[3]);
+    await waitFor(() => {
+      expect(onClear).toBeCalledWith(FACETS.EFFECTIVE_LOCATION);
     });
   });
   it('Should Clear selected filters for language', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[3]);
+
+    userEvent.click(Clearselectedfilters[5]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.LANGUAGE);
     });
   });
 
   it('Should Clear selected filters for resource', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[5]);
+    userEvent.click(Clearselectedfilters[7]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.RESOURCE);
     });
   });
 
   it('Should Clear selected filters for format', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[7]);
+    userEvent.click(Clearselectedfilters[9]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.FORMAT);
     });
   });
 
   it('Should Clear selected filters for mode', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[9]);
+    userEvent.click(Clearselectedfilters[11]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.MODE);
     });
   });
 
   it('Should Clear selected filters for nature Of Content', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[11]);
+    userEvent.click(Clearselectedfilters[13]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.NATURE_OF_CONTENT);
     });
   });
 
   it('Should Clear selected filters for staffSuppress', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[13]);
+    userEvent.click(Clearselectedfilters[15]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.STAFF_SUPPRESS);
     });
   });
 
   it('Should Clear selected filters for Suppress from discovery', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[15]);
+    userEvent.click(Clearselectedfilters[17]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.INSTANCES_DISCOVERY_SUPPRESS);
     });
   });
 
   it('Should Clear selected filters for Statistical code filter list', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[17]);
+    userEvent.click(Clearselectedfilters[19]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.STATISTICAL_CODE_IDS);
     });
   });
 
   it('Should Clear selected filters for Date created filter list', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[19]);
+    userEvent.click(Clearselectedfilters[21]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.CREATED_DATE);
     });
   });
 
   it('Should Clear selected filters for Date updated filter list', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[26]);
+    userEvent.click(Clearselectedfilters[28]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.UPDATED_DATE);
     });
   });
 
   it('Should Clear selected filters for Instance status filter list', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[33]);
+    userEvent.click(Clearselectedfilters[35]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.STATUS);
     });
   });
 
   it('Should Clear selected filters for Source filter list', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[35]);
+    userEvent.click(Clearselectedfilters[37]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.SOURCE);
     });
   });
 });

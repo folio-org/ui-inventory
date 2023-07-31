@@ -93,7 +93,7 @@ const ItemFilters = (props) => {
 
         switch (recordName) {
           case FACETS_CQL.SHARED:
-            accum[name] = getSharedOptions(activeFilters[FACETS.SOURCE], recordValues);
+            accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
             break;
           case FACETS_CQL.ITEMS_STATUSES:
             processItemsStatuses(activeFilters[FACETS.ITEM_STATUS], itemStatuses, intl, ...commonProps);

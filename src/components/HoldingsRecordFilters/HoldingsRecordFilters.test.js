@@ -21,6 +21,7 @@ jest.mock('../../facetUtils', () => ({
 }));
 
 const activeFilters = {
+  [FACETS.SHARED]: ['shared1'],
   [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
   [FACETS.HOLDINGS_PERMANENT_LOCATION]: ['loc2'],
   [FACETS.HOLDINGS_TYPE]: ['loc3'],
@@ -35,13 +36,14 @@ const resources = {
     hasLoaded: true,
     resource: 'facets',
     records: [{
-      'items.effectiveLocationId': 'effectiveLocationId1',
-      'holdings.permanentLocationId': 'permanentLocationId1',
-      'holdings.statisticalCodeIds': 'statisticalCodeIds1',
-      'holdings.discoverySuppress': 'discoverySuppress1',
-      'holdings.sourceId': 'sourceId1',
-      'holdingsTags': 'holdingsTags1',
-      'holdings.holdingsTypeId': 'holdingsTypeId1',
+      'shared': { values: ['shared1'] },
+      'items.effectiveLocationId': { values: ['effectiveLocationId1'] },
+      'holdings.permanentLocationId': { values: ['permanentLocationId1'] },
+      'holdings.statisticalCodeIds': { values: ['statisticalCodeIds1'] },
+      'holdings.discoverySuppress': { values: ['discoverySuppress1'] },
+      'holdings.sourceId': { values: ['sourceId1'] },
+      'holdingsTags': { values: ['holdingsTags1'] },
+      'holdings.holdingsTypeId': { values: ['holdingsTypeId1'] },
     }],
     other: { totalRecords: 0 }
   },
@@ -83,14 +85,29 @@ const renderHoldingsRecordFilters = () => {
 };
 
 describe('HoldingsRecordFilters', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('Should Render shared, Clear selectedfilters buttons', async () => {
+    renderHoldingsRecordFilters();
+    const shared = document.querySelector('[id="accordion-toggle-button-shared"]');
+    userEvent.click(shared);
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[1]);
+    await waitFor(() => {
+      expect(onClear).toBeCalledWith(FACETS.SHARED);
+    });
+  });
+
   it('Should Render effectiveLocation, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const effectiveLocation = document.querySelector('[id="accordion-toggle-button-effectiveLocation"]');
     userEvent.click(effectiveLocation);
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[1]);
+    userEvent.click(Clearselectedfilters[3]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.EFFECTIVE_LOCATION);
     });
   });
 
@@ -99,9 +116,9 @@ describe('HoldingsRecordFilters', () => {
     const holdingsPermanentLocation = document.querySelector('[id="accordion-toggle-button-holdingsPermanentLocation"]');
     userEvent.click(holdingsPermanentLocation);
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[3]);
+    userEvent.click(Clearselectedfilters[5]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_PERMANENT_LOCATION);
     });
   });
 
@@ -110,9 +127,9 @@ describe('HoldingsRecordFilters', () => {
     const holdingsType = document.querySelector('[id="accordion-toggle-button-holdingsType"]');
     userEvent.click(holdingsType);
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[5]);
+    userEvent.click(Clearselectedfilters[7]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_TYPE);
     });
   });
 
@@ -121,9 +138,9 @@ describe('HoldingsRecordFilters', () => {
     const holdingsDiscoverySuppress = document.querySelector('[id="accordion-toggle-button-holdingsDiscoverySuppress"]');
     userEvent.click(holdingsDiscoverySuppress);
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[7]);
+    userEvent.click(Clearselectedfilters[9]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_DISCOVERY_SUPPRESS);
     });
   });
 
@@ -132,9 +149,9 @@ describe('HoldingsRecordFilters', () => {
     const holdingsStatisticalCodeIds = document.querySelector('[id="accordion-toggle-button-holdingsStatisticalCodeIds"]');
     userEvent.click(holdingsStatisticalCodeIds);
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[9]);
+    userEvent.click(Clearselectedfilters[11]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_STATISTICAL_CODE_IDS);
     });
   });
 
@@ -143,9 +160,9 @@ describe('HoldingsRecordFilters', () => {
     const holdingsCreatedDate = document.querySelector('[id="accordion-toggle-button-holdingsCreatedDate"]');
     userEvent.click(holdingsCreatedDate);
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[11]);
+    userEvent.click(Clearselectedfilters[13]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_CREATED_DATE);
     });
   });
 
@@ -154,9 +171,9 @@ describe('HoldingsRecordFilters', () => {
     const holdingsUpdatedDate = document.querySelector('[id="accordion-toggle-button-holdingsUpdatedDate"]');
     userEvent.click(holdingsUpdatedDate);
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[18]);
+    userEvent.click(Clearselectedfilters[20]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_UPDATED_DATE);
     });
   });
   it('Should Render holdingsSource, Clear selectedfilters buttons', async () => {
@@ -164,9 +181,9 @@ describe('HoldingsRecordFilters', () => {
     const holdingsSource = document.querySelector('[id="accordion-toggle-button-holdingsSource"]');
     userEvent.click(holdingsSource);
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[25]);
+    userEvent.click(Clearselectedfilters[27]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_SOURCE);
     });
   });
 });

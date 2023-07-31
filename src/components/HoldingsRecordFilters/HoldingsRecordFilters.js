@@ -94,7 +94,7 @@ const HoldingsRecordFilters = (props) => {
 
         switch (recordName) {
           case FACETS_CQL.SHARED:
-            accum[name] = getSharedOptions(activeFilters[FACETS.SOURCE], recordValues);
+            accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
             break;
           case FACETS_CQL.EFFECTIVE_LOCATION:
             processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
