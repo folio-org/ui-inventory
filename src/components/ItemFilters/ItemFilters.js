@@ -153,7 +153,6 @@ const ItemFilters = (props) => {
           onClearFilter={() => onClear(FACETS.SHARED)}
         >
           <CheckboxFacet
-            data-test-filter-instance-shared
             name={FACETS.SHARED}
             dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS]}
             selectedValues={activeFilters[FACETS.SHARED]}
