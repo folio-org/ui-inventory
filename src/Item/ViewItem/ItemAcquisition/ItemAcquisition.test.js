@@ -12,12 +12,13 @@ import useItemAcquisition from './useItemAcquisition';
 
 jest.mock('./useItemAcquisition', () => jest.fn());
 
-const renderItemAcquisition = ({
-  itemId,
-} = {}) => (
+const renderItemAcquisition = (props = {}) => (
   renderWithIntl(
     <Router>
-      <ItemAcquisition itemId={itemId} />
+      <ItemAcquisition
+        accordionId="accordionId"
+        {...props}
+      />
     </Router>
   )
 );

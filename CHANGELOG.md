@@ -51,6 +51,7 @@
 * Hide Inventory actions related to Local records in Central tenant. Refs UIIN-2491.
 * Add Shared icon to inventory instance results. Refs UIIN-2491.
 * User with limited permissions gets an error modal when navigating to the Inventory app. Fixes UIIN-2490.
+* *BREAKING* Bump `react` to `v18`. Refs UIIN-2508.
 * Add `Shared` facet to Instance/Holdings/Items search. Refs UIIN-2393.
 
 ## [9.4.10](https://github.com/folio-org/ui-inventory/tree/v9.4.10) (2023-07-28)

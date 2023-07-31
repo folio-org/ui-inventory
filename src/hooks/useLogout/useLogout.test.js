@@ -1,5 +1,5 @@
 import { Router } from 'react-router-dom';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -13,9 +13,10 @@ const mockCb = jest.fn();
 
 jest.spyOn(window, 'removeEventListener');
 jest.spyOn(window, 'addEventListener');
+const history = createMemoryHistory();
 
-const wrapper = ({ children, history }) => (
-  <Router history={history || createMemoryHistory()}>
+const wrapper = ({ children }) => (
+  <Router history={history}>
     {children}
   </Router>
 );
@@ -36,20 +37,15 @@ describe('useLogout', () => {
   });
 
   it('should call history.listen', () => {
-    const history = createMemoryHistory();
-    const initialProps = { history };
     jest.spyOn(history, 'listen');
-    renderHook(() => useLogout(mockCb), { wrapper, initialProps });
+    renderHook(() => useLogout(mockCb), { wrapper });
     expect(history.listen).toHaveBeenCalled();
   });
 
   describe('when logout', () => {
-    beforeEach(() => {
-      const history = createMemoryHistory();
-      const initialProps = { history };
-
-      renderHook(() => useLogout(mockCb), { wrapper, initialProps });
-      history.push('/');
+    beforeEach(async () => {
+      renderHook(() => useLogout(mockCb), { wrapper });
+      await act(() => { history.push('/'); });
     });
 
     it('should call cb', () => {
