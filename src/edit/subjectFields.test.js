@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import '../../test/jest/__mock__';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
 import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
@@ -40,10 +39,10 @@ describe('SubjectFields', () => {
   test('Entering value in text box', async () => {
     renderSubjectFields();
     const subject = screen.getByText('Add subject');
-    userEvent.click(subject);
+    fireEvent.click(subject);
     const inputText = screen.getByRole('textbox', { name: 'Subjects' });
     expect(inputText).toHaveValue('');
-    userEvent.type(inputText, 'Enter text for subjects');
+    fireEvent.change(inputText, { target: { value: 'Enter text for subjects' } });
     expect(inputText).toHaveValue('Enter text for subjects');
   });
 });

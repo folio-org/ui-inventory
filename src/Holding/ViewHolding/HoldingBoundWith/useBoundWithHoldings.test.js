@@ -3,7 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -31,9 +31,9 @@ describe('useBoundWithHoldings', () => {
   it('should fetch bound-with holdings', async () => {
     const boundWithItems = [{ hrid: 'BW-ITEM-1', holdingsRecordId: '9e8dc8ce-68f3-4e75-8479-d548ce521157' }];
 
-    const { result, waitFor } = renderHook(() => useBoundWithHoldings(boundWithItems), { wrapper });
+    const { result } = renderHook(() => useBoundWithHoldings(boundWithItems), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await act(() => !result.current.isLoading);
 
     expect(result.current.boundWithHoldings).toEqual(boundWithHoldingsRecords);
   });

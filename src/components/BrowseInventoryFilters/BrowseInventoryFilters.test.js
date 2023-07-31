@@ -1,12 +1,11 @@
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { act, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
-import '__mock__';
+import '../../../test/jest/__mock__';
 
 import {
   renderWithIntl,
   translationsProperties,
-} from 'helpers';
+} from '../../../test/jest/helpers';
 import {
   FACETS,
 } from '../../constants';
@@ -78,7 +77,7 @@ describe('BrowseInventoryFilters', () => {
 
     const facetOption = await screen.findByText(facetOptions.effectiveLocationOptions[0].label);
 
-    await act(async () => userEvent.click(facetOption));
+    await act(async () => fireEvent.click(facetOption));
 
     expect(defaultProps.applyFilters).toHaveBeenCalled();
   });
@@ -92,7 +91,7 @@ describe('BrowseInventoryFilters', () => {
 
     const clearBtn = container.querySelector('[data-test-clear-button="true"]');
 
-    await act(async () => userEvent.click(clearBtn));
+    await act(async () => fireEvent.click(clearBtn));
 
     expect(defaultProps.applyFilters).toHaveBeenCalled();
   });

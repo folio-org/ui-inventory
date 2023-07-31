@@ -1,10 +1,10 @@
 import React from 'react';
 import '../../../test/jest/__mock__';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { screen, waitFor } from '@testing-library/react';
-import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
-import userEvent from '@testing-library/user-event';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import {
   FACETS

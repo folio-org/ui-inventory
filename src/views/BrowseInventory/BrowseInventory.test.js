@@ -3,7 +3,7 @@ import '../../../test/jest/__mock__';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { act, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useLocationFilters } from '@folio/stripes-acq-components';
 
@@ -156,8 +156,7 @@ describe('BrowseInventory', () => {
   it('should call "changeSearchIndex" when browse mode option was changed', async () => {
     renderBrowseInventory();
 
-    await act(async () => userEvent.selectOptions(screen.getByRole('combobox'), 'contributors'));
-
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
     expect(changeSearchIndex).toHaveBeenCalled();
   });
 

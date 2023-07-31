@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import '../../test/jest/__mock__';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
 import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
@@ -46,7 +46,7 @@ describe('SucceedingTitles', () => {
   it('click Add succeeding title button', () => {
     const { getByText } = renderSucceedingTitles();
     const succeedingButton = getByText(/Add succeeding title/i);
-    userEvent.click(succeedingButton);
+    fireEvent.click(succeedingButton);
     expect(getByText(/mocked TitleField/i)).toBeInTheDocument();
   });
 });

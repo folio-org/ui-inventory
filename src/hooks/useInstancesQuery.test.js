@@ -3,7 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -34,9 +34,9 @@ describe('useInstancesQuery', () => {
   });
 
   it('fetches instances', async () => {
-    const { result, waitFor } = renderHook(() => useInstancesQuery(instances.map(({ id }) => id)), { wrapper });
+    const { result } = renderHook(() => useInstancesQuery(instances.map(({ id }) => id)), { wrapper });
 
-    await waitFor(() => result.isSuccess);
+    await act(() => result.isSuccess);
     expect(result.current.data.instances[0].id).toEqual(instances[0].id);
   });
 });

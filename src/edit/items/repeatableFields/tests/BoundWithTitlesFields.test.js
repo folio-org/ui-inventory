@@ -1,6 +1,5 @@
 import React from 'react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../../test/jest/__mock__';
 
@@ -106,7 +105,7 @@ describe('BoundWithTitlesFields', () => {
     it('BoundWith Modal should appear', async () => {
       const { getByText } = renderBoundWithTitlesFields();
       const addButton = getByText('Add Bound-with and analytics');
-      userEvent.click(addButton);
+      fireEvent.click(addButton);
 
       await waitFor(() => expect(getByText('BoundWith Modal')).toBeInTheDocument());
     });
@@ -115,8 +114,8 @@ describe('BoundWithTitlesFields', () => {
       it('BoundWith Modal should disappear', async () => {
         const { queryByText, getByRole, getByText } = renderBoundWithTitlesFields();
         const addButton = getByText('Add Bound-with and analytics');
-        userEvent.click(addButton);
-        userEvent.click(getByRole('button', { name: 'Cancel' }));
+        fireEvent.click(addButton);
+        fireEvent.click(getByRole('button', { name: 'Cancel' }));
 
         await waitFor(() => expect(queryByText('BoundWith Modal')).not.toBeInTheDocument());
       });
@@ -126,8 +125,8 @@ describe('BoundWithTitlesFields', () => {
       it('BoundWith Modal should disappear', async () => {
         const { queryByText, getByRole, getByText } = renderBoundWithTitlesFields();
         const addButton = getByText('Add Bound-with and analytics');
-        userEvent.click(addButton);
-        userEvent.click(getByRole('button', { name: 'Save & close' }));
+        fireEvent.click(addButton);
+        fireEvent.click(getByRole('button', { name: 'Save & close' }));
 
         await waitFor(() => expect(queryByText('BoundWith Modal')).not.toBeInTheDocument());
       });
@@ -135,8 +134,8 @@ describe('BoundWithTitlesFields', () => {
       it('and new bound with titles info should be fetched', async () => {
         const { getByRole, getByText } = renderBoundWithTitlesFields();
         const addButton = getByText('Add Bound-with and analytics');
-        userEvent.click(addButton);
-        userEvent.click(getByRole('button', { name: 'Save & close' }));
+        fireEvent.click(addButton);
+        fireEvent.click(getByRole('button', { name: 'Save & close' }));
 
         expect(useBoundWithTitlesByHrids).toHaveBeenCalled();
       });
@@ -169,7 +168,7 @@ describe('BoundWithTitlesFields', () => {
 
       const deleteButton = getByRole('button', { name: /delete this item/i });
 
-      userEvent.click(deleteButton);
+      fireEvent.click(deleteButton);
 
       expect(queryByLabelText('Instance HRID')).not.toBeInTheDocument();
       expect(queryByLabelText('Instance title')).not.toBeInTheDocument();

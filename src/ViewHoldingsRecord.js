@@ -257,8 +257,8 @@ class ViewHoldingsRecord extends React.Component {
         const isSourceMARC = this.isMARCSource();
 
         if (isSourceMARC) {
-          mutator.marcRecordId.replace(marcRecord.id);
-          mutator.marcRecord.DELETE(marcRecord.id);
+          mutator.marcRecordId.replace(marcRecord?.id);
+          mutator.marcRecord.DELETE(marcRecord?.id);
         }
       });
   }

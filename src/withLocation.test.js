@@ -1,6 +1,5 @@
 import React from 'react';
-import { cleanup, render, waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { cleanup, render, waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import withLocation from './withLocation';
@@ -56,40 +55,40 @@ describe('withLocation', () => {
   });
   it('updateLocation with newParams and options, history.replace should be called', async () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
-    userEvent.click(getByText('updateLocation'));
+    fireEvent.click(getByText('updateLocation'));
     await waitFor(() => {
       expect(mockReplace).toBeCalledWith('/newTestPath?filters=test1&qindex=test&query=test2&sort=test3');
     });
   });
   it('updateLocation with only newParams, history.push should be called', async () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
-    userEvent.click(getByText('updateLocation_with_newParams'));
+    fireEvent.click(getByText('updateLocation_with_newParams'));
     await waitFor(() => {
       expect(mockPush).toBeCalledWith('/testPathName?filters=test1&qindex=test&query=test2&sort=test3');
     });
   });
   it('goTo funtion to be called', async () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
-    userEvent.click(getByText('goTo'));
+    fireEvent.click(getByText('goTo'));
     await waitFor(() => {
       expect(mockPush).toBeCalledWith('/gotoTestPath?0=t&1=e&2=s&3=t&4=P&5=a&6=r&7=a&8=m&9=s');
     });
   });
   it('goTo funtion with only path to be called', async () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
-    userEvent.click(getByText('goTo_with_path'));
+    fireEvent.click(getByText('goTo_with_path'));
     await waitFor(() => {
       expect(mockPush).toBeCalledWith('/gotoTestPath');
     });
   });
   it('getParams funtion to be called', () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
-    userEvent.click(getByText('getParams'));
+    fireEvent.click(getByText('getParams'));
     expect(result).toMatchObject({ 'filters': 'test1', 'qindex': 'test', 'query': 'test2', 'sort': 'test3' });
   });
   it('getSearchParams funtion to be called', () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
-    userEvent.click(getByText('getSearchParams'));
+    fireEvent.click(getByText('getSearchParams'));
     expect(result).toBe('filters=test1&qindex=test&query=test2&sort=test3');
   });
 });

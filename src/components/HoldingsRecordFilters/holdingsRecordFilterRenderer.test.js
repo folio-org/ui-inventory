@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../test/jest/__mock__/currencyData.mock';
 import '../../../test/jest/__mock__/stripesConfig.mock';
 import '../../../test/jest/__mock__/stripesCore.mock';
@@ -104,12 +103,12 @@ describe('holdingsRecordFilterRenderer', () => {
 
   it('onChange function to be called when clearfilter button is clicked', () => {
     renderFilters();
-    userEvent.click(screen.getAllByRole('button', { name: 'onClearFilter' })[0]);
+    fireEvent.click(screen.getAllByRole('button', { name: 'onClearFilter' })[0]);
     expect(onChangeMock).toBeCalled();
   });
   it('onChange function to be called when onChange button is clicked', () => {
     renderFilters();
-    userEvent.click(screen.getAllByRole('button', { name: 'onChange' })[0]);
+    fireEvent.click(screen.getAllByRole('button', { name: 'onChange' })[0]);
     expect(onChangeMock).toBeCalled();
   });
 });
