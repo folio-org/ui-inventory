@@ -45,7 +45,6 @@
 * Restrict modifying and deleting system call number types. Refs UIIN-2385.
 * Prevent editing of shared settings from outside "Consortium manager". Refs UIIN-2482.
 * Add new browse options to limit browse by call number type. Fixes UIIN-2467.
-* Introduce server side pagination for large volume of items. Fixes UIIN-2478.
 * Implement Advanced search modal. Refs UIIN-1920.
 * Remove override CSS for TextLink. Refs UIIN-2365.
 * Remove BigTest infrastructure including tests, deps, config. Refs UIIN-2317.
@@ -53,6 +52,16 @@
 * Add Shared icon to inventory instance results. Refs UIIN-2491.
 * User with limited permissions gets an error modal when navigating to the Inventory app. Fixes UIIN-2490.
 * *BREAKING* Bump `react` to `v18`. Refs UIIN-2508.
+
+## [9.4.10](https://github.com/folio-org/ui-inventory/tree/v9.4.10) (2023-07-28)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.9...v9.4.10)
+
+* Introduce server side pagination for large volume of items. Fixes UIIN-2478.
+
+## [9.4.9](https://github.com/folio-org/ui-inventory/tree/v9.4.9) (2023-07-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.8...v9.4.9)
+
+* Dedupe ID-list passed to `useBoundWithHoldings`. Further addresses UIIN-2478.
 
 ## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.7...v9.4.8)
