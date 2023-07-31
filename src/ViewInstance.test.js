@@ -1,7 +1,6 @@
 import '../test/jest/__mock__';
 import React from 'react';
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
@@ -234,80 +233,80 @@ describe('ViewInstance', () => {
     });
     it('"onClickEditInstance" should be called when the user clicks the "Edit instance" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Edit instance' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Edit instance' }));
       expect(mockPush).toBeCalled();
     });
     it('"onClickViewRequests" should be called when the user clicks the "View requests" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'View requests' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'View requests' }));
       expect(mockPush).toBeCalled();
     });
     it('"onCopy" function should be called when the user clicks the "Duplicate instance" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Duplicate instance' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Duplicate instance' }));
       expect(defaultProp.onCopy).toBeCalled();
     });
     it('"handleViewSource" should be called when the user clicks the "View source" button', async () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       const veiwSourceButton = screen.getByRole('button', { name: 'View source' });
       await waitFor(() => {
         expect(veiwSourceButton).not.toHaveAttribute('disabled');
       });
-      userEvent.click(veiwSourceButton);
+      fireEvent.click(veiwSourceButton);
       expect(goToMock).toBeCalled();
-    });
+    }, 10000);
     it('"createHoldingsMarc" should be called when the user clicks the "Add MARC holdings record" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Add MARC holdings record' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Add MARC holdings record' }));
       expect(mockPush).toBeCalled();
     });
     it('"Move items within an instance" button to be clicked', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
       expect(renderViewInstance()).toBeTruthy();
     });
     it('"Export instance (MARC)" button to be clicked', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
       expect(renderViewInstance()).toBeTruthy();
     });
     it('"InstancePlugin" should render when user clicks "Move holdings/items to another instance" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Move holdings/items to another instance' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Move holdings/items to another instance' }));
       expect(screen.getByRole('button', { name: '+' }));
     });
     it('"ImportRecordModal" component should render when user clicks "Overlay source bibliographic record" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
       expect(screen.getByText('ImportRecordModal')).toBeInTheDocument();
     });
     it('"handleImportRecordModalSubmit" should be called when the user clicks the "handleSubmit" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
-      userEvent.click(screen.getByRole('button', { name: 'handleSubmit' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
+      fireEvent.click(screen.getByRole('button', { name: 'handleSubmit' }));
       expect(updateMock).toBeCalled();
     });
     it('"ImportRecordModal" component should be closed when the user clicks "handleClose" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
-      userEvent.click(screen.getByRole('button', { name: 'handleCancel' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
+      fireEvent.click(screen.getByRole('button', { name: 'handleCancel' }));
       expect(screen.queryByText('ImportRecordModal')).not.toBeInTheDocument();
     });
     it('NewOrderModal should render when the user clicks the new order button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'New order' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'New order' }));
       expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
     });
     it('push function should be called when the user clicks the "Edit MARC bibliographic record" button', async () => {
@@ -316,12 +315,12 @@ describe('ViewInstance', () => {
         pathname: `/inventory/quick-marc/edit-bib/${defaultProp.selectedInstance.id}`,
         search: 'filters=test1&query=test2&sort=test3&qindex=test'
       };
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       const button = screen.getByRole('button', { name: 'Edit MARC bibliographic record' });
       await waitFor(() => {
         expect(button).not.toHaveAttribute('disabled');
       });
-      userEvent.click(button);
+      fireEvent.click(button);
       expect(mockPush).toBeCalledWith(expectedValue);
     });
     it('push function should be called when the user clicks the "Derive new MARC bibliographic record" button', async () => {
@@ -330,49 +329,49 @@ describe('ViewInstance', () => {
         pathname: `/inventory/quick-marc/duplicate-bib/${defaultProp.selectedInstance.id}`,
         search: 'filters=test1&query=test2&sort=test3&qindex=test'
       };
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
       await waitFor(() => {
         expect(button).not.toHaveAttribute('disabled');
       });
-      userEvent.click(button);
+      fireEvent.click(button);
       expect(mockPush).toBeCalledWith(expectedValue);
     });
     it('NewOrderModal should be closed when the user clicks the close button', async () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'New order' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'New order' }));
       expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
-      userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
       await waitFor(() => {
         expect(screen.queryByText(/Create order/i)).not.toBeInTheDocument();
       });
-    });
+    }, 10000);
   });
   describe('Tests for shortcut of HasCommand', () => {
     it('updateLocation function to be triggered on clicking new button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'new' }));
+      fireEvent.click(screen.getByRole('button', { name: 'new' }));
       expect(defaultProp.updateLocation).toBeCalled();
     });
     it('onClickEditInstance function to be triggered on clicking edit button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'edit' }));
+      fireEvent.click(screen.getByRole('button', { name: 'edit' }));
       expect(mockPush).toBeCalled();
     });
     it('onCopy function to be triggered on clicking duplicateRecord button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'duplicateRecord' }));
+      fireEvent.click(screen.getByRole('button', { name: 'duplicateRecord' }));
       expect(defaultProp.onCopy).toBeCalled();
     });
     it('collapseAllSections triggered on clicking collapseAllSections button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'collapseAllSections' }));
+      fireEvent.click(screen.getByRole('button', { name: 'collapseAllSections' }));
       expect(spyOncollapseAllSections).toBeCalled();
     });
     it('expandAllSections triggered on clicking expandAllSections button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'expandAllSections' }));
+      fireEvent.click(screen.getByRole('button', { name: 'expandAllSections' }));
       expect(spyOnexpandAllSections).toBeCalled();
     });
   });

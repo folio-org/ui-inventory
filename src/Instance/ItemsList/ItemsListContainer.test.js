@@ -81,10 +81,8 @@ describe('ItemsListContainer', () => {
     jest.clearAllMocks();
   });
   it('isFetching should be true', async () => {
-    await act(async () => {
-      const { getByText } = renderWithIntl(<ItemsListContainerSetup />, translations);
-      expect(getByText('Loading')).toBeInTheDocument();
-    });
+    const { getByText } = renderWithIntl(<ItemsListContainerSetup />, translations);
+    expect(getByText('Loading')).toBeInTheDocument();
   });
 });
 

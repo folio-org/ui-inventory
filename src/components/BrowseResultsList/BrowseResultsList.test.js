@@ -1,9 +1,8 @@
 import '../../../test/jest/__mock__';
 
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import flow from 'lodash/flow';
 import queryString from 'query-string';
-import { act, cleanup, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { act, cleanup, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
@@ -90,7 +89,7 @@ describe('BrowseResultsList', () => {
   it('should navigate to instance Search page and show related instances', async () => {
     renderBrowseResultsList();
 
-    await act(async () => userEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber)));
+    await act(async () => fireEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber)));
 
     const { pathname, search } = history.location;
 
@@ -131,7 +130,7 @@ describe('BrowseResultsList', () => {
           browseData: [linkedRecord],
         });
 
-        userEvent.click(screen.getByTestId('authority-app-link'));
+        fireEvent.click(screen.getByTestId('authority-app-link'));
       });
 
       it('should open the authority record in a new tab', () => {

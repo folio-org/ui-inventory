@@ -12,12 +12,14 @@ import useInstanceAcquisition from './useInstanceAcquisition';
 
 jest.mock('./useInstanceAcquisition', () => jest.fn());
 
-const renderInstanceAcquisition = ({
-  instanceId,
-} = {}) => (
+const renderInstanceAcquisition = (props = {}) => (
   renderWithIntl(
     <Router>
-      <InstanceAcquisition instanceId={instanceId} />
+      <InstanceAcquisition
+        instanceId="instanceId"
+        accordionId="accordionId"
+        {...props}
+      />
     </Router>
   )
 );
@@ -28,7 +30,7 @@ describe('InstanceAcquisition', () => {
   });
 
   it('should display fetched instance acquisition data', () => {
-    renderInstanceAcquisition('instanceId');
+    renderInstanceAcquisition({ instanceId: 'instanceId' });
 
     expect(screen.getByText(line.poLineNumber)).toBeInTheDocument();
   });

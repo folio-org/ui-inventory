@@ -1,6 +1,5 @@
 import React from 'react';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -46,16 +45,16 @@ describe('BoundWithModal', () => {
 
     // fill inputs with values
     inputs.forEach((input, i) => {
-      userEvent.type(input, `Value ${i}`);
+      fireEvent.change(input, { target: { value: `Value ${i}` } });
     });
 
-    userEvent.click(screen.getByTestId('bound-with-modal-save-button'));
+    fireEvent.click(screen.getByTestId('bound-with-modal-save-button'));
 
     expect(onOkMock).toHaveBeenCalledWith(['Value 0', 'Value 1', 'Value 2', 'Value 3', 'Value 4', 'Value 5', 'Value 6']);
   });
 
   it('triggers onClose callback when cancel button is clicked', () => {
-    userEvent.click(screen.getByTestId('bound-with-modal-cancel-button'));
+    fireEvent.click(screen.getByTestId('bound-with-modal-cancel-button'));
 
     expect(onCloseMock).toHaveBeenCalled();
   });

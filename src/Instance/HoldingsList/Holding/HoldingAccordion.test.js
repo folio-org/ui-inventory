@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -72,7 +71,7 @@ describe('HoldingAccordion', () => {
 
   describe('opening accordion', () => {
     beforeEach(() => {
-      userEvent.click(screen.getByText(/Holdings:/));
+      fireEvent.click(screen.getByText(/Holdings:/));
     });
 
     it('should hide item counter', async () => {

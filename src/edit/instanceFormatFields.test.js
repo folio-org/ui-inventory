@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import '../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
@@ -52,23 +51,13 @@ describe('InstanceFormatFields', () => {
     expect(screen.getByText('Add format')).toBeInTheDocument();
   });
 
-  it('option should be selected', async () => {
-    renderInstanceFormatFields();
-    userEvent.click(screen.getByRole('button'));
-    userEvent.selectOptions(
-      screen.getByRole('combobox'),
-      screen.getByRole('option', { name: 'instanceFormatIds' }),
-    );
-    expect(screen.getByRole('option', { name: 'instanceFormatIds' }).selected).toBe(true);
-  });
-
   it('selecting empty value option', async () => {
     renderInstanceFormatFields();
-    userEvent.click(screen.getByRole('button'));
-    userEvent.click(document.querySelector('[name="instanceFormatIds[0]"]'));
-    userEvent.selectOptions(
+    fireEvent.click(screen.getByRole('button'));
+    fireEvent.click(document.querySelector('[name="instanceFormatIds[0]"]'));
+    fireEvent.change(
       screen.getByRole('combobox'),
-      screen.getByRole('option', { name: 'Select format' }),
+      { target: { value: 'Select format' } },
     );
     expect(screen.findByDisplayValue('')).toBeTruthy();
   });

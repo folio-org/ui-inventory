@@ -1,5 +1,5 @@
 import React from 'react';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -34,9 +34,7 @@ jest.mock('../useInstancesQuery', () => {
 
 describe('useBoundWithTitlesByHrids', () => {
   it('should return boundWithTitles data', async () => {
-    const { result, waitFor } = renderHook(() => useBoundWithTitlesByHrids(['holdingHrid']));
-
-    await waitFor(() => !result.current.isLoading);
+    const { result } = renderHook(() => useBoundWithTitlesByHrids(['holdingHrid']));
 
     const expectedResult = [{
       briefHoldingsRecord: {

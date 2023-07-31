@@ -59,7 +59,7 @@ const InstanceSubjectView = ({
 InstanceSubjectView.propTypes = {
   id: PropTypes.string.isRequired,
   subjects: PropTypes.arrayOf(PropTypes.string),
-  segment: PropTypes.oneOf([Object.values(segments)]).isRequired,
+  segment: PropTypes.oneOf(Object.values(segments)).isRequired,
   source: PropTypes.string.isRequired,
 };
 

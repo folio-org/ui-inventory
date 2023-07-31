@@ -1,7 +1,6 @@
 import '../../../test/jest/__mock__';
 
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { act, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
@@ -118,7 +117,7 @@ describe('getBrowseResultsFormatter', () => {
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
-      await act(async () => userEvent.click(screen.getByText(anchorRecord.fullCallNumber)));
+      await act(async () => fireEvent.click(screen.getByText(anchorRecord.fullCallNumber)));
 
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
     });
@@ -186,7 +185,7 @@ describe('getBrowseResultsFormatter', () => {
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
-      await act(async () => userEvent.click(screen.getByText(anchorRecord.name)));
+      await act(async () => fireEvent.click(screen.getByText(anchorRecord.name)));
 
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
     });
@@ -194,7 +193,7 @@ describe('getBrowseResultsFormatter', () => {
     it('should open the record in MARC authority app in new tab when "authority" icon was clicked', async () => {
       renderContributorsList();
 
-      await act(async () => userEvent.click(screen.getByTestId('authority-app-link')));
+      await act(async () => fireEvent.click(screen.getByTestId('authority-app-link')));
 
       expect(window.open).toHaveBeenCalledWith(expect.stringContaining('/marc-authorities/authorities'), '_blank', 'noopener,noreferrer');
     });
@@ -253,7 +252,7 @@ describe('getBrowseResultsFormatter', () => {
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
-      await act(async () => userEvent.click(screen.getByText(anchorRecord.value)));
+      await act(async () => fireEvent.click(screen.getByText(anchorRecord.value)));
 
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
     });

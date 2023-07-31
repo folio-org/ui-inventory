@@ -2,7 +2,7 @@ import '../../../../test/jest/__mock__';
 
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -30,7 +30,7 @@ describe('useItemMutation', () => {
       { wrapper },
     );
 
-    await result.current.mutateItem({ barcode: 'barcode' });
+    await act(async () => { result.current.mutateItem({ barcode: 'barcode' }); });
 
     expect(postMock).toHaveBeenCalled();
   });
@@ -47,9 +47,7 @@ describe('useItemMutation', () => {
       { wrapper },
     );
 
-    await result.current.mutateItem({
-      id: 'itemId',
-    });
+    await act(async () => { result.current.mutateItem({ id: 'itemId' }); });
 
     expect(putMock).toHaveBeenCalled();
   });
