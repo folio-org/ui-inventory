@@ -73,9 +73,8 @@ const renderInstanceFilters = (props = {}) => {
 
 describe('InstanceFilters', () => {
   it('Contains a filter for creation date ', () => {
-    const { debug } = renderInstanceFilters();
+    renderInstanceFilters();
 
-    debug();
     expect(screen.getByText('Effective location (item)')).toBeInTheDocument();
   });
 

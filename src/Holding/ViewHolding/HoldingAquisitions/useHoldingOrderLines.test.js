@@ -3,7 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -29,9 +29,9 @@ describe('useHoldingOrderLines', () => {
   });
 
   it('should fetch holding order lines', async () => {
-    const { result, waitFor } = renderHook(() => useHoldingOrderLines('holdingUid'), { wrapper });
+    const { result } = renderHook(() => useHoldingOrderLines('holdingUid'), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await act(() => !result.current.isLoading);
 
     expect(result.current.holdingOrderLines).toEqual(holdingSummaries);
   });

@@ -1,8 +1,7 @@
 import React from 'react';
 import '../../../test/jest/__mock__';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { DataContext } from '../../contexts';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
@@ -204,13 +203,13 @@ describe('InstanceDetails', () => {
     expect(secondAccordionSection.getAttribute('aria-expanded')).toBe('false');
     expect(thirdAccordionSection.getAttribute('aria-expanded')).toBe('false');
     expect(fourthAccordionSection.getAttribute('aria-expanded')).toBe('false');
-    userEvent.click(expandAllButtons);
+    fireEvent.click(expandAllButtons);
     expect(firstAccordionSection.getAttribute('aria-expanded')).toBe('true');
     expect(secondAccordionSection.getAttribute('aria-expanded')).toBe('true');
     expect(thirdAccordionSection.getAttribute('aria-expanded')).toBe('true');
     expect(fourthAccordionSection.getAttribute('aria-expanded')).toBe('true');
     const collapseAllButtons = screen.getByText('Collapse all');
-    userEvent.click(collapseAllButtons);
+    fireEvent.click(collapseAllButtons);
     expect(firstAccordionSection.getAttribute('aria-expanded')).toBe('false');
     expect(secondAccordionSection.getAttribute('aria-expanded')).toBe('false');
     expect(thirdAccordionSection.getAttribute('aria-expanded')).toBe('false');
@@ -234,7 +233,7 @@ describe('InstanceDetails', () => {
       translationsProperties
     );
     const button = screen.getAllByRole('button', { id: 'clickable-show-tags' });
-    userEvent.click(button[1]);
+    fireEvent.click(button[1]);
     expect(button[1]).toBeEnabled();
   });
 });

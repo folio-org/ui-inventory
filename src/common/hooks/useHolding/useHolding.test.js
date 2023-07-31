@@ -2,7 +2,7 @@ import '../../../../test/jest/__mock__';
 
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -29,9 +29,9 @@ describe('useHolding', () => {
       }),
     });
 
-    const { result, waitFor } = renderHook(() => useHolding(holdingId), { wrapper });
+    const { result } = renderHook(() => useHolding(holdingId), { wrapper });
 
-    await waitFor(() => {
+    await act(() => {
       return !result.current.isLoading;
     });
 
