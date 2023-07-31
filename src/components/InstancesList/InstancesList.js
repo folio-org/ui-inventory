@@ -24,6 +24,7 @@ import {
   CalloutContext,
   stripesConnect,
   withNamespace,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -678,6 +679,7 @@ class InstancesList extends React.Component {
       parentResources,
       intl,
       segment,
+      stripes,
     } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
@@ -747,7 +749,7 @@ class InstancesList extends React.Component {
               <FormattedMessage id="stripes-smart-components.new" />
             </Button>
           </IfPermission>
-          {!this.isUserInCentralTenant && (
+          {!checkIfUserInCentralTenant(stripes) && (
             <Pluggable
               id="clickable-create-inventory-records"
               onClose={this.toggleNewFastAddModal}
@@ -785,7 +787,7 @@ class InstancesList extends React.Component {
               icon: 'report',
               messageId: 'ui-inventory.exportInProgress',
             }) :
-            !this.isUserInCentralTenant && this.getActionItem({
+            !checkIfUserInCentralTenant(stripes) && this.getActionItem({
               id: 'dropdown-clickable-get-report',
               icon: 'report',
               messageId: 'ui-inventory.inTransitReport',
