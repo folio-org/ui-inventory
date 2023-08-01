@@ -95,7 +95,9 @@ const mockStripesCore = {
 
   useNamespace: () => ['@folio/inventory'],
 
-  TitleManager: ({ children }) => <>{children}</>
+  TitleManager: ({ children }) => <>{children}</>,
+
+  checkIfUserInMemberTenant: () => true,
 };
 
 jest.mock('@folio/stripes/core', () => ({
