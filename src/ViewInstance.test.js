@@ -273,10 +273,6 @@ describe('ViewInstance', () => {
     });
   });
   describe('Action Menu', () => {
-    beforeAll(() => {
-      StripesConnectedInstance.prototype.instance.mockImplementation(() => instance);
-    });
-
     it('should not be displayed', () => {
       const stripes = useStripes();
       stripes.hasPerm.mockImplementationOnce(() => false);
