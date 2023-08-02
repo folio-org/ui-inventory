@@ -13,6 +13,9 @@ jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   LoadingView: () => 'LoadingView',
 }));
+jest.mock('./Holding/ViewHolding/HoldingAquisitions/useHoldingOrderLines', () => {
+  return () => ({ isLoading: false, holdingOrderLines: [] });
+});
 
 const defaultProps = {
   id: 'id',
