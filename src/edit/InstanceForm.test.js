@@ -165,8 +165,8 @@ describe('InstanceForm', () => {
 
   describe('Instance form header', () => {
     describe('when user is central tenant', () => {
-      it('should render correct title', () => {
-        const { getByText } = renderInstanceForm({
+      it('should render correct title', async () => {
+        const { findByText } = renderInstanceForm({
           stripes: {
             ...stripesStub,
             okapi: { tenant: 'consortium' },
@@ -174,13 +174,15 @@ describe('InstanceForm', () => {
           },
         });
 
-        expect(getByText('Edit shared instance • test title')).toBeInTheDocument();
+        const title = await findByText('Edit shared instance • test title');
+
+        expect(title).toBeInTheDocument();
       });
     });
 
     describe('when user is member library tenant', () => {
-      it('should render correct title', () => {
-        const { getByText } = renderInstanceForm({
+      it('should render correct title', async () => {
+        const { findByText } = renderInstanceForm({
           stripes: {
             ...stripesStub,
             okapi: { tenant: 'university' },
@@ -188,29 +190,35 @@ describe('InstanceForm', () => {
           },
         });
 
-        expect(getByText('Edit local instance • test title')).toBeInTheDocument();
+        const title = await findByText('Edit local instance • test title');
+
+        expect(title).toBeInTheDocument();
       });
     });
 
     describe('when user is non-consortial tenant', () => {
-      it('should render correct title', () => {
-        const { getByText } = renderInstanceForm({
+      it('should render correct title', async () => {
+        const { findByText } = renderInstanceForm({
           stripes: {
             ...stripesStub,
             hasInterface: () => false,
           },
         });
 
-        expect(getByText('Edit instance • test title')).toBeInTheDocument();
+        const title = await findByText('Edit instance • test title');
+
+        expect(title).toBeInTheDocument();
       });
     });
   });
 
   describe('Instance subheader', () => {
-    it('should render hrid and last update date', () => {
-      const { getByText } = renderInstanceForm();
+    it('should render hrid and last update date', async () => {
+      const { findByText } = renderInstanceForm();
 
-      expect(getByText('test hrid • Last updated: 11/10/2022')).toBeInTheDocument();
+      const subheader = await findByText('test hrid • Last updated: 11/10/2022');
+
+      expect(subheader).toBeInTheDocument();
     });
   });
 });
