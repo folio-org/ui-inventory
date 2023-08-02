@@ -1,6 +1,6 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -36,9 +36,9 @@ describe('useInstanceAcquisition', () => {
   });
 
   it('should fetch instance acquisition data', async () => {
-    const { result, waitFor } = renderHook(() => useInstanceAcquisition('instanceId'), { wrapper });
+    const { result } = renderHook(() => useInstanceAcquisition('instanceId'), { wrapper });
 
-    await waitFor(() => {
+    await act(() => {
       return !result.current.isLoading;
     });
 

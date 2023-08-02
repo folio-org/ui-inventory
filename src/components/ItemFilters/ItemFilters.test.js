@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { screen, waitFor } from '@testing-library/react';
-import { ModuleHierarchyProvider } from '@folio/stripes-core/src/components/ModuleHierarchy';
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../test/jest/__mock__';
-import userEvent from '@testing-library/user-event';
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
 import ItemFilters from './ItemFilters';
@@ -19,6 +19,7 @@ jest.mock('../../facetUtils', () => ({
 }));
 
 const activeFilters = {
+  [FACETS.SHARED]: ['shared1'],
   [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
   [FACETS.ITEM_STATUS]: ['ITEM_STATUS1'],
   [FACETS.HOLDINGS_PERMANENT_LOCATION]: ['loc2'],
@@ -34,13 +35,14 @@ const resources = {
     hasLoaded: true,
     resource: 'facets',
     records: [{
-      'items.effectiveLocationId': 'effectiveLocationId1',
-      'holdings.permanentLocationId': 'permanentLocationId1',
-      'items.statisticalCodeIds': 'statisticalCodeIds1',
-      'items.discoverySuppress': 'discoverySuppress1',
-      'items.status.name': 'name1',
-      'itemTags': 'itemTags1',
-      'items.materialTypeId': 'materialTypeId1',
+      'shared': { values: ['shared1'] },
+      'items.effectiveLocationId': { values: ['effectiveLocationId1'] },
+      'holdings.permanentLocationId': { values: ['permanentLocationId1'] },
+      'items.statisticalCodeIds': { values: ['statisticalCodeIds1'] },
+      'items.discoverySuppress': { values: ['discoverySuppress1'] },
+      'items.status.name': { values: ['name1'] },
+      'itemTags': { values: ['itemTags1'] },
+      'items.materialTypeId': { values: ['materialTypeId1'] },
     }],
     other: { totalRecords: 0 }
   },
@@ -80,77 +82,87 @@ const renderItemFilters = () => {
 describe('ItemFilters', () => {
   beforeEach(() => {
     renderItemFilters();
+    jest.clearAllMocks();
+  });
+
+  it('Should Clear selected filters for shared', async () => {
+    expect(screen.getByText('Shared')).toBeInTheDocument();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[1]);
+    await waitFor(() => {
+      expect(onClear).toBeCalledWith(FACETS.SHARED);
+    });
   });
 
   it('Should Clear selected filters for itemStatus', async () => {
     expect(screen.getByText('Item status')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[1]);
+    userEvent.click(Clearselectedfilters[3]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.ITEM_STATUS);
     });
   });
 
   it('Should Clear selected filters for effectiveLocation', async () => {
     expect(screen.getByText('Effective location (item)')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[3]);
+    userEvent.click(Clearselectedfilters[5]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.EFFECTIVE_LOCATION);
     });
   });
 
   it('Should Clear selected filters for holdingsPermanentLocation', async () => {
     expect(screen.getByText('Holdings permanent location')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[5]);
+    userEvent.click(Clearselectedfilters[7]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_PERMANENT_LOCATION);
     });
   });
 
   it('Should Clear selected filters for materialType', async () => {
     expect(screen.getByText('Material type')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[7]);
+    userEvent.click(Clearselectedfilters[9]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.MATERIAL_TYPE);
     });
   });
 
   it('Should Clear selected filters for itemsDiscoverySuppress', async () => {
     expect(screen.getByText('Suppress from discovery')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[9]);
+    userEvent.click(Clearselectedfilters[11]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.ITEMS_DISCOVERY_SUPPRESS);
     });
   });
 
   it('Should Clear selected filters for itemsStatisticalCodeIds', async () => {
     expect(screen.getByText('Statistical code')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[11]);
+    userEvent.click(Clearselectedfilters[13]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.ITEMS_STATISTICAL_CODE_IDS);
     });
   });
 
   it('Should Clear selected filters for items Created Date', async () => {
     expect(screen.getByText('Date created')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[13]);
+    userEvent.click(Clearselectedfilters[15]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.ITEMS_CREATED_DATE);
     });
   });
 
   it('Should Clear selected filters for itemsUpdatedDate', async () => {
     expect(screen.getByText('Date updated')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[20]);
+    userEvent.click(Clearselectedfilters[22]);
     await waitFor(() => {
-      expect(onClear).toBeCalled();
+      expect(onClear).toBeCalledWith(FACETS.ITEMS_UPDATED_DATE);
     });
   });
 });

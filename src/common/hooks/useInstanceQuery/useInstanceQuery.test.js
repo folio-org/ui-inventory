@@ -2,7 +2,7 @@ import '../../../../test/jest/__mock__';
 
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -29,9 +29,9 @@ describe('useInstanceQuery', () => {
       }),
     });
 
-    const { result, waitFor } = renderHook(() => useInstanceQuery(instanceId), { wrapper });
+    const { result } = renderHook(() => useInstanceQuery(instanceId), { wrapper });
 
-    await waitFor(() => {
+    await act(() => {
       return !result.current.isLoading;
     });
 

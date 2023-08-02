@@ -7,8 +7,8 @@ import {
   getAllByRole,
   waitForElementToBeRemoved,
   waitFor,
+  fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { noop } from 'lodash';
 
 import '../../test/jest/__mock__';
@@ -168,7 +168,7 @@ describe('InstancesRoute', () => {
 
     describe('opening action menu', () => {
       beforeEach(() => {
-        userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       });
 
       it('should not display exceeded quick export limit warning', () => {
@@ -190,7 +190,7 @@ describe('InstancesRoute', () => {
       beforeEach(() => {
         selectRowCheckboxes = screen.getAllByRole('checkbox', { name: 'Select instance' });
 
-        userEvent.click(selectRowCheckboxes[1]);
+        fireEvent.click(selectRowCheckboxes[1]);
       });
 
       it('should display checked select row checkbox', () => {
@@ -203,9 +203,9 @@ describe('InstancesRoute', () => {
 
       describe('selecting one more row and clicking on show selected records action button', () => {
         beforeEach(() => {
-          userEvent.click(selectRowCheckboxes[2]);
-          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-          userEvent.click(screen.getByRole('button', { name: 'Show selected records' }));
+          fireEvent.click(selectRowCheckboxes[2]);
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Show selected records' }));
         });
 
         it('should open selected records modal', () => {
@@ -245,11 +245,11 @@ describe('InstancesRoute', () => {
             const modal = screen.getByRole('document', { label: 'Selected records' });
             const selectRowCheckboxesInModal = getAllByRole(modal, 'checkbox', { name: 'Select instance' });
 
-            selectRowCheckboxesInModal.forEach(userEvent.click);
+            selectRowCheckboxesInModal.forEach(fireEvent.click);
           });
 
           it('should preserve the selected state for the corresponding rows in the results list after close of the modal upon click on cancel button', async () => {
-            userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+            fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
 
             await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
 
@@ -258,7 +258,7 @@ describe('InstancesRoute', () => {
           });
 
           it('should unselect corresponding rows in the results list after close of the modal upon click on save button', async () => {
-            userEvent.click(screen.getByRole('button', { name: 'Save & close' }));
+            fireEvent.click(screen.getByRole('button', { name: 'Save & close' }));
 
             await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
 
@@ -270,7 +270,7 @@ describe('InstancesRoute', () => {
 
       describe('selecting more than one row', () => {
         beforeEach(() => {
-          userEvent.click(selectRowCheckboxes[2]);
+          fireEvent.click(selectRowCheckboxes[2]);
         });
 
         it('should display selected rows count message (plural form) in the sub header', () => {
@@ -278,8 +278,8 @@ describe('InstancesRoute', () => {
         });
 
         it('should not initiate display of error callout and make an API call upon click on export instances (MARC) button', () => {
-          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-          userEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
 
           expect(quickExportAPICallMock).toBeCalled();
           expect(sendCalloutMock).not.toBeCalled();
@@ -287,8 +287,8 @@ describe('InstancesRoute', () => {
 
         it('should initiate display of error callout and make an API call upon click on export instances (MARC) button with API request set up to fail', async () => {
           quickExportAPICallMock.mockImplementationOnce(Promise.reject.bind(Promise));
-          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-          userEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
 
           expect(quickExportAPICallMock).toBeCalled();
 

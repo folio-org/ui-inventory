@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import '../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
@@ -41,7 +40,7 @@ describe('SeriesFields', () => {
     renderSeriesFields();
     expect(screen.getByText('Series statements')).toBeInTheDocument();
     const seriesButton = screen.getByText('Add series');
-    userEvent.click(seriesButton);
+    fireEvent.click(seriesButton);
     expect(screen.getAllByText('Series statements')[1]).toBeInTheDocument();
     const myText = screen.getByRole('textbox');
     expect(myText).toHaveValue('');

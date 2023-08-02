@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -51,7 +50,7 @@ describe('AlternativeTitles', () => {
 
     expect(screen.getByText(/Alternative titles/i)).toBeInTheDocument();
 
-    userEvent.click(screen.getByText(/Add alternative title/i));
+    fireEvent.click(screen.getByText(/Add alternative title/i));
 
     expect(screen.getByLabelText(/Type/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Alternative title/i)).toBeInTheDocument();

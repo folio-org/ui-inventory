@@ -50,7 +50,7 @@ const TitleSeriesStatements = ({
 
 TitleSeriesStatements.propTypes = {
   seriesStatements: PropTypes.arrayOf(PropTypes.string),
-  segment: PropTypes.oneOf([Object.values(segments)]).isRequired,
+  segment: PropTypes.oneOf(Object.values(segments)).isRequired,
   source: PropTypes.string.isRequired,
 };
 

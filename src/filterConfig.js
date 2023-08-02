@@ -13,6 +13,11 @@ import {
 
 export const instanceFilterConfig = [
   {
+    name: FACETS.SHARED,
+    cql: FACETS_CQL.SHARED,
+    values: [],
+  },
+  {
     name: FACETS.EFFECTIVE_LOCATION,
     cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
@@ -250,6 +255,11 @@ export const holdingSortMap = {};
 
 export const holdingFilterConfig = [
   {
+    name: FACETS.SHARED,
+    cql: FACETS_CQL.SHARED,
+    values: [],
+  },
+  {
     name: FACETS.EFFECTIVE_LOCATION,
     cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
@@ -321,6 +331,11 @@ export const itemIndexes = [
 ];
 
 export const itemFilterConfig = [
+  {
+    name: FACETS.SHARED,
+    cql: FACETS_CQL.SHARED,
+    values: [],
+  },
   {
     name: FACETS.MATERIAL_TYPE,
     cql: FACETS_CQL.MATERIAL_TYPES,
