@@ -13,8 +13,6 @@ import {
   IfPermission,
   Pluggable,
   stripesConnect,
-  checkIfUserInCentralTenant,
-  checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -41,7 +39,6 @@ import {
   isUserInConsortiumMode,
 } from './utils';
 import {
-  CONSORTIUM_PREFIX,
   indentifierTypeNames,
   layers,
   REQUEST_OPEN_STATUSES,
@@ -744,14 +741,11 @@ class ViewInstance extends React.Component {
   renderPaneTitle = (instance) => {
     const { stripes } = this.props;
 
-    const isInstanceShared = checkIfUserInCentralTenant(stripes)
-      || (checkIfUserInMemberTenant(stripes) && instance?.source.startsWith(CONSORTIUM_PREFIX));
-
     return (
       <FormattedMessage
         id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
         values={{
-          isShared: isInstanceShared,
+          isShared: checkIfSharedInstance(stripes, instance),
           title: instance?.title,
           publisherAndDate: getPublishingInfo(instance),
         }}
