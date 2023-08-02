@@ -23,4 +23,3 @@ export { default as BrowseResultsPane } from './BrowseResultsPane';
 export { default as BrowseResultsList } from './BrowseResultsList';
 export { default as BrowseInventoryFilters } from './BrowseInventoryFilters';
 export { default as MissedMatchItem } from './MissedMatchItem';
-export { default as withSingleRecordImport } from './withSingleRecordImport';

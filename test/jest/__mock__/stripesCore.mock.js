@@ -7,7 +7,7 @@ jest.mock('@folio/stripes/core', () => {
     connect: Comp => Comp,
     config: {},
     currency: 'USD',
-    hasInterface: () => jest.fn().mockReturnValue(true),
+    hasInterface: () => true,
     hasPerm: jest.fn().mockReturnValue(true),
     locale: 'en-US',
     logger: {

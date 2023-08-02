@@ -199,8 +199,7 @@ class InventorySettings extends React.Component {
       },
     ];
 
-    if (this.props.stripes.hasInterface('copycat-imports')
-      && this.props.stripes.hasInterface('data-import-converter-storage', '1.3')) {
+    if (this.props.stripes.hasInterface('copycat-imports')) {
       this.sections.push({
         label: <FormattedMessage id="ui-inventory.integrations" />,
         pages: [

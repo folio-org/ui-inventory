@@ -11,7 +11,6 @@ import {
 import BrowseRoute from './BrowseRoute';
 
 jest.mock('../../components', () => ({
-  ...jest.requireActual('../../components'),
   BrowseInventoryFilters: jest.fn(() => <>BrowseInventoryFilters</>),
   BrowseResultsPane: jest.fn(() => <>BrowseResultsPane</>),
   SearchModeNavigation: jest.fn(() => <>SearchModeNavigation</>),
