@@ -10,6 +10,7 @@ import { DataContext } from './contexts';
 import StripesConnectedInstance from './ConnectedInstance/StripesConnectedInstance';
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewInstance from './ViewInstance';
+import { CONSORTIUM_PREFIX } from './constants';
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
@@ -153,6 +154,8 @@ const defaultProp = {
     logger: {
       log: jest.fn()
     },
+    okapi: { tenant: 'diku' },
+    user: { user: {} },
   },
   tagsEnabled: true,
   updateLocation: jest.fn(),
@@ -197,6 +200,7 @@ const renderViewInstance = (props = {}) => renderWithIntl(
 describe('ViewInstance', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    StripesConnectedInstance.prototype.instance.mockImplementation(() => instance);
   });
   it('should display action menu items', () => {
     renderViewInstance();
@@ -313,7 +317,7 @@ describe('ViewInstance', () => {
       renderViewInstance();
       const expectedValue = {
         pathname: `/inventory/quick-marc/edit-bib/${defaultProp.selectedInstance.id}`,
-        search: 'filters=test1&query=test2&sort=test3&qindex=test'
+        search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
       };
       fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       const button = screen.getByRole('button', { name: 'Edit MARC bibliographic record' });
@@ -327,7 +331,7 @@ describe('ViewInstance', () => {
       renderViewInstance();
       const expectedValue = {
         pathname: `/inventory/quick-marc/duplicate-bib/${defaultProp.selectedInstance.id}`,
-        search: 'filters=test1&query=test2&sort=test3&qindex=test'
+        search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
       };
       fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
@@ -347,6 +351,28 @@ describe('ViewInstance', () => {
         expect(screen.queryByText(/Create order/i)).not.toBeInTheDocument();
       });
     }, 10000);
+    describe('when a user derives a shared record', () => {
+      it('should append the `shared` search parameter', async () => {
+        const newInstance = {
+          ...instance,
+          source: `${CONSORTIUM_PREFIX}MARC`,
+        };
+        StripesConnectedInstance.prototype.instance.mockImplementation(() => newInstance);
+
+        renderViewInstance();
+
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
+        await waitFor(() => {
+          expect(button).not.toHaveAttribute('disabled');
+        });
+        fireEvent.click(button);
+
+        expect(mockPush).toBeCalledWith(expect.objectContaining({
+          search: expect.stringContaining('shared=true'),
+        }));
+      });
+    });
   });
   describe('Tests for shortcut of HasCommand', () => {
     it('updateLocation function to be triggered on clicking new button', () => {
