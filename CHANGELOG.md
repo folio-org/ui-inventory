@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## 9.4.11 IN PROGRESS
+## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
 
 * User with limited permissions gets an error modal when navigating to the Inventory app. Fixes UIIN-2510.
 
