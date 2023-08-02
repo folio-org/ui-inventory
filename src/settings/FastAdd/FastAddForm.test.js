@@ -58,7 +58,6 @@ describe('FastAddForm', () => {
     renderFastAddForm();
     const submitButton = screen.getByText(/Save/i);
     userEvent.click(submitButton);
-    screen.debug();
     expect(screen.getByRole('button', { name: /Save/i })).toBeTruthy();
   });
 });

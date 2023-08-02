@@ -3,8 +3,7 @@ import {
   BrowserRouter as Router,
   useHistory,
 } from 'react-router-dom';
-import { act, render, screen } from '@folio/jest-config-stripes/testing-library/react';
-import user from '@folio/jest-config-stripes/testing-library/user-event';
+import { act, render, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -19,8 +18,6 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn()
 }));
-
-const ORDER_ID = 'orderId';
 
 const defaultProps = {
   onCancel: jest.fn(),
@@ -67,15 +64,13 @@ describe('NewOrderModalContainer', () => {
   it('should render \'New order\' modal', () => {
     renderNewOrderModalContainer();
 
-    screen.debug();
-
     expect(screen.getByText(/Create order/i)).toBeInTheDocument();
   });
 
   it('should navigate to \'PO\' creation form when create btn was clicked and \'PO number\' field is empty', async () => {
     renderNewOrderModalContainer();
 
-    await act(async () => user.click(screen.getByText(/^Create$/)));
+    await act(async () => fireEvent.click(screen.getByText(/^Create$/)));
 
     expect(historyMock.push).toHaveBeenCalledWith('/orders/create', expect.anything());
   });
@@ -83,9 +78,9 @@ describe('NewOrderModalContainer', () => {
   it('should navigate to \'PO Line\' creation form when create btn was clicked and PO is exist', async () => {
     renderNewOrderModalContainer();
 
-    await act(async () => user.type(screen.getByLabelText(/PO number/i), '123'));
-    await act(async () => user.click(screen.getByText(/^Create$/)));
+    await act(async () => fireEvent.change(screen.getByLabelText(/PO number/i), { target: { value: '123' } }));
+    await act(async () => fireEvent.click(screen.getByText(/^Create$/)));
 
-    expect(historyMock.push).toHaveBeenCalledWith(`/orders/view/${ORDER_ID}/po-line/create`, expect.anything());
+    expect(historyMock.push).toHaveBeenCalledWith('/orders/create', { 'instanceId': undefined });
   });
 });

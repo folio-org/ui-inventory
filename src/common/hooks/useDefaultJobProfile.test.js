@@ -3,7 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 import { useOkapiKy } from '@folio/stripes/core';
@@ -31,11 +31,9 @@ describe('useDefaultJobProfile', () => {
       }),
     });
 
-    const { result, waitFor } = renderHook(() => useDefaultJobProfile(jobProfileId), { wrapper });
+    const { result } = renderHook(() => useDefaultJobProfile(jobProfileId), { wrapper });
 
-    await waitFor(() => {
-      return !result.current.isLoading;
-    });
+    await act(async () => !result.current.isLoading);
 
     expect(result.current.defaultJobProfile.id).toBe(jobProfileId);
   });

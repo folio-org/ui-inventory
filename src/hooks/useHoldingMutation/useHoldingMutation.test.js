@@ -2,7 +2,7 @@ import '../../../test/jest/__mock__';
 
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -30,7 +30,7 @@ describe('useHoldingMutation', () => {
       { wrapper },
     );
 
-    await result.current.mutateHolding({ barcode: 'barcode' });
+    await act(async () => { result.current.mutateHolding({ barcode: 'barcode' }); });
 
     expect(postMock).toHaveBeenCalled();
   });
@@ -47,9 +47,7 @@ describe('useHoldingMutation', () => {
       { wrapper },
     );
 
-    await result.current.mutateHolding({
-      id: 'holdingId',
-    });
+    await act(async () => { result.current.mutateHolding({ id: 'holdingId' }); });
 
     expect(putMock).toHaveBeenCalled();
   });

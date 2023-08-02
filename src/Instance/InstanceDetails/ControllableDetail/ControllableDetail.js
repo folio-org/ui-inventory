@@ -13,9 +13,9 @@ import { segments } from '../../../constants';
 import css from './ControllableDetail.css';
 
 const propTypes = {
-  authorityId: PropTypes.string.isRequired,
+  authorityId: PropTypes.string,
   value: PropTypes.string,
-  segment: PropTypes.oneOf([Object.values(segments)]).isRequired,
+  segment: PropTypes.oneOf(Object.values(segments)).isRequired,
   source: PropTypes.string.isRequired,
 };
 

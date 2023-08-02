@@ -7,7 +7,8 @@ import '../../../test/jest/__mock__';
 import {
   fireEvent,
   screen,
-} from '@folio/jest-config-stripes/testing-library/dom';
+  act,
+} from '@folio/jest-config-stripes/testing-library/react';
 import {
   renderWithIntl,
   translationsProperties,
@@ -88,17 +89,17 @@ describe('ImportRecordModal', () => {
     handleSubmitMock.mockClear();
   });
 
-  it('modal should be rendered', () => {
-    const { getByText } = renderImportRecordModal();
+  it('modal should be rendered', async () => {
+    await act(async () => { renderImportRecordModal(); });
 
-    const modalTitle = getByText('Single record import');
+    const modalTitle = screen.getByText('Single record import');
 
     expect(modalTitle).toBeInTheDocument();
   });
 
   describe('when there are multiple copycat profiles', () => {
-    it('field for external identifier type should be rendered', () => {
-      renderImportRecordModal(multipleCopycatProfiles);
+    it('field for external identifier type should be rendered', async () => {
+      await act(async () => { renderImportRecordModal(multipleCopycatProfiles); });
 
       const externalIdentifierTypeField = screen.getByLabelText('External target');
 
@@ -106,25 +107,25 @@ describe('ImportRecordModal', () => {
     });
 
     describe('when select another external identifier type', () => {
-      it('external identifier type value should be changed', () => {
-        renderImportRecordModal(multipleCopycatProfiles);
+      it('external identifier type value should be changed', async () => {
+        await act(async () => { renderImportRecordModal(multipleCopycatProfiles); });
 
         const externalIdentifierTypeField = screen.getByLabelText('External target');
-        fireEvent.change(externalIdentifierTypeField, { target: { value: 'testId2' } });
+        await act(async () => { fireEvent.change(externalIdentifierTypeField, { target: { value: 'testId2' } }); });
 
         expect(externalIdentifierTypeField).toHaveValue('testId2');
       });
     });
 
     describe('when click submit button', () => {
-      it('function for submit should be called', () => {
-        renderImportRecordModal(multipleCopycatProfiles);
+      it('function for submit should be called', async () => {
+        await act(async () => { renderImportRecordModal(multipleCopycatProfiles); });
 
         const externalIdentifierTypeField = screen.getByLabelText('Enter the testName1 identifier');
-        fireEvent.change(externalIdentifierTypeField, { target: { value: 'test' } });
+        await act(async () => { fireEvent.change(externalIdentifierTypeField, { target: { value: 'test' } }); });
 
         const confirmButton = screen.getByRole('button', { name: /Import/i });
-        fireEvent.click(confirmButton);
+        await act(async () => { fireEvent.click(confirmButton); });
 
         expect(handleSubmitMock).toHaveBeenCalled();
       });

@@ -75,12 +75,12 @@ export const getFacetOptions = (selectedFiltersId, entries, facetData, key, pars
 const getSuppressedLabel = (id) => (id === 'true' ? 'yes' : 'no');
 const getSuppressedValue = (id) => (id === 'true' ? 'true' : 'false');
 
-const getSelectedSuppressedOptionsWithoutCount = (selectedFiltersId, suppressedOptionsRecords) => {
+const getOptionsWithoutCount = (selectedFiltersId, optionsRecords) => {
   const selectedFiltersWithoutCount = [];
 
   if (selectedFiltersId) {
     selectedFiltersId.forEach(selectedFilterId => {
-      const selectedFilterWithCount = suppressedOptionsRecords.find(record => record.id === selectedFilterId);
+      const selectedFilterWithCount = optionsRecords.find(record => record.id === selectedFilterId);
 
       if (!selectedFilterWithCount) {
         const option = {
@@ -94,6 +94,26 @@ const getSelectedSuppressedOptionsWithoutCount = (selectedFiltersId, suppressedO
   }
 
   return selectedFiltersWithoutCount;
+};
+
+export const getSharedOptions = (selectedFiltersId, sharedOptionsRecords) => {
+  const restFilter = sharedOptionsRecords.reduce((accum, { id, totalRecords }) => {
+    if (!totalRecords) return accum;
+
+    const option = {
+      label: <FormattedMessage id={`ui-inventory.${getSuppressedLabel(id)}`} />,
+      value: id,
+      count: totalRecords,
+    };
+
+    accum.push(option);
+    return accum;
+  }, []);
+
+  return [
+    ...restFilter,
+    ...getOptionsWithoutCount(selectedFiltersId, sharedOptionsRecords),
+  ];
 };
 
 export const getSuppressedOptions = (selectedFiltersId, suppressedOptionsRecords) => {
@@ -111,7 +131,7 @@ export const getSuppressedOptions = (selectedFiltersId, suppressedOptionsRecords
 
   return [
     ...restFilter,
-    ...getSelectedSuppressedOptionsWithoutCount(selectedFiltersId, suppressedOptionsRecords),
+    ...getOptionsWithoutCount(selectedFiltersId, suppressedOptionsRecords),
   ];
 };
 
