@@ -637,3 +637,8 @@ export const SOURCE_VALUES = {
 };
 
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';
+
+export const MAX_RECORDS = 10000;
+
+export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
+export const OKAPI_TOKEN_HEADER = 'X-Okapi-Token';

@@ -54,6 +54,8 @@ import {
   withSingleRecordImport,
   CalloutRenderer,
   NewOrderModal,
+  IfConsortium,
+  IfConsortiumPermission,
 } from './components';
 
 import ImportRecordModal from './components/ImportRecordModal';
@@ -510,18 +512,22 @@ class ViewInstance extends React.Component {
         {showInventoryMenuSection && (
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.inventory.label' })} id="inventory-menu-section">
             {canEditInstance && !suppressEditInstanceForMemberTenant && (
-              <Button
-                id="edit-instance"
-                onClick={() => {
-                  onToggle();
-                  this.onClickEditInstance();
-                }}
-                buttonStyle="dropdownItem"
-              >
-                <Icon icon="edit">
-                  <FormattedMessage id="ui-inventory.editInstance" />
-                </Icon>
-              </Button>
+              <IfConsortium>
+                <IfConsortiumPermission perm="consortia.user-tenants.collection.get">
+                  <Button
+                    id="edit-instance"
+                    onClick={() => {
+                      onToggle();
+                      this.onClickEditInstance();
+                    }}
+                    buttonStyle="dropdownItem"
+                  >
+                    <Icon icon="edit">
+                      <FormattedMessage id="ui-inventory.editInstance" />
+                    </Icon>
+                  </Button>
+                </IfConsortiumPermission>
+              </IfConsortium>
             )}
             {canViewSource && (
               <Button
