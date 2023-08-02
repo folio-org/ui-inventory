@@ -33,6 +33,7 @@ import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
 import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import {
+  checkIfSharedInstance,
   getDate,
   handleKeyCommand,
   isMARCSource,
@@ -293,10 +294,12 @@ class ViewInstance extends React.Component {
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
+    const isSharedInstance = checkIfSharedInstance(stripes, instance);
 
     const searchParams = new URLSearchParams(location.search);
 
     searchParams.delete('relatedRecordVersion');
+    searchParams.append('shared', isSharedInstance.toString());
 
     history.push({
       pathname: `/inventory/quick-marc/${page}/${instance.id}`,

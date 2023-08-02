@@ -7,6 +7,7 @@ import {
   validateNumericField,
   validateAlphaNumericField,
   getQueryTemplate,
+  checkIfSharedInstance,
 } from './utils';
 import { browseModeOptions } from './constants';
 
@@ -143,3 +144,36 @@ describe('getQueryTemplate', () => {
     });
   });
 });
+
+describe('checkIfSharedInstance', () => {
+  describe('when source contains the `CONSORTIUM-` prefix', () => {
+    it('should return true', () => {
+      const instance = { source: 'CONSORTIUM-FOLIO' };
+      const stripes = {};
+
+      expect(checkIfSharedInstance(stripes, instance)).toBeTruthy();
+    });
+  });
+
+  describe('when the user is in the central tenant', () => {
+    it('should return true', () => {
+      const instance = { source: 'FOLIO' };
+      const stripes = {
+        hasInterface: () => true,
+        okapi: {
+          tenant: 'consortia',
+        },
+        user: {
+          user: {
+            consortium: {
+              centralTenantId: 'consortia',
+            },
+          },
+        },
+      };
+
+      expect(checkIfSharedInstance(stripes, instance)).toBeTruthy();
+    });
+  });
+});
+
