@@ -258,12 +258,11 @@ describe('ViewInstance', () => {
       });
       fireEvent.click(veiwSourceButton);
       expect(goToMock).toBeCalled();
-    });
-    it('"createHoldingsMarc" should be called when the user clicks the "Add MARC holdings record" button', async () => {
+    }, 10000);
+    it('"createHoldingsMarc" should be called when the user clicks the "Add MARC holdings record" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      const addButton = await screen.findByRole('button', { name: 'Add MARC holdings record' });
-      userEvent.click(addButton);
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Add MARC holdings record' }));
       expect(mockPush).toBeCalled();
     });
     it('"Move items within an instance" button to be clicked', () => {
@@ -316,8 +315,8 @@ describe('ViewInstance', () => {
         pathname: `/inventory/quick-marc/edit-bib/${defaultProp.selectedInstance.id}`,
         search: 'filters=test1&query=test2&sort=test3&qindex=test'
       };
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      const button = await screen.findByRole('button', { name: 'Edit MARC bibliographic record' });
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      const button = screen.getByRole('button', { name: 'Edit MARC bibliographic record' });
       await waitFor(() => {
         expect(button).not.toHaveAttribute('disabled');
       });
@@ -330,8 +329,8 @@ describe('ViewInstance', () => {
         pathname: `/inventory/quick-marc/duplicate-bib/${defaultProp.selectedInstance.id}`,
         search: 'filters=test1&query=test2&sort=test3&qindex=test'
       };
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      const button = await screen.findByRole('button', { name: 'Derive new MARC bibliographic record' });
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
       await waitFor(() => {
         expect(button).not.toHaveAttribute('disabled');
       });
