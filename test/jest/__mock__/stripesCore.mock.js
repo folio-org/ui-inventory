@@ -6,7 +6,7 @@ const STRIPES = {
   connect: Comp => Comp,
   config: {},
   currency: 'USD',
-  hasInterface: () => true,
+  hasInterface: jest.fn().mockReturnValue(true),
   hasPerm: jest.fn().mockReturnValue(true),
   locale: 'en-US',
   logger: {
@@ -95,7 +95,9 @@ const mockStripesCore = {
 
   useNamespace: () => ['@folio/inventory'],
 
-  TitleManager: ({ children }) => <>{children}</>
+  TitleManager: ({ children }) => <>{children}</>,
+
+  checkIfUserInMemberTenant: () => true,
 };
 
 jest.mock('@folio/stripes/core', () => ({

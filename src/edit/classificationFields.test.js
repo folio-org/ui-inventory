@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -51,12 +50,12 @@ describe('ClassificationFields', () => {
   it('click on Add classification button and check dropdown length, enter value in text box', () => {
     renderClassificationFields();
     const classificationButton = screen.getByText('Add classification');
-    userEvent.click(classificationButton);
+    fireEvent.click(classificationButton);
     const ClassificationDropdown = screen.getAllByText('Select classification type');
     expect(ClassificationDropdown).toHaveLength(1);
     const inputText = screen.getByRole('textbox');
     expect(inputText).toHaveValue('');
-    userEvent.type(inputText, 'Enter text');
+    fireEvent.change(inputText, { target: { value: 'Enter text' } });
     expect(inputText).toHaveValue('Enter text');
   });
 });

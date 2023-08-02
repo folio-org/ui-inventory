@@ -1,6 +1,4 @@
-import React, {
-  createRef,
-} from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { parse } from 'query-string';
 import ReactRouterPropTypes from 'react-router-prop-types';
@@ -8,11 +6,11 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
+import { flowRight } from 'lodash';
 
 import {
   AppIcon,
   IfPermission,
-  IfInterface,
   Pluggable,
   stripesConnect,
   checkIfUserInCentralTenant,
@@ -36,6 +34,7 @@ import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
 import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import {
+  checkIfSharedInstance,
   getDate,
   handleKeyCommand,
   isMARCSource,
@@ -55,6 +54,7 @@ import {
   InstanceDetails,
 } from './Instance';
 import {
+  withSingleRecordImport,
   CalloutRenderer,
   NewOrderModal,
 } from './components';
@@ -296,10 +296,12 @@ class ViewInstance extends React.Component {
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
+    const isSharedInstance = checkIfSharedInstance(stripes, instance);
 
     const searchParams = new URLSearchParams(location.search);
 
     searchParams.delete('relatedRecordVersion');
+    searchParams.append('shared', isSharedInstance.toString());
 
     history.push({
       pathname: `/inventory/quick-marc/${page}/${instance.id}`,
@@ -440,6 +442,7 @@ class ViewInstance extends React.Component {
 
   createActionMenuGetter = (instance, data) => ({ onToggle }) => {
     const {
+      canUseSingleRecordImport,
       onCopy,
       stripes,
       intl,
@@ -466,7 +469,6 @@ class ViewInstance extends React.Component {
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
     const canViewSource = canViewMARCSource && canViewInstance;
-    const canImport = stripes.hasInterface('copycat-imports') && stripes.hasPerm('copycat.profiles.collection.get');
     const canCreateOrder = stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const numberOfRequests = instanceRequests.other?.totalRecords;
@@ -487,7 +489,7 @@ class ViewInstance extends React.Component {
       canEditInstance
       || canViewSource
       || (!openedFromBrowse && (canMoveItems || canMoveHoldings))
-      || canImport
+      || canUseSingleRecordImport
       || canCreateInstance
       || canCreateOrder
       || canReorderRequests
@@ -579,7 +581,7 @@ class ViewInstance extends React.Component {
                 </>
               )
             }
-            {canImport && (
+            {canUseSingleRecordImport && (
               <Button
                 id="dropdown-clickable-reimport-record"
                 onClick={() => {
@@ -766,6 +768,7 @@ class ViewInstance extends React.Component {
       paneWidth,
       tagsEnabled,
       updateLocation,
+      canUseSingleRecordImport,
       intl,
     } = this.props;
     const ci = makeConnectedInstance(this.props, stripes.logger);
@@ -881,18 +884,15 @@ class ViewInstance extends React.Component {
                 />
               )
             }
-
-            <IfInterface name="copycat-imports">
-              <IfPermission perm="copycat.profiles.collection.get">
-                <ImportRecordModal
-                  isOpen={this.state.isImportRecordModalOpened}
-                  currentExternalIdentifier={undefined}
-                  handleSubmit={this.handleImportRecordModalSubmit}
-                  handleCancel={this.handleImportRecordModalCancel}
-                  id={id}
-                />
-              </IfPermission>
-            </IfInterface>
+            {canUseSingleRecordImport && (
+              <ImportRecordModal
+                isOpen={this.state.isImportRecordModalOpened}
+                currentExternalIdentifier={undefined}
+                handleSubmit={this.handleImportRecordModalSubmit}
+                handleCancel={this.handleImportRecordModalCancel}
+                id={id}
+              />
+            )}
 
             <NewOrderModal
               open={this.state.isNewOrderModalOpen}
@@ -907,6 +907,7 @@ class ViewInstance extends React.Component {
 }
 
 ViewInstance.propTypes = {
+  canUseSingleRecordImport: PropTypes.bool,
   selectedInstance:  PropTypes.object,
   goTo: PropTypes.func.isRequired,
   location: PropTypes.shape({
@@ -970,4 +971,8 @@ ViewInstance.propTypes = {
   updateLocation: PropTypes.func.isRequired,
 };
 
-export default injectIntl(withLocation(stripesConnect(ViewInstance)));
+export default flowRight(
+  injectIntl,
+  withLocation,
+  withSingleRecordImport,
+)(stripesConnect(ViewInstance));

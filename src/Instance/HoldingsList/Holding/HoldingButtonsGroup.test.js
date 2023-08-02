@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -58,7 +57,7 @@ describe('HoldingButtonsGroup', () => {
     it('should calls callback', () => {
       const { getByRole } = renderHoldingButtonsGroup();
 
-      userEvent.click(getByRole('button', { name:  'View holdings' }));
+      fireEvent.click(getByRole('button', { name:  'View holdings' }));
 
       expect(mockOnViewHolding.mock.calls.length).toBe(1);
     });
@@ -67,7 +66,7 @@ describe('HoldingButtonsGroup', () => {
     it('should calls callback', () => {
       const { getByRole } = renderHoldingButtonsGroup();
 
-      userEvent.click(getByRole('button', { name:  'Add item' }));
+      fireEvent.click(getByRole('button', { name:  'Add item' }));
 
       expect(mockOnAddItem.mock.calls.length).toBe(1);
     });

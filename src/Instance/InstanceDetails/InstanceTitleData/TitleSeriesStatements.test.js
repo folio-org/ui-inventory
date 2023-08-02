@@ -7,6 +7,7 @@ import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 
 import TitleSeriesStatements from './TitleSeriesStatements';
+import { segments } from '../../../constants';
 
 const seriesStatements = ['Statement 1', 'Statement 2'];
 
@@ -16,7 +17,7 @@ jest.mock('../ControllableDetail', () => ({
 
 const props = {
   seriesStatements,
-  segment: 'segments',
+  segment: segments.instances,
   source: 'source-test'
 };
 

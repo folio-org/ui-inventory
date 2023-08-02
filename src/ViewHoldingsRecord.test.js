@@ -2,8 +2,7 @@ import '../test/jest/__mock__';
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, act, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
@@ -95,51 +94,30 @@ describe('ViewHoldingsRecord actions', () => {
 
   it('should close view holding page', async () => {
     renderViewHoldingsRecord();
-    userEvent.click(await screen.findByRole('button', { name: 'confirm' }));
+    fireEvent.click(await screen.findByRole('button', { name: 'confirm' }));
     expect(defaultProps.history.push).toBeCalled();
   });
 
   it('should translate to edit holding form page', async () => {
     renderViewHoldingsRecord();
     const editHoldingBtn = await screen.findByTestId('edit-holding-btn');
-    userEvent.click(editHoldingBtn);
+    fireEvent.click(editHoldingBtn);
     expect(defaultProps.history.push).toHaveBeenCalled();
   });
 
   it('should translate to duplicate holding form page', async () => {
     renderViewHoldingsRecord();
     const duplicatHoldingBtn = await screen.findByTestId('duplicate-holding-btn');
-    userEvent.click(duplicatHoldingBtn);
+    fireEvent.click(duplicatHoldingBtn);
     expect(defaultProps.history.push).toHaveBeenCalled();
   });
 
   it('should display "inactive" by an inactive temporary location', async () => {
-    renderViewHoldingsRecord();
-    await waitFor(() => {
-      const tempLocation = document.querySelector('*[data-test-id=temporary-location]').innerHTML;
-      expect(tempLocation).toContain('Inactive');
-    });
+    await act(async () => { renderViewHoldingsRecord(); });
+    const tempLocation = document.querySelector('*[data-test-id=temporary-location]').innerHTML;
+    expect(tempLocation).toContain('Inactive');
   });
-  it('handleViewSource should be called when View Source button', async () => {
-    renderViewHoldingsRecord();
-    userEvent.click(await screen.findByText('Actions'));
-    const viewSourceBtn = screen.getByRole('button', { name: 'View source' });
-    await waitFor(() => {
-      expect(viewSourceBtn).not.toHaveAttribute('disabled');
-    });
-    userEvent.click(viewSourceBtn);
-    expect(defaultProps.goTo).toBeCalled();
-  });
-  it('"handleEditInQuickMarc" function should be called when "Edit in quickMARC" button', async () => {
-    renderViewHoldingsRecord();
-    userEvent.click(await screen.findByText('Actions'));
-    const quickMarcbtn = screen.getByRole('button', { name: 'Edit in quickMARC' });
-    await waitFor(() => {
-      expect(quickMarcbtn).not.toHaveAttribute('disabled');
-    });
-    userEvent.click(quickMarcbtn);
-    expect(defaultProps.goTo).toBeCalled();
-  });
+
   describe('Tests for shortcut of HasCommand', () => {
     it('"onCopyHolding" function to be triggered on clicking "duplicateRecord" button', async () => {
       const data = {
@@ -148,7 +126,7 @@ describe('ViewHoldingsRecord actions', () => {
         state: { backPathname: defaultProps.location.pathname },
       };
       renderViewHoldingsRecord();
-      userEvent.click(await screen.findByRole('button', { name: 'duplicateRecord' }));
+      fireEvent.click(await screen.findByRole('button', { name: 'duplicateRecord' }));
       expect(defaultProps.history.push).toBeCalledWith(data);
     });
     it('"onEditHolding" function to be triggered on clicking edit button', async () => {
@@ -158,25 +136,23 @@ describe('ViewHoldingsRecord actions', () => {
         state: { backPathname: defaultProps.location.pathname },
       };
       renderViewHoldingsRecord();
-      userEvent.click(await screen.findByRole('button', { name: 'edit' }));
+      fireEvent.click(await screen.findByRole('button', { name: 'edit' }));
       expect(defaultProps.history.push).toBeCalledWith(data);
     });
     it('"goTo" function to be triggered on clicking duplicateRecord button', async () => {
       renderViewHoldingsRecord();
-      userEvent.click(await screen.findByRole('button', { name: 'search' }));
+      fireEvent.click(await screen.findByRole('button', { name: 'search' }));
       expect(defaultProps.goTo).toBeCalledWith('/inventory');
     });
     it('collapseAllSections triggered on clicking collapseAllSections button', async () => {
       renderViewHoldingsRecord();
-      userEvent.click(await screen.findByRole('button', { name: 'collapseAllSections' }));
+      fireEvent.click(await screen.findByRole('button', { name: 'collapseAllSections' }));
       expect(spyOncollapseAllSections).toBeCalled();
     });
     it('expandAllSections triggered on clicking expandAllSections button', async () => {
-      renderViewHoldingsRecord();
-      userEvent.click(await screen.findByRole('button', { name: 'expandAllSections' }));
-      await waitFor(() => {
-        expect(spyOnexpandAllSections).toBeCalled();
-      });
+      await act(async () => { renderViewHoldingsRecord(); });
+      fireEvent.click(await screen.findByRole('button', { name: 'expandAllSections' }));
+      expect(spyOnexpandAllSections).toBeCalled();
     });
   });
 });

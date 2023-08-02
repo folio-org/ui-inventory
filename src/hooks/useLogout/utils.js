@@ -16,7 +16,7 @@ const registerLogoutListener = (cb, namespace, persistKey, history) => {
       const isLogout = location.pathname === '/';
 
       if (isLogout) {
-        cb();
+        cb?.();
         resetListenerRegister();
         window.removeEventListener('beforeunload', resetListenerRegister);
         unlisten();

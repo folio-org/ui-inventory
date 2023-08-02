@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -61,7 +60,7 @@ describe('Holding', () => {
     expect(selectHoldings).toBeInTheDocument();
     expect(accordion).toBeInTheDocument();
     const selectCheckbox = screen.getByRole('checkbox', { id: 'select-holding-1' });
-    userEvent.click(selectCheckbox);
+    fireEvent.click(selectCheckbox);
     expect(selectCheckbox).toBeChecked();
   });
 });

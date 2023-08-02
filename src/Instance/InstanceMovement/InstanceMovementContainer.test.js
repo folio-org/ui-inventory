@@ -1,8 +1,7 @@
 import '../../../test/jest/__mock__';
 
 import React from 'react';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
 import InstanceMovementContainer from './InstanceMovementContainer';
@@ -152,7 +151,7 @@ describe('Given InstanceMovementContainer', () => {
     it('should handle mutator.recordsEditorId.update with marc holdings id', () => {
       renderInstanceMovementContainer();
 
-      userEvent.click(screen.getByText('Move holdings'));
+      fireEvent.click(screen.getByText('Move holdings'));
 
       expect(mutator.recordsEditorId.update).toHaveBeenCalledWith({ externalId: 'holdings-id-1' });
     });
@@ -160,7 +159,7 @@ describe('Given InstanceMovementContainer', () => {
     it('should handle mutator.recordsEditor.GET', () => {
       renderInstanceMovementContainer();
 
-      userEvent.click(screen.getByText('Move holdings'));
+      fireEvent.click(screen.getByText('Move holdings'));
 
       expect(mutator.recordsEditor.GET).toHaveBeenCalled();
     });
@@ -168,7 +167,7 @@ describe('Given InstanceMovementContainer', () => {
     it('should handle mutator.recordsEditorId.update with parsed record id', () => {
       renderInstanceMovementContainer();
 
-      userEvent.click(screen.getByText('Move holdings'));
+      fireEvent.click(screen.getByText('Move holdings'));
 
       expect(mutator.recordsEditorId.update).toHaveBeenCalledWith({ id: 'parsed-record-id-1' });
     });
@@ -176,7 +175,7 @@ describe('Given InstanceMovementContainer', () => {
     it('should handle mutator.recordsEditor.PUT with correct values', () => {
       renderInstanceMovementContainer();
 
-      userEvent.click(screen.getByText('Move holdings'));
+      fireEvent.click(screen.getByText('Move holdings'));
 
       expect(mutator.recordsEditor.PUT).toHaveBeenCalledWith({
         ...recordsEditorGETReturnValues,
@@ -197,7 +196,7 @@ describe('Given InstanceMovementContainer', () => {
 
       nonUpdatedIds = ['holdings-id-1'];
 
-      userEvent.click(screen.getByText('Move holdings'));
+      fireEvent.click(screen.getByText('Move holdings'));
 
       expect(mutator.movableHoldings.POST).toHaveBeenCalledWith({
         toInstanceId: 'instance-id-2',
