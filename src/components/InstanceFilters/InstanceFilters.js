@@ -9,7 +9,6 @@ import {
   FilterAccordionHeader,
 } from '@folio/stripes/components';
 import {
-  checkIfUserInMemberTenant,
   useStripes,
 } from '@folio/stripes/core';
 
@@ -176,6 +175,14 @@ const InstanceFilters = props => {
     getNewRecords,
     props.data
   );
+
+  const checkIfUserInMemberTenant = stripes2 => {
+    if (!stripes2.hasInterface('consortia')) {
+      return false;
+    }
+
+    return stripes2.okapi.tenant !== stripes2.user.user?.consortium?.centralTenantId;
+  };
 
   const showSharedFacet = checkIfUserInMemberTenant(stripes);
 
