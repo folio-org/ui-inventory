@@ -54,6 +54,11 @@
 * *BREAKING* Bump `react` to `v18`. Refs UIIN-2508.
 * Add `Shared` facet to Instance/Holdings/Items search. Refs UIIN-2393.
 
+## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
+
+* User with limited permissions gets an error modal when navigating to the Inventory app. Fixes UIIN-2510.
+
 ## [9.4.10](https://github.com/folio-org/ui-inventory/tree/v9.4.10) (2023-07-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.9...v9.4.10)
 
