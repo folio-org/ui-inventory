@@ -286,7 +286,7 @@ describe('InstancesList', () => {
         });
 
         describe('for a Consortial central tenant', () => {
-          it('should display the default "New shared record" menu option', () => {
+          it('should display "New shared record" menu option', () => {
             spyOnIsUserInConsortiumMode.mockReturnValue(true);
             spyOnCheckIfUserInCentralTenant.mockReturnValue(true);
 
@@ -298,7 +298,7 @@ describe('InstancesList', () => {
         });
 
         describe('for a Member library tenant', () => {
-          it('should display the default "New local record" menu option', () => {
+          it('should display "New local record" menu option', () => {
             spyOnIsUserInConsortiumMode.mockReturnValue(true);
             spyOnCheckIfUserInCentralTenant.mockReturnValue(false);
 
