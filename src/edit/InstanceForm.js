@@ -11,8 +11,6 @@ import { withRouter } from 'react-router';
 import {
   AppIcon,
   stripesConnect,
-  checkIfUserInCentralTenant,
-  checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
@@ -62,6 +60,8 @@ import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
 import {
+  checkIfSharedInstance,
+  isUserInConsortiumMode,
   getDate,
   handleKeyCommand,
   psTitleRelationshipId,
@@ -77,7 +77,6 @@ import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
 
 import styles from './InstanceForm.css';
 import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
-import { CONSORTIUM_PREFIX } from '../constants';
 
 function validate(values) {
   const errors = {};
@@ -192,19 +191,15 @@ class InstanceForm extends React.Component {
     const getEditInstanceTitle = () => {
       const publishingInfo = getPublishingInfo(initialValues);
 
-      const isInstanceShared = checkIfUserInCentralTenant(stripes) || initialValues?.source.startsWith(CONSORTIUM_PREFIX);
-      const isInstanceLocal = checkIfUserInMemberTenant(stripes) && ['MARC', 'FOLIO'].includes(initialValues?.source);
-      const instanceType = isInstanceShared ? 'shared' : (isInstanceLocal ? 'local' : '');
-
       return (
         <>
           <AppIcon app="inventory" iconKey="instance" size="small" />
           {' '}
           <FormattedMessage
-            id="ui-inventory.editInstance.title"
+            id={`ui-inventory.editInstance.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}title`}
             values={{
               title: initialValues.title,
-              instanceType,
+              isShared: checkIfSharedInstance(stripes, initialValues),
             }}
           />
           {publishingInfo}

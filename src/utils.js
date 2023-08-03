@@ -21,6 +21,7 @@ import {
 } from 'lodash';
 import moment from 'moment';
 
+import { checkIfUserInCentralTenant } from '@folio/stripes/core';
 import { FormattedUTCDate } from '@folio/stripes/components';
 
 import {
@@ -777,4 +778,10 @@ export const buildSingleItemQuery = (qindex, query) => {
 
 export const isMARCSource = (source) => {
   return ['MARC', `${CONSORTIUM_PREFIX}MARC`].includes(source);
+};
+
+export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');
+
+export const checkIfSharedInstance = (stripes, instance) => {
+  return instance.source?.includes(CONSORTIUM_PREFIX) || checkIfUserInCentralTenant(stripes);
 };
