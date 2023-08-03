@@ -36,6 +36,7 @@ import {
   getDate,
   handleKeyCommand,
   isMARCSource,
+  isUserInConsortiumMode,
 } from './utils';
 import {
   indentifierTypeNames,
@@ -737,6 +738,21 @@ class ViewInstance extends React.Component {
     );
   };
 
+  renderPaneTitle = (instance) => {
+    const { stripes } = this.props;
+
+    return (
+      <FormattedMessage
+        id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
+        values={{
+          isShared: checkIfSharedInstance(stripes, instance),
+          title: instance?.title,
+          publisherAndDate: getPublishingInfo(instance),
+        }}
+      />
+    );
+  };
+
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
@@ -783,7 +799,6 @@ class ViewInstance extends React.Component {
       },
     ];
 
-
     if (!instance) {
       return (
         <Pane
@@ -814,15 +829,7 @@ class ViewInstance extends React.Component {
           >
             <InstanceDetails
               id="pane-instancedetails"
-              paneTitle={
-                <FormattedMessage
-                  id="ui-inventory.instanceRecordTitle"
-                  values={{
-                    title: instance?.title,
-                    publisherAndDate: getPublishingInfo(instance),
-                  }}
-                />
-              }
+              paneTitle={this.renderPaneTitle(instance)}
               paneSubtitle={
                 <FormattedMessage
                   id="ui-inventory.instanceRecordSubtitle"
