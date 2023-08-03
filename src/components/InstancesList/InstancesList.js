@@ -220,10 +220,13 @@ class InstancesList extends React.Component {
       this.setSegmentSortBy(sortBy);
     }
 
-    const id = this.props.location.pathname.split('/')[3];
+    const prevId = this.getInstanceIdFromLocation(prevProps.location);
+    const id = this.getInstanceIdFromLocation(this.props.location);
 
     if (id) {
       setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, id);
+    } else if (prevId) {
+      setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, null);
     }
   }
 
@@ -247,6 +250,10 @@ class InstancesList extends React.Component {
 
     return stripes.okapi.tenant === stripes.user.user.consortium?.centralTenantId;
   }
+
+  getInstanceIdFromLocation = (location) => {
+    return location.pathname.split('/')[3];
+  };
 
   clearStorage = () => {
     const {
