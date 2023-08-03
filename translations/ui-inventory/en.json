@@ -54,7 +54,7 @@
   "edit": "Edit",
   "newInstance": "New instance",
   "editInstance": "Edit instance",
-  "editInstance.title": "Edit {instanceType} instance • {title}",
+  "editInstance.title": "Edit instance • {title}",
   "editInstance.consortia.title": "Edit {isShared, select, false {local} true {shared} other {}} instance • {title}",
   "moveItems": "Move holdings/items to another instance",
   "viewRequests": "View requests",

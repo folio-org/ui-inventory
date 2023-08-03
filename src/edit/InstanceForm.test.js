@@ -8,8 +8,6 @@ import { screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
-import { StripesContext } from '@folio/stripes/core';
-
 import {
   renderWithIntl,
   translationsProperties,
@@ -30,7 +28,7 @@ const mockInitialValues = {
   languages: [''],
   source: 'MARC',
   id: 'testId',
-  metadata: { updatedDate: '11-11-2022' },
+  metadata: { updatedDate: '2019-04-11T12:01:48.451+0000' },
   hrid: 'test hrid',
 };
 
@@ -86,29 +84,27 @@ const queryClient = new QueryClient();
 const InstanceFormSetUp = (props = {}) => (
   <Router>
     <QueryClientProvider client={queryClient}>
-      <StripesContext.Provider value={stripesStub}>
-        <DataContext.Provider value={{
-          contributorTypes: [],
-          instanceFormats: [],
-          modesOfIssuance: [],
-          natureOfContentTerms: [],
-          tagsRecords: [],
-        }}
-        >
-          <InstanceForm
-            initialValues={mockInitialValues}
-            onSubmit={mockOnSubmit}
-            onCancel={mockOnCancel}
-            instance={mockInstance}
-            referenceTables={mockReferenceTables}
-            itemCount={mockItemCount}
-            goTo={mockGoTo}
-            isMARCRecord
-            resources={mockResources}
-            {...props}
-          />
-        </DataContext.Provider>
-      </StripesContext.Provider>
+      <DataContext.Provider value={{
+        contributorTypes: [],
+        instanceFormats: [],
+        modesOfIssuance: [],
+        natureOfContentTerms: [],
+        tagsRecords: [],
+      }}
+      >
+        <InstanceForm
+          initialValues={mockInitialValues}
+          onSubmit={mockOnSubmit}
+          onCancel={mockOnCancel}
+          instance={mockInstance}
+          referenceTables={mockReferenceTables}
+          itemCount={mockItemCount}
+          goTo={mockGoTo}
+          isMARCRecord
+          resources={mockResources}
+          {...props}
+        />
+      </DataContext.Provider>
     </QueryClientProvider>
   </Router>
 );
@@ -216,7 +212,7 @@ describe('InstanceForm', () => {
     it('should render hrid and last update date', async () => {
       const { findByText } = renderInstanceForm();
 
-      const subheader = await findByText('test hrid • Last updated: 11/10/2022');
+      const subheader = await findByText('test hrid • Last updated: 4/11/2019');
 
       expect(subheader).toBeInTheDocument();
     });
