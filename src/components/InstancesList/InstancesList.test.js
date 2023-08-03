@@ -4,7 +4,6 @@ import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 import {
   act,
-  cleanup,
   fireEvent,
   screen,
   within,
@@ -12,7 +11,7 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import { StripesContext, ModuleHierarchyProvider } from '@folio/stripes/core';
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
@@ -21,6 +20,7 @@ import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
 import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
+import * as utils from '../../utils';
 
 const updateMock = jest.fn();
 const mockQueryReplace = jest.fn();
@@ -30,6 +30,8 @@ const mockRecordsReset = jest.fn();
 const mockGetLastSearchOffset = jest.fn();
 const mockStoreLastSearchOffset = jest.fn();
 const mockGetLastSearch = jest.fn();
+const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
+const spyOnCheckIfUserInCentralTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInCentralTenant');
 
 jest.mock('../../storage', () => ({
   ...jest.requireActual('../../storage'),
@@ -43,28 +45,6 @@ jest.mock('../../hooks', () => ({
   }),
 }));
 
-const stripesStub = {
-  connect: Component => <Component />,
-  hasPerm: () => true,
-  hasInterface: () => true,
-  logger: { log: noop },
-  locale: 'en-US',
-  plugins: {},
-  okapi: {
-    tenant: 'university',
-    url: 'https://folio-testing-okapi.dev.folio.org',
-  },
-  user: {
-    perms: {},
-    user: {
-      id: 'b1add99d-530b-5912-94f3-4091b4d87e2c',
-      username: 'diku_admin',
-      consortium: {
-        centralTenantId: 'consortia',
-      },
-    },
-  },
-};
 const data = {
   contributorTypes: [],
   contributorNameTypes: [],
@@ -100,7 +80,14 @@ const resources = {
   resultOffset: 0,
 };
 
-let history;
+let history = createMemoryHistory();
+
+const openActionMenu = () => {
+  fireEvent.change(screen.getByRole('combobox', { name: /search field index/i }), {
+    target: { value: 'all' }
+  });
+  fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+};
 
 const renderInstancesList = ({
   segment,
@@ -114,39 +101,37 @@ const renderInstancesList = ({
 
   return renderWithIntl(
     <Router history={history}>
-      <StripesContext.Provider value={stripesStub}>
-        <ModuleHierarchyProvider module="@folio/inventory">
-          <InstancesList
-            parentResources={resources}
-            parentMutator={{
-              resultOffset: { replace: mockResultOffsetReplace },
-              resultCount: { replace: noop },
-              query: { update: updateMock, replace: mockQueryReplace },
-              records: { reset: mockRecordsReset },
-            }}
-            data={{
-              ...data,
-              query
-            }}
-            onSelectRow={noop}
-            renderFilters={renderer({
-              ...data,
-              query,
-              parentResources: resources,
-            })}
-            segment={segment}
-            searchableIndexes={indexes}
-            searchableIndexesES={indexesES}
-            fetchFacets={noop}
-            getLastBrowse={jest.fn()}
-            getLastSearchOffset={mockGetLastSearchOffset}
-            storeLastSearch={mockStoreLastSearch}
-            storeLastSearchOffset={mockStoreLastSearchOffset}
-            storeLastSegment={noop}
-            {...rest}
-          />
-        </ModuleHierarchyProvider>
-      </StripesContext.Provider>
+      <ModuleHierarchyProvider module="@folio/inventory">
+        <InstancesList
+          parentResources={resources}
+          parentMutator={{
+            resultOffset: { replace: mockResultOffsetReplace },
+            resultCount: { replace: noop },
+            query: { update: updateMock, replace: mockQueryReplace },
+            records: { reset: mockRecordsReset },
+          }}
+          data={{
+            ...data,
+            query
+          }}
+          onSelectRow={noop}
+          renderFilters={renderer({
+            ...data,
+            query,
+            parentResources: resources,
+          })}
+          segment={segment}
+          searchableIndexes={indexes}
+          searchableIndexesES={indexesES}
+          fetchFacets={noop}
+          getLastBrowse={jest.fn()}
+          getLastSearchOffset={mockGetLastSearchOffset}
+          storeLastSearch={mockStoreLastSearch}
+          storeLastSearchOffset={mockStoreLastSearchOffset}
+          storeLastSegment={noop}
+          {...rest}
+        />
+      </ModuleHierarchyProvider>
     </Router>,
     translationsProperties,
     rerender,
@@ -155,17 +140,14 @@ const renderInstancesList = ({
 
 describe('InstancesList', () => {
   describe('rendering InstancesList with instances segment', () => {
-    beforeEach(() => {
-      history = createMemoryHistory();
-      renderInstancesList({ segment: 'instances' });
-    });
-
     afterEach(() => {
       jest.clearAllMocks();
     });
 
     describe('when the component is mounted', () => {
       it('should write location.search to the session storage', () => {
+        renderInstancesList({ segment: 'instances' });
+
         const search = '?qindex=title&query=book&sort=title';
         act(() => { history.push({ search }); });
         expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
@@ -207,9 +189,11 @@ describe('InstancesList', () => {
     describe('when the component is updated', () => {
       describe('and location.search has been changed', () => {
         it('should write location.search to the session storage', () => {
+          renderInstancesList({ segment: 'instances' });
+
           const search = '?qindex=title&query=book&sort=title';
-          mockStoreLastSearch.mockClear();
           act(() => { history.push({ search }); });
+
           expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
         });
       });
@@ -246,7 +230,6 @@ describe('InstancesList', () => {
 
     describe('when clicking on the `Browse` tab', () => {
       it('should pass the correct search by clicking on the `Browse` tab', () => {
-        cleanup();
         const search = '?qindex=subject&query=book';
 
         jest.spyOn(history, 'push');
@@ -262,7 +245,6 @@ describe('InstancesList', () => {
       });
 
       it('should store last opened record id', () => {
-        cleanup();
         history = createMemoryHistory({ initialEntries: [{
           pathname: '/inventory/view/test-id',
         }] });
@@ -278,29 +260,68 @@ describe('InstancesList', () => {
     });
 
     it('should have proper list results size', () => {
+      renderInstancesList({ segment: 'instances' });
+
       expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(3);
     });
 
     describe('opening action menu', () => {
-      beforeEach(() => {
-        fireEvent.change(screen.getByRole('combobox'), {
-          target: { value: 'all' }
-        });
+      it('should disable toggleable columns', () => {
+        renderInstancesList({ segment: 'instances' });
+        openActionMenu();
 
-        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        expect(screen.getByText(/show columns/i)).toBeInTheDocument();
       });
 
-      it('should disable toggleable columns', () => {
-        expect(screen.getByText(/show columns/i)).toBeInTheDocument();
+      describe('"New record" button', () => {
+        describe('for non-consortial tenant', () => {
+          it('should display the default "New" menu option', () => {
+            spyOnIsUserInConsortiumMode.mockReturnValue(false);
+
+            renderInstancesList({ segment: 'instances' });
+            openActionMenu();
+
+            expect(screen.getByRole('button', { name: 'New' })).toBeInTheDocument();
+          });
+        });
+
+        describe('for a Consortial central tenant', () => {
+          it('should display the default "New shared record" menu option', () => {
+            spyOnIsUserInConsortiumMode.mockReturnValue(true);
+            spyOnCheckIfUserInCentralTenant.mockReturnValue(true);
+
+            renderInstancesList({ segment: 'instances' });
+            openActionMenu();
+
+            expect(screen.getByRole('button', { name: 'New shared record' })).toBeInTheDocument();
+          });
+        });
+
+        describe('for a Member library tenant', () => {
+          it('should display the default "New local record" menu option', () => {
+            spyOnIsUserInConsortiumMode.mockReturnValue(true);
+            spyOnCheckIfUserInCentralTenant.mockReturnValue(false);
+
+            renderInstancesList({ segment: 'instances' });
+            openActionMenu();
+
+            expect(screen.getByRole('button', { name: 'New local record' })).toBeInTheDocument();
+          });
+        });
       });
 
       describe('"New MARC Bib Record" button', () => {
         it('should render', () => {
+          renderInstancesList({ segment: 'instances' });
+          openActionMenu();
+
           expect(screen.getByRole('button', { name: 'New MARC Bib Record' })).toBeInTheDocument();
         });
 
         it('should redirect to the correct layer', async () => {
           jest.spyOn(history, 'push');
+          renderInstancesList({ segment: 'instances' });
+          openActionMenu();
 
           const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
 
@@ -311,49 +332,65 @@ describe('InstancesList', () => {
       });
 
       describe('hiding contributors column', () => {
-        beforeEach(() => {
-          fireEvent.click(screen.getByTestId('contributors'));
-        });
-
         it('should hide contributors column', () => {
+          renderInstancesList({ segment: 'instances' });
+          fireEvent.click(screen.getByTestId('contributors'));
+
           expect(document.querySelector('#clickable-list-column-contributors')).not.toBeInTheDocument();
         });
       });
 
       describe('select sort by', () => {
         it('should render menu option', () => {
+          renderInstancesList({ segment: 'instances' });
+
           expect(screen.getByTestId('menu-section-sort-by')).toBeInTheDocument();
         });
 
         it('should render select', () => {
+          renderInstancesList({ segment: 'instances' });
+
           expect(screen.getByTestId('sort-by-selection')).toBeInTheDocument();
         });
 
         it('should render as many options as defined plus Relevance', () => {
+          renderInstancesList({ segment: 'instances' });
+          openActionMenu();
+
           const options = within(screen.getByTestId('sort-by-selection')).getAllByRole('option');
+
           expect(options).toHaveLength(Object.keys(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).length + 1);
         });
       });
 
       describe('select proper sort options', () => {
         it('should select Title as default selected sort option', () => {
+          renderInstancesList({ segment: 'instances' });
+
           const search = '?segment=instances&sort=title';
           act(() => { history.push({ search }); });
+          openActionMenu();
 
           const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Title' });
           expect(option.selected).toBeTruthy();
         });
 
         it('should select Contributors option', () => {
-          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          renderInstancesList({ segment: 'instances' });
+
+          openActionMenu();
           fireEvent.change(screen.getByTestId('sort-by-selection'), { target: { value: 'contributors' } });
+          openActionMenu();
 
           const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Contributors' });
           expect(option.selected).toBeTruthy();
         });
 
         it('should select option value "Contributors" after column "Contributors" click', async () => {
+          renderInstancesList({ segment: 'instances' });
+
           await act(async () => fireEvent.click(document.querySelector('#clickable-list-column-contributors')));
+          openActionMenu();
 
           expect((screen.getByRole('option', { name: 'Contributors' })).selected).toBeTruthy();
         });
@@ -362,12 +399,16 @@ describe('InstancesList', () => {
 
     describe('filters pane', () => {
       it('should have selected effective call number option', async () => {
+        renderInstancesList({ segment: 'instances' });
+
         await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'callNumber' } }));
 
         expect((screen.getByRole('option', { name: 'Effective call number (item), shelving order' })).selected).toBeTruthy();
       });
 
       it('should have query in search input', () => {
+        renderInstancesList({ segment: 'instances' });
+
         fireEvent.change(screen.getByRole('searchbox', { name: 'Search' }), { target: { value: 'search query' } });
         fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
@@ -376,7 +417,9 @@ describe('InstancesList', () => {
     });
 
     describe('when using advanced search', () => {
-      beforeEach(() => {
+      it('should set advanced search query in search input', () => {
+        renderInstancesList({ segment: 'instances' });
+
         fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
         fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
           target: { value: 'test' }
@@ -384,9 +427,7 @@ describe('InstancesList', () => {
 
         const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
         fireEvent.click(advancedSearchSubmit);
-      });
 
-      it('should set advanced search query in search input', () => {
         expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
       });
     });
