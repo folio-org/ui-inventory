@@ -54,6 +54,7 @@
 * *BREAKING* Bump `react` to `v18`. Refs UIIN-2508.
 * Add `Shared` facet to Instance/Holdings/Items search. Refs UIIN-2393.
 * Add `Shared` search parameter when the user is redirected to the quick-marc page to identify shared record. Refs UIIN-2517.
+* Instance Edit screen header: add shared/local indication. Refs UIIN-2438.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)

@@ -8,8 +8,6 @@ import { screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
-import { StripesContext } from '@folio/stripes/core';
-
 import {
   renderWithIntl,
   translationsProperties,
@@ -20,20 +18,35 @@ import { DataContext } from '../contexts';
 import InstanceForm from './InstanceForm';
 
 const mockInitialValues = {
+  title: 'test title',
   instanceTypeId: '',
   instanceFormatId: 'instanceFormatId',
   statisticalCodeId: 'statisticalCodeId',
   instanceSource: 'MARC',
   alternativeTitles: [''],
   publication: [{ publisher: '', dateOfPublication: '', place: '' }],
-  languages: ['']
+  languages: [''],
+  source: 'MARC',
+  id: 'testId',
+  metadata: { updatedDate: '2019-04-11T12:01:48.451+0000' },
+  hrid: 'test hrid',
 };
 
 const mockReferenceTables = {
   instanceTypes: [{ id: 'instanceTypesId', name: 'instanceTypesId' }],
   instanceStatuses: [],
   modesOfIssuance: [{ id: 'modesOfIssuanceId', name: 'modesOfIssuanceId' }],
-  statisticalCodes: [],
+  statisticalCodes: [{
+    id: 'testId1',
+    statisticalCodeTypeId: 'testStatisticalCodeTypeId1',
+    code: 'testCode1',
+    name: 'testName1',
+  }, {
+    id: 'testId2',
+    statisticalCodeTypeId: 'testStatisticalCodeTypeId2',
+    code: 'testCode2',
+    name: 'testName2',
+  }],
   instanceRelationshipTypes: [{ id: 'instanceRelationshipTypesId', name: 'instanceRelationshipTypesId' }],
   alternativeTitleTypes: [{ id: 'alternativeTitleTypesId', name: 'statisticalCodeId', code: 'alternativeTitleTypescode' }],
   identifierTypes: [],
@@ -71,29 +84,27 @@ const queryClient = new QueryClient();
 const InstanceFormSetUp = (props = {}) => (
   <Router>
     <QueryClientProvider client={queryClient}>
-      <StripesContext.Provider value={stripesStub}>
-        <DataContext.Provider value={{
-          contributorTypes: [],
-          instanceFormats: [],
-          modesOfIssuance: [],
-          natureOfContentTerms: [],
-          tagsRecords: [],
-        }}
-        >
-          <InstanceForm
-            initialValues={mockInitialValues}
-            onSubmit={mockOnSubmit}
-            onCancel={mockOnCancel}
-            instance={mockInstance}
-            referenceTables={mockReferenceTables}
-            itemCount={mockItemCount}
-            goTo={mockGoTo}
-            isMARCRecord
-            resources={mockResources}
-            {...props}
-          />
-        </DataContext.Provider>
-      </StripesContext.Provider>
+      <DataContext.Provider value={{
+        contributorTypes: [],
+        instanceFormats: [],
+        modesOfIssuance: [],
+        natureOfContentTerms: [],
+        tagsRecords: [],
+      }}
+      >
+        <InstanceForm
+          initialValues={mockInitialValues}
+          onSubmit={mockOnSubmit}
+          onCancel={mockOnCancel}
+          instance={mockInstance}
+          referenceTables={mockReferenceTables}
+          itemCount={mockItemCount}
+          goTo={mockGoTo}
+          isMARCRecord
+          resources={mockResources}
+          {...props}
+        />
+      </DataContext.Provider>
     </QueryClientProvider>
   </Router>
 );
@@ -145,6 +156,65 @@ describe('InstanceForm', () => {
       expect(screen.getByRole('group', { name: 'Classification' })).toBeInTheDocument();
       expect(screen.getByRole('group', { name: 'Child instances' })).toBeInTheDocument();
       expect(screen.getByRole('group', { name: 'Parent instances' })).toBeInTheDocument();
+    });
+  });
+
+  describe('Instance form header', () => {
+    describe('when user is central tenant', () => {
+      it('should render correct title', async () => {
+        const { findByText } = renderInstanceForm({
+          stripes: {
+            ...stripesStub,
+            okapi: { tenant: 'consortium' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          },
+        });
+
+        const title = await findByText('Edit shared instance • test title');
+
+        expect(title).toBeInTheDocument();
+      });
+    });
+
+    describe('when user is member library tenant', () => {
+      it('should render correct title', async () => {
+        const { findByText } = renderInstanceForm({
+          stripes: {
+            ...stripesStub,
+            okapi: { tenant: 'university' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          },
+        });
+
+        const title = await findByText('Edit local instance • test title');
+
+        expect(title).toBeInTheDocument();
+      });
+    });
+
+    describe('when user is non-consortial tenant', () => {
+      it('should render correct title', async () => {
+        const { findByText } = renderInstanceForm({
+          stripes: {
+            ...stripesStub,
+            hasInterface: () => false,
+          },
+        });
+
+        const title = await findByText('Edit instance • test title');
+
+        expect(title).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Instance subheader', () => {
+    it('should render hrid and last update date', async () => {
+      const { findByText } = renderInstanceForm();
+
+      const subheader = await findByText('test hrid • Last updated: 4/11/2019');
+
+      expect(subheader).toBeInTheDocument();
     });
   });
 });
