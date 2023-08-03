@@ -8,6 +8,7 @@ const QuickMarcRoute = ({ match, history, location }) => {
   const onClose = useCallback((recordRoute) => {
     const newSearchParams = new URLSearchParams(location.search);
     newSearchParams.delete('relatedRecordVersion');
+    newSearchParams.delete('shared');
 
     history.push({
       pathname: `/inventory/view/${recordRoute ?? ''}`,
