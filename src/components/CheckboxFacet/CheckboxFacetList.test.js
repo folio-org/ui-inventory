@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { useSearchValue } from '../../stores/facetsStore';
 import '../../../test/jest/__mock__';
 import CheckboxFacetList from './CheckboxFacetList';
@@ -87,10 +86,9 @@ describe('CheckboxFacetList', () => {
         isPending={isPending}
       />,
     );
-    userEvent.type(screen.getByText(`${fieldName}-field`), 'Test Search');
-    await waitFor(() => {
-      expect(onSearch).toBeCalledWith('Test Search');
-    });
+
+    fireEvent.change(screen.getByLabelText(`${fieldName}-field`), { target: { value: 'Test Search' } });
+    expect(onSearch).toBeCalledWith('Test Search');
   });
   it('noMatchingOptions should be render when dataOptions is empty', () => {
     render(

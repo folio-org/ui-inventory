@@ -2,7 +2,7 @@ import '../../../../test/jest/__mock__';
 
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -29,7 +29,7 @@ describe('useBoundWithsMutation', () => {
       { wrapper },
     );
 
-    await result.current.mutateBoundWiths();
+    await act(async () => { result.current.mutateBoundWiths(); });
 
     expect(putMock).toHaveBeenCalled();
   });

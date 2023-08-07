@@ -8,6 +8,25 @@
   margin-right: 5px;
 }
 
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.sharedIconRoot {
+  justify-content: start;
+}
+
+.sharedIcon {
+  stroke: rgb(100, 100, 100);
+  fill: rgb(100, 100, 100);
+}
+
+.sharedIconLight {
+  stroke: rgb(255, 255, 255);
+  fill: rgb(255, 255, 255);
+}
+
 .boundWithIcon {
   background-color: transparent !important;
   margin-left: var(--gutter-static-one-third);
@@ -21,10 +40,4 @@
   margin-left: 26px;
   font-weight: var(--text-weight-bold);
   color: var(--error);
-}
-
-/* A version of these rules are present in TextLink.css, but overridden by MCL.css */
-.inventoryInstances div[class*="Selected"] a:visited {
-  color: var(--link-color-visited-current);
-  text-decoration-color: var(--link-color-visited-current);
 }

@@ -21,6 +21,7 @@ import {
 } from 'lodash';
 import moment from 'moment';
 
+import { checkIfUserInCentralTenant } from '@folio/stripes/core';
 import { FormattedUTCDate } from '@folio/stripes/components';
 
 import {
@@ -33,6 +34,7 @@ import {
   LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
+  CONSORTIUM_PREFIX,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -255,7 +257,13 @@ export function filterItemsBy(name) {
 }
 
 export function getQueryTemplate(queryIndex, indexes) {
-  const searchableIndex = indexes.find(({ value }) => value === queryIndex);
+  const searchableIndex = indexes.find(({ value, subIndexes }) => {
+    if (subIndexes) {
+      return subIndexes.some(subIndex => subIndex.value === queryIndex);
+    }
+
+    return value === queryIndex;
+  });
 
   return get(searchableIndex, 'queryTemplate');
 }
@@ -652,8 +660,6 @@ export const unmarshalInstance = (instance, identifierTypesById) => {
  */
 export const omitFromArray = (array, path) => array.map(title => omit(title, path));
 
-export const sourceSuppressor = sourceValue => term => term.source === sourceValue;
-
 export const getNextSelectedRowsState = (selectedRows, row) => {
   const { id } = row;
   const isRowSelected = Boolean(selectedRows[id]);
@@ -768,4 +774,14 @@ export const buildSingleItemQuery = (qindex, query) => {
   }
 
   return template(queryTemplate, { interpolate: /%{([\s\S]+?)}/g })({ query });
+};
+
+export const isMARCSource = (source) => {
+  return ['MARC', `${CONSORTIUM_PREFIX}MARC`].includes(source);
+};
+
+export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');
+
+export const checkIfSharedInstance = (stripes, instance) => {
+  return instance.source?.includes(CONSORTIUM_PREFIX) || checkIfUserInCentralTenant(stripes);
 };

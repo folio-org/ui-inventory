@@ -3,7 +3,7 @@ import '../../../test/jest/__mock__';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { act, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useLocationFilters } from '@folio/stripes-acq-components';
 
@@ -15,7 +15,10 @@ import { browseModeOptions } from '../../constants';
 import BrowseInventory from './BrowseInventory';
 import { SearchModeNavigation } from '../../components';
 import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
-import { useLastSearchTerms } from '../../hooks';
+import {
+  useLastSearchTerms,
+  useInventoryBrowse,
+} from '../../hooks';
 
 const mockGetLastSearch = jest.fn();
 const mockGetLastBrowseOffset = jest.fn().mockImplementation(() => INIT_PAGE_CONFIG);
@@ -153,8 +156,7 @@ describe('BrowseInventory', () => {
   it('should call "changeSearchIndex" when browse mode option was changed', async () => {
     renderBrowseInventory();
 
-    await act(async () => userEvent.selectOptions(screen.getByRole('combobox'), 'contributors'));
-
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
     expect(changeSearchIndex).toHaveBeenCalled();
   });
 
@@ -177,5 +179,41 @@ describe('BrowseInventory', () => {
     await act(async () => userEvent.click(container.querySelector('[data-test-single-search-form-submit="true"]')));
 
     expect(applySearch).not.toHaveBeenCalled();
+  });
+
+  describe('when the selected qindex is one of those that should comprise the callNumberType param', () => {
+    it('should be added to the useInventoryBrowse filters', () => {
+      const filters = {
+        query: 'fakeQuery',
+        qindex: browseModeOptions.DEWEY,
+      };
+
+      useLocationFilters.mockReturnValue(getFiltersUtils({
+        filters,
+      }));
+
+      renderBrowseInventory();
+
+      const expectedFilters = {
+        ...filters,
+        callNumberType: filters.qindex,
+      };
+
+      expect(useInventoryBrowse).toHaveBeenCalledWith(expect.objectContaining({ filters: expectedFilters }));
+    });
+  });
+
+  it('should display search indexes', () => {
+    const { getByText } = renderBrowseInventory();
+
+    expect(getByText('Call numbers (all)')).toBeDefined();
+    expect(getByText('Dewey Decimal classification')).toBeDefined();
+    expect(getByText('Library of Congress classification')).toBeDefined();
+    expect(getByText('Local')).toBeDefined();
+    expect(getByText('National Library of Medicine classification')).toBeDefined();
+    expect(getByText('Other scheme')).toBeDefined();
+    expect(getByText('Superintendent of Documents classification')).toBeDefined();
+    expect(getByText('Contributors')).toBeDefined();
+    expect(getByText('Subjects')).toBeDefined();
   });
 });

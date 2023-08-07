@@ -3,7 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -30,9 +30,9 @@ describe('useReceivingHistory', () => {
 
   it('should return receiving history based on pieces and holding history', async () => {
     const holding = { id: 'holdingId', receivingHistory: { entries: [receivingHistory[0]] } };
-    const { result, waitFor } = renderHook(() => useReceivingHistory(holding), { wrapper });
+    const { result } = renderHook(() => useReceivingHistory(holding), { wrapper });
 
-    await waitFor(() => !result.current.isLoading);
+    await act(() => !result.current.isLoading);
 
     expect(result.current.receivingHistory).toEqual(receivingHistory);
   });

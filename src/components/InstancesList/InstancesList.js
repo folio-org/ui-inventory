@@ -15,15 +15,16 @@ import {
 } from 'react-intl';
 import saveAs from 'file-saver';
 import moment from 'moment';
+import classnames from 'classnames';
 
 import {
   Pluggable,
   AppIcon,
   IfPermission,
-  IfInterface,
   CalloutContext,
   stripesConnect,
   withNamespace,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -39,6 +40,7 @@ import {
   DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
 
+import { withSingleRecordImport } from '..';
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
@@ -54,11 +56,12 @@ import {
   omitFromArray,
   isTestEnv,
   handleKeyCommand,
-  buildSingleItemQuery
+  buildSingleItemQuery,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
+  queryIndexes,
   segments,
 } from '../../constants';
 import {
@@ -69,13 +72,14 @@ import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
 import SelectedRecordsModal from '../SelectedRecordsModal';
 import ImportRecordModal from '../ImportRecordModal';
-
 import { buildQuery } from '../../routes/buildManifestObject';
 import {
   getItem,
   setItem,
 } from '../../storage';
 import facetsStore from '../../stores/facetsStore';
+import registerLogoutListener from '../../hooks/useLogout/utils';
+import { advancedSearchIndexes } from '../../filterConfig';
 
 import css from './instances.css';
 
@@ -92,11 +96,13 @@ const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 
 class InstancesList extends React.Component {
   static defaultProps = {
+    canUseSingleRecordImport: false,
     showSingleResult: true,
     segment: segments.instances,
   };
 
   static propTypes = {
+    canUseSingleRecordImport: PropTypes.bool,
     data: PropTypes.object,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object,
@@ -123,6 +129,7 @@ class InstancesList extends React.Component {
     location: PropTypes.shape({
       search: PropTypes.string,
       state: PropTypes.object,
+      pathname: PropTypes.string,
     }),
     stripes: PropTypes.object.isRequired,
     history: PropTypes.shape({
@@ -133,6 +140,7 @@ class InstancesList extends React.Component {
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSegment: PropTypes.func.isRequired,
   };
 
   static contextType = CalloutContext;
@@ -167,6 +175,7 @@ class InstancesList extends React.Component {
     const {
       history,
       getParams,
+      namespace,
     } = this.props;
     const params = getParams();
 
@@ -188,6 +197,8 @@ class InstancesList extends React.Component {
       openedFromBrowse: params.selectedBrowseResult === 'true',
       optionSelected: '',
     });
+
+    registerLogoutListener(this.clearStorage, namespace, 'instances-list-logout', history);
   }
 
   componentDidUpdate(prevProps) {
@@ -208,6 +219,15 @@ class InstancesList extends React.Component {
     if (this.state.segmentsSortBy.find(x => x.name === this.props.segment && x.sort !== sortBy)) {
       this.setSegmentSortBy(sortBy);
     }
+
+    const prevId = this.getInstanceIdFromLocation(prevProps.location);
+    const id = this.getInstanceIdFromLocation(this.props.location);
+
+    if (id) {
+      setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, id);
+    } else if (prevId) {
+      setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, null);
+    }
   }
 
   componentWillUnmount() {
@@ -221,6 +241,30 @@ class InstancesList extends React.Component {
     authorityId: '',
   };
 
+  get isUserInCentralTenant() {
+    const { stripes } = this.props;
+
+    if (!stripes.hasInterface('consortia')) {
+      return false;
+    }
+
+    return stripes.okapi.tenant === stripes.user.user.consortium?.centralTenantId;
+  }
+
+  getInstanceIdFromLocation = (location) => {
+    return location.pathname.split('/')[3];
+  };
+
+  clearStorage = () => {
+    const {
+      namespace,
+    } = this.props;
+
+    Object.values(segments).forEach((segment) => {
+      setItem(`${namespace}.${segment}.lastOpenRecord`, null);
+    });
+  }
+
   processLastSearchTerms = () => {
     const {
       getParams,
@@ -228,12 +272,13 @@ class InstancesList extends React.Component {
       parentMutator,
       getLastSearchOffset,
       storeLastSearch,
+      segment,
     } = this.props;
     const params = getParams();
-    const lastSearchOffset = getLastSearchOffset();
+    const lastSearchOffset = getLastSearchOffset(segment);
     const offset = params.selectedBrowseResult === 'true' ? 0 : lastSearchOffset;
 
-    storeLastSearch(location.search);
+    storeLastSearch(location.search, segment);
     parentMutator.resultOffset.replace(offset);
   }
 
@@ -243,14 +288,15 @@ class InstancesList extends React.Component {
       parentResources,
       storeLastSearch,
       storeLastSearchOffset,
+      segment,
     } = this.props;
 
     if (prevProps.location.search !== location.search) {
-      storeLastSearch(location.search);
+      storeLastSearch(location.search, segment);
     }
 
     if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
-      storeLastSearchOffset(parentResources.resultOffset);
+      storeLastSearchOffset(parentResources.resultOffset, segment);
     }
   }
 
@@ -371,6 +417,8 @@ class InstancesList extends React.Component {
   }
 
   refocusOnInputSearch = (segment) => {
+    const { storeLastSegment } = this.props;
+
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
@@ -379,18 +427,33 @@ class InstancesList extends React.Component {
         optionSelected: ''
       });
     }
+    storeLastSegment(segment);
     facetsStore.getState().resetFacetSettings();
     document.getElementById('input-inventory-search').focus();
+  }
+
+  onSearchModeSwitch = () => {
+    const {
+      namespace,
+      location: { pathname },
+      segment,
+    } = this.props;
+
+    const id = pathname.split('/')[3];
+
+    if (id) {
+      setItem(`${namespace}.${segment}.lastOpenRecord`, id);
+    }
   }
 
   renderNavigation = () => (
     <>
       <SearchModeNavigation
         search={this.props.getLastBrowse()}
+        onSearchModeSwitch={this.onSearchModeSwitch}
       />
       <FilterNavigation
         segment={this.props.segment}
-        segmentsSortBy={this.state.segmentsSortBy}
         onChange={this.refocusOnInputSearch}
       />
     </>
@@ -618,7 +681,13 @@ class InstancesList extends React.Component {
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { parentResources, intl, segment } = this.props;
+    const {
+      canUseSingleRecordImport,
+      parentResources,
+      intl,
+      segment,
+      stripes,
+    } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
@@ -687,20 +756,22 @@ class InstancesList extends React.Component {
               <FormattedMessage id="stripes-smart-components.new" />
             </Button>
           </IfPermission>
-          <Pluggable
-            id="clickable-create-inventory-records"
-            onClose={this.toggleNewFastAddModal}
-            open={this.state.showNewFastAddModal} // control the open modal via state var
-            renderTrigger={() => (
-              this.getActionItem({
-                id: 'new-fast-add-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.newFastAddRecord',
-                onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-              })
-            )}
-            type="create-inventory-records"
-          />
+          {!checkIfUserInCentralTenant(stripes) && (
+            <Pluggable
+              id="clickable-create-inventory-records"
+              onClose={this.toggleNewFastAddModal}
+              open={this.state.showNewFastAddModal} // control the open modal via state var
+              renderTrigger={() => (
+                this.getActionItem({
+                  id: 'new-fast-add-record',
+                  icon: 'lightning',
+                  messageId: 'ui-inventory.newFastAddRecord',
+                  onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+                })
+              )}
+              type="create-inventory-records"
+            />
+          )}
           <IfPermission perm="ui-quick-marc.quick-marc-editor.create">
             <Button
               buttonStyle="dropdownItem"
@@ -723,7 +794,7 @@ class InstancesList extends React.Component {
               icon: 'report',
               messageId: 'ui-inventory.exportInProgress',
             }) :
-            this.getActionItem({
+            !checkIfUserInCentralTenant(stripes) && this.getActionItem({
               id: 'dropdown-clickable-get-report',
               icon: 'report',
               messageId: 'ui-inventory.inTransitReport',
@@ -758,16 +829,12 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(this.triggerQuickExport),
             isDisabled: !selectedRowsCount,
           })}
-          <IfInterface name="copycat-imports">
-            <IfPermission perm="copycat.profiles.collection.get">
-              {this.getActionItem({
-                id: 'dropdown-clickable-import-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.copycat.import',
-                onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
-              })}
-            </IfPermission>
-          </IfInterface>
+          {canUseSingleRecordImport && this.getActionItem({
+            id: 'dropdown-clickable-import-record',
+            icon: 'lightning',
+            messageId: 'ui-inventory.copycat.import',
+            onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+          })}
           {this.getActionItem({
             id: 'dropdown-clickable-show-selected-records',
             icon: 'eye-open',
@@ -927,6 +994,18 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  formatSearchableIndex = (index) => {
+    const { intl } = this.props;
+
+    const { prefix = '' } = index;
+    let label = index.label;
+    if (index.label.includes('ui-inventory')) {
+      label = prefix + intl.formatMessage({ id: index.label });
+    }
+
+    return { ...index, label };
+  }
+
   findAndOpenItem = async (instance) => {
     const {
       parentResources,
@@ -978,6 +1057,7 @@ class InstancesList extends React.Component {
 
   render() {
     const {
+      canUseSingleRecordImport,
       disableRecordCreation,
       intl,
       data,
@@ -990,6 +1070,7 @@ class InstancesList extends React.Component {
       },
       namespace,
       stripes,
+      segment,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
@@ -1022,39 +1103,53 @@ class InstancesList extends React.Component {
         title,
         discoverySuppress,
         isBoundWith,
+        shared,
         staffSuppress,
         id,
       }) => {
         return (
-          <AppIcon
-            size="small"
-            app="inventory"
-            iconKey="instance"
-            iconAlignment="baseline"
-          >
-            <TextLink
-              to={this.getRowURL(id)}
-            >
-              {title}
-            </TextLink>
-            {(isBoundWith) &&
+          <div className={css.titleContainer}>
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
-        }
-            {(discoverySuppress || staffSuppress) &&
-            <span className={css.warnIcon}>
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              <TextLink
+                to={this.getRowURL(id)}
+              >
+                {title}
+              </TextLink>
+              {(isBoundWith) &&
+                <AppIcon
+                  size="small"
+                  app="@folio/inventory"
+                  iconKey="bound-with"
+                  iconClassName={css.boundWithIcon}
+                />
+              }
+              {(discoverySuppress || staffSuppress) &&
+                <span className={css.warnIcon}>
+                  <Icon
+                    size="medium"
+                    icon="exclamation-circle"
+                    status="warn"
+                  />
+                </span>
+              }
+            </AppIcon>
+            {shared &&
               <Icon
                 size="medium"
-                icon="exclamation-circle"
-                status="warn"
+                icon="graph"
+                iconRootClass={css.sharedIconRoot}
+                iconClassName={classnames(
+                  css.sharedIcon,
+                  { [css.sharedIconLight]: getItem(`${namespace}.${segment}.lastOpenRecord`) === id }
+                )}
               />
-            </span>
-        }
-          </AppIcon>
+            }
+          </div>
         );
       },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
@@ -1072,7 +1167,6 @@ class InstancesList extends React.Component {
       this.setState({ optionSelected: qindex });
 
       parentMutator.query.update({
-        qindex,
         filters: '',
         ...this.extraParamsToReset,
       });
@@ -1080,15 +1174,28 @@ class InstancesList extends React.Component {
       this.setState({ isSingleResult: true });
     };
 
-    const formattedSearchableIndexes = searchableIndexes.map(index => {
-      const { prefix = '' } = index;
-      let label = index.label;
-      if (index.label.includes('ui-inventory')) {
-        label = prefix + intl.formatMessage({ id: index.label });
-      }
+    const formattedSearchableIndexes = searchableIndexes.map(this.formatSearchableIndex);
 
-      return { ...index, label };
-    });
+    const advancedSearchOptions = advancedSearchIndexes[segment].map(this.formatSearchableIndex);
+
+    const advancedSearchQueryBuilder = (rows) => {
+      const formatRowCondition = (row) => {
+        // use default row formatter, but wrap each search term with parentheses
+
+        const query = `${row.searchOption} ${row.match} ${row.query}`;
+        return query;
+      };
+
+      return rows.reduce((formattedQuery, row, index) => {
+        const rowCondition = formatRowCondition(row);
+
+        if (index === 0) {
+          return rowCondition;
+        }
+
+        return `${formattedQuery} ${row.bool} ${rowCondition}`;
+      }, '');
+    };
 
     const shortcuts = [
       {
@@ -1116,9 +1223,13 @@ class InstancesList extends React.Component {
             maxSortKeys={1}
             renderNavigation={this.renderNavigation}
             searchableIndexes={formattedSearchableIndexes}
+            advancedSearchIndex={queryIndexes.ADVANCED_SEARCH}
+            advancedSearchOptions={advancedSearchOptions}
+            advancedSearchQueryBuilder={advancedSearchQueryBuilder}
             selectedIndex={get(data.query, 'qindex')}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
+            initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
@@ -1195,16 +1306,14 @@ class InstancesList extends React.Component {
           onSave={this.handleSelectedRecordsModalSave}
           onCancel={this.handleSelectedRecordsModalCancel}
         />
-        <IfInterface name="copycat-imports">
-          <IfPermission perm="copycat.profiles.collection.get">
-            <ImportRecordModal
-              isOpen={isImportRecordModalOpened}
-              currentExternalIdentifier={undefined}
-              handleSubmit={this.handleImportRecordModalSubmit}
-              handleCancel={this.handleImportRecordModalCancel}
-            />
-          </IfPermission>
-        </IfInterface>
+        {canUseSingleRecordImport && (
+          <ImportRecordModal
+            isOpen={isImportRecordModalOpened}
+            currentExternalIdentifier={undefined}
+            handleSubmit={this.handleImportRecordModalSubmit}
+            handleCancel={this.handleImportRecordModalCancel}
+          />
+        )}
       </HasCommand>
     );
   }
@@ -1213,4 +1322,5 @@ class InstancesList extends React.Component {
 export default withNamespace(flowRight(
   injectIntl,
   withLocation,
+  withSingleRecordImport,
 )(stripesConnect(InstancesList)));

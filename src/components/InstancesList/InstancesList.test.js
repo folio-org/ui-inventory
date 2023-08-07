@@ -1,14 +1,12 @@
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { createMemoryHistory } from 'history';
 import {
   act,
+  cleanup,
   fireEvent,
   screen,
-  waitFor,
-  cleanup,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
 
@@ -21,6 +19,7 @@ import translationsProperties from '../../../test/jest/helpers/translationsPrope
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
+import { setItem } from '../../storage';
 import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 
 const updateMock = jest.fn();
@@ -30,8 +29,19 @@ const mockStoreLastSearch = jest.fn();
 const mockRecordsReset = jest.fn();
 const mockGetLastSearchOffset = jest.fn();
 const mockStoreLastSearchOffset = jest.fn();
+const mockGetLastSearch = jest.fn();
 
-jest.mock('../../storage');
+jest.mock('../../storage', () => ({
+  ...jest.requireActual('../../storage'),
+  setItem: jest.fn(),
+}));
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useLastSearchTerms: () => ({
+    getLastSearch: mockGetLastSearch,
+  }),
+}));
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -40,6 +50,20 @@ const stripesStub = {
   logger: { log: noop },
   locale: 'en-US',
   plugins: {},
+  okapi: {
+    tenant: 'university',
+    url: 'https://folio-testing-okapi.dev.folio.org',
+  },
+  user: {
+    perms: {},
+    user: {
+      id: 'b1add99d-530b-5912-94f3-4091b4d87e2c',
+      username: 'diku_admin',
+      consortium: {
+        centralTenantId: 'consortia',
+      },
+    },
+  },
 };
 const data = {
   contributorTypes: [],
@@ -118,6 +142,7 @@ const renderInstancesList = ({
             getLastSearchOffset={mockGetLastSearchOffset}
             storeLastSearch={mockStoreLastSearch}
             storeLastSearchOffset={mockStoreLastSearchOffset}
+            storeLastSegment={noop}
             {...rest}
           />
         </ModuleHierarchyProvider>
@@ -142,8 +167,8 @@ describe('InstancesList', () => {
     describe('when the component is mounted', () => {
       it('should write location.search to the session storage', () => {
         const search = '?qindex=title&query=book&sort=title';
-        history.push({ search });
-        expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+        act(() => { history.push({ search }); });
+        expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
       });
 
       describe('and browse result was selected', () => {
@@ -184,8 +209,8 @@ describe('InstancesList', () => {
         it('should write location.search to the session storage', () => {
           const search = '?qindex=title&query=book&sort=title';
           mockStoreLastSearch.mockClear();
-          history.push({ search });
-          expect(mockStoreLastSearch).toHaveBeenCalledWith(search);
+          act(() => { history.push({ search }); });
+          expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
         });
       });
 
@@ -204,7 +229,7 @@ describe('InstancesList', () => {
             },
           }, rerender);
 
-          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset);
+          expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
         });
       });
     });
@@ -219,20 +244,37 @@ describe('InstancesList', () => {
       });
     });
 
-    it('should pass the correct search by clicking on the `Browse` tab', () => {
-      cleanup();
-      const search = '?qindex=subjects&query=book';
+    describe('when clicking on the `Browse` tab', () => {
+      it('should pass the correct search by clicking on the `Browse` tab', () => {
+        cleanup();
+        const search = '?qindex=subject&query=book';
 
-      jest.spyOn(history, 'push');
+        jest.spyOn(history, 'push');
 
-      renderInstancesList({
-        segment: 'instances',
-        getLastBrowse: () => search,
+        renderInstancesList({
+          segment: 'instances',
+          getLastBrowse: () => search,
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+        expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ search }));
       });
 
-      fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+      it('should store last opened record id', () => {
+        cleanup();
+        history = createMemoryHistory({ initialEntries: [{
+          pathname: '/inventory/view/test-id',
+        }] });
 
-      expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ search }));
+        renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+        expect(setItem).toHaveBeenCalledWith('@folio/inventory.instances.lastOpenRecord', 'test-id');
+      });
     });
 
     it('should have proper list results size', () => {
@@ -245,7 +287,7 @@ describe('InstancesList', () => {
           target: { value: 'all' }
         });
 
-        userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       });
 
       it('should disable toggleable columns', () => {
@@ -262,16 +304,15 @@ describe('InstancesList', () => {
 
           const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
 
-          waitFor(() => {
-            fireEvent.click(button);
-            expect(history.push).toHaveBeenCalledWith('/?layer=create-bib');
-          });
+          fireEvent.click(button);
+
+          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bib?');
         });
       });
 
       describe('hiding contributors column', () => {
         beforeEach(() => {
-          userEvent.click(screen.getByTestId('contributors'));
+          fireEvent.click(screen.getByTestId('contributors'));
         });
 
         it('should hide contributors column', () => {
@@ -297,22 +338,22 @@ describe('InstancesList', () => {
       describe('select proper sort options', () => {
         it('should select Title as default selected sort option', () => {
           const search = '?segment=instances&sort=title';
-          history.push({ search });
+          act(() => { history.push({ search }); });
 
           const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Title' });
           expect(option.selected).toBeTruthy();
         });
 
         it('should select Contributors option', () => {
-          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-          userEvent.selectOptions(screen.getByTestId('sort-by-selection'), 'contributors');
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.change(screen.getByTestId('sort-by-selection'), { target: { value: 'contributors' } });
 
           const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Contributors' });
           expect(option.selected).toBeTruthy();
         });
 
         it('should select option value "Contributors" after column "Contributors" click', async () => {
-          await act(async () => userEvent.click(document.querySelector('#clickable-list-column-contributors')));
+          await act(async () => fireEvent.click(document.querySelector('#clickable-list-column-contributors')));
 
           expect((screen.getByRole('option', { name: 'Contributors' })).selected).toBeTruthy();
         });
@@ -321,16 +362,32 @@ describe('InstancesList', () => {
 
     describe('filters pane', () => {
       it('should have selected effective call number option', async () => {
-        await act(async () => userEvent.selectOptions(screen.getByLabelText('Search field index'), 'callNumber'));
+        await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'callNumber' } }));
 
         expect((screen.getByRole('option', { name: 'Effective call number (item), shelving order' })).selected).toBeTruthy();
       });
 
       it('should have query in search input', () => {
-        userEvent.type(screen.getByRole('searchbox', { name: 'Search' }), 'search query');
-        userEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
+        fireEvent.change(screen.getByRole('searchbox', { name: 'Search' }), { target: { value: 'search query' } });
+        fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
         expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
+      });
+    });
+
+    describe('when using advanced search', () => {
+      beforeEach(() => {
+        fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+          target: { value: 'test' }
+        });
+
+        const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+        fireEvent.click(advancedSearchSubmit);
+      });
+
+      it('should set advanced search query in search input', () => {
+        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
       });
     });
   });
@@ -343,7 +400,7 @@ describe('InstancesList', () => {
         target: { value: 'all' }
       });
 
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
       expect(screen.getByRole('button', { name: 'Save holdings UUIDs' })).toBeVisible();
     });

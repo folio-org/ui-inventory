@@ -3,7 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -38,15 +38,16 @@ describe('useHoldingItemsQuery', () => {
     const limit = 5;
     const id = items[0].holdingsRecordId;
 
-    const { result, waitFor } = renderHook(() => useHoldingItemsQuery(id, { searchParams: { limit } }), { wrapper });
+    const { result } = renderHook(() => useHoldingItemsQuery(id, { searchParams: { limit } }), { wrapper });
 
-    await waitFor(() => !result.current.isFetching);
+    await act(() => !result.current.isFetching);
 
     expect(result.current.items).toEqual(items.slice(0, limit));
     expect(mockGet).toHaveBeenCalledWith(
       'inventory/items-by-holdings-id',
       {
         searchParams: {
+          offset: 0,
           limit,
           query: `holdingsRecordId==${id}`
         }

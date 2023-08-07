@@ -1,6 +1,5 @@
 import React from 'react';
-import { screen, act, render } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, render, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../test/jest/__mock__';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
 import CheckboxFacet from './CheckboxFacet';
@@ -81,7 +80,7 @@ describe('CheckboxFacet', () => {
   });
   it('More options should render when More button is click', () => {
     renderCheckboxFacet(defaultProps);
-    userEvent.click(screen.getByRole('button', { name: 'More' }));
+    fireEvent.click(screen.getByRole('button', { name: 'More' }));
     expect(screen.getAllByRole('checkbox')).toHaveLength(6);
   });
   it('components.readonly should be render when readonly property is true', () => {
@@ -104,7 +103,7 @@ describe('CheckboxFacet', () => {
   });
   it('No matching options should be render when required search is not found', () => {
     const { rerender } = renderCheckboxFacet(defaultProps);
-    userEvent.type(screen.getByRole('searchbox', { name: 'Test Name-field' }), 'test search');
+    fireEvent.change(screen.getByRole('searchbox', { name: 'Test Name-field' }), { target: { value: 'test search' } });
 
     renderCheckboxFacet(defaultProps, rerender);
 
@@ -180,11 +179,11 @@ describe('CheckboxFacet', () => {
     };
     const { rerender } = renderCheckboxFacet(defaultProps);
 
-    userEvent.click(screen.getByRole('button', { name: 'More' }));
+    fireEvent.click(screen.getByRole('button', { name: 'More' }));
     renderCheckboxFacet(props, rerender);
 
-    userEvent.click(screen.getByRole('checkbox', { name: 'TestOption3 4' }));
-    userEvent.click(screen.getByRole('checkbox', { name: 'TestOption7 19' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'TestOption3 4' }));
+    fireEvent.click(screen.getByRole('checkbox', { name: 'TestOption7 19' }));
 
     expect(screen.getAllByRole('checkbox')).toHaveLength(8);
   });

@@ -94,9 +94,12 @@ function validate(values) {
 function checkUniqueBarcode(okapi, barcode) {
   return fetch(`${okapi.url}/inventory/items?query=(barcode=="${barcode}")`,
     {
-      headers: { 'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json' }
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'Content-Type': 'application/json',
+        ...(okapi.token && { 'X-Okapi-Token': okapi.token }),
+      },
+      credentials: 'include',
     });
 }
 

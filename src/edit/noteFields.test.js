@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -55,7 +54,7 @@ describe('NoteFields', () => {
       renderNoteFields();
 
       const addNoteButton = screen.getByText('Add note');
-      userEvent.click(addNoteButton);
+      fireEvent.click(addNoteButton);
 
       const relationshipDropdown = screen.getAllByRole('option');
 

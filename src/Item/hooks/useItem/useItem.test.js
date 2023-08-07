@@ -2,7 +2,7 @@ import '../../../../test/jest/__mock__';
 
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -29,9 +29,9 @@ describe('useItem', () => {
       }),
     });
 
-    const { result, waitFor } = renderHook(() => useItem(itemId), { wrapper });
+    const { result } = renderHook(() => useItem(itemId), { wrapper });
 
-    await waitFor(() => {
+    await act(() => {
       return !result.current.isLoading;
     });
 
@@ -53,9 +53,9 @@ describe('useItem', () => {
       }),
     });
 
-    const { result, waitFor } = renderHook(() => useItem(itemId), { wrapper });
+    const { result } = renderHook(() => useItem(itemId), { wrapper });
 
-    await waitFor(() => {
+    await act(() => {
       return !result.current.isLoading;
     });
 

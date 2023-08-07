@@ -8,7 +8,10 @@ import {
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
 
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  AppIcon,
+  stripesConnect,
+} from '@folio/stripes/core';
 import { ViewMetaData } from '@folio/stripes/smart-components';
 import {
   Accordion,
@@ -57,6 +60,9 @@ import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
 import {
+  checkIfSharedInstance,
+  isUserInConsortiumMode,
+  getDate,
   handleKeyCommand,
   psTitleRelationshipId,
   validateOptionalField,
@@ -70,6 +76,7 @@ import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields'
 import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
 
 import styles from './InstanceForm.css';
+import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
 
 function validate(values) {
   const errors = {};
@@ -176,13 +183,54 @@ class InstanceForm extends React.Component {
   getPaneTitle() {
     const {
       initialValues,
+      stripes,
     } = this.props;
 
-    const titleTranslationKey = initialValues.id ? 'ui-inventory.edit' : 'ui-inventory.newInstance';
+    const newInstanceTitle = <FormattedMessage id="ui-inventory.newInstance" />;
+
+    const getEditInstanceTitle = () => {
+      const publishingInfo = getPublishingInfo(initialValues);
+
+      return (
+        <>
+          <AppIcon app="inventory" iconKey="instance" size="small" />
+          {' '}
+          <FormattedMessage
+            id={`ui-inventory.editInstance.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}title`}
+            values={{
+              title: initialValues.title,
+              isShared: checkIfSharedInstance(stripes, initialValues),
+            }}
+          />
+          {publishingInfo}
+        </>
+      );
+    };
 
     return (
       <span data-test-header-title>
-        <FormattedMessage id={titleTranslationKey} />
+        {initialValues.id ? getEditInstanceTitle() : newInstanceTitle}
+      </span>
+    );
+  }
+
+  getPaneSubTitle() {
+    const {
+      initialValues: {
+        hrid,
+        metadata: { updatedDate },
+      }
+    } = this.props;
+
+    return (
+      <span data-test-header-sub-title>
+        <FormattedMessage
+          id="ui-inventory.instanceRecordSubtitle"
+          values={{
+            hrid,
+            updatedDate: getDate(updatedDate),
+          }}
+        />
       </span>
     );
   }
@@ -352,6 +400,7 @@ class InstanceForm extends React.Component {
               onClose={onCancel}
               footer={this.getFooter()}
               paneTitle={this.getPaneTitle()}
+              paneSub={initialValues?.id ? this.getPaneSubTitle() : null}
               actionMenu={this.getActionMenu}
               id={id}
             >

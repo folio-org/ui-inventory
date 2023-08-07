@@ -1,25 +1,24 @@
 import '../test/jest/__mock__';
 import React from 'react';
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+import { useStripes } from '@folio/stripes/core';
 import { instances } from '../test/fixtures/instances';
 import { DataContext } from './contexts';
 import StripesConnectedInstance from './ConnectedInstance/StripesConnectedInstance';
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewInstance from './ViewInstance';
+import { CONSORTIUM_PREFIX } from './constants';
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
-
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
 
 jest.mock('@folio/stripes-core', () => ({
   ...jest.requireActual('@folio/stripes-core'),
   TitleManager: ({ children }) => <>{children}</>
 }));
-
 jest.mock('./components/ImportRecordModal/ImportRecordModal', () => (props) => {
   const { isOpen, handleSubmit, handleCancel } = props;
   if (isOpen) {
@@ -38,7 +37,6 @@ jest.mock('./components/ImportRecordModal/ImportRecordModal', () => (props) => {
   }
   return null;
 });
-
 jest.mock('./components/InstancePlugin/InstancePlugin', () => ({ onSelect, onClose }) => {
   return (
     <div>
@@ -48,7 +46,6 @@ jest.mock('./components/InstancePlugin/InstancePlugin', () => ({ onSelect, onClo
     </div>
   );
 });
-
 jest.mock('./RemoteStorageService/Check', () => ({
   ...jest.requireActual('./RemoteStorageService/Check'),
   useByLocation: jest.fn(() => false),
@@ -157,6 +154,8 @@ const defaultProp = {
     logger: {
       log: jest.fn()
     },
+    okapi: { tenant: 'diku' },
+    user: { user: {} },
   },
   tagsEnabled: true,
   updateLocation: jest.fn(),
@@ -201,6 +200,7 @@ const renderViewInstance = (props = {}) => renderWithIntl(
 describe('ViewInstance', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    StripesConnectedInstance.prototype.instance.mockImplementation(() => instance);
   });
   it('should display action menu items', () => {
     renderViewInstance();
@@ -212,8 +212,72 @@ describe('ViewInstance', () => {
     expect(screen.queryByText('Move items within an instance')).not.toBeInTheDocument();
     expect(screen.queryByText('Move holdings/items to another instance')).not.toBeInTheDocument();
   });
+  describe('instance header', () => {
+    describe('for non-consortia users', () => {
+      it('should render instance title, publisher, and publication date', () => {
+        defaultProp.stripes.hasInterface.mockReturnValue(false);
+
+        const { getByText } = renderViewInstance();
+        const expectedTitle = 'Instance • #youthaction • Information Age Publishing, Inc. • 2015';
+
+        expect(getByText(expectedTitle)).toBeInTheDocument();
+      });
+    });
+
+    describe('for consortia central tenant', () => {
+      it('should render instance shared, title, publisher, and publication date for all instances', () => {
+        defaultProp.stripes.hasInterface.mockReturnValue(true);
+        const stripes = {
+          ...defaultProp.stripes,
+          okapi: { tenant: 'consortium' },
+          user: { user: { consortium: { centralTenantId: 'consortium' } } },
+        };
+
+        const { getByText } = renderViewInstance({ stripes });
+        const expectedTitle = 'Shared instance • #youthaction • Information Age Publishing, Inc. • 2015';
+
+        expect(getByText(expectedTitle)).toBeInTheDocument();
+      });
+    });
+
+    describe('for member library tenant', () => {
+      const stripes = {
+        ...defaultProp.stripes,
+        okapi: { tenant: 'university' },
+        user: { user: { consortium: { centralTenantId: 'consortium' } } },
+      };
+
+      describe('local instance', () => {
+        it('should render instance local, title, publisher, and publication date', () => {
+          const { getByText } = renderViewInstance({ stripes });
+          const expectedTitle = 'Local instance • #youthaction • Information Age Publishing, Inc. • 2015';
+
+          expect(getByText(expectedTitle)).toBeInTheDocument();
+        });
+      });
+
+      describe('shadow instance', () => {
+        it('should render instance shared, title, publisher, and publication date', () => {
+          const selectedInstance = {
+            ...instance,
+            source: 'CONSORTIUM-FOLIO'
+          };
+          StripesConnectedInstance.prototype.instance.mockImplementation(() => selectedInstance);
+
+          const { getByText } = renderViewInstance({ stripes, selectedInstance });
+          const expectedTitle = 'Shared instance • #youthaction • Information Age Publishing, Inc. • 2015';
+
+          expect(getByText(expectedTitle)).toBeInTheDocument();
+        });
+      });
+    });
+  });
   describe('Action Menu', () => {
     it('should not be displayed', () => {
+      const stripes = useStripes();
+      stripes.hasPerm.mockImplementationOnce(() => false);
+      stripes.hasInterface.mockImplementationOnce(() => false);
+
       renderViewInstance({
         stripes: {
           ...defaultProp.stripes,
@@ -233,145 +297,167 @@ describe('ViewInstance', () => {
     });
     it('"onClickEditInstance" should be called when the user clicks the "Edit instance" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Edit instance' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Edit instance' }));
       expect(mockPush).toBeCalled();
     });
     it('"onClickViewRequests" should be called when the user clicks the "View requests" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'View requests' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'View requests' }));
       expect(mockPush).toBeCalled();
     });
     it('"onCopy" function should be called when the user clicks the "Duplicate instance" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Duplicate instance' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Duplicate instance' }));
       expect(defaultProp.onCopy).toBeCalled();
     });
     it('"handleViewSource" should be called when the user clicks the "View source" button', async () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       const veiwSourceButton = screen.getByRole('button', { name: 'View source' });
       await waitFor(() => {
         expect(veiwSourceButton).not.toHaveAttribute('disabled');
       });
-      userEvent.click(veiwSourceButton);
+      fireEvent.click(veiwSourceButton);
       expect(goToMock).toBeCalled();
-    });
+    }, 10000);
     it('"createHoldingsMarc" should be called when the user clicks the "Add MARC holdings record" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Add MARC holdings record' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Add MARC holdings record' }));
       expect(mockPush).toBeCalled();
     });
     it('"Move items within an instance" button to be clicked', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
       expect(renderViewInstance()).toBeTruthy();
     });
     it('"Export instance (MARC)" button to be clicked', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
       expect(renderViewInstance()).toBeTruthy();
     });
     it('"InstancePlugin" should render when user clicks "Move holdings/items to another instance" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Move holdings/items to another instance' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Move holdings/items to another instance' }));
       expect(screen.getByRole('button', { name: '+' }));
     });
     it('"ImportRecordModal" component should render when user clicks "Overlay source bibliographic record" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
       expect(screen.getByText('ImportRecordModal')).toBeInTheDocument();
     });
     it('"handleImportRecordModalSubmit" should be called when the user clicks the "handleSubmit" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
-      userEvent.click(screen.getByRole('button', { name: 'handleSubmit' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
+      fireEvent.click(screen.getByRole('button', { name: 'handleSubmit' }));
       expect(updateMock).toBeCalled();
     });
     it('"ImportRecordModal" component should be closed when the user clicks "handleClose" button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
-      userEvent.click(screen.getByRole('button', { name: 'handleCancel' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
+      fireEvent.click(screen.getByRole('button', { name: 'handleCancel' }));
       expect(screen.queryByText('ImportRecordModal')).not.toBeInTheDocument();
     });
     it('NewOrderModal should render when the user clicks the new order button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'New order' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'New order' }));
       expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
     });
     it('push function should be called when the user clicks the "Edit MARC bibliographic record" button', async () => {
       renderViewInstance();
       const expectedValue = {
         pathname: `/inventory/quick-marc/edit-bib/${defaultProp.selectedInstance.id}`,
-        search: 'filters=test1&query=test2&sort=test3&qindex=test'
+        search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
       };
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       const button = screen.getByRole('button', { name: 'Edit MARC bibliographic record' });
       await waitFor(() => {
         expect(button).not.toHaveAttribute('disabled');
       });
-      userEvent.click(button);
+      fireEvent.click(button);
       expect(mockPush).toBeCalledWith(expectedValue);
     });
     it('push function should be called when the user clicks the "Derive new MARC bibliographic record" button', async () => {
       renderViewInstance();
       const expectedValue = {
         pathname: `/inventory/quick-marc/duplicate-bib/${defaultProp.selectedInstance.id}`,
-        search: 'filters=test1&query=test2&sort=test3&qindex=test'
+        search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
       };
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
       const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
       await waitFor(() => {
         expect(button).not.toHaveAttribute('disabled');
       });
-      userEvent.click(button);
+      fireEvent.click(button);
       expect(mockPush).toBeCalledWith(expectedValue);
     });
     it('NewOrderModal should be closed when the user clicks the close button', async () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      userEvent.click(screen.getByRole('button', { name: 'New order' }));
-	  expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
-      userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'New order' }));
+      expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
+      fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
       await waitFor(() => {
         expect(screen.queryByText(/Create order/i)).not.toBeInTheDocument();
+      });
+    }, 10000);
+    describe('when a user derives a shared record', () => {
+      it('should append the `shared` search parameter', async () => {
+        const newInstance = {
+          ...instance,
+          source: `${CONSORTIUM_PREFIX}MARC`,
+        };
+        StripesConnectedInstance.prototype.instance.mockImplementation(() => newInstance);
+
+        renderViewInstance();
+
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
+        await waitFor(() => {
+          expect(button).not.toHaveAttribute('disabled');
+        });
+        fireEvent.click(button);
+
+        expect(mockPush).toBeCalledWith(expect.objectContaining({
+          search: expect.stringContaining('shared=true'),
+        }));
       });
     });
   });
   describe('Tests for shortcut of HasCommand', () => {
     it('updateLocation function to be triggered on clicking new button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'new' }));
+      fireEvent.click(screen.getByRole('button', { name: 'new' }));
       expect(defaultProp.updateLocation).toBeCalled();
     });
     it('onClickEditInstance function to be triggered on clicking edit button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'edit' }));
+      fireEvent.click(screen.getByRole('button', { name: 'edit' }));
       expect(mockPush).toBeCalled();
     });
     it('onCopy function to be triggered on clicking duplicateRecord button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'duplicateRecord' }));
+      fireEvent.click(screen.getByRole('button', { name: 'duplicateRecord' }));
       expect(defaultProp.onCopy).toBeCalled();
     });
     it('collapseAllSections triggered on clicking collapseAllSections button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'collapseAllSections' }));
+      fireEvent.click(screen.getByRole('button', { name: 'collapseAllSections' }));
       expect(spyOncollapseAllSections).toBeCalled();
     });
     it('expandAllSections triggered on clicking expandAllSections button', () => {
       renderViewInstance();
-      userEvent.click(screen.getByRole('button', { name: 'expandAllSections' }));
+      fireEvent.click(screen.getByRole('button', { name: 'expandAllSections' }));
       expect(spyOnexpandAllSections).toBeCalled();
     });
   });
