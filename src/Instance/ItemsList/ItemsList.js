@@ -19,7 +19,10 @@ import {
   MCLPagingTypes,
 } from '@folio/stripes/components';
 
-import { noValue } from '../../constants';
+import {
+  itemStatuses,
+  noValue,
+} from '../../constants';
 import { checkIfArrayIsEmpty } from '../../utils';
 
 import ItemBarcode from './ItemBarcode';
@@ -83,7 +86,14 @@ const getFormatter = (
       </>)
     ) || noValue;
   },
-  'status': x => x.status?.name || noValue,
+  'status': x => {
+    if (!x.status?.name) return noValue;
+
+    const statusName = x.status.name;
+    const itemStatusTranslationId = itemStatuses.find(({ value }) => value === statusName)?.label;
+
+    return itemStatusTranslationId ? intl.formatMessage({ id: itemStatusTranslationId }) : statusName;
+  },
   'copyNumber': ({ copyNumber }) => copyNumber || noValue,
   'materialType': x => x.materialType?.name || noValue,
   'loanType': x => x.temporaryLoanType?.name || x.permanentLoanType?.name || noValue,
