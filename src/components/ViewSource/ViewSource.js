@@ -9,10 +9,10 @@ import {
   Button,
   LoadingView,
 } from '@folio/stripes/components';
-import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
-
 import { useStripes } from '@folio/stripes/core';
+import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
+
 import {
   useInstance,
   useGoBack,
@@ -34,6 +34,8 @@ const ViewSource = ({
   const closePrintPopup = () => setIsShownPrintPopup(false);
   const isConsortiaEnv = stripes.hasInterface('consortia');
   const isHoldingsRecord = marcType === MARC_TYPES.HOLDINGS;
+
+  console.log(stripes);
 
   const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
   const isPrintHoldingsAvailable = isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
