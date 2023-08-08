@@ -3,12 +3,14 @@ import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
 
 import { ViewSource } from '../../components';
+import MARC_TYPES from '../../components/ViewSource/marcTypes';
 
 const InstanceMarcContainer = ({ mutator, instanceId }) => {
   return (
     <ViewSource
       mutator={mutator}
       instanceId={instanceId}
+      marcType={MARC_TYPES.BIB}
     />
   );
 };
