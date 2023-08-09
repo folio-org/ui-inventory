@@ -17,7 +17,7 @@ import {
   useInstance,
   useGoBack,
 } from '../../common/hooks';
-import { checkIfSharedInstance } from '../../utils';
+import { checkIfSharedInstance, isUserInConsortiumMode } from '../../utils';
 import MARC_TYPES from './marcTypes';
 
 import styles from './ViewSource.css';
@@ -32,10 +32,7 @@ const ViewSource = ({
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
-  const isConsortiaEnv = stripes.hasInterface('consortia');
   const isHoldingsRecord = marcType === MARC_TYPES.HOLDINGS;
-
-  console.log(stripes);
 
   const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
   const isPrintHoldingsAvailable = isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
@@ -87,7 +84,7 @@ const ViewSource = ({
     <FormattedMessage
       id={`ui-inventory.marcSourceRecord.${marcType}`}
       values={{
-        shared: isConsortiaEnv ? checkIfSharedInstance(stripes, instance) : null,
+        shared: isUserInConsortiumMode(stripes) ? checkIfSharedInstance(stripes, instance) : null,
       }}
     />
   );

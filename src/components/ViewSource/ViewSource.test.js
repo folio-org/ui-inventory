@@ -129,7 +129,7 @@ describe('ViewSource', () => {
       });
     });
 
-    it('should display "view shared marc bibliographic record" message', () => {
+    it('should display "shared marc bibliographic record" message', () => {
       expect(screen.getByText('Shared MARC bibliographic record')).toBeInTheDocument();
     });
   });
@@ -149,7 +149,7 @@ describe('ViewSource', () => {
       });
     });
 
-    it('should display "view local marc bibliographic record" message', () => {
+    it('should display "local marc bibliographic record" message', () => {
       expect(screen.getByText('Local MARC bibliographic record')).toBeInTheDocument();
     });
   });
