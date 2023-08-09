@@ -514,6 +514,8 @@
   "fastAdd": "Fast add",
   "newMARCRecord": "New MARC Bib Record",
   "newFastAddRecord": "New Fast Add Record",
+  "newLocalRecord": "New local record",
+  "newSharedRecord": "New shared record",
   "location.confirm.confirmBtn": "Yes",
   "location.confirm.common.header": "Attention!",
   "location.confirm.inactive.header": "Inactive location",
