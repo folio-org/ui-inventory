@@ -57,6 +57,7 @@ import {
   isTestEnv,
   handleKeyCommand,
   buildSingleItemQuery,
+  isUserInConsortiumMode,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -743,18 +744,14 @@ class InstancesList extends React.Component {
       <>
         <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
           <IfPermission perm="ui-inventory.instance.create">
-            <Button
-              buttonStyle="dropdownItem"
-              id="clickable-newinventory"
-              onClick={buildOnClickHandler(this.openCreateInstance)}
-            >
-              <Icon
-                icon="plus-sign"
-                size="medium"
-                iconClassName={css.actionIcon}
-              />
-              <FormattedMessage id="stripes-smart-components.new" />
-            </Button>
+            {this.getActionItem({
+              id: 'clickable-newinventory',
+              icon: checkIfUserInCentralTenant(stripes) ? 'graph' : 'plus-sign',
+              messageId: !isUserInConsortiumMode(stripes)
+                ? 'stripes-smart-components.new'
+                : (checkIfUserInCentralTenant(stripes) ? 'ui-inventory.newSharedRecord' : 'ui-inventory.newLocalRecord'),
+              onClickHandler: buildOnClickHandler(this.openCreateInstance),
+            })}
           </IfPermission>
           {!checkIfUserInCentralTenant(stripes) && (
             <Pluggable
