@@ -13,6 +13,7 @@ import {
   IfPermission,
   Pluggable,
   stripesConnect,
+  checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
 import {
   Pane,
@@ -437,6 +438,10 @@ class ViewInstance extends React.Component {
     return null;
   };
 
+  hasCentralTenantPerm = (perm) => {
+    return this.props.centralTenantPermissions.some(({ permissionName }) => permissionName === perm);
+  }
+
   createActionMenuGetter = (instance, data) => ({ onToggle }) => {
     const {
       canUseSingleRecordImport,
@@ -453,6 +458,7 @@ class ViewInstance extends React.Component {
       titleLevelRequestsFeatureEnabled,
     } = this.state;
 
+    const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
     const isSourceMARC = isMARCSource(instance?.source);
     const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
@@ -460,7 +466,9 @@ class ViewInstance extends React.Component {
     const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
     const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
-    const canEditMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.all');
+    const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && checkIfSharedInstance(stripes, instance)
+      ? this.hasCentralTenantPerm(editBibRecordPerm)
+      : stripes.hasPerm(editBibRecordPerm);
     const canDeriveMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.duplicate');
     const hasReorderPermissions = canCreateRequest || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
@@ -764,6 +772,7 @@ class ViewInstance extends React.Component {
       updateLocation,
       canUseSingleRecordImport,
       intl,
+      isCentralTenantPermissionsLoading,
     } = this.props;
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
@@ -799,7 +808,7 @@ class ViewInstance extends React.Component {
       },
     ];
 
-    if (!instance) {
+    if (!instance || isCentralTenantPermissionsLoading) {
       return (
         <Pane
           id="pane-instancedetails"
@@ -902,6 +911,7 @@ class ViewInstance extends React.Component {
 
 ViewInstance.propTypes = {
   canUseSingleRecordImport: PropTypes.bool,
+  centralTenantPermissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedInstance:  PropTypes.object,
   goTo: PropTypes.func.isRequired,
   location: PropTypes.shape({
@@ -920,6 +930,7 @@ ViewInstance.propTypes = {
   intl: PropTypes.shape({
     formatMessage: PropTypes.func.isRequired,
   }),
+  isCentralTenantPermissionsLoading: PropTypes.bool.isRequired,
   mutator: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     holdings: PropTypes.shape({

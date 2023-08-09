@@ -7,3 +7,4 @@ export { default as useHoldingsQueryByHrids } from './useHoldingsQueryByHrids';
 export { default as useInventoryBrowse } from './useInventoryBrowse';
 export { default as useLastSearchTerms } from './useLastSearchTerms';
 export { default as useLogout } from './useLogout';
+export { default as useUserTenantPermissions } from './useUserTenantPermissions';

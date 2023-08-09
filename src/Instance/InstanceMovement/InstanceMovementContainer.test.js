@@ -1,5 +1,3 @@
-import '../../../test/jest/__mock__';
-
 import React from 'react';
 import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
@@ -13,9 +11,6 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-jest.mock('@folio/stripes/components', () => ({
-  LoadingView: jest.fn(() => <div>LoadingView component</div>),
-}));
 jest.mock('../../common/hooks/useInstance', () => jest.fn());
 jest.mock('../../providers', () => ({
   ...jest.requireActual('../../providers'),
