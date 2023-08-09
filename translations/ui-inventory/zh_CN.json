@@ -312,7 +312,6 @@
     "waitingForResources": "等待资源",
     "fetchingMarcRecord": "获取MARC记录",
     "viewMarcSource": "查看MARC来源",
-    "marcSourceRecord": "MARC书目记录",
     "item.barcode": "单件：条码",
     "resourceIdentifierType": "资源标识符类型",
     "publication": "出版",
@@ -680,7 +679,6 @@
     "receivingHistory.source.user": "用户",
     "holdingsLabelShort": "馆藏：",
     "appMenu.keyboardShortcuts": "键盘快捷键",
-    "marcHoldingsRecord": "MARC馆藏记录",
     "marcHoldingsRecord.paneTitle": "馆藏记录 - {title}",
     "boundWithTitles": "合订与分析",
     "instanceTitleLabel": "实例题名",
@@ -814,5 +812,12 @@
     "browse.natLibOfMed": "美国国家医学图书馆分类法",
     "browse.other": "其他方案",
     "browse.superintendent": "文件分类主管",
-    "advancedSearch": "高级搜索"
+    "advancedSearch": "高级搜索",
+    "filters.shared": "Shared",
+    "consortia.instanceRecordTitle": "{isShared, select, false {Local} true {Shared} other {}} instance • {title} {publisherAndDate}",
+    "editInstance.consortia.title": "Edit {isShared, select, false {local} true {shared} other {}} instance • {title}",
+    "newLocalRecord": "New local record",
+    "newSharedRecord": "New shared record",
+    "marcSourceRecord.bibliographic": "{shared, select, true {Shared} false {Local} other {}} MARC bibliographic record",
+    "marcSourceRecord.holdings": "{shared, select, true {Shared} false {Local} other {}} MARC holdings record"
 }

@@ -312,7 +312,6 @@
     "waitingForResources": "Aguardando por recursos",
     "fetchingMarcRecord": "Buscando registro MARC",
     "viewMarcSource": "Ver fonte MARC",
-    "marcSourceRecord": "Registro bibliográfico MARC",
     "item.barcode": "Item: código de barras",
     "resourceIdentifierType": "Tipo de identificador de recurso",
     "publication": "Publicação",
@@ -680,7 +679,6 @@
     "receivingHistory.source.user": "Usuário",
     "holdingsLabelShort": "Coleções:",
     "appMenu.keyboardShortcuts": "Atalhos do teclado",
-    "marcHoldingsRecord": "Registro MARC de coleções",
     "marcHoldingsRecord.paneTitle": "Registro de coleções - {title}",
     "boundWithTitles": "Títulos encadernados e Analíticas",
     "instanceTitleLabel": "Título da instância",
@@ -814,5 +812,12 @@
     "browse.natLibOfMed": "Classificação da Biblioteca Nacional de Medicina (NLM)",
     "browse.other": "Outro esquema",
     "browse.superintendent": "Superintendente de Classificação de Documentos",
-    "advancedSearch": "Busca avançada"
+    "advancedSearch": "Busca avançada",
+    "filters.shared": "Compartilhado",
+    "consortia.instanceRecordTitle": "{isShared, select, false {Local} true {Compartilhado} other {}} instância - {title} {publisherAndDate}",
+    "editInstance.consortia.title": "Editar {isShared, select, false {local} true {compartilhado} other {}} instância • {title}",
+    "newLocalRecord": "Novo registro local",
+    "newSharedRecord": "Novo registro compartilhado",
+    "marcSourceRecord.bibliographic": "{shared, select, true {Compartilhado} false {Local} other {}} Registro bibliográfico MARC",
+    "marcSourceRecord.holdings": "{shared, select, true {Compartilhado} false {Local} other {}} Registro de coleções MARC"
 }
