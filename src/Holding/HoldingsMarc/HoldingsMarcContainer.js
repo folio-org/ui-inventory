@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
 
 import { ViewSource } from '../../components';
+import MARC_TYPES from '../../components/ViewSource/marcTypes';
 
 const HoldingsMarcContainer = ({
   mutator,
@@ -14,7 +15,7 @@ const HoldingsMarcContainer = ({
       mutator={mutator}
       instanceId={instanceId}
       holdingsRecordId={holdingsrecordid}
-      isHoldingsRecord
+      marcType={MARC_TYPES.HOLDINGS}
     />
   );
 };
