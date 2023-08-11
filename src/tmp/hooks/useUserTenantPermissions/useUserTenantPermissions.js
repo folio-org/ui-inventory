@@ -5,7 +5,7 @@ import {
   useOkapiKy,
 } from '@folio/stripes/core';
 
-import { OKAPI_TENANT_HEADER } from '../../constants';
+import { OKAPI_TENANT_HEADER } from '../../../constants';
 
 const INITIAL_DATA = [];
 
