@@ -312,7 +312,6 @@
     "waitingForResources": "En attente de ressources",
     "fetchingMarcRecord": "Récupération de la notice MARC",
     "viewMarcSource": "Voir la source MARC",
-    "marcSourceRecord": "Notice bibliographique MARC",
     "item.barcode": "Code-barres",
     "resourceIdentifierType": "Type d'identifiant de ressource",
     "publication": "Publication",
@@ -680,7 +679,6 @@
     "receivingHistory.source.user": "Utilisateur",
     "holdingsLabelShort": "Holdings:",
     "appMenu.keyboardShortcuts": "Raccourcis clavier",
-    "marcHoldingsRecord": "MARC holdings record",
     "marcHoldingsRecord.paneTitle": "Holdings record - {title}",
     "boundWithTitles": "Bound-with and analytics",
     "instanceTitleLabel": "Instance title",
@@ -814,5 +812,12 @@
     "browse.natLibOfMed": "National Library of Medicine classification",
     "browse.other": "Other scheme",
     "browse.superintendent": "Superintendent of Documents classification",
-    "advancedSearch": "Advanced search"
+    "advancedSearch": "Advanced search",
+    "filters.shared": "Shared",
+    "consortia.instanceRecordTitle": "{isShared, select, false {Local} true {Shared} other {}} instance • {title} {publisherAndDate}",
+    "editInstance.consortia.title": "Edit {isShared, select, false {local} true {shared} other {}} instance • {title}",
+    "newLocalRecord": "New local record",
+    "newSharedRecord": "New shared record",
+    "marcSourceRecord.bibliographic": "{shared, select, true {Shared} false {Local} other {}} MARC bibliographic record",
+    "marcSourceRecord.holdings": "{shared, select, true {Shared} false {Local} other {}} MARC holdings record"
 }
