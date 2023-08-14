@@ -40,5 +40,5 @@ jest.mock('@folio/stripes/components', () => ({
   },
   Loading: () => <div>Loading</div>,
   LoadingPane: () => <div>LoadingPane</div>,
-  LoadingView: () => <div>LoadingView</div>,
+  LoadingView: jest.fn(() => <div>LoadingView</div>),
 }), { virtual: true });

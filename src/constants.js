@@ -643,3 +643,4 @@ export const SOURCE_VALUES = {
 };
 
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';
+export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
