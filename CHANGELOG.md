@@ -54,7 +54,17 @@
 * *BREAKING* Bump `react` to `v18`. Refs UIIN-2508.
 * Add `Shared` facet to Instance/Holdings/Items search. Refs UIIN-2393.
 * Add `Shared` search parameter when the user is redirected to the quick-marc page to identify shared record. Refs UIIN-2517.
+* Instance Edit screen header: add shared/local indication. Refs UIIN-2438.
+* i18n item status in item list. Refs UIIN-2473.
+* Disable "Save & close" button by default in "Create new Item" window. Fixes UIIN-2492.
+* Inventory 2nd pane Actions menu: Adjust New action. Refs UIIN-2439.
+* Add "Local" or "Shared" to flag MARC bib records. Refs UIIN-2522.
 * Allow for new source values for shadow Instances. Refs UIIN-2459.
+
+## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
+
+* User with limited permissions gets an error modal when navigating to the Inventory app. Fixes UIIN-2510.
 
 ## [9.4.10](https://github.com/folio-org/ui-inventory/tree/v9.4.10) (2023-07-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.9...v9.4.10)

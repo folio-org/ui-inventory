@@ -60,6 +60,8 @@ import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
 import {
+  checkIfSharedInstance,
+  isUserInConsortiumMode,
   getDate,
   handleKeyCommand,
   psTitleRelationshipId,
@@ -181,6 +183,7 @@ class InstanceForm extends React.Component {
   getPaneTitle() {
     const {
       initialValues,
+      stripes,
     } = this.props;
 
     const newInstanceTitle = <FormattedMessage id="ui-inventory.newInstance" />;
@@ -193,8 +196,11 @@ class InstanceForm extends React.Component {
           <AppIcon app="inventory" iconKey="instance" size="small" />
           {' '}
           <FormattedMessage
-            id="ui-inventory.editInstance.title"
-            values={{ title: initialValues.title }}
+            id={`ui-inventory.editInstance.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}title`}
+            values={{
+              title: initialValues.title,
+              isShared: checkIfSharedInstance(stripes, initialValues),
+            }}
           />
           {publishingInfo}
         </>
