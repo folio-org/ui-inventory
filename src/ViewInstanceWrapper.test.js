@@ -7,12 +7,12 @@ import buildStripes from '../test/jest/__mock__/stripesCore.mock';
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewInstanceWrapper from './ViewInstanceWrapper';
 import ViewInstance from './ViewInstance';
-import { useUserTenantPermissions } from './tmp/hooks';
+import { useUserTenantPermissions } from './hooks';
 import { CONSORTIUM_PREFIX } from './constants';
 
 jest.mock('./ViewInstance', () => jest.fn(() => <div>ViewInstance</div>));
 
-jest.mock('./tmp/hooks', () => ({
+jest.mock('./hooks', () => ({
   ...jest.requireActual('./hooks'),
   useUserTenantPermissions: jest.fn(),
 }));

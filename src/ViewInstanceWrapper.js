@@ -6,7 +6,7 @@ import { checkIfUserInMemberTenant } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
 
 import ViewInstance from './ViewInstance';
-import { useUserTenantPermissions } from './tmp/hooks';
+import { useUserTenantPermissions } from './hooks';
 import { checkIfSharedInstance } from './utils';
 
 const ViewInstanceWrapper = (props) => {
