@@ -1,8 +1,6 @@
-import React from 'react';
-
-const STRIPES = {
+const buildStripes = (otherProperties = {}) => ({
   actionNames: [],
-  clone: () => ({ ...STRIPES }),
+  clone: buildStripes,
   connect: Comp => Comp,
   config: {},
   currency: 'USD',
@@ -41,7 +39,10 @@ const STRIPES = {
     },
   },
   withOkapi: true,
-};
+  ...otherProperties,
+});
+
+const STRIPES = buildStripes();
 
 const mockStripesCore = {
   stripesConnect: Component => ({ mutator, resources, stripes, ...rest }) => {
@@ -109,3 +110,5 @@ jest.mock('@folio/stripes-core', () => ({
   ...jest.requireActual('@folio/stripes-core'),
   ...mockStripesCore
 }), { virtual: true });
+
+export default buildStripes;
