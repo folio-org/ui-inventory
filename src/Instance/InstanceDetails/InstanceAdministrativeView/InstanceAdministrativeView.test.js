@@ -81,4 +81,30 @@ describe('InstanceAdministrativeView', () => {
 
     expect(getByText(defaultHRID)).not.toHaveAttribute('data-test-highlighter-mark');
   });
+
+  describe('Source value field', () => {
+    describe('when source is "CONSORTIUM-FOLIO"', () => {
+      it('should render correct source value', () => {
+        const history = getHistory(searchInstance(QUERY_INDEXES.BARCODE));
+        const { getByText } = setupInstanceAdministrativeView({
+          history,
+          instance: instancesFixture[2],
+        });
+
+        expect(getByText('FOLIO-shared')).toBeInTheDocument();
+      });
+    });
+
+    describe('when source is "CONSORTIUM-MARC"', () => {
+      it('should render correct source value', () => {
+        const history = getHistory(searchInstance(QUERY_INDEXES.BARCODE));
+        const { getByText } = setupInstanceAdministrativeView({
+          history,
+          instance: instancesFixture[3],
+        });
+
+        expect(getByText('MARC-shared')).toBeInTheDocument();
+      });
+    });
+  });
 });
