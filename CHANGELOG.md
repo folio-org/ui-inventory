@@ -61,6 +61,7 @@
 * Add "Local" or "Shared" to flag MARC bib records. Refs UIIN-2522.
 * Edit MARC bib record on Shared Instance. Refs UIIN-2526.
 * Allow for new source values for shadow Instances. Refs UIIN-2459.
+* Change tenant id to central when opening details of shadow instance. Refs UIIN-2529.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
