@@ -783,5 +783,5 @@ export const isMARCSource = (source) => {
 export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');
 
 export const checkIfSharedInstance = (stripes, instance = {}) => {
-  return instance.source?.includes(CONSORTIUM_PREFIX) || checkIfUserInCentralTenant(stripes);
+  return instance?.source?.includes(CONSORTIUM_PREFIX) || checkIfUserInCentralTenant(stripes);
 };

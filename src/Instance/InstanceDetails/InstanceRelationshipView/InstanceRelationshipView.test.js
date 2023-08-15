@@ -70,6 +70,6 @@ describe('InstanceRelationshipView', () => {
   });
 
   it('should render child instances', () => {
-    expect(document.querySelectorAll('.mclRowFormatterContainer').length).toEqual(3);
+    expect(document.querySelectorAll('.mclRowFormatterContainer').length).toEqual(4);
   });
 });

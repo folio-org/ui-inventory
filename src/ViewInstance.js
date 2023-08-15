@@ -40,6 +40,7 @@ import {
   isUserInConsortiumMode,
 } from './utils';
 import {
+  CONSORTIUM_PREFIX,
   indentifierTypeNames,
   layers,
   REQUEST_OPEN_STATUSES,
@@ -459,8 +460,9 @@ class ViewInstance extends React.Component {
     } = this.state;
 
     const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
+    const editInstancePerm = 'ui-inventory.instance.edit';
     const isSourceMARC = isMARCSource(instance?.source);
-    const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
+    const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
     const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
@@ -490,6 +492,10 @@ class ViewInstance extends React.Component {
       };
     };
 
+    const suppressEditInstanceForMemberTenant = checkIfUserInMemberTenant(stripes)
+      && instance?.source.startsWith(CONSORTIUM_PREFIX)
+      && !this.hasCentralTenantPerm(editInstancePerm);
+
     const showInventoryMenuSection = (
       canEditInstance
       || canViewSource
@@ -517,7 +523,7 @@ class ViewInstance extends React.Component {
       <>
         {showInventoryMenuSection && (
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.inventory.label' })} id="inventory-menu-section">
-            {canEditInstance && (
+            {canEditInstance && !suppressEditInstanceForMemberTenant && (
               <Button
                 id="edit-instance"
                 onClick={() => {
