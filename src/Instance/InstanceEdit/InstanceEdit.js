@@ -25,6 +25,7 @@ import {
   marshalInstance,
   unmarshalInstance,
   parseHttpError,
+  checkIfSharedInstance,
 } from '../../utils';
 import useLoadSubInstances from '../../hooks/useLoadSubInstances';
 import useCallout from '../../hooks/useCallout';
@@ -42,6 +43,7 @@ const InstanceEdit = ({
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.instanceEdit);
   const parentInstances = useLoadSubInstances(instance?.parentInstances, 'superInstanceId');
   const childInstances = useLoadSubInstances(instance?.childInstances, 'subInstanceId');
+  const isSharedInstance = checkIfSharedInstance(stripes, instance);
 
   useEffect(() => {
     setInitialValues({
@@ -54,12 +56,17 @@ const InstanceEdit = ({
   const goBack = useGoBack(`/inventory/view/${instanceId}`);
 
   const onSuccess = useCallback((updatedInstance) => {
-    callout.sendCallout({
-      type: 'success',
-      message: <FormattedMessage
+    const successfullySavedMessage = (
+      <FormattedMessage
         id="ui-inventory.instance.successfullySaved"
         values={{ hrid: updatedInstance.hrid }}
-      />,
+      />
+    );
+    const successfullySavedSharedMessage = <FormattedMessage id="ui-inventory.instance.shared.successfulySaved" />;
+
+    callout.sendCallout({
+      type: 'success',
+      message: isSharedInstance ? successfullySavedSharedMessage : successfullySavedMessage,
     });
     goBack();
   }, [callout, goBack]);
