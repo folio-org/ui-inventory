@@ -59,6 +59,7 @@
 * Disable "Save & close" button by default in "Create new Item" window. Fixes UIIN-2492.
 * Inventory 2nd pane Actions menu: Adjust New action. Refs UIIN-2439.
 * Add "Local" or "Shared" to flag MARC bib records. Refs UIIN-2522.
+* Fix issue with Relevance sort option. Refs UIIN-2474.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)

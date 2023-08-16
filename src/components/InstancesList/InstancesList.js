@@ -728,14 +728,6 @@ class InstancesList extends React.Component {
       label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option}` }),
     }));
 
-    const sortByOptions = [
-      {
-        value: '',
-        label: intl.formatMessage({ id: 'ui-inventory.actions.menuSection.sortBy.relevance' }),
-      },
-      ...sortOptions,
-    ];
-
     const getSortByValue = () => {
       return this.state.segmentsSortBy.find(x => x.name === segment).sort?.replace('-', '') || '';
     };
@@ -846,7 +838,7 @@ class InstancesList extends React.Component {
         >
           <Select
             data-testid="sort-by-selection"
-            dataOptions={sortByOptions}
+            dataOptions={sortOptions}
             value={getSortByValue()}
             onChange={setSortedColumn}
           />
