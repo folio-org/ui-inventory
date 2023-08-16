@@ -353,13 +353,13 @@ describe('InstancesList', () => {
           expect(screen.getByTestId('sort-by-selection')).toBeInTheDocument();
         });
 
-        it('should render as many options as defined plus Relevance', () => {
+        it('should render as many options as defined', () => {
           renderInstancesList({ segment: 'instances' });
           openActionMenu();
 
           const options = within(screen.getByTestId('sort-by-selection')).getAllByRole('option');
 
-          expect(options).toHaveLength(Object.keys(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).length + 1);
+          expect(options).toHaveLength(Object.keys(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).length);
         });
       });
 
