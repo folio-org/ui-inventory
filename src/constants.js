@@ -241,6 +241,7 @@ export const SORT_DIRECTION = {
 export const SORTABLE_SEARCH_RESULT_LIST_COLUMNS = {
   TITLE: 'title',
   CONTRIBUTORS: 'contributors',
+  RELEVANCE: 'relevance',
 };
 
 

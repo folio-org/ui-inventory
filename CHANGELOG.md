@@ -62,6 +62,7 @@
 * Edit MARC bib record on Shared Instance. Refs UIIN-2526.
 * Allow for new source values for shadow Instances. Refs UIIN-2459.
 * Update Node.js to v18 in GitHub Actions. Refs UIIN-2520.
+* Fix issue with Relevance sort option. Refs UIIN-2474.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
