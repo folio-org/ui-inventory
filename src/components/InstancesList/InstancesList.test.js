@@ -262,7 +262,7 @@ describe('InstancesList', () => {
     it('should have proper list results size', () => {
       renderInstancesList({ segment: 'instances' });
 
-      expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(3);
+      expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(4);
     });
 
     describe('opening action menu', () => {

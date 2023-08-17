@@ -636,4 +636,12 @@ export const RECORD_SOURCE = {
   UC: 'UC',
 };
 
+export const SOURCE_VALUES = {
+  MARC: 'MARC',
+  FOLIO: 'FOLIO',
+  'CONSORTIUM-MARC': 'MARC-shared',
+  'CONSORTIUM-FOLIO': 'FOLIO-shared',
+};
+
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';
+export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';

@@ -1,1 +1,1 @@
-// add additional jest setup here
+import './__mock__';
