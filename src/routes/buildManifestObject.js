@@ -97,6 +97,8 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
 
   if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
     query.sort = '';
+  } else if (query.sort && query.sort === 'relevance') {
+    query.sort = '';
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
     query.sort = DEFAULT_SORT;
