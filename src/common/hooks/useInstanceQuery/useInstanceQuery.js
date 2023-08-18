@@ -4,7 +4,7 @@ import { useNamespace } from '@folio/stripes/core';
 
 import useTenantKy from '../useTenantKy';
 
-const useInstanceQuery = (instanceId, { tenantId }, options = {}) => {
+const useInstanceQuery = (instanceId, { tenantId = '' } = {}, options = {}) => {
   const ky = useTenantKy({ tenantId });
   const [namespace] = useNamespace({ key: 'instance' });
 
