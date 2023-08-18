@@ -47,7 +47,7 @@ const ViewSource = ({
   const [marc, setMarc] = useState();
   const [isMarcLoading, setIsMarcLoading] = useState(true);
 
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.marcInstance);
+  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
 
   useEffect(() => {
     setIsMarcLoading(true);

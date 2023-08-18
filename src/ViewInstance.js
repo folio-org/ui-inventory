@@ -753,13 +753,16 @@ class ViewInstance extends React.Component {
   };
 
   renderPaneTitle = (instance) => {
-    const { stripes } = this.props;
+    const {
+      stripes,
+      isShared,
+    } = this.props;
 
     return (
       <FormattedMessage
         id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
         values={{
-          isShared: checkIfSharedInstance(stripes, instance),
+          isShared,
           title: instance?.title,
           publisherAndDate: getPublishingInfo(instance),
         }}

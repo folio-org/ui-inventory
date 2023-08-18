@@ -7,10 +7,7 @@ import { withTags } from '@folio/stripes/smart-components';
 import ViewInstance from './ViewInstance';
 import { useUserTenantPermissions } from './hooks';
 import { checkIfSharedInstance } from './utils';
-import {
-  useSearchInstanceByIdQuery,
-  useInstanceQuery,
-} from './common';
+import { useInstance } from './common';
 
 const ViewInstanceWrapper = (props) => {
   const {
@@ -21,13 +18,7 @@ const ViewInstanceWrapper = (props) => {
   const userId = stripes?.user?.user?.id;
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
-  const { instance: selectedInstance } = useSearchInstanceByIdQuery(id);
-  const { instance } = useInstanceQuery(
-    id,
-    { tenantId: selectedInstance?.tenantId },
-    { enabled: Boolean(id && selectedInstance?.tenantId) }
-  );
-
+  const { instance } = useInstance(id);
   const {
     userPermissions: centralTenantPermissions,
     isFetching: isCentralTenantPermissionsLoading,
@@ -38,9 +29,12 @@ const ViewInstanceWrapper = (props) => {
     enabled: userId && centralTenantId && checkIfUserInMemberTenant(stripes) && checkIfSharedInstance(stripes, instance),
   });
 
+  const isShared = instance?.shared;
+
   return (
     <ViewInstance
       {...props}
+      isShared={isShared}
       selectedInstance={instance}
       centralTenantPermissions={centralTenantPermissions}
       isCentralTenantPermissionsLoading={isCentralTenantPermissionsLoading}

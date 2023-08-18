@@ -1,30 +1,24 @@
-import {
-  useState,
-  useEffect,
-} from 'react';
+import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
+import useInstanceQuery from './useInstanceQuery';
 
-const useInstance = (id, mutator) => {
-  const [instance, setInstance] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+const useInstance = (id) => {
+  const { instance: _instance } = useSearchInstanceByIdQuery(id);
 
-  useEffect(() => {
-    setIsLoading(true);
+  const instanceTenantId = _instance?.tenantId;
+  const isShared = _instance?.shared;
 
-    mutator.GET({
-      params: {
-        query: `id==${id}`,
-      },
-    })
-      .then((instances) => {
-        setInstance(instances[0]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [id]);
+  const { isLoading, instance } = useInstanceQuery(
+    id,
+    { tenantId: instanceTenantId },
+    { enabled: Boolean(id && instanceTenantId) }
+  );
 
   return {
-    instance,
+    instance: {
+      ...instance,
+      shared: isShared,
+      tenantId: instanceTenantId,
+    },
     isLoading,
   };
 };

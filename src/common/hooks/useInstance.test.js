@@ -1,39 +1,78 @@
-import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  renderHook,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
+
 import useInstance from './useInstance';
 
+import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
+import useInstanceQuery from './useInstanceQuery';
+
+jest.mock('./useSearchInstanceByIdQuery', () => jest.fn());
+jest.mock('./useInstanceQuery', () => jest.fn());
+
 describe('useInstance', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    useSearchInstanceByIdQuery.mockReturnValue({
+      instance: {
+        shared: false,
+        tenantId: 'tenantId',
+      },
+      isLoading: false,
+    });
+  });
+
   it('fetch instance data and return the instance and loading status', async () => {
-    const mockMutator = {
-      GET: jest.fn().mockResolvedValueOnce([{ id: 123, name: 'Test' }]),
-    };
-    const { result } = renderHook(() => useInstance(123, mockMutator));
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.instance).toBe(undefined);
+    useInstanceQuery.mockReturnValueOnce({
+      instance: {
+        id: 123,
+        name: 'Test',
+      },
+      isLoading: false,
+    });
+    const { result } = renderHook(() => useInstance(123));
+
+    const expectedInstance = { id: 123, name: 'Test', shared: false, tenantId: 'tenantId' };
+
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
-      expect(result.current.instance).toEqual({ id: 123, name: 'Test' });
+      expect(result.current.instance).toEqual(expectedInstance);
     });
   });
   it('re-fetch instance data if id changes', async () => {
-    const mockMutator = {
-      GET: jest.fn().mockResolvedValueOnce([{ id: 123, name: 'Test' }])
-        .mockResolvedValueOnce([{ id: 456, name: 'Test 2' }]),
-    };
-    const { result, rerender } = renderHook(({ id }) => useInstance(id, mockMutator), {
+    useInstanceQuery.mockReturnValueOnce({
+      instance: {
+        id: 123,
+        name: 'Test',
+      },
+      isLoading: false,
+    }).mockReturnValueOnce({
+      instance: {
+        id: 456,
+        name: 'Test 2',
+      },
+      isLoading: false,
+    });
+    const { result, rerender } = renderHook(({ id }) => useInstance(id), {
       initialProps: { id: 123 },
     });
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.instance).toBe(undefined);
+
+    const expectedInstance = { id: 123, name: 'Test', shared: false, tenantId: 'tenantId' };
+
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
-      expect(result.current.instance).toEqual({ id: 123, name: 'Test' });
+      expect(result.current.instance).toEqual(expectedInstance);
     });
+
     rerender({ id: 456 });
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.instance).toEqual({ id: 123, name: 'Test' });
+
+    const expectedInstanceAfterRerender = { id: 456, name: 'Test 2', shared: false, tenantId: 'tenantId' };
+
     await waitFor(() => {
       expect(result.current.isLoading).toBe(false);
-      expect(result.current.instance).toEqual({ id: 456, name: 'Test 2' });
+      expect(result.current.instance).toEqual(expectedInstanceAfterRerender);
     });
   });
 });
