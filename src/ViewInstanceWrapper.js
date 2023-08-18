@@ -19,14 +19,13 @@ const ViewInstanceWrapper = (props) => {
   } = props;
 
   const userId = stripes?.user?.user?.id;
-  const tenantId = stripes.okapi.tenant;
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
   const { instance: selectedInstance } = useSearchInstanceByIdQuery(id);
   const { instance } = useInstanceQuery(
     id,
-    { tenantId: selectedInstance?.shared ? centralTenantId : tenantId },
-    { enabled: Boolean(id && selectedInstance) }
+    { tenantId: selectedInstance?.tenantId },
+    { enabled: Boolean(id && selectedInstance?.tenantId) }
   );
 
   const {
