@@ -65,6 +65,7 @@
 * Fix issue with Relevance sort option. Refs UIIN-2474.
 * Change tenant id to central when opening details of shadow instance. Refs UIIN-2529.
 * "Something went wrong" screen appears when adding Item to Holdings. Fixes UIIN-2534.
+* Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
 * ECS: use mod-search to get tenantId for local/shared instance details. Refs UIIN-2538.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
