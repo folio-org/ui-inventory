@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## 9.4.12 IN PROGRESS
+* Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
+
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
 
