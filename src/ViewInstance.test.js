@@ -157,6 +157,7 @@ const defaultProp = {
   },
   tagsEnabled: true,
   updateLocation: jest.fn(),
+  isShared: false,
 };
 
 const referenceData = {
@@ -380,10 +381,12 @@ describe('ViewInstance', () => {
         const sharedInstance = {
           ...instance,
           source: `${CONSORTIUM_PREFIX}MARC`,
+          shared: true,
         };
         StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
 
         renderViewInstance({
+          isShared: true,
           centralTenantPermissions: [{
             permissionName: 'ui-quick-marc.quick-marc-editor.all',
           }],
@@ -400,10 +403,12 @@ describe('ViewInstance', () => {
         const sharedInstance = {
           ...instance,
           source: `${CONSORTIUM_PREFIX}MARC`,
+          shared: true,
         };
         StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
 
         renderViewInstance({
+          isShared: true,
           centralTenantPermissions: [],
         });
 
@@ -473,10 +478,11 @@ describe('ViewInstance', () => {
         const newInstance = {
           ...instance,
           source: `${CONSORTIUM_PREFIX}MARC`,
+          shared: true,
         };
         StripesConnectedInstance.prototype.instance.mockImplementation(() => newInstance);
 
-        renderViewInstance();
+        renderViewInstance({ isShared: true });
 
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });

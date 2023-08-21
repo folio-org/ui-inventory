@@ -7,18 +7,20 @@ const useInstance = (id) => {
   const instanceTenantId = _instance?.tenantId;
   const isShared = _instance?.shared;
 
-  const { isLoading, instance } = useInstanceQuery(
+  const { isLoading, instance: data } = useInstanceQuery(
     id,
     { tenantId: instanceTenantId },
     { enabled: Boolean(id && instanceTenantId) }
   );
 
+  const instance = {
+    ...data,
+    shared: isShared,
+    tenantId: instanceTenantId,
+  };
+
   return {
-    instance: {
-      ...instance,
-      shared: isShared,
-      tenantId: instanceTenantId,
-    },
+    instance,
     isLoading,
   };
 };
