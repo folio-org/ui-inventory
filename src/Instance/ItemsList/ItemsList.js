@@ -172,7 +172,7 @@ const ItemsList = ({
 
   const { locationsById } = useContext(DataContext);
   const pagingCanGoPrevious = offset > 0;
-  const pagingCanGoNext = offset < total && total > pageAmount;
+  const pagingCanGoNext = offset < total && total - offset > pageAmount;
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
@@ -238,7 +238,7 @@ const ItemsList = ({
       rowProps={rowProps}
       pagingCanGoPrevious={pagingCanGoPrevious}
       pagingCanGoNext={pagingCanGoNext}
-      hidePageIndices
+      pagingOffset={offset}
     />
   );
 };
