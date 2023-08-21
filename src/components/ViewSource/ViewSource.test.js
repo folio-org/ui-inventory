@@ -1,7 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
-import { screen, waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+
+import {
+  screen,
+  waitFor,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -10,6 +15,8 @@ import translations from '../../../test/jest/helpers/translationsProperties';
 import ViewSource from './ViewSource';
 import useInstance from '../../common/hooks/useInstance';
 import useGoBack from '../../common/hooks/useGoBack';
+import { CONSORTIUM_PREFIX } from '../../constants';
+import MARC_TYPES from './marcTypes';
 
 jest.mock('../../common/hooks/useInstance', () => jest.fn());
 jest.mock('../../common/hooks/useGoBack', () => jest.fn());
@@ -28,6 +35,7 @@ const getViewSource = (props = {}) => (
       mutator={mutator}
       instanceId="instance-id"
       holdingsRecordId="holdings-record-id"
+      marcType={MARC_TYPES.BIB}
       {...props}
     />
   </Router>
@@ -103,6 +111,46 @@ describe('ViewSource', () => {
         act(() => fireEvent.click(screen.getByText('QuickMarcView')));
         expect(mockGoBack).toBeCalledTimes(1);
       });
+    });
+  });
+
+  describe('when Instance is shared', () => {
+    beforeEach(async () => {
+      useInstance.mockReturnValue({
+        isLoading: false,
+        instance: {
+          title: 'Instance title',
+          source: `${CONSORTIUM_PREFIX}MARC`,
+        },
+      });
+
+      await act(async () => {
+        await renderWithIntl(getViewSource(), translations);
+      });
+    });
+
+    it('should display "shared marc bibliographic record" message', () => {
+      expect(screen.getByText('Shared MARC bibliographic record')).toBeInTheDocument();
+    });
+  });
+
+  describe('when Instance is local', () => {
+    beforeEach(async () => {
+      useInstance.mockReturnValue({
+        isLoading: false,
+        instance: {
+          title: 'Instance title',
+          source: 'MARC',
+        },
+      });
+
+      await act(async () => {
+        await renderWithIntl(getViewSource(), translations);
+      });
+    });
+
+    it('should display "local marc bibliographic record" message', () => {
+      expect(screen.getByText('Local MARC bibliographic record')).toBeInTheDocument();
     });
   });
 });

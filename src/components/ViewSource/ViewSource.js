@@ -9,14 +9,16 @@ import {
   Button,
   LoadingView,
 } from '@folio/stripes/components';
-import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
-
 import { useStripes } from '@folio/stripes/core';
+import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
+
 import {
   useInstance,
   useGoBack,
 } from '../../common/hooks';
+import { checkIfSharedInstance, isUserInConsortiumMode } from '../../utils';
+import MARC_TYPES from './marcTypes';
 
 import styles from './ViewSource.css';
 
@@ -24,12 +26,13 @@ const ViewSource = ({
   mutator,
   instanceId,
   holdingsRecordId,
-  isHoldingsRecord,
+  marcType,
 }) => {
+  const stripes = useStripes();
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
-  const stripes = useStripes();
+  const isHoldingsRecord = marcType === MARC_TYPES.HOLDINGS;
 
   const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
   const isPrintHoldingsAvailable = isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
@@ -77,9 +80,14 @@ const ViewSource = ({
     )
     : instance.title;
 
-  const marcTitle = isHoldingsRecord
-    ? <FormattedMessage id="ui-inventory.marcHoldingsRecord" />
-    : <FormattedMessage id="ui-inventory.marcSourceRecord" />;
+  const marcTitle = (
+    <FormattedMessage
+      id={`ui-inventory.marcSourceRecord.${marcType}`}
+      values={{
+        shared: isUserInConsortiumMode(stripes) ? checkIfSharedInstance(stripes, instance) : null,
+      }}
+    />
+  );
 
   return (
     <div className={styles.viewSource}>
@@ -116,10 +124,7 @@ ViewSource.propTypes = {
   mutator: PropTypes.object.isRequired,
   instanceId: PropTypes.string.isRequired,
   holdingsRecordId: PropTypes.string,
-  isHoldingsRecord: PropTypes.bool,
-};
-ViewSource.defaultProps = {
-  isHoldingsRecord: false,
+  marcType: PropTypes.oneOf(Object.values(MARC_TYPES)).isRequired,
 };
 
 export default ViewSource;

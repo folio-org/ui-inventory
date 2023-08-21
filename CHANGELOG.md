@@ -56,6 +56,16 @@
 * Add `Shared` search parameter when the user is redirected to the quick-marc page to identify shared record. Refs UIIN-2517.
 * Instance Edit screen header: add shared/local indication. Refs UIIN-2438.
 * i18n item status in item list. Refs UIIN-2473.
+* Disable "Save & close" button by default in "Create new Item" window. Fixes UIIN-2492.
+* Inventory 2nd pane Actions menu: Adjust New action. Refs UIIN-2439.
+* Add "Local" or "Shared" to flag MARC bib records. Refs UIIN-2522.
+* Edit MARC bib record on Shared Instance. Refs UIIN-2526.
+* Allow for new source values for shadow Instances. Refs UIIN-2459.
+* Update Node.js to v18 in GitHub Actions. Refs UIIN-2520.
+* Fix issue with Relevance sort option. Refs UIIN-2474.
+* Change tenant id to central when opening details of shadow instance. Refs UIIN-2529.
+* "Something went wrong" screen appears when adding Item to Holdings. Fixes UIIN-2534.
+* Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)

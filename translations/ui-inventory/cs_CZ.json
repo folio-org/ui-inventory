@@ -312,7 +312,6 @@
     "waitingForResources": "Čekání na zdroje",
     "fetchingMarcRecord": "Získávání záznamu MARC",
     "viewMarcSource": "Zobrazit zdroj MARC",
-    "marcSourceRecord": "MARC bibliografický záznam",
     "item.barcode": "Jednotka: čárový kód",
     "resourceIdentifierType": "Typ identifikátoru zdroje",
     "publication": "Publikace",
@@ -680,7 +679,6 @@
     "receivingHistory.source.user": "Uživatel",
     "holdingsLabelShort": "Holdingy:",
     "appMenu.keyboardShortcuts": "Klávesové zkratky",
-    "marcHoldingsRecord": "Záznam MARC holdingů",
     "marcHoldingsRecord.paneTitle": "Záznam o holdingu - {title}",
     "boundWithTitles": "Vazba a analytika",
     "instanceTitleLabel": "Název titulu",
@@ -814,5 +812,12 @@
     "browse.natLibOfMed": "Klasifikace Národní lékařské knihovny",
     "browse.other": "Jiné schéma",
     "browse.superintendent": "Vedoucí klasifikace dokumentů",
-    "advancedSearch": "Rozšířené vyhledávání"
+    "advancedSearch": "Rozšířené vyhledávání",
+    "filters.shared": "Sdíleno",
+    "consortia.instanceRecordTitle": "{isShared, select, false {Lokální} true {Sdílený} other {}} titul • {title} {publisherAndDate}",
+    "editInstance.consortia.title": "Upravit {isShared, select, false {lokální} true {sdílený} other {}} titul • {title}",
+    "newLocalRecord": "New local record",
+    "newSharedRecord": "New shared record",
+    "marcSourceRecord.bibliographic": "{shared, select, true {Shared} false {Local} other {}} MARC bibliographic record",
+    "marcSourceRecord.holdings": "{shared, select, true {Shared} false {Local} other {}} MARC holdings record"
 }

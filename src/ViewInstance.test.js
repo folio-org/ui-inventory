@@ -15,10 +15,6 @@ import { CONSORTIUM_PREFIX } from './constants';
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
 
-jest.mock('@folio/stripes-core', () => ({
-  ...jest.requireActual('@folio/stripes-core'),
-  TitleManager: ({ children }) => <>{children}</>
-}));
 jest.mock('./components/ImportRecordModal/ImportRecordModal', () => (props) => {
   const { isOpen, handleSubmit, handleCancel } = props;
   if (isOpen) {
@@ -81,6 +77,7 @@ const updateMock = jest.fn();
 const mockonClose = jest.fn();
 const mockData = jest.fn().mockResolvedValue(true);
 const defaultProp = {
+  centralTenantPermissions: [],
   selectedInstance: instance,
   goTo: goToMock,
   match: {
@@ -92,6 +89,7 @@ const defaultProp = {
   intl: {
     formatMessage: jest.fn(),
   },
+  isCentralTenantPermissionsLoading: false,
   mutator: {
     allInstanceItems: {
       reset: mockReset
@@ -387,6 +385,76 @@ describe('ViewInstance', () => {
       fireEvent.click(button);
       expect(mockPush).toBeCalledWith(expectedValue);
     });
+
+    describe('when user is in member tenant and record is shared and central tenant has permission to edit marc bib record', () => {
+      it('should see "Edit MARC bibliographic record" action', async () => {
+        const sharedInstance = {
+          ...instance,
+          source: `${CONSORTIUM_PREFIX}MARC`,
+        };
+        StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
+
+        renderViewInstance({
+          centralTenantPermissions: [{
+            permissionName: 'ui-quick-marc.quick-marc-editor.all',
+          }],
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+        expect(screen.getByRole('button', { name: 'Edit MARC bibliographic record' })).toBeVisible();
+      });
+    });
+
+    describe('when user is in member tenant and record is shared and central tenant has not permission to edit the marc bib record', () => {
+      it('should not see "Edit MARC bibliographic record" action', () => {
+        const sharedInstance = {
+          ...instance,
+          source: `${CONSORTIUM_PREFIX}MARC`,
+        };
+        StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
+
+        renderViewInstance({
+          centralTenantPermissions: [],
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+        expect(screen.queryByRole('button', { name: 'Edit MARC bibliographic record' })).not.toBeInTheDocument();
+      });
+    });
+
+    describe('when user is in member tenant and record is not shared', () => {
+      it('should see "Edit MARC bibliographic record" action', () => {
+        renderViewInstance();
+
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+        expect(screen.getByRole('button', { name: 'Edit MARC bibliographic record' })).toBeVisible();
+      });
+    });
+
+    describe('when user is in central tenant and there is permission to edit the marc bib record', () => {
+      it('should see "Edit MARC bibliographic record" action', () => {
+        const stripes = {
+          ...defaultProp.stripes,
+          okapi: { tenant: 'consortium' },
+          user: { user: { consortium: { centralTenantId: 'consortium' } } },
+        };
+
+        renderViewInstance({
+          centralTenantPermissions: [{
+            permissionName: 'ui-quick-marc.quick-marc-editor.all',
+          }],
+          stripes,
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+        expect(screen.getByRole('button', { name: 'Edit MARC bibliographic record' })).toBeVisible();
+      });
+    });
+
     it('push function should be called when the user clicks the "Derive new MARC bibliographic record" button', async () => {
       renderViewInstance();
       const expectedValue = {

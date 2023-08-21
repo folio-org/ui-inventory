@@ -18,11 +18,6 @@ jest.mock('../InstanceDetails/SubInstanceGroup/SubInstanceGroup', () => jest.fn(
 jest.mock('../InstanceDetails/InstanceAcquisition/InstanceAcquisition', () => jest.fn().mockReturnValue('InstanceAcquisition'));
 jest.mock('../InstanceDetails/InstanceTitleData/InstanceTitleData', () => jest.fn().mockReturnValue('InstanceTitleData'));
 
-jest.mock('@folio/stripes-core', () => ({
-  ...jest.requireActual('@folio/stripes-core'),
-  TitleManager: ({ children }) => <>{children}</>
-}));
-
 const instance = {
   title: 'Test Title',
   contributors: [],
