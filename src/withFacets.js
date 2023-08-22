@@ -19,6 +19,7 @@ import {
   CQL_FIND_ALL,
   browseModeOptions,
   browseModeMap,
+  browseCallNumberOptions,
 } from './constants';
 
 function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
@@ -136,7 +137,7 @@ function withFacets(WrappedComponent) {
 
       if (facetName === FACETS.NAME_TYPE) {
         params.query = 'contributorNameTypeId=*';
-      } else if (cqlQuery && queryIndex === browseModeOptions.CALL_NUMBERS) {
+      } else if (cqlQuery && Object.values(browseCallNumberOptions).includes(queryIndex)) {
         params.query = 'callNumber=""';
       } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {
         params.query = cqlQuery;

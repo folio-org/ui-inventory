@@ -78,6 +78,19 @@ describe('InstanceFilters', () => {
     expect(screen.getByText('Effective location (item)')).toBeInTheDocument();
   });
 
+  describe('when call numbers browseType was selected', () => {
+    it('should display filter by effective location accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: 'callNumbers',
+        },
+      });
+
+      expect(getByText('effectiveLocation-field')).toBeInTheDocument();
+    });
+  });
+
   describe('When contributors browseType was selected', () => {
     it('should display filter by nameType accordion', () => {
       const { getByText } = renderInstanceFilters({
