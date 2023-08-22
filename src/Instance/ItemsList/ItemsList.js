@@ -220,7 +220,7 @@ const ItemsList = ({
     <MultiColumnList
       id={`list-items-${holding.id}`}
       columnIdPrefix={`list-items-${holding.id}`}
-      contentData={items}
+      contentData={records}
       rowMetadata={rowMetadata}
       formatter={formatter}
       visibleColumns={draggable ? dragVisibleColumns : visibleColumns}

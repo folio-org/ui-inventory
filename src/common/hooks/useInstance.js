@@ -1,6 +1,7 @@
+import { useMemo } from 'react';
+
 import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
 import useInstanceQuery from './useInstanceQuery';
-import {useMemo} from "react";
 
 const useInstance = (id) => {
   const { instance: _instance } = useSearchInstanceByIdQuery(id);
