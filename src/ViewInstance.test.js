@@ -76,6 +76,17 @@ const mockReset = jest.fn();
 const updateMock = jest.fn();
 const mockonClose = jest.fn();
 const mockData = jest.fn().mockResolvedValue(true);
+const mockStripes = {
+  connect: jest.fn(),
+  hasInterface: jest.fn().mockReturnValue(true),
+  hasPerm: jest.fn().mockReturnValue(true),
+  locale: 'Testlocale',
+  logger: {
+    log: jest.fn()
+  },
+  okapi: { tenant: 'diku' },
+  user: { user: {} },
+};
 const defaultProp = {
   centralTenantPermissions: [],
   selectedInstance: instance,
@@ -129,7 +140,7 @@ const defaultProp = {
       hasLoaded: true,
       records: [
         {
-          value: 'testParse'
+          value: '{"titleLevelRequestsFeatureEnabled": true}',
         },
       ]
     },
@@ -144,17 +155,7 @@ const defaultProp = {
       ],
     },
   },
-  stripes: {
-    connect: jest.fn(),
-    hasInterface: jest.fn().mockReturnValue(true),
-    hasPerm: jest.fn().mockReturnValue(true),
-    locale: 'Testlocale',
-    logger: {
-      log: jest.fn()
-    },
-    okapi: { tenant: 'diku' },
-    user: { user: {} },
-  },
+  stripes: mockStripes,
   tagsEnabled: true,
   updateLocation: jest.fn(),
 };
@@ -192,8 +193,14 @@ const renderViewInstance = (props = {}) => renderWithIntl(
       </DataContext.Provider>
     </Router>
   </QueryClientProvider>,
-  translationsProperties
+  translationsProperties,
 );
+
+const checkActionItemExists = (actionItemName) => {
+  fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+  expect(screen.getByRole('button', { name: actionItemName })).toBeInTheDocument();
+};
 
 describe('ViewInstance', () => {
   beforeEach(() => {
@@ -293,212 +300,405 @@ describe('ViewInstance', () => {
 
       expect(screen.queryByRole('button', { name: 'Actions' })).not.toBeInTheDocument();
     });
-    it('"onClickEditInstance" should be called when the user clicks the "Edit instance" button', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Edit instance' }));
-      expect(mockPush).toBeCalled();
-    });
-    it('"onClickViewRequests" should be called when the user clicks the "View requests" button', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'View requests' }));
-      expect(mockPush).toBeCalled();
-    });
-    it('"onCopy" function should be called when the user clicks the "Duplicate instance" button', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Duplicate instance' }));
-      expect(defaultProp.onCopy).toBeCalled();
-    });
-    it('"handleViewSource" should be called when the user clicks the "View source" button', async () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      const veiwSourceButton = screen.getByRole('button', { name: 'View source' });
-      await waitFor(() => {
-        expect(veiwSourceButton).not.toHaveAttribute('disabled');
-      });
-      fireEvent.click(veiwSourceButton);
-      expect(goToMock).toBeCalled();
-    }, 10000);
-    it('"createHoldingsMarc" should be called when the user clicks the "Add MARC holdings record" button', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Add MARC holdings record' }));
-      expect(mockPush).toBeCalled();
-    });
-    it('"Move items within an instance" button to be clicked', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
-      expect(renderViewInstance()).toBeTruthy();
-    });
-    it('"Export instance (MARC)" button to be clicked', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
-      expect(renderViewInstance()).toBeTruthy();
-    });
-    it('"InstancePlugin" should render when user clicks "Move holdings/items to another instance" button', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Move holdings/items to another instance' }));
-      expect(screen.getByRole('button', { name: '+' }));
-    });
-    it('"ImportRecordModal" component should render when user clicks "Overlay source bibliographic record" button', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
-      expect(screen.getByText('ImportRecordModal')).toBeInTheDocument();
-    });
-    it('"handleImportRecordModalSubmit" should be called when the user clicks the "handleSubmit" button', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
-      fireEvent.click(screen.getByRole('button', { name: 'handleSubmit' }));
-      expect(updateMock).toBeCalled();
-    });
-    it('"ImportRecordModal" component should be closed when the user clicks "handleClose" button', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
-      fireEvent.click(screen.getByRole('button', { name: 'handleCancel' }));
-      expect(screen.queryByText('ImportRecordModal')).not.toBeInTheDocument();
-    });
-    it('NewOrderModal should render when the user clicks the new order button', () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'New order' }));
-      expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
-    });
-    it('push function should be called when the user clicks the "Edit MARC bibliographic record" button', async () => {
-      renderViewInstance();
-      const expectedValue = {
-        pathname: `/inventory/quick-marc/edit-bib/${defaultProp.selectedInstance.id}`,
-        search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
-      };
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      const button = screen.getByRole('button', { name: 'Edit MARC bibliographic record' });
-      await waitFor(() => {
-        expect(button).not.toHaveAttribute('disabled');
-      });
-      fireEvent.click(button);
-      expect(mockPush).toBeCalledWith(expectedValue);
-    });
 
-    describe('when user is in member tenant and record is shared and central tenant has permission to edit marc bib record', () => {
-      it('should see "Edit MARC bibliographic record" action', async () => {
-        const sharedInstance = {
-          ...instance,
-          source: `${CONSORTIUM_PREFIX}MARC`,
-        };
-        StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
-
-        renderViewInstance({
-          centralTenantPermissions: [{
-            permissionName: 'ui-quick-marc.quick-marc-editor.all',
-          }],
-        });
-
-        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-
-        expect(screen.getByRole('button', { name: 'Edit MARC bibliographic record' })).toBeVisible();
-      });
-    });
-
-    describe('when user is in member tenant and record is shared and central tenant has not permission to edit the marc bib record', () => {
-      it('should not see "Edit MARC bibliographic record" action', () => {
-        const sharedInstance = {
-          ...instance,
-          source: `${CONSORTIUM_PREFIX}MARC`,
-        };
-        StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
-
-        renderViewInstance({
-          centralTenantPermissions: [],
-        });
-
-        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-
-        expect(screen.queryByRole('button', { name: 'Edit MARC bibliographic record' })).not.toBeInTheDocument();
-      });
-    });
-
-    describe('when user is in member tenant and record is not shared', () => {
-      it('should see "Edit MARC bibliographic record" action', () => {
+    describe('"Edit instance" action item', () => {
+      it('should be rendered', () => {
         renderViewInstance();
+        checkActionItemExists('Edit instance');
+      });
 
+      it('"onClickEditInstance" should be called when the user clicks the "Edit instance" button', () => {
+        renderViewInstance();
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-
-        expect(screen.getByRole('button', { name: 'Edit MARC bibliographic record' })).toBeVisible();
+        fireEvent.click(screen.getByRole('button', { name: 'Edit instance' }));
+        expect(mockPush).toBeCalled();
       });
     });
+    describe('"View source" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('View source');
+      });
 
-    describe('when user is in central tenant and there is permission to edit the marc bib record', () => {
-      it('should see "Edit MARC bibliographic record" action', () => {
-        const stripes = {
-          ...defaultProp.stripes,
-          okapi: { tenant: 'consortium' },
-          user: { user: { consortium: { centralTenantId: 'consortium' } } },
+      it('"handleViewSource" should be called when the user clicks the "View source" button', async () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        const veiwSourceButton = screen.getByRole('button', { name: 'View source' });
+        await waitFor(() => {
+          expect(veiwSourceButton).not.toHaveAttribute('disabled');
+        });
+        fireEvent.click(veiwSourceButton);
+        expect(goToMock).toBeCalled();
+      }, 10000);
+    });
+    describe('"Move items within an instance" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('Move items within an instance');
+      });
+
+      it('"Move items within an instance" button to be clicked', () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
+        expect(renderViewInstance()).toBeTruthy();
+      });
+
+      describe('when user is in central tenant', () => {
+        it('should be hidden', () => {
+          const stripes = {
+            ...defaultProp.stripes,
+            okapi: { tenant: 'consortium' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          };
+
+          renderViewInstance({ stripes });
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.queryByRole('button', { name: 'Move items within an instance' })).not.toBeInTheDocument();
+        });
+      });
+    });
+    describe('"Move holdings/items to another instance" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('Move holdings/items to another instance');
+      });
+
+      it('"InstancePlugin" should render when user clicks "Move holdings/items to another instance" button', () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Move holdings/items to another instance' }));
+        expect(screen.getByRole('button', { name: '+' }));
+      });
+
+      describe('when user is in central tenant', () => {
+        it('should be hidden', () => {
+          const stripes = {
+            ...defaultProp.stripes,
+            okapi: { tenant: 'consortium' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          };
+
+          renderViewInstance({ stripes });
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.queryByRole('button', { name: 'Move holdings/items to another instance' })).not.toBeInTheDocument();
+        });
+      });
+    });
+    describe('"Overlay source bibliographic record" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('Overlay source bibliographic record');
+      });
+
+      it('"ImportRecordModal" component should render when user clicks "Overlay source bibliographic record" button', () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
+        expect(screen.getByText('ImportRecordModal')).toBeInTheDocument();
+      });
+      it('"handleImportRecordModalSubmit" should be called when the user clicks the "handleSubmit" button', () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
+        fireEvent.click(screen.getByRole('button', { name: 'handleSubmit' }));
+        expect(updateMock).toBeCalled();
+      });
+      it('"ImportRecordModal" component should be closed when the user clicks "handleClose" button', () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Overlay source bibliographic record' }));
+        fireEvent.click(screen.getByRole('button', { name: 'handleCancel' }));
+        expect(screen.queryByText('ImportRecordModal')).not.toBeInTheDocument();
+      });
+    });
+    describe('"Duplicate instance" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('Duplicate instance');
+      });
+
+      it('"onCopy" function should be called when the user clicks the "Duplicate instance" button', () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Duplicate instance' }));
+        expect(defaultProp.onCopy).toBeCalled();
+      });
+    });
+    describe('"Export instance (MARC)" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('Export instance (MARC)');
+      });
+
+      it('"Export instance (MARC)" button to be clicked', () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
+        expect(renderViewInstance()).toBeTruthy();
+      });
+    });
+    describe('"New order" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('New order');
+      });
+
+      it('NewOrderModal should render when the user clicks the new order button', () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'New order' }));
+        expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
+      });
+
+      it('NewOrderModal should be closed when the user clicks the close button', async () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'New order' }));
+        expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
+        fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+        await waitFor(() => {
+          expect(screen.queryByText(/Create order/i)).not.toBeInTheDocument();
+        });
+      }, 10000);
+
+      describe('when user is in central tenant', () => {
+        it('should be hidden', () => {
+          const stripes = {
+            ...defaultProp.stripes,
+            okapi: { tenant: 'consortium' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          };
+
+          renderViewInstance({ stripes });
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.queryByRole('button', { name: 'New order' })).not.toBeInTheDocument();
+        });
+      });
+    });
+    describe('"View requests" action item', () => {
+      beforeEach(() => {
+        const configsRequest = {
+          hasLoaded: true,
+          records: [
+            {
+              value: '{"titleLevelRequestsFeatureEnabled": false}',
+            },
+          ]
         };
 
         renderViewInstance({
-          centralTenantPermissions: [{
-            permissionName: 'ui-quick-marc.quick-marc-editor.all',
-          }],
-          stripes,
+          resources: {
+            ...defaultProp.resources,
+            configs: configsRequest,
+          }
         });
+      });
 
+      it('should be rendered when "titleLevelRequestsFeatureEnabled" from config is false', () => {
+        checkActionItemExists('View requests');
+      });
+
+      it('"onClickViewRequests" should be called when the user clicks the "View requests" button', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'View requests' }));
+        expect(mockPush).toBeCalled();
+      });
 
-        expect(screen.getByRole('button', { name: 'Edit MARC bibliographic record' })).toBeVisible();
+      describe('when user is in central tenant', () => {
+        it('should be hidden', () => {
+          const stripes = {
+            ...defaultProp.stripes,
+            okapi: { tenant: 'consortium' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          };
+
+          renderViewInstance({ stripes });
+
+          expect(screen.queryByRole('button', { name: 'View requests' })).not.toBeInTheDocument();
+        });
       });
     });
-
-    it('push function should be called when the user clicks the "Derive new MARC bibliographic record" button', async () => {
-      renderViewInstance();
-      const expectedValue = {
-        pathname: `/inventory/quick-marc/duplicate-bib/${defaultProp.selectedInstance.id}`,
-        search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
-      };
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
-      await waitFor(() => {
-        expect(button).not.toHaveAttribute('disabled');
-      });
-      fireEvent.click(button);
-      expect(mockPush).toBeCalledWith(expectedValue);
-    });
-    it('NewOrderModal should be closed when the user clicks the close button', async () => {
-      renderViewInstance();
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-      fireEvent.click(screen.getByRole('button', { name: 'New order' }));
-      expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
-      fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
-      await waitFor(() => {
-        expect(screen.queryByText(/Create order/i)).not.toBeInTheDocument();
-      });
-    }, 10000);
-    describe('when a user derives a shared record', () => {
-      it('should append the `shared` search parameter', async () => {
-        const newInstance = {
-          ...instance,
-          source: `${CONSORTIUM_PREFIX}MARC`,
+    describe('"New request" action item', () => {
+      it('should be rendered when "titleLevelRequestsFeatureEnabled" from config is true', () => {
+        const configsRequest = {
+          hasLoaded: true,
+          records: [
+            {
+              value: '{"titleLevelRequestsFeatureEnabled": true}',
+            },
+          ]
         };
-        StripesConnectedInstance.prototype.instance.mockImplementation(() => newInstance);
 
+        renderViewInstance({
+          resources: {
+            ...defaultProp.resources,
+            configs: configsRequest,
+          }
+        });
+        checkActionItemExists('New request');
+      });
+    });
+    describe('"Edit MARC bibliographic record" action item', () => {
+      it('should be rendered', () => {
         renderViewInstance();
+        checkActionItemExists('Edit MARC bibliographic record');
+      });
 
+      it('push function should be called when the user clicks the "Edit MARC bibliographic record" button', async () => {
+        renderViewInstance();
+        const expectedValue = {
+          pathname: `/inventory/quick-marc/edit-bib/${defaultProp.selectedInstance.id}`,
+          search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
+        };
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        const button = screen.getByRole('button', { name: 'Edit MARC bibliographic record' });
+        await waitFor(() => {
+          expect(button).not.toHaveAttribute('disabled');
+        });
+        fireEvent.click(button);
+        expect(mockPush).toBeCalledWith(expectedValue);
+      });
+
+      describe('when user is in member tenant and record is shared and central tenant has permission to edit marc bib record', () => {
+        it('should see "Edit MARC bibliographic record" action', async () => {
+          const sharedInstance = {
+            ...instance,
+            source: `${CONSORTIUM_PREFIX}MARC`,
+          };
+          StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
+
+          renderViewInstance({
+            centralTenantPermissions: [{
+              permissionName: 'ui-quick-marc.quick-marc-editor.all',
+            }],
+          });
+
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.getByRole('button', { name: 'Edit MARC bibliographic record' })).toBeVisible();
+        });
+      });
+      describe('when user is in member tenant and record is shared and central tenant has not permission to edit the marc bib record', () => {
+        it('should not see "Edit MARC bibliographic record" action', () => {
+          const sharedInstance = {
+            ...instance,
+            source: `${CONSORTIUM_PREFIX}MARC`,
+          };
+          StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
+
+          renderViewInstance({
+            centralTenantPermissions: [],
+          });
+
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.queryByRole('button', { name: 'Edit MARC bibliographic record' })).not.toBeInTheDocument();
+        });
+      });
+      describe('when user is in member tenant and record is not shared', () => {
+        it('should see "Edit MARC bibliographic record" action', () => {
+          renderViewInstance();
+
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.getByRole('button', { name: 'Edit MARC bibliographic record' })).toBeVisible();
+        });
+      });
+      describe('when user is in central tenant and there is permission to edit the marc bib record', () => {
+        it('should see "Edit MARC bibliographic record" action', () => {
+          const stripes = {
+            ...defaultProp.stripes,
+            okapi: { tenant: 'consortium' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          };
+
+          renderViewInstance({
+            centralTenantPermissions: [{
+              permissionName: 'ui-quick-marc.quick-marc-editor.all',
+            }],
+            stripes,
+          });
+
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.getByRole('button', { name: 'Edit MARC bibliographic record' })).toBeVisible();
+        });
+      });
+    });
+    describe('"Derive new MARC bibliographic record" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('Derive new MARC bibliographic record');
+      });
+
+      it('push function should be called when the user clicks the "Derive new MARC bibliographic record" button', async () => {
+        renderViewInstance();
+        const expectedValue = {
+          pathname: `/inventory/quick-marc/duplicate-bib/${defaultProp.selectedInstance.id}`,
+          search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
+        };
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
         await waitFor(() => {
           expect(button).not.toHaveAttribute('disabled');
         });
         fireEvent.click(button);
+        expect(mockPush).toBeCalledWith(expectedValue);
+      });
 
-        expect(mockPush).toBeCalledWith(expect.objectContaining({
-          search: expect.stringContaining('shared=true'),
-        }));
+      describe('when a user derives a shared record', () => {
+        it('should append the `shared` search parameter', async () => {
+          const newInstance = {
+            ...instance,
+            source: `${CONSORTIUM_PREFIX}MARC`,
+          };
+          StripesConnectedInstance.prototype.instance.mockImplementation(() => newInstance);
+
+          renderViewInstance();
+
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
+          await waitFor(() => {
+            expect(button).not.toHaveAttribute('disabled');
+          });
+          fireEvent.click(button);
+
+          expect(mockPush).toBeCalledWith(expect.objectContaining({
+            search: expect.stringContaining('shared=true'),
+          }));
+        });
+      });
+    });
+    describe('"Add MARC holdings record" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('Add MARC holdings record');
+      });
+
+      it('"createHoldingsMarc" should be called when the user clicks the "Add MARC holdings record" button', () => {
+        renderViewInstance();
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Add MARC holdings record' }));
+        expect(mockPush).toBeCalled();
+      });
+
+      describe('when user is in central tenant', () => {
+        it('should be hidden', () => {
+          const stripes = {
+            ...defaultProp.stripes,
+            okapi: { tenant: 'consortium' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          };
+
+          renderViewInstance({ stripes });
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.queryByRole('button', { name: 'Add MARC holdings record' })).not.toBeInTheDocument();
+        });
       });
     });
   });
