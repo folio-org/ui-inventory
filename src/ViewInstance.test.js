@@ -636,7 +636,7 @@ describe('ViewInstance', () => {
       });
 
       it('push function should be called when the user clicks the "Derive new MARC bibliographic record" button', async () => {
-        renderViewInstance();
+        renderViewInstance({ isShared: false });
         const expectedValue = {
           pathname: `/inventory/quick-marc/duplicate-bib/${defaultProp.selectedInstance.id}`,
           search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
@@ -655,10 +655,12 @@ describe('ViewInstance', () => {
           const newInstance = {
             ...instance,
             source: `${CONSORTIUM_PREFIX}MARC`,
+            shared: true,
+            tenantId: 'tenantId',
           };
           StripesConnectedInstance.prototype.instance.mockImplementation(() => newInstance);
 
-          renderViewInstance();
+          renderViewInstance({ isShared: true });
 
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
           const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
