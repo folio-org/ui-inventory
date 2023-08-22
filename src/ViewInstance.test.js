@@ -158,6 +158,7 @@ const defaultProp = {
   stripes: mockStripes,
   tagsEnabled: true,
   updateLocation: jest.fn(),
+  isShared: false,
 };
 
 const referenceData = {
@@ -232,13 +233,8 @@ describe('ViewInstance', () => {
     describe('for consortia central tenant', () => {
       it('should render instance shared, title, publisher, and publication date for all instances', () => {
         defaultProp.stripes.hasInterface.mockReturnValue(true);
-        const stripes = {
-          ...defaultProp.stripes,
-          okapi: { tenant: 'consortium' },
-          user: { user: { consortium: { centralTenantId: 'consortium' } } },
-        };
 
-        const { getByText } = renderViewInstance({ stripes });
+        const { getByText } = renderViewInstance({ isShared: true });
         const expectedTitle = 'Shared instance • #youthaction • Information Age Publishing, Inc. • 2015';
 
         expect(getByText(expectedTitle)).toBeInTheDocument();
@@ -246,30 +242,24 @@ describe('ViewInstance', () => {
     });
 
     describe('for member library tenant', () => {
-      const stripes = {
-        ...defaultProp.stripes,
-        okapi: { tenant: 'university' },
-        user: { user: { consortium: { centralTenantId: 'consortium' } } },
-      };
-
       describe('local instance', () => {
         it('should render instance local, title, publisher, and publication date', () => {
-          const { getByText } = renderViewInstance({ stripes });
+          const { getByText } = renderViewInstance({ isShared: false });
           const expectedTitle = 'Local instance • #youthaction • Information Age Publishing, Inc. • 2015';
 
           expect(getByText(expectedTitle)).toBeInTheDocument();
         });
       });
 
-      describe('shadow instance', () => {
+      describe('shared instance', () => {
         it('should render instance shared, title, publisher, and publication date', () => {
           const selectedInstance = {
             ...instance,
-            source: 'CONSORTIUM-FOLIO'
+            source: 'CONSORTIUM-FOLIO',
           };
           StripesConnectedInstance.prototype.instance.mockImplementation(() => selectedInstance);
 
-          const { getByText } = renderViewInstance({ stripes, selectedInstance });
+          const { getByText } = renderViewInstance({ selectedInstance, isShared: true });
           const expectedTitle = 'Shared instance • #youthaction • Information Age Publishing, Inc. • 2015';
 
           expect(getByText(expectedTitle)).toBeInTheDocument();
@@ -568,6 +558,8 @@ describe('ViewInstance', () => {
           const sharedInstance = {
             ...instance,
             source: `${CONSORTIUM_PREFIX}MARC`,
+            shared: true,
+            tenantId: 'tenantId',
           };
           StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
 
@@ -575,6 +567,8 @@ describe('ViewInstance', () => {
             centralTenantPermissions: [{
               permissionName: 'ui-quick-marc.quick-marc-editor.all',
             }],
+            isShared: true,
+            tenantId: 'tenantId',
           });
 
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -587,11 +581,15 @@ describe('ViewInstance', () => {
           const sharedInstance = {
             ...instance,
             source: `${CONSORTIUM_PREFIX}MARC`,
+            shared: true,
+            tenantId: 'tenantId',
           };
           StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
 
           renderViewInstance({
             centralTenantPermissions: [],
+            isShared: true,
+            tenantId: 'tenantId',
           });
 
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -601,7 +599,7 @@ describe('ViewInstance', () => {
       });
       describe('when user is in member tenant and record is not shared', () => {
         it('should see "Edit MARC bibliographic record" action', () => {
-          renderViewInstance();
+          renderViewInstance({ isShared: false });
 
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
@@ -621,6 +619,8 @@ describe('ViewInstance', () => {
               permissionName: 'ui-quick-marc.quick-marc-editor.all',
             }],
             stripes,
+            isShared: true,
+            tenantId: 'tenantId',
           });
 
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));

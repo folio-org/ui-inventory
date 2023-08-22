@@ -6,11 +6,7 @@ import { withTags } from '@folio/stripes/smart-components';
 
 import ViewInstance from './ViewInstance';
 import { useUserTenantPermissions } from './hooks';
-import { checkIfSharedInstance } from './utils';
-import {
-  useSearchInstanceByIdQuery,
-  useInstanceQuery,
-} from './common';
+import { useInstance } from './common';
 
 const ViewInstanceWrapper = (props) => {
   const {
@@ -19,15 +15,11 @@ const ViewInstanceWrapper = (props) => {
   } = props;
 
   const userId = stripes?.user?.user?.id;
-  const tenantId = stripes.okapi.tenant;
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
+  const { instance } = useInstance(id);
 
-  const { instance: selectedInstance } = useSearchInstanceByIdQuery(id);
-  const { instance } = useInstanceQuery(
-    id,
-    { tenantId: selectedInstance?.shared ? centralTenantId : tenantId },
-    { enabled: Boolean(id && selectedInstance) }
-  );
+  const isShared = instance?.shared;
+  const tenantId = instance?.tenantId;
 
   const {
     userPermissions: centralTenantPermissions,
@@ -36,12 +28,14 @@ const ViewInstanceWrapper = (props) => {
     userId,
     tenantId: centralTenantId,
   }, {
-    enabled: userId && centralTenantId && checkIfUserInMemberTenant(stripes) && checkIfSharedInstance(stripes, instance),
+    enabled: userId && centralTenantId && checkIfUserInMemberTenant(stripes) && isShared,
   });
 
   return (
     <ViewInstance
       {...props}
+      isShared={isShared}
+      tenantId={tenantId}
       selectedInstance={instance}
       centralTenantPermissions={centralTenantPermissions}
       isCentralTenantPermissionsLoading={isCentralTenantPermissionsLoading}
