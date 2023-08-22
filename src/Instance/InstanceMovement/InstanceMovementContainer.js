@@ -35,11 +35,11 @@ const InstanceMovementContainer = ({
   const {
     instance: instanceFrom,
     isLoading: isInstanceFromLoading,
-  } = useInstance(idFrom, mutator.movableInstance);
+  } = useInstance(idFrom);
   const {
     instance: instanceTo,
     isLoading: isInstanceToLoading,
-  } = useInstance(idTo, mutator.movableInstance);
+  } = useInstance(idTo);
 
   const onClose = useCallback((closedInstance) => {
     const instanceId = closedInstance.id === instanceFrom?.id

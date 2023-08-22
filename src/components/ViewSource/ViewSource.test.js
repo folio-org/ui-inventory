@@ -121,6 +121,7 @@ describe('ViewSource', () => {
         instance: {
           title: 'Instance title',
           source: `${CONSORTIUM_PREFIX}MARC`,
+          shared: true,
         },
       });
 
@@ -141,6 +142,7 @@ describe('ViewSource', () => {
         instance: {
           title: 'Instance title',
           source: 'MARC',
+          shared: false,
         },
       });
 
