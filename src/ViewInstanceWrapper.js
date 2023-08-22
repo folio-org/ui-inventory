@@ -28,7 +28,7 @@ const ViewInstanceWrapper = (props) => {
     userId,
     tenantId: centralTenantId,
   }, {
-    enabled: userId && centralTenantId && checkIfUserInMemberTenant(stripes) && isShared,
+    enabled: Boolean(isShared && checkIfUserInMemberTenant(stripes)),
   });
 
   return (
