@@ -4,7 +4,7 @@ import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
 import useInstanceQuery from './useInstanceQuery';
 
 const useInstance = (id) => {
-  const { instance: _instance } = useSearchInstanceByIdQuery(id);
+  const { isLoading: isSearchInstanceByIdLoading, instance: _instance } = useSearchInstanceByIdQuery(id);
 
   const instanceTenantId = _instance?.tenantId;
   const isShared = _instance?.shared;
@@ -12,7 +12,7 @@ const useInstance = (id) => {
   const { isLoading, instance: data } = useInstanceQuery(
     id,
     { tenantId: instanceTenantId },
-    { enabled: Boolean(id && instanceTenantId) }
+    { enabled: Boolean(id && !isSearchInstanceByIdLoading) }
   );
 
   const instance = useMemo(
