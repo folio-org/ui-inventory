@@ -38,12 +38,12 @@ const stripesStub = {
   locale: 'en-US',
   plugins: {},
 };
-const mockInstance= {
+const mockInstance = {
   ...instance,
   shared: false,
   tenantId: 'tenantId',
 };
-jest.mock('../../common/hooks/useInstance', () => jest.fn())
+jest.mock('../../common/hooks/useInstance', () => jest.fn());
 
 const InstanceEditSetup = () => (
   <Router>

@@ -12,6 +12,7 @@ import {
 import { useStripes } from '@folio/stripes/core';
 import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
+import { getHeaders } from '@folio/quick-marc/src/QuickMarcEditor/utils';
 
 import {
   useInstance,
@@ -19,7 +20,6 @@ import {
 } from '../../common/hooks';
 
 import { isUserInConsortiumMode } from '../../utils';
-import { getHeaders } from '@folio/quick-marc/src/QuickMarcEditor/utils';
 import MARC_TYPES from './marcTypes';
 
 import styles from './ViewSource.css';
@@ -57,7 +57,7 @@ const ViewSource = ({
     const tenantId = instance?.tenantId;
     const { okapi: { tenant, token, locale } } = stripes;
 
-    mutator.marcRecord.GET({ headers: getHeaders(tenantId || tenant, token, locale )})
+    mutator.marcRecord.GET({ headers: getHeaders(tenantId || tenant, token, locale) })
       .then((marcResponse) => {
         setMarc(marcResponse);
       })
