@@ -54,7 +54,7 @@ const ViewSource = ({
   useEffect(() => {
     setIsMarcLoading(true);
 
-    const { tenantId } = instance;
+    const tenantId = instance?.tenantId;
     const { okapi: { tenant, token, locale } } = stripes;
 
     mutator.marcRecord.GET({ headers: getHeaders(tenantId || tenant, token, locale )})

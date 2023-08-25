@@ -89,7 +89,10 @@ describe('ViewSource', () => {
     beforeEach(async () => {
       useInstance.mockReturnValue({
         isLoading: false,
-        instance: { title: 'Instance title' },
+        instance: {
+          title: 'Instance title',
+          tenantId: 'tenantId',
+        },
       });
 
       await act(async () => {
