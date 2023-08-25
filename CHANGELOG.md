@@ -60,6 +60,16 @@
 * Inventory 2nd pane Actions menu: Adjust New action. Refs UIIN-2439.
 * Add "Local" or "Shared" to flag MARC bib records. Refs UIIN-2522.
 * Edit MARC bib record on Shared Instance. Refs UIIN-2526.
+* Allow for new source values for shadow Instances. Refs UIIN-2459.
+* Update Node.js to v18 in GitHub Actions. Refs UIIN-2520.
+* Fix issue with Relevance sort option. Refs UIIN-2474.
+* Change tenant id to central when opening details of shadow instance. Refs UIIN-2529.
+* "Something went wrong" screen appears when adding Item to Holdings. Fixes UIIN-2534.
+* Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
+* ECS: use mod-search to get tenantId for local/shared instance details. Refs UIIN-2538.
+* Make the 'enabled' argument always boolean when calling useUserTenantPermissions. Refs UIIN-2540.
+* Instance details are not shown on Inventory pane. Fixes UIIN-2541.
+* Enclose the query in quotes to allow for parentheses. Fixes UIIN-2516.
 * Show Effective location facet for all Call Number browse sub-options. Fixes UIIN-2499.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)

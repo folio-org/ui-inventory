@@ -30,6 +30,8 @@ const mockInitialValues = {
   id: 'testId',
   metadata: { updatedDate: '2019-04-11T12:01:48.451+0000' },
   hrid: 'test hrid',
+  tenantId: 'tenantId',
+  shared: 'false',
 };
 
 const mockReferenceTables = {
@@ -168,6 +170,11 @@ describe('InstanceForm', () => {
             okapi: { tenant: 'consortium' },
             user: { user: { consortium: { centralTenantId: 'consortium' } } },
           },
+          initialValues: {
+            ...mockInitialValues,
+            tenantId: 'consortium',
+            shared: true,
+          },
         });
 
         const title = await findByText('Edit shared instance • test title');
@@ -183,6 +190,11 @@ describe('InstanceForm', () => {
             ...stripesStub,
             okapi: { tenant: 'university' },
             user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          },
+          initialValues: {
+            ...mockInitialValues,
+            tenantId: 'university',
+            shared: false,
           },
         });
 

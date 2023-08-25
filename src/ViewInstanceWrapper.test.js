@@ -8,7 +8,11 @@ import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewInstanceWrapper from './ViewInstanceWrapper';
 import ViewInstance from './ViewInstance';
 import { useUserTenantPermissions } from './hooks';
-import { CONSORTIUM_PREFIX } from './constants';
+import { useInstance } from './common';
+import {
+  CONSORTIUM_PREFIX,
+  SOURCE_VALUES,
+} from './constants';
 
 jest.mock('./ViewInstance', () => jest.fn(() => <div>ViewInstance</div>));
 
@@ -16,17 +20,10 @@ jest.mock('./hooks', () => ({
   ...jest.requireActual('./hooks'),
   useUserTenantPermissions: jest.fn(),
 }));
-
-const resources = {
-  instance : {
-    records : [{
-      type: 'okapi',
-      path: 'inventory/instances/:{id}',
-      resourceShouldRefresh: true,
-      throwErrors: false,
-    }],
-  },
-};
+jest.mock('./common', () => ({
+  ...jest.requireActual('./common'),
+  useInstance: jest.fn(),
+}));
 
 const match = {
   params : {
@@ -37,7 +34,7 @@ const match = {
 const renderViewInstanceWrapper = (props = {}) => renderWithIntl(
   <MemoryRouter>
     <ViewInstanceWrapper
-      resources={resources}
+      resources={{}}
       match={match}
       stripes={buildStripes()}
       {...props}
@@ -53,6 +50,15 @@ describe('ViewInstanceWrapper', () => {
       userPermissions: [],
       isFetching: false,
     });
+    useInstance.mockReturnValue({
+      instance: {
+        id: match.params.id,
+        source: SOURCE_VALUES.MARC,
+        shared: false,
+        tenantId: 'tenantId',
+      },
+      isLoading: false,
+    });
   });
 
   describe('when record is shared and user in member tenant and there are both userId and centralTenantId', () => {
@@ -61,21 +67,21 @@ describe('ViewInstanceWrapper', () => {
         permissionName: 'ui-quick-marc.quick-marc-editor.all',
       }];
 
+      useInstance.mockReturnValue({
+        instance: {
+          id: match.params.id,
+          source: `${CONSORTIUM_PREFIX}MARC`,
+          shared: true,
+          tenantId: 'tenantId',
+        },
+        isLoading: false,
+      });
       useUserTenantPermissions.mockReturnValue({
         userPermissions,
         isFetching: false,
       });
 
-      renderViewInstanceWrapper({
-        resources: {
-          ...resources,
-          instance : {
-            records : [{
-              source: `${CONSORTIUM_PREFIX}MARC`,
-            }],
-          },
-        }
-      });
+      renderViewInstanceWrapper();
 
       expect(useUserTenantPermissions).toHaveBeenCalledWith({
         tenantId: 'consortia',

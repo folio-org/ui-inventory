@@ -245,6 +245,7 @@ export const SORT_DIRECTION = {
 export const SORTABLE_SEARCH_RESULT_LIST_COLUMNS = {
   TITLE: 'title',
   CONTRIBUTORS: 'contributors',
+  RELEVANCE: 'relevance',
 };
 
 
@@ -471,11 +472,11 @@ export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
 export const SINGLE_ITEM_QUERY_TEMPLATES = {
-  'items.barcode': 'barcode==%{query}',
-  isbn: 'isbn==%{query}',
-  issn: 'issn==%{query}',
-  itemHrid: 'hrid==%{query}',
-  iid: 'id==%{query}',
+  'items.barcode': 'barcode=="%{query}"',
+  isbn: 'isbn=="%{query}"',
+  issn: 'issn=="%{query}"',
+  itemHrid: 'hrid=="%{query}"',
+  iid: 'id=="%{query}"',
 };
 
 export const fieldSearchConfigurations = {
@@ -637,6 +638,13 @@ export const RECORD_SOURCE = {
   RDA_MODE_ISSUE: 'rdamodeissue',
   SYSTEM: 'system',
   UC: 'UC',
+};
+
+export const SOURCE_VALUES = {
+  MARC: 'MARC',
+  FOLIO: 'FOLIO',
+  'CONSORTIUM-MARC': 'MARC-shared',
+  'CONSORTIUM-FOLIO': 'FOLIO-shared',
 };
 
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';

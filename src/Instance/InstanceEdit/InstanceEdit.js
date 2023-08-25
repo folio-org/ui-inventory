@@ -39,7 +39,7 @@ const InstanceEdit = ({
   const [httpError, setHttpError] = useState();
   const [initialValues, setInitialValues] = useState();
   const callout = useCallout();
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.instanceEdit);
+  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
   const parentInstances = useLoadSubInstances(instance?.parentInstances, 'superInstanceId');
   const childInstances = useLoadSubInstances(instance?.childInstances, 'subInstanceId');
 

@@ -33,13 +33,13 @@ import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
 import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import {
-  checkIfSharedInstance,
   getDate,
   handleKeyCommand,
   isMARCSource,
   isUserInConsortiumMode,
 } from './utils';
 import {
+  CONSORTIUM_PREFIX,
   indentifierTypeNames,
   layers,
   REQUEST_OPEN_STATUSES,
@@ -91,6 +91,7 @@ class ViewInstance extends React.Component {
         query: 'instanceId==:{id}',
         limit: '1000',
       },
+      tenant: '!{tenantId}',
       shouldRefresh: () => false,
     },
     allInstanceItems: {
@@ -100,6 +101,7 @@ class ViewInstance extends React.Component {
       records: 'items',
       throwErrors: false,
       type: 'okapi',
+      tenant: '!{tenantId}',
       shouldRefresh: () => false,
     },
     instanceRequests: {
@@ -113,6 +115,7 @@ class ViewInstance extends React.Component {
       records: 'requests',
       throwErrors: false,
       type: 'okapi',
+      tenant: '!{tenantId}',
       shouldRefresh: () => false,
     },
     movableItems: {
@@ -120,12 +123,14 @@ class ViewInstance extends React.Component {
       path: 'inventory/items/move',
       fetch: false,
       throwErrors: false,
+      tenant: '!{tenantId}',
     },
     marcRecord: {
       type: 'okapi',
       path: 'source-storage/records/:{id}/formatted?idType=INSTANCE',
       accumulate: true,
       throwErrors: false,
+      tenant: '!{tenantId}',
     },
     quickExport: {
       type: 'okapi',
@@ -133,16 +138,21 @@ class ViewInstance extends React.Component {
       path: 'data-export/quick-export',
       throwErrors: false,
       clientGeneratePk: false,
+      tenant: '!{tenantId}',
     },
     instanceRelationshipTypes: {
       type: 'okapi',
       records: 'instanceRelationshipTypes',
       path: 'instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
+      tenant: '!{tenantId}',
+      throwErrors: false,
     },
     locations: {
       type: 'okapi',
       records: 'locations',
       path: 'locations?limit=5000',
+      tenant: '!{tenantId}',
+      throwErrors: false,
     },
     configs: {
       type: 'okapi',
@@ -151,6 +161,8 @@ class ViewInstance extends React.Component {
       params: {
         query: '(module==SETTINGS and configName==TLR)',
       },
+      tenant: '!{tenantId}',
+      throwErrors: false,
     },
   });
 
@@ -290,16 +302,16 @@ class ViewInstance extends React.Component {
       history,
       location,
       stripes,
+      isShared,
     } = this.props;
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
-    const isSharedInstance = checkIfSharedInstance(stripes, instance);
 
     const searchParams = new URLSearchParams(location.search);
 
     searchParams.delete('relatedRecordVersion');
-    searchParams.append('shared', isSharedInstance.toString());
+    searchParams.append('shared', isShared.toString());
 
     history.push({
       pathname: `/inventory/quick-marc/${page}/${instance.id}`,
@@ -444,6 +456,7 @@ class ViewInstance extends React.Component {
 
   createActionMenuGetter = (instance, data) => ({ onToggle }) => {
     const {
+      isShared,
       canUseSingleRecordImport,
       onCopy,
       stripes,
@@ -459,14 +472,15 @@ class ViewInstance extends React.Component {
     } = this.state;
 
     const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
+    const editInstancePerm = 'ui-inventory.instance.edit';
     const isSourceMARC = isMARCSource(instance?.source);
-    const canEditInstance = stripes.hasPerm('ui-inventory.instance.edit');
+    const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
     const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
     const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
-    const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && checkIfSharedInstance(stripes, instance)
+    const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && isShared
       ? this.hasCentralTenantPerm(editBibRecordPerm)
       : stripes.hasPerm(editBibRecordPerm);
     const canDeriveMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.duplicate');
@@ -489,6 +503,10 @@ class ViewInstance extends React.Component {
         onClickHandler(this.context.sendCallout);
       };
     };
+
+    const suppressEditInstanceForMemberTenant = checkIfUserInMemberTenant(stripes)
+      && instance?.source.startsWith(CONSORTIUM_PREFIX)
+      && !this.hasCentralTenantPerm(editInstancePerm);
 
     const showInventoryMenuSection = (
       canEditInstance
@@ -517,7 +535,7 @@ class ViewInstance extends React.Component {
       <>
         {showInventoryMenuSection && (
           <MenuSection label={intl.formatMessage({ id: 'ui-inventory.inventory.label' })} id="inventory-menu-section">
-            {canEditInstance && (
+            {canEditInstance && !suppressEditInstanceForMemberTenant && (
               <Button
                 id="edit-instance"
                 onClick={() => {
@@ -747,13 +765,16 @@ class ViewInstance extends React.Component {
   };
 
   renderPaneTitle = (instance) => {
-    const { stripes } = this.props;
+    const {
+      stripes,
+      isShared,
+    } = this.props;
 
     return (
       <FormattedMessage
         id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
         values={{
-          isShared: checkIfSharedInstance(stripes, instance),
+          isShared,
           title: instance?.title,
           publisherAndDate: getPublishingInfo(instance),
         }}
@@ -910,6 +931,7 @@ class ViewInstance extends React.Component {
 }
 
 ViewInstance.propTypes = {
+  isShared: PropTypes.bool,
   canUseSingleRecordImport: PropTypes.bool,
   centralTenantPermissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedInstance:  PropTypes.object,

@@ -186,7 +186,7 @@ export const instances = [
   {
     'id': '69640328-788e-43fc-9c3c-af39e243f3b7',
     'hrid': 'inst000000000001',
-    'source': 'FOLIO',
+    'source': 'CONSORTIUM-FOLIO',
     'title': 'ABA Journal',
     'alternativeTitles': [],
     'editions': [],
@@ -230,6 +230,55 @@ export const instances = [
     'natureOfContentTermIds': ['0abeee3d-8ad2-4b04-92ff-221b4fce1075'],
     'links': {
       'self': 'http://folio-testing-okapi.dev.folio.org/inventory/instances/69640328-788e-43fc-9c3c-af39e243f3b7'
+    }
+  },
+  {
+    'id': '69640328-788e-43fc-9c3c-af39e243f300',
+    'hrid': 'inst000000000001',
+    'source': 'CONSORTIUM-MARC',
+    'title': 'ABA Journal',
+    'alternativeTitles': [],
+    'editions': [],
+    'series': [],
+    'identifiers': [{
+      'identifierTypeId': '913300b2-03ed-469a-8179-c1092c991227',
+      'value': '0747-0088'
+    }, {
+      'identifierTypeId': 'c858e4f2-2b6b-4385-842b-60732ee14abb',
+      'value': '84641839'
+    }],
+    'contributors': [],
+    'subjects': [],
+    'classifications': [],
+    'publication': [{
+      'publisher': 'American Bar Association',
+      'place': 'Chicago, Ill.',
+      'dateOfPublication': '1915-1983',
+      'role': null
+    }],
+    'publicationFrequency': [],
+    'publicationRange': [],
+    'electronicAccess': [],
+    'instanceTypeId': '6312d172-f0cf-40f6-b27d-9fa8feaf332f',
+    'instanceFormatIds': [],
+    'physicalDescriptions': [],
+    'languages': [],
+    'notes': [],
+    'discoverySuppress': false,
+    'statisticalCodeIds': [],
+    'statusUpdatedDate': '2020-12-24T03:18:49.266+0000',
+    'metadata': {
+      'createdDate': '2020-12-24T03:18:49.266+00:00',
+      'createdByUserId': null,
+      'updatedDate': '2020-12-24T03:18:49.266+00:00',
+      'updatedByUserId': null
+    },
+    'tags': {
+      'tagList': []
+    },
+    'natureOfContentTermIds': ['0abeee3d-8ad2-4b04-92ff-221b4fce1075'],
+    'links': {
+      'self': 'http://folio-testing-okapi.dev.folio.org/inventory/instances/69640328-788e-43fc-9c3c-af39e243f300'
     }
   },
 ];
