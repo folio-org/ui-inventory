@@ -91,6 +91,19 @@ describe('InstanceFilters', () => {
     });
   });
 
+  describe('when call numbers browse sub-type was selected', () => {
+    it('should display filter by effective location accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: 'dewey',
+        },
+      });
+
+      expect(getByText('effectiveLocation-field')).toBeInTheDocument();
+    });
+  });
+
   describe('When contributors browseType was selected', () => {
     it('should display filter by nameType accordion', () => {
       const { getByText } = renderInstanceFilters({
