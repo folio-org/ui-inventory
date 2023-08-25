@@ -369,7 +369,6 @@ class ViewInstance extends React.Component {
     goTo(`${location.pathname.replace('/view/', '/viewsource/')}${location.search}`);
   };
 
-
   triggerQuickExport = async () => {
     const { instancesQuickExportInProgress } = this.state;
     const { match } = this.props;

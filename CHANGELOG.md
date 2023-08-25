@@ -69,6 +69,7 @@
 * ECS: use mod-search to get tenantId for local/shared instance details. Refs UIIN-2538.
 * Make the 'enabled' argument always boolean when calling useUserTenantPermissions. Refs UIIN-2540.
 * Instance details are not shown on Inventory pane. Fixes UIIN-2541.
+* Adjust behaviour of View source for shared instances. Refs UIIN-2449.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)

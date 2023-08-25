@@ -17,7 +17,9 @@ import {
   useInstance,
   useGoBack,
 } from '../../common/hooks';
+
 import { isUserInConsortiumMode } from '../../utils';
+import { getHeaders } from '@folio/quick-marc/src/QuickMarcEditor/utils';
 import MARC_TYPES from './marcTypes';
 
 import styles from './ViewSource.css';
@@ -52,7 +54,10 @@ const ViewSource = ({
   useEffect(() => {
     setIsMarcLoading(true);
 
-    mutator.marcRecord.GET()
+    const { tenantId } = instance;
+    const { okapi: { tenant, token, locale } } = stripes;
+
+    mutator.marcRecord.GET({ headers: getHeaders(tenantId || tenant, token, locale )})
       .then((marcResponse) => {
         setMarc(marcResponse);
       })
