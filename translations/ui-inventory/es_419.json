@@ -814,10 +814,10 @@
     "browse.superintendent": "Clasificación del Superintendente de Documentos",
     "advancedSearch": "Búsqueda avanzada",
     "filters.shared": "Compartido",
-    "consortia.instanceRecordTitle": "{isShared, select, false {Local} true {Shared} other {}} instance • {title} {publisherAndDate}",
-    "editInstance.consortia.title": "Edit {isShared, select, false {local} true {shared} other {}} instance • {title}",
-    "newLocalRecord": "New local record",
-    "newSharedRecord": "New shared record",
-    "marcSourceRecord.bibliographic": "{shared, select, true {Shared} false {Local} other {}} MARC bibliographic record",
-    "marcSourceRecord.holdings": "{shared, select, true {Shared} false {Local} other {}} MARC holdings record"
+    "consortia.instanceRecordTitle": "{isShared, select, false {Local} true {Shared} other {}} instancia - {title} {editorialYfecha}",
+    "editInstance.consortia.title": "Editar {isShared, select, false {local} true {shared} other {}} instancia - {title}",
+    "newLocalRecord": "Nuevo récord local",
+    "newSharedRecord": "Nuevo registro compartido",
+    "marcSourceRecord.bibliographic": "{compartido, seleccionar, verdadero {Compartido} falso {Local} otro {}} Registro bibliográfico MARC",
+    "marcSourceRecord.holdings": "{compartido, seleccionar, verdadero {Compartido} falso {Local} otro {}} Registro de existencias MARC"
 }
