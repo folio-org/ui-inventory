@@ -70,6 +70,7 @@
 * Make the 'enabled' argument always boolean when calling useUserTenantPermissions. Refs UIIN-2540.
 * Instance details are not shown on Inventory pane. Fixes UIIN-2541.
 * Enclose the query in quotes to allow for parentheses. Fixes UIIN-2516.
+* Add advanced search query for facets. Fixes UIIN-2536.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
