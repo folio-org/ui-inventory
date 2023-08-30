@@ -468,11 +468,11 @@ export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
 export const SINGLE_ITEM_QUERY_TEMPLATES = {
-  'items.barcode': 'barcode==%{query}',
-  isbn: 'isbn==%{query}',
-  issn: 'issn==%{query}',
-  itemHrid: 'hrid==%{query}',
-  iid: 'id==%{query}',
+  'items.barcode': 'barcode=="%{query}"',
+  isbn: 'isbn=="%{query}"',
+  issn: 'issn=="%{query}"',
+  itemHrid: 'hrid=="%{query}"',
+  iid: 'id=="%{query}"',
 };
 
 export const fieldSearchConfigurations = {

@@ -19,7 +19,7 @@ const ViewInstanceWrapper = (props) => {
   const { instance } = useInstance(id);
 
   const isShared = instance?.shared;
-  const tenantId = instance?.tenantId;
+  const tenantId = instance?.tenantId ?? stripes.okapi.tenant;
 
   const {
     userPermissions: centralTenantPermissions,
@@ -28,7 +28,7 @@ const ViewInstanceWrapper = (props) => {
     userId,
     tenantId: centralTenantId,
   }, {
-    enabled: userId && centralTenantId && checkIfUserInMemberTenant(stripes) && isShared,
+    enabled: Boolean(isShared && checkIfUserInMemberTenant(stripes)),
   });
 
   return (
