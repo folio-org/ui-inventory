@@ -18,6 +18,7 @@ import {
   FACETS_SETTINGS,
   FACETS_CQL,
   browseModeOptions,
+  browseCallNumberOptions,
 } from '../../../constants';
 import { useFacets } from '../../../common/hooks';
 
@@ -83,7 +84,7 @@ const InstanceFiltersBrowse = props => {
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
       {
-      browseType === browseModeOptions.CALL_NUMBERS && (
+      Object.values(browseCallNumberOptions).includes(browseType) && (
       <Accordion
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
         id={FACETS.EFFECTIVE_LOCATION}

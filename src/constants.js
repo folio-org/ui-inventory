@@ -105,7 +105,7 @@ export const segments = {
   items: 'items',
 };
 
-export const browseModeOptions = {
+export const browseCallNumberOptions = {
   CALL_NUMBERS: 'callNumbers',
   DEWEY: 'dewey',
   LIBRARY_OF_CONGRESS: 'lc',
@@ -113,6 +113,10 @@ export const browseModeOptions = {
   NATIONAL_LIBRARY_OF_MEDICINE: 'nlm',
   OTHER: 'other',
   SUPERINTENDENT: 'sudoc',
+};
+
+export const browseModeOptions = {
+  ...browseCallNumberOptions,
   CONTRIBUTORS: 'contributors',
   SUBJECTS: 'browseSubjects',
 };
