@@ -5,6 +5,7 @@ import React, {
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 
 import DnDContext from '../DnDContext';
 import ItemsList from './ItemsList';
@@ -34,7 +35,9 @@ const ItemsListContainer = ({
   const { isFetching, items, totalRecords } = useHoldingItemsQuery(holding.id, { searchParams });
 
   useEffect(() => {
-    setItemsToShow(items);
+    if(!isEmpty(items)) {
+      setItemsToShow(items);
+    }
   }, [items]);
 
   return (
