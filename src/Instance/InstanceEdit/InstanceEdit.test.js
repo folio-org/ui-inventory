@@ -13,6 +13,7 @@ import DataContext from '../../contexts/DataContext';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
 import { instance } from '../../../test/fixtures';
+import useInstance from '../../common/hooks/useInstance';
 import InstanceEdit from './InstanceEdit';
 
 const queryClient = new QueryClient();
@@ -37,6 +38,12 @@ const stripesStub = {
   locale: 'en-US',
   plugins: {},
 };
+const mockInstance = {
+  ...instance,
+  shared: false,
+  tenantId: 'tenantId',
+};
+jest.mock('../../common/hooks/useInstance', () => jest.fn());
 
 const InstanceEditSetup = () => (
   <Router>
@@ -62,6 +69,10 @@ const InstanceEditSetup = () => (
 
 describe('InstanceEdit', () => {
   beforeEach(async () => {
+    useInstance.mockReturnValue({
+      isLoading: false,
+      instance: mockInstance,
+    });
     await act(async () => {
       await renderWithIntl(<InstanceEditSetup />, translations);
     });

@@ -66,6 +66,12 @@
 * Change tenant id to central when opening details of shadow instance. Refs UIIN-2529.
 * "Something went wrong" screen appears when adding Item to Holdings. Fixes UIIN-2534.
 * Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
+* ECS: use mod-search to get tenantId for local/shared instance details. Refs UIIN-2538.
+* Make the 'enabled' argument always boolean when calling useUserTenantPermissions. Refs UIIN-2540.
+* Instance details are not shown on Inventory pane. Fixes UIIN-2541.
+* Enclose the query in quotes to allow for parentheses. Fixes UIIN-2516.
+* Make the isShared prop boolean to avoid crashes when calling methods from undefined. Fixes UIIN-2554.
+* Add advanced search query for facets. Fixes UIIN-2536.
 * Enable pagination/item number information in the Instance's Holding Item list. Fixes UIIN-2530.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)

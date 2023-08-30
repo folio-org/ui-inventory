@@ -19,12 +19,19 @@ import {
   CQL_FIND_ALL,
   browseModeOptions,
   browseModeMap,
+  queryIndexes,
 } from './constants';
+import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
 function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const queryIndex = queryParams?.qindex ?? 'all';
+  const queryValue = queryParams?.query ?? '';
   const { indexes, filters } = browseModeMap[queryIndex] ? browseConfig : getFilterConfig(queryParams.segment);
-  const queryTemplate = getQueryTemplate(queryIndex, indexes);
+  let queryTemplate = getQueryTemplate(queryIndex, indexes);
+
+  if (queryIndex === queryIndexes.ADVANCED_SEARCH) {
+    queryTemplate = getAdvancedSearchTemplate(queryValue);
+  }
 
   // reset qindex otherwise makeQueryFunction does not use queryTemplate
   // https://github.com/folio-org/stripes-smart-components/blob/e918a620ad2ac2c5b06ce121cd0e061a03bcfdf6/lib/SearchAndSort/makeQueryFunction.js#L46

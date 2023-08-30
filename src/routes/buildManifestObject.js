@@ -22,7 +22,7 @@ const DEFAULT_SORT = 'title';
 const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
 const getAdvancedSearchQueryTemplate = (queryIndex, matchOption) => fieldSearchConfigurations[queryIndex]?.[matchOption];
 
-const getAdvancedSearchTemplate = (queryValue) => {
+export const getAdvancedSearchTemplate = (queryValue) => {
   const splitIntoRowsRegex = /(?=\sor\s|\sand\s|\snot\s)/g;
 
   // split will return array of strings:
