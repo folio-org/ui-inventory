@@ -73,6 +73,7 @@
 * Make the isShared prop boolean to avoid crashes when calling methods from undefined. Fixes UIIN-2554.
 * Add advanced search query for facets. Fixes UIIN-2536.
 * Show Effective location facet for all Call Number browse sub-options. Fixes UIIN-2499.
+* Enable pagination/item number information in the Instance's Holding Item list. Fixes UIIN-2530.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
