@@ -17,7 +17,7 @@ import {
   useInstance,
   useGoBack,
 } from '../../common/hooks';
-import { checkIfSharedInstance, isUserInConsortiumMode } from '../../utils';
+import { isUserInConsortiumMode } from '../../utils';
 import MARC_TYPES from './marcTypes';
 
 import styles from './ViewSource.css';
@@ -47,7 +47,7 @@ const ViewSource = ({
   const [marc, setMarc] = useState();
   const [isMarcLoading, setIsMarcLoading] = useState(true);
 
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.marcInstance);
+  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
 
   useEffect(() => {
     setIsMarcLoading(true);
@@ -84,7 +84,7 @@ const ViewSource = ({
     <FormattedMessage
       id={`ui-inventory.marcSourceRecord.${marcType}`}
       values={{
-        shared: isUserInConsortiumMode(stripes) ? checkIfSharedInstance(stripes, instance) : null,
+        shared: isUserInConsortiumMode(stripes) ? instance.shared : null,
       }}
     />
   );

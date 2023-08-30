@@ -60,7 +60,6 @@ import PrecedingTitleFields from './precedingTitleFields';
 import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
 import {
-  checkIfSharedInstance,
   isUserInConsortiumMode,
   getDate,
   handleKeyCommand,
@@ -199,7 +198,7 @@ class InstanceForm extends React.Component {
             id={`ui-inventory.editInstance.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}title`}
             values={{
               title: initialValues.title,
-              isShared: checkIfSharedInstance(stripes, initialValues),
+              isShared: initialValues.shared,
             }}
           />
           {publishingInfo}
