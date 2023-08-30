@@ -19,6 +19,7 @@ import {
   CQL_FIND_ALL,
   browseModeOptions,
   browseModeMap,
+  browseCallNumberOptions,
   queryIndexes,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
@@ -143,7 +144,7 @@ function withFacets(WrappedComponent) {
 
       if (facetName === FACETS.NAME_TYPE) {
         params.query = 'contributorNameTypeId=*';
-      } else if (cqlQuery && queryIndex === browseModeOptions.CALL_NUMBERS) {
+      } else if (cqlQuery && Object.values(browseCallNumberOptions).includes(queryIndex)) {
         params.query = 'callNumber=""';
       } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {
         params.query = cqlQuery;
