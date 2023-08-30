@@ -160,6 +160,7 @@ const ItemsList = ({
   isItemsDragSelected,
   selectItemsForDrag,
   getDraggingItems,
+  isFetching,
 }) => {
   const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items);
   const holdingsMapById = keyBy(holdings, 'id');
@@ -225,6 +226,7 @@ const ItemsList = ({
       formatter={formatter}
       visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
       columnMapping={columnMapping}
+      columnWidths={{ barcode: '350px' }}
       ariaLabel={ariaLabel}
       interactive={false}
       onNeedMoreData={onNeedMoreData}
@@ -239,6 +241,7 @@ const ItemsList = ({
       pagingCanGoPrevious={pagingCanGoPrevious}
       pagingCanGoNext={pagingCanGoNext}
       pagingOffset={offset}
+      loading={isFetching}
     />
   );
 };
@@ -253,6 +256,7 @@ ItemsList.propTypes = {
   selectItemsForDrag: PropTypes.func.isRequired,
   isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {

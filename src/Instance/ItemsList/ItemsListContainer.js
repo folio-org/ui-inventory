@@ -1,9 +1,10 @@
-import React, { useContext, memo, useState } from 'react';
+import React, {
+  useContext,
+  memo,
+  useState,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
-
-import {
-  Loading,
-} from '@folio/stripes/components';
 
 import DnDContext from '../DnDContext';
 import ItemsList from './ItemsList';
@@ -24,6 +25,7 @@ const ItemsListContainer = ({
   } = useContext(DnDContext);
 
   const [offset, setOffset] = useState(0);
+  const [itemsToShow, setItemsToShow] = useState([]);
   const searchParams = {
     limit: 200,
     offset,
@@ -31,9 +33,9 @@ const ItemsListContainer = ({
 
   const { isFetching, items, totalRecords } = useHoldingItemsQuery(holding.id, { searchParams });
 
-  if (isFetching) {
-    return <Loading size="large" />;
-  }
+  useEffect(() => {
+    setItemsToShow(items);
+  }, [items]);
 
   return (
     <ItemsList
@@ -45,10 +47,11 @@ const ItemsListContainer = ({
       holding={holding}
       offset={offset}
       setOffset={setOffset}
-      items={items}
+      items={itemsToShow}
       total={totalRecords}
       draggable={draggable}
       droppable={droppable}
+      isFetching={isFetching}
     />
   );
 };
