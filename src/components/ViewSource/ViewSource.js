@@ -14,10 +14,7 @@ import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
 import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
 import { getHeaders } from '@folio/quick-marc/src/QuickMarcEditor/utils';
 
-import {
-  useInstance,
-  useGoBack,
-} from '../../common/hooks';
+import { useGoBack } from '../../common/hooks';
 
 import { isUserInConsortiumMode } from '../../utils';
 import MARC_TYPES from './marcTypes';
@@ -26,8 +23,11 @@ import styles from './ViewSource.css';
 
 const ViewSource = ({
   mutator,
+  instance = {},
   instanceId,
+  isInstanceLoading,
   holdingsRecordId,
+  tenantId,
   marcType,
 }) => {
   const stripes = useStripes();
@@ -49,15 +49,12 @@ const ViewSource = ({
   const [marc, setMarc] = useState();
   const [isMarcLoading, setIsMarcLoading] = useState(true);
 
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
-
   useEffect(() => {
     setIsMarcLoading(true);
 
-    const tenantId = instance?.tenantId;
     const { okapi: { tenant, token, locale } } = stripes;
 
-    mutator.marcRecord.GET({ headers: getHeaders(tenantId || tenant, token, locale) })
+    mutator.marcRecord.GET({ headers: getHeaders(tenantId ?? tenant, token, locale) })
       .then((marcResponse) => {
         setMarc(marcResponse);
       })
@@ -128,7 +125,10 @@ const ViewSource = ({
 ViewSource.propTypes = {
   mutator: PropTypes.object.isRequired,
   instanceId: PropTypes.string.isRequired,
+  instance: PropTypes.object,
+  isInstanceLoading: PropTypes.bool,
   holdingsRecordId: PropTypes.string,
+  tenantId: PropTypes.string,
   marcType: PropTypes.oneOf(Object.values(MARC_TYPES)).isRequired,
 };
 

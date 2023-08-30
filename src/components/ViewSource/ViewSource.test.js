@@ -13,12 +13,10 @@ import '../../../test/jest/__mock__';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
 import ViewSource from './ViewSource';
-import useInstance from '../../common/hooks/useInstance';
 import useGoBack from '../../common/hooks/useGoBack';
 import { CONSORTIUM_PREFIX } from '../../constants';
 import MARC_TYPES from './marcTypes';
 
-jest.mock('../../common/hooks/useInstance', () => jest.fn());
 jest.mock('../../common/hooks/useGoBack', () => jest.fn());
 
 const mutator = {
@@ -28,6 +26,12 @@ const mutator = {
 };
 
 const mockGoBack = jest.fn();
+const mockInstance = {
+  id: 'instance-id',
+  title: 'Instance title',
+  tenantId: 'tenantId',
+  shared: false,
+};
 
 const getViewSource = (props = {}) => (
   <Router>
@@ -35,6 +39,8 @@ const getViewSource = (props = {}) => (
       mutator={mutator}
       instanceId="instance-id"
       holdingsRecordId="holdings-record-id"
+      instance={mockInstance}
+      isInstanceLoading={false}
       marcType={MARC_TYPES.BIB}
       {...props}
     />
@@ -52,13 +58,8 @@ describe('ViewSource', () => {
 
   describe('when data is loading', () => {
     beforeEach(async () => {
-      useInstance.mockReturnValue({
-        isLoading: true,
-        instance: null,
-      });
-
       await act(async () => {
-        await renderWithIntl(getViewSource(), translations);
+        await renderWithIntl(getViewSource({ instance: null, isInstanceLoading: true }), translations);
       });
     });
 
@@ -69,14 +70,10 @@ describe('ViewSource', () => {
 
   describe('when marc source request is failed', () => {
     beforeEach(async () => {
-      useInstance.mockReturnValue({
-        isLoading: true,
-        instance: null,
-      });
       mutator.marcRecord.GET.mockRejectedValueOnce('marcRecord error');
 
       await act(async () => {
-        await renderWithIntl(getViewSource(), translations);
+        await renderWithIntl(getViewSource({ instance: null, isInstanceLoading: true }), translations);
       });
     });
 
@@ -87,14 +84,6 @@ describe('ViewSource', () => {
 
   describe('when data is loaded', () => {
     beforeEach(async () => {
-      useInstance.mockReturnValue({
-        isLoading: false,
-        instance: {
-          title: 'Instance title',
-          tenantId: 'tenantId',
-        },
-      });
-
       await act(async () => {
         await renderWithIntl(getViewSource(), translations);
       });
@@ -117,19 +106,28 @@ describe('ViewSource', () => {
     });
   });
 
+  describe('when tenantId provided', () => {
+    beforeEach(async () => {
+      await act(async () => {
+        await renderWithIntl(getViewSource({ tenantId: 'tenantId' }), translations);
+      });
+    });
+
+    it('should set correct header to request', () => {
+      expect(mutator.marcRecord.GET).toHaveBeenCalledWith({ headers: expect.objectContaining({ 'X-Okapi-Tenant': 'tenantId' }) });
+    });
+  });
+
   describe('when Instance is shared', () => {
     beforeEach(async () => {
-      useInstance.mockReturnValue({
-        isLoading: false,
-        instance: {
-          title: 'Instance title',
-          source: `${CONSORTIUM_PREFIX}MARC`,
-          shared: true,
-        },
-      });
-
       await act(async () => {
-        await renderWithIntl(getViewSource(), translations);
+        await renderWithIntl(getViewSource({
+          instance: {
+            title: 'Instance title',
+            source: `${CONSORTIUM_PREFIX}MARC`,
+            shared: true,
+          },
+        }), translations);
       });
     });
 
@@ -140,17 +138,14 @@ describe('ViewSource', () => {
 
   describe('when Instance is local', () => {
     beforeEach(async () => {
-      useInstance.mockReturnValue({
-        isLoading: false,
-        instance: {
-          title: 'Instance title',
-          source: 'MARC',
-          shared: false,
-        },
-      });
-
       await act(async () => {
-        await renderWithIntl(getViewSource(), translations);
+        await renderWithIntl(getViewSource({
+          instance: {
+            title: 'Instance title',
+            source: 'MARC',
+            shared: false,
+          },
+        }), translations);
       });
     });
 
