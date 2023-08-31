@@ -248,11 +248,27 @@ describe('ViewInstance', () => {
         it('should render instance shared, title, publisher, and publication date', () => {
           const selectedInstance = {
             ...instance,
-            source: 'CONSORTIUM-FOLIO',
+            shared: true,
+            source: 'FOLIO',
           };
           StripesConnectedInstance.prototype.instance.mockImplementation(() => selectedInstance);
 
           const { getByText } = renderViewInstance({ selectedInstance, isShared: true });
+          const expectedTitle = 'Shared instance • #youthaction • Information Age Publishing, Inc. • 2015';
+
+          expect(getByText(expectedTitle)).toBeInTheDocument();
+        });
+      });
+
+      describe('shadow copy of instance', () => {
+        it('should render instance shared, title, publisher, and publication date', () => {
+          const selectedInstance = {
+            ...instance,
+            source: 'CONSORTIUM-FOLIO',
+          };
+          StripesConnectedInstance.prototype.instance.mockImplementation(() => selectedInstance);
+
+          const { getByText } = renderViewInstance({ selectedInstance, isShared: false });
           const expectedTitle = 'Shared instance • #youthaction • Information Age Publishing, Inc. • 2015';
 
           expect(getByText(expectedTitle)).toBeInTheDocument();

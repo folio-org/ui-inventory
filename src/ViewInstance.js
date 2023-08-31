@@ -35,11 +35,11 @@ import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import {
   getDate,
   handleKeyCommand,
+  isInstanceShadowCopy,
   isMARCSource,
   isUserInConsortiumMode,
 } from './utils';
 import {
-  CONSORTIUM_PREFIX,
   indentifierTypeNames,
   layers,
   REQUEST_OPEN_STATUSES,
@@ -504,7 +504,7 @@ class ViewInstance extends React.Component {
     };
 
     const suppressEditInstanceForMemberTenant = checkIfUserInMemberTenant(stripes)
-      && instance?.source.startsWith(CONSORTIUM_PREFIX)
+      && isShared
       && !this.hasCentralTenantPerm(editInstancePerm);
 
     const showInventoryMenuSection = (
@@ -769,11 +769,13 @@ class ViewInstance extends React.Component {
       isShared,
     } = this.props;
 
+    const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
+
     return (
       <FormattedMessage
         id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
         values={{
-          isShared,
+          isShared: isInstanceShared,
           title: instance?.title,
           publisherAndDate: getPublishingInfo(instance),
         }}
