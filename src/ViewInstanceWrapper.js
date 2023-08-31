@@ -18,7 +18,7 @@ const ViewInstanceWrapper = (props) => {
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
   const { instance } = useInstance(id);
 
-  const isShared = instance?.shared;
+  const isShared = Boolean(instance?.shared);
   const tenantId = instance?.tenantId ?? stripes.okapi.tenant;
 
   const {
