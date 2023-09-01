@@ -553,6 +553,7 @@
           "browse.call-numbers.instances.collection.get",
           "browse.contributors.instances.collection.get",
           "browse.subjects.instances.collection.get",
+          "perms.users.get",
           "inventory-storage.bound-with-parts.collection.get"
         ],
         "visible": true
