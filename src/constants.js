@@ -105,7 +105,7 @@ export const segments = {
   items: 'items',
 };
 
-export const browseModeOptions = {
+export const browseCallNumberOptions = {
   CALL_NUMBERS: 'callNumbers',
   DEWEY: 'dewey',
   LIBRARY_OF_CONGRESS: 'lc',
@@ -113,6 +113,10 @@ export const browseModeOptions = {
   NATIONAL_LIBRARY_OF_MEDICINE: 'nlm',
   OTHER: 'other',
   SUPERINTENDENT: 'sudoc',
+};
+
+export const browseModeOptions = {
+  ...browseCallNumberOptions,
   CONTRIBUTORS: 'contributors',
   SUBJECTS: 'browseSubjects',
 };
@@ -468,11 +472,11 @@ export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
 export const SINGLE_ITEM_QUERY_TEMPLATES = {
-  'items.barcode': 'barcode==%{query}',
-  isbn: 'isbn==%{query}',
-  issn: 'issn==%{query}',
-  itemHrid: 'hrid==%{query}',
-  iid: 'id==%{query}',
+  'items.barcode': 'barcode=="%{query}"',
+  isbn: 'isbn=="%{query}"',
+  issn: 'issn=="%{query}"',
+  itemHrid: 'hrid=="%{query}"',
+  iid: 'id=="%{query}"',
 };
 
 export const fieldSearchConfigurations = {

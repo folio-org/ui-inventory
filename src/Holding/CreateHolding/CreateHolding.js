@@ -32,7 +32,7 @@ const CreateHolding = ({
   const callout = useCallout();
   const { configs } = useConfigurationQuery('number_generator');
 
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.holdingInstance);
+  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
   const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
 
   const onCancel = useCallback(() => {

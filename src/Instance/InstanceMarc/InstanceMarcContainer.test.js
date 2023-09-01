@@ -9,6 +9,10 @@ jest.mock('../../components', () => ({
   ...jest.requireActual('../../components'),
   ViewSource: () => 'ViewSource',
 }));
+jest.mock('../../common/hooks/useInstance', () => (instanceId) => ({
+  instance: { id: instanceId },
+  isLoading: false,
+}));
 
 const mutator = {};
 const instanceId = 'its me instanceId';
@@ -29,6 +33,10 @@ const renderInstanceMarcContainer = (props = {}) => render(
 );
 
 describe('InstanceMarcContainer', () => {
+  afterAll(() => {
+    jest.clearAllMocks();
+  });
+
   it('should render InstanceMarcContainer component', () => {
     renderInstanceMarcContainer();
     expect(screen.getByText('ViewSource')).toBeInTheDocument();

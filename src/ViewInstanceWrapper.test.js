@@ -8,10 +8,7 @@ import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewInstanceWrapper from './ViewInstanceWrapper';
 import ViewInstance from './ViewInstance';
 import { useUserTenantPermissions } from './hooks';
-import {
-  useSearchInstanceByIdQuery,
-  useInstanceQuery,
-} from './common';
+import { useInstance } from './common';
 import {
   CONSORTIUM_PREFIX,
   SOURCE_VALUES,
@@ -25,8 +22,7 @@ jest.mock('./hooks', () => ({
 }));
 jest.mock('./common', () => ({
   ...jest.requireActual('./common'),
-  useSearchInstanceByIdQuery: jest.fn(),
-  useInstanceQuery: jest.fn(),
+  useInstance: jest.fn(),
 }));
 
 const match = {
@@ -54,14 +50,12 @@ describe('ViewInstanceWrapper', () => {
       userPermissions: [],
       isFetching: false,
     });
-    useSearchInstanceByIdQuery.mockReturnValue({
-      instance: { shared: false },
-      isLoading: false,
-    });
-    useInstanceQuery.mockReturnValue({
+    useInstance.mockReturnValue({
       instance: {
         id: match.params.id,
         source: SOURCE_VALUES.MARC,
+        shared: false,
+        tenantId: 'tenantId',
       },
       isLoading: false,
     });
@@ -73,14 +67,12 @@ describe('ViewInstanceWrapper', () => {
         permissionName: 'ui-quick-marc.quick-marc-editor.all',
       }];
 
-      useSearchInstanceByIdQuery.mockReturnValue({
-        instance: { shared: true },
-        isLoading: false,
-      });
-      useInstanceQuery.mockReturnValue({
+      useInstance.mockReturnValue({
         instance: {
           id: match.params.id,
           source: `${CONSORTIUM_PREFIX}MARC`,
+          shared: true,
+          tenantId: 'tenantId',
         },
         isLoading: false,
       });

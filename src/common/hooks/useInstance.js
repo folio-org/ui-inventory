@@ -1,27 +1,28 @@
-import {
-  useState,
-  useEffect,
-} from 'react';
+import { useMemo } from 'react';
 
-const useInstance = (id, mutator) => {
-  const [instance, setInstance] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
+import useInstanceQuery from './useInstanceQuery';
 
-  useEffect(() => {
-    setIsLoading(true);
+const useInstance = (id) => {
+  const { isLoading: isSearchInstanceByIdLoading, instance: _instance } = useSearchInstanceByIdQuery(id);
 
-    mutator.GET({
-      params: {
-        query: `id==${id}`,
-      },
-    })
-      .then((instances) => {
-        setInstance(instances[0]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [id]);
+  const instanceTenantId = _instance?.tenantId;
+  const isShared = _instance?.shared;
+
+  const { isLoading, instance: data } = useInstanceQuery(
+    id,
+    { tenantId: instanceTenantId },
+    { enabled: Boolean(id && !isSearchInstanceByIdLoading) }
+  );
+
+  const instance = useMemo(
+    () => ({
+      ...data,
+      shared: isShared,
+      tenantId: instanceTenantId,
+    }),
+    [data, isShared, instanceTenantId],
+  );
 
   return {
     instance,
