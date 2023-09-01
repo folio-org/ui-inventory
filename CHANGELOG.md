@@ -76,6 +76,7 @@
 * Enable pagination/item number information in the Instance's Holding Item list. Fixes UIIN-2530.
 * Adjust behaviour of View source for shared instances. Refs UIIN-2449.
 * Consortial Central Tenant: Handling of Instance Action Menu options. Refs UIIN-2498.
+* ECS: display shadow instances as shared. Refs UIIN-2552.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)

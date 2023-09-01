@@ -65,6 +65,7 @@ import {
   handleKeyCommand,
   psTitleRelationshipId,
   validateOptionalField,
+  isInstanceShadowCopy,
 } from '../utils';
 import {
   validateTitles,
@@ -189,6 +190,7 @@ class InstanceForm extends React.Component {
 
     const getEditInstanceTitle = () => {
       const publishingInfo = getPublishingInfo(initialValues);
+      const isInstanceShared = initialValues.shared || isInstanceShadowCopy(initialValues.source);
 
       return (
         <>
@@ -198,7 +200,7 @@ class InstanceForm extends React.Component {
             id={`ui-inventory.editInstance.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}title`}
             values={{
               title: initialValues.title,
-              isShared: initialValues.shared,
+              isShared: isInstanceShared,
             }}
           />
           {publishingInfo}
