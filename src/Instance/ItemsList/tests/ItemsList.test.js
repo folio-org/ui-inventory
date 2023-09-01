@@ -50,6 +50,7 @@ const ItemsListSetup = () => (
           selectItemsForDrag={(_) => {}}
           getDraggingItems={jest.fn()}
           draggable={false}
+          isFetching={false}
         />
       </DataContext.Provider>
     </Router>

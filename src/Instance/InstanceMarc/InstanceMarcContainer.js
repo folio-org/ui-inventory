@@ -4,25 +4,25 @@ import { stripesConnect } from '@folio/stripes/core';
 
 import { ViewSource } from '../../components';
 import MARC_TYPES from '../../components/ViewSource/marcTypes';
+import { useInstance } from '../../common';
 
 const InstanceMarcContainer = ({ mutator, instanceId }) => {
+  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
+  const tenantId = instance?.tenantId;
+
   return (
     <ViewSource
       mutator={mutator}
+      instance={instance}
       instanceId={instanceId}
+      isInstanceLoading={isInstanceLoading}
+      tenantId={tenantId}
       marcType={MARC_TYPES.BIB}
     />
   );
 };
 
 InstanceMarcContainer.manifest = Object.freeze({
-  marcInstance: {
-    type: 'okapi',
-    records: 'instances',
-    throwErrors: false,
-    path: 'inventory/instances',
-    accumulate: true,
-  },
   marcRecord: {
     type: 'okapi',
     path: 'source-storage/records/!{instanceId}/formatted?idType=INSTANCE',
