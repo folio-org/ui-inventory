@@ -12,6 +12,7 @@ import {
 } from '../../common/hooks';
 import {
   useCallout,
+  useConfigurationQuery,
   useHoldingItemsQuery,
   useHoldingMutation,
 } from '../../hooks';
@@ -28,6 +29,8 @@ const EditHolding = ({
   referenceTables,
 }) => {
   const callout = useCallout();
+  const { configs } = useConfigurationQuery('number_generator');
+
   const { search, state: locationState } = location;
   const stripes = useStripes();
   const [httpError, setHttpError] = useState();
@@ -82,6 +85,7 @@ const EditHolding = ({
   return (
     <>
       <HoldingsForm
+        configs={configs}
         httpError={httpError}
         location={location}
         initialValues={holding}

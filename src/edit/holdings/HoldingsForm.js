@@ -33,6 +33,8 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
+import { NumberGeneratorModalButton } from '@folio/service-interaction';
+
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
@@ -115,6 +117,9 @@ class HoldingsForm extends React.Component {
     }),
     goTo: PropTypes.func.isRequired,
     httpError: PropTypes.object,
+    configs: PropTypes.shape({
+      callNumberGeneratorSettingHoldings: PropTypes.string
+    })
   };
 
   static defaultProps = {
@@ -189,6 +194,8 @@ class HoldingsForm extends React.Component {
 
   render() {
     const {
+      configs,
+      form: { change },
       onCancel,
       initialValues,
       instance,
@@ -224,6 +231,10 @@ class HoldingsForm extends React.Component {
         selected: it.id === initialValues.callNumberTypeId,
       }),
     ) : [];
+
+    const {
+      callNumberGeneratorSettingHoldings,
+    } = configs;
 
     const holdingsTypeOptions = referenceTables.holdingsTypes ? referenceTables.holdingsTypes.map(
       it => ({
@@ -538,15 +549,37 @@ class HoldingsForm extends React.Component {
                         />
                       </Col>
                       <Col sm={2}>
-                        <Field
-                          label={<FormattedMessage id="ui-inventory.callNumber" />}
-                          name="callNumber"
-                          id="additem_callnumber"
-                          component={TextArea}
-                          rows={1}
-                          fullWidth
-                          disabled={this.isFieldBlocked('callNumber')}
-                        />
+                        <Row>
+                          <Field
+                            label={<FormattedMessage id="ui-inventory.callNumber" />}
+                            name="callNumber"
+                            id="additem_callnumber"
+                            component={TextArea}
+                            rows={1}
+                            fullWidth
+                            disabled={this.isFieldBlocked('callNumber') || callNumberGeneratorSettingHoldings === 'useGenerator'}
+                          />
+                        </Row>
+                        <Row>
+                          {(
+                            callNumberGeneratorSettingHoldings === 'useGenerator' ||
+                            callNumberGeneratorSettingHoldings === 'useBoth'
+                          ) &&
+                            <Col xs={12}>
+                              <NumberGeneratorModalButton
+                                buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                                callback={(generated) => change('callNumber', generated)}
+                                fullWidth
+                                id="inventoryCallNumber"
+                                generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                                generator="inventory_callNumber"
+                                modalProps={{
+                                  label: <FormattedMessage id="ui-inventory.numberGenerator.callNumberGenerator" />
+                                }}
+                              />
+                            </Col>
+                          }
+                        </Row>
                       </Col>
                       <Col sm={2}>
                         <Field

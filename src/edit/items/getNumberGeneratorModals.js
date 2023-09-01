@@ -1,5 +1,5 @@
 import { FormattedMessage } from 'react-intl';
-import { Layout, MessageBanner } from '@folio/stripes-components';
+import { Layout } from '@folio/stripes-components';
 import { NumberGeneratorModalButton } from '@folio/service-interaction';
 
 // Moving this to a separate utility method so we can declutter this work
@@ -8,27 +8,27 @@ import { NumberGeneratorModalButton } from '@folio/service-interaction';
 // `useForm` and `useConfigurationQuery` to get these parameters.
 const getNumberGeneratorModals = (configs, change) => {
   const {
-    accessionNumberGeneratorSetting,
-    barcodeGeneratorSetting,
-    callNumberGeneratorSetting,
-    useAccessionNumberForCallNumber
+    accessionNumberGeneratorSettingItems,
+    barcodeGeneratorSettingItems,
+    callNumberGeneratorSettingItems,
+    useAccessionNumberForCallNumberItems
   } = configs;
 
-  const accessionNumberGeneratorActive = accessionNumberGeneratorSetting === 'useGenerator' ||
-                                         accessionNumberGeneratorSetting === 'useBoth';
+  const accessionNumberGeneratorActive = accessionNumberGeneratorSettingItems === 'useGenerator' ||
+  accessionNumberGeneratorSettingItems === 'useBoth';
 
-  const barcodeGeneratorActive = barcodeGeneratorSetting === 'useGenerator' ||
-                                 barcodeGeneratorSetting === 'useBoth';
+  const barcodeGeneratorActive = barcodeGeneratorSettingItems === 'useGenerator' ||
+  barcodeGeneratorSettingItems === 'useBoth';
 
-  const callNumberGeneratorActive = callNumberGeneratorSetting === 'useGenerator' ||
-                                    callNumberGeneratorSetting === 'useBoth';
+  const callNumberGeneratorActive = callNumberGeneratorSettingItems === 'useGenerator' ||
+  callNumberGeneratorSettingItems === 'useBoth';
 
-  const disableAccessionNumberField = accessionNumberGeneratorSetting === 'useGenerator';
-  const disableBarcodeField = barcodeGeneratorSetting === 'useGenerator';
-  const disableCallNumberField = callNumberGeneratorSetting === 'useGenerator';
+  const disableAccessionNumberField = accessionNumberGeneratorSettingItems === 'useGenerator';
+  const disableBarcodeField = barcodeGeneratorSettingItems === 'useGenerator';
+  const disableCallNumberField = callNumberGeneratorSettingItems === 'useGenerator';
 
   // This is to ensure that if the field somehow _did_ get set when it's not supposed to, we ignore it
-  const useJointModal = useAccessionNumberForCallNumber && accessionNumberGeneratorActive && callNumberGeneratorActive;
+  const useJointModal = useAccessionNumberForCallNumberItems && accessionNumberGeneratorActive && callNumberGeneratorActive;
 
   // Don't worry about calling logic in here, do that in renderAccession... and renderCall...
   const renderJointNumberGenerator = () => (
