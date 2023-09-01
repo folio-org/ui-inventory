@@ -780,3 +780,5 @@ export const isMARCSource = (source) => {
 };
 
 export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');
+
+export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
