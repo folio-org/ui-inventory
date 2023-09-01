@@ -10,14 +10,13 @@ import { flowRight } from 'lodash';
 
 import {
   AppIcon,
-  IfPermission,
   Pluggable,
   stripesConnect,
   checkIfUserInMemberTenant,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 import {
   Pane,
-  Button,
   Icon,
   MenuSection,
   Callout,
@@ -52,6 +51,7 @@ import {
   InstanceDetails,
 } from './Instance';
 import {
+  ActionItem,
   withSingleRecordImport,
   CalloutRenderer,
   NewOrderModal,
@@ -476,22 +476,23 @@ class ViewInstance extends React.Component {
     const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
-    const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
+    const canMoveItems = !checkIfUserInCentralTenant(stripes) && stripes.hasPerm('ui-inventory.item.move');
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
-    const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
+    const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && isShared
       ? this.hasCentralTenantPerm(editBibRecordPerm)
       : stripes.hasPerm(editBibRecordPerm);
     const canDeriveMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.duplicate');
+    const canAddMARCHoldingsRecord = !checkIfUserInCentralTenant(stripes) && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
     const hasReorderPermissions = canCreateRequest || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
     const canViewSource = canViewMARCSource && canViewInstance;
-    const canCreateOrder = stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
+    const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const numberOfRequests = instanceRequests.other?.totalRecords;
     const canReorderRequests = titleLevelRequestsFeatureEnabled && hasReorderPermissions && numberOfRequests && canReorder;
-    const canViewRequests = !titleLevelRequestsFeatureEnabled;
+    const canViewRequests = !checkIfUserInCentralTenant(stripes) && !titleLevelRequestsFeatureEnabled;
     const canCreateNewRequest = titleLevelRequestsFeatureEnabled && canCreateRequest;
     const identifier = this.getIdentifiers(data);
 
@@ -533,151 +534,118 @@ class ViewInstance extends React.Component {
     return (
       <>
         {showInventoryMenuSection && (
-          <MenuSection label={intl.formatMessage({ id: 'ui-inventory.inventory.label' })} id="inventory-menu-section">
+          <MenuSection
+            id="inventory-menu-section"
+            label={intl.formatMessage({ id: 'ui-inventory.inventory.label' })}
+          >
             {canEditInstance && !suppressEditInstanceForMemberTenant && (
-              <Button
+              <ActionItem
                 id="edit-instance"
-                onClick={() => {
+                icon="edit"
+                messageId="ui-inventory.editInstance"
+                onClickHandler={() => {
                   onToggle();
                   this.onClickEditInstance();
                 }}
-                buttonStyle="dropdownItem"
-              >
-                <Icon icon="edit">
-                  <FormattedMessage id="ui-inventory.editInstance" />
-                </Icon>
-              </Button>
+              />
             )}
             {canViewSource && (
-              <Button
+              <ActionItem
                 id="clickable-view-source"
-                buttonStyle="dropdownItem"
-                disabled={!marcRecord}
-                onClick={(e) => {
+                icon="document"
+                messageId="ui-inventory.viewSource"
+                onClickHandler={(e) => {
                   onToggle();
                   this.handleViewSource(e, instance);
                 }}
-              >
-                <Icon icon="document">
-                  <FormattedMessage id="ui-inventory.viewSource" />
-                </Icon>
-              </Button>
+                disabled={!marcRecord}
+              />
             )}
-            {
-              !openedFromBrowse && (
-                <>
-                  {
-                    canMoveItems && (
-                      <Button
-                        id="move-instance-items"
-                        buttonStyle="dropdownItem"
-                        onClick={() => {
-                          onToggle();
-                          this.toggleItemsMovement();
-                        }}
-                      >
-                        <Icon icon="transfer">
-                          <FormattedMessage
-                            id={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
-                          />
-                        </Icon>
-                      </Button>
-                    )
-                  }
-                  {
-                    (canMoveItems || canMoveHoldings) && (
-                      <Button
-                        id="move-instance"
-                        buttonStyle="dropdownItem"
-                        onClick={() => {
-                          onToggle();
-                          this.toggleFindInstancePlugin();
-                        }}
-                      >
-                        <Icon icon="arrow-right">
-                          <FormattedMessage id="ui-inventory.moveItems" />
-                        </Icon>
-                      </Button>
-                    )
-                  }
-                </>
-              )
-            }
+            {!openedFromBrowse && (
+              <>
+                {canMoveItems && (
+                  <ActionItem
+                    id="move-instance-items"
+                    icon="transfer"
+                    messageId={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
+                    onClickHandler={() => {
+                      onToggle();
+                      this.toggleItemsMovement();
+                    }}
+                  />
+                )}
+                {(canMoveItems || canMoveHoldings) && (
+                  <ActionItem
+                    id="move-instance"
+                    icon="arrow-right"
+                    messageId="ui-inventory.moveItems"
+                    onClickHandler={() => {
+                      onToggle();
+                      this.toggleFindInstancePlugin();
+                    }}
+                  />
+                )}
+              </>
+            )}
             {canUseSingleRecordImport && (
-              <Button
+              <ActionItem
                 id="dropdown-clickable-reimport-record"
-                onClick={() => {
+                icon="lightning"
+                messageId="ui-inventory.copycat.overlaySourceBib"
+                onClickHandler={() => {
                   onToggle();
                   this.setState({ isImportRecordModalOpened: true });
                 }}
-                buttonStyle="dropdownItem"
-              >
-                <Icon icon="lightning">
-                  <FormattedMessage id="ui-inventory.copycat.overlaySourceBib" />
-                </Icon>
-              </Button>
+              />
             )}
             {canCreateInstance && (
-              <Button
+              <ActionItem
                 id="copy-instance"
-                onClick={() => {
+                icon="duplicate"
+                messageId="ui-inventory.duplicateInstance"
+                onClickHandler={() => {
                   onToggle();
                   onCopy(instance);
                 }}
-                buttonStyle="dropdownItem"
-              >
-                <Icon icon="duplicate">
-                  <FormattedMessage id="ui-inventory.duplicateInstance" />
-                </Icon>
-              </Button>
+              />
             )}
-            <Button
+            <ActionItem
               id="quick-export-trigger"
-              onClick={buildOnClickHandler(this.triggerQuickExport)}
-              buttonStyle="dropdownItem"
-            >
-              <Icon icon="download">
-                <FormattedMessage id="ui-inventory.exportInstanceInMARC" />
-              </Icon>
-            </Button>
+              icon="download"
+              messageId="ui-inventory.exportInstanceInMARC"
+              onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
+            />
             {canCreateOrder && (
-              <Button
+              <ActionItem
                 id="clickable-create-order"
-                buttonStyle="dropdownItem"
-                onClick={() => {
+                icon="plus-sign"
+                messageId="ui-inventory.newOrder"
+                onClickHandler={() => {
                   onToggle();
                   this.toggleNewOrderModal();
                 }}
-              >
-                <Icon icon="plus-sign">
-                  <FormattedMessage id="ui-inventory.newOrder" />
-                </Icon>
-              </Button>
+              />
             )}
-            {
-              titleLevelRequestsFeatureEnabled
-                ? (
-                  <RequestsReorderButton
-                    hasReorderPermissions={hasReorderPermissions}
-                    requestId={instanceRequests.records[0]?.id}
-                    instanceId={instance.id}
-                    numberOfRequests={numberOfRequests}
-                  />
-                )
-                : (
-                  <Button
-                    id="view-requests"
-                    onClick={() => {
-                      onToggle();
-                      this.onClickViewRequests();
-                    }}
-                    buttonStyle="dropdownItem"
-                  >
-                    <Icon icon="eye-open">
-                      <FormattedMessage id="ui-inventory.viewRequests" />
-                    </Icon>
-                  </Button>
-                )
+            {titleLevelRequestsFeatureEnabled && !checkIfUserInCentralTenant(stripes)
+              ? (
+                <RequestsReorderButton
+                  hasReorderPermissions={hasReorderPermissions}
+                  requestId={instanceRequests.records[0]?.id}
+                  instanceId={instance.id}
+                  numberOfRequests={numberOfRequests}
+                />
+              )
+              : !checkIfUserInCentralTenant(stripes) && (
+                <ActionItem
+                  id="view-requests"
+                  icon="eye-open"
+                  messageId="ui-inventory.viewRequests"
+                  onClickHandler={() => {
+                    onToggle();
+                    this.onClickViewRequests();
+                  }}
+                />
+              )
             }
             <NewInstanceRequestButton
               isTlrEnabled={!!titleLevelRequestsFeatureEnabled}
@@ -686,57 +654,49 @@ class ViewInstance extends React.Component {
           </MenuSection>
         )}
 
-        {
-          showQuickMarcMenuSection && (
-            <MenuSection label={intl.formatMessage({ id: 'ui-inventory.quickMARC.label' })} id="quickmarc-menu-section">
-              {canEditMARCRecord && (
-                <Button
-                  id="edit-instance-marc"
-                  buttonStyle="dropdownItem"
-                  disabled={!marcRecord}
-                  onClick={() => {
-                    onToggle();
-                    this.editInstanceMarc();
-                  }}
-                >
-                  <Icon icon="edit">
-                    <FormattedMessage id="ui-inventory.editInstanceMarc" />
-                  </Icon>
-                </Button>
-              )}
-              {canDeriveMARCRecord && (
-                <Button
-                  id="duplicate-instance-marc"
-                  buttonStyle="dropdownItem"
-                  disabled={!marcRecord}
-                  onClick={() => {
-                    onToggle();
-                    this.duplicateInstanceMarc();
-                  }}
-                >
-                  <Icon icon="duplicate">
-                    <FormattedMessage id="ui-inventory.duplicateInstanceMarc" />
-                  </Icon>
-                </Button>
-              )}
-              <IfPermission perm="ui-quick-marc.quick-marc-holdings-editor.create">
-                <Button
-                  id="create-holdings-marc"
-                  buttonStyle="dropdownItem"
-                  disabled={!canCreateMARCHoldings}
-                  onClick={() => {
-                    onToggle();
-                    this.createHoldingsMarc();
-                  }}
-                >
-                  <Icon icon="plus-sign">
-                    <FormattedMessage id="ui-inventory.createMARCHoldings" />
-                  </Icon>
-                </Button>
-              </IfPermission>
-            </MenuSection>
-          )
-        }
+        {showQuickMarcMenuSection && (
+          <MenuSection
+            id="quickmarc-menu-section"
+            label={intl.formatMessage({ id: 'ui-inventory.quickMARC.label' })}
+          >
+            {canEditMARCRecord && (
+              <ActionItem
+                id="edit-instance-marc"
+                icon="edit"
+                messageId="ui-inventory.editInstanceMarc"
+                onClickHandler={() => {
+                  onToggle();
+                  this.editInstanceMarc();
+                }}
+                disabled={!marcRecord}
+              />
+            )}
+            {canDeriveMARCRecord && (
+              <ActionItem
+                id="duplicate-instance-marc"
+                icon="duplicate"
+                messageId="ui-inventory.duplicateInstanceMarc"
+                onClickHandler={() => {
+                  onToggle();
+                  this.duplicateInstanceMarc();
+                }}
+                disabled={!marcRecord}
+              />
+            )}
+            {canAddMARCHoldingsRecord && (
+              <ActionItem
+                id="create-holdings-marc"
+                icon="plus-sign"
+                messageId="ui-inventory.createMARCHoldings"
+                onClickHandler={() => {
+                  onToggle();
+                  this.createHoldingsMarc();
+                }}
+                disabled={!canCreateMARCHoldings}
+              />
+            )}
+          </MenuSection>
+        )}
 
         <Pluggable
           id="copyright-permissions-checker"
@@ -745,18 +705,15 @@ class ViewInstance extends React.Component {
           identifier={identifier}
           type="copyright-permissions-checker"
           renderTrigger={({ menuText }) => (
-            <Button
+            <ActionItem
               id="copyright-permissions-check"
-              buttonStyle="dropdownItem"
-              onClick={() => {
+              icon="report"
+              label={menuText}
+              onClickHandler={() => {
                 onToggle();
                 this.toggleCopyrightModal();
               }}
-            >
-              <Icon icon="report">
-                {menuText}
-              </Icon>
-            </Button>
+            />
           )}
         />
       </>
