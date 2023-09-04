@@ -164,7 +164,6 @@ class InstancesList extends React.Component {
       isSelectedRecordsModalOpened: false,
       visibleColumns: this.getInitialToggableColumns(),
       isImportRecordModalOpened: false,
-      optionSelected: '',
       searchAndSortKey: 0,
       segmentsSortBy: this.getInitialSegmentsSortBy(),
       isSingleResult: this.props.showSingleResult,
@@ -196,26 +195,15 @@ class InstancesList extends React.Component {
 
     this.setState({
       openedFromBrowse: params.selectedBrowseResult === 'true',
-      optionSelected: '',
     });
 
     registerLogoutListener(this.clearStorage, namespace, 'instances-list-logout', history);
   }
 
   componentDidUpdate(prevProps) {
-    const qindex = this.getQIndexFromParams();
     const sortBy = this.getSortFromParams();
 
     this.storeLastSearchTerms(prevProps);
-
-    // Keep the 'optionSelected' updated with the URL 'qindex'. ESLint
-    // doesn't like this because setState causes a re-render and can
-    // lead to a rendering loop. But the check on state.optionSelected
-    // prevents a loop, so I guess this is OK.
-    if (this.props.segment === segments.instances && qindex && this.state.optionSelected !== qindex) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ optionSelected: qindex });
-    }
 
     if (this.state.segmentsSortBy.find(x => x.name === this.props.segment && x.sort !== sortBy)) {
       this.setSegmentSortBy(sortBy);
@@ -241,16 +229,6 @@ class InstancesList extends React.Component {
     selectedBrowseResult: false,
     authorityId: '',
   };
-
-  get isUserInCentralTenant() {
-    const { stripes } = this.props;
-
-    if (!stripes.hasInterface('consortia')) {
-      return false;
-    }
-
-    return stripes.okapi.tenant === stripes.user.user.consortium?.centralTenantId;
-  }
 
   getInstanceIdFromLocation = (location) => {
     return location.pathname.split('/')[3];
@@ -299,11 +277,6 @@ class InstancesList extends React.Component {
     if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
       storeLastSearchOffset(parentResources.resultOffset, segment);
     }
-  }
-
-  getQIndexFromParams = () => {
-    const params = new URLSearchParams(this.props.location.search);
-    return params.get('qindex');
   }
 
   getSortFromParams = () => {
@@ -423,11 +396,6 @@ class InstancesList extends React.Component {
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
-    if (segment !== segments.instances) {
-      this.setState({
-        optionSelected: ''
-      });
-    }
     storeLastSegment(segment);
     facetsStore.getState().resetFacetSettings();
     document.getElementById('input-inventory-search').focus();
@@ -935,7 +903,6 @@ class InstancesList extends React.Component {
   handleResetAll = () => {
     this.setState({
       selectedRows: {},
-      optionSelected: '',
     });
 
     facetsStore.getState().resetFacetSettings();
@@ -1153,12 +1120,13 @@ class InstancesList extends React.Component {
     const onChangeIndex = (e) => {
       const qindex = e.target.value;
 
-      this.setState({ optionSelected: qindex });
-
-      parentMutator.query.update({
-        filters: '',
-        ...this.extraParamsToReset,
-      });
+      if (qindex !== queryIndexes.ADVANCED_SEARCH) {
+        parentMutator.query.update({
+          qindex,
+          filters: '',
+          ...this.extraParamsToReset,
+        });
+      }
 
       this.setState({ isSingleResult: true });
     };
