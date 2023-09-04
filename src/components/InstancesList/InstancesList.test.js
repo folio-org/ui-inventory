@@ -426,6 +426,23 @@ describe('InstancesList', () => {
       });
     });
 
+    describe('when clicking on the `Holdings` or `Items` segments', () => {
+      it('should select Title as default sort option on Holdings or Item segments', async () => {
+        renderInstancesList({ segment: 'instances' });
+
+        const search = '?segment=instances&sort=title';
+        act(() => { history.push({ search }); });
+        await act(async () => fireEvent.click(document.querySelector('#segment-navigation-holdings')));
+        const paramSortHoldings = new URLSearchParams(history.location.search).get('sort');
+
+        await act(async () => fireEvent.click(document.querySelector('#segment-navigation-items')));
+        const paramSortItems = new URLSearchParams(history.location.search).get('sort');
+
+        expect(paramSortHoldings).toEqual('title');
+        expect(paramSortItems).toEqual('title');
+      });
+    });
+
     describe('filters pane', () => {
       it('should have selected effective call number option', async () => {
         renderInstancesList({ segment: 'instances' });
