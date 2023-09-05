@@ -1127,7 +1127,6 @@ class InstancesList extends React.Component {
 
       if (!isAdvancedSearchModal) {
         parentMutator.query.update({
-          qindex,
           filters: '',
           ...this.extraParamsToReset,
         });

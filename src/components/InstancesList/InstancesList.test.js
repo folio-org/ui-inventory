@@ -444,16 +444,6 @@ describe('InstancesList', () => {
 
         expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
       });
-
-      describe('when a search option selected', () => {
-        it('should change qindex', async () => {
-          renderInstancesList({ segment: 'instances' });
-
-          await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'title' } }));
-
-          expect(updateMock).toHaveBeenCalledWith(expect.objectContaining({ qindex: 'title' }));
-        });
-      });
     });
 
     describe('when using advanced search', () => {
