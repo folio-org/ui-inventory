@@ -35,7 +35,7 @@ const ItemsListContainer = ({
   const { isFetching, items, totalRecords } = useHoldingItemsQuery(holding.id, { searchParams });
 
   useEffect(() => {
-    if(!isEmpty(items)) {
+    if (!isEmpty(items)) {
       setItemsToShow(items);
     }
   }, [items]);
