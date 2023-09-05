@@ -32,7 +32,8 @@ const ItemsListContainer = ({
     offset,
   };
 
-  const { isFetching, items, totalRecords } = useHoldingItemsQuery(holding.id, { searchParams });
+  const { isFetching, items } = useHoldingItemsQuery(holding.id, { searchParams });
+  const { totalRecords } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount' });
 
   useEffect(() => {
     if (!isEmpty(items)) {
