@@ -6,6 +6,7 @@ import {
   act,
   fireEvent,
   screen,
+  waitFor,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
 
@@ -458,6 +459,72 @@ describe('InstancesList', () => {
         fireEvent.click(advancedSearchSubmit);
 
         expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
+      });
+
+      describe('when current search option is advancedSearch and user clicks Search in the advanced search modal', () => {
+        it('should not fire onChangeIndex functionality', async () => {
+          history = createMemoryHistory({ initialEntries: [{
+            search: '?qindex=advancedSearch&query=test',
+          }] });
+
+          renderInstancesList({ segment: 'instances' });
+
+          fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+            target: { value: 'test2' }
+          });
+          const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+
+          await act(async () => { fireEvent.click(advancedSearchSubmit); });
+
+          expect(updateMock).not.toHaveBeenCalled();
+        });
+      });
+
+      describe('when current search option is advancedSearch and user clicks Search in the advanced search modal', () => {
+        it('should not reset filters', async () => {
+          history = createMemoryHistory({ initialEntries: [{
+            search: '?qindex=advancedSearch&query=keyword containsAll test&filters=language.eng',
+          }] });
+          history.push = jest.fn();
+
+          renderInstancesList({ segment: 'instances' });
+
+          fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+            target: { value: 'test2' }
+          });
+          const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+
+          await act(async () => { fireEvent.click(advancedSearchSubmit); });
+
+          await waitFor(() => { expect(history.push).toHaveBeenCalledWith(
+            '/?filters=language.eng&qindex=advancedSearch&query=keyword%20containsAll%20test2'
+          ); })
+        });
+      });
+
+      describe('when current search option is not the advancedSearch and user clicks Search in the advanced search modal', () => {
+        it('should reset filters', async () => {
+          history = createMemoryHistory({ initialEntries: [{
+            search: '?qindex=title&query=test&filters=language.eng',
+          }] });
+          history.push = jest.fn();
+
+          renderInstancesList({ segment: 'instances' });
+
+          fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+            target: { value: 'test2' }
+          });
+          const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+
+          await act(async () => { fireEvent.click(advancedSearchSubmit); });
+
+          await waitFor(() => {
+            expect(history.push).toHaveBeenCalledWith('/?qindex=advancedSearch&query=title%20containsAll%20test2');
+          })
+        });
       });
     });
   });
