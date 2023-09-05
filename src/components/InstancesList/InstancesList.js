@@ -1122,19 +1122,16 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
-    const onChangeIndex = (e) => {
+    const onChangeIndex = (e, { isAdvancedSearchModal } = {}) => {
       const qindex = e.target.value;
-      const currentQindex = this.getQIndexFromParams();
 
-      if (currentQindex === qindex) {
-        return;
+      if (!isAdvancedSearchModal) {
+        parentMutator.query.update({
+          qindex,
+          filters: '',
+          ...this.extraParamsToReset,
+        });
       }
-
-      parentMutator.query.update({
-        qindex,
-        filters: '',
-        ...this.extraParamsToReset,
-      });
 
       this.setState({ isSingleResult: true });
     };

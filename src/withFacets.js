@@ -21,7 +21,6 @@ import {
   browseModeMap,
   browseCallNumberOptions,
   queryIndexes,
-  fieldSearchConfigurations,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
@@ -32,7 +31,7 @@ function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
   if (queryIndex === queryIndexes.ADVANCED_SEARCH) {
-    queryTemplate = getAdvancedSearchTemplate(queryValue) || fieldSearchConfigurations.keyword.containsAll;
+    queryTemplate = getAdvancedSearchTemplate(queryValue);
   }
 
   // reset qindex otherwise makeQueryFunction does not use queryTemplate
