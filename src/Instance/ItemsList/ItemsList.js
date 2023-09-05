@@ -160,6 +160,7 @@ const ItemsList = ({
   isItemsDragSelected,
   selectItemsForDrag,
   getDraggingItems,
+  isFetching,
 }) => {
   const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items);
   const holdingsMapById = keyBy(holdings, 'id');
@@ -172,7 +173,7 @@ const ItemsList = ({
 
   const { locationsById } = useContext(DataContext);
   const pagingCanGoPrevious = offset > 0;
-  const pagingCanGoNext = offset < total && total > pageAmount;
+  const pagingCanGoNext = offset < total && total - offset > pageAmount;
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
@@ -220,11 +221,12 @@ const ItemsList = ({
     <MultiColumnList
       id={`list-items-${holding.id}`}
       columnIdPrefix={`list-items-${holding.id}`}
-      contentData={items}
+      contentData={records}
       rowMetadata={rowMetadata}
       formatter={formatter}
       visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
       columnMapping={columnMapping}
+      columnWidths={{ barcode: '350px' }}
       ariaLabel={ariaLabel}
       interactive={false}
       onNeedMoreData={onNeedMoreData}
@@ -238,7 +240,8 @@ const ItemsList = ({
       rowProps={rowProps}
       pagingCanGoPrevious={pagingCanGoPrevious}
       pagingCanGoNext={pagingCanGoNext}
-      hidePageIndices
+      pagingOffset={offset}
+      loading={isFetching}
     />
   );
 };
@@ -253,6 +256,7 @@ ItemsList.propTypes = {
   selectItemsForDrag: PropTypes.func.isRequired,
   isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {

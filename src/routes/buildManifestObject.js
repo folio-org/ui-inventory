@@ -22,7 +22,7 @@ const DEFAULT_SORT = 'title';
 const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
 const getAdvancedSearchQueryTemplate = (queryIndex, matchOption) => fieldSearchConfigurations[queryIndex]?.[matchOption];
 
-const getAdvancedSearchTemplate = (queryValue) => {
+export const getAdvancedSearchTemplate = (queryValue) => {
   const splitIntoRowsRegex = /(?=\sor\s|\sand\s|\snot\s)/g;
 
   // split will return array of strings:
@@ -96,6 +96,8 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   }
 
   if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
+    query.sort = '';
+  } else if (query.sort && query.sort === 'relevance') {
     query.sort = '';
   } else if (!query.sort) {
     // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)

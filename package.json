@@ -553,6 +553,7 @@
           "browse.call-numbers.instances.collection.get",
           "browse.contributors.instances.collection.get",
           "browse.subjects.instances.collection.get",
+          "perms.users.get",
           "inventory-storage.bound-with-parts.collection.get"
         ],
         "visible": true
@@ -912,7 +913,7 @@
   },
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^3.0.0",
-    "@folio/plugin-find-instance": "^6.0.0"
+    "@folio/plugin-find-instance": "^7.0.0"
   },
   "resolutions": {
     "moment": "~2.29.4"

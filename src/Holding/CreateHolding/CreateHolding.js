@@ -29,7 +29,7 @@ const CreateHolding = ({
   mutator,
 }) => {
   const callout = useCallout();
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.holdingInstance);
+  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
   const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
 
   const onCancel = useCallback(() => {

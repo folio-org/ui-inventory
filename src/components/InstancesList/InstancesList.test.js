@@ -30,6 +30,7 @@ const mockRecordsReset = jest.fn();
 const mockGetLastSearchOffset = jest.fn();
 const mockStoreLastSearchOffset = jest.fn();
 const mockGetLastSearch = jest.fn();
+const mockItemsByQuery = jest.fn();
 const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 const spyOnCheckIfUserInCentralTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInCentralTenant');
 
@@ -109,6 +110,7 @@ const renderInstancesList = ({
             resultCount: { replace: noop },
             query: { update: updateMock, replace: mockQueryReplace },
             records: { reset: mockRecordsReset },
+            itemsByQuery: { reset: noop, GET: mockItemsByQuery },
           }}
           data={{
             ...data,
@@ -353,13 +355,13 @@ describe('InstancesList', () => {
           expect(screen.getByTestId('sort-by-selection')).toBeInTheDocument();
         });
 
-        it('should render as many options as defined plus Relevance', () => {
+        it('should render as many options as defined', () => {
           renderInstancesList({ segment: 'instances' });
           openActionMenu();
 
           const options = within(screen.getByTestId('sort-by-selection')).getAllByRole('option');
 
-          expect(options).toHaveLength(Object.keys(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).length + 1);
+          expect(options).toHaveLength(Object.keys(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).length);
         });
       });
 
@@ -393,6 +395,33 @@ describe('InstancesList', () => {
           openActionMenu();
 
           expect((screen.getByRole('option', { name: 'Contributors' })).selected).toBeTruthy();
+        });
+
+        it('should select Relevance selected sort option when in search query', () => {
+          renderInstancesList({ segment: 'instances' });
+
+          const search = '?segment=instances&sort=relevance';
+          act(() => { history.push({ search }); });
+          openActionMenu();
+
+          const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Relevance' });
+          expect(option.selected).toBeTruthy();
+        });
+
+        it('should set aria-sort to none on sorted columns after query sort by Relevance', () => {
+          renderInstancesList({
+            segment: 'instances',
+            parentResources: {
+              ...resources,
+              query: {
+                query: '',
+                sort: 'relevance',
+              }
+            },
+          });
+
+          const sortCols = document.querySelectorAll('[aria-sort="ascending"], [aria-sort="descending"]');
+          expect(sortCols).toHaveLength(0);
         });
       });
     });
@@ -444,6 +473,46 @@ describe('InstancesList', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
       expect(screen.getByRole('button', { name: 'Save holdings UUIDs' })).toBeVisible();
+    });
+  });
+
+  describe('rendering InstancesList with Item segment', () => {
+    [
+      { qindex: 'items.barcode', query: '1234567(89)', option: 'barcode' },
+      { qindex: 'isbn', query: '1234567(89)', option: 'isbn' },
+      { qindex: 'issn', query: '1234567(89)', option: 'issn' },
+      { qindex: 'itemHrid', query: '1234567(89)', option: 'hrid' },
+      { qindex: 'iid', query: '1234567(89)', option: 'id' },
+    ].forEach(({ qindex, query: _query, option }) => {
+      describe('when open item view', () => {
+        it(`should enclose the ${option} query in quotes`, async () => {
+          renderInstancesList({
+            segment: 'items',
+            parentResources: {
+              ...resources,
+              query: {
+                ...query,
+                qindex,
+                query: _query,
+              },
+            },
+          });
+
+          await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: qindex } }));
+
+          fireEvent.change(screen.getByRole('searchbox', { name: 'Search' }), { target: { value: _query } });
+          fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
+
+          const row = screen.getAllByText('ABA Journal')[0];
+          fireEvent.click(row);
+
+          expect(mockItemsByQuery).toHaveBeenCalledWith({
+            params: {
+              query: `${option}=="${_query}"`,
+            },
+          });
+        });
+      });
     });
   });
 });

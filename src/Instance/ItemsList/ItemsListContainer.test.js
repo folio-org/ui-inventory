@@ -70,22 +70,6 @@ const ItemsListContainerSetup = () => (
   </QueryClientProvider>
 );
 
-describe('ItemsListContainer', () => {
-  beforeEach(async () => {
-    useHoldingItemsQuery.mockReturnValue({
-      isFetching: true,
-      totalRecords: itemsFixture.length,
-    });
-  });
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-  it('isFetching should be true', async () => {
-    const { getByText } = renderWithIntl(<ItemsListContainerSetup />, translations);
-    expect(getByText('Loading')).toBeInTheDocument();
-  });
-});
-
 describe('ItemsList', () => {
   beforeEach(async () => {
     useHoldingItemsQuery.mockReturnValue({
