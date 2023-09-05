@@ -279,11 +279,6 @@ class InstancesList extends React.Component {
     }
   }
 
-  getQIndexFromParams = () => {
-    const params = new URLSearchParams(this.props.location.search);
-    return params.get('qindex');
-  }
-
   getSortFromParams = () => {
     const params = new URLSearchParams(this.props.location.search);
     return params.get('sort');
@@ -1123,8 +1118,6 @@ class InstancesList extends React.Component {
     const columnMapping = this.getColumnMapping();
 
     const onChangeIndex = (e, { isAdvancedSearchModal } = {}) => {
-      const qindex = e.target.value;
-
       if (!isAdvancedSearchModal) {
         parentMutator.query.update({
           filters: '',
