@@ -220,9 +220,7 @@ class InstancesList extends React.Component {
   }
 
   componentWillUnmount() {
-    const { parentMutator } = this.props;
     this.unlisten();
-    parentMutator.records.reset();
   }
 
   extraParamsToReset = {
@@ -1117,14 +1115,7 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
-    const onChangeIndex = (e, { isAdvancedSearchModal } = {}) => {
-      if (!isAdvancedSearchModal) {
-        parentMutator.query.update({
-          filters: '',
-          ...this.extraParamsToReset,
-        });
-      }
-
+    const onChangeIndex = () => {
       this.setState({ isSingleResult: true });
     };
 
