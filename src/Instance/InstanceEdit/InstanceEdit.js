@@ -10,6 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   stripesConnect,
   stripesShape,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 import {
   LoadingView,
@@ -25,16 +26,15 @@ import {
   marshalInstance,
   unmarshalInstance,
   parseHttpError,
-  checkIfSharedInstance,
 } from '../../utils';
 import useLoadSubInstances from '../../hooks/useLoadSubInstances';
 import useCallout from '../../hooks/useCallout';
+import { useInstanceMutation } from '../../hooks';
 
 const InstanceEdit = ({
   instanceId,
   referenceData,
   stripes,
-  mutator,
 }) => {
   const { identifierTypesById, identifierTypesByName } = referenceData ?? {};
   const [httpError, setHttpError] = useState();
@@ -43,7 +43,6 @@ const InstanceEdit = ({
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
   const parentInstances = useLoadSubInstances(instance?.parentInstances, 'superInstanceId');
   const childInstances = useLoadSubInstances(instance?.childInstances, 'subInstanceId');
-  const isSharedInstance = checkIfSharedInstance(stripes, instance);
 
   useEffect(() => {
     setInitialValues({
@@ -66,7 +65,7 @@ const InstanceEdit = ({
 
     callout.sendCallout({
       type: 'success',
-      message: isSharedInstance ? successfullySavedSharedMessage : successfullySavedMessage,
+      message: instance?.shared ? successfullySavedSharedMessage : successfullySavedMessage,
     });
     goBack();
   }, [callout, goBack]);
@@ -76,11 +75,19 @@ const InstanceEdit = ({
     setHttpError(parsedError);
   };
 
-  const onSubmit = useCallback((updatedInstance) => {
-    return mutator.instanceEdit.PUT(marshalInstance(updatedInstance, identifierTypesByName))
-      .then(() => onSuccess(updatedInstance))
-      .catch(onError);
-  }, [identifierTypesByName, onError]);
+  const isCentralTenant = checkIfUserInCentralTenant(stripes);
+  const tenantId = isCentralTenant || instance?.shared ? stripes.user.user.consortium.centralTenantId : stripes.okapi.tenant;
+
+  const { mutateInstance } = useInstanceMutation({
+    options: { onSuccess, onError },
+    tenantId,
+  });
+
+  const onSubmit = useCallback((initialInstance) => {
+    const updatedInstance = marshalInstance(initialInstance, identifierTypesByName);
+
+    return mutateInstance(updatedInstance);
+  }, [mutateInstance]);
 
   if (isInstanceLoading) return <LoadingView />;
 
@@ -121,7 +128,6 @@ InstanceEdit.manifest = Object.freeze({
 
 InstanceEdit.propTypes = {
   instanceId: PropTypes.string.isRequired,
-  mutator: PropTypes.object.isRequired,
   referenceData: PropTypes.object.isRequired,
   stripes: stripesShape.isRequired,
 };
