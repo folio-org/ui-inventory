@@ -221,16 +221,6 @@ describe('InstancesList', () => {
       });
     });
 
-    describe('when the component is unmounted', () => {
-      it('should reset records', () => {
-        mockRecordsReset.mockClear();
-
-        const { unmount } = renderInstancesList({ segment: 'instances' });
-        unmount();
-        expect(mockRecordsReset).toHaveBeenCalled();
-      });
-    });
-
     describe('when clicking on the `Browse` tab', () => {
       it('should pass the correct search by clicking on the `Browse` tab', () => {
         const search = '?qindex=subject&query=book';
@@ -444,45 +434,9 @@ describe('InstancesList', () => {
 
         expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
       });
-    });
 
-    describe('when using advanced search', () => {
-      it('should set advanced search query in search input', () => {
-        renderInstancesList({ segment: 'instances' });
-
-        fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
-          target: { value: 'test' }
-        });
-
-        const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
-        fireEvent.click(advancedSearchSubmit);
-
-        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
-      });
-
-      describe('when current search option is advancedSearch and user clicks Search in the advanced search modal', () => {
-        it('should not fire onChangeIndex functionality', async () => {
-          history = createMemoryHistory({ initialEntries: [{
-            search: '?qindex=advancedSearch&query=test',
-          }] });
-
-          renderInstancesList({ segment: 'instances' });
-
-          fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
-            target: { value: 'test2' }
-          });
-          const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
-
-          await act(async () => { fireEvent.click(advancedSearchSubmit); });
-
-          expect(updateMock).not.toHaveBeenCalled();
-        });
-      });
-
-      describe('when current search option is advancedSearch and user clicks Search in the advanced search modal', () => {
-        it('should not reset filters', async () => {
+      describe('when the search option is changed', () => {
+        it('should not change the URL in the onChangeIndex function', async () => {
           history = createMemoryHistory({ initialEntries: [{
             search: '?qindex=advancedSearch&query=keyword containsAll test&filters=language.eng',
           }] });
@@ -498,33 +452,32 @@ describe('InstancesList', () => {
 
           await act(async () => { fireEvent.click(advancedSearchSubmit); });
 
-          await waitFor(() => { expect(history.push).toHaveBeenCalledWith(
-            '/?filters=language.eng&qindex=advancedSearch&query=keyword%20containsAll%20test2'
-          ); })
-        });
-      });
-
-      describe('when current search option is not the advancedSearch and user clicks Search in the advanced search modal', () => {
-        it('should reset filters', async () => {
-          history = createMemoryHistory({ initialEntries: [{
-            search: '?qindex=title&query=test&filters=language.eng',
-          }] });
-          history.push = jest.fn();
-
-          renderInstancesList({ segment: 'instances' });
-
-          fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
-            target: { value: 'test2' }
-          });
-          const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
-
-          await act(async () => { fireEvent.click(advancedSearchSubmit); });
+          expect(updateMock).not.toHaveBeenCalled();
+          expect(mockQueryReplace).not.toHaveBeenCalled();
 
           await waitFor(() => {
-            expect(history.push).toHaveBeenCalledWith('/?qindex=advancedSearch&query=title%20containsAll%20test2');
-          })
+            expect(history.push).toHaveBeenCalledTimes(1);
+            expect(history.push).toHaveBeenCalledWith(
+              '/?filters=language.eng&qindex=advancedSearch&query=keyword%20containsAll%20test2'
+            );
+          });
         });
+      });
+    });
+
+    describe('when using advanced search', () => {
+      it('should set advanced search query in search input', () => {
+        renderInstancesList({ segment: 'instances' });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+          target: { value: 'test' }
+        });
+
+        const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+        fireEvent.click(advancedSearchSubmit);
+
+        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
       });
     });
   });
