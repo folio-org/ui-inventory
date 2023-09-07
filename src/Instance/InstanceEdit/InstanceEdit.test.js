@@ -1,9 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import { act } from 'react-dom/test-utils';
-import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
 import '../../../test/jest/__mock__';
 
@@ -14,7 +16,12 @@ import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
 import { instance } from '../../../test/fixtures';
 import useInstance from '../../common/hooks/useInstance';
+import { useInstanceMutation } from '../../hooks';
 import InstanceEdit from './InstanceEdit';
+
+jest.mock('../../hooks', () => ({
+  useInstanceMutation: jest.fn().mockReturnValue({ mutateInstance: jest.fn() }),
+}));
 
 const queryClient = new QueryClient();
 const referenceData = {
@@ -56,7 +63,6 @@ const InstanceEditSetup = () => (
             mutator={{
               instanceEdit: {
                 GET: () => new Promise(resolve => resolve([instance])),
-                PUT: () => new Promise((resolve, reject) => reject(new Error('error'))),
                 reset: noop,
               },
             }}
@@ -67,31 +73,66 @@ const InstanceEditSetup = () => (
   </Router>
 );
 
+const renderInstanceEdit = () => renderWithIntl(<InstanceEditSetup />, translations);
+
 describe('InstanceEdit', () => {
-  beforeEach(async () => {
-    useInstance.mockReturnValue({
-      isLoading: false,
-      instance: mockInstance,
-    });
-    await act(async () => {
-      await renderWithIntl(<InstanceEditSetup />, translations);
-    });
+  const mockMutate = jest.fn();
+
+  beforeEach(() => {
+    useInstanceMutation.mockClear().mockReturnValue({ mutateInstance: mockMutate });
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  describe('saving instance', () => {
-    beforeEach(async () => {
-      await act(async () => {
-        await fireEvent.change(screen.getByRole('textbox', { name: /resource title/i }), { target: { value: 'new title' } });
-        fireEvent.click(screen.getByText(/Save & close/i));
+  describe('when instance is loading', () => {
+    beforeEach(() => {
+      useInstance.mockReturnValue({ isLoading: true });
+    });
+
+    it('should render loading icon', () => {
+      const { getByText } = renderInstanceEdit();
+
+      expect(getByText('LoadingView')).toBeInTheDocument();
+    });
+  });
+
+  describe('when instance is not found', () => {
+    beforeEach(() => {
+      useInstance.mockReturnValue({
+        isLoading: false,
+        instance: null,
       });
     });
 
-    it('should show error modal', () => {
-      expect(screen.getByRole('heading', { name: /saving instance failed/i })).toBeInTheDocument();
+    it('should render empty container', () => {
+      const { container } = renderInstanceEdit();
+
+      expect(container.children.length).toBe(0);
+    });
+  });
+
+  describe('when edit instance and save changes', () => {
+    beforeEach(() => {
+      useInstance.mockReturnValue({
+        isLoading: false,
+        instance: mockInstance,
+      });
+    });
+
+    it('should call mutation request', () => {
+      const {
+        getByRole,
+        getByText,
+      } = renderInstanceEdit();
+
+      const resourceTitleField = getByRole('textbox', { name: /resource title/i });
+
+      fireEvent.change(resourceTitleField, { target: { value: 'new title' } });
+      fireEvent.click(getByText(/Save & close/i));
+
+      expect(mockMutate).toHaveBeenCalled();
     });
   });
 });
