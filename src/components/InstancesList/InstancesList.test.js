@@ -456,8 +456,8 @@ describe('InstancesList', () => {
           expect(mockQueryReplace).not.toHaveBeenCalled();
 
           await waitFor(() => {
-            expect(history.push).toHaveBeenNthCalledWith(
-              1,
+            expect(history.push).toHaveBeenCalledTimes(1);
+            expect(history.push).toHaveBeenCalledWith(
               '/?filters=language.eng&qindex=advancedSearch&query=keyword%20containsAll%20test2'
             );
           });
