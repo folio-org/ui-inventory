@@ -78,6 +78,7 @@
 * Consortial Central Tenant: Handling of Instance Action Menu options. Refs UIIN-2498.
 * ECS: display shadow instances as shared. Refs UIIN-2552.
 * Display correct number of items in the Instance's Holding accordion. Fixes UIIN-2550.
+* Sorting on the Instance's Holdings item table is not working, part 2. Fixes UIIN-2565.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
