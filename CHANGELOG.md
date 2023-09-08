@@ -77,6 +77,8 @@
 * Adjust behaviour of View source for shared instances. Refs UIIN-2449.
 * Consortial Central Tenant: Handling of Instance Action Menu options. Refs UIIN-2498.
 * ECS: display shadow instances as shared. Refs UIIN-2552.
+* Display correct number of items in the Instance's Holding accordion. Fixes UIIN-2550.
+* Don't reset filters after changing a search option. Fixes UIIN-2566.
 * Fix issue with 'Up' caret on default sort Holdings/Items segments. Refs UIIN-2553.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)

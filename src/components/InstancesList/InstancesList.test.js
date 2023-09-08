@@ -6,6 +6,7 @@ import {
   act,
   fireEvent,
   screen,
+  waitFor,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
 
@@ -217,16 +218,6 @@ describe('InstancesList', () => {
 
           expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
         });
-      });
-    });
-
-    describe('when the component is unmounted', () => {
-      it('should reset records', () => {
-        mockRecordsReset.mockClear();
-
-        const { unmount } = renderInstancesList({ segment: 'instances' });
-        unmount();
-        expect(mockRecordsReset).toHaveBeenCalled();
       });
     });
 
@@ -459,6 +450,35 @@ describe('InstancesList', () => {
         fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
         expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
+      });
+
+      describe('when the search option is changed', () => {
+        it('should not change the URL in the onChangeIndex function', async () => {
+          history = createMemoryHistory({ initialEntries: [{
+            search: '?qindex=advancedSearch&query=keyword containsAll test&filters=language.eng',
+          }] });
+          history.push = jest.fn();
+
+          renderInstancesList({ segment: 'instances' });
+
+          fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+            target: { value: 'test2' }
+          });
+          const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+
+          await act(async () => { fireEvent.click(advancedSearchSubmit); });
+
+          expect(updateMock).not.toHaveBeenCalled();
+          expect(mockQueryReplace).not.toHaveBeenCalled();
+
+          await waitFor(() => {
+            expect(history.push).toHaveBeenCalledTimes(1);
+            expect(history.push).toHaveBeenCalledWith(
+              '/?filters=language.eng&qindex=advancedSearch&query=keyword%20containsAll%20test2'
+            );
+          });
+        });
       });
     });
 
