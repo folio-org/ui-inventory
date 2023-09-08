@@ -432,10 +432,10 @@ describe('InstancesList', () => {
 
         const search = '?segment=instances&sort=title';
         act(() => { history.push({ search }); });
-        await act(async () => fireEvent.click(document.querySelector('#segment-navigation-holdings')));
+        await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
         const paramSortHoldings = new URLSearchParams(history.location.search).get('sort');
 
-        await act(async () => fireEvent.click(document.querySelector('#segment-navigation-items')));
+        await act(async () => fireEvent.click(screen.getByRole('button', { name: /^item$/i })));
         const paramSortItems = new URLSearchParams(history.location.search).get('sort');
 
         expect(paramSortHoldings).toEqual('title');
