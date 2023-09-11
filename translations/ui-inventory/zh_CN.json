@@ -813,11 +813,11 @@
     "browse.other": "其他方案",
     "browse.superintendent": "文件分类主管",
     "advancedSearch": "高级搜索",
-    "filters.shared": "Shared",
-    "consortia.instanceRecordTitle": "{isShared, select, false {Local} true {Shared} other {}} instance • {title} {publisherAndDate}",
-    "editInstance.consortia.title": "Edit {isShared, select, false {local} true {shared} other {}} instance • {title}",
-    "newLocalRecord": "New local record",
-    "newSharedRecord": "New shared record",
-    "marcSourceRecord.bibliographic": "{shared, select, true {Shared} false {Local} other {}} MARC bibliographic record",
-    "marcSourceRecord.holdings": "{shared, select, true {Shared} false {Local} other {}} MARC holdings record"
+    "filters.shared": "已共享",
+    "consortia.instanceRecordTitle": "{isShared, select, false {本地} true {已共享} other {}}实例 • {title} {publisherAndDate}",
+    "editInstance.consortia.title": "编辑{isShared, select, false { 本地 } true { 已共享 } other {}}实例 • {title}",
+    "newLocalRecord": "新建本地纪录",
+    "newSharedRecord": "新建已共享记录",
+    "marcSourceRecord.bibliographic": "{shared, select, true {已共享 } false { 本地 } other {}} MARC 书目记录",
+    "marcSourceRecord.holdings": "{shared, select, true { 已共享 } false { 本地 } other {}} MARC 馆藏记录"
 }

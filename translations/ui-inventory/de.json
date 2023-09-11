@@ -267,7 +267,7 @@
     "selectStatisticalCode": "Statistischen Codetyp auswählen",
     "numberOfMissingPieces": "Anzahl der fehlenden Teile",
     "missingPieces": "Fehlende Teile",
-    "itemDamagedStatus": "Schadensbeschreibung des Exemplars",
+    "itemDamagedStatus": "Beschädigungsstatus des Exemplars",
     "typeFreeText": "Typ, Freitext",
     "name": "Name",
     "nameType": "Namenstyp",
