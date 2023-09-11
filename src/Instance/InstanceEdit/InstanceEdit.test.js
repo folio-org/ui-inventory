@@ -60,12 +60,6 @@ const InstanceEditSetup = () => (
           <InstanceEdit
             referenceData={referenceData}
             instanceId={instance.id}
-            mutator={{
-              instanceEdit: {
-                GET: () => new Promise(resolve => resolve([instance])),
-                reset: noop,
-              },
-            }}
           />
         </StripesContext.Provider>
       </DataContext.Provider>

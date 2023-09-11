@@ -10,7 +10,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   stripesConnect,
   stripesShape,
-  checkIfUserInCentralTenant,
+  checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
 import {
   LoadingView,
@@ -75,8 +75,8 @@ const InstanceEdit = ({
     setHttpError(parsedError);
   };
 
-  const isCentralTenant = checkIfUserInCentralTenant(stripes);
-  const tenantId = isCentralTenant || instance?.shared ? stripes.user.user.consortium.centralTenantId : stripes.okapi.tenant;
+  const isMemberTenant = checkIfUserInMemberTenant(stripes);
+  const tenantId = (isMemberTenant && instance?.shared) ? stripes.user.user.consortium.centralTenantId : stripes.okapi.tenant;
 
   const { mutateInstance } = useInstanceMutation({
     options: { onSuccess, onError },
