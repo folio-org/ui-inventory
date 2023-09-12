@@ -6,7 +6,10 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import { flowRight, isEmpty } from 'lodash';
+import {
+  flowRight,
+  isEmpty,
+} from 'lodash';
 
 import {
   AppIcon,
