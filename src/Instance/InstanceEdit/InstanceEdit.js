@@ -55,17 +55,18 @@ const InstanceEdit = ({
   const goBack = useGoBack(`/inventory/view/${instanceId}`);
 
   const onSuccess = useCallback((updatedInstance) => {
-    const successfullySavedMessage = (
+    const message = instance?.shared ? (
+      <FormattedMessage id="ui-inventory.instance.shared.successfulySaved" />
+    ) : (
       <FormattedMessage
         id="ui-inventory.instance.successfullySaved"
         values={{ hrid: updatedInstance.hrid }}
       />
     );
-    const successfullySavedSharedMessage = <FormattedMessage id="ui-inventory.instance.shared.successfulySaved" />;
 
     callout.sendCallout({
       type: 'success',
-      message: instance?.shared ? successfullySavedSharedMessage : successfullySavedMessage,
+      message,
     });
     goBack();
   }, [callout, goBack]);
