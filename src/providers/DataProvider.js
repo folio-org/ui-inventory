@@ -13,7 +13,7 @@ const DataProvider = ({
   resources,
 }) => {
   const { manifest } = DataProvider;
-  const dataRef = useRef();
+  const dataRef = useRef({});
 
   const isLoading = useMemo(() => {
     // eslint-disable-next-line guard-for-in
@@ -29,7 +29,7 @@ const DataProvider = ({
   }, [resources, manifest]);
 
   useEffect(() => {
-    if (isLoading || dataRef.current) {
+    if (isLoading || !dataRef.current) {
       return;
     }
 

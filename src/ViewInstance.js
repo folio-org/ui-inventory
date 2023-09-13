@@ -6,7 +6,10 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import { flowRight } from 'lodash';
+import {
+  flowRight,
+  isEmpty,
+} from 'lodash';
 
 import {
   AppIcon,
@@ -424,13 +427,14 @@ class ViewInstance extends React.Component {
 
   // Get all identifiers for all records
   getIdentifiers = (data) => {
-    const { identifierTypesById } = data;
-    const { ISBN, ISSN } = indentifierTypeNames;
     const selectedInstance = this.props?.selectedInstance;
 
-    if (!selectedInstance) {
+    if (!selectedInstance || isEmpty(data)) {
       return null;
     }
+
+    const { identifierTypesById } = data;
+    const { ISBN, ISSN } = indentifierTypeNames;
 
     // We can't make any meaningful assessment of which is
     // the best identifier to return, so just return the first
