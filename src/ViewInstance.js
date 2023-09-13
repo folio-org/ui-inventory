@@ -460,7 +460,6 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes,
       intl,
-      openedFromBrowse,
       resources: {
         instanceRequests,
       },
@@ -511,7 +510,7 @@ class ViewInstance extends React.Component {
     const showInventoryMenuSection = (
       canEditInstance
       || canViewSource
-      || (!openedFromBrowse && (canMoveItems || canMoveHoldings))
+      || (canMoveItems || canMoveHoldings)
       || canUseSingleRecordImport
       || canCreateInstance
       || canCreateOrder
@@ -927,7 +926,6 @@ ViewInstance.propTypes = {
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
-  openedFromBrowse: PropTypes.bool,
   paneWidth: PropTypes.string.isRequired,
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
