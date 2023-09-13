@@ -561,31 +561,27 @@ class ViewInstance extends React.Component {
                 disabled={!marcRecord}
               />
             )}
-            {!openedFromBrowse && (
-              <>
-                {canMoveItems && (
-                  <ActionItem
-                    id="move-instance-items"
-                    icon="transfer"
-                    messageId={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
-                    onClickHandler={() => {
-                      onToggle();
-                      this.toggleItemsMovement();
-                    }}
-                  />
-                )}
-                {(canMoveItems || canMoveHoldings) && (
-                  <ActionItem
-                    id="move-instance"
-                    icon="arrow-right"
-                    messageId="ui-inventory.moveItems"
-                    onClickHandler={() => {
-                      onToggle();
-                      this.toggleFindInstancePlugin();
-                    }}
-                  />
-                )}
-              </>
+            {canMoveItems && (
+              <ActionItem
+                id="move-instance-items"
+                icon="transfer"
+                messageId={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
+                onClickHandler={() => {
+                  onToggle();
+                  this.toggleItemsMovement();
+                }}
+              />
+            )}
+            {(canMoveItems || canMoveHoldings) && (
+              <ActionItem
+                id="move-instance"
+                icon="arrow-right"
+                messageId="ui-inventory.moveItems"
+                onClickHandler={() => {
+                  onToggle();
+                  this.toggleFindInstancePlugin();
+                }}
+              />
             )}
             {canUseSingleRecordImport && (
               <ActionItem
