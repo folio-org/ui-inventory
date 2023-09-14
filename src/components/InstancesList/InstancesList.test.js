@@ -6,6 +6,7 @@ import {
   act,
   fireEvent,
   screen,
+  waitFor,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
 
@@ -220,16 +221,6 @@ describe('InstancesList', () => {
       });
     });
 
-    describe('when the component is unmounted', () => {
-      it('should reset records', () => {
-        mockRecordsReset.mockClear();
-
-        const { unmount } = renderInstancesList({ segment: 'instances' });
-        unmount();
-        expect(mockRecordsReset).toHaveBeenCalled();
-      });
-    });
-
     describe('when clicking on the `Browse` tab', () => {
       it('should pass the correct search by clicking on the `Browse` tab', () => {
         const search = '?qindex=subject&query=book';
@@ -426,6 +417,23 @@ describe('InstancesList', () => {
       });
     });
 
+    describe('when clicking on the `Holdings` or `Items` segments', () => {
+      it('should select Title as default sort option on Holdings or Item segments', async () => {
+        renderInstancesList({ segment: 'instances' });
+
+        const search = '?segment=instances&sort=title';
+        act(() => { history.push({ search }); });
+        await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
+        const paramSortHoldings = new URLSearchParams(history.location.search).get('sort');
+
+        await act(async () => fireEvent.click(screen.getByRole('button', { name: /^item$/i })));
+        const paramSortItems = new URLSearchParams(history.location.search).get('sort');
+
+        expect(paramSortHoldings).toEqual('title');
+        expect(paramSortItems).toEqual('title');
+      });
+    });
+
     describe('filters pane', () => {
       it('should have selected effective call number option', async () => {
         renderInstancesList({ segment: 'instances' });
@@ -442,6 +450,35 @@ describe('InstancesList', () => {
         fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
         expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
+      });
+
+      describe('when the search option is changed', () => {
+        it('should not change the URL in the onChangeIndex function', async () => {
+          history = createMemoryHistory({ initialEntries: [{
+            search: '?qindex=advancedSearch&query=keyword containsAll test&filters=language.eng',
+          }] });
+          history.push = jest.fn();
+
+          renderInstancesList({ segment: 'instances' });
+
+          fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
+          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+            target: { value: 'test2' }
+          });
+          const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
+
+          await act(async () => { fireEvent.click(advancedSearchSubmit); });
+
+          expect(updateMock).not.toHaveBeenCalled();
+          expect(mockQueryReplace).not.toHaveBeenCalled();
+
+          await waitFor(() => {
+            expect(history.push).toHaveBeenCalledTimes(1);
+            expect(history.push).toHaveBeenCalledWith(
+              '/?filters=language.eng&qindex=advancedSearch&query=keyword%20containsAll%20test2'
+            );
+          });
+        });
       });
     });
 
