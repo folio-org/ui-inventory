@@ -6,7 +6,10 @@ import {
   FormattedMessage,
   injectIntl,
 } from 'react-intl';
-import { flowRight } from 'lodash';
+import {
+  flowRight,
+  isEmpty,
+} from 'lodash';
 
 import {
   AppIcon,
@@ -464,13 +467,14 @@ class ViewInstance extends React.Component {
 
   // Get all identifiers for all records
   getIdentifiers = (data) => {
-    const { identifierTypesById } = data;
-    const { ISBN, ISSN } = indentifierTypeNames;
     const selectedInstance = this.props?.selectedInstance;
 
-    if (!selectedInstance) {
+    if (!selectedInstance || isEmpty(data)) {
       return null;
     }
+
+    const { identifierTypesById } = data;
+    const { ISBN, ISSN } = indentifierTypeNames;
 
     // We can't make any meaningful assessment of which is
     // the best identifier to return, so just return the first
@@ -500,7 +504,6 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes,
       intl,
-      openedFromBrowse,
       resources: {
         instanceRequests,
       },
@@ -553,7 +556,7 @@ class ViewInstance extends React.Component {
     const showInventoryMenuSection = (
       canEditInstance
       || canViewSource
-      || (!openedFromBrowse && (canMoveItems || canMoveHoldings))
+      || (canMoveItems || canMoveHoldings)
       || canUseSingleRecordImport
       || canCreateInstance
       || canCreateOrder
@@ -603,31 +606,27 @@ class ViewInstance extends React.Component {
                 disabled={!marcRecord}
               />
             )}
-            {!openedFromBrowse && (
-              <>
-                {canMoveItems && (
-                  <ActionItem
-                    id="move-instance-items"
-                    icon="transfer"
-                    messageId={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
-                    onClickHandler={() => {
-                      onToggle();
-                      this.toggleItemsMovement();
-                    }}
-                  />
-                )}
-                {(canMoveItems || canMoveHoldings) && (
-                  <ActionItem
-                    id="move-instance"
-                    icon="arrow-right"
-                    messageId="ui-inventory.moveItems"
-                    onClickHandler={() => {
-                      onToggle();
-                      this.toggleFindInstancePlugin();
-                    }}
-                  />
-                )}
-              </>
+            {canMoveItems && (
+              <ActionItem
+                id="move-instance-items"
+                icon="transfer"
+                messageId={`ui-inventory.moveItems.instance.actionMenu.${this.state.isItemsMovement ? 'disable' : 'enable'}`}
+                onClickHandler={() => {
+                  onToggle();
+                  this.toggleItemsMovement();
+                }}
+              />
+            )}
+            {(canMoveItems || canMoveHoldings) && (
+              <ActionItem
+                id="move-instance"
+                icon="arrow-right"
+                messageId="ui-inventory.moveItems"
+                onClickHandler={() => {
+                  onToggle();
+                  this.toggleFindInstancePlugin();
+                }}
+              />
             )}
             {canUseSingleRecordImport && (
               <ActionItem
@@ -996,7 +995,6 @@ ViewInstance.propTypes = {
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
-  openedFromBrowse: PropTypes.bool,
   paneWidth: PropTypes.string.isRequired,
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,

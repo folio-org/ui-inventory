@@ -79,6 +79,10 @@
 * ECS: display shadow instances as shared. Refs UIIN-2552.
 * Display correct number of items in the Instance's Holding accordion. Fixes UIIN-2550.
 * Don't reset filters after changing a search option. Fixes UIIN-2566.
+* Fix issue with 'Up' caret on default sort Holdings/Items segments. Refs UIIN-2553.
+* *BREAKING* bump `react-intl` to `v6.4.4`. Refs UIIN-2573.
+* Remove error message when switch between apps. Fixes UIIN-2488.
+* Make the Move actions available regardless of how user navigated to the record. Refs UIIN-2518.
 * Promote a local instance to become a shared instance. Refs UIIN-2460.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
