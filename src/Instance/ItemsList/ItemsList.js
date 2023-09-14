@@ -232,6 +232,7 @@ const ItemsList = ({
       onNeedMoreData={onNeedMoreData}
       pagingType={MCLPagingTypes.PREV_NEXT}
       totalCount={total}
+      nonInteractiveHeaders={['loanType', 'effectiveLocation', 'materialType']}
       onHeaderClick={onHeaderClick}
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}

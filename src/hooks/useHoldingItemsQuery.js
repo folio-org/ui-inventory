@@ -1,3 +1,8 @@
+import {
+  useEffect,
+  useState,
+} from 'react';
+
 import { useQuery } from 'react-query';
 import { omit } from 'lodash';
 
@@ -12,36 +17,37 @@ const useHoldingItemsQuery = (
   holdingsRecordId,
   options = { searchParams: {}, key: 'items' },
 ) => {
+  const [sortBy, setSortBy] = useState(`${DEFAULT_ITEM_TABLE_SORTBY_FIELD}/sort.ascending`);
   const ky = useOkapiKy().extend({ timeout: false });
   const [namespace] = useNamespace();
 
+  // sortMap contains not all item table's columns because sorting by some columns
+  // is not implemented on BE yet
   const sortMap = {
     'barcode': 'barcode',
     'status': 'status.name',
     'copyNumber': 'copyNumber',
-    'loanType': 'temporaryLoanType.name',
-    'effectiveLocation': 'effectiveLocation.name',
     'enumeration': 'enumeration',
     'chronology': 'chronology',
     'volume': 'volume',
     'yearCaption': 'yearCaption',
-    'materialType': 'materialType.name',
   };
-  const sortBy = options.searchParams.sortBy ?? DEFAULT_ITEM_TABLE_SORTBY_FIELD;
 
-  const buildQuery = () => {
-    const queryFilterByHoldingsRecordId = `holdingsRecordId==${holdingsRecordId}`;
-    const sortDirection = sortBy.startsWith('-') ? 'descending' : 'ascending';
-    const sortOrder = sortBy.replace(/^-/, '');
-    const sort = sortMap[sortOrder];
+  useEffect(() => {
+    if (options.searchParams.sortBy) {
+      const sortQuery = options.searchParams.sortBy;
+      const sortDirection = sortQuery.startsWith('-') ? 'descending' : 'ascending';
+      const sortOrder = sortQuery.replace(/^-/, '');
+      const newSortBy = sortMap[sortOrder] ? `${sortMap[sortOrder]}/sort.${sortDirection}` : sortBy;
 
-    return `${queryFilterByHoldingsRecordId} sortby ${sort}/sort.${sortDirection}`;
-  };
+      setSortBy(newSortBy);
+    }
+  }, [options.searchParams.sortBy]);
 
   const defaultSearchParams = {
     offset: 0,
     limit: LIMIT_MAX,
-    query: buildQuery(),
+    query: `holdingsRecordId==${holdingsRecordId} sortby ${sortBy}`,
   };
   const searchParams = {
     ...defaultSearchParams,
