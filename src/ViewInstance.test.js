@@ -1,19 +1,35 @@
-import '../test/jest/__mock__';
 import React from 'react';
-import { screen, waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
-import { useStripes } from '@folio/stripes/core';
+
+import '../test/jest/__mock__';
+
+import {
+  screen,
+  waitFor,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
+import {
+  useStripes,
+  checkIfUserInMemberTenant,
+} from '@folio/stripes/core';
+import { ConfirmationModal } from '@folio/stripes/components';
+
 import { instances } from '../test/fixtures/instances';
 import { DataContext } from './contexts';
 import StripesConnectedInstance from './ConnectedInstance/StripesConnectedInstance';
-import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
+
 import ViewInstance from './ViewInstance';
 import { CONSORTIUM_PREFIX } from './constants';
 
-const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
-const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../test/jest/helpers';
 
 jest.mock('./components/ImportRecordModal/ImportRecordModal', () => (props) => {
   const { isOpen, handleSubmit, handleCancel } = props;
@@ -48,6 +64,9 @@ jest.mock('./RemoteStorageService/Check', () => ({
   useByHoldings: jest.fn(() => false),
 }));
 
+const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
+const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
+
 const location = {
   pathname: '/testPathName',
   search: '?filters=test1&query=test2&sort=test3&qindex=test',
@@ -71,6 +90,29 @@ jest
   .mockImplementation(() => instance)
   .mockImplementationOnce(() => {});
 
+ConfirmationModal.mockImplementation(({
+  open,
+  onCancel,
+  onConfirm,
+}) => (open ? (
+  <div>
+    <span>Confirmation modal</span>
+    <button
+      type="button"
+      onClick={onCancel}
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      id="confirmButton"
+      onClick={onConfirm}
+    >
+      Confirm
+    </button>
+  </div>
+) : null));
+
 const goToMock = jest.fn();
 const mockReset = jest.fn();
 const updateMock = jest.fn();
@@ -90,6 +132,9 @@ const mockStripes = {
 const defaultProp = {
   centralTenantPermissions: [],
   selectedInstance: instance,
+  centralTenantId: 'centralTenantId',
+  consortiumId: 'consortiumId',
+  refetchInstance: jest.fn(),
   goTo: goToMock,
   match: {
     path: '/inventory/view',
@@ -124,7 +169,8 @@ const defaultProp = {
     instanceRequests: {
       GET: jest.fn(() => Promise.resolve([])),
       reset: jest.fn()
-    }
+    },
+    shareInstance: { POST: jest.fn() },
   },
   onClose: mockonClose,
   onCopy: jest.fn(),
@@ -156,6 +202,7 @@ const defaultProp = {
     },
   },
   stripes: mockStripes,
+  okapi: { tenant: 'memberTenant' },
   tagsEnabled: true,
   updateLocation: jest.fn(),
   isShared: false,
@@ -431,6 +478,98 @@ describe('ViewInstance', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         fireEvent.click(screen.getByRole('button', { name: 'Duplicate instance' }));
         expect(defaultProp.onCopy).toBeCalled();
+      });
+    });
+    describe('"Share local instance" action item', () => {
+      describe('when user is in non-consortium env', () => {
+        it('should be hidden', () => {
+          const stripes = {
+            ...defaultProp.stripes,
+            hasInterface: jest.fn().mockReturnValue(false),
+          };
+          checkIfUserInMemberTenant.mockClear().mockReturnValue(false);
+
+          renderViewInstance({ stripes });
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.queryByRole('button', { name: 'Share local instance' })).not.toBeInTheDocument();
+        });
+      });
+      describe('when user is in central tenant', () => {
+        it('should be hidden', () => {
+          const stripes = {
+            ...defaultProp.stripes,
+            okapi: { tenant: 'consortium' },
+            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+          };
+          checkIfUserInMemberTenant.mockClear().mockReturnValue(false);
+
+          renderViewInstance({ stripes });
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.queryByRole('button', { name: 'Share local instance' })).not.toBeInTheDocument();
+        });
+      });
+      describe('when user is in member tenant', () => {
+        describe('and instance is shared', () => {
+          it('should be hidden', () => {
+            checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+
+            renderViewInstance({ isShared: true });
+            fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+            expect(screen.queryByRole('button', { name: 'Share local instance' })).not.toBeInTheDocument();
+          });
+        });
+        describe('and instance is shadow copy', () => {
+          it('should be hidden', () => {
+            checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+            StripesConnectedInstance.prototype.instance.mockImplementation(() => ({
+              ...instance,
+              source: 'CONSORTIUM-FOLIO',
+            }));
+
+            renderViewInstance();
+            fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+            expect(screen.queryByRole('button', { name: 'Share local instance' })).not.toBeInTheDocument();
+          });
+        });
+        describe('and instance is local', () => {
+          it('should be visible', () => {
+            checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+
+            renderViewInstance();
+            fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+            expect(screen.getByRole('button', { name: 'Share local instance' })).toBeInTheDocument();
+          });
+        });
+      });
+
+      describe('when clicking Share local instance', () => {
+        it('should show confirmation modal', () => {
+          checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+
+          renderViewInstance();
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
+
+          expect(screen.getByText('Confirmation modal')).toBeInTheDocument();
+        });
+
+        describe('when confirming', () => {
+          it('should make POST request to share local instance', () => {
+            checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+
+            renderViewInstance();
+            fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+            fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
+            fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+
+            expect(defaultProp.mutator.shareInstance.POST).toHaveBeenCalled();
+          });
+        });
       });
     });
     describe('"Export instance (MARC)" action item', () => {

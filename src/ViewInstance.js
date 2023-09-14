@@ -24,6 +24,7 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
+  ConfirmationModal,
 } from '@folio/stripes/components';
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
@@ -164,6 +165,13 @@ class ViewInstance extends React.Component {
       tenant: '!{tenantId}',
       throwErrors: false,
     },
+    shareInstance: {
+      type: 'okapi',
+      path: 'consortia/!{consortiumId}/sharing/instances',
+      accumulate: true,
+      throwErrors: false,
+      tenant: '!{centralTenantId}',
+    },
   });
 
   constructor(props) {
@@ -178,6 +186,7 @@ class ViewInstance extends React.Component {
       isItemsMovement: false,
       isImportRecordModalOpened: false,
       isCopyrightModalOpened: false,
+      isShareLocalInstanceModalOpen: false,
       isNewOrderModalOpen: false,
       afterCreate: false,
       instancesQuickExportInProgress: false,
@@ -410,6 +419,37 @@ class ViewInstance extends React.Component {
     this.setState({ isImportRecordModalOpened: false });
   }
 
+  handleShareLocalInstance = (instance = {}) => {
+    const centralTenantId = this.props.centralTenantId;
+    const sourceTenantId = this.props.okapi.tenant;
+    const instanceTitle = instance.title;
+    const instanceIdentifier = instance.id;
+
+    try {
+      this.props.mutator.shareInstance.POST({
+        sourceTenantId,
+        instanceIdentifier,
+        targetTenantId: centralTenantId,
+      })
+        .then(() => {
+          this.props.refetchInstance();
+        })
+        .then(() => {
+          this.calloutRef.current.sendCallout({
+            type: 'success',
+            message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.successful" values={{ instanceTitle }} />,
+          });
+        });
+    } catch (error) {
+      this.calloutRef.current.sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
+      });
+    } finally {
+      this.setState({ isShareLocalInstanceModalOpen: false });
+    }
+  }
+
   toggleCopyrightModal = () => {
     this.setState(prevState => ({ isCopyrightModalOpened: !prevState.isCopyrightModalOpened }));
   };
@@ -469,10 +509,11 @@ class ViewInstance extends React.Component {
       marcRecord,
       titleLevelRequestsFeatureEnabled,
     } = this.state;
+    const source = instance?.source;
 
     const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
     const editInstancePerm = 'ui-inventory.instance.edit';
-    const isSourceMARC = isMARCSource(instance?.source);
+    const isSourceMARC = isMARCSource(source);
     const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
@@ -488,6 +529,7 @@ class ViewInstance extends React.Component {
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
     const canViewSource = canViewMARCSource && canViewInstance;
+    const canShareLocalInstance = checkIfUserInMemberTenant(stripes) && !isShared && !isInstanceShadowCopy(source);
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const numberOfRequests = instanceRequests.other?.totalRecords;
@@ -606,6 +648,17 @@ class ViewInstance extends React.Component {
                 onClickHandler={() => {
                   onToggle();
                   onCopy(instance);
+                }}
+              />
+            )}
+            {canShareLocalInstance && (
+              <ActionItem
+                id="share-local-instance"
+                icon="graph"
+                messageId="ui-inventory.shareLocalInstance"
+                onClickHandler={() => {
+                  onToggle();
+                  this.setState({ isShareLocalInstanceModalOpen: true });
                 }}
               />
             )}
@@ -881,6 +934,15 @@ class ViewInstance extends React.Component {
               onCancel={this.toggleNewOrderModal}
             />
 
+            <ConfirmationModal
+              open={this.state.isShareLocalInstanceModalOpen}
+              heading={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.header" />}
+              message={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.message" values={{ instanceTitle: instance?.title }} />}
+              confirmLabel={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.confirmButton" />}
+              onCancel={() => this.setState({ isShareLocalInstanceModalOpen: false })}
+              onConfirm={() => this.handleShareLocalInstance(instance)}
+            />
+
           </HasCommand>
         )}
       </DataContext.Consumer>
@@ -893,6 +955,8 @@ ViewInstance.propTypes = {
   canUseSingleRecordImport: PropTypes.bool,
   centralTenantPermissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   selectedInstance:  PropTypes.object,
+  centralTenantId: PropTypes.string,
+  refetchInstance: PropTypes.func,
   goTo: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
@@ -928,6 +992,7 @@ ViewInstance.propTypes = {
       GET: PropTypes.func.isRequired,
       reset: PropTypes.func.isRequired,
     }).isRequired,
+    shareInstance: PropTypes.shape({ POST: PropTypes.func.isRequired }).isRequired,
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
@@ -952,6 +1017,7 @@ ViewInstance.propTypes = {
     locale: PropTypes.string.isRequired,
     logger: PropTypes.object.isRequired,
   }).isRequired,
+  okapi: PropTypes.object.isRequired,
   tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
 };

@@ -79,6 +79,7 @@
 * ECS: display shadow instances as shared. Refs UIIN-2552.
 * Display correct number of items in the Instance's Holding accordion. Fixes UIIN-2550.
 * Don't reset filters after changing a search option. Fixes UIIN-2566.
+* Promote a local instance to become a shared instance. Refs UIIN-2460.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
