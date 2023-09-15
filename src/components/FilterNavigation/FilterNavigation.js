@@ -8,7 +8,7 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-import { segments } from '../../constants';
+import { segments, SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 import { useLastSearchTerms } from '../../hooks';
 
 const FilterNavigation = ({ segment, onChange }) => {
@@ -24,6 +24,7 @@ const FilterNavigation = ({ segment, onChange }) => {
           const searchParams = queryString.parse(getLastSearch(name));
 
           searchParams.segment = name;
+          if (!searchParams.sort) searchParams.sort = SORTABLE_SEARCH_RESULT_LIST_COLUMNS.TITLE;
 
           return (
             <Button

@@ -174,7 +174,6 @@ const defaultProp = {
   },
   onClose: mockonClose,
   onCopy: jest.fn(),
-  openedFromBrowse: false,
   paneWidth: '55%',
   resources: {
     allInstanceItems: {
@@ -260,10 +259,10 @@ describe('ViewInstance', () => {
     expect(screen.getByText('Move items within an instance')).toBeInTheDocument();
     expect(screen.getByText('Move holdings/items to another instance')).toBeInTheDocument();
   });
-  it('should NOT display \'move\' action menu items when instance was opened from Browse page', () => {
-    renderViewInstance({ openedFromBrowse: true });
-    expect(screen.queryByText('Move items within an instance')).not.toBeInTheDocument();
-    expect(screen.queryByText('Move holdings/items to another instance')).not.toBeInTheDocument();
+  it('should display \'move\' action menu items when instance was opened from Browse page', () => {
+    renderViewInstance();
+    expect(screen.queryByText('Move items within an instance')).toBeInTheDocument();
+    expect(screen.queryByText('Move holdings/items to another instance')).toBeInTheDocument();
   });
   describe('instance header', () => {
     describe('for non-consortia users', () => {
