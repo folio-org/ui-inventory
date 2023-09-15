@@ -41,6 +41,7 @@ import {
   IntlConsumer,
   CalloutContext,
   stripesConnect,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 
 import {
@@ -126,7 +127,7 @@ class ViewHoldingsRecord extends React.Component {
     super(props);
     this.state = {
       marcRecord: null,
-      instance: null,
+      instance: {},
       confirmHoldingsRecordDeleteModal: false,
       noHoldingsRecordDeleteModal: false,
     };
@@ -471,6 +472,7 @@ class ViewHoldingsRecord extends React.Component {
       referenceTables,
       goTo,
       stripes,
+      isLocalInstance,
     } = this.props;
     const { instance } = this.state;
 
@@ -667,6 +669,9 @@ class ViewHoldingsRecord extends React.Component {
       },
     ];
 
+    const isCentralTenant = checkIfUserInCentralTenant(stripes);
+    const suppressActionMenu = isLocalInstance && isCentralTenant;
+
     return (
       <IntlConsumer>
         {intl => (
@@ -718,7 +723,7 @@ class ViewHoldingsRecord extends React.Component {
                   })}
                   dismissible
                   onClose={this.onClose}
-                  actionMenu={this.getPaneHeaderActionMenu}
+                  actionMenu={suppressActionMenu ? null : this.getPaneHeaderActionMenu}
                 >
                   <Row center="xs">
                     <Col sm={6}>
@@ -1101,6 +1106,7 @@ ViewHoldingsRecord.propTypes = {
   location: PropTypes.object,
   history: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
+  isLocalInstance: PropTypes.bool,
   holdingsrecordid: PropTypes.string.isRequired,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
@@ -1126,6 +1132,10 @@ ViewHoldingsRecord.propTypes = {
     query: PropTypes.object.isRequired,
   }),
   goTo: PropTypes.func.isRequired,
+};
+
+ViewHoldingsRecord.defaultProps = {
+  isLocalInstance: false,
 };
 
 export default flowRight(

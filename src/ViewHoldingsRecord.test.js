@@ -1,10 +1,22 @@
-import '../test/jest/__mock__';
 import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 import { MemoryRouter } from 'react-router-dom';
-import { screen, act, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  screen,
+  act,
+  fireEvent,
+} from '@folio/jest-config-stripes/testing-library/react';
 
-import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
+import '../test/jest/__mock__';
+import buildStripes from '../test/jest/__mock__/stripesCore.mock';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../test/jest/helpers';
+
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
 
@@ -59,6 +71,7 @@ const defaultProps = {
     temporaryLocationQuery: {},
     query: {},
   },
+  stripes: buildStripes(),
   history: {
     push: jest.fn(),
   },
@@ -116,6 +129,36 @@ describe('ViewHoldingsRecord actions', () => {
     await act(async () => { renderViewHoldingsRecord(); });
     const tempLocation = document.querySelector('*[data-test-id=temporary-location]').innerHTML;
     expect(tempLocation).toContain('Inactive');
+  });
+
+  describe('Action menu', () => {
+    describe('when user is in central tenant', () => {
+      describe('and instance is local', () => {
+        it('should suppress action menu', () => {
+          const { queryByText } = renderViewHoldingsRecord({
+            stripes: {
+              ...buildStripes({ okapi: { tenant: 'consortia' } }),
+            },
+            isLocalInstance: true,
+          });
+
+          expect(queryByText('Actions')).not.toBeInTheDocument();
+        });
+      });
+
+      describe('and instance is shared', () => {
+        it('should render action menu', () => {
+          const { getByText } = renderViewHoldingsRecord({
+            stripes: {
+              ...buildStripes({ okapi: { tenant: 'consortia' } }),
+            },
+            isLocalInstance: false,
+          });
+
+          expect(getByText('Actions')).toBeInTheDocument();
+        });
+      });
+    });
   });
 
   describe('Tests for shortcut of HasCommand', () => {

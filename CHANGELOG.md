@@ -83,6 +83,7 @@
 * *BREAKING* bump `react-intl` to `v6.4.4`. Refs UIIN-2573.
 * Remove error message when switch between apps. Fixes UIIN-2488.
 * Make the Move actions available regardless of how user navigated to the record. Refs UIIN-2518.
+* Consortial Central Tenant: Suppress Holdings detail view Action menu. Refs UIIN-2524.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
