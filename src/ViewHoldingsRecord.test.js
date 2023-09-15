@@ -133,30 +133,15 @@ describe('ViewHoldingsRecord actions', () => {
 
   describe('Action menu', () => {
     describe('when user is in central tenant', () => {
-      describe('and instance is local', () => {
-        it('should suppress action menu', () => {
-          const { queryByText } = renderViewHoldingsRecord({
-            stripes: {
-              ...buildStripes({ okapi: { tenant: 'consortia' } }),
-            },
-            isLocalInstance: true,
-          });
-
-          expect(queryByText('Actions')).not.toBeInTheDocument();
+      it('should suppress action menu', () => {
+        const { queryByText } = renderViewHoldingsRecord({
+          stripes: {
+            ...buildStripes({ okapi: { tenant: 'consortia' } }),
+          },
+          isLocalInstance: true,
         });
-      });
 
-      describe('and instance is shared', () => {
-        it('should render action menu', () => {
-          const { getByText } = renderViewHoldingsRecord({
-            stripes: {
-              ...buildStripes({ okapi: { tenant: 'consortia' } }),
-            },
-            isLocalInstance: false,
-          });
-
-          expect(getByText('Actions')).toBeInTheDocument();
-        });
+        expect(queryByText('Actions')).not.toBeInTheDocument();
       });
     });
   });

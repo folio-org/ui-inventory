@@ -127,7 +127,7 @@ class ViewHoldingsRecord extends React.Component {
     super(props);
     this.state = {
       marcRecord: null,
-      instance: {},
+      instance: null,
       confirmHoldingsRecordDeleteModal: false,
       noHoldingsRecordDeleteModal: false,
     };
@@ -338,6 +338,10 @@ class ViewHoldingsRecord extends React.Component {
       marcRecord,
     } = this.state;
 
+    const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+
+    if (isUserInCentralTenant) return null;
+
     const canCreate = stripes.hasPerm('ui-inventory.holdings.create');
     const canEdit = stripes.hasPerm('ui-inventory.holdings.edit');
     const canDelete = stripes.hasPerm('ui-inventory.holdings.delete');
@@ -472,7 +476,6 @@ class ViewHoldingsRecord extends React.Component {
       referenceTables,
       goTo,
       stripes,
-      isLocalInstance,
     } = this.props;
     const { instance } = this.state;
 
@@ -669,9 +672,6 @@ class ViewHoldingsRecord extends React.Component {
       },
     ];
 
-    const isCentralTenant = checkIfUserInCentralTenant(stripes);
-    const suppressActionMenu = isLocalInstance && isCentralTenant;
-
     return (
       <IntlConsumer>
         {intl => (
@@ -723,7 +723,7 @@ class ViewHoldingsRecord extends React.Component {
                   })}
                   dismissible
                   onClose={this.onClose}
-                  actionMenu={suppressActionMenu ? null : this.getPaneHeaderActionMenu}
+                  actionMenu={this.getPaneHeaderActionMenu}
                 >
                   <Row center="xs">
                     <Col sm={6}>
@@ -1106,7 +1106,6 @@ ViewHoldingsRecord.propTypes = {
   location: PropTypes.object,
   history: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
-  isLocalInstance: PropTypes.bool,
   holdingsrecordid: PropTypes.string.isRequired,
   paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
@@ -1132,10 +1131,6 @@ ViewHoldingsRecord.propTypes = {
     query: PropTypes.object.isRequired,
   }),
   goTo: PropTypes.func.isRequired,
-};
-
-ViewHoldingsRecord.defaultProps = {
-  isLocalInstance: false,
 };
 
 export default flowRight(
