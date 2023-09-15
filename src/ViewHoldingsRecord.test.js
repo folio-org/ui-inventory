@@ -138,7 +138,6 @@ describe('ViewHoldingsRecord actions', () => {
           stripes: {
             ...buildStripes({ okapi: { tenant: 'consortia' } }),
           },
-          isLocalInstance: true,
         });
 
         expect(queryByText('Actions')).not.toBeInTheDocument();
