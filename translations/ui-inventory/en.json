@@ -539,6 +539,7 @@
   "filters.holdings": "Holdings",
   "filters.items": "Item",
   "filters.shared": "Shared",
+  "filters.tenantId": "Held by",
   "filters.effectiveLocation": "Effective location (item)",
   "filters.nameType": "Name type",
   "yes": "Yes",
