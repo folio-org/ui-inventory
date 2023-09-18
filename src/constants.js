@@ -429,3 +429,5 @@ export const SINGLE_ITEM_QUERY_TEMPLATES = {
   itemHrid: 'hrid==%{query}',
   iid: 'id==%{query}',
 };
+
+export const DEFAULT_ITEM_TABLE_SORTBY_FIELD = 'barcode';
