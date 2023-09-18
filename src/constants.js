@@ -655,3 +655,5 @@ export const SOURCE_VALUES = {
 
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';
 export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
+
+export const DEFAULT_ITEM_TABLE_SORTBY_FIELD = 'barcode';
