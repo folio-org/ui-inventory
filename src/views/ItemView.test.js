@@ -18,10 +18,6 @@ import ItemView from './ItemView';
 jest.mock('../Item/ViewItem/ItemAcquisition', () => ({
   ItemAcquisition: jest.fn(() => 'ItemAcquisition'),
 }));
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  checkIfUserInCentralTenant: jest.fn(),
-}));
 
 const stripesStub = {
   connect: Component => <Component />,
@@ -202,7 +198,7 @@ describe('ItemView', () => {
 
   describe('action menu', () => {
     it('should be suppressed for consortial central tenant', () => {
-      checkIfUserInCentralTenant.mockReturnValue(true);
+      checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
       renderWithIntl(<ItemViewSetup />, translationsProperties);
 
       expect(screen.queryByRole('button', { name: 'Actions' })).not.toBeInTheDocument();
