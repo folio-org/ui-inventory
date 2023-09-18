@@ -290,7 +290,7 @@ export const FACETS = {
 
 export const FACETS_CQL = {
   SHARED: 'shared',
-  HELD_BY: 'tenantId',
+  HELD_BY: 'holdings.tenantId',
   EFFECTIVE_LOCATION: 'items.effectiveLocationId',
   LANGUAGES: 'languages',
   INSTANCE_TYPE: 'instanceTypeId',

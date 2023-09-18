@@ -17,6 +17,7 @@ const holdingsRecordFilterRenderer = data => onChange => {
     tags,
     onFetchFacets,
     parentResources,
+    consortiaTenants,
   } = data;
 
   return (
@@ -31,6 +32,7 @@ const holdingsRecordFilterRenderer = data => onChange => {
         query,
         onFetchFacets,
         parentResources,
+        consortiaTenants,
       }}
       onChange={onChange}
       onClear={(name) => {

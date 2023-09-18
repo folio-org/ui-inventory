@@ -18,6 +18,11 @@ export const instanceFilterConfig = [
     values: [],
   },
   {
+    name: FACETS.HELD_BY,
+    cql: FACETS_CQL.HELD_BY,
+    values: [],
+  },
+  {
     name: FACETS.EFFECTIVE_LOCATION,
     cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
@@ -260,6 +265,11 @@ export const holdingFilterConfig = [
     values: [],
   },
   {
+    name: FACETS.HELD_BY,
+    cql: FACETS_CQL.HELD_BY,
+    values: [],
+  },
+  {
     name: FACETS.EFFECTIVE_LOCATION,
     cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],
@@ -334,6 +344,11 @@ export const itemFilterConfig = [
   {
     name: FACETS.SHARED,
     cql: FACETS_CQL.SHARED,
+    values: [],
+  },
+  {
+    name: FACETS.HELD_BY,
+    cql: FACETS_CQL.HELD_BY,
     values: [],
   },
   {

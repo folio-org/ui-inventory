@@ -199,7 +199,7 @@ const InstanceFilters = props => {
           onClearFilter={() => onClear(FACETS.SHARED)}
         >
           <CheckboxFacet
-            data-test-filter-instance-shared
+            data-test-filter-item-shared
             name={FACETS.SHARED}
             dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS]}
             selectedValues={activeFilters[FACETS.SHARED]}
@@ -219,7 +219,7 @@ const InstanceFilters = props => {
           onClearFilter={() => onClear(FACETS.HELD_BY)}
         >
           <CheckboxFacet
-            data-test-filter-instance-held-by
+            data-test-filter-item-held-by
             name={FACETS.HELD_BY}
             dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
             selectedValues={activeFilters[FACETS.HELD_BY]}

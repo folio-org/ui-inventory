@@ -259,6 +259,16 @@ export const resources = {
       }
     ],
   },
+  consortiaTenants: {
+    hasLoaded: true,
+    failed: false,
+    records: [
+      {
+        id: 'consortiaTenant-1',
+        name: 'consortiaTenant-1',
+      },
+    ],
+  },
 };
 
 export const resources2 = {
@@ -520,6 +530,16 @@ export const resources2 = {
         id: 'holdingsSources-1',
         name: 'holdingsSources 1',
       }
+    ],
+  },
+  consortiaTenants: {
+    hasLoaded: false,
+    failed: false,
+    records: [
+      {
+        id: 'consortiaTenant-1',
+        name: 'consortiaTenant-1',
+      },
     ],
   },
 };
