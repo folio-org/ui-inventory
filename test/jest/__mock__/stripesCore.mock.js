@@ -98,7 +98,7 @@ const mockStripesCore = {
 
   TitleManager: ({ children }) => <>{children}</>,
 
-  checkIfUserInMemberTenant: () => true,
+  checkIfUserInMemberTenant: jest.fn(() => true),
 
   checkIfUserInCentralTenant: jest.fn(() => false),
 };
