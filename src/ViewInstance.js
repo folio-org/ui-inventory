@@ -538,7 +538,7 @@ class ViewInstance extends React.Component {
     const numberOfRequests = instanceRequests.other?.totalRecords;
     const canReorderRequests = titleLevelRequestsFeatureEnabled && hasReorderPermissions && numberOfRequests && canReorder;
     const canViewRequests = !checkIfUserInCentralTenant(stripes) && !titleLevelRequestsFeatureEnabled;
-    const canCreateNewRequest = titleLevelRequestsFeatureEnabled && canCreateRequest;
+    const canCreateNewRequest = !checkIfUserInCentralTenant(stripes) && titleLevelRequestsFeatureEnabled && canCreateRequest;
     const identifier = this.getIdentifiers(data);
 
     const buildOnClickHandler = onClickHandler => {
@@ -700,7 +700,7 @@ class ViewInstance extends React.Component {
               )
             }
             <NewInstanceRequestButton
-              isTlrEnabled={!!titleLevelRequestsFeatureEnabled}
+              isTlrEnabled={canCreateNewRequest}
               instanceId={instance.id}
             />
           </MenuSection>
