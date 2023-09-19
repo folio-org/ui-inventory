@@ -99,6 +99,8 @@ const mockStripesCore = {
   TitleManager: ({ children }) => <>{children}</>,
 
   checkIfUserInMemberTenant: jest.fn(() => true),
+
+  checkIfUserInCentralTenant: jest.fn(() => false),
 };
 
 jest.mock('@folio/stripes/core', () => ({
