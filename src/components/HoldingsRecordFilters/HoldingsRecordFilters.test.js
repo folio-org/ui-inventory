@@ -94,7 +94,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render shared, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const shared = screen.getByLabelText('Shared filter list');
+    const shared = screen.getByRole('button', { name: /Shared/i });
     userEvent.click(shared);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[1]);
@@ -105,7 +105,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render Held by, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const heldBy = screen.getByLabelText('Held by filter list');
+    const heldBy = screen.getByRole('button', { name: /held by/i });
     userEvent.click(heldBy);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[3]);
@@ -116,7 +116,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render effectiveLocation, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const effectiveLocation = screen.getByLabelText('Effective location (item) filter list');
+    const effectiveLocation = screen.getByRole('button', { name: /Effective location \(item\)/i });
     userEvent.click(effectiveLocation);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[5]);
@@ -127,7 +127,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsPermanentLocation, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsPermanentLocation = screen.getByLabelText('Holdings permanent location filter list');
+    const holdingsPermanentLocation = screen.getByRole('button', { name: /Holdings permanent location/i });
     userEvent.click(holdingsPermanentLocation);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[7]);
@@ -138,7 +138,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsType, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsType = screen.getByLabelText('Holdings type filter list');
+    const holdingsType = screen.getByRole('button', { name: /Holdings type/i });
     userEvent.click(holdingsType);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[9]);
@@ -149,7 +149,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsDiscoverySuppress, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsDiscoverySuppress = screen.getByLabelText('Suppress from discovery filter list');
+    const holdingsDiscoverySuppress = screen.getByRole('button', { name: /Suppress from discovery/i });
     userEvent.click(holdingsDiscoverySuppress);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[11]);
@@ -160,7 +160,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsStatisticalCodeIds, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsStatisticalCodeIds = screen.getByLabelText('Statistical code filter list');
+    const holdingsStatisticalCodeIds = screen.getByRole('button', { name: /Statistical code/i });
     userEvent.click(holdingsStatisticalCodeIds);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[13]);
@@ -171,7 +171,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsCreatedDate, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsCreatedDate = screen.getByLabelText('Date created filter list');
+    const holdingsCreatedDate = screen.getByRole('button', { name: /Date created/i });
     userEvent.click(holdingsCreatedDate);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[15]);
@@ -182,7 +182,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsUpdatedDate, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsUpdatedDate = screen.getByLabelText('Date updated filter list');
+    const holdingsUpdatedDate = screen.getByRole('button', { name: /Date updated/i });
     userEvent.click(holdingsUpdatedDate);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[22]);
@@ -192,7 +192,7 @@ describe('HoldingsRecordFilters', () => {
   });
   it('Should Render holdingsSource, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsSource = screen.getByLabelText('Source filter list');
+    const holdingsSource = screen.getByRole('button', { name: /Source/i });
     userEvent.click(holdingsSource);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[29]);
