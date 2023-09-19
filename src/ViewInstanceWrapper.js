@@ -16,7 +16,8 @@ const ViewInstanceWrapper = (props) => {
 
   const userId = stripes?.user?.user?.id;
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
-  const { instance } = useInstance(id);
+  const consortiumId = stripes.user.user?.consortium?.id;
+  const { instance, refetch } = useInstance(id);
 
   const isShared = Boolean(instance?.shared);
   const tenantId = instance?.tenantId ?? stripes.okapi.tenant;
@@ -36,6 +37,9 @@ const ViewInstanceWrapper = (props) => {
       {...props}
       isShared={isShared}
       tenantId={tenantId}
+      centralTenantId={centralTenantId}
+      consortiumId={consortiumId}
+      refetchInstance={refetch}
       selectedInstance={instance}
       centralTenantPermissions={centralTenantPermissions}
       isCentralTenantPermissionsLoading={isCentralTenantPermissionsLoading}

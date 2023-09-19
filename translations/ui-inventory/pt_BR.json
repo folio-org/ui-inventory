@@ -819,5 +819,12 @@
     "newLocalRecord": "Novo registro local",
     "newSharedRecord": "Novo registro compartilhado",
     "marcSourceRecord.bibliographic": "{shared, select, true {Compartilhado} false {Local} other {}} Registro bibliográfico MARC",
-    "marcSourceRecord.holdings": "{shared, select, true {Compartilhado} false {Local} other {}} Registro de coleções MARC"
+    "marcSourceRecord.holdings": "{shared, select, true {Compartilhado} false {Local} other {}} Registro de coleções MARC",
+    "instance.shared.successfulySaved": "Essa instância compartilhada foi salva de forma centralizada e as atualizações dos registros das bibliotecas associadas estão em andamento. As alterações nessa cópia da instância podem não aparecer imediatamente.",
+    "shareLocalInstance": "Compartilhar instância local",
+    "shareLocalInstance.modal.header": "Tem certeza de que deseja compartilhar essa instância?",
+    "shareLocalInstance.modal.message": "Você optou por compartilhar a instância local <b>{instanceTitle}</b> com outras bibliotecas membros do seu consórcio",
+    "shareLocalInstance.modal.confirmButton": "Compartilhar",
+    "shareLocalInstance.toast.unsuccessful": "A instância local <b>{instanceTitle}</b> não foi compartilhada",
+    "shareLocalInstance.toast.successful": "A instância local <b>{instanceTitle}</b> foi compartilhada com sucesso"
 }
