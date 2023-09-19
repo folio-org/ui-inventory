@@ -85,6 +85,7 @@
 * Make the Move actions available regardless of how user navigated to the record. Refs UIIN-2518.
 * Sorting on the Instance's Holdings item table is not working, part 2. Fixes UIIN-2565.
 * Promote a local instance to become a shared instance. Refs UIIN-2460.
+* Consortial Central Tenant: Suppress Holdings detail view Action menu. Refs UIIN-2524.
 * Add facet for members with holdings on Instances in Inventory Instances/Holdings/Items search. Refs UIIN-2395.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
