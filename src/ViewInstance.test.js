@@ -16,6 +16,7 @@ import {
 import {
   useStripes,
   checkIfUserInMemberTenant,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 import { ConfirmationModal } from '@folio/stripes/components';
 
@@ -253,6 +254,7 @@ describe('ViewInstance', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     StripesConnectedInstance.prototype.instance.mockImplementation(() => instance);
+    checkIfUserInCentralTenant.mockReturnValue(false);
   });
   it('should display action menu items', () => {
     renderViewInstance();
@@ -403,6 +405,7 @@ describe('ViewInstance', () => {
             okapi: { tenant: 'consortium' },
             user: { user: { consortium: { centralTenantId: 'consortium' } } },
           };
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
 
           renderViewInstance({ stripes });
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -431,6 +434,7 @@ describe('ViewInstance', () => {
             okapi: { tenant: 'consortium' },
             user: { user: { consortium: { centralTenantId: 'consortium' } } },
           };
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
 
           renderViewInstance({ stripes });
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -502,6 +506,7 @@ describe('ViewInstance', () => {
             user: { user: { consortium: { centralTenantId: 'consortium' } } },
           };
           checkIfUserInMemberTenant.mockClear().mockReturnValue(false);
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
 
           renderViewInstance({ stripes });
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -615,6 +620,7 @@ describe('ViewInstance', () => {
             okapi: { tenant: 'consortium' },
             user: { user: { consortium: { centralTenantId: 'consortium' } } },
           };
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
 
           renderViewInstance({ stripes });
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -849,6 +855,7 @@ describe('ViewInstance', () => {
             okapi: { tenant: 'consortium' },
             user: { user: { consortium: { centralTenantId: 'consortium' } } },
           };
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
 
           renderViewInstance({ stripes });
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
