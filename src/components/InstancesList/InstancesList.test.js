@@ -229,8 +229,8 @@ describe('InstancesList', () => {
           const { unmount } = renderInstancesList({ segment: 'instances' });
           unmount();
           expect(mockRecordsReset).toHaveBeenCalled();
-        })
-      })
+        });
+      });
     });
 
     describe('when clicking on the `Browse` tab', () => {
