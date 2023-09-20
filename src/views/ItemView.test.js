@@ -6,7 +6,11 @@ import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/reac
 
 import '../../test/jest/__mock__';
 
-import { StripesContext, ModuleHierarchyProvider } from '@folio/stripes/core';
+import {
+  StripesContext,
+  ModuleHierarchyProvider,
+  checkIfUserInCentralTenant,
+} from '@folio/stripes/core';
 import { renderWithIntl, translationsProperties } from '../../test/jest/helpers';
 
 import ItemView from './ItemView';
@@ -189,6 +193,15 @@ describe('ItemView', () => {
     it('should display the information icons', () => {
       expect(screen.getAllByTestId('info-icon-effective-call-number')[0]).toBeDefined();
       expect(screen.getAllByTestId('info-icon-shelving-order')[0]).toBeDefined();
+    });
+  });
+
+  describe('action menu', () => {
+    it('should be suppressed for consortial central tenant', () => {
+      checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
+      renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+      expect(screen.queryByRole('button', { name: 'Actions' })).not.toBeInTheDocument();
     });
   });
 });
