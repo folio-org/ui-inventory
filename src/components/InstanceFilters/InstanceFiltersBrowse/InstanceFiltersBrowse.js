@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { useIntl } from 'react-intl';
 import _ from 'lodash';
 
 import {
@@ -42,6 +42,7 @@ const InstanceFiltersBrowse = props => {
   } = props;
 
   const stripes = useStripes();
+  const intl = useIntl();
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
@@ -104,7 +105,7 @@ const InstanceFiltersBrowse = props => {
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
       {Object.values(browseCallNumberOptions).includes(browseType) && (
         <Accordion
-          label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
+          label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
           id={FACETS.EFFECTIVE_LOCATION}
           name={FACETS.EFFECTIVE_LOCATION}
           separator={false}
@@ -128,7 +129,7 @@ const InstanceFiltersBrowse = props => {
         <>
           {isUserInMemberTenant && (
             <Accordion
-              label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
+              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
               id={FACETS.CONTRIBUTORS_SHARED}
               name={FACETS.CONTRIBUTORS_SHARED}
               separator={false}
@@ -147,7 +148,7 @@ const InstanceFiltersBrowse = props => {
           )}
           <MultiSelectionFacet
             id={FACETS.NAME_TYPE}
-            label={<FormattedMessage id={`ui-inventory.filters.${FACETS.NAME_TYPE}`} />}
+            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
             name={FACETS.NAME_TYPE}
             closedByDefault
             options={facetsOptions[FACETS_OPTIONS.NAME_TYPE_OPTIONS]}
@@ -161,7 +162,7 @@ const InstanceFiltersBrowse = props => {
       )}
       {browseType === browseModeOptions.SUBJECTS && isUserInMemberTenant && (
         <Accordion
-          label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
+          label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
           id={FACETS.SUBJECTS_SHARED}
           name={FACETS.SUBJECTS_SHARED}
           separator={false}
