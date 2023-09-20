@@ -88,6 +88,7 @@
 * Consortial Central Tenant: Suppress Holdings detail view Action menu. Refs UIIN-2524.
 * Consortial Central Tenant: Suppress Item detail view Action menu. Refs UIIN-2525.
 * Consortial Central Tenant: Hide Instance Action Menu New Request option. Refs UIIN-2572.
+* Add Inventory Browse facet for Contributors & Subjects on Shared vs Local Instances. Regs UIIN-2400.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
