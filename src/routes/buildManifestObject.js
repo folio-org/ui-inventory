@@ -129,6 +129,7 @@ const buildRecordsManifest = (options = {}) => {
     throwErrors: false,
     path: 'inventory/instances',
     resultDensity: 'sparse',
+    accumulate: 'true',
     GET: {
       path,
       params: {

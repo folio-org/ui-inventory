@@ -221,6 +221,18 @@ describe('InstancesList', () => {
       });
     });
 
+    describe('when a user performs a search and clicks the `Next` button in the list of records', () => {
+      describe('then clicks on the `Browse` lookup tab and then clicks `Search` lookup tab', () => {
+        it('should avoid infinity loading by resetting the records on unmounting', () => {
+          mockRecordsReset.mockClear();
+
+          const { unmount } = renderInstancesList({ segment: 'instances' });
+          unmount();
+          expect(mockRecordsReset).toHaveBeenCalled();
+        })
+      })
+    });
+
     describe('when clicking on the `Browse` tab', () => {
       it('should pass the correct search by clicking on the `Browse` tab', () => {
         const search = '?qindex=subject&query=book';
