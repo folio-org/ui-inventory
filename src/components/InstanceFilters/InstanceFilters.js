@@ -49,6 +49,7 @@ const InstanceFilters = props => {
       modesOfIssuance,
       statisticalCodes,
       natureOfContentTerms,
+      consortiaTenants,
     },
     onChange,
     onClear,
@@ -59,6 +60,7 @@ const InstanceFilters = props => {
 
   const segmentAccordions = {
     [FACETS.SHARED]: false,
+    [FACETS.HELD_BY]: false,
     [FACETS.EFFECTIVE_LOCATION]: false,
     [FACETS.LANGUAGE]: false,
     [FACETS.RESOURCE]: false,
@@ -77,6 +79,7 @@ const InstanceFilters = props => {
 
   const segmentOptions = {
     [FACETS_OPTIONS.SHARED_OPTIONS]: [],
+    [FACETS_OPTIONS.HELD_BY_OPTIONS]: [],
     [FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]: [],
     [FACETS_OPTIONS.LANG_OPTIONS]: [],
     [FACETS_OPTIONS.RESOURCE_TYPE_OPTIONS]: [],
@@ -93,6 +96,7 @@ const InstanceFilters = props => {
 
   const selectedFacetFilters = {
     [FACETS.SHARED]: activeFilters[FACETS.SHARED],
+    [FACETS.HELD_BY]: activeFilters[FACETS.HELD_BY],
     [FACETS.EFFECTIVE_LOCATION]: activeFilters[FACETS.EFFECTIVE_LOCATION],
     [FACETS.LANGUAGE]: activeFilters[FACETS.LANGUAGE],
     [FACETS.RESOURCE]: activeFilters[FACETS.RESOURCE],
@@ -118,6 +122,9 @@ const InstanceFilters = props => {
         switch (recordName) {
           case FACETS_CQL.SHARED:
             accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
+            break;
+          case FACETS_CQL.HELD_BY:
+            processFacetOptions(activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
             break;
           case FACETS_CQL.EFFECTIVE_LOCATION:
             processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
@@ -177,11 +184,11 @@ const InstanceFilters = props => {
     props.data
   );
 
-  const showSharedFacet = checkIfUserInMemberTenant(stripes);
+  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
-      {showSharedFacet && (
+      {isUserInMemberTenant && (
         <Accordion
           label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
           id={FACETS.SHARED}
@@ -192,11 +199,31 @@ const InstanceFilters = props => {
           onClearFilter={() => onClear(FACETS.SHARED)}
         >
           <CheckboxFacet
-            data-test-filter-instance-shared
+            data-test-filter-item-shared
             name={FACETS.SHARED}
             dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS]}
             selectedValues={activeFilters[FACETS.SHARED]}
             isPending={getIsPending(FACETS.SHARED)}
+            onChange={onChange}
+          />
+        </Accordion>
+      )}
+      {isUserInMemberTenant && (
+        <Accordion
+          label={<FormattedMessage id={`ui-inventory.filters.${FACETS.HELD_BY}`} />}
+          id={FACETS.HELD_BY}
+          name={FACETS.HELD_BY}
+          separator={false}
+          header={FilterAccordionHeader}
+          displayClearButton={activeFilters[FACETS.HELD_BY]?.length > 0}
+          onClearFilter={() => onClear(FACETS.HELD_BY)}
+        >
+          <CheckboxFacet
+            data-test-filter-item-held-by
+            name={FACETS.HELD_BY}
+            dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
+            selectedValues={activeFilters[FACETS.HELD_BY]}
+            isPending={getIsPending(FACETS.HELD_BY)}
             onChange={onChange}
           />
         </Accordion>
