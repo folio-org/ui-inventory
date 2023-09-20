@@ -1,6 +1,7 @@
 export const resources = {
   locations: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -11,6 +12,7 @@ export const resources = {
   },
   identifierTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -21,6 +23,7 @@ export const resources = {
   },
   instanceRelationshipTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -31,6 +34,7 @@ export const resources = {
   },
   statisticalCodeTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -41,6 +45,7 @@ export const resources = {
   },
   contributorTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -51,6 +56,7 @@ export const resources = {
   },
   contributorNameTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -61,6 +67,7 @@ export const resources = {
   },
   instanceFormats: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -71,6 +78,7 @@ export const resources = {
   },
   instanceTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -81,6 +89,7 @@ export const resources = {
   },
   statisticalCodes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -91,6 +100,7 @@ export const resources = {
   },
   classificationTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -101,6 +111,7 @@ export const resources = {
   },
   alternativeTitleTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -111,6 +122,7 @@ export const resources = {
   },
   instanceStatuses: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -121,6 +133,7 @@ export const resources = {
   },
   modesOfIssuance: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -131,6 +144,7 @@ export const resources = {
   },
   instanceNoteTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -141,6 +155,7 @@ export const resources = {
   },
   electronicAccessRelationships: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -151,6 +166,7 @@ export const resources = {
   },
   illPolicies: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -161,6 +177,7 @@ export const resources = {
   },
   holdingsTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -171,6 +188,7 @@ export const resources = {
   },
   callNumberTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -181,6 +199,7 @@ export const resources = {
   },
   holdingsNoteTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -191,6 +210,7 @@ export const resources = {
   },
   itemNoteTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -201,6 +221,7 @@ export const resources = {
   },
   itemDamagedStatuses: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -211,6 +232,7 @@ export const resources = {
   },
   natureOfContentTerms: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -221,6 +243,7 @@ export const resources = {
   },
   materialTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -231,6 +254,7 @@ export const resources = {
   },
   loanTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -241,6 +265,7 @@ export const resources = {
   },
   tags: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -251,6 +276,7 @@ export const resources = {
   },
   holdingsSources: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -259,11 +285,23 @@ export const resources = {
       }
     ],
   },
+  consortiaTenants: {
+    hasLoaded: false,
+    isPending: false,
+    failed: false,
+    records: [
+      {
+        id: 'consortiaTenant-1',
+        name: 'consortiaTenant-1',
+      },
+    ],
+  },
 };
 
 export const resources2 = {
   locations: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -274,6 +312,7 @@ export const resources2 = {
   },
   identifierTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -284,6 +323,7 @@ export const resources2 = {
   },
   instanceRelationshipTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -294,6 +334,7 @@ export const resources2 = {
   },
   statisticalCodeTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -304,6 +345,7 @@ export const resources2 = {
   },
   contributorTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -314,6 +356,7 @@ export const resources2 = {
   },
   contributorNameTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -324,6 +367,7 @@ export const resources2 = {
   },
   instanceFormats: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -334,6 +378,7 @@ export const resources2 = {
   },
   instanceTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -344,6 +389,7 @@ export const resources2 = {
   },
   statisticalCodes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -354,6 +400,7 @@ export const resources2 = {
   },
   classificationTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -364,6 +411,7 @@ export const resources2 = {
   },
   alternativeTitleTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -374,6 +422,7 @@ export const resources2 = {
   },
   instanceStatuses: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -384,6 +433,7 @@ export const resources2 = {
   },
   modesOfIssuance: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -394,6 +444,7 @@ export const resources2 = {
   },
   instanceNoteTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -404,6 +455,7 @@ export const resources2 = {
   },
   electronicAccessRelationships: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -414,6 +466,7 @@ export const resources2 = {
   },
   illPolicies: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -424,6 +477,7 @@ export const resources2 = {
   },
   holdingsTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -434,6 +488,7 @@ export const resources2 = {
   },
   callNumberTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -444,6 +499,7 @@ export const resources2 = {
   },
   holdingsNoteTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -454,6 +510,7 @@ export const resources2 = {
   },
   itemNoteTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -464,6 +521,7 @@ export const resources2 = {
   },
   itemDamagedStatuses: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -474,6 +532,7 @@ export const resources2 = {
   },
   natureOfContentTerms: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -484,6 +543,7 @@ export const resources2 = {
   },
   materialTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -494,6 +554,7 @@ export const resources2 = {
   },
   loanTypes: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -504,6 +565,7 @@ export const resources2 = {
   },
   tags: {
     hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
@@ -513,13 +575,25 @@ export const resources2 = {
     ],
   },
   holdingsSources: {
-    hasLoaded: false,
+    hasLoaded: true,
+    isPending: false,
     failed: false,
     records: [
       {
         id: 'holdingsSources-1',
         name: 'holdingsSources 1',
       }
+    ],
+  },
+  consortiaTenants: {
+    hasLoaded: false,
+    isPending: true,
+    failed: false,
+    records: [
+      {
+        id: 'consortiaTenant-1',
+        name: 'consortiaTenant-1',
+      },
     ],
   },
 };

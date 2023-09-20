@@ -17,6 +17,7 @@ const itemFilterRenderer = data => onChange => {
     tags,
     onFetchFacets,
     parentResources,
+    consortiaTenants,
   } = data;
   const activeFilters = getCurrentFilters(get(query, 'filters', ''));
 
@@ -32,6 +33,7 @@ const itemFilterRenderer = data => onChange => {
         query,
         onFetchFacets,
         parentResources,
+        consortiaTenants,
       }}
       onChange={onChange}
       onClear={(name) => {
