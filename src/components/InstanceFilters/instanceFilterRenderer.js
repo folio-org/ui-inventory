@@ -20,6 +20,7 @@ const instanceFilterRenderer = data => onChange => {
     onFetchFacets,
     parentResources,
     statisticalCodes,
+    consortiaTenants,
   } = data;
 
   const activeFilters = getCurrentFilters(get(query, 'filters', ''));
@@ -36,6 +37,7 @@ const instanceFilterRenderer = data => onChange => {
     onFetchFacets,
     parentResources,
     instanceStatuses,
+    consortiaTenants,
   };
 
   return (

@@ -408,6 +408,7 @@ export const FACETS_ENDPOINTS = {
 
 export const FACETS_OPTIONS = {
   SHARED_OPTIONS: 'sharedOptions',
+  HELD_BY_OPTIONS: 'heldByOptions',
   EFFECTIVE_LOCATION_OPTIONS: 'effectiveLocationOptions',
   LANG_OPTIONS: 'langOptions',
   RESOURCE_TYPE_OPTIONS: 'resourceTypeOptions',
