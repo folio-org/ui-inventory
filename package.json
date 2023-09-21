@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "9.4.11",
+  "version": "9.4.12",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -929,6 +929,7 @@
   "resolutions": {
     "moment": "~2.29.4",
     "aria-query": "^4",
-    "react-virtualized-auto-sizer": "1.0.7"
+    "react-virtualized-auto-sizer": "1.0.7",
+    "@rehooks/local-storage": "2.4.4"
   }
 }
