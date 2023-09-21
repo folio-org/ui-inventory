@@ -214,7 +214,10 @@ class InstancesList extends React.Component {
   }
 
   componentWillUnmount() {
+    const { parentMutator } = this.props;
+
     this.unlisten();
+    parentMutator.records.reset();
   }
 
   extraParamsToReset = {
