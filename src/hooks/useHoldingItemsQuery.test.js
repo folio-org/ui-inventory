@@ -4,6 +4,7 @@ import {
   QueryClientProvider,
 } from 'react-query';
 import { renderHook } from '@testing-library/react-hooks';
+import { act } from '@testing-library/react';
 
 import '../../test/jest/__mock__';
 
