@@ -14,15 +14,7 @@ import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 
 import InstanceFiltersBrowse from './InstanceFiltersBrowse';
-
-jest.mock('../../MultiSelectionFacet', () => ({
-  MultiSelectionFacet: ({ name, onClearFilter }) => (
-    <div>
-      {name}
-      <button type="button" onClick={() => onClearFilter(name)}>Clear {name}</button>
-    </div>
-  ),
-}));
+import { browseModeOptions } from '../../../constants';
 
 const mockOnChange = jest.fn();
 const mockOnClear = jest.fn();
@@ -50,7 +42,15 @@ const data = {
   query: [],
   onFetchFacets: noop,
   parentResources: resources,
-  browseType: 'callNumbers',
+  browseType: browseModeOptions.CALL_NUMBERS,
+};
+
+const activeFilters = {
+  language: ['eng'],
+  effectiveLocation: ['effectiveLocation1'],
+  contributorsShared: ['true'],
+  subjectsShared: ['true'],
+  nameType: ['nameType1'],
 };
 
 const renderInstanceFilters = (props = {}) => {
@@ -58,7 +58,7 @@ const renderInstanceFilters = (props = {}) => {
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
         <InstanceFiltersBrowse
-          activeFilters={{ 'language': ['eng'] }}
+          activeFilters={activeFilters}
           data={data}
           onChange={mockOnChange}
           onClear={mockOnClear}
@@ -83,7 +83,7 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: 'callNumbers',
+          browseType: browseModeOptions.CALL_NUMBERS,
         },
       });
 
@@ -96,7 +96,7 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: 'dewey',
+          browseType: browseModeOptions.DEWEY,
         },
       });
 
@@ -104,27 +104,57 @@ describe('InstanceFilters', () => {
     });
   });
 
-  describe('When contributors browseType was selected', () => {
-    it('should display filter by nameType accordion', () => {
-      const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          browseType: 'contributors',
-        },
-      });
+  describe('When callNumber browseType was selected', () => {
+    it('should call onClear handler if clear btn is clicked', () => {
+      renderInstanceFilters();
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Effective location (item)"'));
 
-      fireEvent.click(screen.getByText('Clear nameType'));
-
-      expect(getByText('nameType')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
     });
   });
 
-  describe('When callNumber browseType was selected', () => {
-    it('should call onClear handler if clear btn is clicked', () => {
-      renderInstanceFilters();
-      fireEvent.click(screen.getByText('effectiveLocation-field'));
+  describe('When contributors browseType was selected', () => {
+    it('should display filter by nameType accordion', () => {
+      const { getByRole } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CONTRIBUTORS,
+        },
+      });
 
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Name type"'));
+
+      expect(getByRole('heading', { name: 'Name type' })).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display shared filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CONTRIBUTORS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+
+      expect(getByText('Shared')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+  });
+
+  describe('When subjects browseType was selected', () => {
+    it('should display shared filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.SUBJECTS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+
+      expect(getByText('Shared')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
     });
   });
