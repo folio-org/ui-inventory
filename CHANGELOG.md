@@ -89,6 +89,7 @@
 * Consortial Central Tenant: Suppress Item detail view Action menu. Refs UIIN-2525.
 * Consortial Central Tenant: Hide Instance Action Menu New Request option. Refs UIIN-2572.
 * Add facet for members with holdings on Instances in Inventory Instances/Holdings/Items search. Refs UIIN-2395.
+* Disable View source button for Source = FOLIO instances. Fixes UIIN-2570.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
