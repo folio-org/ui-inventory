@@ -6,19 +6,20 @@ import {
 import { useQuery } from 'react-query';
 import { omit } from 'lodash';
 
-import { useOkapiKy, useNamespace } from '@folio/stripes/core';
+import { useNamespace } from '@folio/stripes/core';
 
 import {
   DEFAULT_ITEM_TABLE_SORTBY_FIELD,
   LIMIT_MAX,
 } from '../constants';
+import { useTenantKy } from '../common';
 
 const useHoldingItemsQuery = (
   holdingsRecordId,
-  options = { searchParams: {}, key: 'items' },
+  options = { searchParams: {}, key: 'items', tenantId: null },
 ) => {
   const [sortBy, setSortBy] = useState(`${DEFAULT_ITEM_TABLE_SORTBY_FIELD}/sort.ascending`);
-  const ky = useOkapiKy().extend({ timeout: false });
+  const ky = useTenantKy({ tenantId: options.tenantId }).extend({ timeout: false });
   const [namespace] = useNamespace();
 
   // sortMap contains not all item table's columns because sorting by some columns
@@ -34,7 +35,7 @@ const useHoldingItemsQuery = (
   };
 
   useEffect(() => {
-    if (options.searchParams.sortBy) {
+    if (options.searchParams?.sortBy) {
       const sortQuery = options.searchParams.sortBy;
       const sortDirection = sortQuery.startsWith('-') ? 'descending' : 'ascending';
       const sortOrder = sortQuery.replace(/^-/, '');
@@ -42,7 +43,7 @@ const useHoldingItemsQuery = (
 
       setSortBy(newSortBy);
     }
-  }, [options.searchParams.sortBy]);
+  }, [options.searchParams?.sortBy]);
 
   const defaultSearchParams = {
     offset: 0,
