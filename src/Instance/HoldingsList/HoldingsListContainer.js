@@ -9,8 +9,13 @@ import HoldingsList from './HoldingsList';
 import { HoldingsListMovement } from '../InstanceMovement/HoldingMovementList';
 import { useInstanceHoldingsQuery } from '../../providers';
 
-const HoldingsListContainer = ({ instance, isHoldingsMove, ...rest }) => {
-  const { holdingsRecords: holdings, isLoading } = useInstanceHoldingsQuery(instance.id);
+const HoldingsListContainer = ({
+  instance,
+  isHoldingsMove,
+  tenantId,
+  ...rest
+}) => {
+  const { holdingsRecords: holdings, isLoading } = useInstanceHoldingsQuery(instance.id, { tenantId });
 
   if (isLoading) return <Loading size="large" />;
 
@@ -26,6 +31,7 @@ const HoldingsListContainer = ({ instance, isHoldingsMove, ...rest }) => {
         {...rest}
         holdings={holdings}
         instance={instance}
+        tenantId={tenantId}
       />
     )
   );

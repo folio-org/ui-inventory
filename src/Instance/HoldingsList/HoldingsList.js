@@ -6,9 +6,11 @@ import { HoldingContainer } from './Holding';
 const HoldingsList = ({
   instance,
   holdings,
-
   draggable,
   droppable,
+  tenantId,
+  isViewHoldingsDisabled,
+  isAddItemDisabled,
 }) => holdings.map(holding => (
   <HoldingContainer
     key={`items_${holding.id}`}
@@ -17,6 +19,9 @@ const HoldingsList = ({
     draggable={draggable}
     droppable={droppable}
     holdings={holdings}
+    tenantId={tenantId}
+    isViewHoldingsDisabled={isViewHoldingsDisabled}
+    isAddItemDisabled={isAddItemDisabled}
   />
 ));
 

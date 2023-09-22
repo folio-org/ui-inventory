@@ -24,6 +24,9 @@ const HoldingAccordion = ({
   onViewHolding,
   onAddItem,
   withMoveDropdown,
+  isViewHoldingsDisabled,
+  isAddItemDisabled,
+  tenantId,
 }) => {
   const searchParams = {
     limit: 0,
@@ -33,7 +36,7 @@ const HoldingAccordion = ({
   const { locationsById } = useContext(DataContext);
   const [open, setOpen] = useState(false);
   const [openFirstTime, setOpenFirstTime] = useState(false);
-  const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'itemCount' });
+  const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, tenantId, { searchParams, key: 'itemCount' });
 
   if (!locationsById) return null;
 
@@ -57,6 +60,8 @@ const HoldingAccordion = ({
     onAddItem={onAddItem}
     withMoveDropdown={withMoveDropdown}
     isOpen={open}
+    isViewHoldingsDisabled={isViewHoldingsDisabled}
+    isAddItemDisabled={isAddItemDisabled}
   />;
 
   const location = labelLocation?.isActive ?

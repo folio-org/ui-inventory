@@ -19,6 +19,9 @@ const Holding = ({
   isHoldingDragSelected,
   isDraggable,
   isItemsDroppable,
+  tenantId,
+  isViewHoldingsDisabled,
+  isAddItemDisabled,
 }) => {
   return (
     <div>
@@ -47,11 +50,15 @@ const Holding = ({
           holdings={holdings}
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
+          isViewHoldingsDisabled={isViewHoldingsDisabled}
+          isAddItemDisabled={isAddItemDisabled}
+          tenantId={tenantId}
         >
           <ItemsListContainer
             holding={holding}
             draggable={draggable}
             droppable={droppable}
+            tenantId={tenantId}
           />
         </HoldingAccordion>
       </DropZone>

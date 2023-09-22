@@ -36,6 +36,7 @@ import HelperApp from '../../components/HelperApp';
 
 import { getAccordionState } from './utils';
 import { DataContext } from '../../contexts';
+import { ConsortialHoldings } from './ConsortialHoldings';
 
 const accordions = {
   administrative: 'acc01',
@@ -131,6 +132,8 @@ const InstanceDetails = forwardRef(({
             {children}
 
             <InstanceNewHolding instance={instance} />
+
+            <ConsortialHoldings instance={instance} />
 
             <InstanceAdministrativeView
               id={accordions.administrative}

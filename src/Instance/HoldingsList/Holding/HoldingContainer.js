@@ -35,6 +35,7 @@ const DraggableHolding = ({
   holding,
   onViewHolding,
   onAddItem,
+  tenantId,
   ...rest
 }) => {
   const rowStyles = useMemo(() => (
@@ -66,6 +67,7 @@ const DraggableHolding = ({
               holding={holding}
               onViewHolding={onViewHolding}
               onAddItem={onAddItem}
+              tenantId={tenantId}
             />
           )
       }
@@ -95,6 +97,9 @@ const HoldingContainer = ({
   isDraggable,
   holdingIndex,
   draggingHoldingsCount,
+  tenantId,
+  isViewHoldingsDisabled,
+  isAddItemDisabled,
   ...rest
 }) => {
   const onViewHolding = useCallback(() => {
@@ -125,6 +130,7 @@ const HoldingContainer = ({
           holding={holding}
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
+          tenantId={tenantId}
           {...rest}
         />
       )}
@@ -135,6 +141,9 @@ const HoldingContainer = ({
       holding={holding}
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
+      tenantId={tenantId}
+      isViewHoldingsDisabled={isViewHoldingsDisabled}
+      isAddItemDisabled={isAddItemDisabled}
     />
   );
 };

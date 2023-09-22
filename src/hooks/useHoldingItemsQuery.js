@@ -12,13 +12,15 @@ import {
   DEFAULT_ITEM_TABLE_SORTBY_FIELD,
   LIMIT_MAX,
 } from '../constants';
+import { useTenantKy } from '../common';
 
 const useHoldingItemsQuery = (
   holdingsRecordId,
+  tenantId,
   options = { searchParams: {}, key: 'items' },
 ) => {
   const [sortBy, setSortBy] = useState(`${DEFAULT_ITEM_TABLE_SORTBY_FIELD}/sort.ascending`);
-  const ky = useOkapiKy().extend({ timeout: false });
+  const ky = useTenantKy({ tenantId }).extend({ timeout: false });
   const [namespace] = useNamespace();
 
   // sortMap contains not all item table's columns because sorting by some columns

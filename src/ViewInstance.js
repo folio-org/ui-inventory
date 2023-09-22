@@ -892,6 +892,7 @@ class ViewInstance extends React.Component {
                       <HoldingsListContainer
                         instance={instance}
                         draggable={this.state.isItemsMovement}
+                        tenantId={stripes.okapi.tenant}
                         droppable
                       />
                     </MoveItemsContext>

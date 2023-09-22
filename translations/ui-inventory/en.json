@@ -443,6 +443,7 @@
   "updateHoldingsRecord": "Update holdings record",
   "duplicateHoldings": "Duplicate",
   "editHoldings": "Edit",
+  "consortialHoldings": "Consortial holdings",
   "instanceData": "Administrative data",
   "instanceId": "Instance UUID",
   "authorityId": "Authority UUID",

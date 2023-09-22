@@ -15,6 +15,7 @@ import useHoldingItemsQuery from '../../hooks/useHoldingItemsQuery';
 import { DEFAULT_ITEM_TABLE_SORTBY_FIELD } from '../../constants';
 
 const ItemsListContainer = ({
+  tenantId,
   holding,
   draggable,
   droppable,
@@ -36,8 +37,8 @@ const ItemsListContainer = ({
     offset,
   };
 
-  const { isFetching, items } = useHoldingItemsQuery(holding.id, { searchParams });
-  const { totalRecords } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount' });
+  const { isFetching, items } = useHoldingItemsQuery(holding.id, tenantId, { searchParams });
+  const { totalRecords } = useHoldingItemsQuery(holding.id, tenantId, { searchParams: { limit: 0 }, key: 'itemCount' });
 
   useEffect(() => {
     if (!isEmpty(items)) {
