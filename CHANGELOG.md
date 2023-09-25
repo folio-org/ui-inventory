@@ -90,6 +90,7 @@
 * Consortial Central Tenant: Hide Instance Action Menu New Request option. Refs UIIN-2572.
 * Add facet for members with holdings on Instances in Inventory Instances/Holdings/Items search. Refs UIIN-2395.
 * Add Inventory Browse facet for Contributors & Subjects on Shared vs Local Instances. Regs UIIN-2400.
+* Add Browse facet for members with holdings on Instances in Contributors & Subject Browse. Refs UIIN-2415.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
