@@ -22,6 +22,7 @@ const HoldingsListMovement = ({
   holdings,
   draggable,
   droppable,
+  tenantId,
 }) => {
   const {
     selectItemsForDrag,
@@ -56,6 +57,7 @@ const HoldingsListMovement = ({
               getDraggingItems={getDraggingItems}
               holdingIndex={index}
               draggingHoldingsCount={draggingHoldingsCount}
+              tenantId={tenantId}
             />
           ))
         ) : (

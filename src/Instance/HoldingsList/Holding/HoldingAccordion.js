@@ -1,9 +1,7 @@
-import React, {
-  useState,
-  useContext,
-} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { keyBy } from 'lodash';
 
 import {
   Accordion,
@@ -12,10 +10,10 @@ import {
   Icon,
 } from '@folio/stripes/components';
 
-import { DataContext } from '../../../contexts';
 import { callNumberLabel } from '../../../utils';
 import HoldingButtonsGroup from './HoldingButtonsGroup';
 import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
+import { useLocationsQuery } from '../../../hooks';
 
 const HoldingAccordion = ({
   children,
@@ -24,8 +22,6 @@ const HoldingAccordion = ({
   onViewHolding,
   onAddItem,
   withMoveDropdown,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
   tenantId,
 }) => {
   const searchParams = {
@@ -33,13 +29,14 @@ const HoldingAccordion = ({
     offset: 0,
   };
 
-  const { locationsById } = useContext(DataContext);
   const [open, setOpen] = useState(false);
   const [openFirstTime, setOpenFirstTime] = useState(false);
   const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, tenantId, { searchParams, key: 'itemCount' });
+  const { data: locations } = useLocationsQuery({ tenantId });
 
-  if (!locationsById) return null;
+  if (!locations) return null;
 
+  const locationsById = keyBy(locations, 'id');
   const labelLocation = locationsById[holding.permanentLocationId];
   const labelLocationName = labelLocation?.name ?? '';
 
@@ -60,8 +57,6 @@ const HoldingAccordion = ({
     onAddItem={onAddItem}
     withMoveDropdown={withMoveDropdown}
     isOpen={open}
-    isViewHoldingsDisabled={isViewHoldingsDisabled}
-    isAddItemDisabled={isAddItemDisabled}
   />;
 
   const location = labelLocation?.isActive ?

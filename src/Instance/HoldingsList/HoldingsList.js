@@ -6,11 +6,10 @@ import { HoldingContainer } from './Holding';
 const HoldingsList = ({
   instance,
   holdings,
+  tenantId,
+
   draggable,
   droppable,
-  tenantId,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
 }) => holdings.map(holding => (
   <HoldingContainer
     key={`items_${holding.id}`}
@@ -20,14 +19,13 @@ const HoldingsList = ({
     droppable={droppable}
     holdings={holdings}
     tenantId={tenantId}
-    isViewHoldingsDisabled={isViewHoldingsDisabled}
-    isAddItemDisabled={isAddItemDisabled}
   />
 ));
 
 HoldingsList.propTypes = {
   instance: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
+  tenantId: PropTypes.string,
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,

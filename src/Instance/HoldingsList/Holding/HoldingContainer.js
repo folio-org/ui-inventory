@@ -98,8 +98,6 @@ const HoldingContainer = ({
   holdingIndex,
   draggingHoldingsCount,
   tenantId,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
   ...rest
 }) => {
   const onViewHolding = useCallback(() => {
@@ -142,8 +140,6 @@ const HoldingContainer = ({
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
       tenantId={tenantId}
-      isViewHoldingsDisabled={isViewHoldingsDisabled}
-      isAddItemDisabled={isAddItemDisabled}
     />
   );
 };
@@ -159,6 +155,7 @@ HoldingContainer.propTypes = {
   holdingIndex: PropTypes.number,
   isDraggable: PropTypes.bool,
   draggingHoldingsCount: PropTypes.number,
+  tenantId: PropTypes.string,
 };
 
 export default withRouter(HoldingContainer);

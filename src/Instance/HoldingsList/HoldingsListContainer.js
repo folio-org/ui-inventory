@@ -25,6 +25,7 @@ const HoldingsListContainer = ({
         {...rest}
         holdings={holdings}
         instance={instance}
+        tenantId={tenantId}
       />
     ) : (
       <HoldingsList
@@ -40,6 +41,7 @@ const HoldingsListContainer = ({
 HoldingsListContainer.propTypes = {
   instance: PropTypes.object.isRequired,
   isHoldingsMove: PropTypes.bool,
+  tenantId: PropTypes.string,
 };
 
 export default HoldingsListContainer;

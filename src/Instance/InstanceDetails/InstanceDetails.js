@@ -133,7 +133,9 @@ const InstanceDetails = forwardRef(({
 
             <InstanceNewHolding instance={instance} />
 
-            <ConsortialHoldings instance={instance} />
+            {instance?.shared && (
+              <ConsortialHoldings instance={instance} />
+            )}
 
             <InstanceAdministrativeView
               id={accordions.administrative}

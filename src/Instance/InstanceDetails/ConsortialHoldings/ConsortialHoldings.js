@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -10,13 +11,19 @@ import {
   AccordionSet,
 } from '@folio/stripes/components';
 
-import { useUserAffiliations } from '@folio/consortia-settings/src/hooks';
 import { MemberTenantHoldings } from '../MemberTenantHoldings';
+import { useUserAffiliations } from '../../../hooks';
 
 const ConsortialHoldings = ({ instance }) => {
   const stripes = useStripes();
   const { affiliations } = useUserAffiliations({ userId: stripes.user.user.id });
-  const otherMembers = affiliations.filter(affiliation => !affiliation.isPrimary && (affiliation.tenantId !== stripes.okapi.tenant));
+
+  const memberTenants = affiliations.filter(affiliation => {
+    const isNotCentralTenant = !affiliation.isPrimary;
+    const isNotCurrentTenant = (affiliation.tenantId !== stripes.okapi.tenant);
+
+    return isNotCentralTenant && isNotCurrentTenant;
+  });
 
   return (
     <IfInterface name="consortia">
@@ -26,9 +33,9 @@ const ConsortialHoldings = ({ instance }) => {
         closedByDefault
       >
         <AccordionSet>
-          {otherMembers.map(affiliation => (
+          {memberTenants.map(memberTenant => (
             <MemberTenantHoldings
-              affiliation={affiliation}
+              memberTenant={memberTenant}
               instance={instance}
             />
           ))}
@@ -37,5 +44,7 @@ const ConsortialHoldings = ({ instance }) => {
     </IfInterface>
   );
 };
+
+ConsortialHoldings.propTypes = { instance: PropTypes.object.isRequired };
 
 export default ConsortialHoldings;
