@@ -4,6 +4,7 @@ import {
   QueryClientProvider,
 } from 'react-query';
 import { renderHook } from '@testing-library/react-hooks';
+import { act } from '@testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -49,9 +50,37 @@ describe('useHoldingItemsQuery', () => {
         searchParams: {
           offset: 0,
           limit,
-          query: `holdingsRecordId==${id}`
+          query: `holdingsRecordId==${id} sortby barcode/sort.ascending`
         }
       }
     );
+  });
+
+  describe('when sortBy param is provided', () => {
+    it('should fetch items with certain sortby param', async () => {
+      const limit = 5;
+      const id = items[0].holdingsRecordId;
+
+      const { result } = renderHook(() => useHoldingItemsQuery(id, {
+        searchParams: {
+          limit,
+          sortBy: '-status',
+        }
+      }), { wrapper });
+
+      await act(() => !result.current.isFetching);
+
+      expect(result.current.items).toEqual(items.slice(0, limit));
+      expect(mockGet).toHaveBeenCalledWith(
+        'inventory/items-by-holdings-id',
+        {
+          searchParams: {
+            offset: 0,
+            limit,
+            query: `holdingsRecordId==${id} sortby status.name/sort.descending`
+          }
+        }
+      );
+    });
   });
 });
