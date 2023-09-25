@@ -603,7 +603,7 @@ class ViewInstance extends React.Component {
                   onToggle();
                   this.handleViewSource(e, instance);
                 }}
-                isDisabled={!marcRecord}
+                disabled={!marcRecord}
               />
             )}
             {canMoveItems && (
