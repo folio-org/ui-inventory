@@ -49,7 +49,9 @@ const activeFilters = {
   language: ['eng'],
   effectiveLocation: ['effectiveLocation1'],
   contributorsShared: ['true'],
+  contributorsTenantId: ['consortium'],
   subjectsShared: ['true'],
+  subjectsTenantId: ['consortium'],
   nameType: ['nameType1'],
 };
 
@@ -141,6 +143,20 @@ describe('InstanceFilters', () => {
       expect(getByText('Shared')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
     });
+
+    it('should display Held by filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CONTRIBUTORS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+
+      expect(getByText('Held by')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
   });
 
   describe('When subjects browseType was selected', () => {
@@ -155,6 +171,20 @@ describe('InstanceFilters', () => {
       fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
 
       expect(getByText('Shared')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display Held by filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.SUBJECTS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+
+      expect(getByText('Held by')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
     });
   });
