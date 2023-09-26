@@ -18,7 +18,7 @@ const renderActionItem = (props) => {
       icon="actionItemIcon"
       label="action item label"
       onClickHandler={mockOnClickHandler}
-      isDisabled={false}
+      disabled={false}
       {...props}
     />
   );
@@ -41,8 +41,8 @@ describe('ActionItem', () => {
     expect(mockOnClickHandler).toBeCalled();
   });
 
-  it('should be disabled when isDisabled prop is true', () => {
-    const { getByRole } = renderActionItem({ isDisabled: true });
+  it('should be disabled when disabled prop is true', () => {
+    const { getByRole } = renderActionItem({ disabled: true });
     const button = getByRole('button', { name: /action item label/i });
 
     expect(button).toBeDisabled();
