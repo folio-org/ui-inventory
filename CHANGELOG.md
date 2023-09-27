@@ -91,6 +91,8 @@
 * Add facet for members with holdings on Instances in Inventory Instances/Holdings/Items search. Refs UIIN-2395.
 * Add Inventory Browse facet for Contributors & Subjects on Shared vs Local Instances. Regs UIIN-2400.
 * Disable View source button for Source = FOLIO instances. Fixes UIIN-2570.
+* Add Inventory Browse facet for Call numbers (item) on Shared vs Not shared Instances. Refs UIIN-2407.
+* Add Browse facet for members with holdings on Instances in Contributors & Subject Browse. Refs UIIN-2415.
 
 ## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.11...v9.4.12)
