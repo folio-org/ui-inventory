@@ -4,8 +4,7 @@ import { isEmpty } from 'lodash';
 
 import { Accordion } from '@folio/stripes/components';
 
-import HoldingsList from '../../HoldingsList/HoldingsList';
-import { MoveItemsContext } from '../../MoveItemsContext';
+import { HoldingsList } from '../../HoldingsList';
 import { InstanceNewHolding } from '../InstanceNewHolding';
 
 import { useInstanceHoldingsQuery } from '../../../providers';
@@ -32,15 +31,13 @@ const MemberTenantHoldings = ({
       closedByDefault
     >
       <div className={css.memberTenantHoldings}>
-        <MoveItemsContext>
-          <HoldingsList
-            holdings={holdingsRecords}
-            instance={instance}
-            tenantId={id}
-            draggable={false}
-            droppable={false}
-          />
-        </MoveItemsContext>
+        <HoldingsList
+          holdings={holdingsRecords}
+          instance={instance}
+          tenantId={id}
+          draggable={false}
+          droppable={false}
+        />
       </div>
       <InstanceNewHolding instance={instance} />
     </Accordion>

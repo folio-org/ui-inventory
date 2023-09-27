@@ -13,7 +13,7 @@ import {
 
 import { MemberTenantHoldings } from '../MemberTenantHoldings';
 import { DataContext } from '../../../contexts';
-import useSearchForShadowInstanceTenants from '../../../hooks/useSearchForShadowInstanceTenants';
+import { useSearchForShadowInstanceTenants } from '../../../hooks';
 
 const ConsortialHoldings = ({ instance }) => {
   const stripes = useStripes();
@@ -23,7 +23,7 @@ const ConsortialHoldings = ({ instance }) => {
 
   const memberTenants = tenants
     .map(tenant => consortiaTenantsById[tenant.id])
-    .filter(tenant => !tenant.isCentral && (tenant.id !== stripes.okapi.tenant))
+    .filter(tenant => !tenant?.isCentral && (tenant?.id !== stripes.okapi.tenant))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (

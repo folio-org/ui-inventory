@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
@@ -10,30 +8,44 @@ import {
 
 import { instance } from '../../../../test/fixtures';
 
+import { DataContext } from '../../../contexts';
 import ConsortialHoldings from './ConsortialHoldings';
 
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useContext: jest.fn().mockReturnValue({ consortiaTenants: [{ id: 'tenant-id', name: 'tenant-name', isCentral: false }] })
-}));
 jest.mock('../MemberTenantHoldings', () => ({
-  // ...jest.requireActual('../MemberTenantHoldings'),
-  MemberTenantHoldings: () => <>MemberTenantHoldings</>,
+  ...jest.requireActual('../MemberTenantHoldings'),
+  MemberTenantHoldings: ({ memberTenant }) => <>{memberTenant.name} accordion</>,
+}));
+jest.mock('../../../hooks', () => ({
+  ...jest.requireActual('../../../hooks'),
+  useSearchForShadowInstanceTenants: () => ({ tenants: [{ id: 'college' }] }),
 }));
 
+const providerValue = {
+  consortiaTenantsById: {
+    'college': { id: 'college', name: 'College', isCentral: false },
+  }
+};
+
 const renderConsortialHoldings = () => {
-  return renderWithIntl(
-    <ConsortialHoldings instance={instance} />,
-    translationsProperties,
+  const component = (
+    <DataContext.Provider value={providerValue}>
+      <ConsortialHoldings instance={instance} />
+    </DataContext.Provider>
   );
+
+  return renderWithIntl(component, translationsProperties);
 };
 
 describe('ConsortialHoldings', () => {
-  it('should render accordion', () => {
+  it('should render Consortial holdings accordion', () => {
     renderConsortialHoldings();
 
-    screen.debug();
-
     expect(screen.getByRole('button', { name: 'Consortial holdings' })).toBeInTheDocument();
+  });
+
+  it('should render sub-accordion with tenants\' holdings info', () => {
+    renderConsortialHoldings();
+
+    expect(screen.getByText('College accordion')).toBeInTheDocument();
   });
 });
