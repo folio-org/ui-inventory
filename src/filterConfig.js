@@ -195,6 +195,11 @@ export const instanceIndexes = [
 
 export const browseFiltersConfig = [
   {
+    name: FACETS.SHARED,
+    cql: FACETS_CQL.SHARED,
+    values: [],
+  },
+  {
     name: FACETS.EFFECTIVE_LOCATION,
     cql: FACETS_CQL.EFFECTIVE_LOCATION,
     values: [],

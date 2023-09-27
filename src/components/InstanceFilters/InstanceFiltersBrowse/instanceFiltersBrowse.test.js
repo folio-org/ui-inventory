@@ -47,6 +47,7 @@ const data = {
 
 const activeFilters = {
   language: ['eng'],
+  shared: ['true'],
   effectiveLocation: ['effectiveLocation1'],
   contributorsShared: ['true'],
   subjectsShared: ['true'],
@@ -89,6 +90,20 @@ describe('InstanceFilters', () => {
 
       expect(getByText('effectiveLocation-field')).toBeInTheDocument();
     });
+
+    it('should display shared filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CALL_NUMBERS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+
+      expect(getByText('Shared')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
   });
 
   describe('when call numbers browse sub-type was selected', () => {
@@ -101,6 +116,20 @@ describe('InstanceFilters', () => {
       });
 
       expect(getByText('effectiveLocation-field')).toBeInTheDocument();
+    });
+
+    it('should display shared filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.DEWEY,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+
+      expect(getByText('Shared')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
     });
   });
 
