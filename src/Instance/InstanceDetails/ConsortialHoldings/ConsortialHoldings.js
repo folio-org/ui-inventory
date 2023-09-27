@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,18 +12,19 @@ import {
 } from '@folio/stripes/components';
 
 import { MemberTenantHoldings } from '../MemberTenantHoldings';
-import { useUserAffiliations } from '../../../hooks';
+import { DataContext } from '../../../contexts';
+import useSearchForShadowInstanceTenants from '../../../hooks/useSearchForShadowInstanceTenants';
 
 const ConsortialHoldings = ({ instance }) => {
   const stripes = useStripes();
-  const { affiliations } = useUserAffiliations({ userId: stripes.user.user.id });
+  const { consortiaTenantsById } = useContext(DataContext);
 
-  const memberTenants = affiliations.filter(affiliation => {
-    const isNotCentralTenant = !affiliation.isPrimary;
-    const isNotCurrentTenant = (affiliation.tenantId !== stripes.okapi.tenant);
+  const { tenants } = useSearchForShadowInstanceTenants({ instanceId: instance?.id });
 
-    return isNotCentralTenant && isNotCurrentTenant;
-  });
+  const memberTenants = tenants
+    .map(tenant => consortiaTenantsById[tenant.id])
+    .filter(tenant => !tenant.isCentral && (tenant.id !== stripes.okapi.tenant))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <IfInterface name="consortia">
@@ -35,6 +36,7 @@ const ConsortialHoldings = ({ instance }) => {
         <AccordionSet>
           {memberTenants.map(memberTenant => (
             <MemberTenantHoldings
+              key={memberTenant.id}
               memberTenant={memberTenant}
               instance={instance}
             />

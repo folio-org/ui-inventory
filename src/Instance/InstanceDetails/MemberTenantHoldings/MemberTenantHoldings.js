@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 
 import { Accordion } from '@folio/stripes/components';
@@ -10,25 +11,24 @@ import { InstanceNewHolding } from '../InstanceNewHolding';
 import { useInstanceHoldingsQuery } from '../../../providers';
 
 import css from './MemberTenantHoldings.css';
-import PropTypes from 'prop-types';
 
 const MemberTenantHoldings = ({
   memberTenant,
   instance,
 }) => {
   const {
-    tenantName,
-    tenantId,
+    name,
+    id,
   } = memberTenant;
-  const { holdingsRecords } = useInstanceHoldingsQuery(instance?.id, { tenantId });
+  const { holdingsRecords } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
 
   if (isEmpty(holdingsRecords)) return null;
 
   return (
     <Accordion
       className={css.memberTenantHoldings}
-      id={`${tenantName}-holdings`}
-      label={tenantName}
+      id={`${name}-holdings`}
+      label={name}
       closedByDefault
     >
       <div className={css.memberTenantHoldings}>
@@ -36,7 +36,7 @@ const MemberTenantHoldings = ({
           <HoldingsList
             holdings={holdingsRecords}
             instance={instance}
-            tenantId={tenantId}
+            tenantId={id}
             draggable={false}
             droppable={false}
           />
