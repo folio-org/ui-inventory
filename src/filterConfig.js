@@ -205,8 +205,28 @@ export const browseFiltersConfig = [
     values: [],
   },
   {
+    name: FACETS.CONTRIBUTORS_SHARED,
+    cql: FACETS_CQL.INSTANCES_SHARED,
+    values: [],
+  },
+  {
+    name: FACETS.CONTRIBUTORS_HELD_BY,
+    cql: FACETS_CQL.INSTANCES_HELD_BY,
+    values: [],
+  },
+  {
     name: FACETS.NAME_TYPE,
     cql: FACETS_CQL.NAME_TYPE,
+    values: [],
+  },
+  {
+    name: FACETS.SUBJECTS_SHARED,
+    cql: FACETS_CQL.INSTANCES_SHARED,
+    values: [],
+  },
+  {
+    name: FACETS.SUBJECTS_HELD_BY,
+    cql: FACETS_CQL.INSTANCES_HELD_BY,
     values: [],
   },
 ];
