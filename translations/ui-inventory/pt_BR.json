@@ -663,14 +663,14 @@
     "acq.receiptStatus.Awaiting Receipt": "Aguardando recebimento",
     "acq.receiptStatus.Cancelled": "Cancelado",
     "acq.receiptStatus.Fully Received": "Recebido totalmente",
-    "acq.receiptStatus.Ongoing": "Em curso",
+    "acq.receiptStatus.Ongoing": "Em andamento",
     "acq.receiptStatus.Partially Received": "Parcialmente recebido",
     "acq.receiptStatus.Pending": "Pendente",
     "acq.receiptStatus.Receipt Not Required": "Recibo não obrigatório",
     "acq.orderSentDate": "Data de envio do pedido",
     "acq.orderType": "Tipo de pedido",
     "acq.orderType.One-Time": "Uma vez",
-    "acq.orderType.Ongoing": "Em curso",
+    "acq.orderType.Ongoing": "Em andamento",
     "boundWith": "e {boundWithCount, plural, one {um título a mais} other {e outros títulos}}",
     "receivingHistory.receivedDate": "Data de recebimento",
     "receivingHistory.comment": "Comentário",
@@ -826,5 +826,6 @@
     "shareLocalInstance.modal.message": "Você optou por compartilhar a instância local <b>{instanceTitle}</b> com outras bibliotecas membros do seu consórcio",
     "shareLocalInstance.modal.confirmButton": "Compartilhar",
     "shareLocalInstance.toast.unsuccessful": "A instância local <b>{instanceTitle}</b> não foi compartilhada",
-    "shareLocalInstance.toast.successful": "A instância local <b>{instanceTitle}</b> foi compartilhada com sucesso"
+    "shareLocalInstance.toast.successful": "A instância local <b>{instanceTitle}</b> foi compartilhada com sucesso",
+    "filters.tenantId": "Realizada por"
 }
