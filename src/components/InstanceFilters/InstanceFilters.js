@@ -9,6 +9,7 @@ import {
   FilterAccordionHeader,
 } from '@folio/stripes/components';
 import {
+  IfInterface,
   checkIfUserInMemberTenant,
   useStripes,
 } from '@folio/stripes/core';
@@ -208,7 +209,7 @@ const InstanceFilters = props => {
           />
         </Accordion>
       )}
-      {isUserInMemberTenant && (
+      <IfInterface name="consortia">
         <Accordion
           label={<FormattedMessage id={`ui-inventory.filters.${FACETS.HELD_BY}`} />}
           id={FACETS.HELD_BY}
@@ -227,7 +228,7 @@ const InstanceFilters = props => {
             onChange={onChange}
           />
         </Accordion>
-      )}
+      </IfInterface>
       <Accordion
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
         id={FACETS.EFFECTIVE_LOCATION}
