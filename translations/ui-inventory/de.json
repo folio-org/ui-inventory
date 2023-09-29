@@ -826,5 +826,6 @@
     "shareLocalInstance.modal.message": "You have chosen to share the local instance <b>{instanceTitle}</b> with other member libraries in your consortium",
     "shareLocalInstance.modal.confirmButton": "Share",
     "shareLocalInstance.toast.unsuccessful": "Local instance <b>{instanceTitle}</b> was not shared",
-    "shareLocalInstance.toast.successful": "Local instance <b>{instanceTitle}</b> has been successfully shared"
+    "shareLocalInstance.toast.successful": "Local instance <b>{instanceTitle}</b> has been successfully shared",
+    "filters.tenantId": "Held by"
 }
