@@ -819,5 +819,13 @@
     "newLocalRecord": "新建本地纪录",
     "newSharedRecord": "新建已共享记录",
     "marcSourceRecord.bibliographic": "{shared, select, true {已共享 } false { 本地 } other {}} MARC 书目记录",
-    "marcSourceRecord.holdings": "{shared, select, true { 已共享 } false { 本地 } other {}} MARC 馆藏记录"
+    "marcSourceRecord.holdings": "{shared, select, true { 已共享 } false { 本地 } other {}} MARC 馆藏记录",
+    "instance.shared.successfulySaved": "该共享实例已集中保存，相关成员馆记录的更新正在进行中。此实例副本中的更改可能不会立即显示。",
+    "shareLocalInstance": "共享本地实例",
+    "shareLocalInstance.modal.header": "确定要共享此实例吗？",
+    "shareLocalInstance.modal.message": "您已选择与联盟中的其他成员馆共享本地实例<b> {instanceTitle} </b>",
+    "shareLocalInstance.modal.confirmButton": "共享",
+    "shareLocalInstance.toast.unsuccessful": "本地实例<b> {instanceTitle} </b>未共享",
+    "shareLocalInstance.toast.successful": "本地实例<b> {instanceTitle} </b>已成功共享",
+    "filters.tenantId": "持有者"
 }

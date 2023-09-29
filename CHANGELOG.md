@@ -81,6 +81,24 @@
 * Don't reset filters after changing a search option. Fixes UIIN-2566.
 * Fix issue with 'Up' caret on default sort Holdings/Items segments. Refs UIIN-2553.
 * *BREAKING* bump `react-intl` to `v6.4.4`. Refs UIIN-2573.
+* Remove error message when switch between apps. Fixes UIIN-2488.
+* Make the Move actions available regardless of how user navigated to the record. Refs UIIN-2518.
+* Sorting on the Instance's Holdings item table is not working, part 2. Fixes UIIN-2565.
+* Promote a local instance to become a shared instance. Refs UIIN-2460.
+* Consortial Central Tenant: Suppress Holdings detail view Action menu. Refs UIIN-2524.
+* Consortial Central Tenant: Suppress Item detail view Action menu. Refs UIIN-2525.
+* Consortial Central Tenant: Hide Instance Action Menu New Request option. Refs UIIN-2572.
+* Add facet for members with holdings on Instances in Inventory Instances/Holdings/Items search. Refs UIIN-2395.
+* Add Inventory Browse facet for Contributors & Subjects on Shared vs Local Instances. Regs UIIN-2400.
+* Disable View source button for Source = FOLIO instances. Fixes UIIN-2570.
+* Add Inventory Browse facet for Call numbers (item) on Shared vs Not shared Instances. Refs UIIN-2407.
+* Add Browse facet for members with holdings on Instances in Contributors & Subject Browse. Refs UIIN-2415.
+
+## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.11...v9.4.12)
+
+* Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
+* Sorting on the Instance's Holdings item table is not working, part 2. Fixes UIIN-2565.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)

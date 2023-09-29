@@ -618,7 +618,7 @@
     "copycat.callout.simpleError": "Coś poszło nie tak: {err}",
     "copycat.callout.complexError": "Coś poszło nie tak: {err}: {detail}",
     "permission.single-record-import": "Inwentarz: Importuj pojedyncze rekordy bibliograficzne",
-    "duplicateInstanceMarc": "Duplikat rekordu bibliograficznego MARC",
+    "duplicateInstanceMarc": "Duplikuj rekord bibliograficzny MARC",
     "permission.items.mark-unknown": "Inwentarz: Oznacz egzemplarze jako nieznane",
     "permission.items.mark-unavailable": "Inwentarz: Oznacz egzemplarze jako niedostępne",
     "permission.items.mark-long-missing": "Inwentarz: Oznacz egzemplarze jako długotrwale brakujące",
@@ -774,7 +774,7 @@
     "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
     "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
     "markAsHeader": "Mark as",
-    "newMARCRecord": "New MARC Bib Record",
+    "newMARCRecord": "Nowy rekord bibliograficzny (MARC)",
     "boundWithTitles.add": "Add Bound-with and analytics",
     "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
     "selectCode": "Select code",
@@ -819,5 +819,13 @@
     "newLocalRecord": "New local record",
     "newSharedRecord": "New shared record",
     "marcSourceRecord.bibliographic": "{shared, select, true {Shared} false {Local} other {}} MARC bibliographic record",
-    "marcSourceRecord.holdings": "{shared, select, true {Shared} false {Local} other {}} MARC holdings record"
+    "marcSourceRecord.holdings": "{shared, select, true {Shared} false {Local} other {}} MARC holdings record",
+    "instance.shared.successfulySaved": "This shared instance has been saved centrally, and updates to associated member library records are in process. Changes in this copy of the instance may not appear immediately.",
+    "shareLocalInstance": "Share local instance",
+    "shareLocalInstance.modal.header": "Are you sure you want to share this instance?",
+    "shareLocalInstance.modal.message": "You have chosen to share the local instance <b>{instanceTitle}</b> with other member libraries in your consortium",
+    "shareLocalInstance.modal.confirmButton": "Share",
+    "shareLocalInstance.toast.unsuccessful": "Local instance <b>{instanceTitle}</b> was not shared",
+    "shareLocalInstance.toast.successful": "Local instance <b>{instanceTitle}</b> has been successfully shared",
+    "filters.tenantId": "Held by"
 }

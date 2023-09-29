@@ -174,10 +174,8 @@ class InstancesList extends React.Component {
   componentDidMount() {
     const {
       history,
-      getParams,
       namespace,
     } = this.props;
-    const params = getParams();
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -192,10 +190,6 @@ class InstancesList extends React.Component {
     });
 
     this.processLastSearchTerms();
-
-    this.setState({
-      openedFromBrowse: params.selectedBrowseResult === 'true',
-    });
 
     registerLogoutListener(this.clearStorage, namespace, 'instances-list-logout', history);
   }
@@ -220,7 +214,10 @@ class InstancesList extends React.Component {
   }
 
   componentWillUnmount() {
+    const { parentMutator } = this.props;
+
     this.unlisten();
+    parentMutator.records.reset();
   }
 
   extraParamsToReset = {
@@ -314,16 +311,11 @@ class InstancesList extends React.Component {
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
 
-    this.setState({
-      openedFromBrowse: false,
-    });
-
     goTo(path, { ...params, filters: filtersStr });
   };
 
   onSubmitSearch = () => {
     this.setState({
-      openedFromBrowse: false,
       searchInProgress: true,
     });
   }
@@ -1029,7 +1021,6 @@ class InstancesList extends React.Component {
     const {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
-      openedFromBrowse,
       selectedRows,
       searchAndSortKey,
       isSingleResult
@@ -1216,7 +1207,6 @@ class InstancesList extends React.Component {
             detailProps={{
               referenceTables: data,
               onCopy: this.copyInstance,
-              openedFromBrowse,
             }}
             basePath={path}
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}

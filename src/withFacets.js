@@ -144,6 +144,10 @@ function withFacets(WrappedComponent) {
 
       if (facetName === FACETS.NAME_TYPE) {
         params.query = 'contributorNameTypeId=*';
+      } else if ([FACETS.CONTRIBUTORS_SHARED, FACETS.CONTRIBUTORS_HELD_BY].includes(facetName)) {
+        params.query = 'name=*';
+      } else if ([FACETS.SUBJECTS_SHARED, FACETS.SUBJECTS_HELD_BY].includes(facetName)) {
+        params.query = 'value=*';
       } else if (cqlQuery && Object.values(browseCallNumberOptions).includes(queryIndex)) {
         params.query = 'callNumber=""';
       } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {

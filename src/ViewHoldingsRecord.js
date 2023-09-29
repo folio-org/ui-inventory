@@ -41,6 +41,7 @@ import {
   IntlConsumer,
   CalloutContext,
   stripesConnect,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 
 import {
@@ -336,6 +337,10 @@ class ViewHoldingsRecord extends React.Component {
       instance,
       marcRecord,
     } = this.state;
+
+    const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+
+    if (isUserInCentralTenant) return null;
 
     const canCreate = stripes.hasPerm('ui-inventory.holdings.create');
     const canEdit = stripes.hasPerm('ui-inventory.holdings.edit');
