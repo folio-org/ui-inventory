@@ -569,7 +569,6 @@ class HoldingsForm extends React.Component {
                               <NumberGeneratorModalButton
                                 buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
                                 callback={(generated) => change('callNumber', generated)}
-                                fullWidth
                                 id="inventoryCallNumber"
                                 generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
                                 generator="inventory_callNumber"
