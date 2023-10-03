@@ -8,6 +8,7 @@ import {
   FACETS,
   queryIndexes,
   FACETS_CQL,
+  browseCallNumberOptions,
 } from './constants';
 
 const WrappedComponent = ({
@@ -86,6 +87,62 @@ describe('withFacets', () => {
         params: {
           facet: `${FACETS_CQL.INSTANCES_SHARED}:6`,
           query: 'value=*',
+        },
+      }));
+    });
+  });
+
+  describe('when using call numbers browse', () => {
+    it('should make a request with correct params', () => {
+      const resources = {
+        query: {
+          qindex: browseCallNumberOptions.CALL_NUMBERS,
+          query: 'test',
+        },
+      };
+
+      const { getByText } = render(
+        <FacetsHoc
+          mutator={mutator}
+          resources={resources}
+          properties={{ facetToOpen: FACETS.SHARED }}
+        />
+      );
+
+      fireEvent.click(getByText('fetchFacetsButton'));
+
+      expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+        params: {
+          facet: `${FACETS_CQL.SHARED}:6`,
+          query: 'callNumberType=""',
+        },
+      }));
+    });
+  });
+
+  describe('when using call numbers sub-type browse', () => {
+    it('should make a request with correct params', () => {
+      const resources = {
+        query: {
+          qindex: browseCallNumberOptions.DEWEY,
+          query: 'test',
+        },
+      };
+
+      const { getByText } = render(
+        <FacetsHoc
+          mutator={mutator}
+          resources={resources}
+          properties={{ facetToOpen: FACETS.SHARED }}
+        />
+      );
+
+      fireEvent.click(getByText('fetchFacetsButton'));
+
+      expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+        params: {
+          facet: `${FACETS_CQL.SHARED}:6`,
+          query: 'callNumberType="dewey"',
         },
       }));
     });
