@@ -15,6 +15,10 @@ import { useInstanceHoldingsQuery } from '../../../providers';
 
 import css from './MemberTenantHoldings.css';
 import HoldingsListContainer from '../../HoldingsList/HoldingsListContainer';
+import {
+  checkIfUserInCentralTenant,
+  useStripes,
+} from '@folio/stripes/core';
 
 const MemberTenantHoldings = ({
   memberTenant,
@@ -24,7 +28,9 @@ const MemberTenantHoldings = ({
     name,
     id,
   } = memberTenant;
+  const stripes = useStripes();
   const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   if (isEmpty(holdingsRecords)) return null;
 
@@ -50,7 +56,9 @@ const MemberTenantHoldings = ({
             </MoveItemsContext>
           )}
       </div>
-      <InstanceNewHolding instance={instance} />
+      {!isUserInCentralTenant && (
+        <InstanceNewHolding instance={instance} />
+      )}
     </Accordion>
   );
 };
