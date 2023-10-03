@@ -11,6 +11,7 @@ import {
 import {
   checkIfUserInMemberTenant,
   useStripes,
+  IfInterface,
 } from '@folio/stripes/core';
 
 import CheckboxFacet from '../../CheckboxFacet';
@@ -188,44 +189,46 @@ const InstanceFiltersBrowse = props => {
       {browseType === browseModeOptions.CONTRIBUTORS && (
         <>
           {isUserInMemberTenant && (
-            <>
-              <Accordion
-                label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
-                id={FACETS.CONTRIBUTORS_SHARED}
+            <Accordion
+              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
+              id={FACETS.CONTRIBUTORS_SHARED}
+              name={FACETS.CONTRIBUTORS_SHARED}
+              separator={false}
+              header={FilterAccordionHeader}
+              displayClearButton={activeFilters[FACETS.CONTRIBUTORS_SHARED]?.length > 0}
+              onClearFilter={() => onClear(FACETS.CONTRIBUTORS_SHARED)}
+            >
+              <CheckboxFacet
                 name={FACETS.CONTRIBUTORS_SHARED}
-                separator={false}
-                header={FilterAccordionHeader}
-                displayClearButton={activeFilters[FACETS.CONTRIBUTORS_SHARED]?.length > 0}
-                onClearFilter={() => onClear(FACETS.CONTRIBUTORS_SHARED)}
-              >
-                <CheckboxFacet
-                  name={FACETS.CONTRIBUTORS_SHARED}
-                  dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
-                  selectedValues={activeFilters[FACETS.CONTRIBUTORS_SHARED]}
-                  isPending={getIsPending(FACETS.CONTRIBUTORS_SHARED)}
-                  onChange={onChange}
-                />
-              </Accordion>
-              <Accordion
-                label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
-                id={FACETS.CONTRIBUTORS_HELD_BY}
-                name={FACETS.CONTRIBUTORS_HELD_BY}
-                separator={false}
-                header={FilterAccordionHeader}
-                displayClearButton={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]?.length > 0}
-                onClearFilter={() => onClear(FACETS.CONTRIBUTORS_HELD_BY)}
-              >
-                <CheckboxFacet
-                  data-test-filter-item-held-by
-                  name={FACETS.CONTRIBUTORS_HELD_BY}
-                  dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
-                  selectedValues={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]}
-                  isPending={getIsPending(FACETS.CONTRIBUTORS_HELD_BY)}
-                  onChange={onChange}
-                />
-              </Accordion>
-            </>
+                dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
+                selectedValues={activeFilters[FACETS.CONTRIBUTORS_SHARED]}
+                isPending={getIsPending(FACETS.CONTRIBUTORS_SHARED)}
+                onChange={onChange}
+              />
+            </Accordion>
           )}
+          <IfInterface name="consortia">
+            <Accordion
+              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
+              id={FACETS.CONTRIBUTORS_HELD_BY}
+              name={FACETS.CONTRIBUTORS_HELD_BY}
+              separator={false}
+              header={FilterAccordionHeader}
+              displayClearButton={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]?.length > 0}
+              onClearFilter={() => onClear(FACETS.CONTRIBUTORS_HELD_BY)}
+            >
+              <CheckboxFacet
+                data-test-filter-item-held-by
+                name={FACETS.CONTRIBUTORS_HELD_BY}
+                dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
+                selectedValues={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]}
+                isPending={getIsPending(FACETS.CONTRIBUTORS_HELD_BY)}
+                onChange={onChange}
+                isFilterable
+                onSearch={handleFilterSearch}
+              />
+            </Accordion>
+          </IfInterface>
           <MultiSelectionFacet
             id={FACETS.NAME_TYPE}
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
@@ -240,42 +243,48 @@ const InstanceFiltersBrowse = props => {
           />
         </>
       )}
-      {browseType === browseModeOptions.SUBJECTS && isUserInMemberTenant && (
+      {browseType === browseModeOptions.SUBJECTS && (
         <>
-          <Accordion
-            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
-            id={FACETS.SUBJECTS_SHARED}
-            name={FACETS.SUBJECTS_SHARED}
-            separator={false}
-            header={FilterAccordionHeader}
-            displayClearButton={activeFilters[FACETS.SUBJECTS_SHARED]?.length > 0}
-            onClearFilter={() => onClear(FACETS.SUBJECTS_SHARED)}
-          >
-            <CheckboxFacet
+          {isUserInMemberTenant && (
+            <Accordion
+              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
+              id={FACETS.SUBJECTS_SHARED}
               name={FACETS.SUBJECTS_SHARED}
-              dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
-              selectedValues={activeFilters[FACETS.SUBJECTS_SHARED]}
-              isPending={getIsPending(FACETS.SUBJECTS_SHARED)}
-              onChange={onChange}
-            />
-          </Accordion>
-          <Accordion
-            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
-            id={FACETS.SUBJECTS_HELD_BY}
-            name={FACETS.SUBJECTS_HELD_BY}
-            separator={false}
-            header={FilterAccordionHeader}
-            displayClearButton={activeFilters[FACETS.SUBJECTS_HELD_BY]?.length > 0}
-            onClearFilter={() => onClear(FACETS.SUBJECTS_HELD_BY)}
-          >
-            <CheckboxFacet
+              separator={false}
+              header={FilterAccordionHeader}
+              displayClearButton={activeFilters[FACETS.SUBJECTS_SHARED]?.length > 0}
+              onClearFilter={() => onClear(FACETS.SUBJECTS_SHARED)}
+            >
+              <CheckboxFacet
+                name={FACETS.SUBJECTS_SHARED}
+                dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
+                selectedValues={activeFilters[FACETS.SUBJECTS_SHARED]}
+                isPending={getIsPending(FACETS.SUBJECTS_SHARED)}
+                onChange={onChange}
+              />
+            </Accordion>
+          )}
+          <IfInterface name="consortia">
+            <Accordion
+              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
+              id={FACETS.SUBJECTS_HELD_BY}
               name={FACETS.SUBJECTS_HELD_BY}
-              dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS] || []}
-              selectedValues={activeFilters[FACETS.SUBJECTS_HELD_BY]}
-              isPending={getIsPending(FACETS.SUBJECTS_HELD_BY)}
-              onChange={onChange}
-            />
-          </Accordion>
+              separator={false}
+              header={FilterAccordionHeader}
+              displayClearButton={activeFilters[FACETS.SUBJECTS_HELD_BY]?.length > 0}
+              onClearFilter={() => onClear(FACETS.SUBJECTS_HELD_BY)}
+            >
+              <CheckboxFacet
+                name={FACETS.SUBJECTS_HELD_BY}
+                dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS] || []}
+                selectedValues={activeFilters[FACETS.SUBJECTS_HELD_BY]}
+                isPending={getIsPending(FACETS.SUBJECTS_HELD_BY)}
+                onChange={onChange}
+                isFilterable
+                onSearch={handleFilterSearch}
+              />
+            </Accordion>
+          </IfInterface>
         </>
       )}
     </AccordionSet>

@@ -95,6 +95,12 @@
 * Add Browse facet for members with holdings on Instances in Contributors & Subject Browse. Refs UIIN-2415.
 * Add `Held By` facet in Call number browse. Refs UIIN-2416.
 
+## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.11...v9.4.12)
+
+* Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
+* Sorting on the Instance's Holdings item table is not working, part 2. Fixes UIIN-2565.
+
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
 
