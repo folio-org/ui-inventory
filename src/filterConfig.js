@@ -229,6 +229,11 @@ export const browseFiltersConfig = [
     cql: FACETS_CQL.INSTANCES_HELD_BY,
     values: [],
   },
+  {
+    name: FACETS.CALL_NUMBERS_HELD_BY,
+    cql: FACETS_CQL.HELD_BY,
+    values: [],
+  },
 ];
 
 export const browseInstanceIndexes = [
