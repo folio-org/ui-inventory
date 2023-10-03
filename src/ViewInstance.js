@@ -173,7 +173,6 @@ class ViewInstance extends React.Component {
       path: 'consortia/!{consortiumId}/sharing/instances',
       accumulate: true,
       throwErrors: false,
-      tenant: '!{centralTenantId}',
     },
   });
 
