@@ -149,7 +149,8 @@ function withFacets(WrappedComponent) {
       } else if ([FACETS.SUBJECTS_SHARED, FACETS.SUBJECTS_HELD_BY].includes(facetName)) {
         params.query = 'value=*';
       } else if (cqlQuery && Object.values(browseCallNumberOptions).includes(queryIndex)) {
-        params.query = 'callNumber=""';
+        const callNumberType = queryIndex === browseCallNumberOptions.CALL_NUMBERS ? '' : queryIndex;
+        params.query = `callNumberType="${callNumberType}"`;
       } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {
         params.query = cqlQuery;
       }

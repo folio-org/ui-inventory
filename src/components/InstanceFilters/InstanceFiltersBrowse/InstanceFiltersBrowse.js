@@ -136,6 +136,7 @@ const InstanceFiltersBrowse = props => {
                 selectedValues={activeFilters[FACETS.SHARED]}
                 isPending={getIsPending(FACETS.SHARED)}
                 onChange={onChange}
+                onFetch={handleFetchFacets}
               />
             </Accordion>
           )}
@@ -179,6 +180,7 @@ const InstanceFiltersBrowse = props => {
                 selectedValues={activeFilters[FACETS.CONTRIBUTORS_SHARED]}
                 isPending={getIsPending(FACETS.CONTRIBUTORS_SHARED)}
                 onChange={onChange}
+                onFetch={handleFetchFacets}
               />
             </Accordion>
           )}
@@ -236,6 +238,7 @@ const InstanceFiltersBrowse = props => {
                 selectedValues={activeFilters[FACETS.SUBJECTS_SHARED]}
                 isPending={getIsPending(FACETS.SUBJECTS_SHARED)}
                 onChange={onChange}
+                onFetch={handleFetchFacets}
               />
             </Accordion>
           )}
