@@ -13,7 +13,7 @@ const mockItemCount = 3;
 const mockOnAddItem = jest.fn();
 const mockOnViewHolding = jest.fn();
 
-const HoldingButtonsGroupSetup = () => (
+const HoldingButtonsGroupSetup = props => (
   <Router>
     <HoldingButtonsGroup
       withMoveDropdown={false}
@@ -24,14 +24,17 @@ const HoldingButtonsGroupSetup = () => (
       onAddItem={mockOnAddItem}
       itemCount={mockItemCount}
       isOpen={false}
+      isViewHoldingsDisabled={false}
+      isAddItemDisabled={false}
+      {...props}
     >
       {() => null}
     </HoldingButtonsGroup>
   </Router>
 );
 
-const renderHoldingButtonsGroup = () => renderWithIntl(
-  <HoldingButtonsGroupSetup />,
+const renderHoldingButtonsGroup = props => renderWithIntl(
+  <HoldingButtonsGroupSetup {...props} />,
   translations
 );
 
@@ -53,6 +56,22 @@ describe('HoldingButtonsGroup', () => {
     expect(getByRole('button', { name:  'Add item' })).toBeDefined();
   });
 
+  describe('when user has no permissions to view holdings', () => {
+    it('should render "View Holdings" button as disabled', () => {
+      const { getByRole } = renderHoldingButtonsGroup({ isViewHoldingsDisabled: true });
+
+      expect(getByRole('button', { name:  'View holdings' })).toBeDisabled();
+    });
+  });
+
+  describe('when user has no permissions to create items', () => {
+    it('should render "Add item" button as disabled', () => {
+      const { getByRole } = renderHoldingButtonsGroup({ isAddItemDisabled: true });
+
+      expect(getByRole('button', { name:  'Add item' })).toBeDisabled();
+    });
+  });
+
   describe('when user click on View holdings button', () => {
     it('should calls callback', () => {
       const { getByRole } = renderHoldingButtonsGroup();
@@ -62,6 +81,7 @@ describe('HoldingButtonsGroup', () => {
       expect(mockOnViewHolding.mock.calls.length).toBe(1);
     });
   });
+
   describe('when user click on Add item button', () => {
     it('should calls callback', () => {
       const { getByRole } = renderHoldingButtonsGroup();

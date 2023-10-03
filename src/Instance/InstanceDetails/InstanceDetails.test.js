@@ -32,6 +32,11 @@ const instance = {
   discoverySuppress: false,
 };
 
+const userTenantPermissions = [{
+  tenantId: 'testTenantId',
+  permissionNames: ['test permission'],
+}];
+
 const mockReferenceData = {
   titleTypes:[
     { id: '1', name: 'Type 1' },
@@ -59,6 +64,7 @@ describe('InstanceDetails', () => {
               onClose={onClose}
               tagsEnabled={tagsEnabled}
               actionMenu={actionMenu}
+              userTenantPermissions={userTenantPermissions}
             />,
           </MemoryRouter>
         </DataContext.Provider>
@@ -112,6 +118,7 @@ describe('InstanceDetails', () => {
               onClose={onClose}
               tagsEnabled={tagsEnabled}
               actionMenu={actionMenu}
+              userTenantPermissions={userTenantPermissions}
             />,
           </MemoryRouter>
         </DataContext.Provider>
@@ -137,6 +144,7 @@ describe('InstanceDetails', () => {
               onClose={onClose}
               tagsEnabled={tagsEnabled}
               actionMenu={actionMenu}
+              userTenantPermissions={userTenantPermissions}
             />,
           </MemoryRouter>
         </DataContext.Provider>
@@ -162,6 +170,7 @@ describe('InstanceDetails', () => {
               onClose={onClose}
               tagsEnabled={tagsEnabled}
               actionMenu={actionMenu}
+              userTenantPermissions={userTenantPermissions}
             />,
           </MemoryRouter>
         </DataContext.Provider>
@@ -182,6 +191,7 @@ describe('InstanceDetails', () => {
               onClose={onClose}
               tagsEnabled={tagsEnabled}
               actionMenu={actionMenu}
+              userTenantPermissions={userTenantPermissions}
             />,
           </MemoryRouter>
         </DataContext.Provider>
@@ -221,6 +231,7 @@ describe('InstanceDetails', () => {
               onClose={onClose}
               tagsEnabled={tagsEnabled}
               actionMenu={actionMenu}
+              userTenantPermissions={userTenantPermissions}
             />,
           </MemoryRouter>
         </DataContext.Provider>

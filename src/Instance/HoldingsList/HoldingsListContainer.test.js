@@ -12,6 +12,11 @@ jest.mock('./HoldingsList', () => jest.fn().mockReturnValue('Holdings List'));
 jest.mock('../InstanceMovement/HoldingMovementList/HoldingsListMovement', () => jest.fn().mockReturnValue('HoldingMovementList'));
 jest.mock('./Holding/HoldingContainer', () => jest.fn().mockReturnValue('HoldingContainer'));
 
+const userTenantPermissions = [{
+  tenantId: 'testTenantId',
+  permissionNames: ['test permission'],
+}];
+
 describe('HoldingsListContainer', () => {
   const instance = {
     id: '123',
@@ -39,7 +44,10 @@ describe('HoldingsListContainer', () => {
 
     render(
       <MemoryRouter>
-        <HoldingsListContainer instance={instance} />
+        <HoldingsListContainer
+          instance={instance}
+          userTenantPermissions={userTenantPermissions}
+        />
       </MemoryRouter>
     );
     expect(screen.getByText('Loading')).toBeInTheDocument();
@@ -53,7 +61,10 @@ describe('HoldingsListContainer', () => {
 
     render(
       <MemoryRouter>
-        <HoldingsListContainer instance={instance} />
+        <HoldingsListContainer
+          instance={instance}
+          userTenantPermissions={userTenantPermissions}
+        />
       </MemoryRouter>
     );
 
@@ -70,7 +81,11 @@ describe('HoldingsListContainer', () => {
     const isHoldingsMove = true;
     render(
       <MemoryRouter>
-        <HoldingsListContainer instance={instance} isHoldingsMove={isHoldingsMove} />
+        <HoldingsListContainer
+          instance={instance}
+          isHoldingsMove={isHoldingsMove}
+          userTenantPermissions={userTenantPermissions}
+        />
       </MemoryRouter>
     );
 

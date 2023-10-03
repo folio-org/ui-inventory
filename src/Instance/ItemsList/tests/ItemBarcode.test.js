@@ -32,7 +32,8 @@ const itemProp = {
 const itemBarcodeProps = {
   item: itemProp,
   holdingId: 'testId1',
-  instanceId: 'testId2'
+  instanceId: 'testId2',
+  isBarcodeAsHotlink: true,
 };
 
 const searchItem = qIndex => `?qindex=${qIndex}&query=${itemProp.barcode}`;
@@ -41,11 +42,17 @@ const setupItemBarcode = ({
   item,
   holdingId,
   instanceId,
-  history
+  history,
+  isBarcodeAsHotlink,
 }) => {
   const component = (
     <Router history={history}>
-      <ItemBarcode item={item} holdingId={holdingId} instanceId={instanceId} />
+      <ItemBarcode
+        item={item}
+        holdingId={holdingId}
+        instanceId={instanceId}
+        isBarcodeAsHotlink={isBarcodeAsHotlink}
+      />
     </Router>
   );
 
@@ -82,5 +89,23 @@ describe('<ItemBarcode>', () => {
     const { getByText } = setupItemBarcode({ ...itemBarcodeProps, history });
 
     expect(getByText(itemProp.barcode)).not.toHaveAttribute('data-test-highlighter-mark');
+  });
+
+  it('should render barcode as a hotlink', () => {
+    const history = getHistory(searchItem(QUERY_INDEXES.BARCODE));
+    const { container } = setupItemBarcode({ ...itemBarcodeProps, history });
+
+    expect(container.querySelector('[data-test-item-link="true"]')).toBeInTheDocument();
+  });
+
+  it('should render barcode as a plain text', () => {
+    const history = getHistory(searchItem(QUERY_INDEXES.BARCODE));
+    const { container } = setupItemBarcode({
+      ...itemBarcodeProps,
+      isBarcodeAsHotlink: false,
+      history,
+    });
+
+    expect(container.querySelector('[data-test-item-link="true"]')).not.toBeInTheDocument();
   });
 });

@@ -21,6 +21,7 @@ import {
 } from 'lodash';
 import moment from 'moment';
 
+import { updateTenant } from '@folio/stripes/core';
 import { FormattedUTCDate } from '@folio/stripes/components';
 
 import {
@@ -823,4 +824,14 @@ export const hasMemberTenantPermission = (permissions, permissionName, tenantId)
   const tenantPermissions = permissions.find(permission => permission.tenantId === tenantId)?.permissionNames;
 
   return tenantPermissions?.includes(permissionName);
+};
+
+export const updateAffiliation = async (okapi, tenantId, move) => {
+  if (okapi.tenant !== tenantId) {
+    await updateTenant(okapi, tenantId);
+
+    move();
+  } else {
+    move();
+  }
 };

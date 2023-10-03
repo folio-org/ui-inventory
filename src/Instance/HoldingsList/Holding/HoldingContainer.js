@@ -96,7 +96,6 @@ DraggableHolding.propTypes = {
 
 const HoldingContainer = ({
   location,
-  history,
   isViewHoldingsDisabled,
   isAddItemDisabled,
   isBarcodeAsHotlink,
@@ -109,18 +108,12 @@ const HoldingContainer = ({
   ...rest
 }) => {
   const onViewHolding = useCallback(() => {
-    history.push({
-      pathname: `/inventory/view/${instance.id}/${holding.id}`,
-      search: location.search,
-    });
+    window.location.href = `/inventory/view/${instance.id}/${holding.id}${location.search}`;
   }, [location.search, instance.id, holding.id]);
 
   const onAddItem = useCallback(() => {
-    history.push({
-      pathname: `/inventory/create/${instance.id}/${holding.id}/item`,
-      search: location.search,
-    });
-  }, [instance.id, holding.id]);
+    window.location.href = `/inventory/create/${instance.id}/${holding.id}/item${location.search}`;
+  }, [location.search, instance.id, holding.id]);
 
   return isDraggable ? (
     <Draggable

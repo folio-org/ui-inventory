@@ -6,7 +6,7 @@ import {
 import { useQuery } from 'react-query';
 import { omit } from 'lodash';
 
-import { useOkapiKy, useNamespace } from '@folio/stripes/core';
+import { useNamespace } from '@folio/stripes/core';
 
 import {
   DEFAULT_ITEM_TABLE_SORTBY_FIELD,

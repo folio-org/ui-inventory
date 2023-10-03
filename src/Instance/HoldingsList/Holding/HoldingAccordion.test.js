@@ -35,6 +35,7 @@ const HoldingAccordionSetup = () => (
         onViewHolding={noop}
         onAddItem={noop}
         withMoveDropdown={false}
+        tenantId="testTenantId"
       >
         <></>
       </HoldingAccordion>

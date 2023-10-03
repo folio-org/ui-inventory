@@ -59,6 +59,7 @@ const HoldingAccordion = ({
     onAddItem={onAddItem}
     withMoveDropdown={withMoveDropdown}
     isOpen={open}
+    tenantId={tenantId}
     isViewHoldingsDisabled={isViewHoldingsDisabled}
     isAddItemDisabled={isAddItemDisabled}
   />;

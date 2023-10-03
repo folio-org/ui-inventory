@@ -2,12 +2,17 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { IfPermission } from '@folio/stripes/core';
+import {
+  IfPermission,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   Button,
   Badge,
   Icon,
 } from '@folio/stripes/components';
+
+import { updateAffiliation } from '../../../utils';
 
 import { MoveToDropdown } from './MoveToDropdown';
 
@@ -20,11 +25,15 @@ const HoldingButtonsGroup = ({
   onAddItem,
   itemCount,
   isOpen,
+  tenantId,
   isViewHoldingsDisabled,
   isAddItemDisabled,
-}) => (
-  <>
-    {
+}) => {
+  const { okapi } = useStripes();
+
+  return (
+    <>
+      {
       withMoveDropdown && (
         <MoveToDropdown
           holding={holding}
@@ -33,29 +42,30 @@ const HoldingButtonsGroup = ({
         />
       )
     }
-    <Button
-      id={`clickable-view-holdings-${holding.id}`}
-      data-test-view-holdings
-      onClick={onViewHolding}
-      disabled={isViewHoldingsDisabled}
-    >
-      <FormattedMessage id="ui-inventory.viewHoldings" />
-    </Button>
-
-    <IfPermission perm="ui-inventory.item.create">
       <Button
-        id={`clickable-new-item-${holding.id}`}
-        data-test-add-item
-        onClick={onAddItem}
-        buttonStyle="primary paneHeaderNewButton"
-        disabled={isAddItemDisabled}
+        id={`clickable-view-holdings-${holding.id}`}
+        data-test-view-holdings
+        onClick={() => updateAffiliation(okapi, tenantId, onViewHolding)}
+        disabled={isViewHoldingsDisabled}
       >
-        <FormattedMessage id="ui-inventory.addItem" />
+        <FormattedMessage id="ui-inventory.viewHoldings" />
       </Button>
-    </IfPermission>
-    {!isOpen && <Badge>{itemCount ?? <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
-  </>
-);
+
+      <IfPermission perm="ui-inventory.item.create">
+        <Button
+          id={`clickable-new-item-${holding.id}`}
+          data-test-add-item
+          onClick={() => updateAffiliation(okapi, tenantId, onAddItem)}
+          buttonStyle="primary paneHeaderNewButton"
+          disabled={isAddItemDisabled}
+        >
+          <FormattedMessage id="ui-inventory.addItem" />
+        </Button>
+      </IfPermission>
+      {!isOpen && <Badge>{itemCount ?? <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
+    </>
+  );
+};
 
 HoldingButtonsGroup.propTypes = {
   holding: PropTypes.object.isRequired,
@@ -68,6 +78,7 @@ HoldingButtonsGroup.propTypes = {
   withMoveDropdown: PropTypes.bool,
   isViewHoldingsDisabled: PropTypes.bool,
   isAddItemDisabled: PropTypes.bool,
+  tenantId: PropTypes.string,
 };
 
 
