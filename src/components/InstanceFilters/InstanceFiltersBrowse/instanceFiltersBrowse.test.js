@@ -49,6 +49,7 @@ const activeFilters = {
   language: ['eng'],
   shared: ['true'],
   effectiveLocation: ['effectiveLocation1'],
+  callNumbersTenantId: ['college'],
   contributorsShared: ['true'],
   contributorsTenantId: ['consortium'],
   subjectsShared: ['true'],
@@ -140,6 +141,20 @@ describe('InstanceFilters', () => {
       renderInstanceFilters();
       fireEvent.click(screen.getByLabelText('Clear selected filters for "Effective location (item)"'));
 
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display "Held By" facet accordion', () => {
+      const { getByRole } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CALL_NUMBERS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+
+      expect(getByRole('heading', { name: 'Held by' })).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
     });
   });

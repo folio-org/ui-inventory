@@ -49,6 +49,7 @@ const InstanceFiltersBrowse = props => {
 
   const segmentAccordions = {
     [FACETS.SHARED]: false,
+    [FACETS.CALL_NUMBERS_HELD_BY]: false,
     [FACETS.CONTRIBUTORS_SHARED]: false,
     [FACETS.CONTRIBUTORS_HELD_BY]: false,
     [FACETS.SUBJECTS_SHARED]: false,
@@ -66,6 +67,7 @@ const InstanceFiltersBrowse = props => {
 
   const selectedFacetFilters = {
     [FACETS.SHARED]: activeFilters[FACETS.SHARED],
+    [FACETS.CALL_NUMBERS_HELD_BY]: activeFilters[FACETS.CALL_NUMBERS_HELD_BY],
     [FACETS.CONTRIBUTORS_SHARED]: activeFilters[FACETS.CONTRIBUTORS_SHARED],
     [FACETS.CONTRIBUTORS_HELD_BY]: activeFilters[FACETS.CONTRIBUTORS_HELD_BY],
     [FACETS.SUBJECTS_SHARED]: activeFilters[FACETS.SUBJECTS_SHARED],
@@ -95,6 +97,9 @@ const InstanceFiltersBrowse = props => {
         if (recordName === FACETS_CQL.SHARED) {
           accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
         }
+        if (recordName === FACETS_CQL.HELD_BY) {
+          processFacetOptions(activeFilters[FACETS.CALL_NUMBERS_HELD_BY], consortiaTenants, ...commonProps);
+        }
       }
       return accum;
     }, {});
@@ -121,6 +126,7 @@ const InstanceFiltersBrowse = props => {
         <>
           {isUserInMemberTenant && (
             <Accordion
+              closedByDefault
               label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
               id={FACETS.SHARED}
               name={FACETS.SHARED}
@@ -139,6 +145,25 @@ const InstanceFiltersBrowse = props => {
             </Accordion>
           )}
           <Accordion
+            closedByDefault
+            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
+            id={FACETS.CALL_NUMBERS_HELD_BY}
+            name={FACETS.CALL_NUMBERS_HELD_BY}
+            separator={false}
+            header={FilterAccordionHeader}
+            displayClearButton={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]?.length > 0}
+            onClearFilter={() => onClear(FACETS.CALL_NUMBERS_HELD_BY)}
+          >
+            <CheckboxFacet
+              name={FACETS.CALL_NUMBERS_HELD_BY}
+              dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
+              selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
+              isPending={getIsPending(FACETS.CALL_NUMBERS_HELD_BY)}
+              onChange={onChange}
+            />
+          </Accordion>
+          <Accordion
+            closedByDefault
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
             id={FACETS.EFFECTIVE_LOCATION}
             name={FACETS.EFFECTIVE_LOCATION}
