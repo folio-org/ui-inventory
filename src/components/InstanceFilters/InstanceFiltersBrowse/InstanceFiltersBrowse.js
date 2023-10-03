@@ -145,24 +145,26 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
-          <Accordion
-            closedByDefault
-            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
-            id={FACETS.CALL_NUMBERS_HELD_BY}
-            name={FACETS.CALL_NUMBERS_HELD_BY}
-            separator={false}
-            header={FilterAccordionHeader}
-            displayClearButton={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]?.length > 0}
-            onClearFilter={() => onClear(FACETS.CALL_NUMBERS_HELD_BY)}
-          >
-            <CheckboxFacet
+          <IfInterface name="consortia">
+            <Accordion
+              closedByDefault
+              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
+              id={FACETS.CALL_NUMBERS_HELD_BY}
               name={FACETS.CALL_NUMBERS_HELD_BY}
-              dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
-              selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
-              isPending={getIsPending(FACETS.CALL_NUMBERS_HELD_BY)}
-              onChange={onChange}
-            />
-          </Accordion>
+              separator={false}
+              header={FilterAccordionHeader}
+              displayClearButton={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]?.length > 0}
+              onClearFilter={() => onClear(FACETS.CALL_NUMBERS_HELD_BY)}
+            >
+              <CheckboxFacet
+                name={FACETS.CALL_NUMBERS_HELD_BY}
+                dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
+                selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
+                isPending={getIsPending(FACETS.CALL_NUMBERS_HELD_BY)}
+                onChange={onChange}
+              />
+            </Accordion>
+          </IfInterface>
           <Accordion
             closedByDefault
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
