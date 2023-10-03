@@ -5,9 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-import {
-  IfPermission,
-} from '@folio/stripes/core';
+import { IfPermission } from '@folio/stripes/core';
 import {
   Row,
   Col,
@@ -16,8 +14,8 @@ import {
 
 const InstanceNewHolding = ({
   location,
-
   instance,
+  disabled,
 }) => {
   const intl = useIntl();
 
@@ -33,6 +31,7 @@ const InstanceNewHolding = ({
             aria-label={label}
             buttonStyle="primary"
             fullWidth
+            disabled={disabled}
           >
             {label}
           </Button>
@@ -45,6 +44,7 @@ const InstanceNewHolding = ({
 InstanceNewHolding.propTypes = {
   location: PropTypes.object.isRequired,
   instance: PropTypes.object,
+  disabled: PropTypes.bool,
 };
 
 export default withRouter(InstanceNewHolding);

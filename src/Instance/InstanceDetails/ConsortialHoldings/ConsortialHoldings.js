@@ -15,7 +15,10 @@ import { MemberTenantHoldings } from '../MemberTenantHoldings';
 import { DataContext } from '../../../contexts';
 import { useSearchForShadowInstanceTenants } from '../../../hooks';
 
-const ConsortialHoldings = ({ instance }) => {
+const ConsortialHoldings = ({
+  instance,
+  userTenantPermissions,
+}) => {
   const stripes = useStripes();
   const { consortiaTenantsById } = useContext(DataContext);
 
@@ -39,6 +42,7 @@ const ConsortialHoldings = ({ instance }) => {
               key={memberTenant.id}
               memberTenant={memberTenant}
               instance={instance}
+              userTenantPermissions={userTenantPermissions}
             />
           ))}
         </AccordionSet>
@@ -47,6 +51,9 @@ const ConsortialHoldings = ({ instance }) => {
   );
 };
 
-ConsortialHoldings.propTypes = { instance: PropTypes.object.isRequired };
+ConsortialHoldings.propTypes = {
+  instance: PropTypes.object.isRequired,
+  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default ConsortialHoldings;

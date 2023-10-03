@@ -24,7 +24,13 @@ import {
 import css from '../../View.css';
 import { QUERY_INDEXES } from '../../constants';
 
-const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
+const ItemBarcode = ({
+  location,
+  item,
+  holdingId,
+  instanceId,
+  isBarcodeAsHotlink,
+}) => {
   const { search } = location;
   const queryBarcode = queryString.parse(search)?.query;
   const isQueryByBarcode = queryString.parse(search)?.qindex === QUERY_INDEXES.BARCODE;
@@ -43,18 +49,25 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
 
   const highlightableBarcode = isQueryByBarcode ? <Highlighter searchWords={[queryBarcode]} text={String(item.barcode)} /> : item.barcode;
 
+  const itemBarcode = (
+    <span data-test-items-app-icon>
+      <AppIcon app="inventory" iconKey="item" size="small">
+        {item.barcode ? highlightableBarcode : <FormattedMessage id="ui-inventory.noBarcode" />}
+      </AppIcon>
+    </span>
+  );
+
   return (
     <>
-      <Link
-        to={`/inventory/view/${instanceId}/${holdingId}/${item.id}${search}`}
-        data-test-item-link
-      >
-        <span data-test-items-app-icon>
-          <AppIcon app="inventory" iconKey="item" size="small">
-            {item.barcode ? highlightableBarcode : <FormattedMessage id="ui-inventory.noBarcode" />}
-          </AppIcon>
-        </span>
-      </Link>
+      {isBarcodeAsHotlink ? (
+        <Link
+          to={`/inventory/view/${instanceId}/${holdingId}/${item.id}${search}`}
+          data-test-item-link
+        >
+          {itemBarcode}
+        </Link>
+      ) : itemBarcode
+      }
       {item.barcode &&
         <CopyToClipboard
           text={item.barcode}
@@ -79,10 +92,10 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
 
 ItemBarcode.propTypes = {
   location: PropTypes.object.isRequired,
-
   item: PropTypes.object.isRequired,
   holdingId: PropTypes.string.isRequired,
   instanceId: PropTypes.string.isRequired,
+  isBarcodeAsHotlink: PropTypes.bool,
 };
 
 export default withRouter(ItemBarcode);

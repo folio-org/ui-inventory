@@ -19,6 +19,7 @@ const ItemsListContainer = ({
   holding,
   draggable,
   droppable,
+  isBarcodeAsHotlink,
 }) => {
   const {
     selectItemsForDrag,
@@ -62,6 +63,7 @@ const ItemsListContainer = ({
       draggable={draggable}
       droppable={droppable}
       isFetching={isFetching}
+      isBarcodeAsHotlink={isBarcodeAsHotlink}
     />
   );
 };
@@ -69,7 +71,9 @@ const ItemsListContainer = ({
 ItemsListContainer.propTypes = {
   holding: PropTypes.object.isRequired,
   draggable: PropTypes.bool,
-  droppable: PropTypes.bool
+  droppable: PropTypes.bool,
+  tenantId: PropTypes.string,
+  isBarcodeAsHotlink: PropTypes.bool,
 };
 
 export default memo(ItemsListContainer);

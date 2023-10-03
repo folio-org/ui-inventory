@@ -37,6 +37,7 @@ import InstancePlugin from './components/InstancePlugin';
 import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import {
   getDate,
+  getUserTenantsPermissions,
   handleKeyCommand,
   isInstanceShadowCopy,
   isMARCSource,
@@ -186,6 +187,7 @@ class ViewInstance extends React.Component {
       isNewOrderModalOpen: false,
       afterCreate: false,
       instancesQuickExportInProgress: false,
+      userTenantPermissions: [],
     };
     this.instanceId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
@@ -195,7 +197,10 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
-    const { selectedInstance } = this.props;
+    const {
+      selectedInstance,
+      stripes,
+    } = this.props;
     const isMARCSourceRecord = isMARCSource(selectedInstance?.source);
 
     if (isMARCSourceRecord) {
@@ -203,6 +208,8 @@ class ViewInstance extends React.Component {
     }
 
     this.setTlrSettings();
+
+    getUserTenantsPermissions(stripes).then(userTenantPermissions => this.setState({ userTenantPermissions }));
   }
 
   componentDidUpdate(prevProps) {
@@ -878,6 +885,7 @@ class ViewInstance extends React.Component {
               instance={instance}
               tagsEnabled={tagsEnabled}
               ref={this.accordionStatusRef}
+              userTenantPermissions={this.state.userTenantPermissions}
             >
               {
                 (!holdingsrecordid && !itemid) ?
@@ -887,6 +895,7 @@ class ViewInstance extends React.Component {
                         instance={instance}
                         draggable={this.state.isItemsMovement}
                         tenantId={okapi.tenant}
+                        userTenantPermissions={this.state.userTenantPermissions}
                         droppable
                       />
                     </MoveItemsContext>

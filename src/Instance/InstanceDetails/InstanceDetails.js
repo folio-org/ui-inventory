@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import {
   AppIcon,
   TitleManager,
+  useStripes,
 } from '@folio/stripes/core';
 import {
   AccordionSet,
@@ -35,6 +36,7 @@ import { InstanceAcquisition } from './InstanceAcquisition';
 import HelperApp from '../../components/HelperApp';
 
 import { getAccordionState } from './utils';
+import { hasMemberTenantPermission } from '../../utils';
 import { DataContext } from '../../contexts';
 import { ConsortialHoldings } from './ConsortialHoldings';
 
@@ -60,16 +62,20 @@ const InstanceDetails = forwardRef(({
   onClose,
   actionMenu,
   tagsEnabled,
+  userTenantPermissions,
   ...rest
 }, ref) => {
   const intl = useIntl();
   const location = useLocation();
+  const { okapi: { tenant: tenantId } } = useStripes();
   const searchParams = new URLSearchParams(location.search);
 
   const referenceData = useContext(DataContext);
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
   const tags = instance?.tags?.tagList;
+
+  const canCreateHoldings = hasMemberTenantPermission(userTenantPermissions, 'ui-inventory.holdings.create', tenantId);
 
   const detailsLastMenu = useMemo(() => {
     return (
@@ -131,10 +137,16 @@ const InstanceDetails = forwardRef(({
           <AccordionSet initialStatus={accordionState}>
             {children}
 
-            <InstanceNewHolding instance={instance} />
+            <InstanceNewHolding
+              instance={instance}
+              disabled={!canCreateHoldings}
+            />
 
             {instance?.shared && (
-              <ConsortialHoldings instance={instance} />
+              <ConsortialHoldings
+                instance={instance}
+                userTenantPermissions={userTenantPermissions}
+              />
             )}
 
             <InstanceAdministrativeView
@@ -230,6 +242,7 @@ InstanceDetails.propTypes = {
   paneSubtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
+  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
 };
 
 InstanceDetails.defaultProps = {

@@ -36,6 +36,9 @@ const DraggableHolding = ({
   onViewHolding,
   onAddItem,
   tenantId,
+  isViewHoldingsDisabled,
+  isAddItemDisabled,
+  isBarcodeAsHotlink,
   ...rest
 }) => {
   const rowStyles = useMemo(() => (
@@ -68,6 +71,9 @@ const DraggableHolding = ({
               onViewHolding={onViewHolding}
               onAddItem={onAddItem}
               tenantId={tenantId}
+              isViewHoldingsDisabled={isViewHoldingsDisabled}
+              isAddItemDisabled={isAddItemDisabled}
+              isBarcodeAsHotlink={isBarcodeAsHotlink}
             />
           )
       }
@@ -91,7 +97,9 @@ DraggableHolding.propTypes = {
 const HoldingContainer = ({
   location,
   history,
-
+  isViewHoldingsDisabled,
+  isAddItemDisabled,
+  isBarcodeAsHotlink,
   instance,
   holding,
   isDraggable,
@@ -129,6 +137,9 @@ const HoldingContainer = ({
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
           tenantId={tenantId}
+          isViewHoldingsDisabled={isViewHoldingsDisabled}
+          isAddItemDisabled={isAddItemDisabled}
+          isBarcodeAsHotlink={isBarcodeAsHotlink}
           {...rest}
         />
       )}
@@ -140,6 +151,9 @@ const HoldingContainer = ({
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
       tenantId={tenantId}
+      isViewHoldingsDisabled={isViewHoldingsDisabled}
+      isAddItemDisabled={isAddItemDisabled}
+      isBarcodeAsHotlink={isBarcodeAsHotlink}
     />
   );
 };
@@ -149,13 +163,15 @@ HoldingContainer.propTypes = {
   history: PropTypes.object.isRequired,
   provided: PropTypes.object.isRequired,
   snapshot: PropTypes.object.isRequired,
-
   instance: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,
   holdingIndex: PropTypes.number,
   isDraggable: PropTypes.bool,
   draggingHoldingsCount: PropTypes.number,
   tenantId: PropTypes.string,
+  isViewHoldingsDisabled: PropTypes.bool,
+  isAddItemDisabled: PropTypes.bool,
+  isBarcodeAsHotlink: PropTypes.bool,
 };
 
 export default withRouter(HoldingContainer);

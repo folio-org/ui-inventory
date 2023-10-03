@@ -20,6 +20,8 @@ const HoldingButtonsGroup = ({
   onAddItem,
   itemCount,
   isOpen,
+  isViewHoldingsDisabled,
+  isAddItemDisabled,
 }) => (
   <>
     {
@@ -35,6 +37,7 @@ const HoldingButtonsGroup = ({
       id={`clickable-view-holdings-${holding.id}`}
       data-test-view-holdings
       onClick={onViewHolding}
+      disabled={isViewHoldingsDisabled}
     >
       <FormattedMessage id="ui-inventory.viewHoldings" />
     </Button>
@@ -45,6 +48,7 @@ const HoldingButtonsGroup = ({
         data-test-add-item
         onClick={onAddItem}
         buttonStyle="primary paneHeaderNewButton"
+        disabled={isAddItemDisabled}
       >
         <FormattedMessage id="ui-inventory.addItem" />
       </Button>
@@ -62,6 +66,8 @@ HoldingButtonsGroup.propTypes = {
   onAddItem: PropTypes.func.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   withMoveDropdown: PropTypes.bool,
+  isViewHoldingsDisabled: PropTypes.bool,
+  isAddItemDisabled: PropTypes.bool,
 };
 
 

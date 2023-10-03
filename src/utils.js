@@ -34,6 +34,9 @@ import {
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
   CONSORTIUM_PREFIX,
+  OKAPI_TENANT_HEADER,
+  CONTENT_TYPE_HEADER,
+  OKAPI_TOKEN_HEADER,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -782,3 +785,42 @@ export const isMARCSource = (source) => {
 export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');
 
 export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
+
+export const getUserTenantsPermissions = stripes => {
+  const {
+    user: {
+      user: {
+        tenants,
+        id,
+      },
+    },
+    okapi: {
+      url,
+      token,
+    }
+  } = stripes;
+  const userTenantIds = tenants.map(tenant => tenant.id);
+
+  const promises = userTenantIds.map(async (tenantId) => {
+    const result = await fetch(`${url}/perms/users/${id}/permissions?full=false&indexField=userId`, {
+      headers: {
+        [OKAPI_TENANT_HEADER]: tenantId,
+        [CONTENT_TYPE_HEADER]: 'application/json',
+        ...(token && { [OKAPI_TOKEN_HEADER]: token }),
+      },
+      credentials: 'include',
+    });
+
+    const json = await result.json();
+
+    return { tenantId, ...json };
+  });
+
+  return Promise.all(promises);
+};
+
+export const hasMemberTenantPermission = (permissions, permissionName, tenantId) => {
+  const tenantPermissions = permissions.find(permission => permission.tenantId === tenantId)?.permissionNames;
+
+  return tenantPermissions?.includes(permissionName);
+};
