@@ -25,6 +25,18 @@ const facetOptions = {
     },
   ],
   nameTypeOptions: [],
+  heldByOptions: [
+    {
+      label: 'College',
+      value: 'college',
+      count: 13,
+    },
+    {
+      label: 'University',
+      value: 'university',
+      count: 8,
+    },
+  ],
 };
 
 jest.mock('react-router-dom', () => ({

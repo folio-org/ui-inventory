@@ -144,12 +144,13 @@ function withFacets(WrappedComponent) {
 
       if (facetName === FACETS.NAME_TYPE) {
         params.query = 'contributorNameTypeId=*';
-      } else if (facetName === FACETS.CONTRIBUTORS_SHARED) {
+      } else if ([FACETS.CONTRIBUTORS_SHARED, FACETS.CONTRIBUTORS_HELD_BY].includes(facetName)) {
         params.query = 'name=*';
-      } else if (facetName === FACETS.SUBJECTS_SHARED) {
+      } else if ([FACETS.SUBJECTS_SHARED, FACETS.SUBJECTS_HELD_BY].includes(facetName)) {
         params.query = 'value=*';
       } else if (cqlQuery && Object.values(browseCallNumberOptions).includes(queryIndex)) {
-        params.query = 'callNumber=""';
+        const callNumberType = queryIndex === browseCallNumberOptions.CALL_NUMBERS ? '' : queryIndex;
+        params.query = `callNumberType="${callNumberType}"`;
       } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {
         params.query = cqlQuery;
       }
