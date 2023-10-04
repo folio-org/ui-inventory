@@ -209,7 +209,7 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
-          <IfInterface name="consortia">
+          {/* <IfInterface name="consortia">
             <Accordion
               label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
               id={FACETS.CONTRIBUTORS_HELD_BY}
@@ -230,7 +230,7 @@ const InstanceFiltersBrowse = props => {
                 onSearch={handleFilterSearch}
               />
             </Accordion>
-          </IfInterface>
+          </IfInterface> */}
           <MultiSelectionFacet
             id={FACETS.NAME_TYPE}
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
@@ -266,7 +266,7 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
-          <IfInterface name="consortia">
+          {/* <IfInterface name="consortia">
             <Accordion
               label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
               id={FACETS.SUBJECTS_HELD_BY}
@@ -286,7 +286,7 @@ const InstanceFiltersBrowse = props => {
                 onSearch={handleFilterSearch}
               />
             </Accordion>
-          </IfInterface>
+          </IfInterface> */}
         </>
       )}
     </AccordionSet>
