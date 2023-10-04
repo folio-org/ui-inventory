@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { noop } from 'lodash';
+import {
+  noop,
+  cloneDeep,
+} from 'lodash';
 import {
   screen,
   fireEvent,
@@ -37,18 +40,41 @@ const resources = {
   },
 };
 
+const consortiaTenants = [
+  {
+    'id': 'consortium',
+    'code': 'MCO',
+    'name': 'Consortium',
+    'isCentral': true
+  },
+  {
+    'id': 'university',
+    'code': 'UNI',
+    'name': 'University',
+    'isCentral': false
+  },
+  {
+    'id': 'college',
+    'code': 'COL',
+    'name': 'College',
+    'isCentral': false
+  }
+];
+
 const data = {
   locations: [],
   query: [],
   onFetchFacets: noop,
   parentResources: resources,
   browseType: browseModeOptions.CALL_NUMBERS,
+  consortiaTenants,
 };
 
 const activeFilters = {
   language: ['eng'],
   shared: ['true'],
   effectiveLocation: ['effectiveLocation1'],
+  callNumbersTenantId: ['college'],
   contributorsShared: ['true'],
   contributorsTenantId: ['consortium'],
   subjectsShared: ['true'],
@@ -65,7 +91,6 @@ const renderInstanceFilters = (props = {}) => {
           data={data}
           onChange={mockOnChange}
           onClear={mockOnClear}
-          parentResources={resources}
           {...props}
         />
       </ModuleHierarchyProvider>
@@ -141,6 +166,46 @@ describe('InstanceFilters', () => {
       fireEvent.click(screen.getByLabelText('Clear selected filters for "Effective location (item)"'));
 
       expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display "Held By" facet accordion', () => {
+      const { getByRole } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CALL_NUMBERS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+
+      expect(getByRole('heading', { name: 'Held by' })).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display "Held By" facet options', () => {
+      const newData = cloneDeep(data);
+      newData.parentResources.facets.records = [{
+        'holdings.tenantId': {
+          'values': [
+            {
+              'id': 'university',
+              'totalRecords': 3,
+            },
+            {
+              'id': 'college',
+              'totalRecords': 1,
+            }
+          ],
+          'totalRecords': 2,
+        },
+      }];
+
+      const { getByText } = renderInstanceFilters({
+        data: newData,
+      });
+
+      expect(getByText('University')).toBeVisible();
+      expect(getByText('College')).toBeVisible();
     });
   });
 
