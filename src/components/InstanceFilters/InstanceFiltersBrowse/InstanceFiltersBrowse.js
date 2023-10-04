@@ -162,6 +162,9 @@ const InstanceFiltersBrowse = props => {
                 selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
                 isPending={getIsPending(FACETS.CALL_NUMBERS_HELD_BY)}
                 onChange={onChange}
+                isFilterable
+                onSearch={handleFilterSearch}
+                onFetch={handleFetchFacets}
               />
             </Accordion>
           </IfInterface>
