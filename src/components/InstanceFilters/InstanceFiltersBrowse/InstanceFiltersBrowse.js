@@ -11,10 +11,10 @@ import {
 import {
   checkIfUserInMemberTenant,
   useStripes,
-  IfInterface,
 } from '@folio/stripes/core';
 
 import CheckboxFacet from '../../CheckboxFacet';
+import HeldByFacet from '../../HeldByFacet';
 import { MultiSelectionFacet } from '../../MultiSelectionFacet';
 import {
   getSharedOptions,
@@ -145,26 +145,16 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
-          <IfInterface name="consortia">
-            <Accordion
-              closedByDefault
-              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
-              id={FACETS.CALL_NUMBERS_HELD_BY}
-              name={FACETS.CALL_NUMBERS_HELD_BY}
-              separator={false}
-              header={FilterAccordionHeader}
-              displayClearButton={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]?.length > 0}
-              onClearFilter={() => onClear(FACETS.CALL_NUMBERS_HELD_BY)}
-            >
-              <CheckboxFacet
-                name={FACETS.CALL_NUMBERS_HELD_BY}
-                dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
-                selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
-                isPending={getIsPending(FACETS.CALL_NUMBERS_HELD_BY)}
-                onChange={onChange}
-              />
-            </Accordion>
-          </IfInterface>
+          <HeldByFacet
+            activeFilters={activeFilters}
+            facetsOptions={facetsOptions}
+            getIsPending={getIsPending}
+            name={FACETS.CALL_NUMBERS_HELD_BY}
+            onChange={onChange}
+            onClear={onClear}
+            onFetchFacets={handleFetchFacets}
+            onFilterSearch={handleFilterSearch}
+          />
           <Accordion
             closedByDefault
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
@@ -209,28 +199,16 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
-          <IfInterface name="consortia">
-            <Accordion
-              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
-              id={FACETS.CONTRIBUTORS_HELD_BY}
-              name={FACETS.CONTRIBUTORS_HELD_BY}
-              separator={false}
-              header={FilterAccordionHeader}
-              displayClearButton={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]?.length > 0}
-              onClearFilter={() => onClear(FACETS.CONTRIBUTORS_HELD_BY)}
-            >
-              <CheckboxFacet
-                data-test-filter-item-held-by
-                name={FACETS.CONTRIBUTORS_HELD_BY}
-                dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
-                selectedValues={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]}
-                isPending={getIsPending(FACETS.CONTRIBUTORS_HELD_BY)}
-                onChange={onChange}
-                isFilterable
-                onSearch={handleFilterSearch}
-              />
-            </Accordion>
-          </IfInterface>
+          <HeldByFacet
+            activeFilters={activeFilters}
+            facetsOptions={facetsOptions}
+            getIsPending={getIsPending}
+            name={FACETS.CONTRIBUTORS_HELD_BY}
+            onChange={onChange}
+            onClear={onClear}
+            onFetchFacets={handleFetchFacets}
+            onFilterSearch={handleFilterSearch}
+          />
           <MultiSelectionFacet
             id={FACETS.NAME_TYPE}
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
@@ -266,27 +244,16 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
-          <IfInterface name="consortia">
-            <Accordion
-              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
-              id={FACETS.SUBJECTS_HELD_BY}
-              name={FACETS.SUBJECTS_HELD_BY}
-              separator={false}
-              header={FilterAccordionHeader}
-              displayClearButton={activeFilters[FACETS.SUBJECTS_HELD_BY]?.length > 0}
-              onClearFilter={() => onClear(FACETS.SUBJECTS_HELD_BY)}
-            >
-              <CheckboxFacet
-                name={FACETS.SUBJECTS_HELD_BY}
-                dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS] || []}
-                selectedValues={activeFilters[FACETS.SUBJECTS_HELD_BY]}
-                isPending={getIsPending(FACETS.SUBJECTS_HELD_BY)}
-                onChange={onChange}
-                isFilterable
-                onSearch={handleFilterSearch}
-              />
-            </Accordion>
-          </IfInterface>
+          <HeldByFacet
+            activeFilters={activeFilters}
+            facetsOptions={facetsOptions}
+            getIsPending={getIsPending}
+            name={FACETS.SUBJECTS_HELD_BY}
+            onChange={onChange}
+            onClear={onClear}
+            onFetchFacets={handleFetchFacets}
+            onFilterSearch={handleFilterSearch}
+          />
         </>
       )}
     </AccordionSet>
