@@ -161,6 +161,7 @@ const InstanceFiltersBrowse = props => {
                 dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
                 selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
                 isPending={getIsPending(FACETS.CALL_NUMBERS_HELD_BY)}
+                isFilterable
                 onChange={onChange}
               />
             </Accordion>
