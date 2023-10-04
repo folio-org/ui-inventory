@@ -173,7 +173,6 @@ class ViewInstance extends React.Component {
       path: 'consortia/!{consortiumId}/sharing/instances',
       accumulate: true,
       throwErrors: false,
-      tenant: '!{centralTenantId}',
     },
   });
 
@@ -530,7 +529,10 @@ class ViewInstance extends React.Component {
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
     const canViewSource = canViewMARCSource && canViewInstance;
-    const canShareLocalInstance = checkIfUserInMemberTenant(stripes) && !isShared && !isInstanceShadowCopy(source);
+    const canShareLocalInstance = checkIfUserInMemberTenant(stripes)
+      && stripes.hasPerm('consortia.inventory.share.local.instance')
+      && !isShared
+      && !isInstanceShadowCopy(source);
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const numberOfRequests = instanceRequests.other?.totalRecords;
