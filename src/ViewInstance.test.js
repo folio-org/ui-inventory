@@ -64,6 +64,10 @@ jest.mock('./RemoteStorageService/Check', () => ({
   useByLocation: jest.fn(() => false),
   useByHoldings: jest.fn(() => false),
 }));
+jest.mock('./common/hooks', () => ({
+  ...jest.requireActual('./common/hooks'),
+  useTenantKy: jest.fn(),
+}));
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');

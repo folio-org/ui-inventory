@@ -35,6 +35,7 @@ const DraggableHolding = ({
   holding,
   onViewHolding,
   onAddItem,
+  tenantId,
   ...rest
 }) => {
   const rowStyles = useMemo(() => (
@@ -66,6 +67,7 @@ const DraggableHolding = ({
               holding={holding}
               onViewHolding={onViewHolding}
               onAddItem={onAddItem}
+              tenantId={tenantId}
             />
           )
       }
@@ -84,6 +86,7 @@ DraggableHolding.propTypes = {
   holding: PropTypes.object,
   onViewHolding: PropTypes.func,
   onAddItem: PropTypes.func,
+  tenantId: PropTypes.string,
 };
 
 const HoldingContainer = ({
@@ -95,6 +98,7 @@ const HoldingContainer = ({
   isDraggable,
   holdingIndex,
   draggingHoldingsCount,
+  tenantId,
   ...rest
 }) => {
   const onViewHolding = useCallback(() => {
@@ -125,6 +129,7 @@ const HoldingContainer = ({
           holding={holding}
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
+          tenantId={tenantId}
           {...rest}
         />
       )}
@@ -135,6 +140,7 @@ const HoldingContainer = ({
       holding={holding}
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
+      tenantId={tenantId}
     />
   );
 };
@@ -150,6 +156,7 @@ HoldingContainer.propTypes = {
   holdingIndex: PropTypes.number,
   isDraggable: PropTypes.bool,
   draggingHoldingsCount: PropTypes.number,
+  tenantId: PropTypes.string,
 };
 
 export default withRouter(HoldingContainer);

@@ -151,13 +151,6 @@ class ViewInstance extends React.Component {
       tenant: '!{tenantId}',
       throwErrors: false,
     },
-    locations: {
-      type: 'okapi',
-      records: 'locations',
-      path: 'locations?limit=5000',
-      tenant: '!{tenantId}',
-      throwErrors: false,
-    },
     configs: {
       type: 'okapi',
       records: 'configs',
@@ -796,6 +789,7 @@ class ViewInstance extends React.Component {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
       stripes,
+      okapi,
       onCopy,
       onClose,
       paneWidth,
@@ -892,6 +886,7 @@ class ViewInstance extends React.Component {
                       <HoldingsListContainer
                         instance={instance}
                         draggable={this.state.isItemsMovement}
+                        tenantId={okapi.tenant}
                         droppable
                       />
                     </MoveItemsContext>
@@ -999,7 +994,6 @@ ViewInstance.propTypes = {
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceHoldings: PropTypes.object.isRequired,
-    locations: PropTypes.object.isRequired,
     configs: PropTypes.object.isRequired,
     instanceRequests: PropTypes.shape({
       other: PropTypes.shape({
