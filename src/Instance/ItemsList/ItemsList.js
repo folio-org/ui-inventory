@@ -34,14 +34,15 @@ import { DataContext } from '../../contexts';
 
 const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
 
-const getFormatter = (
+const getFormatter = ({
   intl,
   locationsById,
   holdingsMapById,
   selectItemsForDrag,
   ifItemsSelected,
   isBarcodeAsHotlink,
-) => ({
+  tenantId,
+}) => ({
   'dnd': () => (
     <Icon
       icon="drag-drop"
@@ -73,6 +74,7 @@ const getFormatter = (
           holdingId={item.holdingsRecordId}
           instanceId={holdingsMapById[item.holdingsRecordId]?.instanceId}
           isBarcodeAsHotlink={isBarcodeAsHotlink}
+          tenantId={tenantId}
         />
         {item.discoverySuppress &&
         <span>
@@ -163,8 +165,9 @@ const ItemsList = ({
   getDraggingItems,
   isFetching,
   isBarcodeAsHotlink,
+  tenantId,
 }) => {
-  const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items);
+  const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items, { tenantId });
   const holdingsMapById = keyBy(holdings, 'id');
   const intl = useIntl();
   const [itemsSorting, setItemsSorting] = useState({
@@ -183,7 +186,15 @@ const ItemsList = ({
     [holding.id, records, isItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(intl, locationsById, holdingsMapById, selectItemsForDrag, isItemsDragSelected, isBarcodeAsHotlink),
+    () => getFormatter({
+      intl,
+      locationsById,
+      holdingsMapById,
+      selectItemsForDrag,
+      isItemsDragSelected,
+      isBarcodeAsHotlink,
+      tenantId,
+    }),
     [holdingsMapById, selectItemsForDrag, isItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
@@ -262,6 +273,7 @@ ItemsList.propTypes = {
   isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
   isFetching: PropTypes.bool,
+  tenantId: PropTypes.string,
   isBarcodeAsHotlink: PropTypes.bool,
 };
 

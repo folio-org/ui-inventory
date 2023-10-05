@@ -140,6 +140,7 @@ const InstanceDetails = forwardRef(({
             <InstanceNewHolding
               instance={instance}
               disabled={!canCreateHoldings}
+              tenantId={tenantId}
             />
 
             {instance?.shared && (

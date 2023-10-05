@@ -64,6 +64,7 @@ const ItemsListContainer = ({
       droppable={droppable}
       isFetching={isFetching}
       isBarcodeAsHotlink={isBarcodeAsHotlink}
+      tenantId={tenantId}
     />
   );
 };

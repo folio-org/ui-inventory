@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
-import { IfPermission } from '@folio/stripes/core';
+import {
+  IfPermission,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   Row,
   Col,
   Button,
 } from '@folio/stripes/components';
 
+import { updateAffiliation } from '../../../utils';
+
 const InstanceNewHolding = ({
   location,
   instance,
+  tenantId,
   disabled,
 }) => {
   const intl = useIntl();
+  const stripes = useStripes();
 
   const label = intl.formatMessage({ id: 'ui-inventory.addHoldings' });
+
+  const onNewHolding = useCallback(() => {
+    window.location.href = `/inventory/create/${instance?.id}/holding${location.search}`;
+  }, [location.search, instance.id]);
 
   return (
     <IfPermission perm="ui-inventory.holdings.create">
@@ -25,10 +36,10 @@ const InstanceNewHolding = ({
         <Col sm={12}>
           <Button
             id="clickable-new-holdings-record"
-            to={`/inventory/create/${instance?.id}/holding${location.search}`}
             aria-label={label}
             buttonStyle="primary"
             fullWidth
+            onClick={() => updateAffiliation(stripes.okapi, tenantId, onNewHolding)}
             disabled={disabled}
           >
             {label}
@@ -42,6 +53,7 @@ const InstanceNewHolding = ({
 InstanceNewHolding.propTypes = {
   location: PropTypes.object.isRequired,
   instance: PropTypes.object,
+  tenantId: PropTypes.string,
   disabled: PropTypes.bool,
 };
 

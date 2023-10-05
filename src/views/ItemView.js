@@ -659,7 +659,7 @@ class ItemView extends React.Component {
       },
       effectiveLocation: {
         name: get(item, ['effectiveLocation', 'name'], '-'),
-        isActive: locationsById[item.effectiveLocation.id].isActive,
+        isActive: locationsById[item.effectiveLocation.id]?.isActive,
       },
     };
 
@@ -753,7 +753,7 @@ class ItemView extends React.Component {
         <KeyValue
           label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
           value={checkIfElementIsEmpty(itemLocation.effectiveLocation.name)}
-          subValue={!itemLocation.effectiveLocation.isActive &&
+          subValue={!itemLocation.effectiveLocation?.isActive &&
             <FormattedMessage id="ui-inventory.inactive" />
           }
           data-testid="item-effective-location"
@@ -1335,7 +1335,7 @@ class ItemView extends React.Component {
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.permanentLocation" />}
                             value={checkIfElementIsEmpty(holdingLocation.permanentLocation.name)}
-                            subValue={!holdingLocation.permanentLocation.isActive &&
+                            subValue={!holdingLocation.permanentLocation?.isActive &&
                               <FormattedMessage id="ui-inventory.inactive" />
                             }
                             data-testid="holding-permanent-location"
@@ -1345,7 +1345,7 @@ class ItemView extends React.Component {
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
                             value={checkIfElementIsEmpty(holdingLocation.temporaryLocation.name)}
-                            subValue={holdingLocation.temporaryLocation.isActive === false &&
+                            subValue={holdingLocation.temporaryLocation?.isActive === false &&
                               <FormattedMessage id="ui-inventory.inactive" />
                             }
                             data-testid="holding-temporary-location"
@@ -1371,7 +1371,7 @@ class ItemView extends React.Component {
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.permanentLocation" />}
                             value={checkIfElementIsEmpty(itemLocation.permanentLocation.name)}
-                            subValue={itemLocation.permanentLocation.isActive === false &&
+                            subValue={itemLocation.permanentLocation?.isActive === false &&
                               <FormattedMessage id="ui-inventory.inactive" />
                             }
                             data-testid="item-permanent-location"
@@ -1381,7 +1381,7 @@ class ItemView extends React.Component {
                           <KeyValue
                             label={<FormattedMessage id="ui-inventory.temporaryLocation" />}
                             value={checkIfElementIsEmpty(itemLocation.temporaryLocation.name)}
-                            subValue={itemLocation.temporaryLocation.isActive === false &&
+                            subValue={itemLocation.temporaryLocation?.isActive === false &&
                               <FormattedMessage id="ui-inventory.inactive" />
                             }
                             data-testid="item-temporary-location"

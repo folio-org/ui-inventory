@@ -54,6 +54,7 @@ const MemberTenantHoldings = ({
       </div>
       <InstanceNewHolding
         instance={instance}
+        tenantId={id}
         disabled={!canCreateHoldings}
       />
     </Accordion>

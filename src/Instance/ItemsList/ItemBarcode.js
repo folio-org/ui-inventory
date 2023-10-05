@@ -4,25 +4,23 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import {
-  Link,
-} from 'react-router-dom';
-import {
-  FormattedMessage,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import queryString from 'query-string';
 
 import {
   CalloutContext,
   AppIcon,
+  useStripes,
 } from '@folio/stripes/core';
 import {
+  Button,
   Highlighter,
   IconButton,
 } from '@folio/stripes/components';
 import css from '../../View.css';
 import { QUERY_INDEXES } from '../../constants';
+import { updateAffiliation } from '../../utils';
 
 const ItemBarcode = ({
   location,
@@ -30,10 +28,16 @@ const ItemBarcode = ({
   holdingId,
   instanceId,
   isBarcodeAsHotlink,
+  tenantId,
 }) => {
+  const stripes = useStripes();
   const { search } = location;
   const queryBarcode = queryString.parse(search)?.query;
   const isQueryByBarcode = queryString.parse(search)?.qindex === QUERY_INDEXES.BARCODE;
+
+  const onViewItem = useCallback(() => {
+    window.location.href = `/inventory/view/${instanceId}/${holdingId}/${item.id}${search}`;
+  }, [instanceId, holdingId, item.id, search]);
 
   const callout = useContext(CalloutContext);
   const onCopyToClipbaord = useCallback(() => {
@@ -60,12 +64,14 @@ const ItemBarcode = ({
   return (
     <>
       {isBarcodeAsHotlink ? (
-        <Link
-          to={`/inventory/view/${instanceId}/${holdingId}/${item.id}${search}`}
+        <Button
+          buttonStyle="link"
+          buttonClass={css.linkWithoutBorder}
+          onClick={() => updateAffiliation(stripes.okapi, tenantId, onViewItem)}
           data-test-item-link
         >
           {itemBarcode}
-        </Link>
+        </Button>
       ) : itemBarcode
       }
       {item.barcode &&
@@ -95,6 +101,7 @@ ItemBarcode.propTypes = {
   item: PropTypes.object.isRequired,
   holdingId: PropTypes.string.isRequired,
   instanceId: PropTypes.string.isRequired,
+  tenantId: PropTypes.string,
   isBarcodeAsHotlink: PropTypes.bool,
 };
 
