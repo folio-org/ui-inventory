@@ -6,8 +6,7 @@ import React, {
 import { useQuery } from 'react-query';
 import { keyBy } from 'lodash';
 
-import { useOkapiKy } from '@folio/stripes/core';
-
+import { useTenantKy } from '../common';
 
 const API = 'holdings-storage/holdings';
 const LIMIT = 1000;
@@ -31,8 +30,8 @@ export const HoldingsProvider = ({ ...rest }) => {
 };
 
 
-export const useInstanceHoldingsQuery = instanceId => {
-  const ky = useOkapiKy();
+export const useInstanceHoldingsQuery = (instanceId, { tenantId } = {}) => {
+  const ky = useTenantKy({ tenantId });
 
   const holdings = useHoldings();
 
@@ -41,7 +40,7 @@ export const useInstanceHoldingsQuery = instanceId => {
     query: `instanceId==${instanceId}`,
   };
 
-  const queryKey = [API, searchParams];
+  const queryKey = [API, searchParams, tenantId];
   const queryFn = () => ky(API, { searchParams }).json();
 
   const onSuccess = data => holdings?.update(data.holdingsRecords);

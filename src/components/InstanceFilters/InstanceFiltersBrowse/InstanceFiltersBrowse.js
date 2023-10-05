@@ -199,6 +199,7 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
+          {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* <HeldByFacet
             activeFilters={activeFilters}
             facetsOptions={facetsOptions}
@@ -244,6 +245,7 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
+          {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* <HeldByFacet
             activeFilters={activeFilters}
             facetsOptions={facetsOptions}
