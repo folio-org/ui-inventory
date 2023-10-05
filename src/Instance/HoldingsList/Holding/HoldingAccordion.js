@@ -116,6 +116,7 @@ HoldingAccordion.propTypes = {
   holdings: PropTypes.arrayOf(PropTypes.object),
   withMoveDropdown: PropTypes.bool,
   children: PropTypes.object,
+  tenantId: PropTypes.string,
 };
 
 export default HoldingAccordion;

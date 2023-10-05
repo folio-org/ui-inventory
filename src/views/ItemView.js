@@ -659,7 +659,7 @@ class ItemView extends React.Component {
       },
       effectiveLocation: {
         name: get(item, ['effectiveLocation', 'name'], '-'),
-        isActive: locationsById[item.effectiveLocation.id].isActive,
+        isActive: locationsById[item.effectiveLocation.id]?.isActive,
       },
     };
 

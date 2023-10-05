@@ -6,6 +6,10 @@ import {
   Accordion,
   Loading,
 } from '@folio/stripes/components';
+import {
+  checkIfUserInCentralTenant,
+  useStripes,
+} from '@folio/stripes/core';
 
 import { HoldingsList } from '../../HoldingsList';
 import { InstanceNewHolding } from '../InstanceNewHolding';
@@ -14,11 +18,6 @@ import { MoveItemsContext } from '../../MoveItemsContext';
 import { useInstanceHoldingsQuery } from '../../../providers';
 
 import css from './MemberTenantHoldings.css';
-import HoldingsListContainer from '../../HoldingsList/HoldingsListContainer';
-import {
-  checkIfUserInCentralTenant,
-  useStripes,
-} from '@folio/stripes/core';
 
 const MemberTenantHoldings = ({
   memberTenant,

@@ -15,6 +15,7 @@ import {
 import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
+import HeldByFacet from '../HeldByFacet';
 import { useFacets } from '../../common/hooks';
 import {
   getSourceOptions,
@@ -168,26 +169,16 @@ const ItemFilters = (props) => {
           />
         </Accordion>
       )}
-      {isUserInMemberTenant && (
-        <Accordion
-          label={<FormattedMessage id={`ui-inventory.filters.${FACETS.HELD_BY}`} />}
-          id={FACETS.HELD_BY}
-          name={FACETS.HELD_BY}
-          separator={false}
-          header={FilterAccordionHeader}
-          displayClearButton={activeFilters[FACETS.HELD_BY]?.length > 0}
-          onClearFilter={() => onClear(FACETS.HELD_BY)}
-        >
-          <CheckboxFacet
-            data-test-filter-instance-held-by
-            name={FACETS.HELD_BY}
-            dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
-            selectedValues={activeFilters[FACETS.HELD_BY]}
-            isPending={getIsPending(FACETS.HELD_BY)}
-            onChange={onChange}
-          />
-        </Accordion>
-      )}
+      <HeldByFacet
+        activeFilters={activeFilters}
+        facetsOptions={facetsOptions}
+        getIsPending={getIsPending}
+        name={FACETS.HELD_BY}
+        onChange={onChange}
+        onClear={onClear}
+        onFetchFacets={handleFetchFacets}
+        onFilterSearch={handleFilterSearch}
+      />
       <Accordion
         label={<FormattedMessage id="ui-inventory.item.status" />}
         id={FACETS.ITEM_STATUS}
