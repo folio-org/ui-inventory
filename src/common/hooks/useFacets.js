@@ -46,6 +46,7 @@ const useFacets = (
       newState[id] = false;
       return newState;
     });
+    delete prevUrl.current[id];
   }, []);
 
   const handleFilterSearch = useCallback((filter) => {
@@ -183,7 +184,7 @@ const useFacets = (
       !facetToOpen.match(/updatedDate/i)
     ) {
       handleFetchFacets({ facetToOpen });
-      prevUrl[facetToOpen] = location.search;
+      prevUrl.current[facetToOpen] = location.search;
     }
 
     prevAccordionsState.current = { ...accordions };
