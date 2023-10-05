@@ -33,15 +33,20 @@ const ConsortialHoldings = ({ instance }) => {
         label={<FormattedMessage id="ui-inventory.consortialHoldings" />}
         closedByDefault
       >
-        <AccordionSet>
-          {memberTenants.map(memberTenant => (
-            <MemberTenantHoldings
-              key={memberTenant.id}
-              memberTenant={memberTenant}
-              instance={instance}
-            />
-          ))}
-        </AccordionSet>
+        {!memberTenants.length
+          ? <FormattedMessage id="stripes-components.tableEmpty" />
+          : (
+            <AccordionSet>
+              {memberTenants.map(memberTenant => (
+                <MemberTenantHoldings
+                  key={memberTenant.id}
+                  memberTenant={memberTenant}
+                  instance={instance}
+                />
+              ))}
+            </AccordionSet>
+          )
+        }
       </Accordion>
     </IfInterface>
   );
