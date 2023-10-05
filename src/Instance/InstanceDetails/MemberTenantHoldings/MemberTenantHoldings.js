@@ -6,6 +6,10 @@ import {
   Accordion,
   Loading,
 } from '@folio/stripes/components';
+import {
+  checkIfUserInCentralTenant,
+  useStripes,
+} from '@folio/stripes/core';
 
 import { HoldingsList } from '../../HoldingsList';
 import { InstanceNewHolding } from '../InstanceNewHolding';
@@ -23,7 +27,9 @@ const MemberTenantHoldings = ({
     name,
     id,
   } = memberTenant;
+  const stripes = useStripes();
   const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   if (isEmpty(holdingsRecords)) return null;
 
@@ -49,7 +55,9 @@ const MemberTenantHoldings = ({
             </MoveItemsContext>
           )}
       </div>
-      <InstanceNewHolding instance={instance} />
+      {!isUserInCentralTenant && (
+        <InstanceNewHolding instance={instance} />
+      )}
     </Accordion>
   );
 };

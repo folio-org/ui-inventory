@@ -2,7 +2,11 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { IfPermission } from '@folio/stripes/core';
+import {
+  checkIfUserInCentralTenant,
+  IfPermission,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   Button,
   Badge,
@@ -20,38 +24,45 @@ const HoldingButtonsGroup = ({
   onAddItem,
   itemCount,
   isOpen,
-}) => (
-  <>
-    {
-      withMoveDropdown && (
-        <MoveToDropdown
-          holding={holding}
-          holdings={holdings}
-          locationsById={locationsById}
-        />
-      )
-    }
-    <Button
-      id={`clickable-view-holdings-${holding.id}`}
-      data-test-view-holdings
-      onClick={onViewHolding}
-    >
-      <FormattedMessage id="ui-inventory.viewHoldings" />
-    </Button>
+}) => {
+  const stripes = useStripes();
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
-    <IfPermission perm="ui-inventory.item.create">
+  return (
+    <>
+      {
+        withMoveDropdown && (
+          <MoveToDropdown
+            holding={holding}
+            holdings={holdings}
+            locationsById={locationsById}
+          />
+        )
+      }
       <Button
-        id={`clickable-new-item-${holding.id}`}
-        data-test-add-item
-        onClick={onAddItem}
-        buttonStyle="primary paneHeaderNewButton"
+        id={`clickable-view-holdings-${holding.id}`}
+        data-test-view-holdings
+        onClick={onViewHolding}
       >
-        <FormattedMessage id="ui-inventory.addItem" />
+        <FormattedMessage id="ui-inventory.viewHoldings" />
       </Button>
-    </IfPermission>
-    {!isOpen && <Badge>{itemCount ?? <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
-  </>
-);
+
+      {!isUserInCentralTenant && (
+        <IfPermission perm="ui-inventory.item.create">
+          <Button
+            id={`clickable-new-item-${holding.id}`}
+            data-test-add-item
+            onClick={onAddItem}
+            buttonStyle="primary paneHeaderNewButton"
+          >
+            <FormattedMessage id="ui-inventory.addItem" />
+          </Button>
+        </IfPermission>
+      )}
+      {!isOpen && <Badge>{itemCount ?? <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
+    </>
+  );
+};
 
 HoldingButtonsGroup.propTypes = {
   holding: PropTypes.object.isRequired,
