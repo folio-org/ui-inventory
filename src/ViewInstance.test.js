@@ -568,6 +568,7 @@ describe('ViewInstance', () => {
 
         describe('when confirming', () => {
           it('should make POST request to share local instance', () => {
+            defaultProp.mutator.shareInstance.POST.mockResolvedValue({});
             checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
 
             renderViewInstance();
