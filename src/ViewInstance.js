@@ -167,7 +167,6 @@ class ViewInstance extends React.Component {
       path: 'consortia/!{consortiumId}/sharing/instances',
       accumulate: true,
       throwErrors: false,
-      tenant: '!{centralTenantId}',
     },
   });
 
@@ -428,29 +427,27 @@ class ViewInstance extends React.Component {
     const instanceTitle = instance.title;
     const instanceIdentifier = instance.id;
 
-    try {
-      this.props.mutator.shareInstance.POST({
-        sourceTenantId,
-        instanceIdentifier,
-        targetTenantId: centralTenantId,
-      })
-        .then(() => {
-          this.props.refetchInstance();
-        })
-        .then(() => {
-          this.calloutRef.current.sendCallout({
-            type: 'success',
-            message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.successful" values={{ instanceTitle }} />,
-          });
+    this.props.mutator.shareInstance.POST({
+      sourceTenantId,
+      instanceIdentifier,
+      targetTenantId: centralTenantId,
+    })
+      .then(async () => {
+        await this.props.refetchInstance();
+        this.calloutRef.current.sendCallout({
+          type: 'success',
+          message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.successful" values={{ instanceTitle }} />,
         });
-    } catch (error) {
-      this.calloutRef.current.sendCallout({
-        type: 'error',
-        message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
+      })
+      .catch(() => {
+        this.calloutRef.current.sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
+        });
+      })
+      .finally(() => {
+        this.setState({ isShareLocalInstanceModalOpen: false });
       });
-    } finally {
-      this.setState({ isShareLocalInstanceModalOpen: false });
-    }
   }
 
   toggleCopyrightModal = () => {
@@ -532,7 +529,10 @@ class ViewInstance extends React.Component {
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
     const canViewSource = canViewMARCSource && canViewInstance;
-    const canShareLocalInstance = checkIfUserInMemberTenant(stripes) && !isShared && !isInstanceShadowCopy(source);
+    const canShareLocalInstance = checkIfUserInMemberTenant(stripes)
+      && stripes.hasPerm('consortia.inventory.share.local.instance')
+      && !isShared
+      && !isInstanceShadowCopy(source);
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const numberOfRequests = instanceRequests.other?.totalRecords;
