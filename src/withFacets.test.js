@@ -114,7 +114,7 @@ describe('withFacets', () => {
       expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
         params: {
           facet: `${FACETS_CQL.SHARED}:6`,
-          query: 'callNumberType=""',
+          query: 'id = *',
         },
       }));
     });

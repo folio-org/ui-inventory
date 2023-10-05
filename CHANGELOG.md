@@ -95,6 +95,8 @@
 * Add Browse facet for members with holdings on Instances in Contributors & Subject Browse. Refs UIIN-2415.
 * Add permission to promote a local instance to shared. Refs UIIN-2571.
 * Add `Held By` facet in Call number browse. Refs UIIN-2416.
+* Item barcode redirects to the broken page in circ log. Fixes UIIN-2606.
+* Bump the major versions of @folio/plugin-create-inventory-records optionalDependencies. Refs UIIN-2597.
 * Instance 3rd pane: Add consortial holdings/item accordion. Refs UIIN-2410.
 
 ## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
