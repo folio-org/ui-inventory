@@ -40,6 +40,14 @@ const useFacets = (
     });
   }, []);
 
+  const onUnregisterAccordion = useCallback((id) => {
+    setAccordions(curState => {
+      const newState = _.cloneDeep(curState);
+      newState[id] = false;
+      return newState;
+    });
+  }, []);
+
   const handleFilterSearch = useCallback((filter) => {
     const {
       name,
@@ -155,17 +163,12 @@ const useFacets = (
 
   useEffect(() => {
     let facetToOpen = '';
-    let facetToClose = '';
 
     const isFacetOpened = _.some(prevAccordionsState.current, (prevFacetValue, facetName) => {
       const curFacetValue = accordions[facetName];
 
-      if (curFacetValue !== prevFacetValue) {
-        if (curFacetValue) {
-          facetToOpen = facetName;
-        } else {
-          facetToClose = facetName;
-        }
+      if (curFacetValue !== prevFacetValue && curFacetValue) {
+        facetToOpen = facetName;
         return curFacetValue;
       }
       return false;
@@ -180,8 +183,7 @@ const useFacets = (
       !facetToOpen.match(/updatedDate/i)
     ) {
       handleFetchFacets({ facetToOpen });
-    } else {
-      prevUrl.current[facetToClose] = location.search;
+      prevUrl[facetToOpen] = location.search;
     }
 
     prevAccordionsState.current = { ...accordions };
@@ -223,6 +225,7 @@ const useFacets = (
     handleFilterSearch,
     facetsOptions,
     getIsPending,
+    onUnregisterAccordion,
   ];
 };
 
