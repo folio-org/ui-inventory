@@ -912,7 +912,7 @@
     "zustand": "^4.1.1"
   },
   "optionalDependencies": {
-    "@folio/plugin-create-inventory-records": "^3.0.0",
+    "@folio/plugin-create-inventory-records": "^4.0.0",
     "@folio/plugin-find-instance": "^7.0.0"
   },
   "resolutions": {
