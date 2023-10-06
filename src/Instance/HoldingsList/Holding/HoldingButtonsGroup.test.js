@@ -7,7 +7,14 @@ import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 
+import { updateAffiliation } from '../../../utils';
+
 import HoldingButtonsGroup from './HoldingButtonsGroup';
+
+jest.mock('../../../utils', () => ({
+  ...jest.requireActual('../../../utils'),
+  updateAffiliation: jest.fn(),
+}));
 
 const mockItemCount = 3;
 const mockOnAddItem = jest.fn();
@@ -73,22 +80,22 @@ describe('HoldingButtonsGroup', () => {
   });
 
   describe('when user click on View holdings button', () => {
-    it('should calls callback', () => {
+    it('should call function to update user\'s affiliation', () => {
       const { getByRole } = renderHoldingButtonsGroup();
 
       fireEvent.click(getByRole('button', { name:  'View holdings' }));
 
-      expect(mockOnViewHolding.mock.calls.length).toBe(1);
+      expect(updateAffiliation.mock.calls.length).toBe(1);
     });
   });
 
   describe('when user click on Add item button', () => {
-    it('should calls callback', () => {
+    it('should call function to update user\'s affiliation', () => {
       const { getByRole } = renderHoldingButtonsGroup();
 
       fireEvent.click(getByRole('button', { name:  'Add item' }));
 
-      expect(mockOnAddItem.mock.calls.length).toBe(1);
+      expect(updateAffiliation.mock.calls.length).toBe(1);
     });
   });
 });
