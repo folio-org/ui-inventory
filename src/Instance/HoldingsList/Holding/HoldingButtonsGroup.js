@@ -25,7 +25,7 @@ const HoldingButtonsGroup = ({
   onViewHolding,
   onAddItem,
   itemCount,
-  isOpen
+  isOpen,
   tenantId,
   isViewHoldingsDisabled,
   isAddItemDisabled,
