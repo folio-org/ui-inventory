@@ -25,7 +25,7 @@ const HoldingButtonsGroup = ({
   onViewHolding,
   onAddItem,
   itemCount,
-  isOpen
+  isOpen,
   tenantId,
   isViewHoldingsDisabled,
   isAddItemDisabled,
@@ -47,7 +47,7 @@ const HoldingButtonsGroup = ({
       <Button
         id={`clickable-view-holdings-${holding.id}`}
         data-test-view-holdings
-        onClick={() => updateAffiliation(okapi, tenantId, onViewHolding)}
+        onClick={() => updateAffiliation(stripes.okapi, tenantId, onViewHolding)}
         disabled={isViewHoldingsDisabled}
       >
         <FormattedMessage id="ui-inventory.viewHoldings" />
@@ -58,7 +58,7 @@ const HoldingButtonsGroup = ({
           <Button
             id={`clickable-new-item-${holding.id}`}
             data-test-add-item
-            onClick={() => updateAffiliation(okapi, tenantId, onAddItem)}
+            onClick={() => updateAffiliation(stripes.okapi, tenantId, onAddItem)}
             buttonStyle="primary paneHeaderNewButton"
             disabled={isAddItemDisabled}
           >

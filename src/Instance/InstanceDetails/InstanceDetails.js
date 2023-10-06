@@ -153,6 +153,7 @@ const InstanceDetails = forwardRef(({
                 instance={instance}
                 userTenantPermissions={userTenantPermissions}
               />
+            )}
 
             <InstanceAdministrativeView
               id={accordions.administrative}

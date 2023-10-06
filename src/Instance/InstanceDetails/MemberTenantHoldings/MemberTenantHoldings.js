@@ -16,6 +16,7 @@ import { InstanceNewHolding } from '../InstanceNewHolding';
 import { MoveItemsContext } from '../../MoveItemsContext';
 
 import { useInstanceHoldingsQuery } from '../../../providers';
+import { hasMemberTenantPermission } from '../../../utils';
 
 import css from './MemberTenantHoldings.css';
 
@@ -65,7 +66,7 @@ const MemberTenantHoldings = ({
           )}
       </div>
       {!isUserInCentralTenant && (
-         <InstanceNewHolding
+        <InstanceNewHolding
           instance={instance}
           tenantId={id}
           disabled={!canCreateHoldings}
