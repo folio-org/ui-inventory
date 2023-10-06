@@ -92,6 +92,7 @@ DraggableHolding.propTypes = {
   holding: PropTypes.object,
   onViewHolding: PropTypes.func,
   onAddItem: PropTypes.func,
+  tenantId: PropTypes.string,
 };
 
 const HoldingContainer = ({

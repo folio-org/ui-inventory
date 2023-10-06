@@ -4,7 +4,10 @@ import { FormattedMessage } from 'react-intl';
 
 import { Checkbox } from '@folio/stripes/components';
 
-import { ItemsListContainer, DropZone } from '../../ItemsList';
+import {
+  ItemsListContainer,
+  DropZone,
+} from '../../ItemsList';
 
 import HoldingAccordion from './HoldingAccordion';
 

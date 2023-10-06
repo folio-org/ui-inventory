@@ -11,9 +11,12 @@ import {
 } from '@folio/stripes/components';
 
 import { callNumberLabel } from '../../../utils';
+import {
+  useLocationsQuery,
+  useHoldingItemsQuery,
+} from '../../../hooks';
+
 import HoldingButtonsGroup from './HoldingButtonsGroup';
-import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
-import { useLocationsQuery } from '../../../hooks';
 
 const HoldingAccordion = ({
   children,
@@ -33,12 +36,13 @@ const HoldingAccordion = ({
 
   const [open, setOpen] = useState(false);
   const [openFirstTime, setOpenFirstTime] = useState(false);
-  const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, tenantId, { searchParams, key: 'itemCount' });
+  const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'itemCount', tenantId });
   const { data: locations } = useLocationsQuery({ tenantId });
 
   if (!locations) return null;
 
   const locationsById = keyBy(locations, 'id');
+
   const labelLocation = locationsById[holding.permanentLocationId];
   const labelLocationName = labelLocation?.name ?? '';
 

@@ -20,6 +20,10 @@ jest.mock('../../HoldingsList', () => ({
   ...jest.requireActual('../../HoldingsList'),
   HoldingsList: () => <>Holdings</>,
 }));
+jest.mock('../../MoveItemsContext', () => ({
+  ...jest.requireActual('../../MoveItemsContext'),
+  MoveItemsContext: ({ children }) => children,
+}));
 
 const mockMemberTenant = {
   id: 'college',

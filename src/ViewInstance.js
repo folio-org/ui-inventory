@@ -167,7 +167,6 @@ class ViewInstance extends React.Component {
       path: 'consortia/!{consortiumId}/sharing/instances',
       accumulate: true,
       throwErrors: false,
-      tenant: '!{centralTenantId}',
     },
   });
 
@@ -197,10 +196,7 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      selectedInstance,
-      stripes,
-    } = this.props;
+    const { selectedInstance } = this.props;
     const isMARCSourceRecord = isMARCSource(selectedInstance?.source);
 
     if (isMARCSourceRecord) {
@@ -209,7 +205,7 @@ class ViewInstance extends React.Component {
 
     this.setTlrSettings();
 
-    getUserTenantsPermissions(stripes).then(userTenantPermissions => this.setState({ userTenantPermissions }));
+    this.getCurrentTenantPermissions();
   }
 
   componentDidUpdate(prevProps) {
@@ -252,6 +248,18 @@ class ViewInstance extends React.Component {
 
   componentWillUnmount() {
     this.props.mutator.allInstanceItems.reset();
+  }
+
+  getCurrentTenantPermissions = () => {
+    const { stripes } = this.props;
+
+    if (isUserInConsortiumMode(stripes)) {
+      const { user: { user: { tenants } } } = stripes;
+      getUserTenantsPermissions(stripes, tenants).then(userTenantPermissions => this.setState({ userTenantPermissions }));
+    } else {
+      const { okapi: { tenant } } = this.props;
+      getUserTenantsPermissions(stripes, [tenant]).then(userTenantPermissions => this.setState({ userTenantPermissions }));
+    }
   }
 
   getMARCRecord = () => {
@@ -428,29 +436,27 @@ class ViewInstance extends React.Component {
     const instanceTitle = instance.title;
     const instanceIdentifier = instance.id;
 
-    try {
-      this.props.mutator.shareInstance.POST({
-        sourceTenantId,
-        instanceIdentifier,
-        targetTenantId: centralTenantId,
-      })
-        .then(() => {
-          this.props.refetchInstance();
-        })
-        .then(() => {
-          this.calloutRef.current.sendCallout({
-            type: 'success',
-            message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.successful" values={{ instanceTitle }} />,
-          });
+    this.props.mutator.shareInstance.POST({
+      sourceTenantId,
+      instanceIdentifier,
+      targetTenantId: centralTenantId,
+    })
+      .then(async () => {
+        await this.props.refetchInstance();
+        this.calloutRef.current.sendCallout({
+          type: 'success',
+          message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.successful" values={{ instanceTitle }} />,
         });
-    } catch (error) {
-      this.calloutRef.current.sendCallout({
-        type: 'error',
-        message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
+      })
+      .catch(() => {
+        this.calloutRef.current.sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
+        });
+      })
+      .finally(() => {
+        this.setState({ isShareLocalInstanceModalOpen: false });
       });
-    } finally {
-      this.setState({ isShareLocalInstanceModalOpen: false });
-    }
   }
 
   toggleCopyrightModal = () => {
@@ -532,7 +538,10 @@ class ViewInstance extends React.Component {
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
     const canViewSource = canViewMARCSource && canViewInstance;
-    const canShareLocalInstance = checkIfUserInMemberTenant(stripes) && !isShared && !isInstanceShadowCopy(source);
+    const canShareLocalInstance = checkIfUserInMemberTenant(stripes)
+      && stripes.hasPerm('consortia.inventory.share.local.instance')
+      && !isShared
+      && !isInstanceShadowCopy(source);
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const numberOfRequests = instanceRequests.other?.totalRecords;
@@ -1017,8 +1026,15 @@ ViewInstance.propTypes = {
     hasPerm: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
     logger: PropTypes.object.isRequired,
+    user: PropTypes.shape({
+      user: PropTypes.shape({
+        tenants: PropTypes.arrayOf(PropTypes.object),
+      }).isRequired
+    }).isRequired,
   }).isRequired,
-  okapi: PropTypes.object.isRequired,
+  okapi: PropTypes.shape({
+    tenant: PropTypes.string.isRequired
+  }).isRequired,
   tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
 };

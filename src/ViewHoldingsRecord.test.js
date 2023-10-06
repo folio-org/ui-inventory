@@ -19,8 +19,12 @@ import {
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
-
 jest.mock('./withLocation', () => jest.fn(c => c));
+
+jest.mock('./common', () => ({
+  ...jest.requireActual('./common'),
+  useTenantKy: jest.fn(),
+}));
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');

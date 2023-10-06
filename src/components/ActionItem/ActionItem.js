@@ -13,12 +13,12 @@ const ActionItem = ({
   label,
   messageId,
   onClickHandler,
-  isDisabled,
+  disabled,
 }) => {
   return (
     <Button
       id={id}
-      disabled={isDisabled}
+      disabled={disabled}
       onClick={onClickHandler}
       buttonStyle="dropdownItem"
     >
@@ -35,12 +35,12 @@ ActionItem.propTypes = {
   label: PropTypes.any,
   messageId: PropTypes.string,
   onClickHandler: PropTypes.func,
-  isDisabled: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 ActionItem.defaultTypes = {
   label: null,
-  isDisabled: false,
+  disabled: false,
 };
 
 export default ActionItem;

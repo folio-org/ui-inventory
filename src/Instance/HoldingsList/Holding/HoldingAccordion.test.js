@@ -6,40 +6,42 @@ import { screen, waitFor, fireEvent } from '@folio/jest-config-stripes/testing-l
 
 import '../../../../test/jest/__mock__';
 
-import DataContext from '../../../contexts/DataContext';
-
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 import { items as itemsFixture } from '../../../../test/fixtures/items';
+import { useHoldingItemsQuery } from '../../../hooks';
+
 import HoldingAccordion from './HoldingAccordion';
-import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
 
 jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn());
+jest.mock('../../../hooks', () => ({
+  ...jest.requireActual('../../../hooks'),
+  useLocationsQuery: () => ({
+    data: [
+      {
+        id: 'inactiveLocation',
+        name: 'Location 1',
+        isActive: false,
+      },
+    ],
+  }),
+  useHoldingItemsQuery: jest.fn(),
+}));
 
 const HoldingAccordionSetup = () => (
   <Router>
-    <DataContext.Provider value={{ locationsById: {} }}>
-      <HoldingAccordion
-        holding={{
-          id: '123',
-          permanentLocation: { id: 'inactiveLocation' },
-        }}
-        holdings={[]}
-        locationsById={[
-          {
-            id: 'inactiveLocation',
-            name: 'Location 1',
-            isActive: false,
-          },
-        ]}
-        onViewHolding={noop}
-        onAddItem={noop}
-        withMoveDropdown={false}
-        tenantId="testTenantId"
-      >
-        <></>
-      </HoldingAccordion>
-    </DataContext.Provider>
+    <HoldingAccordion
+      holding={{
+        id: '123',
+        permanentLocation: { id: 'inactiveLocation' },
+      }}
+      holdings={[]}
+      onViewHolding={noop}
+      onAddItem={noop}
+      withMoveDropdown={false}
+    >
+      <></>
+    </HoldingAccordion>
   </Router>
 );
 

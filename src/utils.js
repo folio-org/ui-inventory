@@ -787,20 +787,15 @@ export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia
 
 export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
 
-export const getUserTenantsPermissions = stripes => {
+export const getUserTenantsPermissions = (stripes, tenants) => {
   const {
-    user: {
-      user: {
-        tenants,
-        id,
-      },
-    },
+    user: { user: { id } },
     okapi: {
       url,
       token,
     }
   } = stripes;
-  const userTenantIds = tenants.map(tenant => tenant.id);
+  const userTenantIds = tenants.map(tenant => tenant.id || tenant);
 
   const promises = userTenantIds.map(async (tenantId) => {
     const result = await fetch(`${url}/perms/users/${id}/permissions?full=false&indexField=userId`, {
@@ -821,7 +816,7 @@ export const getUserTenantsPermissions = stripes => {
 };
 
 export const hasMemberTenantPermission = (permissions, permissionName, tenantId) => {
-  const tenantPermissions = permissions.find(permission => permission.tenantId === tenantId)?.permissionNames;
+  const tenantPermissions = permissions?.find(permission => permission.tenantId === tenantId)?.permissionNames;
 
   return tenantPermissions?.includes(permissionName);
 };

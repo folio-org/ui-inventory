@@ -10,7 +10,7 @@ import { isEmpty } from 'lodash';
 import DnDContext from '../DnDContext';
 import ItemsList from './ItemsList';
 
-import useHoldingItemsQuery from '../../hooks/useHoldingItemsQuery';
+import { useHoldingItemsQuery } from '../../hooks';
 
 import { DEFAULT_ITEM_TABLE_SORTBY_FIELD } from '../../constants';
 
@@ -38,8 +38,8 @@ const ItemsListContainer = ({
     offset,
   };
 
-  const { isFetching, items } = useHoldingItemsQuery(holding.id, tenantId, { searchParams });
-  const { totalRecords } = useHoldingItemsQuery(holding.id, tenantId, { searchParams: { limit: 0 }, key: 'itemCount' });
+  const { isFetching, items } = useHoldingItemsQuery(holding.id, { searchParams, tenantId });
+  const { totalRecords } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
 
   useEffect(() => {
     if (!isEmpty(items)) {
