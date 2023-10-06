@@ -199,7 +199,8 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
-          <HeldByFacet
+          {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
+          {/* <HeldByFacet
             activeFilters={activeFilters}
             facetsOptions={facetsOptions}
             getIsPending={getIsPending}
@@ -208,7 +209,7 @@ const InstanceFiltersBrowse = props => {
             onClear={onClear}
             onFetchFacets={handleFetchFacets}
             onFilterSearch={handleFilterSearch}
-          />
+          /> */}
           <MultiSelectionFacet
             id={FACETS.NAME_TYPE}
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
@@ -244,7 +245,8 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
-          <HeldByFacet
+          {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
+          {/* <HeldByFacet
             activeFilters={activeFilters}
             facetsOptions={facetsOptions}
             getIsPending={getIsPending}
@@ -253,7 +255,7 @@ const InstanceFiltersBrowse = props => {
             onClear={onClear}
             onFetchFacets={handleFetchFacets}
             onFilterSearch={handleFilterSearch}
-          />
+          /> */}
         </>
       )}
     </AccordionSet>

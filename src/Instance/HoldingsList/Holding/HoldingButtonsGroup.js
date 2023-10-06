@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
+  checkIfUserInCentralTenant,
   IfPermission,
   useStripes,
 } from '@folio/stripes/core';
@@ -24,24 +25,25 @@ const HoldingButtonsGroup = ({
   onViewHolding,
   onAddItem,
   itemCount,
-  isOpen,
+  isOpen
   tenantId,
   isViewHoldingsDisabled,
   isAddItemDisabled,
 }) => {
-  const { okapi } = useStripes();
+  const stripes = useStripes();
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   return (
     <>
       {
-      withMoveDropdown && (
-        <MoveToDropdown
-          holding={holding}
-          holdings={holdings}
-          locationsById={locationsById}
-        />
-      )
-    }
+        withMoveDropdown && (
+          <MoveToDropdown
+            holding={holding}
+            holdings={holdings}
+            locationsById={locationsById}
+          />
+        )
+      }
       <Button
         id={`clickable-view-holdings-${holding.id}`}
         data-test-view-holdings
@@ -51,17 +53,19 @@ const HoldingButtonsGroup = ({
         <FormattedMessage id="ui-inventory.viewHoldings" />
       </Button>
 
-      <IfPermission perm="ui-inventory.item.create">
-        <Button
-          id={`clickable-new-item-${holding.id}`}
-          data-test-add-item
-          onClick={() => updateAffiliation(okapi, tenantId, onAddItem)}
-          buttonStyle="primary paneHeaderNewButton"
-          disabled={isAddItemDisabled}
-        >
-          <FormattedMessage id="ui-inventory.addItem" />
-        </Button>
-      </IfPermission>
+      {!isUserInCentralTenant && (
+        <IfPermission perm="ui-inventory.item.create">
+          <Button
+            id={`clickable-new-item-${holding.id}`}
+            data-test-add-item
+            onClick={() => updateAffiliation(okapi, tenantId, onAddItem)}
+            buttonStyle="primary paneHeaderNewButton"
+            disabled={isAddItemDisabled}
+          >
+            <FormattedMessage id="ui-inventory.addItem" />
+          </Button>
+        </IfPermission>
+      )}
       {!isOpen && <Badge>{itemCount ?? <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
     </>
   );

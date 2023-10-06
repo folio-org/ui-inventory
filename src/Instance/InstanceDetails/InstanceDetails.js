@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import {
   AppIcon,
+  checkIfUserInCentralTenant,
   TitleManager,
   useStripes,
 } from '@folio/stripes/core';
@@ -65,6 +66,7 @@ const InstanceDetails = forwardRef(({
   userTenantPermissions,
   ...rest
 }, ref) => {
+  const stripes = useStripes();
   const intl = useIntl();
   const location = useLocation();
   const { okapi: { tenant: tenantId } } = useStripes();
@@ -74,6 +76,7 @@ const InstanceDetails = forwardRef(({
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
   const tags = instance?.tags?.tagList;
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   const canCreateHoldings = hasMemberTenantPermission(userTenantPermissions, 'ui-inventory.holdings.create', tenantId);
 
@@ -137,18 +140,19 @@ const InstanceDetails = forwardRef(({
           <AccordionSet initialStatus={accordionState}>
             {children}
 
-            <InstanceNewHolding
-              instance={instance}
-              disabled={!canCreateHoldings}
-              tenantId={tenantId}
-            />
+            {!isUserInCentralTenant && (
+              <InstanceNewHolding
+                instance={instance}
+                disabled={!canCreateHoldings}
+                tenantId={tenantId}
+              />
+            )}
 
             {instance?.shared && (
               <ConsortialHoldings
                 instance={instance}
                 userTenantPermissions={userTenantPermissions}
               />
-            )}
 
             <InstanceAdministrativeView
               id={accordions.administrative}

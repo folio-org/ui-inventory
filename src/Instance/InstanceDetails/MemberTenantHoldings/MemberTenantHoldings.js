@@ -2,14 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
 
-import { Accordion } from '@folio/stripes/components';
+import {
+  Accordion,
+  Loading,
+} from '@folio/stripes/components';
+import {
+  checkIfUserInCentralTenant,
+  useStripes,
+} from '@folio/stripes/core';
 
 import { HoldingsList } from '../../HoldingsList';
-import { MoveItemsContext } from '../../MoveItemsContext';
 import { InstanceNewHolding } from '../InstanceNewHolding';
+import { MoveItemsContext } from '../../MoveItemsContext';
 
 import { useInstanceHoldingsQuery } from '../../../providers';
-import { hasMemberTenantPermission } from '../../../utils';
 
 import css from './MemberTenantHoldings.css';
 
@@ -22,7 +28,9 @@ const MemberTenantHoldings = ({
     name,
     id,
   } = memberTenant;
-  const { holdingsRecords } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
+  const stripes = useStripes();
+  const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   const canViewHoldings = hasMemberTenantPermission(userTenantPermissions, 'ui-inventory.holdings.edit', id);
   const canCreateItem = hasMemberTenantPermission(userTenantPermissions, 'ui-inventory.item.create', id);
@@ -39,24 +47,30 @@ const MemberTenantHoldings = ({
       closedByDefault
     >
       <div className={css.memberTenantHoldings}>
-        <MoveItemsContext>
-          <HoldingsList
-            holdings={holdingsRecords}
-            instance={instance}
-            tenantId={id}
-            draggable={false}
-            droppable={false}
-            isViewHoldingsDisabled={!canViewHoldings}
-            isAddItemDisabled={!canCreateItem}
-            isBarcodeAsHotlink={canViewItems}
-          />
-        </MoveItemsContext>
+        {isLoading
+          ? <Loading size="large" />
+          : (
+            <MoveItemsContext>
+              <HoldingsList
+                holdings={holdingsRecords}
+                instance={instance}
+                tenantId={id}
+                draggable={false}
+                droppable={false}
+                isViewHoldingsDisabled={!canViewHoldings}
+                isAddItemDisabled={!canCreateItem}
+                isBarcodeAsHotlink={canViewItems}
+              />
+            </MoveItemsContext>
+          )}
       </div>
-      <InstanceNewHolding
-        instance={instance}
-        tenantId={id}
-        disabled={!canCreateHoldings}
-      />
+      {!isUserInCentralTenant && (
+         <InstanceNewHolding
+          instance={instance}
+          tenantId={id}
+          disabled={!canCreateHoldings}
+        />
+      )}
     </Accordion>
   );
 };

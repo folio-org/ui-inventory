@@ -238,7 +238,7 @@ describe('InstanceFilters', () => {
       expect(mockOnClear).toHaveBeenCalled();
     });
 
-    it('should display Held by filter accordion', () => {
+    it.skip('should display Held by filter accordion', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
@@ -268,7 +268,7 @@ describe('InstanceFilters', () => {
       expect(mockOnClear).toHaveBeenCalled();
     });
 
-    it('should display Held by filter accordion', () => {
+    it.skip('should display Held by filter accordion', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
