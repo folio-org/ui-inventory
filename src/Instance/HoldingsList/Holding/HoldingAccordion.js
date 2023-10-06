@@ -42,8 +42,6 @@ const HoldingAccordion = ({
   if (!locations) return null;
 
   const locationsById = keyBy(locations, 'id');
-
-  const locationsById = keyBy(locations, 'id');
   const labelLocation = locationsById[holding.permanentLocationId];
   const labelLocationName = labelLocation?.name ?? '';
 
