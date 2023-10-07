@@ -827,5 +827,7 @@
     "shareLocalInstance.modal.confirmButton": "Compartilhar",
     "shareLocalInstance.toast.unsuccessful": "A instância local <b>{instanceTitle}</b> não foi compartilhada",
     "shareLocalInstance.toast.successful": "A instância local <b>{instanceTitle}</b> foi compartilhada com sucesso",
-    "filters.tenantId": "Realizada por"
+    "filters.tenantId": "Realizada por",
+    "permission.consortia.inventory.share.local.instance": "Inventário: Compartilhar a instância local com o consórcio",
+    "consortialHoldings": "Participações em consórcios"
 }
