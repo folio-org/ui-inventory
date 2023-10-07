@@ -827,5 +827,7 @@
     "shareLocalInstance.modal.confirmButton": "共享",
     "shareLocalInstance.toast.unsuccessful": "本地实例<b> {instanceTitle} </b>未共享",
     "shareLocalInstance.toast.successful": "本地实例<b> {instanceTitle} </b>已成功共享",
-    "filters.tenantId": "持有者"
+    "filters.tenantId": "持有者",
+    "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
+    "consortialHoldings": "Consortial holdings"
 }
