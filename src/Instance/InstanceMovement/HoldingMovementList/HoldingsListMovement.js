@@ -82,7 +82,6 @@ const HoldingsListMovement = ({
 HoldingsListMovement.propTypes = {
   instance: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
-  tenantId: PropTypes.string,
   isViewHoldingsDisabled: PropTypes.bool,
   isAddItemDisabled: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
