@@ -23,8 +23,8 @@ class CallNumberTypes extends React.Component {
   }
 
   actionSuppressor = {
-    edit: getSourceSuppressor(RECORD_SOURCE.SYSTEM),
-    delete: getSourceSuppressor(RECORD_SOURCE.SYSTEM),
+    edit: getSourceSuppressor([RECORD_SOURCE.SYSTEM, RECORD_SOURCE.CONSORTIUM]),
+    delete: getSourceSuppressor([RECORD_SOURCE.SYSTEM, RECORD_SOURCE.CONSORTIUM]),
   }
 
   render() {
