@@ -45,8 +45,8 @@ describe('CallNumberTypes', () => {
       renderCallNumberTypes();
 
       const actionSuppressor = {
-        delete: expect(getSourceSuppressor).toHaveBeenNthCalledWith(1, RECORD_SOURCE.SYSTEM),
-        edit: expect(getSourceSuppressor).toHaveBeenNthCalledWith(2, RECORD_SOURCE.SYSTEM),
+        delete: expect(getSourceSuppressor).toHaveBeenNthCalledWith(1, [RECORD_SOURCE.SYSTEM, RECORD_SOURCE.CONSORTIUM]),
+        edit: expect(getSourceSuppressor).toHaveBeenNthCalledWith(2, [RECORD_SOURCE.SYSTEM, RECORD_SOURCE.CONSORTIUM]),
       };
 
       expect(ControlledVocab).toHaveBeenCalledWith(expect.objectContaining({ actionSuppressor }), {});
