@@ -20,6 +20,7 @@ import {
 } from '@folio/stripes/components';
 
 import {
+  DEFAULT_ITEM_TABLE_SORTBY_FIELD,
   itemStatuses,
   noValue,
 } from '../../constants';
@@ -27,9 +28,6 @@ import { checkIfArrayIsEmpty } from '../../utils';
 
 import ItemBarcode from './ItemBarcode';
 import ItemsListRow from './ItemsListRow';
-import {
-  sortItems,
-} from './utils';
 import useBoundWithHoldings from '../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
 
 import { DataContext } from '../../contexts';
@@ -95,7 +93,6 @@ const getFormatter = (
     return itemStatusTranslationId ? intl.formatMessage({ id: itemStatusTranslationId }) : statusName;
   },
   'copyNumber': ({ copyNumber }) => copyNumber || noValue,
-  'materialType': x => x.materialType?.name || noValue,
   'loanType': x => x.temporaryLoanType?.name || x.permanentLoanType?.name || noValue,
   'effectiveLocation': x => {
     const effectiveLocation = locationsById[x.effectiveLocation?.id];
@@ -110,6 +107,7 @@ const getFormatter = (
   'chronology': x => x.chronology || noValue,
   'volume': x => x.volume || noValue,
   'yearCaption': x => x.yearCaption?.join(', ') || noValue,
+  'materialType': x => x.materialType?.name || noValue,
 });
 const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected, selectItemsForDrag) => ({
   'dnd': '',
@@ -126,13 +124,13 @@ const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected, select
   'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
   'status': intl.formatMessage({ id: 'ui-inventory.status' }),
   'copyNumber': intl.formatMessage({ id: 'ui-inventory.copyNumber' }),
-  'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
   'loanType': intl.formatMessage({ id: 'ui-inventory.loanType' }),
   'effectiveLocation': intl.formatMessage({ id: 'ui-inventory.effectiveLocationShort' }),
   'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
   'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
   'volume': intl.formatMessage({ id: 'ui-inventory.volume' }),
   'yearCaption': intl.formatMessage({ id: 'ui-inventory.yearCaption' }),
+  'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
 });
 const visibleColumns = [
   'barcode',
@@ -154,6 +152,7 @@ const ItemsList = ({
   holding,
   items,
   setOffset,
+  setSorting,
   total,
   draggable,
   offset,
@@ -167,7 +166,7 @@ const ItemsList = ({
   const intl = useIntl();
   const [itemsSorting, setItemsSorting] = useState({
     isDesc: false,
-    column: 'barcode',
+    column: DEFAULT_ITEM_TABLE_SORTBY_FIELD,
   });
   const [records, setRecords] = useState([]);
 
@@ -196,8 +195,8 @@ const ItemsList = ({
   };
 
   useEffect(() => {
-    setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
-  }, [items, itemsSorting]);
+    setRecords(checkIfArrayIsEmpty(items));
+  }, [items]);
 
   // NOTE: in order to sort on a particular column, it must be registered
   // as a sorter in '../utils'. If it's not, there won't be any errors;
@@ -213,6 +212,7 @@ const ItemsList = ({
     };
 
     setItemsSorting(newItemsSorting);
+    setSorting(`${newItemsSorting.isDesc ? '-' : ''}${newItemsSorting.column}`);
   }, [itemsSorting]);
 
   if ((!draggable && isEmpty(items)) || isLoading) return null;
@@ -232,6 +232,7 @@ const ItemsList = ({
       onNeedMoreData={onNeedMoreData}
       pagingType={MCLPagingTypes.PREV_NEXT}
       totalCount={total}
+      nonInteractiveHeaders={['loanType', 'effectiveLocation', 'materialType']}
       onHeaderClick={onHeaderClick}
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}
@@ -250,6 +251,7 @@ ItemsList.propTypes = {
   holding: PropTypes.object.isRequired,
   items: PropTypes.arrayOf(PropTypes.object),
   setOffset: PropTypes.func.isRequired,
+  setSorting: PropTypes.func.isRequired,
   offset: PropTypes.number,
   total: PropTypes.number,
   draggable: PropTypes.bool,

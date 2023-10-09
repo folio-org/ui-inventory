@@ -20,6 +20,7 @@ jest.mock('../../facetUtils', () => ({
 
 const activeFilters = {
   [FACETS.SHARED]: ['shared1'],
+  [FACETS.HELD_BY]: ['HELD_BY1'],
   [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
   [FACETS.ITEM_STATUS]: ['ITEM_STATUS1'],
   [FACETS.HOLDINGS_PERMANENT_LOCATION]: ['loc2'],
@@ -36,6 +37,7 @@ const resources = {
     resource: 'facets',
     records: [{
       'shared': { values: ['shared1'] },
+      'holdings.tenantId': { values: ['heldby1'] },
       'items.effectiveLocationId': { values: ['effectiveLocationId1'] },
       'holdings.permanentLocationId': { values: ['permanentLocationId1'] },
       'items.statisticalCodeIds': { values: ['statisticalCodeIds1'] },
@@ -56,6 +58,7 @@ const data = {
   statisticalCodes: [],
   tagsRecords: [],
   natureOfContentTerms: [],
+  consortiaTenants: [],
   query: [],
   onFetchFacets: jest.fn(),
   parentResources: resources,
@@ -94,10 +97,19 @@ describe('ItemFilters', () => {
     });
   });
 
+  it('Should Clear selected filters for Held by', async () => {
+    expect(screen.getByText('Held by')).toBeInTheDocument();
+    const Clearselectedfilters = screen.getAllByRole('button');
+    userEvent.click(Clearselectedfilters[3]);
+    await waitFor(() => {
+      expect(onClear).toBeCalledWith(FACETS.HELD_BY);
+    });
+  });
+
   it('Should Clear selected filters for itemStatus', async () => {
     expect(screen.getByText('Item status')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[3]);
+    userEvent.click(Clearselectedfilters[5]);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.ITEM_STATUS);
     });
@@ -106,7 +118,7 @@ describe('ItemFilters', () => {
   it('Should Clear selected filters for effectiveLocation', async () => {
     expect(screen.getByText('Effective location (item)')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[5]);
+    userEvent.click(Clearselectedfilters[7]);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.EFFECTIVE_LOCATION);
     });
@@ -115,7 +127,7 @@ describe('ItemFilters', () => {
   it('Should Clear selected filters for holdingsPermanentLocation', async () => {
     expect(screen.getByText('Holdings permanent location')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[7]);
+    userEvent.click(Clearselectedfilters[9]);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.HOLDINGS_PERMANENT_LOCATION);
     });
@@ -124,7 +136,7 @@ describe('ItemFilters', () => {
   it('Should Clear selected filters for materialType', async () => {
     expect(screen.getByText('Material type')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[9]);
+    userEvent.click(Clearselectedfilters[11]);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.MATERIAL_TYPE);
     });
@@ -133,7 +145,7 @@ describe('ItemFilters', () => {
   it('Should Clear selected filters for itemsDiscoverySuppress', async () => {
     expect(screen.getByText('Suppress from discovery')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[11]);
+    userEvent.click(Clearselectedfilters[13]);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.ITEMS_DISCOVERY_SUPPRESS);
     });
@@ -142,7 +154,7 @@ describe('ItemFilters', () => {
   it('Should Clear selected filters for itemsStatisticalCodeIds', async () => {
     expect(screen.getByText('Statistical code')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[13]);
+    userEvent.click(Clearselectedfilters[15]);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.ITEMS_STATISTICAL_CODE_IDS);
     });
@@ -151,7 +163,7 @@ describe('ItemFilters', () => {
   it('Should Clear selected filters for items Created Date', async () => {
     expect(screen.getByText('Date created')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[15]);
+    userEvent.click(Clearselectedfilters[17]);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.ITEMS_CREATED_DATE);
     });
@@ -160,7 +172,7 @@ describe('ItemFilters', () => {
   it('Should Clear selected filters for itemsUpdatedDate', async () => {
     expect(screen.getByText('Date updated')).toBeInTheDocument();
     const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[22]);
+    userEvent.click(Clearselectedfilters[24]);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.ITEMS_UPDATED_DATE);
     });

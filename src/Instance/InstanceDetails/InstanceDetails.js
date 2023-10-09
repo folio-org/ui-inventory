@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 
 import {
   AppIcon,
+  checkIfUserInCentralTenant,
   TitleManager,
+  useStripes,
 } from '@folio/stripes/core';
 import {
   AccordionSet,
@@ -36,6 +38,7 @@ import HelperApp from '../../components/HelperApp';
 
 import { getAccordionState } from './utils';
 import { DataContext } from '../../contexts';
+import { ConsortialHoldings } from './ConsortialHoldings';
 
 const accordions = {
   administrative: 'acc01',
@@ -61,6 +64,7 @@ const InstanceDetails = forwardRef(({
   tagsEnabled,
   ...rest
 }, ref) => {
+  const stripes = useStripes();
   const intl = useIntl();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -69,6 +73,7 @@ const InstanceDetails = forwardRef(({
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
   const tags = instance?.tags?.tagList;
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   const detailsLastMenu = useMemo(() => {
     return (
@@ -130,7 +135,13 @@ const InstanceDetails = forwardRef(({
           <AccordionSet initialStatus={accordionState}>
             {children}
 
-            <InstanceNewHolding instance={instance} />
+            {!isUserInCentralTenant && (
+              <InstanceNewHolding instance={instance} />
+            )}
+
+            {instance?.shared && (
+              <ConsortialHoldings instance={instance} />
+            )}
 
             <InstanceAdministrativeView
               id={accordions.administrative}

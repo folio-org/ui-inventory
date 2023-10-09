@@ -15,6 +15,7 @@ import {
 
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
+import HeldByFacet from '../HeldByFacet';
 import DateRangeFilter from '../DateRangeFilter';
 import {
   getSourceOptions,
@@ -49,6 +50,7 @@ const InstanceFilters = props => {
       modesOfIssuance,
       statisticalCodes,
       natureOfContentTerms,
+      consortiaTenants,
     },
     onChange,
     onClear,
@@ -59,6 +61,7 @@ const InstanceFilters = props => {
 
   const segmentAccordions = {
     [FACETS.SHARED]: false,
+    [FACETS.HELD_BY]: false,
     [FACETS.EFFECTIVE_LOCATION]: false,
     [FACETS.LANGUAGE]: false,
     [FACETS.RESOURCE]: false,
@@ -77,6 +80,7 @@ const InstanceFilters = props => {
 
   const segmentOptions = {
     [FACETS_OPTIONS.SHARED_OPTIONS]: [],
+    [FACETS_OPTIONS.HELD_BY_OPTIONS]: [],
     [FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]: [],
     [FACETS_OPTIONS.LANG_OPTIONS]: [],
     [FACETS_OPTIONS.RESOURCE_TYPE_OPTIONS]: [],
@@ -93,6 +97,7 @@ const InstanceFilters = props => {
 
   const selectedFacetFilters = {
     [FACETS.SHARED]: activeFilters[FACETS.SHARED],
+    [FACETS.HELD_BY]: activeFilters[FACETS.HELD_BY],
     [FACETS.EFFECTIVE_LOCATION]: activeFilters[FACETS.EFFECTIVE_LOCATION],
     [FACETS.LANGUAGE]: activeFilters[FACETS.LANGUAGE],
     [FACETS.RESOURCE]: activeFilters[FACETS.RESOURCE],
@@ -118,6 +123,9 @@ const InstanceFilters = props => {
         switch (recordName) {
           case FACETS_CQL.SHARED:
             accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
+            break;
+          case FACETS_CQL.HELD_BY:
+            processFacetOptions(activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
             break;
           case FACETS_CQL.EFFECTIVE_LOCATION:
             processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
@@ -177,11 +185,11 @@ const InstanceFilters = props => {
     props.data
   );
 
-  const showSharedFacet = checkIfUserInMemberTenant(stripes);
+  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
-      {showSharedFacet && (
+      {isUserInMemberTenant && (
         <Accordion
           label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
           id={FACETS.SHARED}
@@ -192,7 +200,7 @@ const InstanceFilters = props => {
           onClearFilter={() => onClear(FACETS.SHARED)}
         >
           <CheckboxFacet
-            data-test-filter-instance-shared
+            data-test-filter-item-shared
             name={FACETS.SHARED}
             dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS]}
             selectedValues={activeFilters[FACETS.SHARED]}
@@ -201,6 +209,16 @@ const InstanceFilters = props => {
           />
         </Accordion>
       )}
+      <HeldByFacet
+        activeFilters={activeFilters}
+        facetsOptions={facetsOptions}
+        getIsPending={getIsPending}
+        name={FACETS.HELD_BY}
+        onChange={onChange}
+        onClear={onClear}
+        onFetchFacets={handleFetchFacets}
+        onFilterSearch={handleFilterSearch}
+      />
       <Accordion
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
         id={FACETS.EFFECTIVE_LOCATION}

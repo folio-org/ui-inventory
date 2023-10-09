@@ -50,6 +50,7 @@ import {
   IfPermission,
   IntlConsumer,
   CalloutContext,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 
 import ModalContent from '../components/ModalContent';
@@ -247,6 +248,9 @@ class ItemView extends React.Component {
       resources,
       stripes,
     } = this.props;
+    const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+
+    if (isUserInCentralTenant) return null;
 
     const firstItem = get(resources, 'itemsResource.records[0]');
     const request = get(resources, 'requests.records[0]');
@@ -655,7 +659,7 @@ class ItemView extends React.Component {
       },
       effectiveLocation: {
         name: get(item, ['effectiveLocation', 'name'], '-'),
-        isActive: locationsById[item.effectiveLocation.id].isActive,
+        isActive: locationsById[item.effectiveLocation.id]?.isActive,
       },
     };
 

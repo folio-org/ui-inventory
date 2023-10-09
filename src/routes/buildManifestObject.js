@@ -1,6 +1,5 @@
 import {
   get,
-  isEmpty,
 } from 'lodash';
 
 import { makeQueryFunction } from '@folio/stripes/smart-components';
@@ -14,7 +13,6 @@ import {
   getIsbnIssnTemplate,
 } from '../utils';
 import { getFilterConfig } from '../filterConfig';
-import facetsStore from '../stores/facetsStore';
 
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
@@ -120,71 +118,6 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 
-const memoizeGetFetch = (fn) => {
-  let prevLocationKey = '';
-  let prevResultOffset = '';
-  let prevResult = false;
-
-  return props => {
-    const {
-      location,
-      resources: {
-        resultOffset,
-      },
-    } = props;
-
-    if (
-      prevLocationKey === location.key &&
-      prevResultOffset === resultOffset
-    ) {
-      return prevResult;
-    } else {
-      const result = fn(props);
-      prevLocationKey = location.key;
-      prevResultOffset = resultOffset;
-      prevResult = result;
-      return result;
-    }
-  };
-};
-
-const getFetchProp = () => {
-  let prevQindex = null;
-  let prevQuery = null;
-
-  return memoizeGetFetch(props => {
-    const {
-      location,
-    } = props;
-    const params = new URLSearchParams(location.search);
-    const qindex = params.get('qindex');
-    const query = params.get('query');
-    const filters = params.get('filters');
-    const sort = params.get('sort');
-    const selectedBrowseResult = params.get('selectedBrowseResult');
-    const hasReset = (
-      !qindex &&
-      !query &&
-      !filters &&
-      (sort === DEFAULT_SORT || !sort) &&
-      isEmpty(facetsStore.getState().facetSettings)
-    );
-    let isFetch = true;
-
-    if (prevQindex !== qindex) {
-      isFetch = (
-        hasReset ||
-        prevQuery !== query ||
-        selectedBrowseResult === 'true'
-      );
-    }
-
-    prevQindex = qindex;
-    prevQuery = query;
-    return isFetch;
-  });
-};
-
 const buildRecordsManifest = (options = {}) => {
   const { path } = options;
 
@@ -197,7 +130,6 @@ const buildRecordsManifest = (options = {}) => {
     path: 'inventory/instances',
     resultDensity: 'sparse',
     accumulate: 'true',
-    fetch: getFetchProp(),
     GET: {
       path,
       params: {

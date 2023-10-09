@@ -15,6 +15,7 @@ import {
 import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
+import HeldByFacet from '../HeldByFacet';
 import { useFacets } from '../../common/hooks';
 import {
   getSourceOptions,
@@ -44,6 +45,7 @@ const ItemFilters = (props) => {
       statisticalCodes,
       locations,
       materialTypes,
+      consortiaTenants,
     },
     onChange,
     onClear,
@@ -54,6 +56,7 @@ const ItemFilters = (props) => {
 
   const segmentAccordions = {
     [FACETS.SHARED]: false,
+    [FACETS.HELD_BY]: false,
     [FACETS.ITEM_STATUS]: false,
     [FACETS.EFFECTIVE_LOCATION]: false,
     [FACETS.HOLDINGS_PERMANENT_LOCATION]: false,
@@ -65,6 +68,7 @@ const ItemFilters = (props) => {
 
   const segmentOptions = {
     [FACETS_OPTIONS.SHARED_OPTIONS]: [],
+    [FACETS_OPTIONS.HELD_BY_OPTIONS]: [],
     [FACETS_OPTIONS.ITEMS_STATUSES_OPTIONS]: [],
     [FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]: [],
     [FACETS_OPTIONS.HOLDINGS_PERMANENT_LOCATION_OPTIONS]: [],
@@ -76,6 +80,7 @@ const ItemFilters = (props) => {
 
   const selectedFacetFilters = {
     [FACETS.SHARED]: activeFilters[FACETS.SHARED],
+    [FACETS.HELD_BY]: activeFilters[FACETS.HELD_BY],
     [FACETS.ITEM_STATUS]: activeFilters[FACETS.ITEM_STATUS],
     [FACETS.EFFECTIVE_LOCATION]: activeFilters[FACETS.EFFECTIVE_LOCATION],
     [FACETS.HOLDINGS_PERMANENT_LOCATION]: activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION],
@@ -94,6 +99,9 @@ const ItemFilters = (props) => {
         switch (recordName) {
           case FACETS_CQL.SHARED:
             accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
+            break;
+          case FACETS_CQL.HELD_BY:
+            processFacetOptions(activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_STATUSES:
             processItemsStatuses(activeFilters[FACETS.ITEM_STATUS], itemStatuses, intl, ...commonProps);
@@ -138,11 +146,11 @@ const ItemFilters = (props) => {
     props.data
   );
 
-  const showSharedFacet = checkIfUserInMemberTenant(stripes);
+  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
-      {showSharedFacet && (
+      {isUserInMemberTenant && (
         <Accordion
           label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
           id={FACETS.SHARED}
@@ -161,6 +169,16 @@ const ItemFilters = (props) => {
           />
         </Accordion>
       )}
+      <HeldByFacet
+        activeFilters={activeFilters}
+        facetsOptions={facetsOptions}
+        getIsPending={getIsPending}
+        name={FACETS.HELD_BY}
+        onChange={onChange}
+        onClear={onClear}
+        onFetchFacets={handleFetchFacets}
+        onFilterSearch={handleFilterSearch}
+      />
       <Accordion
         label={<FormattedMessage id="ui-inventory.item.status" />}
         id={FACETS.ITEM_STATUS}

@@ -267,7 +267,7 @@
     "selectStatisticalCode": "Statistischen Codetyp auswählen",
     "numberOfMissingPieces": "Anzahl der fehlenden Teile",
     "missingPieces": "Fehlende Teile",
-    "itemDamagedStatus": "Schadensbeschreibung des Exemplars",
+    "itemDamagedStatus": "Beschädigungsstatus des Exemplars",
     "typeFreeText": "Typ, Freitext",
     "name": "Name",
     "nameType": "Namenstyp",
@@ -819,5 +819,15 @@
     "newLocalRecord": "New local record",
     "newSharedRecord": "New shared record",
     "marcSourceRecord.bibliographic": "{shared, select, true {Shared} false {Local} other {}} MARC bibliographic record",
-    "marcSourceRecord.holdings": "{shared, select, true {Shared} false {Local} other {}} MARC holdings record"
+    "marcSourceRecord.holdings": "{shared, select, true {Shared} false {Local} other {}} MARC holdings record",
+    "instance.shared.successfulySaved": "This shared instance has been saved centrally, and updates to associated member library records are in process. Changes in this copy of the instance may not appear immediately.",
+    "shareLocalInstance": "Share local instance",
+    "shareLocalInstance.modal.header": "Are you sure you want to share this instance?",
+    "shareLocalInstance.modal.message": "You have chosen to share the local instance <b>{instanceTitle}</b> with other member libraries in your consortium",
+    "shareLocalInstance.modal.confirmButton": "Share",
+    "shareLocalInstance.toast.unsuccessful": "Local instance <b>{instanceTitle}</b> was not shared",
+    "shareLocalInstance.toast.successful": "Local instance <b>{instanceTitle}</b> has been successfully shared",
+    "filters.tenantId": "Held by",
+    "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
+    "consortialHoldings": "Consortial holdings"
 }

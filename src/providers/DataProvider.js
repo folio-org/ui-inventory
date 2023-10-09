@@ -2,23 +2,44 @@ import keyBy from 'lodash/keyBy';
 import React, { useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  useStripes,
+} from '@folio/stripes/core';
 
 import { DataContext } from '../contexts';
+import { OKAPI_TENANT_HEADER } from '../constants';
 
 // Provider which loads dictionary data used in various places in ui-inventory.
 // The data is fetched once when the ui-inventory module is loaded.
 const DataProvider = ({
   children,
   resources,
+  mutator,
 }) => {
   const { manifest } = DataProvider;
-  const dataRef = useRef();
+  const dataRef = useRef({});
+  const stripes = useStripes();
+
+  const { consortium } = stripes.user.user;
+
+  useEffect(() => {
+    if (!consortium) {
+      return;
+    }
+
+    mutator.consortiaTenants.GET({
+      path: `consortia/${consortium?.id}/tenants`,
+      headers: {
+        [OKAPI_TENANT_HEADER]: consortium?.centralTenantId,
+      },
+    });
+  }, [consortium?.id]);
 
   const isLoading = useMemo(() => {
     // eslint-disable-next-line guard-for-in
     for (const key in manifest) {
-      const isResourceLoading = !resources?.[key]?.hasLoaded && !resources?.[key]?.failed;
+      const isResourceLoading = !resources?.[key]?.hasLoaded && !resources?.[key]?.failed && resources?.[key]?.isPending;
 
       if (manifest[key].type === 'okapi' && isResourceLoading) {
         return true;
@@ -29,7 +50,7 @@ const DataProvider = ({
   }, [resources, manifest]);
 
   useEffect(() => {
-    if (isLoading || dataRef.current) {
+    if (isLoading || !dataRef.current) {
       return;
     }
 
@@ -46,6 +67,7 @@ const DataProvider = ({
       instanceRelationshipTypes,
       statisticalCodeTypes,
       statisticalCodes,
+      consortiaTenants,
     } = loadedData;
 
     loadedData.locationsById = keyBy(locations, 'id');
@@ -53,6 +75,7 @@ const DataProvider = ({
     loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
     loadedData.holdingsSourcesByName = keyBy(holdingsSources, 'name');
     loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
+    loadedData.consortiaTenantsById = keyBy(consortiaTenants, 'id');
     const statisticalCodeTypesById = keyBy(statisticalCodeTypes, 'id');
 
     // attach full statisticalCodeType object to each statisticalCode
@@ -76,11 +99,18 @@ const DataProvider = ({
 };
 
 DataProvider.propTypes = {
+  mutator: PropTypes.object.isRequired,
   resources: PropTypes.object.isRequired,
   children: PropTypes.object,
 };
 
 DataProvider.manifest = {
+  consortiaTenants: {
+    type: 'okapi',
+    records: 'tenants',
+    accumulate: true,
+    throwErrors: false,
+  },
   identifierTypes: {
     type: 'okapi',
     records: 'identifierTypes',

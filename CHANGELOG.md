@@ -78,6 +78,34 @@
 * Consortial Central Tenant: Handling of Instance Action Menu options. Refs UIIN-2498.
 * ECS: display shadow instances as shared. Refs UIIN-2552.
 * Display correct number of items in the Instance's Holding accordion. Fixes UIIN-2550.
+* Don't reset filters after changing a search option. Fixes UIIN-2566.
+* Fix issue with 'Up' caret on default sort Holdings/Items segments. Refs UIIN-2553.
+* *BREAKING* bump `react-intl` to `v6.4.4`. Refs UIIN-2573.
+* Remove error message when switch between apps. Fixes UIIN-2488.
+* Make the Move actions available regardless of how user navigated to the record. Refs UIIN-2518.
+* Sorting on the Instance's Holdings item table is not working, part 2. Fixes UIIN-2565.
+* Promote a local instance to become a shared instance. Refs UIIN-2460.
+* Consortial Central Tenant: Suppress Holdings detail view Action menu. Refs UIIN-2524.
+* Consortial Central Tenant: Suppress Item detail view Action menu. Refs UIIN-2525.
+* Consortial Central Tenant: Hide Instance Action Menu New Request option. Refs UIIN-2572.
+* Add facet for members with holdings on Instances in Inventory Instances/Holdings/Items search. Refs UIIN-2395.
+* Add Inventory Browse facet for Contributors & Subjects on Shared vs Local Instances. Regs UIIN-2400.
+* Disable View source button for Source = FOLIO instances. Fixes UIIN-2570.
+* Add Inventory Browse facet for Call numbers (item) on Shared vs Not shared Instances. Refs UIIN-2407.
+* Add Browse facet for members with holdings on Instances in Contributors & Subject Browse. Refs UIIN-2415.
+* Add permission to promote a local instance to shared. Refs UIIN-2571.
+* Add `Held By` facet in Call number browse. Refs UIIN-2416.
+* Item barcode redirects to the broken page in circ log. Fixes UIIN-2606.
+* Bump the major versions of @folio/plugin-create-inventory-records optionalDependencies. Refs UIIN-2597.
+* Instance 3rd pane: Add consortial holdings/item accordion. Refs UIIN-2410.
+* Consortial Central Tenant: Handling Holdings and Item actions on the Instance detail view. Refs UIIN-2523.
+* Hide Held by facet in Inventory contributor and subject browse. Refs UIIN-2591.
+
+## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.11...v9.4.12)
+
+* Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
+* Sorting on the Instance's Holdings item table is not working, part 2. Fixes UIIN-2565.
 
 ## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)

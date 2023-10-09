@@ -1,6 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { noop } from 'lodash';
+import {
+  noop,
+  cloneDeep,
+} from 'lodash';
 import {
   screen,
   fireEvent,
@@ -14,15 +17,7 @@ import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 
 import InstanceFiltersBrowse from './InstanceFiltersBrowse';
-
-jest.mock('../../MultiSelectionFacet', () => ({
-  MultiSelectionFacet: ({ name, onClearFilter }) => (
-    <div>
-      {name}
-      <button type="button" onClick={() => onClearFilter(name)}>Clear {name}</button>
-    </div>
-  ),
-}));
+import { browseModeOptions } from '../../../constants';
 
 const mockOnChange = jest.fn();
 const mockOnClear = jest.fn();
@@ -45,12 +40,46 @@ const resources = {
   },
 };
 
+const consortiaTenants = [
+  {
+    'id': 'consortium',
+    'code': 'MCO',
+    'name': 'Consortium',
+    'isCentral': true
+  },
+  {
+    'id': 'university',
+    'code': 'UNI',
+    'name': 'University',
+    'isCentral': false
+  },
+  {
+    'id': 'college',
+    'code': 'COL',
+    'name': 'College',
+    'isCentral': false
+  }
+];
+
 const data = {
   locations: [],
   query: [],
   onFetchFacets: noop,
   parentResources: resources,
-  browseType: 'callNumbers',
+  browseType: browseModeOptions.CALL_NUMBERS,
+  consortiaTenants,
+};
+
+const activeFilters = {
+  language: ['eng'],
+  shared: ['true'],
+  effectiveLocation: ['effectiveLocation1'],
+  callNumbersTenantId: ['college'],
+  contributorsShared: ['true'],
+  contributorsTenantId: ['consortium'],
+  subjectsShared: ['true'],
+  subjectsTenantId: ['consortium'],
+  nameType: ['nameType1'],
 };
 
 const renderInstanceFilters = (props = {}) => {
@@ -58,11 +87,10 @@ const renderInstanceFilters = (props = {}) => {
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
         <InstanceFiltersBrowse
-          activeFilters={{ 'language': ['eng'] }}
+          activeFilters={activeFilters}
           data={data}
           onChange={mockOnChange}
           onClear={mockOnClear}
-          parentResources={resources}
           {...props}
         />
       </ModuleHierarchyProvider>
@@ -83,11 +111,25 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: 'callNumbers',
+          browseType: browseModeOptions.CALL_NUMBERS,
         },
       });
 
       expect(getByText('effectiveLocation-field')).toBeInTheDocument();
+    });
+
+    it('should display shared filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CALL_NUMBERS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+
+      expect(getByText('Shared')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
     });
   });
 
@@ -96,26 +138,24 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: 'dewey',
+          browseType: browseModeOptions.DEWEY,
         },
       });
 
       expect(getByText('effectiveLocation-field')).toBeInTheDocument();
     });
-  });
 
-  describe('When contributors browseType was selected', () => {
-    it('should display filter by nameType accordion', () => {
+    it('should display shared filter accordion', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: 'contributors',
+          browseType: browseModeOptions.DEWEY,
         },
       });
 
-      fireEvent.click(screen.getByText('Clear nameType'));
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
 
-      expect(getByText('nameType')).toBeInTheDocument();
+      expect(getByText('Shared')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
     });
   });
@@ -123,8 +163,122 @@ describe('InstanceFilters', () => {
   describe('When callNumber browseType was selected', () => {
     it('should call onClear handler if clear btn is clicked', () => {
       renderInstanceFilters();
-      fireEvent.click(screen.getByText('effectiveLocation-field'));
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Effective location (item)"'));
 
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display "Held By" facet accordion', () => {
+      const { getByRole } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CALL_NUMBERS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+
+      expect(getByRole('heading', { name: 'Held by' })).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display "Held By" facet options', () => {
+      const newData = cloneDeep(data);
+      newData.parentResources.facets.records = [{
+        'holdings.tenantId': {
+          'values': [
+            {
+              'id': 'university',
+              'totalRecords': 3,
+            },
+            {
+              'id': 'college',
+              'totalRecords': 1,
+            }
+          ],
+          'totalRecords': 2,
+        },
+      }];
+
+      const { getByText } = renderInstanceFilters({
+        data: newData,
+      });
+
+      expect(getByText('University')).toBeVisible();
+      expect(getByText('College')).toBeVisible();
+    });
+  });
+
+  describe('When contributors browseType was selected', () => {
+    it('should display filter by nameType accordion', () => {
+      const { getByRole } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CONTRIBUTORS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Name type"'));
+
+      expect(getByRole('heading', { name: 'Name type' })).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display shared filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CONTRIBUTORS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+
+      expect(getByText('Shared')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it.skip('should display Held by filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CONTRIBUTORS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+
+      expect(getByText('Held by')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+  });
+
+  describe('When subjects browseType was selected', () => {
+    it('should display shared filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.SUBJECTS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+
+      expect(getByText('Shared')).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it.skip('should display Held by filter accordion', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.SUBJECTS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+
+      expect(getByText('Held by')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
     });
   });
