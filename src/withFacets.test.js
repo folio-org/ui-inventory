@@ -170,7 +170,7 @@ describe('withFacets', () => {
       expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
         params: {
           facet: 'source:6',
-          query: 'isbn="*test1*" or title==/string "test2" or keyword all "test3*"',
+          query: 'isbn="*test1*" or title=="test2" or keyword all "test3*"',
         },
       }));
     });
