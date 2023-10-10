@@ -53,7 +53,7 @@ const NewOrderModalContainer = ({
     const route = orderId ? `/orders/view/${orderId}/po-line/create` : '/orders/create';
     const instanceTenantId = instance?.tenantId || stripes.okapi.tenant;
 
-    history.push(route, { instanceId: id, instanceTenantId });
+    history.push(route, { instanceId: instance?.id, instanceTenantId });
   }, [instance, orderId, stripes.okapi.tenant]);
 
   return (
