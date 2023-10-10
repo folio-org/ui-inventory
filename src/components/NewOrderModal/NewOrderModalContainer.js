@@ -9,8 +9,12 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import {
+  useOkapiKy,
+  useStripes,
+} from '@folio/stripes/core';
 
+import { useInstance } from '../../common';
 import { ORDERS_API } from '../../constants';
 import NewOrderModal from './NewOrderModal';
 
@@ -20,7 +24,9 @@ const NewOrderModalContainer = ({
 }) => {
   const history = useHistory();
   const ky = useOkapiKy();
+  const stripes = useStripes();
   const { id } = useParams();
+  const { instance } = useInstance(id);
   const [orderId, setOrderId] = useState();
 
   const validatePONumber = useCallback(async (poNumber) => {
@@ -45,9 +51,10 @@ const NewOrderModalContainer = ({
 
   const onSubmit = useCallback(() => {
     const route = orderId ? `/orders/view/${orderId}/po-line/create` : '/orders/create';
+    const instanceTenantId = instance?.tenantId || stripes.okapi.tenant;
 
-    history.push(route, { instanceId: id });
-  }, [orderId]);
+    history.push(route, { instanceId: id, instanceTenantId });
+  }, [instance, orderId, stripes.okapi.tenant]);
 
   return (
     <NewOrderModal
