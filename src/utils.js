@@ -799,7 +799,7 @@ export const getUserTenantsPermissions = (stripes, tenants = []) => {
   const userTenantIds = tenants.map(tenant => tenant.id || tenant);
 
   const promises = userTenantIds.map(async (tenantId) => {
-    const result = await fetch(`${url}/perms/users/${id}/permissions?full=false&indexField=userId`, {
+    const result = await fetch(`${url}/perms/users/${id}/permissions?full=true&indexField=userId`, {
       headers: {
         [OKAPI_TENANT_HEADER]: tenantId,
         [CONTENT_TYPE_HEADER]: 'application/json',
@@ -819,7 +819,13 @@ export const getUserTenantsPermissions = (stripes, tenants = []) => {
 export const hasMemberTenantPermission = (permissions, permissionName, tenantId) => {
   const tenantPermissions = permissions?.find(permission => permission.tenantId === tenantId)?.permissionNames;
 
-  return tenantPermissions?.includes(permissionName);
+  const hasPermission = tenantPermissions?.some(tenantPermission => tenantPermission.permissionName === permissionName);
+
+  if (!hasPermission) {
+    return tenantPermissions.some(tenantPermission => tenantPermission.subPermissions.includes(permissionName));
+  }
+
+  return hasPermission;
 };
 
 export const TENANT_IDS_KEY = 'tenantIds';

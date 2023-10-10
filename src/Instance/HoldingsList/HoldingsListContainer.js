@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { useStripes } from '@folio/stripes/core';
 import {
   Loading,
 } from '@folio/stripes/components';
@@ -8,20 +9,19 @@ import {
 import HoldingsList from './HoldingsList';
 import { HoldingsListMovement } from '../InstanceMovement/HoldingMovementList';
 import { useInstanceHoldingsQuery } from '../../providers';
-import { hasMemberTenantPermission } from '../../utils';
 
 const HoldingsListContainer = ({
   instance,
   isHoldingsMove,
   tenantId,
-  userTenantPermissions,
   ...rest
 }) => {
+  const stripes = useStripes();
   const { holdingsRecords: holdings, isLoading } = useInstanceHoldingsQuery(instance.id, { tenantId });
 
-  const canViewHoldings = hasMemberTenantPermission(userTenantPermissions, 'ui-inventory.holdings.edit', tenantId);
-  const canCreateItem = hasMemberTenantPermission(userTenantPermissions, 'ui-inventory.item.create', tenantId);
-  const canViewItems = hasMemberTenantPermission(userTenantPermissions, 'ui-inventory.item.create', tenantId);
+  const canViewHoldings = stripes.hasPerm('ui-inventory.instance.view');
+  const canCreateItem = stripes.hasPerm('ui-inventory.item.edit');
+  const canViewItems = stripes.hasPerm('ui-inventory.instance.view');
 
   if (isLoading) return <Loading size="large" />;
 
@@ -54,7 +54,6 @@ HoldingsListContainer.propTypes = {
   instance: PropTypes.object.isRequired,
   isHoldingsMove: PropTypes.bool,
   tenantId: PropTypes.string,
-  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default HoldingsListContainer;

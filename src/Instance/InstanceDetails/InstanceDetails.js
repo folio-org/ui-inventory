@@ -37,7 +37,6 @@ import { InstanceAcquisition } from './InstanceAcquisition';
 import HelperApp from '../../components/HelperApp';
 
 import { getAccordionState } from './utils';
-import { hasMemberTenantPermission } from '../../utils';
 import { DataContext } from '../../contexts';
 import { ConsortialHoldings } from './ConsortialHoldings';
 
@@ -78,7 +77,7 @@ const InstanceDetails = forwardRef(({
   const tags = instance?.tags?.tagList;
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
-  const canCreateHoldings = hasMemberTenantPermission(userTenantPermissions, 'ui-inventory.holdings.create', tenantId);
+  const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.edit');
 
   const detailsLastMenu = useMemo(() => {
     return (

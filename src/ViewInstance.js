@@ -196,7 +196,10 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
-    const { selectedInstance } = this.props;
+    const {
+      selectedInstance,
+      stripes,
+    } = this.props;
     const isMARCSourceRecord = isMARCSource(selectedInstance?.source);
 
     if (isMARCSourceRecord) {
@@ -205,7 +208,9 @@ class ViewInstance extends React.Component {
 
     this.setTlrSettings();
 
-    this.getCurrentTenantPermissions();
+    if (isUserInConsortiumMode(stripes)) {
+      this.getCurrentTenantPermissions();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -251,15 +256,12 @@ class ViewInstance extends React.Component {
   }
 
   getCurrentTenantPermissions = () => {
-    const { stripes } = this.props;
+    const {
+      stripes,
+      stripes: { user: { user: { tenants } } },
+    } = this.props;
 
-    if (isUserInConsortiumMode(stripes)) {
-      const { user: { user: { tenants } } } = stripes;
-      getUserTenantsPermissions(stripes, tenants).then(userTenantPermissions => this.setState({ userTenantPermissions }));
-    } else {
-      const { okapi: { tenant } } = this.props;
-      getUserTenantsPermissions(stripes, [tenant]).then(userTenantPermissions => this.setState({ userTenantPermissions }));
-    }
+    getUserTenantsPermissions(stripes, tenants).then(userTenantPermissions => this.setState({ userTenantPermissions }));
   }
 
   getMARCRecord = () => {
@@ -904,7 +906,6 @@ class ViewInstance extends React.Component {
                         instance={instance}
                         draggable={this.state.isItemsMovement}
                         tenantId={okapi.tenant}
-                        userTenantPermissions={this.state.userTenantPermissions}
                         droppable
                       />
                     </MoveItemsContext>
