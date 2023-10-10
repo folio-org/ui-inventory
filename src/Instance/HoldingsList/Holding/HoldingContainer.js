@@ -93,6 +93,9 @@ DraggableHolding.propTypes = {
   onViewHolding: PropTypes.func,
   onAddItem: PropTypes.func,
   tenantId: PropTypes.string,
+  isViewHoldingsDisabled: PropTypes.bool,
+  isAddItemDisabled: PropTypes.bool,
+  isBarcodeAsHotlink: PropTypes.bool,
 };
 
 const HoldingContainer = ({
