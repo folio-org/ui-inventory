@@ -88,7 +88,6 @@ HoldingsListMovement.propTypes = {
   isBarcodeAsHotlink: PropTypes.bool,
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
-  tenantId: PropTypes.string,
 };
 
 HoldingsListMovement.defaultProps = {

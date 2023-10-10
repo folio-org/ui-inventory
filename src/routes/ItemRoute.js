@@ -13,6 +13,11 @@ import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { PaneLoading } from '../components';
 import { DataContext } from '../contexts';
+import { getItem } from '../storage';
+import {
+  TENANT_IDS_KEY,
+  updateAffiliation,
+} from '../utils';
 
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`;
 
@@ -155,19 +160,22 @@ class ItemRoute extends React.Component {
     },
   });
 
-  onClose = () => {
+  goBack = () => {
     const {
-      goTo,
-      match: {
-        params: { id },
-      },
-      location: { pathname, search },
+      match: { params: { id } },
+      location: { search },
     } = this.props;
 
-    // extract instance url
-    const [path] = pathname.match(new RegExp(`(.*)${id}`));
+    window.location.href = `/inventory/view/${id}${search}`;
+  }
 
-    goTo(`${path}${search}`);
+  onClose = () => {
+    const { stripes: { okapi } } = this.props;
+    const tenantIds = getItem(TENANT_IDS_KEY);
+
+    const tenantFrom = tenantIds ? tenantIds.tenantFrom : okapi.tenant;
+
+    updateAffiliation(okapi, tenantFrom, this.goBack);
   }
 
   isLoading = () => {
@@ -212,6 +220,8 @@ ItemRoute.propTypes = {
   match: PropTypes.object,
   location: PropTypes.object,
   resources: PropTypes.object,
+  stripes: PropTypes.object,
+  tenantFrom: PropTypes.string,
 };
 
 export default flowRight(

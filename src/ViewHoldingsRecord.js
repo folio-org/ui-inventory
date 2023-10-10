@@ -52,6 +52,7 @@ import {
   getSortedNotes,
   handleKeyCommand,
   getDate,
+  updateAffiliation,
 } from './utils';
 import withLocation from './withLocation';
 import {
@@ -80,6 +81,7 @@ class ViewHoldingsRecord extends React.Component {
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
       resourceShouldRefresh: false,
       accumulate: true,
+      tenant: '!{tenantTo}'
     },
     items: {
       type: 'okapi',
@@ -95,6 +97,7 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
       accumulate: true,
+      tenant: '!{tenantTo}'
     },
     tagSettings: {
       type: 'okapi',
@@ -195,19 +198,22 @@ class ViewHoldingsRecord extends React.Component {
       });
   };
 
+  goBack = () => {
+    const {
+      id,
+      location: { search, state: locationState },
+    } = this.props;
+    const pathname = locationState?.backPathname ?? `/inventory/view/${id}`;
+
+    window.location.href = `${pathname}${search}`;
+  }
+
   onClose = (e) => {
     if (e) e.preventDefault();
 
-    const {
-      history,
-      location: { search, state: locationState },
-      id,
-    } = this.props;
+    const { stripes, tenantFrom } = this.props;
 
-    history.push({
-      pathname: locationState?.backPathname ?? `/inventory/view/${id}`,
-      search,
-    });
+    updateAffiliation(stripes.okapi, tenantFrom, this.goBack);
   }
 
   // Edit Holdings records handlers
@@ -1086,6 +1092,7 @@ ViewHoldingsRecord.propTypes = {
     connect: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
     hasInterface: PropTypes.func.isRequired,
+    okapi: PropTypes.object.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.object,
@@ -1131,6 +1138,7 @@ ViewHoldingsRecord.propTypes = {
     query: PropTypes.object.isRequired,
   }),
   goTo: PropTypes.func.isRequired,
+  tenantFrom: PropTypes.string,
 };
 
 export default flowRight(

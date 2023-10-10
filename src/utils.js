@@ -39,6 +39,7 @@ import {
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
 } from './constants';
+import { getItem, removeItem, setItem } from './storage';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
   ? (isEmpty(item) || item.every(element => !element || element === '-'))
@@ -787,7 +788,7 @@ export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia
 
 export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
 
-export const getUserTenantsPermissions = (stripes, tenants) => {
+export const getUserTenantsPermissions = (stripes, tenants = []) => {
   const {
     user: { user: { id } },
     okapi: {
@@ -821,9 +822,19 @@ export const hasMemberTenantPermission = (permissions, permissionName, tenantId)
   return tenantPermissions?.includes(permissionName);
 };
 
+export const TENANT_IDS_KEY = 'tenantIds';
+
 export const updateAffiliation = async (okapi, tenantId, move) => {
   if (okapi.tenant !== tenantId) {
     await updateTenant(okapi, tenantId);
+
+    const tenantIds = getItem(TENANT_IDS_KEY);
+
+    if (tenantIds) {
+      removeItem(TENANT_IDS_KEY);
+    } else {
+      setItem(TENANT_IDS_KEY, { tenantTo: tenantId, tenantFrom: okapi.tenant });
+    }
 
     move();
   } else {

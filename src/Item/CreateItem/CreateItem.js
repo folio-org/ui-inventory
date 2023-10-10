@@ -3,10 +3,7 @@ import React, {
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-import {
-  useHistory,
-  useLocation,
-} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import { useStripes } from '@folio/stripes/core';
@@ -21,17 +18,19 @@ import {
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
 import { useItemMutation } from '../hooks';
+import { updateAffiliation } from '../../utils';
 
 const CreateItem = ({
   referenceData,
   instanceId,
   holdingId,
+  tenantTo,
+  tenantFrom,
 }) => {
-  const history = useHistory();
   const location = useLocation();
 
-  const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
-  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
+  const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId, { tenantId: tenantTo });
+  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId, { tenantId: tenantTo });
   const callout = useCallout();
   const stripes = useStripes();
 
@@ -40,12 +39,13 @@ const CreateItem = ({
     holdingsRecordId: holding.id,
   }), [holding.id]);
 
+  const goBack = useCallback(() => {
+    window.location.href = `/inventory/view/${instanceId}${location.search}`;
+  }, [instanceId, location.search]);
+
   const onCancel = useCallback(() => {
-    history.push({
-      pathname: `/inventory/view/${instanceId}`,
-      search: location.search,
-    });
-  }, [location.search, instanceId]);
+    updateAffiliation(stripes.okapi, tenantFrom, goBack);
+  }, [stripes.okapi, tenantFrom, goBack]);
 
   const onSuccess = useCallback(async (response) => {
     const { hrid } = await response.json();
@@ -91,6 +91,8 @@ CreateItem.propTypes = {
   instanceId: PropTypes.string.isRequired,
   holdingId: PropTypes.string.isRequired,
   referenceData: PropTypes.object.isRequired,
+  tenantTo: PropTypes.string,
+  tenantFrom: PropTypes.string,
 };
 
 export default CreateItem;
