@@ -74,6 +74,13 @@ const InstanceDetails = forwardRef(({
   ...rest
 }, ref) => {
   const intl = useIntl();
+  const stripes = useStripes();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+
+  const referenceData = useContext(DataContext);
+  const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
+  const [helperApp, setHelperApp] = useState();
 
   if (isLoading) {
     return (
@@ -95,13 +102,6 @@ const InstanceDetails = forwardRef(({
     );
   }
 
-  const stripes = useStripes();
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-
-  const referenceData = useContext(DataContext);
-  const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
-  const [helperApp, setHelperApp] = useState();
   const tags = instance?.tags?.tagList;
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
