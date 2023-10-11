@@ -31,12 +31,10 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
-import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import {
   handleKeyCommand,
   isInstanceShadowCopy,
   isMARCSource,
-  isUserInConsortiumMode,
 } from './utils';
 import {
   indentifierTypeNames,
@@ -811,26 +809,6 @@ class ViewInstance extends React.Component {
           )}
         />
       </>
-    );
-  };
-
-  renderPaneTitle = (instance = {}) => {
-    const {
-      stripes,
-      isShared,
-    } = this.props;
-
-    const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
-
-    return (
-      <FormattedMessage
-        id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
-        values={{
-          isShared: isInstanceShared,
-          title: instance?.title,
-          publisherAndDate: getPublishingInfo(instance),
-        }}
-      />
     );
   };
 
