@@ -507,17 +507,17 @@ export const SINGLE_ITEM_QUERY_TEMPLATES = {
 
 export const fieldSearchConfigurations = {
   keyword: {
-    exactPhrase: 'keyword==/string "%{query.query}"',
+    exactPhrase: 'keyword=="%{query.query}"',
     containsAll: 'keyword all "%{query.query}"',
     startsWith: 'keyword all "%{query.query}*"',
   },
   contributor: {
-    exactPhrase: 'contributors.name==/string "%{query.query}"',
+    exactPhrase: 'contributors.name=="%{query.query}"',
     containsAll: 'contributors.name="*%{query.query}*"',
     startsWith: 'contributors.name="%{query.query}*"',
   },
   title: {
-    exactPhrase: 'title==/string "%{query.query}"',
+    exactPhrase: 'title=="%{query.query}"',
     containsAll: 'title all "%{query.query}"',
     startsWith: 'title all "%{query.query}*"',
   },
@@ -542,24 +542,24 @@ export const fieldSearchConfigurations = {
     startsWith: 'oclc="%{query.query}*"',
   },
   instanceNotes: {
-    exactPhrase: 'notes.note==/string "%{query.query}" or administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'notes.note=="%{query.query}" or administrativeNotes=="%{query.query}"',
     containsAll: 'notes.note all "%{query.query}" or administrativeNotes all "%{query.query}"',
     startsWith: 'notes.note all "%{query.query}*" or administrativeNotes all "%{query.query}*"',
   },
   instanceAdministrativeNotes: {
-    exactPhrase: 'administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'administrativeNotes=="%{query.query}"',
     containsAll: 'administrativeNotes all "%{query.query}"',
     startsWith: 'administrativeNotes all "%{query.query}*"',
   },
   subject: {
-    exactPhrase: 'subjects.value==/string "%{query.query}"',
+    exactPhrase: 'subjects.value=="%{query.query}"',
     containsAll: 'subjects.value all "%{query.query}"',
-    startsWith: 'subjects.value==/string "%{query.query}*"',
+    startsWith: 'subjects.value=="%{query.query}*"',
   },
   callNumber: {
-    exactPhrase: 'itemEffectiveShelvingOrder==/string "%{query.query}"',
+    exactPhrase: 'itemEffectiveShelvingOrder=="%{query.query}"',
     containsAll: 'itemEffectiveShelvingOrder="*%{query.query}*"',
-    startsWith: 'itemEffectiveShelvingOrder==/string "%{query.query}*"',
+    startsWith: 'itemEffectiveShelvingOrder=="%{query.query}*"',
   },
   hrid: {
     exactPhrase: 'hrid=="%{query.query}"',
@@ -577,7 +577,7 @@ export const fieldSearchConfigurations = {
     startsWith: 'authorityId=="%{query.query}*"',
   },
   allFields: {
-    exactPhrase: 'cql.all==/string "%{query.query}"',
+    exactPhrase: 'cql.all=="%{query.query}"',
     containsAll: 'cql.all all "%{query.query}"',
     startsWith: 'cql.all all "%{query.query}*"',
   },
@@ -592,12 +592,12 @@ export const fieldSearchConfigurations = {
     startsWith: 'holdingsNormalizedCallNumbers="%{query.query}*"',
   },
   holdingsNotes: {
-    exactPhrase: 'holdings.notes.note==/string "%{query.query}" or holdings.administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'holdings.notes.note=="%{query.query}" or holdings.administrativeNotes=="%{query.query}"',
     containsAll: 'holdings.notes.note all "%{query.query}" or holdings.administrativeNotes all "%{query.query}"',
     startsWith: 'holdings.notes.note all "%{query.query}*" or holdings.administrativeNotes all "%{query.query}*"',
   },
   holdingsAdministrativeNotes: {
-    exactPhrase: 'holdings.administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'holdings.administrativeNotes=="%{query.query}"',
     containsAll: 'holdings.administrativeNotes all "%{query.query}"',
     startsWith: 'holdings.administrativeNotes all "%{query.query}*"',
   },
@@ -627,17 +627,17 @@ export const fieldSearchConfigurations = {
     startsWith: 'itemNormalizedCallNumbers="%{query.query}*"',
   },
   itemNotes: {
-    exactPhrase: 'item.notes.note==/string "%{query.query}" or item.administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'item.notes.note=="%{query.query}" or item.administrativeNotes=="%{query.query}"',
     containsAll: 'item.notes.note all "%{query.query}" or item.administrativeNotes all "%{query.query}"',
     startsWith: 'item.notes.note all "%{query.query}*" or item.administrativeNotes all "%{query.query}*"',
   },
   itemAdministrativeNotes: {
-    exactPhrase: 'item.administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'item.administrativeNotes=="%{query.query}"',
     containsAll: 'item.administrativeNotes all "%{query.query}"',
     startsWith: 'item.administrativeNotes all "%{query.query}*"',
   },
   itemCirculationNotes: {
-    exactPhrase: 'item.circulationNotes.note==/string "%{query.query}"',
+    exactPhrase: 'item.circulationNotes.note=="%{query.query}"',
     containsAll: 'item.circulationNotes.note all "%{query.query}"',
     startsWith: 'item.circulationNotes.note all "%{query.query}*"',
   },
