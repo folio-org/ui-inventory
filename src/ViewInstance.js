@@ -450,7 +450,7 @@ class ViewInstance extends React.Component {
       });
   }
 
-  checkIfHasLinkedAuyhorities = (instance = {}) => {
+  checkIfHasLinkedAuthorities = (instance = {}) => {
     const linkedAuthorities = pick(this.props.selectedInstance, AUTHORITY_LINKED_FIELDS);
 
     const findLinkedAuthorities = authorities => {
@@ -973,7 +973,7 @@ class ViewInstance extends React.Component {
               message={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.message" values={{ instanceTitle: instance?.title }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.confirmButton" />}
               onCancel={() => this.setState({ isShareLocalInstanceModalOpen: false })}
-              onConfirm={() => this.checkIfHasLinkedAuyhorities(instance)}
+              onConfirm={() => this.checkIfHasLinkedAuthorities(instance)}
             />
 
             <ConfirmationModal
