@@ -100,6 +100,7 @@
 * Instance 3rd pane: Add consortial holdings/item accordion. Refs UIIN-2410.
 * Consortial Central Tenant: Handling Holdings and Item actions on the Instance detail view. Refs UIIN-2523.
 * Hide Held by facet in Inventory contributor and subject browse. Refs UIIN-2591.
+* Use `==` for exact phrase search in Advanced Search for all full-text and term fields. Refs UIIN-2612.
 * ECS: Check when sharing instance with source=MARC is complete before re-fetching it. Refs UIIN-2605.
 
 ## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
