@@ -19,6 +19,7 @@ import {
   PaneMenu,
   Row,
   MessageBanner,
+  Icon,
 } from '@folio/stripes/components';
 
 import { InstanceTitle } from './InstanceTitle';
@@ -36,9 +37,17 @@ import { InstanceNewHolding } from './InstanceNewHolding';
 import { InstanceAcquisition } from './InstanceAcquisition';
 import HelperApp from '../../components/HelperApp';
 
-import { getAccordionState } from './utils';
 import { DataContext } from '../../contexts';
 import { ConsortialHoldings } from './ConsortialHoldings';
+import {
+  getAccordionState,
+  getPublishingInfo,
+} from './utils';
+import {
+  getDate,
+  isInstanceShadowCopy,
+  isUserInConsortiumMode,
+} from '../../utils';
 
 const accordions = {
   administrative: 'acc01',
@@ -57,15 +66,36 @@ const accordions = {
 const InstanceDetails = forwardRef(({
   children,
   instance,
-  paneTitle,
-  paneSubtitle,
   onClose,
   actionMenu,
   tagsEnabled,
+  isShared,
+  isLoading,
   ...rest
 }, ref) => {
-  const stripes = useStripes();
   const intl = useIntl();
+
+  if (isLoading) {
+    return (
+      <Pane
+        id="pane-instancedetails"
+        defaultWidth="fill"
+        paneTitle={intl.formatMessage({ id: 'ui-inventory.edit' })}
+        appIcon={<AppIcon app="inventory" iconKey="instance" />}
+        dismissible
+        onClose={onClose}
+      >
+        <div style={{ paddingTop: '1rem' }}>
+          <Icon
+            icon="spinner-ellipsis"
+            width="100px"
+          />
+        </div>
+      </Pane>
+    );
+  }
+
+  const stripes = useStripes();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
@@ -74,6 +104,33 @@ const InstanceDetails = forwardRef(({
   const [helperApp, setHelperApp] = useState();
   const tags = instance?.tags?.tagList;
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+
+  const renderPaneTitle = () => {
+    const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
+
+    return (
+      <FormattedMessage
+        id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
+        values={{
+          isShared: isInstanceShared,
+          title: instance?.title,
+          publisherAndDate: getPublishingInfo(instance),
+        }}
+      />
+    );
+  };
+
+  const renderPaneSubtitle = () => {
+    return (
+      <FormattedMessage
+        id="ui-inventory.instanceRecordSubtitle"
+        values={{
+          hrid: instance?.hrid,
+          updatedDate: getDate(instance?.metadata?.updatedDate),
+        }}
+      />
+    );
+  };
 
   const detailsLastMenu = useMemo(() => {
     return (
@@ -99,8 +156,8 @@ const InstanceDetails = forwardRef(({
         {...rest}
         data-test-instance-details
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
-        paneTitle={paneTitle}
-        paneSub={paneSubtitle}
+        paneTitle={renderPaneTitle()}
+        paneSub={renderPaneSubtitle()}
         dismissible
         onClose={onClose}
         actionMenu={actionMenu}
@@ -232,15 +289,17 @@ InstanceDetails.propTypes = {
   actionMenu: PropTypes.func,
   onClose: PropTypes.func.isRequired,
   instance: PropTypes.object,
-  paneTitle: PropTypes.object,
-  paneSubtitle: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  isShared: PropTypes.bool,
 };
 
 InstanceDetails.defaultProps = {
   instance: {},
   tagsEnabled: false,
+  isLoading: false,
+  isShared: false,
 };
 
 export default InstanceDetails;
