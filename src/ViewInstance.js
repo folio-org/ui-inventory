@@ -9,6 +9,7 @@ import {
 import {
   flowRight,
   isEmpty,
+  pick,
 } from 'lodash';
 
 import {
@@ -43,6 +44,7 @@ import {
   isUserInConsortiumMode,
 } from './utils';
 import {
+  AUTHORITY_LINKED_FIELDS,
   indentifierTypeNames,
   layers,
   REQUEST_OPEN_STATUSES,
@@ -182,6 +184,8 @@ class ViewInstance extends React.Component {
       isImportRecordModalOpened: false,
       isCopyrightModalOpened: false,
       isShareLocalInstanceModalOpen: false,
+      isUnlinkAuthoritiesModalOpen: false,
+      linkedAuthoritiesLength: 0,
       isNewOrderModalOpen: false,
       afterCreate: false,
       instancesQuickExportInProgress: false,
@@ -439,8 +443,42 @@ class ViewInstance extends React.Component {
         });
       })
       .finally(() => {
-        this.setState({ isShareLocalInstanceModalOpen: false });
+        this.setState({
+          isShareLocalInstanceModalOpen: false,
+          isUnlinkAuthoritiesModalOpen: false,
+        });
       });
+  }
+
+  checkIfHasLinkedAuyhorities = (instance = {}) => {
+    const linkedAuthorities = pick(this.props.selectedInstance, AUTHORITY_LINKED_FIELDS);
+
+    const findLinkedAuthorities = authorities => {
+      const linkedAuthoritiesLength = AUTHORITY_LINKED_FIELDS.reduce((total, field) => {
+        const authoritiesAmount = authorities[field].filter(item => item.authorityId).length;
+        return total + authoritiesAmount;
+      }, 0);
+
+      return {
+        hasLinkedAuthoriries: !!linkedAuthoritiesLength,
+        linkedAuthoritiesLength,
+      };
+    };
+
+    const {
+      hasLinkedAuthoriries,
+      linkedAuthoritiesLength,
+    } = findLinkedAuthorities(linkedAuthorities);
+
+    if (hasLinkedAuthoriries) {
+      this.setState({
+        linkedAuthoritiesLength,
+        isShareLocalInstanceModalOpen: false,
+        isUnlinkAuthoritiesModalOpen: true,
+      });
+    } else {
+      this.handleShareLocalInstance(instance);
+    }
   }
 
   toggleCopyrightModal = () => {
@@ -799,6 +837,7 @@ class ViewInstance extends React.Component {
       intl,
       isCentralTenantPermissionsLoading,
     } = this.props;
+    const { linkedAuthoritiesLength } = this.state;
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
@@ -934,6 +973,15 @@ class ViewInstance extends React.Component {
               message={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.message" values={{ instanceTitle: instance?.title }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.confirmButton" />}
               onCancel={() => this.setState({ isShareLocalInstanceModalOpen: false })}
+              onConfirm={() => this.checkIfHasLinkedAuyhorities(instance)}
+            />
+
+            <ConfirmationModal
+              open={this.state.isUnlinkAuthoritiesModalOpen}
+              heading={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.header" />}
+              message={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.message" values={{ linkedAuthoritiesLength }} />}
+              confirmLabel={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.proceed" />}
+              onCancel={() => this.setState({ isUnlinkAuthoritiesModalOpen: false })}
               onConfirm={() => this.handleShareLocalInstance(instance)}
             />
 
