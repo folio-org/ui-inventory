@@ -79,7 +79,7 @@ describe('buildQuery', () => {
         const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
         expect(cql).toContain(
-          '(keyword all "test" or title==/string "hello")'
+          '(keyword all "test" or title=="hello")'
         );
       });
 
