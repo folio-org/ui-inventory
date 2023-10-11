@@ -485,7 +485,7 @@ class ViewInstance extends React.Component {
       })
       .catch(() => {
         this.setState({ isShareLocalInstanceModalOpen: false });
-        this.calloutRef.current.sendCallout({
+        this.calloutRef.current?.sendCallout({
           type: 'error',
           message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
         });
