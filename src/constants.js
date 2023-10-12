@@ -684,3 +684,9 @@ export const AUTHORITY_LINKED_FIELDS = [
   'subjects',
   'series',
 ];
+
+export const INSTANCE_SHARING_STATUSES = {
+  COMPLETE: 'COMPLETE',
+  ERROR: 'ERROR',
+  IN_PROGRESS: 'IN_PROGRESS',
+};

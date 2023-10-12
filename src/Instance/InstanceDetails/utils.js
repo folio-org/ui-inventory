@@ -20,7 +20,7 @@ export const getPublishingInfo = instance => {
   return undefined;
 };
 
-export const getAccordionState = (instance, accordions) => {
+export const getAccordionState = (instance = {}, accordions = {}) => {
   const instanceData = pick(
     instance,
     ['hrid', 'source', 'catalogedDate', 'statusId', 'statusUpdatedDate', 'modeOfIssuanceId', 'statisticalCodeIds'],
