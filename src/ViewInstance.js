@@ -509,17 +509,17 @@ class ViewInstance extends React.Component {
       }, 0);
 
       return {
-        hasLinkedAuthoriries: !!linkedAuthoritiesLength,
+        hasLinkedAuthorities: !!linkedAuthoritiesLength,
         linkedAuthoritiesLength,
       };
     };
 
     const {
-      hasLinkedAuthoriries,
+      hasLinkedAuthorities,
       linkedAuthoritiesLength,
     } = findLinkedAuthorities(linkedAuthorities);
 
-    if (hasLinkedAuthoriries) {
+    if (hasLinkedAuthorities) {
       this.setState({
         linkedAuthoritiesLength,
         isShareLocalInstanceModalOpen: false,
