@@ -430,7 +430,7 @@ class ViewInstance extends React.Component {
             type: 'error',
             message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
           });
-
+          clearInterval(interval);
           reject(error);
         };
         const onSuccess = response => {
@@ -442,7 +442,6 @@ class ViewInstance extends React.Component {
           }
 
           if (sharingStatus === INSTANCE_SHARING_STATUSES.ERROR) {
-            clearInterval(interval);
             onError(response);
           }
         };

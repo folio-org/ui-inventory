@@ -82,6 +82,27 @@ const InstanceDetails = forwardRef(({
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
 
+  const tags = instance?.tags?.tagList;
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+
+  const detailsLastMenu = useMemo(() => {
+    return (
+      <PaneMenu>
+        {
+          tagsEnabled && (
+            <IconButton
+              icon="tag"
+              id="clickable-show-tags"
+              onClick={() => setHelperApp('tags')}
+              badgeCount={tags?.length}
+              ariaLabel={intl.formatMessage({ id: 'ui-inventory.showTags' })}
+            />
+          )
+        }
+      </PaneMenu>
+    );
+  }, [tagsEnabled, tags, intl]);
+
   if (isLoading) {
     return (
       <Pane
@@ -101,9 +122,6 @@ const InstanceDetails = forwardRef(({
       </Pane>
     );
   }
-
-  const tags = instance?.tags?.tagList;
-  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   const renderPaneTitle = () => {
     const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
@@ -131,24 +149,6 @@ const InstanceDetails = forwardRef(({
       />
     );
   };
-
-  const detailsLastMenu = useMemo(() => {
-    return (
-      <PaneMenu>
-        {
-          tagsEnabled && (
-            <IconButton
-              icon="tag"
-              id="clickable-show-tags"
-              onClick={() => setHelperApp('tags')}
-              badgeCount={tags?.length}
-              ariaLabel={intl.formatMessage({ id: 'ui-inventory.showTags' })}
-            />
-          )
-        }
-      </PaneMenu>
-    );
-  }, [tagsEnabled, tags, intl]);
 
   return (
     <>
