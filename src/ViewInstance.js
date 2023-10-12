@@ -172,6 +172,7 @@ class ViewInstance extends React.Component {
     this.log = logger.log.bind(logger);
 
     this.state = {
+      intervalId: null,
       isLoading: false,
       marcRecord: null,
       findInstancePluginOpened: false,
@@ -241,6 +242,7 @@ class ViewInstance extends React.Component {
 
   componentWillUnmount() {
     this.props.mutator.allInstanceItems.reset();
+    clearInterval(this.state.intervalId);
   }
 
   getMARCRecord = () => {
@@ -450,6 +452,8 @@ class ViewInstance extends React.Component {
           .then(onSuccess)
           .catch(onError);
       }, 2000);
+
+      this.setState({ intervalId: interval });
     });
   }
 
