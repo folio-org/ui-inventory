@@ -678,6 +678,13 @@ export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
 
 export const DEFAULT_ITEM_TABLE_SORTBY_FIELD = 'barcode';
 
+export const AUTHORITY_LINKED_FIELDS = [
+  'alternativeTitles',
+  'contributors',
+  'subjects',
+  'series',
+];
+
 export const INSTANCE_SHARING_STATUSES = {
   COMPLETE: 'COMPLETE',
   ERROR: 'ERROR',
