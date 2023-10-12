@@ -677,3 +677,9 @@ export const CONSORTIUM_PREFIX = 'CONSORTIUM-';
 export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
 
 export const DEFAULT_ITEM_TABLE_SORTBY_FIELD = 'barcode';
+
+export const INSTANCE_SHARING_STATUSES = {
+  COMPLETE: 'COMPLETE',
+  ERROR: 'ERROR',
+  IN_PROGRESS: 'IN_PROGRESS',
+};

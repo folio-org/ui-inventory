@@ -175,7 +175,10 @@ const defaultProp = {
       GET: jest.fn(() => Promise.resolve([])),
       reset: jest.fn()
     },
-    shareInstance: { POST: jest.fn() },
+    shareInstance: {
+      POST: jest.fn(),
+      GET: jest.fn(() => Promise.resolve({ sharingInstances: [{ status: 'COMPLETE' }] })),
+    },
   },
   onClose: mockonClose,
   onCopy: jest.fn(),
@@ -259,6 +262,7 @@ describe('ViewInstance', () => {
     jest.clearAllMocks();
     StripesConnectedInstance.prototype.instance.mockImplementation(() => instance);
     checkIfUserInCentralTenant.mockReturnValue(false);
+    useStripes().hasInterface.mockReturnValue(true);
   });
   it('should display action menu items', () => {
     renderViewInstance();
@@ -273,7 +277,7 @@ describe('ViewInstance', () => {
   describe('instance header', () => {
     describe('for non-consortia users', () => {
       it('should render instance title, publisher, and publication date', () => {
-        defaultProp.stripes.hasInterface.mockReturnValue(false);
+        useStripes().hasInterface.mockReturnValue(false);
 
         const { getByText } = renderViewInstance();
         const expectedTitle = 'Instance • #youthaction • Information Age Publishing, Inc. • 2015';
