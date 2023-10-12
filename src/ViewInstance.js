@@ -172,7 +172,6 @@ class ViewInstance extends React.Component {
     this.log = logger.log.bind(logger);
 
     this.state = {
-      intervalId: null,
       isLoading: false,
       marcRecord: null,
       findInstancePluginOpened: false,
@@ -185,6 +184,7 @@ class ViewInstance extends React.Component {
       instancesQuickExportInProgress: false,
     };
     this.instanceId = null;
+    this.intervalId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
 
     this.calloutRef = createRef();
@@ -242,7 +242,7 @@ class ViewInstance extends React.Component {
 
   componentWillUnmount() {
     this.props.mutator.allInstanceItems.reset();
-    clearInterval(this.state.intervalId);
+    clearInterval(this.intervalId);
   }
 
   getMARCRecord = () => {
@@ -426,20 +426,20 @@ class ViewInstance extends React.Component {
 
   waitForInstanceSharingComplete = ({ sourceTenantId, instanceIdentifier, instanceTitle }) => {
     return new Promise((resolve, reject) => {
-      const interval = setInterval(() => {
+      this.intervalId = setInterval(() => {
         const onError = error => {
           this.calloutRef.current.sendCallout({
             type: 'error',
             message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
           });
-          clearInterval(interval);
+          clearInterval(this.intervalId);
           reject(error);
         };
         const onSuccess = response => {
           const sharingStatus = response?.sharingInstances[0]?.status;
 
           if (sharingStatus === INSTANCE_SHARING_STATUSES.COMPLETE) {
-            clearInterval(interval);
+            clearInterval(this.intervalId);
             resolve(response);
           }
 
@@ -452,8 +452,6 @@ class ViewInstance extends React.Component {
           .then(onSuccess)
           .catch(onError);
       }, 2000);
-
-      this.setState({ intervalId: interval });
     });
   }
 
