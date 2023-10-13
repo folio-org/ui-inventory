@@ -66,9 +66,9 @@ const InstanceDetails = forwardRef(({
   ...rest
 }, ref) => {
   const stripes = useStripes();
+  const { okapi: { tenant: tenantId } } = stripes;
   const intl = useIntl();
   const location = useLocation();
-  const { okapi: { tenant: tenantId } } = useStripes();
   const searchParams = new URLSearchParams(location.search);
 
   const referenceData = useContext(DataContext);

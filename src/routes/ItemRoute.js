@@ -16,7 +16,7 @@ import { DataContext } from '../contexts';
 import { getItem } from '../storage';
 import {
   TENANT_IDS_KEY,
-  updateAffiliation,
+  switchAffiliation,
 } from '../utils';
 
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`;
@@ -175,7 +175,7 @@ class ItemRoute extends React.Component {
 
     const tenantFrom = tenantIds ? tenantIds.tenantFrom : okapi.tenant;
 
-    updateAffiliation(okapi, tenantFrom, this.goBack);
+    switchAffiliation(okapi, tenantFrom, this.goBack).then();
   }
 
   isLoading = () => {

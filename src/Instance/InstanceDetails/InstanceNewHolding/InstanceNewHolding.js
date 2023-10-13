@@ -13,7 +13,7 @@ import {
   Button,
 } from '@folio/stripes/components';
 
-import { updateAffiliation } from '../../../utils';
+import { switchAffiliation } from '../../../utils';
 
 const InstanceNewHolding = ({
   location,
@@ -39,7 +39,7 @@ const InstanceNewHolding = ({
             aria-label={label}
             buttonStyle="primary"
             fullWidth
-            onClick={() => updateAffiliation(stripes.okapi, tenantId, onNewHolding)}
+            onClick={() => switchAffiliation(stripes.okapi, tenantId, onNewHolding)}
             disabled={disabled}
           >
             {label}

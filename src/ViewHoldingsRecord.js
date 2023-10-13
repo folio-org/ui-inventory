@@ -52,7 +52,7 @@ import {
   getSortedNotes,
   handleKeyCommand,
   getDate,
-  updateAffiliation,
+  switchAffiliation,
 } from './utils';
 import withLocation from './withLocation';
 import {
@@ -213,7 +213,7 @@ class ViewHoldingsRecord extends React.Component {
 
     const { stripes, tenantFrom } = this.props;
 
-    updateAffiliation(stripes.okapi, tenantFrom, this.goBack);
+    switchAffiliation(stripes.okapi, tenantFrom, this.goBack);
   }
 
   // Edit Holdings records handlers

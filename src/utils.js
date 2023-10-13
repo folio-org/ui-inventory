@@ -830,7 +830,7 @@ export const hasMemberTenantPermission = (permissions, permissionName, tenantId)
 
 export const TENANT_IDS_KEY = 'tenantIds';
 
-export const updateAffiliation = async (okapi, tenantId, move) => {
+export const switchAffiliation = async (okapi, tenantId, move) => {
   if (okapi.tenant !== tenantId) {
     await updateTenant(okapi, tenantId);
 

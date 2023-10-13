@@ -13,7 +13,7 @@ import {
   Icon,
 } from '@folio/stripes/components';
 
-import { updateAffiliation } from '../../../utils';
+import { switchAffiliation } from '../../../utils';
 
 import { MoveToDropdown } from './MoveToDropdown';
 
@@ -47,7 +47,7 @@ const HoldingButtonsGroup = ({
       <Button
         id={`clickable-view-holdings-${holding.id}`}
         data-test-view-holdings
-        onClick={() => updateAffiliation(stripes.okapi, tenantId, onViewHolding)}
+        onClick={() => switchAffiliation(stripes.okapi, tenantId, onViewHolding)}
         disabled={isViewHoldingsDisabled}
       >
         <FormattedMessage id="ui-inventory.viewHoldings" />
@@ -58,7 +58,7 @@ const HoldingButtonsGroup = ({
           <Button
             id={`clickable-new-item-${holding.id}`}
             data-test-add-item
-            onClick={() => updateAffiliation(stripes.okapi, tenantId, onAddItem)}
+            onClick={() => switchAffiliation(stripes.okapi, tenantId, onAddItem)}
             buttonStyle="primary paneHeaderNewButton"
             disabled={isAddItemDisabled}
           >

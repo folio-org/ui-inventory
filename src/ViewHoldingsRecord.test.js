@@ -17,7 +17,7 @@ import {
   translationsProperties,
 } from '../test/jest/helpers';
 
-import { updateAffiliation } from './utils';
+import { switchAffiliation } from './utils';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
 jest.mock('./withLocation', () => jest.fn(c => c));
@@ -118,7 +118,7 @@ describe('ViewHoldingsRecord actions', () => {
   it('should close view holding page', async () => {
     renderViewHoldingsRecord();
     fireEvent.click(await screen.findByRole('button', { name: 'confirm' }));
-    expect(updateAffiliation).toHaveBeenCalled();
+    expect(switchAffiliation).toHaveBeenCalled();
   });
 
   it('should translate to edit holding form page', async () => {

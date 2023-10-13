@@ -7,7 +7,7 @@ import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 
-import { updateAffiliation } from '../../../utils';
+import { switchAffiliation } from '../../../utils';
 
 import HoldingButtonsGroup from './HoldingButtonsGroup';
 
@@ -85,7 +85,7 @@ describe('HoldingButtonsGroup', () => {
 
       fireEvent.click(getByRole('button', { name:  'View holdings' }));
 
-      expect(updateAffiliation.mock.calls.length).toBe(1);
+      expect(switchAffiliation.mock.calls.length).toBe(1);
     });
   });
 
@@ -95,7 +95,7 @@ describe('HoldingButtonsGroup', () => {
 
       fireEvent.click(getByRole('button', { name:  'Add item' }));
 
-      expect(updateAffiliation.mock.calls.length).toBe(1);
+      expect(switchAffiliation.mock.calls.length).toBe(1);
     });
   });
 });

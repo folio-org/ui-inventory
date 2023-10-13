@@ -18,7 +18,7 @@ import {
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
 import { useItemMutation } from '../hooks';
-import { updateAffiliation } from '../../utils';
+import { switchAffiliation } from '../../utils';
 
 const CreateItem = ({
   referenceData,
@@ -44,7 +44,7 @@ const CreateItem = ({
   }, [instanceId, location.search]);
 
   const onCancel = useCallback(() => {
-    updateAffiliation(stripes.okapi, tenantFrom, goBack);
+    switchAffiliation(stripes.okapi, tenantFrom, goBack).then();
   }, [stripes.okapi, tenantFrom, goBack]);
 
   const onSuccess = useCallback(async (response) => {

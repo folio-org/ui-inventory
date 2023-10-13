@@ -20,7 +20,7 @@ import {
 } from '@folio/stripes/components';
 import css from '../../View.css';
 import { QUERY_INDEXES } from '../../constants';
-import { updateAffiliation } from '../../utils';
+import { switchAffiliation } from '../../utils';
 
 const ItemBarcode = ({
   location,
@@ -67,7 +67,7 @@ const ItemBarcode = ({
         <Button
           buttonStyle="link"
           buttonClass={css.linkWithoutBorder}
-          onClick={() => updateAffiliation(stripes.okapi, tenantId, onViewItem)}
+          onClick={() => switchAffiliation(stripes.okapi, tenantId, onViewItem)}
           data-test-item-link
         >
           {itemBarcode}

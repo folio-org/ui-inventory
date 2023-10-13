@@ -19,7 +19,7 @@ import {
 } from '../../common/hooks';
 import useCallout from '../../hooks/useCallout';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
-import { updateAffiliation } from '../../utils';
+import { switchAffiliation } from '../../utils';
 
 const CreateHolding = ({
   location,
@@ -38,7 +38,7 @@ const CreateHolding = ({
   }, [location.search, instanceId]);
 
   const onCancel = useCallback(() => {
-    updateAffiliation(stripes.okapi, tenantFrom, goBack);
+    switchAffiliation(stripes.okapi, tenantFrom, goBack).then();
   }, [stripes.okapi, tenantFrom, goBack]);
 
   const onSubmit = useCallback((newHolding) => {
