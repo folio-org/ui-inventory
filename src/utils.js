@@ -816,10 +816,10 @@ export const getUserTenantsPermissions = (stripes, tenants = []) => {
   return Promise.all(promises);
 };
 
-export const hasMemberTenantPermission = (permissions, permissionName, tenantId) => {
-  const tenantPermissions = permissions?.find(permission => permission.tenantId === tenantId)?.permissionNames;
+export const hasMemberTenantPermission = (permissions = [], permissionName, tenantId) => {
+  const tenantPermissions = permissions?.find(permission => permission?.tenantId === tenantId)?.permissionNames || [];
 
-  const hasPermission = tenantPermissions?.some(tenantPermission => tenantPermission.permissionName === permissionName);
+  const hasPermission = tenantPermissions?.some(tenantPermission => tenantPermission?.permissionName === permissionName);
 
   if (!hasPermission) {
     return tenantPermissions.some(tenantPermission => tenantPermission.subPermissions.includes(permissionName));
