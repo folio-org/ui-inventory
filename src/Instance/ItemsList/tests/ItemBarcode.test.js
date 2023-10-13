@@ -93,19 +93,20 @@ describe('<ItemBarcode>', () => {
 
   it('should render barcode as a hotlink', () => {
     const history = getHistory(searchItem(QUERY_INDEXES.BARCODE));
-    const { container } = setupItemBarcode({ ...itemBarcodeProps, history });
+    const { getByRole } = setupItemBarcode({ ...itemBarcodeProps, history });
 
-    expect(container.querySelector('[data-test-item-link="true"]')).toBeInTheDocument();
+    expect(getByRole('button', { name: itemProp.barcode })).toBeInTheDocument();
   });
 
   it('should render barcode as a plain text', () => {
     const history = getHistory(searchItem(QUERY_INDEXES.BARCODE));
-    const { container } = setupItemBarcode({
+    const { queryByRole, getByText } = setupItemBarcode({
       ...itemBarcodeProps,
       isBarcodeAsHotlink: false,
       history,
     });
 
-    expect(container.querySelector('[data-test-item-link="true"]')).not.toBeInTheDocument();
+    expect(queryByRole('button', { name: itemProp.barcode })).not.toBeInTheDocument();
+    expect(getByText(itemProp.barcode)).toBeInTheDocument();
   });
 });

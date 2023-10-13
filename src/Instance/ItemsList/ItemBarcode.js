@@ -68,7 +68,6 @@ const ItemBarcode = ({
           buttonStyle="link"
           buttonClass={css.linkWithoutBorder}
           onClick={() => switchAffiliation(stripes.okapi, tenantId, onViewItem)}
-          data-test-item-link
         >
           {itemBarcode}
         </Button>
