@@ -77,7 +77,7 @@ const InstanceDetails = forwardRef(({
   const intl = useIntl();
   const stripes = useStripes();
   const { okapi: { tenant: tenantId } } = stripes;
-  
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 

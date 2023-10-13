@@ -33,7 +33,7 @@ import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
 import {
-  getDate,
+  isUserInConsortiumMode,
   getUserTenantsPermissions,
   handleKeyCommand,
   isInstanceShadowCopy,
@@ -1086,7 +1086,8 @@ ViewInstance.propTypes = {
     }).isRequired,
   }).isRequired,
   okapi: PropTypes.shape({
-    tenant: PropTypes.string.isRequired
+    tenant: PropTypes.string.isRequired,
+    token: PropTypes.string.isRequired
   }).isRequired,
   tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
