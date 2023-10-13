@@ -105,6 +105,7 @@
 * Bump @folio/stripes-acq-components dependency version to 5.0.0. Refs UIIN-2620.
 * ECS: Check when sharing instance with source=MARC is complete before re-fetching it. Refs UIIN-2605.
 * Update all facets after changing a term or selecting a facet option. Refs UIIN-2610.
+* If Shared & Held by facets were selected in the Browse search, then retain them in the Search lookup after clicking the record. Refs UIIN-2608.
 
 ## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.11...v9.4.12)
