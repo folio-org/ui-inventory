@@ -29,7 +29,7 @@ jest.mock('./common', () => ({
 
 jest.mock('./utils', () => ({
   ...jest.requireActual('./utils'),
-  updateAffiliation: jest.fn(),
+  switchAffiliation: jest.fn(),
 }));
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
