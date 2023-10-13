@@ -860,6 +860,7 @@ class ViewInstance extends React.Component {
       },
     ];
     const isInstanceLoading = this.state.isLoading || !instance || isCentralTenantPermissionsLoading;
+    const keyInStorageToHoldingsAccsState = ['holdings'];
 
     return (
       <DataContext.Consumer>
@@ -887,6 +888,7 @@ class ViewInstance extends React.Component {
                         instance={instance}
                         draggable={this.state.isItemsMovement}
                         tenantId={okapi.tenant}
+                        pathToAccordionsState={keyInStorageToHoldingsAccsState}
                         droppable
                       />
                     </MoveItemsContext>

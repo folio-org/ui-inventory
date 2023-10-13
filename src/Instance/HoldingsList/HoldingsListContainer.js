@@ -13,6 +13,7 @@ const HoldingsListContainer = ({
   instance,
   isHoldingsMove,
   tenantId,
+  pathToAccordionsState,
   ...rest
 }) => {
   const { holdingsRecords: holdings, isLoading } = useInstanceHoldingsQuery(instance.id, { tenantId });
@@ -26,6 +27,7 @@ const HoldingsListContainer = ({
         holdings={holdings}
         instance={instance}
         tenantId={tenantId}
+        pathToAccordionsState={pathToAccordionsState}
       />
     ) : (
       <HoldingsList
@@ -33,6 +35,7 @@ const HoldingsListContainer = ({
         holdings={holdings}
         instance={instance}
         tenantId={tenantId}
+        pathToAccordionsState={pathToAccordionsState}
       />
     )
   );
@@ -42,6 +45,7 @@ HoldingsListContainer.propTypes = {
   instance: PropTypes.object.isRequired,
   isHoldingsMove: PropTypes.bool,
   tenantId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default HoldingsListContainer;

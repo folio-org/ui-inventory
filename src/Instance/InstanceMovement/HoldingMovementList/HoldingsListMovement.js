@@ -23,6 +23,7 @@ const HoldingsListMovement = ({
   draggable,
   droppable,
   tenantId,
+  pathToAccordionsState,
 }) => {
   const {
     selectItemsForDrag,
@@ -58,6 +59,7 @@ const HoldingsListMovement = ({
               holdingIndex={index}
               draggingHoldingsCount={draggingHoldingsCount}
               tenantId={tenantId}
+              pathToAccordionsState={pathToAccordionsState}
             />
           ))
         ) : (
@@ -80,6 +82,7 @@ HoldingsListMovement.propTypes = {
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
   tenantId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
 HoldingsListMovement.defaultProps = {

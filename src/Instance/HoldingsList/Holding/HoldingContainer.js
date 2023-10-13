@@ -36,6 +36,8 @@ const DraggableHolding = ({
   onViewHolding,
   onAddItem,
   tenantId,
+  instanceId,
+  pathToAccordionsState,
   ...rest
 }) => {
   const rowStyles = useMemo(() => (
@@ -68,6 +70,8 @@ const DraggableHolding = ({
               onViewHolding={onViewHolding}
               onAddItem={onAddItem}
               tenantId={tenantId}
+              instanceId={instanceId}
+              pathToAccordionsState={pathToAccordionsState}
             />
           )
       }
@@ -87,6 +91,8 @@ DraggableHolding.propTypes = {
   onViewHolding: PropTypes.func,
   onAddItem: PropTypes.func,
   tenantId: PropTypes.string,
+  instanceId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
 const HoldingContainer = ({
@@ -99,6 +105,7 @@ const HoldingContainer = ({
   holdingIndex,
   draggingHoldingsCount,
   tenantId,
+  pathToAccordionsState,
   ...rest
 }) => {
   const onViewHolding = useCallback(() => {
@@ -130,6 +137,8 @@ const HoldingContainer = ({
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
           tenantId={tenantId}
+          instanceId={instance?.id}
+          pathToAccordionsState={pathToAccordionsState}
           {...rest}
         />
       )}
@@ -141,6 +150,8 @@ const HoldingContainer = ({
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
       tenantId={tenantId}
+      instanceId={instance?.id}
+      pathToAccordionsState={pathToAccordionsState}
     />
   );
 };
@@ -157,6 +168,7 @@ HoldingContainer.propTypes = {
   isDraggable: PropTypes.bool,
   draggingHoldingsCount: PropTypes.number,
   tenantId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default withRouter(HoldingContainer);

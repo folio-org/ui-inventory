@@ -20,6 +20,8 @@ const Holding = ({
   isDraggable,
   isItemsDroppable,
   tenantId,
+  instanceId,
+  pathToAccordionsState,
 }) => {
   return (
     <div>
@@ -49,6 +51,8 @@ const Holding = ({
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
           tenantId={tenantId}
+          instanceId={instanceId}
+          pathToAccordionsState={pathToAccordionsState}
         >
           <ItemsListContainer
             holding={holding}
@@ -74,6 +78,8 @@ Holding.propTypes = {
   isHoldingDragSelected: PropTypes.func,
   isItemsDroppable: PropTypes.bool,
   tenantId: PropTypes.string,
+  instanceId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
 Holding.defaultProps = {
