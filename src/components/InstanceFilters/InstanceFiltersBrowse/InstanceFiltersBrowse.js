@@ -119,7 +119,8 @@ const InstanceFiltersBrowse = props => {
     segmentOptions,
     selectedFacetFilters,
     getNewRecords,
-    props.data
+    props.data,
+    false,
   );
 
   return (

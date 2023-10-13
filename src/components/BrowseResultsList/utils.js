@@ -15,6 +15,14 @@ export const isRowPreventsClick = (row, browseOption) => {
 };
 
 export const getSearchParams = (row, qindex) => {
+  // console.log('row', row);
+  const searchParams = new URLSearchParams(window.location.search);
+  const sharedOptions = searchParams.getAll('subjectsShared');
+  // console.log('shared', searchParams.get('subjectsShared'))
+  const subjectFilters = {
+    filters: sharedOptions.map(option => `shared.${option}`).join(',')
+  };
+
   const optionsMap = {
     [browseModeOptions.CALL_NUMBERS]: {
       qindex: queryIndexes.CALL_NUMBER,
@@ -53,6 +61,7 @@ export const getSearchParams = (row, qindex) => {
       qindex: queryIndexes.SUBJECT,
       query: row.value,
       ...(row.authorityId && { filters: `${FACETS.AUTHORITY_ID}.${row.authorityId}` }),
+      // filters: 'shared.false,shared.true'
     },
   };
 
