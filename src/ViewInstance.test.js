@@ -186,7 +186,10 @@ const defaultProp = {
       GET: jest.fn(() => Promise.resolve([])),
       reset: jest.fn()
     },
-    shareInstance: { POST: jest.fn() },
+    shareInstance: {
+      POST: jest.fn(),
+      GET: jest.fn(() => Promise.resolve({ sharingInstances: [{ status: 'COMPLETE' }] })),
+    },
   },
   onClose: mockonClose,
   onCopy: jest.fn(),
@@ -281,6 +284,7 @@ describe('ViewInstance', () => {
         ok: true,
         json: async () => ({}),
       });
+    useStripes().hasInterface.mockReturnValue(true);
   });
   it('should display action menu items', () => {
     renderViewInstance();
@@ -295,7 +299,7 @@ describe('ViewInstance', () => {
   describe('instance header', () => {
     describe('for non-consortia users', () => {
       it('should render instance title, publisher, and publication date', () => {
-        defaultProp.stripes.hasInterface.mockReturnValue(false);
+        useStripes().hasInterface.mockReturnValue(false);
 
         const { getByText } = renderViewInstance();
         const expectedTitle = 'Instance • #youthaction • Information Age Publishing, Inc. • 2015';
@@ -581,27 +585,65 @@ describe('ViewInstance', () => {
       });
 
       describe('when clicking Share local instance', () => {
-        it('should show confirmation modal', () => {
-          checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
-
-          renderViewInstance();
-          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-          fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
-
-          expect(screen.getByText('Confirmation modal')).toBeInTheDocument();
-        });
-
-        describe('when confirming', () => {
-          it('should make POST request to share local instance', () => {
-            defaultProp.mutator.shareInstance.POST.mockResolvedValue({});
+        describe('and it has no linked MARC Authorities', () => {
+          it('should show confirmation modal', () => {
             checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
 
             renderViewInstance();
             fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
             fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
-            fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
 
-            expect(defaultProp.mutator.shareInstance.POST).toHaveBeenCalled();
+            expect(screen.getByText('Confirmation modal')).toBeInTheDocument();
+          });
+        });
+
+        describe('when confirming', () => {
+          describe('and it has linked MARC Authorities', () => {
+            beforeEach(() => {
+              defaultProp.mutator.shareInstance.POST.mockResolvedValue({});
+              checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+
+              renderViewInstance({
+                selectedInstance: {
+                  ...instances[0],
+                  alternativeTitles: [{
+                    alternativeTitleTypeId: 'fe19bae4-da28-472b-be90-d442e2428ead',
+                    alternativeTitle: 'Hashtag youthaction',
+                    authorityId: 'testAuthorityId'
+                  }],
+                }
+              });
+            });
+
+            it('should render unlink local MARC Authorities modal', () => {
+              fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+              fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
+              fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+
+              expect(screen.getByText('Confirmation modal')).toBeInTheDocument();
+            });
+
+            describe('when proceed sharing', () => {
+              it('should make POST request to share local instance', () => {
+                fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+                fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
+                fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+                fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+
+                expect(defaultProp.mutator.shareInstance.POST).toHaveBeenCalled();
+              });
+            });
+
+            describe('when cancel sharing', () => {
+              it('should hide confirmation modal', () => {
+                fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+                fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
+                fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+                fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+
+                expect(screen.queryByText('Confirmation modal')).not.toBeInTheDocument();
+              });
+            });
           });
         });
       });

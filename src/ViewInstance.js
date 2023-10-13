@@ -9,18 +9,16 @@ import {
 import {
   flowRight,
   isEmpty,
+  pick,
 } from 'lodash';
 
 import {
-  AppIcon,
   Pluggable,
   stripesConnect,
   checkIfUserInMemberTenant,
   checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 import {
-  Pane,
-  Icon,
   MenuSection,
   Callout,
   checkScope,
@@ -34,18 +32,19 @@ import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
-import { getPublishingInfo } from './Instance/InstanceDetails/utils';
 import {
   getDate,
   getUserTenantsPermissions,
   handleKeyCommand,
   isInstanceShadowCopy,
   isMARCSource,
-  isUserInConsortiumMode,
 } from './utils';
 import {
+  AUTHORITY_LINKED_FIELDS,
   indentifierTypeNames,
+  INSTANCE_SHARING_STATUSES,
   layers,
+  OKAPI_TENANT_HEADER,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -177,18 +176,22 @@ class ViewInstance extends React.Component {
     this.log = logger.log.bind(logger);
 
     this.state = {
+      isLoading: false,
       marcRecord: null,
       findInstancePluginOpened: false,
       isItemsMovement: false,
       isImportRecordModalOpened: false,
       isCopyrightModalOpened: false,
       isShareLocalInstanceModalOpen: false,
+      isUnlinkAuthoritiesModalOpen: false,
+      linkedAuthoritiesLength: 0,
       isNewOrderModalOpen: false,
       afterCreate: false,
       instancesQuickExportInProgress: false,
       userTenantPermissions: [],
     };
     this.instanceId = null;
+    this.intervalId = null;
     this.cViewHoldingsRecord = this.props.stripes.connect(ViewHoldingsRecord);
 
     this.calloutRef = createRef();
@@ -253,6 +256,7 @@ class ViewInstance extends React.Component {
 
   componentWillUnmount() {
     this.props.mutator.allInstanceItems.reset();
+    clearInterval(this.intervalId);
   }
 
   getCurrentTenantPermissions = () => {
@@ -432,6 +436,48 @@ class ViewInstance extends React.Component {
     this.setState({ isImportRecordModalOpened: false });
   }
 
+  checkInstanceSharingProgress = ({ sourceTenantId, instanceIdentifier }) => {
+    return this.props.mutator.shareInstance.GET({
+      params: { sourceTenantId, instanceIdentifier },
+      headers: {
+        [OKAPI_TENANT_HEADER]: this.props.centralTenantId,
+        'Content-Type': 'application/json',
+        ...(this.props.okapi.token && { 'X-Okapi-Token': this.props.okapi.token }),
+      },
+    });
+  }
+
+  waitForInstanceSharingComplete = ({ sourceTenantId, instanceIdentifier, instanceTitle }) => {
+    return new Promise((resolve, reject) => {
+      this.intervalId = setInterval(() => {
+        const onError = error => {
+          this.calloutRef.current.sendCallout({
+            type: 'error',
+            message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
+          });
+          clearInterval(this.intervalId);
+          reject(error);
+        };
+        const onSuccess = response => {
+          const sharingStatus = response?.sharingInstances[0]?.status;
+
+          if (sharingStatus === INSTANCE_SHARING_STATUSES.COMPLETE) {
+            clearInterval(this.intervalId);
+            resolve(response);
+          }
+
+          if (sharingStatus === INSTANCE_SHARING_STATUSES.ERROR) {
+            onError(response);
+          }
+        };
+
+        this.checkInstanceSharingProgress({ sourceTenantId, instanceIdentifier })
+          .then(onSuccess)
+          .catch(onError);
+      }, 2000);
+    });
+  }
+
   handleShareLocalInstance = (instance = {}) => {
     const centralTenantId = this.props.centralTenantId;
     const sourceTenantId = this.props.okapi.tenant;
@@ -444,21 +490,63 @@ class ViewInstance extends React.Component {
       targetTenantId: centralTenantId,
     })
       .then(async () => {
+        this.setState({
+          isUnlinkAuthoritiesModalOpen: false,
+          isShareLocalInstanceModalOpen: false,
+          isLoading: true
+        });
+
+        await this.waitForInstanceSharingComplete({ sourceTenantId, instanceIdentifier, instanceTitle });
+      })
+      .then(async () => {
         await this.props.refetchInstance();
+        this.setState({ isLoading: false });
         this.calloutRef.current.sendCallout({
           type: 'success',
           message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.successful" values={{ instanceTitle }} />,
         });
       })
       .catch(() => {
-        this.calloutRef.current.sendCallout({
+        this.setState({
+          isUnlinkAuthoritiesModalOpen: false,
+          isShareLocalInstanceModalOpen: false,
+        });
+        this.calloutRef.current?.sendCallout({
           type: 'error',
           message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
         });
-      })
-      .finally(() => {
-        this.setState({ isShareLocalInstanceModalOpen: false });
       });
+  }
+
+  checkIfHasLinkedAuthorities = (instance = {}) => {
+    const linkedAuthorities = pick(this.props.selectedInstance, AUTHORITY_LINKED_FIELDS);
+
+    const findLinkedAuthorities = authorities => {
+      const linkedAuthoritiesLength = AUTHORITY_LINKED_FIELDS.reduce((total, field) => {
+        const authoritiesAmount = authorities[field].filter(item => item.authorityId).length;
+        return total + authoritiesAmount;
+      }, 0);
+
+      return {
+        hasLinkedAuthorities: !!linkedAuthoritiesLength,
+        linkedAuthoritiesLength,
+      };
+    };
+
+    const {
+      hasLinkedAuthorities,
+      linkedAuthoritiesLength,
+    } = findLinkedAuthorities(linkedAuthorities);
+
+    if (hasLinkedAuthorities) {
+      this.setState({
+        linkedAuthoritiesLength,
+        isShareLocalInstanceModalOpen: false,
+        isUnlinkAuthoritiesModalOpen: true,
+      });
+    } else {
+      this.handleShareLocalInstance(instance);
+    }
   }
 
   toggleCopyrightModal = () => {
@@ -783,26 +871,6 @@ class ViewInstance extends React.Component {
     );
   };
 
-  renderPaneTitle = (instance) => {
-    const {
-      stripes,
-      isShared,
-    } = this.props;
-
-    const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
-
-    return (
-      <FormattedMessage
-        id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
-        values={{
-          isShared: isInstanceShared,
-          title: instance?.title,
-          publisherAndDate: getPublishingInfo(instance),
-        }}
-      />
-    );
-  };
-
   render() {
     const {
       match: { params: { id, holdingsrecordid, itemid } },
@@ -810,13 +878,13 @@ class ViewInstance extends React.Component {
       okapi,
       onCopy,
       onClose,
-      paneWidth,
       tagsEnabled,
       updateLocation,
       canUseSingleRecordImport,
-      intl,
       isCentralTenantPermissionsLoading,
+      isShared,
     } = this.props;
+    const { linkedAuthoritiesLength } = this.state;
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
@@ -850,26 +918,7 @@ class ViewInstance extends React.Component {
         handler: (e) => collapseAllSections(e, this.accordionStatusRef),
       },
     ];
-
-    if (!instance || isCentralTenantPermissionsLoading) {
-      return (
-        <Pane
-          id="pane-instancedetails"
-          defaultWidth={paneWidth}
-          paneTitle={intl.formatMessage({ id: 'ui-inventory.edit' })}
-          appIcon={<AppIcon app="inventory" iconKey="instance" />}
-          dismissible
-          onClose={onClose}
-        >
-          <div style={{ paddingTop: '1rem' }}>
-            <Icon
-              icon="spinner-ellipsis"
-              width="100px"
-            />
-          </div>
-        </Pane>
-      );
-    }
+    const isInstanceLoading = this.state.isLoading || !instance || isCentralTenantPermissionsLoading;
 
     return (
       <DataContext.Consumer>
@@ -881,22 +930,14 @@ class ViewInstance extends React.Component {
           >
             <InstanceDetails
               id="pane-instancedetails"
-              paneTitle={this.renderPaneTitle(instance)}
-              paneSubtitle={
-                <FormattedMessage
-                  id="ui-inventory.instanceRecordSubtitle"
-                  values={{
-                    hrid: instance?.hrid,
-                    updatedDate: getDate(instance?.metadata?.updatedDate),
-                  }}
-                />
-              }
               onClose={onClose}
               actionMenu={this.createActionMenuGetter(instance, data)}
               instance={instance}
               tagsEnabled={tagsEnabled}
               ref={this.accordionStatusRef}
               userTenantPermissions={this.state.userTenantPermissions}
+              isLoading={isInstanceLoading}
+              isShared={isShared}
             >
               {
                 (!holdingsrecordid && !itemid) ?
@@ -919,7 +960,7 @@ class ViewInstance extends React.Component {
 
             {this.state.afterCreate &&
               <CalloutRenderer
-                message={<FormattedMessage id="ui-inventory.instance.successfullySaved" values={{ hrid: instance.hrid }} />}
+                message={<FormattedMessage id="ui-inventory.instance.successfullySaved" values={{ hrid: instance?.hrid }} />}
               />
             }
 
@@ -953,6 +994,15 @@ class ViewInstance extends React.Component {
               message={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.message" values={{ instanceTitle: instance?.title }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.confirmButton" />}
               onCancel={() => this.setState({ isShareLocalInstanceModalOpen: false })}
+              onConfirm={() => this.checkIfHasLinkedAuthorities(instance)}
+            />
+
+            <ConfirmationModal
+              open={this.state.isUnlinkAuthoritiesModalOpen}
+              heading={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.header" />}
+              message={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.message" values={{ linkedAuthoritiesLength }} />}
+              confirmLabel={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.proceed" />}
+              onCancel={() => this.setState({ isUnlinkAuthoritiesModalOpen: false })}
               onConfirm={() => this.handleShareLocalInstance(instance)}
             />
 
@@ -1005,11 +1055,13 @@ ViewInstance.propTypes = {
       GET: PropTypes.func.isRequired,
       reset: PropTypes.func.isRequired,
     }).isRequired,
-    shareInstance: PropTypes.shape({ POST: PropTypes.func.isRequired }).isRequired,
+    shareInstance: PropTypes.shape({
+      POST: PropTypes.func.isRequired,
+      GET: PropTypes.func.isRequired,
+    }).isRequired,
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
-  paneWidth: PropTypes.string.isRequired,
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceHoldings: PropTypes.object.isRequired,

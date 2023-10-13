@@ -372,50 +372,6 @@ export const FACETS_TO_REQUEST = {
   [FACETS.HOLDINGS_TYPE]: FACETS_CQL.HOLDINGS_TYPE,
 };
 
-const INSTANCES_FACET_ENDPOINT = 'search/instances/facets';
-const CONTRIBUTORS_FACET_ENDPOINT = 'search/contributors/facets';
-const SUBJECTS_FACET_ENDPOINT = 'search/subjects/facets';
-
-export const FACETS_ENDPOINTS = {
-  [FACETS.SHARED]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.CONTRIBUTORS_SHARED]: CONTRIBUTORS_FACET_ENDPOINT,
-  [FACETS.SUBJECTS_SHARED]: SUBJECTS_FACET_ENDPOINT,
-  [FACETS.HELD_BY]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.CALL_NUMBERS_HELD_BY]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.CONTRIBUTORS_HELD_BY]: CONTRIBUTORS_FACET_ENDPOINT,
-  [FACETS.SUBJECTS_HELD_BY]: SUBJECTS_FACET_ENDPOINT,
-  [FACETS.EFFECTIVE_LOCATION]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.LANGUAGE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.RESOURCE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.FORMAT]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.MODE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.NATURE_OF_CONTENT]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.STAFF_SUPPRESS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.INSTANCES_DISCOVERY_SUPPRESS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.ITEMS_DISCOVERY_SUPPRESS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.SOURCE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.STATUS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.INSTANCES_TAGS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.ITEMS_TAGS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.HOLDINGS_TAGS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.MATERIAL_TYPE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.ITEM_STATUS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.HOLDINGS_PERMANENT_LOCATION]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.CREATED_DATE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.UPDATED_DATE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.HOLDINGS_CREATED_DATE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.HOLDINGS_UPDATED_DATE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.HOLDINGS_SOURCE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.ITEMS_CREATED_DATE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.ITEMS_UPDATED_DATE]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.STATISTICAL_CODE_IDS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.HOLDINGS_STATISTICAL_CODE_IDS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.ITEMS_STATISTICAL_CODE_IDS]: INSTANCES_FACET_ENDPOINT,
-  [FACETS.NAME_TYPE]: CONTRIBUTORS_FACET_ENDPOINT,
-  [FACETS.HOLDINGS_TYPE]: INSTANCES_FACET_ENDPOINT,
-};
-
 export const FACETS_OPTIONS = {
   SHARED_OPTIONS: 'sharedOptions',
   HELD_BY_OPTIONS: 'heldByOptions',
@@ -507,17 +463,17 @@ export const SINGLE_ITEM_QUERY_TEMPLATES = {
 
 export const fieldSearchConfigurations = {
   keyword: {
-    exactPhrase: 'keyword==/string "%{query.query}"',
+    exactPhrase: 'keyword=="%{query.query}"',
     containsAll: 'keyword all "%{query.query}"',
     startsWith: 'keyword all "%{query.query}*"',
   },
   contributor: {
-    exactPhrase: 'contributors.name==/string "%{query.query}"',
+    exactPhrase: 'contributors.name=="%{query.query}"',
     containsAll: 'contributors.name="*%{query.query}*"',
     startsWith: 'contributors.name="%{query.query}*"',
   },
   title: {
-    exactPhrase: 'title==/string "%{query.query}"',
+    exactPhrase: 'title=="%{query.query}"',
     containsAll: 'title all "%{query.query}"',
     startsWith: 'title all "%{query.query}*"',
   },
@@ -542,24 +498,24 @@ export const fieldSearchConfigurations = {
     startsWith: 'oclc="%{query.query}*"',
   },
   instanceNotes: {
-    exactPhrase: 'notes.note==/string "%{query.query}" or administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'notes.note=="%{query.query}" or administrativeNotes=="%{query.query}"',
     containsAll: 'notes.note all "%{query.query}" or administrativeNotes all "%{query.query}"',
     startsWith: 'notes.note all "%{query.query}*" or administrativeNotes all "%{query.query}*"',
   },
   instanceAdministrativeNotes: {
-    exactPhrase: 'administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'administrativeNotes=="%{query.query}"',
     containsAll: 'administrativeNotes all "%{query.query}"',
     startsWith: 'administrativeNotes all "%{query.query}*"',
   },
   subject: {
-    exactPhrase: 'subjects.value==/string "%{query.query}"',
+    exactPhrase: 'subjects.value=="%{query.query}"',
     containsAll: 'subjects.value all "%{query.query}"',
-    startsWith: 'subjects.value==/string "%{query.query}*"',
+    startsWith: 'subjects.value=="%{query.query}*"',
   },
   callNumber: {
-    exactPhrase: 'itemEffectiveShelvingOrder==/string "%{query.query}"',
+    exactPhrase: 'itemEffectiveShelvingOrder=="%{query.query}"',
     containsAll: 'itemEffectiveShelvingOrder="*%{query.query}*"',
-    startsWith: 'itemEffectiveShelvingOrder==/string "%{query.query}*"',
+    startsWith: 'itemEffectiveShelvingOrder=="%{query.query}*"',
   },
   hrid: {
     exactPhrase: 'hrid=="%{query.query}"',
@@ -577,7 +533,7 @@ export const fieldSearchConfigurations = {
     startsWith: 'authorityId=="%{query.query}*"',
   },
   allFields: {
-    exactPhrase: 'cql.all==/string "%{query.query}"',
+    exactPhrase: 'cql.all=="%{query.query}"',
     containsAll: 'cql.all all "%{query.query}"',
     startsWith: 'cql.all all "%{query.query}*"',
   },
@@ -592,12 +548,12 @@ export const fieldSearchConfigurations = {
     startsWith: 'holdingsNormalizedCallNumbers="%{query.query}*"',
   },
   holdingsNotes: {
-    exactPhrase: 'holdings.notes.note==/string "%{query.query}" or holdings.administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'holdings.notes.note=="%{query.query}" or holdings.administrativeNotes=="%{query.query}"',
     containsAll: 'holdings.notes.note all "%{query.query}" or holdings.administrativeNotes all "%{query.query}"',
     startsWith: 'holdings.notes.note all "%{query.query}*" or holdings.administrativeNotes all "%{query.query}*"',
   },
   holdingsAdministrativeNotes: {
-    exactPhrase: 'holdings.administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'holdings.administrativeNotes=="%{query.query}"',
     containsAll: 'holdings.administrativeNotes all "%{query.query}"',
     startsWith: 'holdings.administrativeNotes all "%{query.query}*"',
   },
@@ -627,17 +583,17 @@ export const fieldSearchConfigurations = {
     startsWith: 'itemNormalizedCallNumbers="%{query.query}*"',
   },
   itemNotes: {
-    exactPhrase: 'item.notes.note==/string "%{query.query}" or item.administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'item.notes.note=="%{query.query}" or item.administrativeNotes=="%{query.query}"',
     containsAll: 'item.notes.note all "%{query.query}" or item.administrativeNotes all "%{query.query}"',
     startsWith: 'item.notes.note all "%{query.query}*" or item.administrativeNotes all "%{query.query}*"',
   },
   itemAdministrativeNotes: {
-    exactPhrase: 'item.administrativeNotes==/string "%{query.query}"',
+    exactPhrase: 'item.administrativeNotes=="%{query.query}"',
     containsAll: 'item.administrativeNotes all "%{query.query}"',
     startsWith: 'item.administrativeNotes all "%{query.query}*"',
   },
   itemCirculationNotes: {
-    exactPhrase: 'item.circulationNotes.note==/string "%{query.query}"',
+    exactPhrase: 'item.circulationNotes.note=="%{query.query}"',
     containsAll: 'item.circulationNotes.note all "%{query.query}"',
     startsWith: 'item.circulationNotes.note all "%{query.query}*"',
   },
@@ -679,3 +635,16 @@ export const OKAPI_TOKEN_HEADER = 'X-Okapi-Token';
 export const CONTENT_TYPE_HEADER = 'Content-Type';
 
 export const DEFAULT_ITEM_TABLE_SORTBY_FIELD = 'barcode';
+
+export const AUTHORITY_LINKED_FIELDS = [
+  'alternativeTitles',
+  'contributors',
+  'subjects',
+  'series',
+];
+
+export const INSTANCE_SHARING_STATUSES = {
+  COMPLETE: 'COMPLETE',
+  ERROR: 'ERROR',
+  IN_PROGRESS: 'IN_PROGRESS',
+};

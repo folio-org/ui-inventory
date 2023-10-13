@@ -4,15 +4,27 @@ import _ from 'lodash';
 
 import { useFacetSettings } from '../../stores/facetsStore';
 
+// Facets behavior (useFacets and withFacets):
+// - when the user opens a facet, the first 6 options must be fetched for it;
+// - when the user clicks the "+More" button under the options, all options for that facet must be fetched;
+// - when the user places the cursor in a facet's input field, all options for it must be fetched;
+// - when multiple facets are open and the user enters a value in the search box, options must be fetched for all open facets.
+// - when multiple facets are open and the user selects an option of any facet, options must be fetched for all open facets.
+
 const useFacets = (
   segmentAccordions,
   segmentOptions,
   selectedFacetFilters,
   getNewRecords,
   data,
+  isFetchFacetsAfterReset = true,
 ) => {
   const {
-    query: { query, filters = '' },
+    query: {
+      query,
+      qindex,
+      filters = '',
+    },
     onFetchFacets,
     parentResources: { facets },
   } = data;
@@ -30,7 +42,9 @@ const useFacets = (
   const prevAccordionsState = useRef(accordions);
   const prevFilters = useRef({});
   const prevUrl = useRef({});
-  const prevQuery = useRef('');
+  const prevQindex = useRef('');
+  const isSearchOptionChanged = useRef(false);
+  const isReset = useRef(false);
 
   const onToggleSection = useCallback(({ id }) => {
     setAccordions(curState => {
@@ -38,6 +52,15 @@ const useFacets = (
       newState[id] = !curState[id];
       return newState;
     });
+  }, []);
+
+  const onUnregisterAccordion = useCallback((id) => {
+    setAccordions(curState => {
+      const newState = _.cloneDeep(curState);
+      newState[id] = false;
+      return newState;
+    });
+    delete prevUrl.current[id];
   }, []);
 
   const handleFilterSearch = useCallback((filter) => {
@@ -147,6 +170,12 @@ const useFacets = (
   ]);
 
   useEffect(() => {
+    isSearchOptionChanged.current = !query && !filters && qindex && prevQindex.current && qindex !== prevQindex.current;
+    isReset.current = !query && !filters && !qindex;
+    prevQindex.current = qindex;
+  }, [qindex, filters, query]);
+
+  useEffect(() => {
     if (!_.isEmpty(records)) {
       const newRecords = getNewRecords(records);
       setFacetsOptions(prevFacetOptions => ({ ...prevFacetOptions, ...newRecords }));
@@ -155,17 +184,12 @@ const useFacets = (
 
   useEffect(() => {
     let facetToOpen = '';
-    let facetToClose = '';
 
     const isFacetOpened = _.some(prevAccordionsState.current, (prevFacetValue, facetName) => {
       const curFacetValue = accordions[facetName];
 
-      if (curFacetValue !== prevFacetValue) {
-        if (curFacetValue) {
-          facetToOpen = facetName;
-        } else {
-          facetToClose = facetName;
-        }
+      if (curFacetValue !== prevFacetValue && curFacetValue) {
+        facetToOpen = facetName;
         return curFacetValue;
       }
       return false;
@@ -180,8 +204,7 @@ const useFacets = (
       !facetToOpen.match(/updatedDate/i)
     ) {
       handleFetchFacets({ facetToOpen });
-    } else {
-      prevUrl.current[facetToClose] = location.search;
+      prevUrl.current[facetToOpen] = location.search;
     }
 
     prevAccordionsState.current = { ...accordions };
@@ -189,10 +212,16 @@ const useFacets = (
 
   useEffect(() => {
     if (!_.isEmpty(accordionsData)) {
-      const isNoFilterSelected = _.every(accordionsData, value => !value?.isSelected);
-      if (!query && prevQuery.current && isNoFilterSelected) return;
+      // When there is a value in the search box and any facet option is selected and the user resets the search,
+      // and `isFetchFacetsAfterReset` is true, then two useEffects are called, one is tracking `query` and another is
+      // tracking `accordionsData`, hence 2 calls are fired, so let's check url to make only 1 call.
+      const areOpenFacetsAlreadyFetched = prevUrl.current.all === location.search;
 
-      handleFetchFacets({ focusedFacet: facetNameToOpen });
+      if (isSearchOptionChanged.current || (!isFetchFacetsAfterReset && isReset.current) || areOpenFacetsAlreadyFetched) {
+        return;
+      }
+      handleFetchFacets();
+      prevUrl.current.all = location.search;
     }
   }, [accordionsData]);
 
@@ -204,15 +233,14 @@ const useFacets = (
 
   useEffect(() => {
     const isSomeFacetOpened = _.some(accordions, isFacetOpened => isFacetOpened);
-    const isValidQuery = (query && query !== prevQuery.current) || (query !== undefined && prevQuery.current);
+
+    if (isSearchOptionChanged.current || (!isFetchFacetsAfterReset && isReset.current)) {
+      return;
+    }
 
     if (isSomeFacetOpened) {
-      if (isValidQuery) {
-        prevQuery.current = query;
-        handleFetchFacets({ facetToOpen: facetNameToOpen });
-      }
-    } else if (isValidQuery) {
-      prevQuery.current = query;
+      handleFetchFacets();
+      prevUrl.current.all = location.search;
     }
   }, [query]);
 
@@ -223,6 +251,7 @@ const useFacets = (
     handleFilterSearch,
     facetsOptions,
     getIsPending,
+    onUnregisterAccordion,
   ];
 };
 

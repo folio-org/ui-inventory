@@ -113,16 +113,22 @@ const InstanceFiltersBrowse = props => {
     handleFilterSearch,
     facetsOptions,
     getIsPending,
+    onUnregisterAccordion,
   ] = useFacets(
     segmentAccordions,
     segmentOptions,
     selectedFacetFilters,
     getNewRecords,
-    props.data
+    props.data,
+    false,
   );
 
   return (
-    <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
+    <AccordionSet
+      accordionStatus={accordions}
+      onToggle={onToggleSection}
+      onUnregisterAccordion={onUnregisterAccordion}
+    >
       {Object.values(browseCallNumberOptions).includes(browseType) && (
         <>
           {isUserInMemberTenant && (
