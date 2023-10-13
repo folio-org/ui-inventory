@@ -49,10 +49,6 @@ export default class CheckboxFacet extends React.Component {
     ) {
       this.updateMore();
     }
-
-    if (prevDataLength > currentDataLength && currentDataLength === DEFAULT_FILTERS_NUMBER) {
-      this.setDefaultMore();
-    }
   }
 
   onMoreClick = (totalOptions) => {
@@ -103,10 +99,6 @@ export default class CheckboxFacet extends React.Component {
     this.setState(({ more }) => {
       return { more: more + SHOW_OPTIONS_INCREMENT };
     });
-  }
-
-  setDefaultMore = () => {
-    this.setState(({ more: SHOW_OPTIONS_COUNT }));
   }
 
   render() {
