@@ -22,7 +22,7 @@ const useHoldingsAccordionState = ({ instanceId, pathToAccordion = [] }) => {
   const instanceHoldingsAccordionsState = getItem(key) ?? {};
   const currentAccState = get(instanceHoldingsAccordionsState, [instanceId, ...pathToAccordion], false);
 
-  const [isOpen, setOpen] = useState(currentAccState);
+  const [isOpen, setIsOpen] = useState(currentAccState);
 
   useEffect(() => {
     let newState = {
@@ -36,7 +36,7 @@ const useHoldingsAccordionState = ({ instanceId, pathToAccordion = [] }) => {
     setItem(key, newState);
   }, [instanceHoldingsAccordionsState, isOpen, instanceId]);
 
-  return [isOpen, setOpen];
+  return [isOpen, setIsOpen];
 };
 
 export default useHoldingsAccordionState;
