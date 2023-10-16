@@ -17,10 +17,9 @@ export const isRowPreventsClick = (row, browseOption) => {
   );
 };
 
-// [true, false] => 'shared.true,shared.false'
 const facetsToString = (filters, facetNameInBrowse, facetNameInSearch) => {
   return filters[facetNameInBrowse]?.map(value => `${facetNameInSearch}.${value}`).join(',');
-}
+};
 
 const getExtraFilters = (row, qindex, allFilters) => {
   const filtersOnly = omit(allFilters, 'qindex', 'query');
@@ -51,7 +50,7 @@ const getExtraFilters = (row, qindex, allFilters) => {
   const extraFacetsString = [...extraFacets, sharedExtraFacets, heldByExtraFacets].filter(Boolean).join(',');
 
   return extraFacetsString ? { filters: extraFacetsString } : {};
-}
+};
 
 export const getSearchParams = (row, qindex, allFilters) => {
   const filters = getExtraFilters(row, qindex, allFilters);
