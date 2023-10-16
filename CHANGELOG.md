@@ -1,6 +1,12 @@
 # Change history for ui-inventory
 
-## 10.0.0 IN PROGRESS
+## 10.0.1 IN PROGRESS
+
+* Instance 3rd pane: Adjust behavior when returning to instance from holdings/item full screen. Refs UIIN-2453.
+
+## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)
+
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
@@ -104,7 +110,7 @@
 * Provide an instance `tenantId` to the PO line form when creating an order from the instance. Refs UIIN-2614.
 * Bump @folio/stripes-acq-components dependency version to 5.0.0. Refs UIIN-2620.
 * ECS: Check when sharing instance with source=MARC is complete before re-fetching it. Refs UIIN-2605.
-* Instance 3rd pane: Adjust behavior when returning to instance from holdings/item full screen. Refs UIIN-2453.
+* Update all facets after changing a term or selecting a facet option. Refs UIIN-2610.
 
 ## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.11...v9.4.12)
