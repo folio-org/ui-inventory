@@ -155,7 +155,7 @@ describe('BrowseResultsList', () => {
           },
         });
 
-        await act(async () => fireEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber)));
+        fireEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber))
 
         expect(history.location.search).toContain('?filters=shared.true%2Cshared.false%2CtenantId.college');
       });
@@ -181,7 +181,7 @@ describe('BrowseResultsList', () => {
           browseData: contributorsData,
         });
 
-        await act(async () => fireEvent.click(screen.getByText(contributorsData[0].name)));
+        fireEvent.click(screen.getByText(contributorsData[0].name))
 
         expect(history.location.search).toContain(
           '?filters=searchContributors.2b94c631-fca9-4892-a730-03ee529ffe2a%2Cshared.true%2Cshared.false%2CtenantId.college'
@@ -209,7 +209,7 @@ describe('BrowseResultsList', () => {
           browseData: subjectsData,
         });
 
-        await act(async () => fireEvent.click(screen.getByText(subjectsData[0].value)));
+        fireEvent.click(screen.getByText(subjectsData[0].value))
 
         expect(history.location.search).toContain('?filters=shared.true%2Cshared.false%2CtenantId.college');
       });
