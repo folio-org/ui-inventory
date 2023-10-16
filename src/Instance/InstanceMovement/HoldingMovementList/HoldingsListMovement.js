@@ -87,6 +87,7 @@ HoldingsListMovement.propTypes = {
 
 HoldingsListMovement.defaultProps = {
   holdings: [],
+  pathToAccordionsState: [],
 };
 
 export default HoldingsListMovement;

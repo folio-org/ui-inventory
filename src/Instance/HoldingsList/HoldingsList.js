@@ -36,6 +36,7 @@ HoldingsList.propTypes = {
 
 HoldingsList.defaultProps = {
   holdings: [],
+  pathToAccordionsState: [],
 };
 
 export default HoldingsList;

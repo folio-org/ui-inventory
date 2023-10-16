@@ -127,4 +127,6 @@ HoldingAccordion.propTypes = {
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
+HoldingAccordion.defaultProps = { pathToAccordionsState: [] };
+
 export default HoldingAccordion;

@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Loading,
-} from '@folio/stripes/components';
+import { Loading } from '@folio/stripes/components';
 
 import HoldingsList from './HoldingsList';
 import { HoldingsListMovement } from '../InstanceMovement/HoldingMovementList';
@@ -47,5 +45,7 @@ HoldingsListContainer.propTypes = {
   tenantId: PropTypes.string,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
+
+HoldingsListContainer.defaultProps = { pathToAccordionsState: [] };
 
 export default HoldingsListContainer;
