@@ -29,6 +29,7 @@ const HoldingSetup = () => (
   <Router>
     <Holding
       holding={holding}
+      instanceId="instanceId"
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
       holdings={holdings}
@@ -38,6 +39,7 @@ const HoldingSetup = () => (
       isHoldingDragSelected={isHoldingDragSelected}
       isDraggable={isDraggable}
       isItemsDroppable={isItemsDroppable}
+      pathToAccordionsState={['holdings']}
     />
   </Router>
 );
