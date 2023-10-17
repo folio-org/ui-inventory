@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { useStripes } from '@folio/stripes/core';
-import {
-  Loading,
-} from '@folio/stripes/components';
+import { Loading } from '@folio/stripes/components';
 
 import HoldingsList from './HoldingsList';
 import { HoldingsListMovement } from '../InstanceMovement/HoldingMovementList';
@@ -14,6 +12,7 @@ const HoldingsListContainer = ({
   instance,
   isHoldingsMove,
   tenantId,
+  pathToAccordionsState,
   ...rest
 }) => {
   const stripes = useStripes();
@@ -35,6 +34,7 @@ const HoldingsListContainer = ({
         isViewHoldingsDisabled={!canViewHoldings}
         isAddItemDisabled={!canCreateItem}
         isBarcodeAsHotlink={canViewItems}
+        pathToAccordionsState={pathToAccordionsState}
       />
     ) : (
       <HoldingsList
@@ -45,6 +45,7 @@ const HoldingsListContainer = ({
         isViewHoldingsDisabled={!canViewHoldings}
         isAddItemDisabled={!canCreateItem}
         isBarcodeAsHotlink={canViewItems}
+        pathToAccordionsState={pathToAccordionsState}
       />
     )
   );
@@ -54,6 +55,9 @@ HoldingsListContainer.propTypes = {
   instance: PropTypes.object.isRequired,
   isHoldingsMove: PropTypes.bool,
   tenantId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
+
+HoldingsListContainer.defaultProps = { pathToAccordionsState: [] };
 
 export default HoldingsListContainer;
