@@ -17,9 +17,14 @@ jest.mock('../InstanceDetails/ControllableDetail/ControllableDetail', () => jest
 jest.mock('../InstanceDetails/SubInstanceGroup/SubInstanceGroup', () => jest.fn().mockReturnValue('SubInstanceGroup'));
 jest.mock('../InstanceDetails/InstanceAcquisition/InstanceAcquisition', () => jest.fn().mockReturnValue('InstanceAcquisition'));
 jest.mock('../InstanceDetails/InstanceTitleData/InstanceTitleData', () => jest.fn().mockReturnValue('InstanceTitleData'));
+jest.mock('./ConsortialHoldings', () => ({
+  ...jest.requireActual('./ConsortialHoldings'),
+  ConsortialHoldings: () => <button type="button">Consortial holdings</button>,
+}));
 
 const instance = {
   title: 'Test Title',
+  source: 'FOLIO',
   contributors: [],
   identifiers: [],
   instanceTypeId: '1234',
@@ -30,6 +35,7 @@ const instance = {
   notes: [],
   staffSuppress: false,
   discoverySuppress: false,
+  shared: false,
 };
 
 const mockReferenceData = {
@@ -48,23 +54,31 @@ const queryClient = new QueryClient();
 const actionMenu = jest.fn();
 const onClose = jest.fn();
 const tagsEnabled = true;
+
+const renderInstanceDetails = (props) => {
+  const component = (
+    <QueryClientProvider client={queryClient}>
+      <DataContext.Provider value={mockReferenceData}>
+        <MemoryRouter>
+          <InstanceDetails
+            instance={instance}
+            onClose={onClose}
+            tagsEnabled={tagsEnabled}
+            actionMenu={actionMenu}
+            {...props}
+          />
+        </MemoryRouter>
+      </DataContext.Provider>
+    </QueryClientProvider>
+  );
+
+  return renderWithIntl(component, translationsProperties);
+};
+
 describe('InstanceDetails', () => {
   it('renders the InstanceDetails component', () => {
-    renderWithIntl(
-      <QueryClientProvider client={queryClient}>
-        <DataContext.Provider value={mockReferenceData}>
-          <MemoryRouter>
-            <InstanceDetails
-              instance={instance}
-              onClose={onClose}
-              tagsEnabled={tagsEnabled}
-              actionMenu={actionMenu}
-            />,
-          </MemoryRouter>
-        </DataContext.Provider>
-      </QueryClientProvider>,
-      translationsProperties
-    );
+    renderInstanceDetails();
+
     expect(screen.getByText('InstanceTitle')).toBeInTheDocument();
     expect(screen.getByText('Add holdings')).toBeInTheDocument();
     expect(screen.getByText('Administrative data')).toBeInTheDocument();
@@ -103,21 +117,7 @@ describe('InstanceDetails', () => {
       ...instance,
       staffSuppress: true,
     };
-    renderWithIntl(
-      <QueryClientProvider client={queryClient}>
-        <DataContext.Provider value={mockReferenceData}>
-          <MemoryRouter>
-            <InstanceDetails
-              instance={staffSuppressedInstance}
-              onClose={onClose}
-              tagsEnabled={tagsEnabled}
-              actionMenu={actionMenu}
-            />,
-          </MemoryRouter>
-        </DataContext.Provider>
-      </QueryClientProvider>,
-      translationsProperties
-    );
+    renderInstanceDetails({ instance: staffSuppressedInstance });
 
     expect(screen.getByText('Warning: Instance is marked staff suppressed')).toBeInTheDocument();
     expect(screen.getByText('Staff suppressed')).toBeInTheDocument();
@@ -128,21 +128,7 @@ describe('InstanceDetails', () => {
       ...instance,
       discoverySuppress: true,
     };
-    renderWithIntl(
-      <QueryClientProvider client={queryClient}>
-        <DataContext.Provider value={mockReferenceData}>
-          <MemoryRouter>
-            <InstanceDetails
-              instance={discoverySuppressedInstance}
-              onClose={onClose}
-              tagsEnabled={tagsEnabled}
-              actionMenu={actionMenu}
-            />,
-          </MemoryRouter>
-        </DataContext.Provider>
-      </QueryClientProvider>,
-      translationsProperties
-    );
+    renderInstanceDetails({ instance: discoverySuppressedInstance });
 
     expect(screen.getByText('Warning: Instance is marked suppressed from discovery')).toBeInTheDocument();
     expect(screen.getByText('Suppressed from discovery')).toBeInTheDocument();
@@ -153,48 +139,21 @@ describe('InstanceDetails', () => {
       staffSuppress: true,
       discoverySuppress: true,
     };
-    renderWithIntl(
-      <QueryClientProvider client={queryClient}>
-        <DataContext.Provider value={mockReferenceData}>
-          <MemoryRouter>
-            <InstanceDetails
-              instance={bothSuppressedInstance}
-              onClose={onClose}
-              tagsEnabled={tagsEnabled}
-              actionMenu={actionMenu}
-            />,
-          </MemoryRouter>
-        </DataContext.Provider>
-      </QueryClientProvider>,
-      translationsProperties
-    );
+    renderInstanceDetails({ instance: bothSuppressedInstance });
 
     expect(screen.getByText('Warning: Instance is marked suppressed from discovery and staff suppressed')).toBeInTheDocument();
   });
 
   it('expands and collapses the accordion sections', () => {
-    renderWithIntl(
-      <QueryClientProvider client={queryClient}>
-        <DataContext.Provider value={mockReferenceData}>
-          <MemoryRouter>
-            <InstanceDetails
-              instance={instance}
-              onClose={onClose}
-              tagsEnabled={tagsEnabled}
-              actionMenu={actionMenu}
-            />,
-          </MemoryRouter>
-        </DataContext.Provider>
-      </QueryClientProvider>,
-      translationsProperties
-    );
+    renderInstanceDetails();
 
     const expandAllButtons = screen.getByText('Expand all');
     const firstAccordionSection = screen.getByRole('button', { name: /Administrative data/i });
     const secondAccordionSection = screen.getByRole('button', { name: /Instance notes/i });
     const thirdAccordionSection = screen.getByRole('button', { name: /Electronic access/i });
     const fourthAccordionSection = screen.getByRole('button', { name: /Classification/i });
-    expect(firstAccordionSection.getAttribute('aria-expanded')).toBe('false');
+    // Administrative data is open because it has initial data inside it
+    expect(firstAccordionSection.getAttribute('aria-expanded')).toBe('true');
     expect(secondAccordionSection.getAttribute('aria-expanded')).toBe('false');
     expect(thirdAccordionSection.getAttribute('aria-expanded')).toBe('false');
     expect(fourthAccordionSection.getAttribute('aria-expanded')).toBe('false');
@@ -212,23 +171,39 @@ describe('InstanceDetails', () => {
   });
 
   it('renders tags button if tagsEnabled is true', () => {
-    renderWithIntl(
-      <QueryClientProvider client={queryClient}>
-        <DataContext.Provider value={mockReferenceData}>
-          <MemoryRouter>
-            <InstanceDetails
-              instance={instance}
-              onClose={onClose}
-              tagsEnabled={tagsEnabled}
-              actionMenu={actionMenu}
-            />,
-          </MemoryRouter>
-        </DataContext.Provider>
-      </QueryClientProvider>,
-      translationsProperties
-    );
+    renderInstanceDetails();
+
     const button = screen.getAllByRole('button', { id: 'clickable-show-tags' });
     fireEvent.click(button[1]);
     expect(button[1]).toBeEnabled();
+  });
+
+  describe('Consortial holdings accordion', () => {
+    it('should be visible for shared instances', () => {
+      const sharedInstance = {
+        ...instance,
+        shared: true,
+      };
+      renderInstanceDetails({ instance: sharedInstance });
+
+      expect(screen.getByRole('button', { name: 'Consortial holdings' })).toBeInTheDocument();
+    });
+
+    it('should be visible for shadow instances', () => {
+      const shadowInstance = {
+        ...instance,
+        shared: false,
+        source: 'CONSORTIUM-FOLIO',
+      };
+      renderInstanceDetails({ instance: shadowInstance });
+
+      expect(screen.getByRole('button', { name: 'Consortial holdings' })).toBeInTheDocument();
+    });
+
+    it('should not be visible for local instances', () => {
+      renderInstanceDetails();
+
+      expect(screen.queryByRole('button', { name: 'Consortial holdings' })).not.toBeInTheDocument();
+    });
   });
 });
