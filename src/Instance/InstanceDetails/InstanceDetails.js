@@ -123,6 +123,8 @@ const InstanceDetails = forwardRef(({
     );
   }
 
+  const isConsortialHoldingsVisible = instance?.shared || isInstanceShadowCopy(instance?.source);
+
   const renderPaneTitle = () => {
     const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
 
@@ -196,7 +198,7 @@ const InstanceDetails = forwardRef(({
               <InstanceNewHolding instance={instance} />
             )}
 
-            {instance?.shared && (
+            {isConsortialHoldingsVisible && (
               <ConsortialHoldings instance={instance} />
             )}
 
