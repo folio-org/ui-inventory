@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## [10.0.1](IN PROGRESS)
+* Show facet options, if they exist, after clicking the +More button. Refs UIIN-2533.
+
 ## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)
 
