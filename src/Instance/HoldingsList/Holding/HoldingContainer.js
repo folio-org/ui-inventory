@@ -36,6 +36,8 @@ const DraggableHolding = ({
   onViewHolding,
   onAddItem,
   tenantId,
+  instanceId,
+  pathToAccordionsState,
   ...rest
 }) => {
   const rowStyles = useMemo(() => (
@@ -68,6 +70,8 @@ const DraggableHolding = ({
               onViewHolding={onViewHolding}
               onAddItem={onAddItem}
               tenantId={tenantId}
+              instanceId={instanceId}
+              pathToAccordionsState={pathToAccordionsState}
             />
           )
       }
@@ -83,11 +87,15 @@ DraggableHolding.propTypes = {
   draggingHoldingsCount: PropTypes.number,
   provided: PropTypes.object.isRequired,
   snapshot: PropTypes.object.isRequired,
+  instanceId: PropTypes.string.isRequired,
   holding: PropTypes.object,
   onViewHolding: PropTypes.func,
   onAddItem: PropTypes.func,
   tenantId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
+
+DraggableHolding.defaultProps = { pathToAccordionsState: [] };
 
 const HoldingContainer = ({
   location,
@@ -99,6 +107,7 @@ const HoldingContainer = ({
   holdingIndex,
   draggingHoldingsCount,
   tenantId,
+  pathToAccordionsState,
   ...rest
 }) => {
   const onViewHolding = useCallback(() => {
@@ -130,6 +139,8 @@ const HoldingContainer = ({
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
           tenantId={tenantId}
+          instanceId={instance?.id}
+          pathToAccordionsState={pathToAccordionsState}
           {...rest}
         />
       )}
@@ -141,6 +152,8 @@ const HoldingContainer = ({
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
       tenantId={tenantId}
+      instanceId={instance?.id}
+      pathToAccordionsState={pathToAccordionsState}
     />
   );
 };
@@ -157,6 +170,9 @@ HoldingContainer.propTypes = {
   isDraggable: PropTypes.bool,
   draggingHoldingsCount: PropTypes.number,
   tenantId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
+
+HoldingContainer.defaultProps = { pathToAccordionsState: [] };
 
 export default withRouter(HoldingContainer);
