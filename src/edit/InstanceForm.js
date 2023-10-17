@@ -309,7 +309,7 @@ class InstanceForm extends React.Component {
       return ref || {};
     };
 
-    const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes.map(
+    const instanceTypeOptions = referenceTables.instanceTypes ? referenceTables.instanceTypes?.map(
       it => ({
         label: it.name,
         value: it.id,
@@ -317,7 +317,7 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
-    const instanceNoteTypeOptions = referenceTables.instanceNoteTypes ? referenceTables.instanceNoteTypes.map(
+    const instanceNoteTypeOptions = referenceTables.instanceNoteTypes ? referenceTables.instanceNoteTypes?.map(
       it => ({
         label: it.name,
         value: it.id,
@@ -325,7 +325,7 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
-    const instanceStatusOptions = referenceTables.instanceStatuses ? referenceTables.instanceStatuses.map(
+    const instanceStatusOptions = referenceTables.instanceStatuses ? referenceTables.instanceStatuses?.map(
       it => ({
         label: `${it.name} (${it.source}: ${it.code})`,
         value: it.id,
@@ -333,7 +333,7 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
-    const modeOfIssuanceOptions = referenceTables.modesOfIssuance ? referenceTables.modesOfIssuance.map(
+    const modeOfIssuanceOptions = referenceTables.modesOfIssuance ? referenceTables.modesOfIssuance?.map(
       it => ({
         label: it.name,
         value: it.id,
@@ -342,7 +342,7 @@ class InstanceForm extends React.Component {
     ) : [];
 
     const statisticalCodeOptions = referenceTables.statisticalCodes
-      .map(
+      ?.map(
         code => ({
           label: refLookup(referenceTables.statisticalCodeTypes, code.statisticalCodeTypeId).name + ':    ' + code.code + ' - ' + code.name,
           value: code.id,
@@ -355,7 +355,7 @@ class InstanceForm extends React.Component {
     // we don't want the type selection box for parent/child to include the preceding-succeeding type
     const rTypes = referenceTables.instanceRelationshipTypes;
     const mostParentChildRelationships = filter(rTypes, rt => rt.id !== psTitleRelationshipId(rTypes));
-    const relationshipTypes = mostParentChildRelationships.map(it => ({
+    const relationshipTypes = mostParentChildRelationships?.map(it => ({
       label: it.name,
       value: it.id,
     }));

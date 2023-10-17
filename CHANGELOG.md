@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 10.0.1 IN PROGRESS
+
+* Remove error message after switch from Instance Edit screen to another app. Fixes UIIN-2600.
+
 ## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)
 

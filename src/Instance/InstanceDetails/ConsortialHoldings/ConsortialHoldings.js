@@ -21,6 +21,8 @@ const ConsortialHoldings = ({ instance }) => {
 
   const { tenants } = useSearchForShadowInstanceTenants({ instanceId: instance?.id });
 
+  if (!consortiaTenantsById) return null;
+
   const memberTenants = tenants
     .map(tenant => consortiaTenantsById[tenant.id])
     .filter(tenant => !tenant?.isCentral && (tenant?.id !== stripes.okapi.tenant))
