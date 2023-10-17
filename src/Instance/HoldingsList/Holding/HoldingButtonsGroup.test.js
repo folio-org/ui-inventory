@@ -13,7 +13,7 @@ import HoldingButtonsGroup from './HoldingButtonsGroup';
 
 jest.mock('../../../utils', () => ({
   ...jest.requireActual('../../../utils'),
-  updateAffiliation: jest.fn(),
+  switchAffiliation: jest.fn(),
 }));
 
 const mockItemCount = 3;
@@ -80,7 +80,7 @@ describe('HoldingButtonsGroup', () => {
   });
 
   describe('when user click on View holdings button', () => {
-    it('should call function to update user\'s affiliation', () => {
+    it('should call function to switch user\'s affiliation', () => {
       const { getByRole } = renderHoldingButtonsGroup();
 
       fireEvent.click(getByRole('button', { name:  'View holdings' }));
@@ -90,7 +90,7 @@ describe('HoldingButtonsGroup', () => {
   });
 
   describe('when user click on Add item button', () => {
-    it('should call function to update user\'s affiliation', () => {
+    it('should call function to switch user\'s affiliation', () => {
       const { getByRole } = renderHoldingButtonsGroup();
 
       fireEvent.click(getByRole('button', { name:  'Add item' }));

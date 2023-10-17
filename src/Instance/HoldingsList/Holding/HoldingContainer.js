@@ -8,6 +8,8 @@ import { withRouter } from 'react-router';
 import { Draggable } from 'react-beautiful-dnd';
 import { FormattedMessage } from 'react-intl';
 
+import { useStripes } from '@folio/stripes/core';
+
 import Holding from './Holding';
 
 const dragStyles = {
@@ -100,6 +102,7 @@ DraggableHolding.propTypes = {
 
 const HoldingContainer = ({
   location,
+  history,
   isViewHoldingsDisabled,
   isAddItemDisabled,
   isBarcodeAsHotlink,
@@ -111,12 +114,28 @@ const HoldingContainer = ({
   tenantId,
   ...rest
 }) => {
+  const stripes = useStripes();
+
   const onViewHolding = useCallback(() => {
-    window.location.href = `/inventory/view/${instance.id}/${holding.id}${location.search}`;
+    history.push({
+      pathname: `/inventory/view/${instance.id}/${holding.id}`,
+      search: location.search,
+      state: {
+        tenantTo: tenantId,
+        tenantFrom: stripes.okapi.tenant,
+      },
+    });
   }, [location.search, instance.id, holding.id]);
 
   const onAddItem = useCallback(() => {
-    window.location.href = `/inventory/create/${instance.id}/${holding.id}/item${location.search}`;
+    history.push({
+      pathname: `/inventory/create/${instance.id}/${holding.id}/item`,
+      search: location.search,
+      state: {
+        tenantTo: tenantId,
+        tenantFrom: stripes.okapi.tenant,
+      },
+    });
   }, [location.search, instance.id, holding.id]);
 
   return isDraggable ? (

@@ -17,7 +17,6 @@ import {
   translationsProperties,
 } from '../test/jest/helpers';
 
-import { switchAffiliation } from './utils';
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
 jest.mock('./withLocation', () => jest.fn(c => c));
@@ -25,11 +24,6 @@ jest.mock('./withLocation', () => jest.fn(c => c));
 jest.mock('./common', () => ({
   ...jest.requireActual('./common'),
   useTenantKy: jest.fn(),
-}));
-
-jest.mock('./utils', () => ({
-  ...jest.requireActual('./utils'),
-  switchAffiliation: jest.fn(),
 }));
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
@@ -87,7 +81,11 @@ const defaultProps = {
   },
   location: {
     search: '/',
-    pathname: 'pathname'
+    pathname: 'pathname',
+    state: {
+      tenantTo: 'testTenantToId',
+      tenantFrom: 'testTenantFromId',
+    }
   },
 };
 
@@ -118,7 +116,7 @@ describe('ViewHoldingsRecord actions', () => {
   it('should close view holding page', async () => {
     renderViewHoldingsRecord();
     fireEvent.click(await screen.findByRole('button', { name: 'confirm' }));
-    expect(switchAffiliation).toHaveBeenCalled();
+    expect(defaultProps.history.push).toHaveBeenCalled();
   });
 
   it('should translate to edit holding form page', async () => {

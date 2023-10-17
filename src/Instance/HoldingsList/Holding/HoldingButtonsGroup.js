@@ -47,7 +47,7 @@ const HoldingButtonsGroup = ({
       <Button
         id={`clickable-view-holdings-${holding.id}`}
         data-test-view-holdings
-        onClick={() => switchAffiliation(stripes.okapi, tenantId, onViewHolding)}
+        onClick={() => switchAffiliation(stripes, tenantId, onViewHolding)}
         disabled={isViewHoldingsDisabled}
       >
         <FormattedMessage id="ui-inventory.viewHoldings" />
@@ -58,7 +58,7 @@ const HoldingButtonsGroup = ({
           <Button
             id={`clickable-new-item-${holding.id}`}
             data-test-add-item
-            onClick={() => switchAffiliation(stripes.okapi, tenantId, onAddItem)}
+            onClick={() => switchAffiliation(stripes, tenantId, onAddItem)}
             buttonStyle="primary paneHeaderNewButton"
             disabled={isAddItemDisabled}
           >

@@ -13,11 +13,7 @@ import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { PaneLoading } from '../components';
 import { DataContext } from '../contexts';
-import { getItem } from '../storage';
-import {
-  TENANT_IDS_KEY,
-  switchAffiliation,
-} from '../utils';
+import { switchAffiliation } from '../utils';
 
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`;
 
@@ -29,6 +25,7 @@ class ItemRoute extends React.Component {
       path: 'inventory/items/:{itemid}',
       POST: { path: 'inventory/items' },
       resourceShouldRefresh: true,
+      tenant: '!{location.state.tenantTo}',
     },
     markItemAsWithdrawn: {
       type: 'okapi',
@@ -105,6 +102,7 @@ class ItemRoute extends React.Component {
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
+      tenant: '!{location.state.tenantTo}',
     },
     instanceRecords: {
       type: 'okapi',
@@ -164,18 +162,22 @@ class ItemRoute extends React.Component {
     const {
       match: { params: { id } },
       location: { search },
+      history,
     } = this.props;
 
-    window.location.href = `/inventory/view/${id}${search}`;
+    history.push({
+      pathname: `/inventory/view/${id}`,
+      search,
+    });
   }
 
   onClose = () => {
-    const { stripes: { okapi } } = this.props;
-    const tenantIds = getItem(TENANT_IDS_KEY);
+    const {
+      stripes,
+      location: { state: { tenantFrom } },
+    } = this.props;
 
-    const tenantFrom = tenantIds ? tenantIds.tenantFrom : okapi.tenant;
-
-    switchAffiliation(okapi, tenantFrom, this.goBack).then();
+    switchAffiliation(stripes, tenantFrom, this.goBack).then();
   }
 
   isLoading = () => {
@@ -222,6 +224,7 @@ ItemRoute.propTypes = {
   resources: PropTypes.object,
   stripes: PropTypes.object,
   tenantFrom: PropTypes.string,
+  history: PropTypes.object,
 };
 
 export default flowRight(

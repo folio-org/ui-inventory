@@ -22,6 +22,7 @@ import {
 import moment from 'moment';
 
 import { updateTenant } from '@folio/stripes/core';
+import { validateUser } from '@folio/stripes-core/src/loginServices';
 import { FormattedUTCDate } from '@folio/stripes/components';
 
 import {
@@ -39,7 +40,6 @@ import {
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
 } from './constants';
-import { getItem, removeItem, setItem } from './storage';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
   ? (isEmpty(item) || item.every(element => !element || element === '-'))
@@ -828,19 +828,20 @@ export const hasMemberTenantPermission = (permissions = [], permissionName, tena
   return hasPermission;
 };
 
-export const TENANT_IDS_KEY = 'tenantIds';
+export const switchAffiliation = async (stripes, tenantId, move) => {
+  if (stripes.okapi.tenant !== tenantId) {
+    await updateTenant(stripes.okapi, tenantId);
 
-export const switchAffiliation = async (okapi, tenantId, move) => {
-  if (okapi.tenant !== tenantId) {
-    await updateTenant(okapi, tenantId);
-
-    const tenantIds = getItem(TENANT_IDS_KEY);
-
-    if (tenantIds) {
-      removeItem(TENANT_IDS_KEY);
-    } else {
-      setItem(TENANT_IDS_KEY, { tenantTo: tenantId, tenantFrom: okapi.tenant });
-    }
+    validateUser(
+      stripes.okapi.url,
+      stripes.store,
+      tenantId,
+      {
+        token: stripes.okapi.token,
+        user: stripes.user.user,
+        perms: stripes.user.perms,
+      },
+    );
 
     move();
   } else {

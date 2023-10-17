@@ -3,13 +3,11 @@ import React, {
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import { useStripes } from '@folio/stripes/core';
-import {
-  LoadingView,
-} from '@folio/stripes/components';
+import { LoadingView } from '@folio/stripes/components';
 
 import {
   useInstanceQuery,
@@ -24,10 +22,17 @@ const CreateItem = ({
   referenceData,
   instanceId,
   holdingId,
-  tenantTo,
-  tenantFrom,
 }) => {
-  const location = useLocation();
+  const {
+    push,
+    location: {
+      search,
+      state: {
+        tenantTo,
+        tenantFrom,
+      },
+    },
+  } = useHistory();
 
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId, { tenantId: tenantTo });
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId, { tenantId: tenantTo });
@@ -40,12 +45,15 @@ const CreateItem = ({
   }), [holding.id]);
 
   const goBack = useCallback(() => {
-    window.location.href = `/inventory/view/${instanceId}${location.search}`;
-  }, [instanceId, location.search]);
+    push({
+      pathname: `/inventory/view/${instanceId}`,
+      search,
+    });
+  }, [instanceId, search]);
 
   const onCancel = useCallback(() => {
-    switchAffiliation(stripes.okapi, tenantFrom, goBack).then();
-  }, [stripes.okapi, tenantFrom, goBack]);
+    switchAffiliation(stripes, tenantFrom, goBack).then();
+  }, [stripes, tenantFrom]);
 
   const onSuccess = useCallback(async (response) => {
     const { hrid } = await response.json();
@@ -91,8 +99,6 @@ CreateItem.propTypes = {
   instanceId: PropTypes.string.isRequired,
   holdingId: PropTypes.string.isRequired,
   referenceData: PropTypes.object.isRequired,
-  tenantTo: PropTypes.string,
-  tenantFrom: PropTypes.string,
 };
 
 export default CreateItem;

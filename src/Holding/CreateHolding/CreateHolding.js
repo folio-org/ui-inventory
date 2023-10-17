@@ -10,9 +10,7 @@ import {
   stripesConnect,
   stripesShape,
 } from '@folio/stripes/core';
-import {
-  LoadingView,
-} from '@folio/stripes/components';
+import { LoadingView } from '@folio/stripes/components';
 
 import {
   useInstance,
@@ -22,24 +20,29 @@ import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import { switchAffiliation } from '../../utils';
 
 const CreateHolding = ({
+  history,
   location,
   instanceId,
   referenceData,
   stripes,
   mutator,
-  tenantFrom,
 }) => {
   const callout = useCallout();
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
   const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
 
   const goBack = useCallback(() => {
-    window.location.href = `/inventory/view/${instanceId}${location.search}`;
+    history.push({
+      pathname: `/inventory/view/${instanceId}`,
+      search: location.search,
+    });
   }, [location.search, instanceId]);
 
   const onCancel = useCallback(() => {
-    switchAffiliation(stripes.okapi, tenantFrom, goBack).then();
-  }, [stripes.okapi, tenantFrom, goBack]);
+    const { location: { state: { tenantFrom } } } = history;
+
+    switchAffiliation(stripes, tenantFrom, goBack).then();
+  }, [stripes, goBack]);
 
   const onSubmit = useCallback((newHolding) => {
     return mutator.holding.POST(newHolding)
@@ -94,11 +97,11 @@ CreateHolding.manifest = Object.freeze({
 
 CreateHolding.propTypes = {
   location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
   instanceId: PropTypes.string.isRequired,
   mutator: PropTypes.object.isRequired,
   referenceData: PropTypes.object.isRequired,
   stripes: stripesShape.isRequired,
-  tenantFrom: PropTypes.string,
 };
 
 export default withRouter(stripesConnect(CreateHolding));

@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 
 import {
   IfPermission,
@@ -23,11 +24,19 @@ const InstanceNewHolding = ({
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
+  const history = useHistory();
 
   const label = intl.formatMessage({ id: 'ui-inventory.addHoldings' });
 
   const onNewHolding = useCallback(() => {
-    window.location.href = `/inventory/create/${instance?.id}/holding${location.search}`;
+    history.push({
+      pathname: `/inventory/create/${instance?.id}/holding`,
+      search: location.search,
+      state: {
+        tenantTo: tenantId,
+        tenantFrom: stripes.okapi.tenant,
+      }
+    });
   }, [location.search, instance.id]);
 
   return (
@@ -39,7 +48,7 @@ const InstanceNewHolding = ({
             aria-label={label}
             buttonStyle="primary"
             fullWidth
-            onClick={() => switchAffiliation(stripes.okapi, tenantId, onNewHolding)}
+            onClick={() => switchAffiliation(stripes, tenantId, onNewHolding)}
             disabled={disabled}
           >
             {label}

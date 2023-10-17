@@ -81,7 +81,7 @@ class ViewHoldingsRecord extends React.Component {
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
       resourceShouldRefresh: false,
       accumulate: true,
-      tenant: '!{tenantTo}'
+      tenant: '!{location.state.tenantTo}'
     },
     items: {
       type: 'okapi',
@@ -97,7 +97,7 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
       accumulate: true,
-      tenant: '!{tenantTo}'
+      tenant: '!{location.state.tenantTo}'
     },
     tagSettings: {
       type: 'okapi',
@@ -198,22 +198,19 @@ class ViewHoldingsRecord extends React.Component {
       });
   };
 
-  goBack = () => {
-    const {
-      id,
-      location: { search, state: locationState },
-    } = this.props;
-    const pathname = locationState?.backPathname ?? `/inventory/view/${id}`;
-
-    window.location.href = `${pathname}${search}`;
-  }
-
   onClose = (e) => {
     if (e) e.preventDefault();
 
-    const { stripes, tenantFrom } = this.props;
+    const {
+      history,
+      location: { search, state: locationState },
+      id,
+    } = this.props;
 
-    switchAffiliation(stripes.okapi, tenantFrom, this.goBack);
+    history.push({
+      pathname: locationState?.backPathname ?? `/inventory/view/${id}`,
+      search,
+    });
   }
 
   // Edit Holdings records handlers
@@ -482,6 +479,7 @@ class ViewHoldingsRecord extends React.Component {
       referenceTables,
       goTo,
       stripes,
+      location: { state: { tenantFrom } },
     } = this.props;
     const { instance } = this.state;
 
@@ -728,7 +726,7 @@ class ViewHoldingsRecord extends React.Component {
                     updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
                   })}
                   dismissible
-                  onClose={this.onClose}
+                  onClose={() => switchAffiliation(stripes, tenantFrom, this.onClose)}
                   actionMenu={this.getPaneHeaderActionMenu}
                 >
                   <Row center="xs">
@@ -1138,7 +1136,6 @@ ViewHoldingsRecord.propTypes = {
     query: PropTypes.object.isRequired,
   }),
   goTo: PropTypes.func.isRequired,
-  tenantFrom: PropTypes.string,
 };
 
 export default flowRight(

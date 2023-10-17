@@ -4,6 +4,7 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
+import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import queryString from 'query-string';
@@ -30,13 +31,21 @@ const ItemBarcode = ({
   isBarcodeAsHotlink,
   tenantId,
 }) => {
+  const history = useHistory();
   const stripes = useStripes();
   const { search } = location;
   const queryBarcode = queryString.parse(search)?.query;
   const isQueryByBarcode = queryString.parse(search)?.qindex === QUERY_INDEXES.BARCODE;
 
   const onViewItem = useCallback(() => {
-    window.location.href = `/inventory/view/${instanceId}/${holdingId}/${item.id}${search}`;
+    history.push({
+      pathname: `/inventory/view/${instanceId}/${holdingId}/${item.id}`,
+      search,
+      state: {
+        tenantTo: tenantId,
+        tenantFrom: stripes.okapi.tenant,
+      },
+    });
   }, [instanceId, holdingId, item.id, search]);
 
   const callout = useContext(CalloutContext);
@@ -67,7 +76,7 @@ const ItemBarcode = ({
         <Button
           buttonStyle="link"
           buttonClass={css.linkWithoutBorder}
-          onClick={() => switchAffiliation(stripes.okapi, tenantId, onViewItem)}
+          onClick={() => switchAffiliation(stripes, tenantId, onViewItem)}
         >
           {itemBarcode}
         </Button>
