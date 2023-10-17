@@ -54,13 +54,13 @@ const InstanceEdit = ({
 
   const goBack = useGoBack(`/inventory/view/${instanceId}`);
 
-  const onSuccess = useCallback((updatedInstance) => {
+  const onSuccess = useCallback(() => {
     const message = instance?.shared ? (
       <FormattedMessage id="ui-inventory.instance.shared.successfulySaved" />
     ) : (
       <FormattedMessage
         id="ui-inventory.instance.successfullySaved"
-        values={{ hrid: updatedInstance.hrid }}
+        values={{ hrid: instance.hrid }}
       />
     );
 
