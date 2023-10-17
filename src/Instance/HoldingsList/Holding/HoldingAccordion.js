@@ -11,16 +11,12 @@ import {
 } from '@folio/stripes/components';
 
 import { callNumberLabel } from '../../../utils';
-import {
-  useLocationsQuery,
-  useHoldingItemsQuery,
-} from '../../../hooks';
 
 import HoldingButtonsGroup from './HoldingButtonsGroup';
-import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
 import {
   useHoldingsAccordionState,
   useLocationsQuery,
+  useHoldingItemsQuery,
 } from '../../../hooks';
 
 const HoldingAccordion = ({
