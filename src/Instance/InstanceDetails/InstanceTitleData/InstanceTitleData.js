@@ -29,10 +29,13 @@ const InstanceTitleData = ({
 }) => {
   const precedingTitles = useMemo(() => {
     return checkIfArrayIsEmpty(instance.precedingTitles);
-  }, [instance]);
+  }, [instance.precedingTitles]);
   const succeedingTitles = useMemo(() => {
     return checkIfArrayIsEmpty(instance.succeedingTitles);
-  }, [instance]);
+  }, [instance.succeedingTitles]);
+  const seriesStatements = useMemo(() => {
+    return checkIfArrayIsEmpty(instance.series);
+  }, [instance.series]);
 
   return (
     <Accordion
@@ -67,7 +70,7 @@ const InstanceTitleData = ({
       </Row>
 
       <TitleSeriesStatements
-        seriesStatements={instance.series}
+        seriesStatements={seriesStatements}
         source={instance.source}
         segment={segment}
       />
