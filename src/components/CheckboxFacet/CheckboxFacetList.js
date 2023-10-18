@@ -52,23 +52,25 @@ function CheckboxFacetList({
           <FormattedMessage id="ui-inventory.noMatchingOptions" />
         }
 
-        {!isPending && dataOptions.map(({ count, value, label, disabled, readOnly }) => {
-          const name = typeof label === 'string' ? label : value;
-          return (
-            <Checkbox
-              id={`clickable-filter-${fieldName}-${kebabCase(name)}`}
-              data-test-checkbox-filter-data-option={value}
-              key={value}
-              label={label}
-              labelInfo={count}
-              name={name}
-              disabled={disabled}
-              readOnly={readOnly}
-              checked={selectedValues.includes(value)}
-              onChange={onChange(value)}
-            />
-          );
-        })}
+        {!isPending && dataOptions
+          .filter(({ isDeleted }) => !isDeleted)
+          .map(({ count, value, label, disabled, readOnly }) => {
+            const name = typeof label === 'string' ? label : value;
+            return (
+              <Checkbox
+                id={`clickable-filter-${fieldName}-${kebabCase(name)}`}
+                data-test-checkbox-filter-data-option={value}
+                key={value}
+                label={label}
+                labelInfo={count}
+                name={name}
+                disabled={disabled}
+                readOnly={readOnly}
+                checked={selectedValues.includes(value)}
+                onChange={onChange(value)}
+              />
+            );
+          })}
       </div>
 
       {!isPending && showMore && (
