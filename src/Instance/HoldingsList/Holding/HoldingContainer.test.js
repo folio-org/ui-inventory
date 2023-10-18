@@ -54,6 +54,7 @@ const renderHoldingContainer = (props = {}) => renderWithIntl(
           provided={{ draggableProps: { style: true } }}
           onViewHolding={jest.fn()}
           onAddItem={jest.fn()}
+          pathToAccordionsState={['holdings']}
           {...props}
         />
       </DnDContext.Provider>
