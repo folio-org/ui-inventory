@@ -7,6 +7,7 @@ const HoldingsList = ({
   instance,
   holdings,
   tenantId,
+  pathToAccordionsState,
 
   draggable,
   droppable,
@@ -19,6 +20,7 @@ const HoldingsList = ({
     droppable={droppable}
     holdings={holdings}
     tenantId={tenantId}
+    pathToAccordionsState={pathToAccordionsState}
   />
 ));
 
@@ -26,6 +28,7 @@ HoldingsList.propTypes = {
   instance: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
   tenantId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
@@ -33,6 +36,7 @@ HoldingsList.propTypes = {
 
 HoldingsList.defaultProps = {
   holdings: [],
+  pathToAccordionsState: [],
 };
 
 export default HoldingsList;
