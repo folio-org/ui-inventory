@@ -91,6 +91,7 @@ const BrowseResultsPane = ({
         isLoading={isFetching}
         pagination={pagination}
         totalRecords={totalRecords}
+        filters={filters}
       />
     </Pane>
   );
