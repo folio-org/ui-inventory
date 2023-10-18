@@ -30,6 +30,7 @@ const CreateHolding = ({
   const callout = useCallout();
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
   const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
+  const { location: { state: { tenantFrom } } } = history;
 
   const goBack = useCallback(() => {
     history.push({
@@ -39,10 +40,8 @@ const CreateHolding = ({
   }, [location.search, instanceId]);
 
   const onCancel = useCallback(() => {
-    const { location: { state: { tenantFrom } } } = history;
-
     switchAffiliation(stripes, tenantFrom, goBack);
-  }, [stripes, goBack]);
+  }, [stripes, tenantFrom, goBack]);
 
   const onSubmit = useCallback((newHolding) => {
     return mutator.holding.POST(newHolding)

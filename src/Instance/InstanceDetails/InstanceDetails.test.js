@@ -38,11 +38,6 @@ const instance = {
   shared: false,
 };
 
-const userTenantPermissions = [{
-  tenantId: 'testTenantId',
-  permissionNames: ['test permission'],
-}];
-
 const mockReferenceData = {
   titleTypes:[
     { id: '1', name: 'Type 1' },

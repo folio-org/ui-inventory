@@ -59,15 +59,15 @@ describe('HoldingButtonsGroup', () => {
   it('should display buttons', () => {
     const { getByRole } = renderHoldingButtonsGroup();
 
-    expect(getByRole('button', { name:  'View holdings' })).toBeDefined();
-    expect(getByRole('button', { name:  'Add item' })).toBeDefined();
+    expect(getByRole('button', { name: 'View holdings' })).toBeDefined();
+    expect(getByRole('button', { name: 'Add item' })).toBeDefined();
   });
 
   describe('when user has no permissions to view holdings', () => {
     it('should supress "View Holdings" button', () => {
       const { queryByRole } = renderHoldingButtonsGroup({ showViewHoldingsButton: false });
 
-      expect(queryByRole('button', { name:  'View holdings' })).not.toBeInTheDocument();
+      expect(queryByRole('button', { name: 'View holdings' })).not.toBeInTheDocument();
     });
   });
 
@@ -75,7 +75,7 @@ describe('HoldingButtonsGroup', () => {
     it('should supress "Add item" button', () => {
       const { queryByRole } = renderHoldingButtonsGroup({ showAddItemButton: false });
 
-      expect(queryByRole('button', { name:  'Add item' })).not.toBeInTheDocument();
+      expect(queryByRole('button', { name: 'Add item' })).not.toBeInTheDocument();
     });
   });
 
@@ -83,7 +83,7 @@ describe('HoldingButtonsGroup', () => {
     it('should call function to switch user\'s affiliation', () => {
       const { getByRole } = renderHoldingButtonsGroup();
 
-      fireEvent.click(getByRole('button', { name:  'View holdings' }));
+      fireEvent.click(getByRole('button', { name: 'View holdings' }));
 
       expect(switchAffiliation.mock.calls.length).toBe(1);
     });
@@ -93,7 +93,7 @@ describe('HoldingButtonsGroup', () => {
     it('should call function to switch user\'s affiliation', () => {
       const { getByRole } = renderHoldingButtonsGroup();
 
-      fireEvent.click(getByRole('button', { name:  'Add item' }));
+      fireEvent.click(getByRole('button', { name: 'Add item' }));
 
       expect(switchAffiliation.mock.calls.length).toBe(1);
     });
