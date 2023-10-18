@@ -39,7 +39,6 @@ const buildStripes = (otherProperties = {}) => ({
     },
   },
   withOkapi: true,
-  updateTenant: jest.fn().mockImplementation(() => {}),
   ...otherProperties,
 });
 

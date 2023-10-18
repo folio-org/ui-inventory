@@ -84,5 +84,4 @@ HoldingButtonsGroup.propTypes = {
   tenantId: PropTypes.string,
 };
 
-
 export default memo(HoldingButtonsGroup);
