@@ -20,7 +20,6 @@ const InstanceNewHolding = ({
   location,
   instance,
   tenantId,
-  disabled,
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
@@ -49,7 +48,6 @@ const InstanceNewHolding = ({
             buttonStyle="primary"
             fullWidth
             onClick={() => switchAffiliation(stripes, tenantId, onNewHolding)}
-            disabled={disabled}
           >
             {label}
           </Button>
@@ -63,7 +61,6 @@ InstanceNewHolding.propTypes = {
   location: PropTypes.object.isRequired,
   instance: PropTypes.object,
   tenantId: PropTypes.string,
-  disabled: PropTypes.bool,
 };
 
 export default withRouter(InstanceNewHolding);

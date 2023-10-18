@@ -54,6 +54,8 @@ const renderHoldingContainer = (props = {}) => renderWithIntl(
           provided={{ draggableProps: { style: true } }}
           onViewHolding={jest.fn()}
           onAddItem={jest.fn()}
+          showViewHoldingsButton
+          showAddItemButton
           {...props}
         />
       </DnDContext.Provider>

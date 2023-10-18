@@ -7,8 +7,8 @@ const HoldingsList = ({
   instance,
   holdings,
   tenantId,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
+  showViewHoldingsButton,
+  showAddItemButton,
   isBarcodeAsHotlink,
   draggable,
   droppable,
@@ -21,8 +21,8 @@ const HoldingsList = ({
     droppable={droppable}
     holdings={holdings}
     tenantId={tenantId}
-    isViewHoldingsDisabled={isViewHoldingsDisabled}
-    isAddItemDisabled={isAddItemDisabled}
+    showViewHoldingsButton={showViewHoldingsButton}
+    showAddItemButton={showAddItemButton}
     isBarcodeAsHotlink={isBarcodeAsHotlink}
   />
 ));
@@ -31,8 +31,8 @@ HoldingsList.propTypes = {
   instance: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
   tenantId: PropTypes.string,
-  isViewHoldingsDisabled: PropTypes.bool,
-  isAddItemDisabled: PropTypes.bool,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,

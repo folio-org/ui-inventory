@@ -23,8 +23,8 @@ const Holding = ({
   isDraggable,
   isItemsDroppable,
   tenantId,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
+  showViewHoldingsButton,
+  showAddItemButton,
   isBarcodeAsHotlink,
 }) => {
   return (
@@ -55,8 +55,8 @@ const Holding = ({
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
           tenantId={tenantId}
-          isViewHoldingsDisabled={isViewHoldingsDisabled}
-          isAddItemDisabled={isAddItemDisabled}
+          showViewHoldingsButton={showViewHoldingsButton}
+          showAddItemButton={showAddItemButton}
         >
           <ItemsListContainer
             holding={holding}
@@ -83,8 +83,8 @@ Holding.propTypes = {
   isHoldingDragSelected: PropTypes.func,
   isItemsDroppable: PropTypes.bool,
   tenantId: PropTypes.string,
-  isViewHoldingsDisabled: PropTypes.bool,
-  isAddItemDisabled: PropTypes.bool,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
 };
 

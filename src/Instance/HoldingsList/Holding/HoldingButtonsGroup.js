@@ -27,8 +27,8 @@ const HoldingButtonsGroup = ({
   itemCount,
   isOpen,
   tenantId,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
+  showViewHoldingsButton,
+  showAddItemButton,
 }) => {
   const stripes = useStripes();
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
@@ -44,23 +44,22 @@ const HoldingButtonsGroup = ({
           />
         )
       }
-      <Button
-        id={`clickable-view-holdings-${holding.id}`}
-        data-test-view-holdings
-        onClick={() => switchAffiliation(stripes, tenantId, onViewHolding)}
-        disabled={isViewHoldingsDisabled}
-      >
-        <FormattedMessage id="ui-inventory.viewHoldings" />
-      </Button>
-
-      {!isUserInCentralTenant && (
+      {showViewHoldingsButton &&
+        <Button
+          id={`clickable-view-holdings-${holding.id}`}
+          data-test-view-holdings
+          onClick={() => switchAffiliation(stripes, tenantId, onViewHolding)}
+        >
+          <FormattedMessage id="ui-inventory.viewHoldings" />
+        </Button>
+      }
+      {!isUserInCentralTenant && showAddItemButton && (
         <IfPermission perm="ui-inventory.item.create">
           <Button
             id={`clickable-new-item-${holding.id}`}
             data-test-add-item
             onClick={() => switchAffiliation(stripes, tenantId, onAddItem)}
             buttonStyle="primary paneHeaderNewButton"
-            disabled={isAddItemDisabled}
           >
             <FormattedMessage id="ui-inventory.addItem" />
           </Button>
@@ -80,8 +79,8 @@ HoldingButtonsGroup.propTypes = {
   onAddItem: PropTypes.func.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   withMoveDropdown: PropTypes.bool,
-  isViewHoldingsDisabled: PropTypes.bool,
-  isAddItemDisabled: PropTypes.bool,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
   tenantId: PropTypes.string,
 };
 

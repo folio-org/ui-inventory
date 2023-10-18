@@ -38,8 +38,8 @@ const DraggableHolding = ({
   onViewHolding,
   onAddItem,
   tenantId,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
+  showViewHoldingsButton,
+  showAddItemButton,
   isBarcodeAsHotlink,
   ...rest
 }) => {
@@ -73,8 +73,8 @@ const DraggableHolding = ({
               onViewHolding={onViewHolding}
               onAddItem={onAddItem}
               tenantId={tenantId}
-              isViewHoldingsDisabled={isViewHoldingsDisabled}
-              isAddItemDisabled={isAddItemDisabled}
+              showViewHoldingsButton={showViewHoldingsButton}
+              showAddItemButton={showAddItemButton}
               isBarcodeAsHotlink={isBarcodeAsHotlink}
             />
           )
@@ -95,16 +95,16 @@ DraggableHolding.propTypes = {
   onViewHolding: PropTypes.func,
   onAddItem: PropTypes.func,
   tenantId: PropTypes.string,
-  isViewHoldingsDisabled: PropTypes.bool,
-  isAddItemDisabled: PropTypes.bool,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
 };
 
 const HoldingContainer = ({
   location,
   history,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
+  showViewHoldingsButton,
+  showAddItemButton,
   isBarcodeAsHotlink,
   instance,
   holding,
@@ -153,8 +153,8 @@ const HoldingContainer = ({
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
           tenantId={tenantId}
-          isViewHoldingsDisabled={isViewHoldingsDisabled}
-          isAddItemDisabled={isAddItemDisabled}
+          showViewHoldingsButton={showViewHoldingsButton}
+          showAddItemButton={showAddItemButton}
           isBarcodeAsHotlink={isBarcodeAsHotlink}
           {...rest}
         />
@@ -167,8 +167,8 @@ const HoldingContainer = ({
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
       tenantId={tenantId}
-      isViewHoldingsDisabled={isViewHoldingsDisabled}
-      isAddItemDisabled={isAddItemDisabled}
+      showViewHoldingsButton={showViewHoldingsButton}
+      showAddItemButton={showAddItemButton}
       isBarcodeAsHotlink={isBarcodeAsHotlink}
     />
   );
@@ -185,8 +185,8 @@ HoldingContainer.propTypes = {
   isDraggable: PropTypes.bool,
   draggingHoldingsCount: PropTypes.number,
   tenantId: PropTypes.string,
-  isViewHoldingsDisabled: PropTypes.bool,
-  isAddItemDisabled: PropTypes.bool,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
 };
 

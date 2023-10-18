@@ -197,10 +197,9 @@ const InstanceDetails = forwardRef(({
           <AccordionSet initialStatus={accordionState}>
             {children}
 
-            {!isUserInCentralTenant && (
+            {!isUserInCentralTenant && canCreateHoldings && (
               <InstanceNewHolding
                 instance={instance}
-                disabled={!canCreateHoldings}
                 tenantId={tenantId}
               />
             )}

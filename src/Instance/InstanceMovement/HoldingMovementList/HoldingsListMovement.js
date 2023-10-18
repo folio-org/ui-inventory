@@ -23,8 +23,8 @@ const HoldingsListMovement = ({
   draggable,
   droppable,
   tenantId,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
+  showViewHoldingsButton,
+  showAddItemButton,
   isBarcodeAsHotlink,
 }) => {
   const {
@@ -61,8 +61,8 @@ const HoldingsListMovement = ({
               holdingIndex={index}
               draggingHoldingsCount={draggingHoldingsCount}
               tenantId={tenantId}
-              isViewHoldingsDisabled={isViewHoldingsDisabled}
-              isAddItemDisabled={isAddItemDisabled}
+              showViewHoldingsButton={showViewHoldingsButton}
+              showAddItemButton={showAddItemButton}
               isBarcodeAsHotlink={isBarcodeAsHotlink}
             />
           ))
@@ -82,8 +82,8 @@ const HoldingsListMovement = ({
 HoldingsListMovement.propTypes = {
   instance: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
-  isViewHoldingsDisabled: PropTypes.bool,
-  isAddItemDisabled: PropTypes.bool,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,

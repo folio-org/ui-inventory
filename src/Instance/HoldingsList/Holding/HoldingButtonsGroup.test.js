@@ -31,8 +31,8 @@ const HoldingButtonsGroupSetup = props => (
       onAddItem={mockOnAddItem}
       itemCount={mockItemCount}
       isOpen={false}
-      isViewHoldingsDisabled={false}
-      isAddItemDisabled={false}
+      showViewHoldingsButton
+      showAddItemButton
       {...props}
     >
       {() => null}
@@ -64,18 +64,18 @@ describe('HoldingButtonsGroup', () => {
   });
 
   describe('when user has no permissions to view holdings', () => {
-    it('should render "View Holdings" button as disabled', () => {
-      const { getByRole } = renderHoldingButtonsGroup({ isViewHoldingsDisabled: true });
+    it('should supress "View Holdings" button', () => {
+      const { queryByRole } = renderHoldingButtonsGroup({ showViewHoldingsButton: false });
 
-      expect(getByRole('button', { name:  'View holdings' })).toBeDisabled();
+      expect(queryByRole('button', { name:  'View holdings' })).not.toBeInTheDocument();
     });
   });
 
   describe('when user has no permissions to create items', () => {
-    it('should render "Add item" button as disabled', () => {
-      const { getByRole } = renderHoldingButtonsGroup({ isAddItemDisabled: true });
+    it('should supress "Add item" button', () => {
+      const { queryByRole } = renderHoldingButtonsGroup({ showAddItemButton: false });
 
-      expect(getByRole('button', { name:  'Add item' })).toBeDisabled();
+      expect(queryByRole('button', { name:  'Add item' })).not.toBeInTheDocument();
     });
   });
 

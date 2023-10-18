@@ -33,7 +33,7 @@ const mockMemberTenant = {
 const userTenantPermissions = [{
   tenantId: 'college',
   permissionNames: [{
-    permissionName: 'test Permission name 1',
+    permissionName: 'ui-inventory.holdings.edit',
     subPermissions: ['test subPermission 1']
   }],
 }];

@@ -32,8 +32,8 @@ const HoldingsListContainer = ({
         holdings={holdings}
         instance={instance}
         tenantId={tenantId}
-        isViewHoldingsDisabled={!canViewHoldings}
-        isAddItemDisabled={!canCreateItem}
+        showViewHoldingsButton={canViewHoldings}
+        showAddItemButton={canCreateItem}
         isBarcodeAsHotlink={canViewItems}
       />
     ) : (
@@ -42,8 +42,8 @@ const HoldingsListContainer = ({
         holdings={holdings}
         instance={instance}
         tenantId={tenantId}
-        isViewHoldingsDisabled={!canViewHoldings}
-        isAddItemDisabled={!canCreateItem}
+        showViewHoldingsButton={canViewHoldings}
+        showAddItemButton={canCreateItem}
         isBarcodeAsHotlink={canViewItems}
       />
     )

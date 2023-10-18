@@ -58,18 +58,17 @@ const MemberTenantHoldings = ({
                 tenantId={id}
                 draggable={false}
                 droppable={false}
-                isViewHoldingsDisabled={!canViewHoldings}
-                isAddItemDisabled={!canCreateItem}
+                showViewHoldingsButton={canViewHoldings}
+                showAddItemButton={canCreateItem}
                 isBarcodeAsHotlink={canViewItems}
               />
             </MoveItemsContext>
           )}
       </div>
-      {!isUserInCentralTenant && (
+      {!isUserInCentralTenant && canCreateHoldings && (
         <InstanceNewHolding
           instance={instance}
           tenantId={id}
-          disabled={!canCreateHoldings}
         />
       )}
     </Accordion>

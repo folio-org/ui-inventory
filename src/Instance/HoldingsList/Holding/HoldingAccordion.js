@@ -26,8 +26,8 @@ const HoldingAccordion = ({
   onAddItem,
   withMoveDropdown,
   tenantId,
-  isViewHoldingsDisabled,
-  isAddItemDisabled,
+  showViewHoldingsButton,
+  showAddItemButton,
 }) => {
   const searchParams = {
     limit: 0,
@@ -63,8 +63,8 @@ const HoldingAccordion = ({
     withMoveDropdown={withMoveDropdown}
     isOpen={open}
     tenantId={tenantId}
-    isViewHoldingsDisabled={isViewHoldingsDisabled}
-    isAddItemDisabled={isAddItemDisabled}
+    showViewHoldingsButton={showViewHoldingsButton}
+    showAddItemButton={showAddItemButton}
   />;
 
   const location = labelLocation?.isActive ?
@@ -125,8 +125,8 @@ HoldingAccordion.propTypes = {
   withMoveDropdown: PropTypes.bool,
   children: PropTypes.object,
   tenantId: PropTypes.string,
-  isViewHoldingsDisabled: PropTypes.bool,
-  isAddItemDisabled: PropTypes.bool,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
 };
 
 export default HoldingAccordion;
