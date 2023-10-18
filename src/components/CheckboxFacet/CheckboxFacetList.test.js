@@ -38,6 +38,7 @@ const dataOptions = [
     label: 'Check Box 2',
     value: 'checkBox2',
   },
+  { id: 'fakeId', isDeleted: true },
 ];
 const selectedValues = ['checkBox1'];
 const fieldName = 'testFacet';
@@ -122,5 +123,25 @@ describe('CheckboxFacetList', () => {
     );
     const checkBoxs = screen.findAllByRole('checkbox');
     expect(checkBoxs).toMatchObject({});
+  });
+
+  it('should not render deleted options', () => {
+    render(
+      <CheckboxFacetList
+        dataOptions={dataOptions}
+        selectedValues={selectedValues}
+        showMore={showMore}
+        showSearch={showSearch}
+        onMoreClick={onMoreClick}
+        onSearch={onSearch}
+        onChange={onChange}
+        fieldName={fieldName}
+        isPending={isPending}
+      />,
+    );
+
+    const allOptions = screen.getAllByRole('checkbox').length;
+
+    expect(allOptions).toBe(2);
   });
 });
