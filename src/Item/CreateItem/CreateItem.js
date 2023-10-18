@@ -52,7 +52,7 @@ const CreateItem = ({
   }, [instanceId, search]);
 
   const onCancel = useCallback(() => {
-    switchAffiliation(stripes, tenantFrom, goBack).then();
+    switchAffiliation(stripes, tenantFrom, goBack);
   }, [stripes, tenantFrom]);
 
   const onSuccess = useCallback(async (response) => {

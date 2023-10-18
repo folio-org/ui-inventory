@@ -21,8 +21,10 @@ import {
 } from 'lodash';
 import moment from 'moment';
 
-import { updateTenant } from '@folio/stripes/core';
-import { validateUser } from '@folio/stripes-core/src/loginServices';
+import {
+  updateTenant,
+  validateUser,
+} from '@folio/stripes/core';
 import { FormattedUTCDate } from '@folio/stripes/components';
 
 import {
@@ -816,7 +818,7 @@ export const getUserTenantsPermissions = (stripes, tenants = []) => {
   return Promise.all(promises);
 };
 
-export const hasMemberTenantPermission = (permissions = [], permissionName, tenantId) => {
+export const hasMemberTenantPermission = (permissionName, tenantId, permissions = []) => {
   const tenantPermissions = permissions?.find(permission => permission?.tenantId === tenantId)?.permissionNames || [];
 
   const hasPermission = tenantPermissions?.some(tenantPermission => tenantPermission?.permissionName === permissionName);

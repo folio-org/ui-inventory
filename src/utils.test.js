@@ -1,14 +1,23 @@
 import '../test/jest/__mock__';
 
 import { FormattedMessage } from 'react-intl';
+
+import { updateTenant } from '@folio/stripes/core';
+
 import {
   validateRequiredField,
   validateFieldLength,
   validateNumericField,
   validateAlphaNumericField,
   getQueryTemplate,
+  switchAffiliation,
 } from './utils';
 import { browseModeOptions } from './constants';
+
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  updateTenant: jest.fn(),
+}));
 
 describe('validateRequiredField', () => {
   const expectedResult = <FormattedMessage id="ui-inventory.hridHandling.validation.enterValue" />;
@@ -144,3 +153,53 @@ describe('getQueryTemplate', () => {
   });
 });
 
+describe('switchAffiliation', () => {
+  global.fetch = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    global.fetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          user: {
+            id: 'testId',
+            username: 'testUsername',
+            personal: {},
+          },
+          permissions: {
+            permissions: [],
+          }
+        }),
+      });
+  });
+
+  const moveMock = jest.fn();
+  const stripes = {
+    okapi: {
+      tenant: 'college',
+      token: 'testToken',
+    },
+    store: { dispatch: jest.fn() },
+    user: {
+      user: {},
+      perms: [],
+    },
+  };
+
+  describe('when current tenant is the same as tenant to switch', () => {
+    it('should only move to the next page', () => {
+      switchAffiliation(stripes, 'college', moveMock);
+
+      expect(moveMock).toHaveBeenCalled();
+    });
+  });
+
+  describe('when current tenant is not the same as tenant to switch', () => {
+    it('should switch affiliation', () => {
+      switchAffiliation(stripes, 'university', moveMock);
+
+      expect(updateTenant).toHaveBeenCalled();
+    });
+  });
+});

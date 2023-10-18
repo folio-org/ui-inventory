@@ -177,7 +177,7 @@ class ItemRoute extends React.Component {
       location: { state: { tenantFrom } },
     } = this.props;
 
-    switchAffiliation(stripes, tenantFrom, this.goBack).then();
+    switchAffiliation(stripes, tenantFrom, this.goBack);
   }
 
   isLoading = () => {

@@ -41,7 +41,7 @@ const CreateHolding = ({
   const onCancel = useCallback(() => {
     const { location: { state: { tenantFrom } } } = history;
 
-    switchAffiliation(stripes, tenantFrom, goBack).then();
+    switchAffiliation(stripes, tenantFrom, goBack);
   }, [stripes, goBack]);
 
   const onSubmit = useCallback((newHolding) => {
