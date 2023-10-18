@@ -10,6 +10,7 @@ const HoldingsList = ({
   showViewHoldingsButton,
   showAddItemButton,
   isBarcodeAsHotlink,
+  pathToAccordionsState,
   draggable,
   droppable,
 }) => holdings.map(holding => (
@@ -24,6 +25,7 @@ const HoldingsList = ({
     showViewHoldingsButton={showViewHoldingsButton}
     showAddItemButton={showAddItemButton}
     isBarcodeAsHotlink={isBarcodeAsHotlink}
+    pathToAccordionsState={pathToAccordionsState}
   />
 ));
 
@@ -34,12 +36,14 @@ HoldingsList.propTypes = {
   showViewHoldingsButton: PropTypes.bool,
   showAddItemButton: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
 };
 
 HoldingsList.defaultProps = {
   holdings: [],
+  pathToAccordionsState: [],
 };
 
 export default HoldingsList;

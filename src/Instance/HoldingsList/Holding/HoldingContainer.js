@@ -41,6 +41,8 @@ const DraggableHolding = ({
   showViewHoldingsButton,
   showAddItemButton,
   isBarcodeAsHotlink,
+  instanceId,
+  pathToAccordionsState,
   ...rest
 }) => {
   const rowStyles = useMemo(() => (
@@ -76,6 +78,8 @@ const DraggableHolding = ({
               showViewHoldingsButton={showViewHoldingsButton}
               showAddItemButton={showAddItemButton}
               isBarcodeAsHotlink={isBarcodeAsHotlink}
+              instanceId={instanceId}
+              pathToAccordionsState={pathToAccordionsState}
             />
           )
       }
@@ -91,6 +95,7 @@ DraggableHolding.propTypes = {
   draggingHoldingsCount: PropTypes.number,
   provided: PropTypes.object.isRequired,
   snapshot: PropTypes.object.isRequired,
+  instanceId: PropTypes.string.isRequired,
   holding: PropTypes.object,
   onViewHolding: PropTypes.func,
   onAddItem: PropTypes.func,
@@ -98,7 +103,10 @@ DraggableHolding.propTypes = {
   showViewHoldingsButton: PropTypes.bool,
   showAddItemButton: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
+
+DraggableHolding.defaultProps = { pathToAccordionsState: [] };
 
 const HoldingContainer = ({
   location,
@@ -112,6 +120,7 @@ const HoldingContainer = ({
   holdingIndex,
   draggingHoldingsCount,
   tenantId,
+  pathToAccordionsState,
   ...rest
 }) => {
   const stripes = useStripes();
@@ -156,6 +165,8 @@ const HoldingContainer = ({
           showViewHoldingsButton={showViewHoldingsButton}
           showAddItemButton={showAddItemButton}
           isBarcodeAsHotlink={isBarcodeAsHotlink}
+          instanceId={instance?.id}
+          pathToAccordionsState={pathToAccordionsState}
           {...rest}
         />
       )}
@@ -170,6 +181,8 @@ const HoldingContainer = ({
       showViewHoldingsButton={showViewHoldingsButton}
       showAddItemButton={showAddItemButton}
       isBarcodeAsHotlink={isBarcodeAsHotlink}
+      instanceId={instance?.id}
+      pathToAccordionsState={pathToAccordionsState}
     />
   );
 };
@@ -188,6 +201,9 @@ HoldingContainer.propTypes = {
   showViewHoldingsButton: PropTypes.bool,
   showAddItemButton: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
+
+HoldingContainer.defaultProps = { pathToAccordionsState: [] };
 
 export default withRouter(HoldingContainer);

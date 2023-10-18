@@ -26,6 +26,7 @@ const HoldingsListMovement = ({
   showViewHoldingsButton,
   showAddItemButton,
   isBarcodeAsHotlink,
+  pathToAccordionsState,
 }) => {
   const {
     selectItemsForDrag,
@@ -64,6 +65,7 @@ const HoldingsListMovement = ({
               showViewHoldingsButton={showViewHoldingsButton}
               showAddItemButton={showAddItemButton}
               isBarcodeAsHotlink={isBarcodeAsHotlink}
+              pathToAccordionsState={pathToAccordionsState}
             />
           ))
         ) : (
@@ -88,10 +90,12 @@ HoldingsListMovement.propTypes = {
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
   tenantId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
 HoldingsListMovement.defaultProps = {
   holdings: [],
+  pathToAccordionsState: [],
 };
 
 export default HoldingsListMovement;

@@ -56,6 +56,7 @@ const renderHoldingContainer = (props = {}) => renderWithIntl(
           onAddItem={jest.fn()}
           showViewHoldingsButton
           showAddItemButton
+          pathToAccordionsState={['holdings']}
           {...props}
         />
       </DnDContext.Provider>

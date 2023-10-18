@@ -11,12 +11,13 @@ import {
 } from '@folio/stripes/components';
 
 import { callNumberLabel } from '../../../utils';
+
+import HoldingButtonsGroup from './HoldingButtonsGroup';
 import {
+  useHoldingsAccordionState,
   useLocationsQuery,
   useHoldingItemsQuery,
 } from '../../../hooks';
-
-import HoldingButtonsGroup from './HoldingButtonsGroup';
 
 const HoldingAccordion = ({
   children,
@@ -28,13 +29,16 @@ const HoldingAccordion = ({
   tenantId,
   showViewHoldingsButton,
   showAddItemButton,
+  instanceId,
+  pathToAccordionsState,
 }) => {
   const searchParams = {
     limit: 0,
     offset: 0,
   };
 
-  const [open, setOpen] = useState(false);
+  const pathToAccordion = [...pathToAccordionsState, holding?.id];
+  const [open, setOpen] = useHoldingsAccordionState({ instanceId, pathToAccordion });
   const [openFirstTime, setOpenFirstTime] = useState(false);
   const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'itemCount', tenantId });
   const { data: locations } = useLocationsQuery({ tenantId });
@@ -121,12 +125,16 @@ HoldingAccordion.propTypes = {
   holding: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
+  instanceId: PropTypes.string.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
   withMoveDropdown: PropTypes.bool,
   children: PropTypes.object,
   tenantId: PropTypes.string,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
   showViewHoldingsButton: PropTypes.bool,
   showAddItemButton: PropTypes.bool,
 };
+
+HoldingAccordion.defaultProps = { pathToAccordionsState: [] };
 
 export default HoldingAccordion;

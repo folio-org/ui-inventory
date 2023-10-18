@@ -39,6 +39,8 @@ const HoldingAccordionSetup = () => (
       onViewHolding={noop}
       onAddItem={noop}
       withMoveDropdown={false}
+      instanceId="instanceId"
+      pathToAccordionsState={['holdings']}
     >
       <></>
     </HoldingAccordion>
