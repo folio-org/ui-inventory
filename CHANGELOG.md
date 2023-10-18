@@ -9,6 +9,7 @@
 * Instance 3rd pane: Adjust behavior when returning to instance from holdings/item full screen. Refs UIIN-2453.
 * Consortial holdings accordion is not appearing after the sharing of Instance. Fixes UIIN-2629.
 * Reset CheckboxFacet state.more when user resets search form and fewer facet options are loaded. Fixes UIIN-2531.
+* Edit instance success toast no longer shows the instance HRID. Fixes UIIN-2588.
 * Show facet options, if they exist, after clicking the +More button. Refs UIIN-2533.
 
 ## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
