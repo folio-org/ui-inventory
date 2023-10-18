@@ -444,6 +444,9 @@ const InstanceFilters = props => {
           selectedValues={activeFilters[FACETS.STATUS]}
           isPending={getIsPending(FACETS.STATUS)}
           onChange={onChange}
+          isFilterable
+          onSearch={handleFilterSearch}
+          onFetch={handleFetchFacets}
         />
       </Accordion>
       <Accordion

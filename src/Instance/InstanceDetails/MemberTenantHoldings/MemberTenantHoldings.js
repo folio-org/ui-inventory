@@ -16,6 +16,7 @@ import { InstanceNewHolding } from '../InstanceNewHolding';
 import { MoveItemsContext } from '../../MoveItemsContext';
 
 import { useInstanceHoldingsQuery } from '../../../providers';
+import { useHoldingsAccordionState } from '../../../hooks';
 
 import css from './MemberTenantHoldings.css';
 
@@ -27,7 +28,13 @@ const MemberTenantHoldings = ({
     name,
     id,
   } = memberTenant;
+  const instanceId = instance?.id;
   const stripes = useStripes();
+
+  const pathToAccordion = ['consortialHoldings', id, '_state'];
+  const pathToHoldingsAccordion = ['consortialHoldings', id];
+  const [isMemberTenantAccOpen, setMemberTenantAccOpen] = useHoldingsAccordionState({ instanceId, pathToAccordion });
+
   const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
@@ -38,7 +45,8 @@ const MemberTenantHoldings = ({
       className={css.memberTenantHoldings}
       id={`${name}-holdings`}
       label={name}
-      closedByDefault
+      open={isMemberTenantAccOpen}
+      onToggle={() => setMemberTenantAccOpen(prevValue => !prevValue)}
     >
       <div className={css.memberTenantHoldings}>
         {isLoading
@@ -51,6 +59,7 @@ const MemberTenantHoldings = ({
                 tenantId={id}
                 draggable={false}
                 droppable={false}
+                pathToAccordionsState={pathToHoldingsAccordion}
               />
             </MoveItemsContext>
           )}
