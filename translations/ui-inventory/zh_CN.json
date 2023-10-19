@@ -829,5 +829,8 @@
     "shareLocalInstance.toast.successful": "本地实例<b> {instanceTitle} </b>已成功共享",
     "filters.tenantId": "持有者",
     "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
-    "consortialHoldings": "Consortial holdings"
+    "consortialHoldings": "Consortial holdings",
+    "unlinkLocalMarcAuthorities.modal.header": "Linked to local authorities",
+    "unlinkLocalMarcAuthorities.modal.message": "If you proceed with sharing this instance, then <b>{linkedAuthoritiesLength}</b> bibliographic fields linked to local authority records will retain authorized values but will become uncontrolled",
+    "unlinkLocalMarcAuthorities.modal.proceed": "Proceed"
 }
