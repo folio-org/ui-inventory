@@ -15,6 +15,8 @@ import {
   browseModeOptions,
   BROWSE_INVENTORY_ROUTE,
   INVENTORY_ROUTE,
+  browseCallNumberOptions,
+  FACETS,
 } from '../../constants';
 import { DataContext } from '../../contexts';
 import BrowseResultsList from './BrowseResultsList';
@@ -59,13 +61,36 @@ const defaultProps = {
     pageConfig: [0, null, null],
   },
   totalRecords: 1,
+  filters: {},
 };
 
 const mockContext = {
   contributorNameTypes: [{
     id: '2b94c631-fca9-4892-a730-03ee529ffe2a',
   }],
+  contributorTypes: [{
+    id: '6e09d47d-95e2-4d8a-831b-f777b8ef6d81',
+    name: 'Author',
+  }],
 };
+
+const contributorsData = [
+  {
+    'name': 'Toth, Josh',
+    'contributorTypeId': [
+      '6e09d47d-95e2-4d8a-831b-f777b8ef6d81'
+    ],
+    'contributorNameTypeId': '2b94c631-fca9-4892-a730-03ee529ffe2a',
+    'isAnchor': false,
+    'totalRecords': 1
+  },
+];
+const subjectsData = [
+  {
+    'value': 'Trivia and miscellanea',
+    'totalRecords': 8
+  },
+];
 
 const renderBrowseResultsList = (props = {}) => renderWithIntl(
   <Router history={history}>
@@ -101,6 +126,94 @@ describe('BrowseResultsList', () => {
         expect.stringContaining
       )(defaultProps.browseData[2], browseModeOptions.CALL_NUMBERS)
     );
+  });
+
+  describe.each([
+    { searchOption: browseCallNumberOptions.CALL_NUMBERS, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.DEWEY, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.LIBRARY_OF_CONGRESS, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.LOCAL, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.NATIONAL_LIBRARY_OF_MEDICINE, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.OTHER, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.SUPERINTENDENT, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+  ])('when the search option is $searchOption and the Shared and/or HeldBy facets are selected', ({ searchOption, shared, heldBy }) => {
+    describe('and the user clicks on a record in the list', () => {
+      it('should be navigated to the Search lookup with those filters', async () => {
+        history = createMemoryHistory({
+          initialEntries: [{
+            pathname: BROWSE_INVENTORY_ROUTE,
+            search: `${heldBy}=college&qindex=${searchOption}&query=a&${shared}=true&${shared}=false`,
+          }],
+        });
+
+        renderBrowseResultsList({
+          filters: {
+            qindex: searchOption,
+            query: 'a',
+            [shared]: ['true', 'false'],
+            [heldBy]: ['college'],
+          },
+        });
+
+        fireEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber));
+
+        expect(history.location.search).toContain('?filters=shared.true%2Cshared.false%2CtenantId.college');
+      });
+    });
+  });
+
+  describe('when the search option is Contributors and the Shared and/or HeldBy facets are selected', () => {
+    describe('and the user clicks on a record in the list', () => {
+      it('should be navigated to the Search lookup with those filters', async () => {
+        history = createMemoryHistory({
+          initialEntries: [{
+            pathname: BROWSE_INVENTORY_ROUTE,
+            search: 'contributorsShared=true&contributorsShared=false&contributorsTenantId=college&qindex=contributors',
+          }],
+        });
+
+        renderBrowseResultsList({
+          filters: {
+            qindex: 'contributors',
+            contributorsShared: ['true', 'false'],
+            contributorsTenantId: ['college'],
+          },
+          browseData: contributorsData,
+        });
+
+        fireEvent.click(screen.getByText(contributorsData[0].name));
+
+        expect(history.location.search).toContain(
+          '?filters=searchContributors.2b94c631-fca9-4892-a730-03ee529ffe2a%2Cshared.true%2Cshared.false%2CtenantId.college'
+        );
+      });
+    });
+  });
+
+  describe('when the search option is Subjects and the Shared and/or HeldBy facets are selected', () => {
+    describe('and the user clicks on a record in the list', () => {
+      it('should be navigated to the Search lookup with those filters', async () => {
+        history = createMemoryHistory({
+          initialEntries: [{
+            pathname: BROWSE_INVENTORY_ROUTE,
+            search: 'qindex=browseSubjects&subjectsShared=true&subjectsShared=false&subjectsTenantId=college',
+          }],
+        });
+
+        renderBrowseResultsList({
+          filters: {
+            qindex: 'browseSubjects',
+            subjectsShared: ['true', 'false'],
+            subjectsTenantId: ['college'],
+          },
+          browseData: subjectsData,
+        });
+
+        fireEvent.click(screen.getByText(subjectsData[0].value));
+
+        expect(history.location.search).toContain('?filters=shared.true%2Cshared.false%2CtenantId.college');
+      });
+    });
   });
 
   describe('when Instance record is linked to an authority record', () => {
