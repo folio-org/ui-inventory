@@ -13,6 +13,7 @@ import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { PaneLoading } from '../components';
 import { DataContext } from '../contexts';
+import { switchAffiliation } from '../utils';
 
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`;
 
@@ -24,6 +25,7 @@ class ItemRoute extends React.Component {
       path: 'inventory/items/:{itemid}',
       POST: { path: 'inventory/items' },
       resourceShouldRefresh: true,
+      tenant: '!{location.state.tenantTo}',
     },
     markItemAsWithdrawn: {
       type: 'okapi',
@@ -100,6 +102,7 @@ class ItemRoute extends React.Component {
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
+      tenant: '!{location.state.tenantTo}',
     },
     instanceRecords: {
       type: 'okapi',
@@ -155,19 +158,26 @@ class ItemRoute extends React.Component {
     },
   });
 
-  onClose = () => {
+  goBack = () => {
     const {
-      goTo,
-      match: {
-        params: { id },
-      },
-      location: { pathname, search },
+      match: { params: { id } },
+      location: { search },
+      history,
     } = this.props;
 
-    // extract instance url
-    const [path] = pathname.match(new RegExp(`(.*)${id}`));
+    history.push({
+      pathname: `/inventory/view/${id}`,
+      search,
+    });
+  }
 
-    goTo(`${path}${search}`);
+  onClose = () => {
+    const {
+      stripes,
+      location: { state: { tenantFrom } },
+    } = this.props;
+
+    switchAffiliation(stripes, tenantFrom, this.goBack);
   }
 
   isLoading = () => {
@@ -212,6 +222,9 @@ ItemRoute.propTypes = {
   match: PropTypes.object,
   location: PropTypes.object,
   resources: PropTypes.object,
+  stripes: PropTypes.object,
+  tenantFrom: PropTypes.string,
+  history: PropTypes.object,
 };
 
 export default flowRight(

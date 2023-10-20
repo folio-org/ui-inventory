@@ -19,8 +19,12 @@ import {
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
-
 jest.mock('./withLocation', () => jest.fn(c => c));
+
+jest.mock('./common', () => ({
+  ...jest.requireActual('./common'),
+  useTenantKy: jest.fn(),
+}));
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
@@ -77,7 +81,11 @@ const defaultProps = {
   },
   location: {
     search: '/',
-    pathname: 'pathname'
+    pathname: 'pathname',
+    state: {
+      tenantTo: 'testTenantToId',
+      tenantFrom: 'testTenantFromId',
+    }
   },
 };
 
@@ -108,7 +116,7 @@ describe('ViewHoldingsRecord actions', () => {
   it('should close view holding page', async () => {
     renderViewHoldingsRecord();
     fireEvent.click(await screen.findByRole('button', { name: 'confirm' }));
-    expect(defaultProps.history.push).toBeCalled();
+    expect(defaultProps.history.push).toHaveBeenCalled();
   });
 
   it('should translate to edit holding form page', async () => {

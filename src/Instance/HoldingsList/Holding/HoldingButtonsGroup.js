@@ -13,6 +13,8 @@ import {
   Icon,
 } from '@folio/stripes/components';
 
+import { switchAffiliation } from '../../../utils';
+
 import { MoveToDropdown } from './MoveToDropdown';
 
 const HoldingButtonsGroup = ({
@@ -24,6 +26,9 @@ const HoldingButtonsGroup = ({
   onAddItem,
   itemCount,
   isOpen,
+  tenantId,
+  showViewHoldingsButton,
+  showAddItemButton,
 }) => {
   const stripes = useStripes();
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
@@ -39,20 +44,21 @@ const HoldingButtonsGroup = ({
           />
         )
       }
-      <Button
-        id={`clickable-view-holdings-${holding.id}`}
-        data-test-view-holdings
-        onClick={onViewHolding}
-      >
-        <FormattedMessage id="ui-inventory.viewHoldings" />
-      </Button>
-
-      {!isUserInCentralTenant && (
+      {showViewHoldingsButton &&
+        <Button
+          id={`clickable-view-holdings-${holding.id}`}
+          data-test-view-holdings
+          onClick={() => switchAffiliation(stripes, tenantId, onViewHolding)}
+        >
+          <FormattedMessage id="ui-inventory.viewHoldings" />
+        </Button>
+      }
+      {!isUserInCentralTenant && showAddItemButton && (
         <IfPermission perm="ui-inventory.item.create">
           <Button
             id={`clickable-new-item-${holding.id}`}
             data-test-add-item
-            onClick={onAddItem}
+            onClick={() => switchAffiliation(stripes, tenantId, onAddItem)}
             buttonStyle="primary paneHeaderNewButton"
           >
             <FormattedMessage id="ui-inventory.addItem" />
@@ -73,7 +79,9 @@ HoldingButtonsGroup.propTypes = {
   onAddItem: PropTypes.func.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   withMoveDropdown: PropTypes.bool,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
+  tenantId: PropTypes.string,
 };
-
 
 export default memo(HoldingButtonsGroup);

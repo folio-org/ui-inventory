@@ -11,11 +11,12 @@ import {
 } from '@folio/stripes/components';
 
 import { callNumberLabel } from '../../../utils';
+
 import HoldingButtonsGroup from './HoldingButtonsGroup';
-import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
 import {
   useHoldingsAccordionState,
   useLocationsQuery,
+  useHoldingItemsQuery,
 } from '../../../hooks';
 
 const HoldingAccordion = ({
@@ -26,6 +27,8 @@ const HoldingAccordion = ({
   onAddItem,
   withMoveDropdown,
   tenantId,
+  showViewHoldingsButton,
+  showAddItemButton,
   instanceId,
   pathToAccordionsState,
 }) => {
@@ -63,6 +66,9 @@ const HoldingAccordion = ({
     onAddItem={onAddItem}
     withMoveDropdown={withMoveDropdown}
     isOpen={open}
+    tenantId={tenantId}
+    showViewHoldingsButton={showViewHoldingsButton}
+    showAddItemButton={showAddItemButton}
   />;
 
   const location = labelLocation?.isActive ?
@@ -125,6 +131,8 @@ HoldingAccordion.propTypes = {
   children: PropTypes.object,
   tenantId: PropTypes.string,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
 };
 
 HoldingAccordion.defaultProps = { pathToAccordionsState: [] };

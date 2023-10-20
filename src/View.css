@@ -14,3 +14,21 @@
   background-color: transparent !important;
   margin-left: var(--gutter-static-one-third);
 }
+
+/* Reset default behaviour for item hotlink */
+.linkWithoutBorder {
+  &:hover,
+  &:focus {
+    outline-style: none !important;
+  }
+}
+
+.linkWithoutBorder:hover::before {
+  background: transparent;
+}
+
+.linkWithoutBorder:focus::before {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}

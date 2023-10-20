@@ -70,7 +70,10 @@ describe('HoldingsListContainer', () => {
     const isHoldingsMove = true;
     render(
       <MemoryRouter>
-        <HoldingsListContainer instance={instance} isHoldingsMove={isHoldingsMove} />
+        <HoldingsListContainer
+          instance={instance}
+          isHoldingsMove={isHoldingsMove}
+        />
       </MemoryRouter>
     );
 
