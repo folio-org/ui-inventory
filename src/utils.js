@@ -21,6 +21,10 @@ import {
 } from 'lodash';
 import moment from 'moment';
 
+import {
+  updateTenant,
+  validateUser,
+} from '@folio/stripes/core';
 import { FormattedUTCDate } from '@folio/stripes/components';
 
 import {
@@ -34,6 +38,9 @@ import {
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
   CONSORTIUM_PREFIX,
+  OKAPI_TENANT_HEADER,
+  CONTENT_TYPE_HEADER,
+  OKAPI_TOKEN_HEADER,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -782,3 +789,64 @@ export const isMARCSource = (source) => {
 export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');
 
 export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
+
+export const getUserTenantsPermissions = (stripes, tenants = []) => {
+  const {
+    user: { user: { id } },
+    okapi: {
+      url,
+      token,
+    }
+  } = stripes;
+  const userTenantIds = tenants.map(tenant => tenant.id || tenant);
+
+  const promises = userTenantIds.map(async (tenantId) => {
+    const result = await fetch(`${url}/perms/users/${id}/permissions?full=true&indexField=userId`, {
+      headers: {
+        [OKAPI_TENANT_HEADER]: tenantId,
+        [CONTENT_TYPE_HEADER]: 'application/json',
+        ...(token && { [OKAPI_TOKEN_HEADER]: token }),
+      },
+      credentials: 'include',
+    });
+
+    const json = await result.json();
+
+    return { tenantId, ...json };
+  });
+
+  return Promise.all(promises);
+};
+
+export const hasMemberTenantPermission = (permissionName, tenantId, permissions = []) => {
+  const tenantPermissions = permissions?.find(permission => permission?.tenantId === tenantId)?.permissionNames || [];
+
+  const hasPermission = tenantPermissions?.some(tenantPermission => tenantPermission?.permissionName === permissionName);
+
+  if (!hasPermission) {
+    return tenantPermissions.some(tenantPermission => tenantPermission.subPermissions.includes(permissionName));
+  }
+
+  return hasPermission;
+};
+
+export const switchAffiliation = async (stripes, tenantId, move) => {
+  if (stripes.okapi.tenant !== tenantId) {
+    await updateTenant(stripes.okapi, tenantId);
+
+    validateUser(
+      stripes.okapi.url,
+      stripes.store,
+      tenantId,
+      {
+        token: stripes.okapi.token,
+        user: stripes.user.user,
+        perms: stripes.user.perms,
+      },
+    );
+
+    move();
+  } else {
+    move();
+  }
+};

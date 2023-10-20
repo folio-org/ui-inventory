@@ -14,6 +14,7 @@
 * If Shared & Held by facets were selected in the Browse search, then retain them in the Search lookup after clicking the record. Refs UIIN-2608.
 * Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
 * Remove error message after switch from Instance Edit screen to another app. Fixes UIIN-2600.
+* Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
 
 ## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)

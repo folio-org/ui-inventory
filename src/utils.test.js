@@ -1,12 +1,18 @@
 import '../test/jest/__mock__';
 
 import { FormattedMessage } from 'react-intl';
+
+import { updateTenant } from '@folio/stripes/core';
+
+import buildStripes from '../test/jest/__mock__/stripesCore.mock';
+
 import {
   validateRequiredField,
   validateFieldLength,
   validateNumericField,
   validateAlphaNumericField,
   getQueryTemplate,
+  switchAffiliation,
 } from './utils';
 import { browseModeOptions } from './constants';
 
@@ -144,3 +150,32 @@ describe('getQueryTemplate', () => {
   });
 });
 
+describe('switchAffiliation', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  const moveMock = jest.fn();
+  const stripes = buildStripes({
+    okapi: {
+      tenant: 'college',
+      token: 'testToken',
+    },
+  });
+
+  describe('when current tenant is the same as tenant to switch', () => {
+    it('should only move to the next page', () => {
+      switchAffiliation(stripes, 'college', moveMock);
+
+      expect(moveMock).toHaveBeenCalled();
+    });
+  });
+
+  describe('when current tenant is not the same as tenant to switch', () => {
+    it('should switch affiliation', () => {
+      switchAffiliation(stripes, 'university', moveMock);
+
+      expect(updateTenant).toHaveBeenCalled();
+    });
+  });
+});

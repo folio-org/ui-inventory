@@ -3,16 +3,11 @@ import React, {
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-import {
-  useHistory,
-  useLocation,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import { useStripes } from '@folio/stripes/core';
-import {
-  LoadingView,
-} from '@folio/stripes/components';
+import { LoadingView } from '@folio/stripes/components';
 
 import {
   useInstanceQuery,
@@ -21,17 +16,26 @@ import {
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
 import { useItemMutation } from '../hooks';
+import { switchAffiliation } from '../../utils';
 
 const CreateItem = ({
   referenceData,
   instanceId,
   holdingId,
 }) => {
-  const history = useHistory();
-  const location = useLocation();
+  const {
+    push,
+    location: {
+      search,
+      state: {
+        tenantTo,
+        tenantFrom,
+      },
+    },
+  } = useHistory();
 
-  const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
-  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
+  const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId, { tenantId: tenantTo });
+  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId, { tenantId: tenantTo });
   const callout = useCallout();
   const stripes = useStripes();
 
@@ -40,12 +44,16 @@ const CreateItem = ({
     holdingsRecordId: holding.id,
   }), [holding.id]);
 
-  const onCancel = useCallback(() => {
-    history.push({
+  const goBack = useCallback(() => {
+    push({
       pathname: `/inventory/view/${instanceId}`,
-      search: location.search,
+      search,
     });
-  }, [location.search, instanceId]);
+  }, [instanceId, search]);
+
+  const onCancel = useCallback(() => {
+    switchAffiliation(stripes, tenantFrom, goBack);
+  }, [stripes, tenantFrom]);
 
   const onSuccess = useCallback(async (response) => {
     const { hrid } = await response.json();

@@ -10,7 +10,7 @@ import { isEmpty } from 'lodash';
 import DnDContext from '../DnDContext';
 import ItemsList from './ItemsList';
 
-import useHoldingItemsQuery from '../../hooks/useHoldingItemsQuery';
+import { useHoldingItemsQuery } from '../../hooks';
 
 import { DEFAULT_ITEM_TABLE_SORTBY_FIELD } from '../../constants';
 
@@ -19,6 +19,7 @@ const ItemsListContainer = ({
   holding,
   draggable,
   droppable,
+  isBarcodeAsHotlink,
 }) => {
   const {
     selectItemsForDrag,
@@ -62,6 +63,8 @@ const ItemsListContainer = ({
       draggable={draggable}
       droppable={droppable}
       isFetching={isFetching}
+      isBarcodeAsHotlink={isBarcodeAsHotlink}
+      tenantId={tenantId}
     />
   );
 };
@@ -71,6 +74,7 @@ ItemsListContainer.propTypes = {
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
   tenantId: PropTypes.string,
+  isBarcodeAsHotlink: PropTypes.bool,
 };
 
 export default memo(ItemsListContainer);

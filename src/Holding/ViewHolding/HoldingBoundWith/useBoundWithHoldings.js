@@ -1,6 +1,6 @@
 import useChunkedCQLFetch from '../../../hooks/useChunkedCQLFetch';
 
-const useBoundWithHoldings = (boundWithItems) => {
+const useBoundWithHoldings = (boundWithItems, tenantId) => {
   let holdingsRecordIds = boundWithItems?.map(x => x.holdingsRecordId);
 
   // De-dup the list of holdingsRecordIds for efficiency
@@ -13,7 +13,8 @@ const useBoundWithHoldings = (boundWithItems) => {
       holdingQueries.reduce((acc, curr) => {
         return [...acc, ...(curr?.data?.holdingsRecords ?? [])];
       }, [])
-    )
+    ),
+    tenantId,
   });
 
   return {
