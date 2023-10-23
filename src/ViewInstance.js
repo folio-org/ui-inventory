@@ -960,9 +960,9 @@ class ViewInstance extends React.Component {
 
             <Callout ref={this.calloutRef} />
 
-            {this.state.afterCreate &&
+            {this.state.afterCreate && !isEmpty(instance) &&
               <CalloutRenderer
-                message={<FormattedMessage id="ui-inventory.instance.successfullySaved" values={{ hrid: instance?.hrid }} />}
+                message={<FormattedMessage id="ui-inventory.instance.successfullySaved" values={{ hrid: instance.hrid }} />}
               />
             }
 
