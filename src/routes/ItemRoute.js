@@ -174,8 +174,9 @@ class ItemRoute extends React.Component {
   onClose = () => {
     const {
       stripes,
-      location: { state: { tenantFrom } },
+      location,
     } = this.props;
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     switchAffiliation(stripes, tenantFrom, this.goBack);
   }
