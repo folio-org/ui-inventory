@@ -1,8 +1,9 @@
 import '../../../test/jest/__mock__';
 
-import { MemoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { createMemoryHistory } from 'history';
 
 import { instance } from '../../../test/fixtures/instance';
 import {
@@ -19,6 +20,16 @@ jest.mock('../../common/hooks', () => ({
   useHolding: jest.fn().mockReturnValue({ holding: {}, isLoading: false }),
 }));
 
+const history = createMemoryHistory();
+history.location = {
+  pathname: '/testPathName',
+  search: '?filters=test1',
+  state: {
+    tenantTo: 'testTenantToId',
+    tenantFrom: 'testTenantFromId',
+  }
+};
+
 const defaultProps = {
   instanceId: instance.id,
   holdingId: 'holdingId',
@@ -28,11 +39,11 @@ const defaultProps = {
 const queryClient = new QueryClient();
 
 const wrapper = ({ children }) => (
-  <MemoryRouter>
+  <Router history={history}>
     <QueryClientProvider client={queryClient}>
       {children}
     </QueryClientProvider>
-  </MemoryRouter>
+  </Router>
 );
 
 const renderCreateItem = (props = {}) => render(

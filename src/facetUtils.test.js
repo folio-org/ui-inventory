@@ -43,6 +43,7 @@ describe('getFacetOptions', () => {
     const key = 'id';
     const expectedOptions = [
       { label: 'Filter 1', value: 'filter1', count: 2 },
+      { id: 'invalid', isDeleted: true },
       { label: 'Filter 2', value: 'filter2', count: 0 },
     ];
     expect(getFacetOptions(selectedFiltersId, entries, facetData, key)).toEqual(expectedOptions);

@@ -2,12 +2,18 @@ import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { IfPermission } from '@folio/stripes/core';
+import {
+  checkIfUserInCentralTenant,
+  IfPermission,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   Button,
   Badge,
   Icon,
 } from '@folio/stripes/components';
+
+import { switchAffiliation } from '../../../utils';
 
 import { MoveToDropdown } from './MoveToDropdown';
 
@@ -20,38 +26,49 @@ const HoldingButtonsGroup = ({
   onAddItem,
   itemCount,
   isOpen,
-}) => (
-  <>
-    {
-      withMoveDropdown && (
-        <MoveToDropdown
-          holding={holding}
-          holdings={holdings}
-          locationsById={locationsById}
-        />
-      )
-    }
-    <Button
-      id={`clickable-view-holdings-${holding.id}`}
-      data-test-view-holdings
-      onClick={onViewHolding}
-    >
-      <FormattedMessage id="ui-inventory.viewHoldings" />
-    </Button>
+  tenantId,
+  showViewHoldingsButton,
+  showAddItemButton,
+}) => {
+  const stripes = useStripes();
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
-    <IfPermission perm="ui-inventory.item.create">
-      <Button
-        id={`clickable-new-item-${holding.id}`}
-        data-test-add-item
-        onClick={onAddItem}
-        buttonStyle="primary paneHeaderNewButton"
-      >
-        <FormattedMessage id="ui-inventory.addItem" />
-      </Button>
-    </IfPermission>
-    {!isOpen && <Badge>{itemCount ?? <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
-  </>
-);
+  return (
+    <>
+      {
+        withMoveDropdown && (
+          <MoveToDropdown
+            holding={holding}
+            holdings={holdings}
+            locationsById={locationsById}
+          />
+        )
+      }
+      {showViewHoldingsButton &&
+        <Button
+          id={`clickable-view-holdings-${holding.id}`}
+          data-test-view-holdings
+          onClick={() => switchAffiliation(stripes, tenantId, onViewHolding)}
+        >
+          <FormattedMessage id="ui-inventory.viewHoldings" />
+        </Button>
+      }
+      {!isUserInCentralTenant && showAddItemButton && (
+        <IfPermission perm="ui-inventory.item.create">
+          <Button
+            id={`clickable-new-item-${holding.id}`}
+            data-test-add-item
+            onClick={() => switchAffiliation(stripes, tenantId, onAddItem)}
+            buttonStyle="primary paneHeaderNewButton"
+          >
+            <FormattedMessage id="ui-inventory.addItem" />
+          </Button>
+        </IfPermission>
+      )}
+      {!isOpen && <Badge>{itemCount ?? <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
+    </>
+  );
+};
 
 HoldingButtonsGroup.propTypes = {
   holding: PropTypes.object.isRequired,
@@ -62,7 +79,9 @@ HoldingButtonsGroup.propTypes = {
   onAddItem: PropTypes.func.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   withMoveDropdown: PropTypes.bool,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
+  tenantId: PropTypes.string,
 };
-
 
 export default memo(HoldingButtonsGroup);

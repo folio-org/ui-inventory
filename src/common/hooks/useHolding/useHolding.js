@@ -1,9 +1,11 @@
 import { useQuery } from 'react-query';
 
-import { useOkapiKy, useNamespace } from '@folio/stripes/core';
+import { useNamespace } from '@folio/stripes/core';
 
-const useHolding = (holdingId) => {
-  const ky = useOkapiKy();
+import useTenantKy from '../useTenantKy';
+
+const useHolding = (holdingId, { tenantId = '' } = {}) => {
+  const ky = useTenantKy({ tenantId });
   const [namespace] = useNamespace({ key: 'holding' });
 
   const { isLoading, data: holding = {} } = useQuery(

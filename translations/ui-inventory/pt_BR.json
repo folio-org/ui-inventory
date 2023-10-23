@@ -827,5 +827,10 @@
     "shareLocalInstance.modal.confirmButton": "Compartilhar",
     "shareLocalInstance.toast.unsuccessful": "A instância local <b>{instanceTitle}</b> não foi compartilhada",
     "shareLocalInstance.toast.successful": "A instância local <b>{instanceTitle}</b> foi compartilhada com sucesso",
-    "filters.tenantId": "Realizada por"
+    "filters.tenantId": "Realizada por",
+    "permission.consortia.inventory.share.local.instance": "Inventário: Compartilhar a instância local com o consórcio",
+    "consortialHoldings": "Participações em consórcios",
+    "unlinkLocalMarcAuthorities.modal.header": "Vinculado às autoridades locais",
+    "unlinkLocalMarcAuthorities.modal.message": "Se prosseguir com o compartilhamento dessa instância, os campos bibliográficos <b>{linkedAuthoritiesLength}</b> vinculados a registros de autoridades locais manterão os valores autorizados, mas passarão a não ser controlados",
+    "unlinkLocalMarcAuthorities.modal.proceed": "Prosseguir"
 }

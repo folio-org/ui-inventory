@@ -827,5 +827,10 @@
     "shareLocalInstance.modal.confirmButton": "Compartir",
     "shareLocalInstance.toast.unsuccessful": "La instancia local <b>{instanceTitle}</b> no se compartió",
     "shareLocalInstance.toast.successful": "Local instance <b>{instanceTitle}</b> has been successfully shared",
-    "filters.tenantId": "Held by"
+    "filters.tenantId": "Held by",
+    "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
+    "consortialHoldings": "Consortial holdings",
+    "unlinkLocalMarcAuthorities.modal.header": "Linked to local authorities",
+    "unlinkLocalMarcAuthorities.modal.message": "If you proceed with sharing this instance, then <b>{linkedAuthoritiesLength}</b> bibliographic fields linked to local authority records will retain authorized values but will become uncontrolled",
+    "unlinkLocalMarcAuthorities.modal.proceed": "Proceed"
 }

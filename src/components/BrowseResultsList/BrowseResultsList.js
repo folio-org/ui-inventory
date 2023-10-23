@@ -49,6 +49,7 @@ const BrowseResultsList = ({
     onNeedMoreData,
   },
   totalRecords,
+  filters,
 }) => {
   const data = useContext(DataContext);
   const { search } = useLocation();
@@ -75,7 +76,7 @@ const BrowseResultsList = ({
       id={listId}
       totalCount={totalRecords}
       contentData={browseData}
-      formatter={getBrowseResultsFormatter({ data, browseOption })}
+      formatter={getBrowseResultsFormatter({ data, browseOption, filters })}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
       isSelected={isSelected}
@@ -101,6 +102,7 @@ const BrowseResultsList = ({
 
 BrowseResultsList.propTypes = {
   browseData: PropTypes.arrayOf(PropTypes.object),
+  filters: PropTypes.object.isRequired,
   isEmptyMessage: PropTypes.node.isRequired,
   isLoading: PropTypes.bool,
   pagination: PropTypes.shape({

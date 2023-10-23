@@ -19,14 +19,16 @@ const BrowseInventoryFilters = ({
   const data = useContext(DataContext);
 
   const filters = omit(activeFilters || {}, ['qindex', 'query']);
+  const isBrowseLookup = true;
   const filtersData = {
     ...data,
     browseType: searchIndex,
-    onFetchFacets: fetchFacets(data),
+    onFetchFacets: fetchFacets(data, isBrowseLookup),
     parentResources: resources,
     query: {
       query: activeFilters.query,
       filters: parseFiltersToStr(filters),
+      qindex: searchIndex,
     }
   };
 

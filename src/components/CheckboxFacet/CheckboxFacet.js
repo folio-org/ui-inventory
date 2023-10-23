@@ -42,16 +42,12 @@ export default class CheckboxFacet extends React.Component {
     const prevDataLength = prevProps.dataOptions.length;
     const currentDataLength = this.props.dataOptions.length;
 
-    if (
-      this.state.isMoreClicked &&
-      prevDataLength === DEFAULT_FILTERS_NUMBER &&
-      currentDataLength > DEFAULT_FILTERS_NUMBER
-    ) {
-      this.updateMore();
-    }
-
-    if (prevDataLength > currentDataLength && currentDataLength === DEFAULT_FILTERS_NUMBER) {
-      this.setDefaultMore();
+    if (this.state.isMoreClicked) {
+      if (prevDataLength === DEFAULT_FILTERS_NUMBER && currentDataLength > DEFAULT_FILTERS_NUMBER) {
+        this.updateMore();
+      } else if (currentDataLength < prevDataLength) { // if filters were reset we need to reset state.more to show +More button
+        this.setState({ more: SHOW_OPTIONS_COUNT });
+      }
     }
   }
 
@@ -103,10 +99,6 @@ export default class CheckboxFacet extends React.Component {
     this.setState(({ more }) => {
       return { more: more + SHOW_OPTIONS_INCREMENT };
     });
-  }
-
-  setDefaultMore = () => {
-    this.setState(({ more: SHOW_OPTIONS_COUNT }));
   }
 
   render() {

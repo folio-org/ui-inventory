@@ -52,6 +52,7 @@ import {
   getSortedNotes,
   handleKeyCommand,
   getDate,
+  switchAffiliation,
 } from './utils';
 import withLocation from './withLocation';
 import {
@@ -80,6 +81,7 @@ class ViewHoldingsRecord extends React.Component {
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
       resourceShouldRefresh: false,
       accumulate: true,
+      tenant: '!{location.state.tenantTo}'
     },
     items: {
       type: 'okapi',
@@ -95,6 +97,7 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
       accumulate: true,
+      tenant: '!{location.state.tenantTo}'
     },
     tagSettings: {
       type: 'okapi',
@@ -476,6 +479,7 @@ class ViewHoldingsRecord extends React.Component {
       referenceTables,
       goTo,
       stripes,
+      location: { state: { tenantFrom } },
     } = this.props;
     const { instance } = this.state;
 
@@ -722,7 +726,7 @@ class ViewHoldingsRecord extends React.Component {
                     updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
                   })}
                   dismissible
-                  onClose={this.onClose}
+                  onClose={() => switchAffiliation(stripes, tenantFrom, this.onClose)}
                   actionMenu={this.getPaneHeaderActionMenu}
                 >
                   <Row center="xs">
@@ -1086,6 +1090,7 @@ ViewHoldingsRecord.propTypes = {
     connect: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
     hasInterface: PropTypes.func.isRequired,
+    okapi: PropTypes.object.isRequired,
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.object,

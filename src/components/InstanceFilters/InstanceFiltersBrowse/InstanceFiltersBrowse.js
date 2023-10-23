@@ -14,6 +14,7 @@ import {
 } from '@folio/stripes/core';
 
 import CheckboxFacet from '../../CheckboxFacet';
+import HeldByFacet from '../../HeldByFacet';
 import { MultiSelectionFacet } from '../../MultiSelectionFacet';
 import {
   getSharedOptions,
@@ -49,6 +50,7 @@ const InstanceFiltersBrowse = props => {
 
   const segmentAccordions = {
     [FACETS.SHARED]: false,
+    [FACETS.CALL_NUMBERS_HELD_BY]: false,
     [FACETS.CONTRIBUTORS_SHARED]: false,
     [FACETS.CONTRIBUTORS_HELD_BY]: false,
     [FACETS.SUBJECTS_SHARED]: false,
@@ -66,6 +68,7 @@ const InstanceFiltersBrowse = props => {
 
   const selectedFacetFilters = {
     [FACETS.SHARED]: activeFilters[FACETS.SHARED],
+    [FACETS.CALL_NUMBERS_HELD_BY]: activeFilters[FACETS.CALL_NUMBERS_HELD_BY],
     [FACETS.CONTRIBUTORS_SHARED]: activeFilters[FACETS.CONTRIBUTORS_SHARED],
     [FACETS.CONTRIBUTORS_HELD_BY]: activeFilters[FACETS.CONTRIBUTORS_HELD_BY],
     [FACETS.SUBJECTS_SHARED]: activeFilters[FACETS.SUBJECTS_SHARED],
@@ -95,6 +98,9 @@ const InstanceFiltersBrowse = props => {
         if (recordName === FACETS_CQL.SHARED) {
           accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
         }
+        if (recordName === FACETS_CQL.HELD_BY) {
+          processFacetOptions(activeFilters[FACETS.CALL_NUMBERS_HELD_BY], consortiaTenants, ...commonProps);
+        }
       }
       return accum;
     }, {});
@@ -107,20 +113,27 @@ const InstanceFiltersBrowse = props => {
     handleFilterSearch,
     facetsOptions,
     getIsPending,
+    onUnregisterAccordion,
   ] = useFacets(
     segmentAccordions,
     segmentOptions,
     selectedFacetFilters,
     getNewRecords,
-    props.data
+    props.data,
+    false,
   );
 
   return (
-    <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
+    <AccordionSet
+      accordionStatus={accordions}
+      onToggle={onToggleSection}
+      onUnregisterAccordion={onUnregisterAccordion}
+    >
       {Object.values(browseCallNumberOptions).includes(browseType) && (
         <>
           {isUserInMemberTenant && (
             <Accordion
+              closedByDefault
               label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
               id={FACETS.SHARED}
               name={FACETS.SHARED}
@@ -138,7 +151,18 @@ const InstanceFiltersBrowse = props => {
               />
             </Accordion>
           )}
+          <HeldByFacet
+            activeFilters={activeFilters}
+            facetsOptions={facetsOptions}
+            getIsPending={getIsPending}
+            name={FACETS.CALL_NUMBERS_HELD_BY}
+            onChange={onChange}
+            onClear={onClear}
+            onFetchFacets={handleFetchFacets}
+            onFilterSearch={handleFilterSearch}
+          />
           <Accordion
+            closedByDefault
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
             id={FACETS.EFFECTIVE_LOCATION}
             name={FACETS.EFFECTIVE_LOCATION}
@@ -163,44 +187,35 @@ const InstanceFiltersBrowse = props => {
       {browseType === browseModeOptions.CONTRIBUTORS && (
         <>
           {isUserInMemberTenant && (
-            <>
-              <Accordion
-                label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
-                id={FACETS.CONTRIBUTORS_SHARED}
+            <Accordion
+              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
+              id={FACETS.CONTRIBUTORS_SHARED}
+              name={FACETS.CONTRIBUTORS_SHARED}
+              separator={false}
+              header={FilterAccordionHeader}
+              displayClearButton={activeFilters[FACETS.CONTRIBUTORS_SHARED]?.length > 0}
+              onClearFilter={() => onClear(FACETS.CONTRIBUTORS_SHARED)}
+            >
+              <CheckboxFacet
                 name={FACETS.CONTRIBUTORS_SHARED}
-                separator={false}
-                header={FilterAccordionHeader}
-                displayClearButton={activeFilters[FACETS.CONTRIBUTORS_SHARED]?.length > 0}
-                onClearFilter={() => onClear(FACETS.CONTRIBUTORS_SHARED)}
-              >
-                <CheckboxFacet
-                  name={FACETS.CONTRIBUTORS_SHARED}
-                  dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
-                  selectedValues={activeFilters[FACETS.CONTRIBUTORS_SHARED]}
-                  isPending={getIsPending(FACETS.CONTRIBUTORS_SHARED)}
-                  onChange={onChange}
-                />
-              </Accordion>
-              <Accordion
-                label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
-                id={FACETS.CONTRIBUTORS_HELD_BY}
-                name={FACETS.CONTRIBUTORS_HELD_BY}
-                separator={false}
-                header={FilterAccordionHeader}
-                displayClearButton={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]?.length > 0}
-                onClearFilter={() => onClear(FACETS.CONTRIBUTORS_HELD_BY)}
-              >
-                <CheckboxFacet
-                  data-test-filter-item-held-by
-                  name={FACETS.CONTRIBUTORS_HELD_BY}
-                  dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS]}
-                  selectedValues={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]}
-                  isPending={getIsPending(FACETS.CONTRIBUTORS_HELD_BY)}
-                  onChange={onChange}
-                />
-              </Accordion>
-            </>
+                dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
+                selectedValues={activeFilters[FACETS.CONTRIBUTORS_SHARED]}
+                isPending={getIsPending(FACETS.CONTRIBUTORS_SHARED)}
+                onChange={onChange}
+              />
+            </Accordion>
           )}
+          {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
+          {/* <HeldByFacet
+            activeFilters={activeFilters}
+            facetsOptions={facetsOptions}
+            getIsPending={getIsPending}
+            name={FACETS.CONTRIBUTORS_HELD_BY}
+            onChange={onChange}
+            onClear={onClear}
+            onFetchFacets={handleFetchFacets}
+            onFilterSearch={handleFilterSearch}
+          /> */}
           <MultiSelectionFacet
             id={FACETS.NAME_TYPE}
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
@@ -215,42 +230,38 @@ const InstanceFiltersBrowse = props => {
           />
         </>
       )}
-      {browseType === browseModeOptions.SUBJECTS && isUserInMemberTenant && (
+      {browseType === browseModeOptions.SUBJECTS && (
         <>
-          <Accordion
-            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
-            id={FACETS.SUBJECTS_SHARED}
-            name={FACETS.SUBJECTS_SHARED}
-            separator={false}
-            header={FilterAccordionHeader}
-            displayClearButton={activeFilters[FACETS.SUBJECTS_SHARED]?.length > 0}
-            onClearFilter={() => onClear(FACETS.SUBJECTS_SHARED)}
-          >
-            <CheckboxFacet
+          {isUserInMemberTenant && (
+            <Accordion
+              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
+              id={FACETS.SUBJECTS_SHARED}
               name={FACETS.SUBJECTS_SHARED}
-              dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
-              selectedValues={activeFilters[FACETS.SUBJECTS_SHARED]}
-              isPending={getIsPending(FACETS.SUBJECTS_SHARED)}
-              onChange={onChange}
-            />
-          </Accordion>
-          <Accordion
-            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.HELD_BY}` })}
-            id={FACETS.SUBJECTS_HELD_BY}
+              separator={false}
+              header={FilterAccordionHeader}
+              displayClearButton={activeFilters[FACETS.SUBJECTS_SHARED]?.length > 0}
+              onClearFilter={() => onClear(FACETS.SUBJECTS_SHARED)}
+            >
+              <CheckboxFacet
+                name={FACETS.SUBJECTS_SHARED}
+                dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
+                selectedValues={activeFilters[FACETS.SUBJECTS_SHARED]}
+                isPending={getIsPending(FACETS.SUBJECTS_SHARED)}
+                onChange={onChange}
+              />
+            </Accordion>
+          )}
+          {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
+          {/* <HeldByFacet
+            activeFilters={activeFilters}
+            facetsOptions={facetsOptions}
+            getIsPending={getIsPending}
             name={FACETS.SUBJECTS_HELD_BY}
-            separator={false}
-            header={FilterAccordionHeader}
-            displayClearButton={activeFilters[FACETS.SUBJECTS_HELD_BY]?.length > 0}
-            onClearFilter={() => onClear(FACETS.SUBJECTS_HELD_BY)}
-          >
-            <CheckboxFacet
-              name={FACETS.SUBJECTS_HELD_BY}
-              dataOptions={facetsOptions[FACETS_OPTIONS.HELD_BY_OPTIONS] || []}
-              selectedValues={activeFilters[FACETS.SUBJECTS_HELD_BY]}
-              isPending={getIsPending(FACETS.SUBJECTS_HELD_BY)}
-              onChange={onChange}
-            />
-          </Accordion>
+            onChange={onChange}
+            onClear={onClear}
+            onFetchFacets={handleFetchFacets}
+            onFilterSearch={handleFilterSearch}
+          /> */}
         </>
       )}
     </AccordionSet>

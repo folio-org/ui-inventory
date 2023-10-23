@@ -4,7 +4,10 @@ import { FormattedMessage } from 'react-intl';
 
 import { Checkbox } from '@folio/stripes/components';
 
-import { ItemsListContainer, DropZone } from '../../ItemsList';
+import {
+  ItemsListContainer,
+  DropZone,
+} from '../../ItemsList';
 
 import HoldingAccordion from './HoldingAccordion';
 
@@ -19,6 +22,12 @@ const Holding = ({
   isHoldingDragSelected,
   isDraggable,
   isItemsDroppable,
+  tenantId,
+  showViewHoldingsButton,
+  showAddItemButton,
+  isBarcodeAsHotlink,
+  instanceId,
+  pathToAccordionsState,
 }) => {
   return (
     <div>
@@ -47,11 +56,18 @@ const Holding = ({
           holdings={holdings}
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
+          tenantId={tenantId}
+          instanceId={instanceId}
+          pathToAccordionsState={pathToAccordionsState}
+          showViewHoldingsButton={showViewHoldingsButton}
+          showAddItemButton={showAddItemButton}
         >
           <ItemsListContainer
             holding={holding}
             draggable={draggable}
             droppable={droppable}
+            tenantId={tenantId}
+            isBarcodeAsHotlink={isBarcodeAsHotlink}
           />
         </HoldingAccordion>
       </DropZone>
@@ -63,6 +79,7 @@ Holding.propTypes = {
   holding: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
+  instanceId: PropTypes.string.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
@@ -70,10 +87,16 @@ Holding.propTypes = {
   selectHoldingsForDrag: PropTypes.func,
   isHoldingDragSelected: PropTypes.func,
   isItemsDroppable: PropTypes.bool,
+  tenantId: PropTypes.string,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
+  isBarcodeAsHotlink: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
 Holding.defaultProps = {
   isItemsDroppable: true,
+  pathToAccordionsState: [],
 };
 
 export default Holding;

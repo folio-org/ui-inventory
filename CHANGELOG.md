@@ -1,6 +1,24 @@
 # Change history for ui-inventory
 
-## 10.0.0 IN PROGRESS
+
+## [10.1.0] IN PROGRESS
+
+
+## [10.0.1] IN PROGRESS
+
+* Instance 3rd pane: Adjust behavior when returning to instance from holdings/item full screen. Refs UIIN-2453.
+* Consortial holdings accordion is not appearing after the sharing of Instance. Fixes UIIN-2629.
+* Reset CheckboxFacet state.more when user resets search form and fewer facet options are loaded. Fixes UIIN-2531.
+* Edit instance success toast no longer shows the instance HRID. Fixes UIIN-2588.
+* Show facet options, if they exist, after clicking the +More button. Refs UIIN-2533.
+* If Shared & Held by facets were selected in the Browse search, then retain them in the Search lookup after clicking the record. Refs UIIN-2608.
+* Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
+* Remove error message after switch from Instance Edit screen to another app. Fixes UIIN-2600.
+* Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
+
+## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)
+
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
@@ -93,6 +111,18 @@
 * Disable View source button for Source = FOLIO instances. Fixes UIIN-2570.
 * Add Inventory Browse facet for Call numbers (item) on Shared vs Not shared Instances. Refs UIIN-2407.
 * Add Browse facet for members with holdings on Instances in Contributors & Subject Browse. Refs UIIN-2415.
+* Add permission to promote a local instance to shared. Refs UIIN-2571.
+* Add `Held By` facet in Call number browse. Refs UIIN-2416.
+* Item barcode redirects to the broken page in circ log. Fixes UIIN-2606.
+* Bump the major versions of @folio/plugin-create-inventory-records optionalDependencies. Refs UIIN-2597.
+* Instance 3rd pane: Add consortial holdings/item accordion. Refs UIIN-2410.
+* Consortial Central Tenant: Handling Holdings and Item actions on the Instance detail view. Refs UIIN-2523.
+* Hide Held by facet in Inventory contributor and subject browse. Refs UIIN-2591.
+* Use `==` for exact phrase search in Advanced Search for all full-text and term fields. Refs UIIN-2612.
+* Provide an instance `tenantId` to the PO line form when creating an order from the instance. Refs UIIN-2614.
+* Bump @folio/stripes-acq-components dependency version to 5.0.0. Refs UIIN-2620.
+* ECS: Check when sharing instance with source=MARC is complete before re-fetching it. Refs UIIN-2605.
+* Update all facets after changing a term or selecting a facet option. Refs UIIN-2610.
 
 ## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.11...v9.4.12)

@@ -1,8 +1,12 @@
-import { reduce } from 'lodash';
+import {
+  reduce,
+  omit,
+} from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 
 import { makeQueryFunction } from '@folio/stripes/smart-components';
+import { buildFilterQuery } from '@folio/stripes-acq-components';
 
 import {
   getQueryTemplate,
@@ -13,9 +17,7 @@ import {
 } from './filterConfig';
 import {
   DEFAULT_FILTERS_NUMBER,
-  FACETS,
   FACETS_TO_REQUEST,
-  FACETS_ENDPOINTS,
   CQL_FIND_ALL,
   browseModeOptions,
   browseModeMap,
@@ -114,7 +116,62 @@ function withFacets(WrappedComponent) {
       }, '');
     };
 
-    fetchFacets = (data) => async (properties = {}) => {
+    getEndpoint = (queryIndex) => {
+      if (queryIndex === browseModeOptions.CONTRIBUTORS) {
+        return 'search/contributors/facets';
+      }
+
+      if (queryIndex === browseModeOptions.SUBJECTS) {
+        return 'search/subjects/facets';
+      }
+
+      return 'search/instances/facets';
+    }
+
+    getCqlQuery = (isBrowseLookup, query, queryIndex, data) => {
+      if (isBrowseLookup) {
+        const normalizedFilters = {
+          ...Object.entries(query).reduce((acc, [key, value]) => ({
+            ...acc,
+            [FACETS_TO_REQUEST[key] || key]: value,
+          }), {}),
+          query: query.query || undefined,
+        };
+
+        const otherFilters = omit(normalizedFilters, 'query', 'qindex');
+        const hasSelectedFacetOption = Object.values(otherFilters).some(Boolean);
+
+        let queryForBrowseFacets = '';
+
+        const isTypedCallNumber = Object.values(browseCallNumberOptions).includes(queryIndex)
+          && queryIndex !== browseCallNumberOptions.CALL_NUMBERS;
+
+        if (hasSelectedFacetOption) {
+          if (isTypedCallNumber) {
+            queryForBrowseFacets = `callNumberType="${queryIndex}"`;
+          }
+        } else if (isTypedCallNumber) {
+          queryForBrowseFacets = `callNumberType="${queryIndex}"`;
+        } else {
+          queryForBrowseFacets = 'cql.allRecords=1';
+        }
+
+        return buildFilterQuery(
+          {
+            query: queryForBrowseFacets,
+            qindex: normalizedFilters.qindex,
+            ...otherFilters,
+          },
+          _query => _query,
+          undefined,
+          false,
+        );
+      }
+
+      return buildQuery(query, {}, { ...data, query }, { log: () => null }) || '';
+    }
+
+    fetchFacets = (data, isBrowseLookup) => async (properties = {}) => {
       const {
         onMoreClickedFacet,
         focusedFacet,
@@ -136,21 +193,13 @@ function withFacets(WrappedComponent) {
 
       // temporary query value
       const params = { query: 'id = *' };
-      const cqlQuery = buildQuery(query, {}, { ...data, query }, { log: () => null }) || '';
       const facetName = facetToOpen || onMoreClickedFacet || focusedFacet;
       const facetNameToRequest = FACETS_TO_REQUEST[facetName];
       const paramsUrl = new URLSearchParams(window.location.search);
       const queryIndex = paramsUrl.get('qindex') || query?.qindex;
+      const cqlQuery = this.getCqlQuery(isBrowseLookup, query, queryIndex, data);
 
-      if (facetName === FACETS.NAME_TYPE) {
-        params.query = 'contributorNameTypeId=*';
-      } else if ([FACETS.CONTRIBUTORS_SHARED, FACETS.CONTRIBUTORS_HELD_BY].includes(facetName)) {
-        params.query = 'name=*';
-      } else if ([FACETS.SUBJECTS_SHARED, FACETS.SUBJECTS_HELD_BY].includes(facetName)) {
-        params.query = 'value=*';
-      } else if (cqlQuery && Object.values(browseCallNumberOptions).includes(queryIndex)) {
-        params.query = 'callNumber=""';
-      } else if (cqlQuery && queryIndex !== browseModeOptions.CALL_NUMBERS) {
+      if (cqlQuery) {
         params.query = cqlQuery;
       }
 
@@ -171,7 +220,7 @@ function withFacets(WrappedComponent) {
 
       try {
         reset();
-        const requestPath = FACETS_ENDPOINTS[facetName] || 'search/instances/facets';
+        const requestPath = this.getEndpoint(queryIndex);
         await GET({ path: requestPath, params });
       } catch (error) {
         throw new Error(error);

@@ -40,6 +40,8 @@ const getFormatter = (
   holdingsMapById,
   selectItemsForDrag,
   ifItemsSelected,
+  isBarcodeAsHotlink,
+  tenantId,
 ) => ({
   'dnd': () => (
     <Icon
@@ -71,6 +73,8 @@ const getFormatter = (
           item={item}
           holdingId={item.holdingsRecordId}
           instanceId={holdingsMapById[item.holdingsRecordId]?.instanceId}
+          isBarcodeAsHotlink={isBarcodeAsHotlink}
+          tenantId={tenantId}
         />
         {item.discoverySuppress &&
         <span>
@@ -160,8 +164,10 @@ const ItemsList = ({
   selectItemsForDrag,
   getDraggingItems,
   isFetching,
+  isBarcodeAsHotlink,
+  tenantId,
 }) => {
-  const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items);
+  const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items, tenantId);
   const holdingsMapById = keyBy(holdings, 'id');
   const intl = useIntl();
   const [itemsSorting, setItemsSorting] = useState({
@@ -180,7 +186,15 @@ const ItemsList = ({
     [holding.id, records, isItemsDragSelected, selectItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(intl, locationsById, holdingsMapById, selectItemsForDrag, isItemsDragSelected),
+    () => getFormatter(
+      intl,
+      locationsById,
+      holdingsMapById,
+      selectItemsForDrag,
+      isItemsDragSelected,
+      isBarcodeAsHotlink,
+      tenantId,
+    ),
     [holdingsMapById, selectItemsForDrag, isItemsDragSelected],
   );
   const rowProps = useMemo(() => ({
@@ -259,6 +273,8 @@ ItemsList.propTypes = {
   isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
   isFetching: PropTypes.bool,
+  tenantId: PropTypes.string,
+  isBarcodeAsHotlink: PropTypes.bool,
 };
 
 ItemsList.defaultProps = {

@@ -8,6 +8,8 @@ import { withRouter } from 'react-router';
 import { Draggable } from 'react-beautiful-dnd';
 import { FormattedMessage } from 'react-intl';
 
+import { useStripes } from '@folio/stripes/core';
+
 import Holding from './Holding';
 
 const dragStyles = {
@@ -35,6 +37,12 @@ const DraggableHolding = ({
   holding,
   onViewHolding,
   onAddItem,
+  tenantId,
+  showViewHoldingsButton,
+  showAddItemButton,
+  isBarcodeAsHotlink,
+  instanceId,
+  pathToAccordionsState,
   ...rest
 }) => {
   const rowStyles = useMemo(() => (
@@ -66,6 +74,12 @@ const DraggableHolding = ({
               holding={holding}
               onViewHolding={onViewHolding}
               onAddItem={onAddItem}
+              tenantId={tenantId}
+              showViewHoldingsButton={showViewHoldingsButton}
+              showAddItemButton={showAddItemButton}
+              isBarcodeAsHotlink={isBarcodeAsHotlink}
+              instanceId={instanceId}
+              pathToAccordionsState={pathToAccordionsState}
             />
           )
       }
@@ -81,26 +95,44 @@ DraggableHolding.propTypes = {
   draggingHoldingsCount: PropTypes.number,
   provided: PropTypes.object.isRequired,
   snapshot: PropTypes.object.isRequired,
+  instanceId: PropTypes.string.isRequired,
   holding: PropTypes.object,
   onViewHolding: PropTypes.func,
   onAddItem: PropTypes.func,
+  tenantId: PropTypes.string,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
+  isBarcodeAsHotlink: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
+
+DraggableHolding.defaultProps = { pathToAccordionsState: [] };
 
 const HoldingContainer = ({
   location,
   history,
-
+  showViewHoldingsButton,
+  showAddItemButton,
+  isBarcodeAsHotlink,
   instance,
   holding,
   isDraggable,
   holdingIndex,
   draggingHoldingsCount,
+  tenantId,
+  pathToAccordionsState,
   ...rest
 }) => {
+  const stripes = useStripes();
+
   const onViewHolding = useCallback(() => {
     history.push({
       pathname: `/inventory/view/${instance.id}/${holding.id}`,
       search: location.search,
+      state: {
+        tenantTo: tenantId,
+        tenantFrom: stripes.okapi.tenant,
+      },
     });
   }, [location.search, instance.id, holding.id]);
 
@@ -108,8 +140,12 @@ const HoldingContainer = ({
     history.push({
       pathname: `/inventory/create/${instance.id}/${holding.id}/item`,
       search: location.search,
+      state: {
+        tenantTo: tenantId,
+        tenantFrom: stripes.okapi.tenant,
+      },
     });
-  }, [instance.id, holding.id]);
+  }, [location.search, instance.id, holding.id]);
 
   return isDraggable ? (
     <Draggable
@@ -125,6 +161,12 @@ const HoldingContainer = ({
           holding={holding}
           onViewHolding={onViewHolding}
           onAddItem={onAddItem}
+          tenantId={tenantId}
+          showViewHoldingsButton={showViewHoldingsButton}
+          showAddItemButton={showAddItemButton}
+          isBarcodeAsHotlink={isBarcodeAsHotlink}
+          instanceId={instance?.id}
+          pathToAccordionsState={pathToAccordionsState}
           {...rest}
         />
       )}
@@ -135,6 +177,12 @@ const HoldingContainer = ({
       holding={holding}
       onViewHolding={onViewHolding}
       onAddItem={onAddItem}
+      tenantId={tenantId}
+      showViewHoldingsButton={showViewHoldingsButton}
+      showAddItemButton={showAddItemButton}
+      isBarcodeAsHotlink={isBarcodeAsHotlink}
+      instanceId={instance?.id}
+      pathToAccordionsState={pathToAccordionsState}
     />
   );
 };
@@ -144,12 +192,18 @@ HoldingContainer.propTypes = {
   history: PropTypes.object.isRequired,
   provided: PropTypes.object.isRequired,
   snapshot: PropTypes.object.isRequired,
-
   instance: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,
   holdingIndex: PropTypes.number,
   isDraggable: PropTypes.bool,
   draggingHoldingsCount: PropTypes.number,
+  tenantId: PropTypes.string,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
+  isBarcodeAsHotlink: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
+
+HoldingContainer.defaultProps = { pathToAccordionsState: [] };
 
 export default withRouter(HoldingContainer);

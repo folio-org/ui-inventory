@@ -62,6 +62,11 @@ export const getFacetOptions = (selectedFiltersId, entries, facetData, key, pars
     if (facet) {
       const option = parse(facetDataMap.get(entry.id), entry.totalRecords);
       accum.push(option);
+    } else {
+      accum.push({
+        id: entry.id,
+        isDeleted: true,
+      });
     }
     return accum;
   }, []);

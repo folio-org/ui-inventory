@@ -20,7 +20,7 @@ export const getPublishingInfo = instance => {
   return undefined;
 };
 
-export const getAccordionState = (instance, accordions) => {
+export const getAccordionState = (instance = {}, accordions = {}) => {
   const instanceData = pick(
     instance,
     ['hrid', 'source', 'catalogedDate', 'statusId', 'statusUpdatedDate', 'modeOfIssuanceId', 'statisticalCodeIds'],
@@ -48,13 +48,13 @@ export const getAccordionState = (instance, accordions) => {
   return ({
     [accordions.administrative]: !areAllFieldsEmpty(values(instanceData)),
     [accordions.title]: !areAllFieldsEmpty(values(titleData)),
-    [accordions.identifiers]: !areAllFieldsEmpty([instance.identifiers ?? []]),
-    [accordions.contributors]: !areAllFieldsEmpty([instance.contributors ?? []]),
+    [accordions.identifiers]: !areAllFieldsEmpty([instance?.identifiers ?? []]),
+    [accordions.contributors]: !areAllFieldsEmpty([instance?.contributors ?? []]),
     [accordions.descriptiveData]: !areAllFieldsEmpty(values(descriptiveData)),
     [accordions.notes]: !areAllFieldsEmpty([instance?.notes ?? []]),
-    [accordions.electronicAccess]: !areAllFieldsEmpty([instance.electronicAccess ?? []]),
-    [accordions.subjects]: !areAllFieldsEmpty([instance.subjects ?? []]),
-    [accordions.classifications]: !areAllFieldsEmpty([instance.classifications ?? []]),
+    [accordions.electronicAccess]: !areAllFieldsEmpty([instance?.electronicAccess ?? []]),
+    [accordions.subjects]: !areAllFieldsEmpty([instance?.subjects ?? []]),
+    [accordions.classifications]: !areAllFieldsEmpty([instance?.classifications ?? []]),
     [accordions.relationship]: !areAllFieldsEmpty(values(instanceRelationship)),
   });
 };
