@@ -501,9 +501,10 @@ class ViewHoldingsRecord extends React.Component {
       referenceTables,
       goTo,
       stripes,
-      location: { state: { tenantFrom } },
+      location,
     } = this.props;
     const { instance } = this.state;
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     if (this.isAwaitingResource()) return <LoadingView />;
 
