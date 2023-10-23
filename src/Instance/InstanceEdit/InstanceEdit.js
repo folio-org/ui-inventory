@@ -72,22 +72,20 @@ const InstanceEdit = ({
   }, [callout, goBack]);
 
   const onError = async error => {
-    const parsedError = await parseHttpError(error);
+    const response = await error.response;
+    const parsedError = await parseHttpError(response);
     setHttpError(parsedError);
   };
 
   const isMemberTenant = checkIfUserInMemberTenant(stripes);
   const tenantId = (isMemberTenant && instance?.shared) ? stripes.user.user.consortium.centralTenantId : stripes.okapi.tenant;
 
-  const { mutateInstance } = useInstanceMutation({
-    options: { onSuccess, onError },
-    tenantId,
-  });
+  const { mutateInstance } = useInstanceMutation({ tenantId });
 
   const onSubmit = useCallback((initialInstance) => {
     const updatedInstance = marshalInstance(initialInstance, identifierTypesByName);
 
-    return mutateInstance(updatedInstance);
+    return mutateInstance(updatedInstance, { onSuccess, onError });
   }, [mutateInstance]);
 
   if (isInstanceLoading) return <LoadingView />;
