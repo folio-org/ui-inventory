@@ -15,6 +15,7 @@
 * Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
 * Remove error message after switch from Instance Edit screen to another app. Fixes UIIN-2600.
 * Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
+* User receives an error when searching for an item in the Inventory app. Fixes UIIN-2634.
 * Create new instance success toast no longer shows the instance HRID. Fixes UIIN-2635.
 
 ## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
