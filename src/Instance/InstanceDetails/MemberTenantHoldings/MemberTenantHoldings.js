@@ -16,6 +16,7 @@ import { InstanceNewHolding } from '../InstanceNewHolding';
 import { MoveItemsContext } from '../../MoveItemsContext';
 
 import { useInstanceHoldingsQuery } from '../../../providers';
+import { hasMemberTenantPermission } from '../../../utils';
 import { useHoldingsAccordionState } from '../../../hooks';
 
 import css from './MemberTenantHoldings.css';
@@ -23,6 +24,7 @@ import css from './MemberTenantHoldings.css';
 const MemberTenantHoldings = ({
   memberTenant,
   instance,
+  userTenantPermissions,
 }) => {
   const {
     name,
@@ -37,6 +39,11 @@ const MemberTenantHoldings = ({
 
   const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+
+  const canViewHoldings = hasMemberTenantPermission('ui-inventory.instance.view', id, userTenantPermissions);
+  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.edit', id, userTenantPermissions);
+  const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.edit', id, userTenantPermissions);
+  const canViewItems = hasMemberTenantPermission('ui-inventory.instance.view', id, userTenantPermissions);
 
   if (isEmpty(holdingsRecords)) return null;
 
@@ -59,13 +66,19 @@ const MemberTenantHoldings = ({
                 tenantId={id}
                 draggable={false}
                 droppable={false}
+                showViewHoldingsButton={canViewHoldings}
+                showAddItemButton={canCreateItem}
+                isBarcodeAsHotlink={canViewItems}
                 pathToAccordionsState={pathToHoldingsAccordion}
               />
             </MoveItemsContext>
           )}
       </div>
-      {!isUserInCentralTenant && (
-        <InstanceNewHolding instance={instance} />
+      {!isUserInCentralTenant && canCreateHoldings && (
+        <InstanceNewHolding
+          instance={instance}
+          tenantId={id}
+        />
       )}
     </Accordion>
   );
@@ -74,6 +87,7 @@ const MemberTenantHoldings = ({
 MemberTenantHoldings.propTypes = {
   instance: PropTypes.object.isRequired,
   memberTenant: PropTypes.object.isRequired,
+  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default MemberTenantHoldings;

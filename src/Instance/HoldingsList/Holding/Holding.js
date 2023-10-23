@@ -4,7 +4,10 @@ import { FormattedMessage } from 'react-intl';
 
 import { Checkbox } from '@folio/stripes/components';
 
-import { ItemsListContainer, DropZone } from '../../ItemsList';
+import {
+  ItemsListContainer,
+  DropZone,
+} from '../../ItemsList';
 
 import HoldingAccordion from './HoldingAccordion';
 
@@ -20,6 +23,9 @@ const Holding = ({
   isDraggable,
   isItemsDroppable,
   tenantId,
+  showViewHoldingsButton,
+  showAddItemButton,
+  isBarcodeAsHotlink,
   instanceId,
   pathToAccordionsState,
 }) => {
@@ -53,12 +59,15 @@ const Holding = ({
           tenantId={tenantId}
           instanceId={instanceId}
           pathToAccordionsState={pathToAccordionsState}
+          showViewHoldingsButton={showViewHoldingsButton}
+          showAddItemButton={showAddItemButton}
         >
           <ItemsListContainer
             holding={holding}
             draggable={draggable}
             droppable={droppable}
             tenantId={tenantId}
+            isBarcodeAsHotlink={isBarcodeAsHotlink}
           />
         </HoldingAccordion>
       </DropZone>
@@ -79,6 +88,9 @@ Holding.propTypes = {
   isHoldingDragSelected: PropTypes.func,
   isItemsDroppable: PropTypes.bool,
   tenantId: PropTypes.string,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
+  isBarcodeAsHotlink: PropTypes.bool,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 

@@ -341,7 +341,7 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
-    const statisticalCodeOptions = referenceTables.statisticalCodes
+    const statisticalCodeOptions = referenceTables.statisticalCodes ? referenceTables.statisticalCodes
       .map(
         code => ({
           label: refLookup(referenceTables.statisticalCodeTypes, code.statisticalCodeTypeId).name + ':    ' + code.code + ' - ' + code.name,
@@ -349,7 +349,7 @@ class InstanceForm extends React.Component {
           selected: code.id === initialValues.statisticalCodeId,
         })
       )
-      .sort((a, b) => a.label.localeCompare(b.label));
+      .sort((a, b) => a.label.localeCompare(b.label)) : [];
 
     // Since preceding/succeeding title relationships are split out from other parent/child instances,
     // we don't want the type selection box for parent/child to include the preceding-succeeding type

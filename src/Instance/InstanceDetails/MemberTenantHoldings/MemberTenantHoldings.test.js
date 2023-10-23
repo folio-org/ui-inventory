@@ -30,12 +30,21 @@ const mockMemberTenant = {
   name: 'College',
 };
 
+const userTenantPermissions = [{
+  tenantId: 'college',
+  permissionNames: [{
+    permissionName: 'ui-inventory.holdings.edit',
+    subPermissions: ['test subPermission 1']
+  }],
+}];
+
 const renderMemberTenantHoldings = () => {
   const component = (
     <Router>
       <MemberTenantHoldings
         instance={instance}
         memberTenant={mockMemberTenant}
+        userTenantPermissions={userTenantPermissions}
       />
     </Router>
   );

@@ -22,21 +22,17 @@ import {
   useSearchForShadowInstanceTenants,
 } from '../../../hooks';
 
-const ConsortialHoldings = ({ instance }) => {
+const ConsortialHoldings = ({
+  instance,
+  userTenantPermissions,
+}) => {
+  const pathToAccordion = ['consortialHoldings', '_state'];
   const instanceId = instance?.id;
-  const prevInstanceId = useRef(instanceId);
 
   const stripes = useStripes();
+  const prevInstanceId = useRef(instanceId);
   const { consortiaTenantsById } = useContext(DataContext);
-
   const { tenants } = useSearchForShadowInstanceTenants({ instanceId });
-
-  const memberTenants = tenants
-    .map(tenant => consortiaTenantsById[tenant.id])
-    .filter(tenant => !tenant?.isCentral && (tenant?.id !== stripes.okapi.tenant))
-    .sort((a, b) => a.name.localeCompare(b.name));
-
-  const pathToAccordion = ['consortialHoldings', '_state'];
   const [isConsortialAccOpen, setConsortialAccOpen] = useHoldingsAccordionState({ instanceId, pathToAccordion });
 
   useEffect(() => {
@@ -45,6 +41,13 @@ const ConsortialHoldings = ({ instance }) => {
       prevInstanceId.current = instanceId;
     }
   }, [instanceId]);
+
+  if (!consortiaTenantsById) return null;
+
+  const memberTenants = tenants
+    .map(tenant => consortiaTenantsById[tenant.id])
+    .filter(tenant => !tenant?.isCentral && (tenant?.id !== stripes.okapi.tenant))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <IfInterface name="consortia">
@@ -63,6 +66,7 @@ const ConsortialHoldings = ({ instance }) => {
                   key={`${memberTenant.id}.${instanceId}`}
                   memberTenant={memberTenant}
                   instance={instance}
+                  userTenantPermissions={userTenantPermissions}
                 />
               ))}
             </AccordionSet>
@@ -73,6 +77,9 @@ const ConsortialHoldings = ({ instance }) => {
   );
 };
 
-ConsortialHoldings.propTypes = { instance: PropTypes.object.isRequired };
+ConsortialHoldings.propTypes = {
+  instance: PropTypes.object.isRequired,
+  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default ConsortialHoldings;

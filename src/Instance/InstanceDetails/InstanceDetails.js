@@ -69,12 +69,15 @@ const InstanceDetails = forwardRef(({
   onClose,
   actionMenu,
   tagsEnabled,
+  userTenantPermissions,
   isShared,
   isLoading,
   ...rest
 }, ref) => {
   const intl = useIntl();
   const stripes = useStripes();
+  const { okapi: { tenant: tenantId } } = stripes;
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
@@ -84,6 +87,8 @@ const InstanceDetails = forwardRef(({
 
   const tags = instance?.tags?.tagList;
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+
+  const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.edit');
 
   const detailsLastMenu = useMemo(() => {
     return (
@@ -194,12 +199,18 @@ const InstanceDetails = forwardRef(({
           <AccordionSet initialStatus={accordionState}>
             {children}
 
-            {!isUserInCentralTenant && (
-              <InstanceNewHolding instance={instance} />
+            {!isUserInCentralTenant && canCreateHoldings && (
+              <InstanceNewHolding
+                instance={instance}
+                tenantId={tenantId}
+              />
             )}
 
             {isConsortialHoldingsVisible && (
-              <ConsortialHoldings instance={instance} />
+              <ConsortialHoldings
+                instance={instance}
+                userTenantPermissions={userTenantPermissions}
+              />
             )}
 
             <InstanceAdministrativeView
@@ -293,6 +304,7 @@ InstanceDetails.propTypes = {
   instance: PropTypes.object,
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
+  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
   isShared: PropTypes.bool,
 };

@@ -4,30 +4,49 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import {
-  Link,
-} from 'react-router-dom';
-import {
-  FormattedMessage,
-} from 'react-intl';
+import { useHistory } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import queryString from 'query-string';
 
 import {
   CalloutContext,
   AppIcon,
+  useStripes,
 } from '@folio/stripes/core';
 import {
+  Button,
   Highlighter,
   IconButton,
 } from '@folio/stripes/components';
 import css from '../../View.css';
 import { QUERY_INDEXES } from '../../constants';
+import { switchAffiliation } from '../../utils';
 
-const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
+const ItemBarcode = ({
+  location,
+  item,
+  holdingId,
+  instanceId,
+  isBarcodeAsHotlink,
+  tenantId,
+}) => {
+  const history = useHistory();
+  const stripes = useStripes();
   const { search } = location;
   const queryBarcode = queryString.parse(search)?.query;
   const isQueryByBarcode = queryString.parse(search)?.qindex === QUERY_INDEXES.BARCODE;
+
+  const onViewItem = useCallback(() => {
+    history.push({
+      pathname: `/inventory/view/${instanceId}/${holdingId}/${item.id}`,
+      search,
+      state: {
+        tenantTo: tenantId,
+        tenantFrom: stripes.okapi.tenant,
+      },
+    });
+  }, [instanceId, holdingId, item.id, search]);
 
   const callout = useContext(CalloutContext);
   const onCopyToClipbaord = useCallback(() => {
@@ -43,18 +62,26 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
 
   const highlightableBarcode = isQueryByBarcode ? <Highlighter searchWords={[queryBarcode]} text={String(item.barcode)} /> : item.barcode;
 
+  const itemBarcode = (
+    <span data-test-items-app-icon>
+      <AppIcon app="inventory" iconKey="item" size="small">
+        {item.barcode ? highlightableBarcode : <FormattedMessage id="ui-inventory.noBarcode" />}
+      </AppIcon>
+    </span>
+  );
+
   return (
     <>
-      <Link
-        to={`/inventory/view/${instanceId}/${holdingId}/${item.id}${search}`}
-        data-test-item-link
-      >
-        <span data-test-items-app-icon>
-          <AppIcon app="inventory" iconKey="item" size="small">
-            {item.barcode ? highlightableBarcode : <FormattedMessage id="ui-inventory.noBarcode" />}
-          </AppIcon>
-        </span>
-      </Link>
+      {isBarcodeAsHotlink ? (
+        <Button
+          buttonStyle="link"
+          buttonClass={css.linkWithoutBorder}
+          onClick={() => switchAffiliation(stripes, tenantId, onViewItem)}
+        >
+          {itemBarcode}
+        </Button>
+      ) : itemBarcode
+      }
       {item.barcode &&
         <CopyToClipboard
           text={item.barcode}
@@ -79,10 +106,11 @@ const ItemBarcode = ({ location, item, holdingId, instanceId }) => {
 
 ItemBarcode.propTypes = {
   location: PropTypes.object.isRequired,
-
   item: PropTypes.object.isRequired,
   holdingId: PropTypes.string.isRequired,
   instanceId: PropTypes.string.isRequired,
+  tenantId: PropTypes.string,
+  isBarcodeAsHotlink: PropTypes.bool,
 };
 
 export default withRouter(ItemBarcode);

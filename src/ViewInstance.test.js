@@ -32,6 +32,8 @@ import {
   translationsProperties,
 } from '../test/jest/helpers';
 
+import * as utils from './utils';
+
 jest.mock('./components/ImportRecordModal/ImportRecordModal', () => (props) => {
   const { isOpen, handleSubmit, handleCancel } = props;
   if (isOpen) {
@@ -68,9 +70,15 @@ jest.mock('./common/hooks', () => ({
   ...jest.requireActual('./common/hooks'),
   useTenantKy: jest.fn(),
 }));
+jest.mock('react-beautiful-dnd', () => ({
+  ...jest.requireActual('react-beautiful-dnd'),
+  Draggable: jest.fn(() => <div>Press space bar to start a drag</div>),
+}));
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
+
+const spyOnGetUserTenantsPermissions = jest.spyOn(utils, 'getUserTenantsPermissions');
 
 const location = {
   pathname: '/testPathName',
@@ -132,7 +140,10 @@ const mockStripes = {
     log: jest.fn()
   },
   okapi: { tenant: 'diku' },
-  user: { user: {} },
+  user: {
+    user: {},
+    tenants: ['testTenantId']
+  },
 };
 const defaultProp = {
   centralTenantPermissions: [],
@@ -257,11 +268,22 @@ const checkActionItemExists = (actionItemName) => {
   expect(screen.getByRole('button', { name: actionItemName })).toBeInTheDocument();
 };
 
+global.fetch = jest.fn();
+
 describe('ViewInstance', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     StripesConnectedInstance.prototype.instance.mockImplementation(() => instance);
     checkIfUserInCentralTenant.mockReturnValue(false);
+    spyOnGetUserTenantsPermissions.mockResolvedValueOnce([{
+      tenantId: 'testTenantId',
+      permissionNames: ['test permission 1'],
+    }]);
+    global.fetch
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({}),
+      });
     useStripes().hasInterface.mockReturnValue(true);
   });
   it('should display action menu items', () => {
@@ -399,11 +421,14 @@ describe('ViewInstance', () => {
         checkActionItemExists('Move items within an instance');
       });
 
-      it('"Move items within an instance" button to be clicked', () => {
-        renderViewInstance();
-        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-        fireEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
-        expect(renderViewInstance()).toBeTruthy();
+      describe('when click "Move items within an instance" button', () => {
+        it('should render component for dragging', () => {
+          const { getByText } = renderViewInstance();
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Move items within an instance' }));
+
+          expect(getByText(/Press space bar to start a drag/i)).toBeInTheDocument();
+        });
       });
 
       describe('when user is in central tenant', () => {
@@ -629,11 +654,14 @@ describe('ViewInstance', () => {
         checkActionItemExists('Export instance (MARC)');
       });
 
-      it('"Export instance (MARC)" button to be clicked', () => {
-        renderViewInstance();
-        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-        fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
-        expect(renderViewInstance()).toBeTruthy();
+      describe('when click "Export instance (MARC)" button', () => {
+        it('should call function to export instance', () => {
+          renderViewInstance();
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
+
+          expect(defaultProp.mutator.quickExport.POST).toHaveBeenCalled();
+        });
       });
     });
     describe('"New order" action item', () => {
@@ -665,7 +693,12 @@ describe('ViewInstance', () => {
           const stripes = {
             ...defaultProp.stripes,
             okapi: { tenant: 'consortium' },
-            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+            user: {
+              user: {
+                consortium: { centralTenantId: 'consortium' },
+                tenants: ['testTenantId'],
+              },
+            },
           };
           checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
 
@@ -710,7 +743,12 @@ describe('ViewInstance', () => {
           const stripes = {
             ...defaultProp.stripes,
             okapi: { tenant: 'consortium' },
-            user: { user: { consortium: { centralTenantId: 'consortium' } } },
+            user: {
+              user: {
+                consortium: { centralTenantId: 'consortium' },
+                tenants: ['testTenantId'],
+              },
+            },
           };
 
           renderViewInstance({ stripes });

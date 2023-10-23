@@ -9,8 +9,9 @@ import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 import { items as itemsFixture } from '../../../../test/fixtures/items';
+import { useHoldingItemsQuery } from '../../../hooks';
+
 import HoldingAccordion from './HoldingAccordion';
-import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
 
 jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn());
 jest.mock('../../../hooks', () => ({
@@ -23,7 +24,8 @@ jest.mock('../../../hooks', () => ({
         isActive: false,
       },
     ],
-  })
+  }),
+  useHoldingItemsQuery: jest.fn(),
 }));
 
 const HoldingAccordionSetup = () => (

@@ -3,16 +3,17 @@ import { useQueries } from 'react-query';
 
 import { chunk } from 'lodash';
 
-import { useOkapiKy } from '@folio/stripes/core';
+import { useTenantKy } from '../common';
 
 // When fetching from a potentially large list of items,
 // make sure to chunk the request to avoid hitting limits.
 const useChunkedCQLFetch = ({
   endpoint, // endpoint to hit to fetch items
   ids, // List of ids to fetch
-  reduceFunction // Function to reduce fetched objects at the end into single array
+  reduceFunction, // Function to reduce fetched objects at the end into single array
+  tenantId,
 }) => {
-  const ky = useOkapiKy();
+  const ky = useTenantKy({ tenantId });
 
   const CONCURRENT_REQUESTS = 5; // Number of requests to make concurrently
   const STEP_SIZE = 60; // Number of ids to request for per concurrent request
