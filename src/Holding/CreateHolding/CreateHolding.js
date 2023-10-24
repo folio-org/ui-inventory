@@ -30,7 +30,7 @@ const CreateHolding = ({
   const callout = useCallout();
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
   const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
-  const { location: { state: { tenantFrom } } } = history;
+  const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
   const goBack = useCallback(() => {
     history.push({
@@ -45,7 +45,9 @@ const CreateHolding = ({
 
   const onSubmit = useCallback((newHolding) => {
     return mutator.holding.POST(newHolding)
-      .then((holdingsRecord) => {
+      .then(async (holdingsRecord) => {
+        await onCancel();
+
         callout.sendCallout({
           type: 'success',
           message: <FormattedMessage
@@ -53,7 +55,6 @@ const CreateHolding = ({
             values={{ hrid: holdingsRecord.hrid }}
           />,
         });
-        onCancel();
       });
   }, [onCancel, callout]);
 
