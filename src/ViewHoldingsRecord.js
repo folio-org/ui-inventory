@@ -727,7 +727,9 @@ class ViewHoldingsRecord extends React.Component {
                     updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
                   })}
                   dismissible
-                  onClose={() => switchAffiliation(stripes, tenantFrom, this.onClose)}
+                  onClose={async () => {
+                    await switchAffiliation(stripes, tenantFrom, this.onClose);
+                  }}
                   actionMenu={this.getPaneHeaderActionMenu}
                 >
                   <Row center="xs">

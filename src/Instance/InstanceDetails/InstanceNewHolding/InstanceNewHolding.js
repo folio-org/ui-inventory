@@ -47,7 +47,9 @@ const InstanceNewHolding = ({
             aria-label={label}
             buttonStyle="primary"
             fullWidth
-            onClick={() => switchAffiliation(stripes, tenantId, onNewHolding)}
+            onClick={async () => {
+              await switchAffiliation(stripes, tenantId, onNewHolding);
+            }}
           >
             {label}
           </Button>

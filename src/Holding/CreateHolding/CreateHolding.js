@@ -39,8 +39,8 @@ const CreateHolding = ({
     });
   }, [location.search, instanceId]);
 
-  const onCancel = useCallback(() => {
-    switchAffiliation(stripes, tenantFrom, goBack);
+  const onCancel = useCallback(async () => {
+    await switchAffiliation(stripes, tenantFrom, goBack);
   }, [stripes, tenantFrom, goBack]);
 
   const onSubmit = useCallback((newHolding) => {

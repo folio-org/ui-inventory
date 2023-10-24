@@ -171,14 +171,14 @@ class ItemRoute extends React.Component {
     });
   }
 
-  onClose = () => {
+  onClose = async () => {
     const {
       stripes,
       location,
     } = this.props;
     const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
-    switchAffiliation(stripes, tenantFrom, this.goBack);
+    await switchAffiliation(stripes, tenantFrom, this.goBack);
   }
 
   isLoading = () => {
