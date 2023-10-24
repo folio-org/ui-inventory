@@ -40,10 +40,10 @@ const MemberTenantHoldings = ({
   const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
-  const canViewHoldings = hasMemberTenantPermission('ui-inventory.instance.view', id, userTenantPermissions);
-  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.edit', id, userTenantPermissions);
-  const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.edit', id, userTenantPermissions);
-  const canViewItems = hasMemberTenantPermission('ui-inventory.instance.view', id, userTenantPermissions);
+  const canViewHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', id, userTenantPermissions);
+  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', id, userTenantPermissions);
+  const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', id, userTenantPermissions);
+  const canViewItems = hasMemberTenantPermission('ui-inventory.item.create', id, userTenantPermissions);
 
   if (isEmpty(holdingsRecords)) return null;
 
