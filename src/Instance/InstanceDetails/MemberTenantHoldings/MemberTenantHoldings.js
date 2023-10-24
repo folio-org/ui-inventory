@@ -41,8 +41,8 @@ const MemberTenantHoldings = ({
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   const canViewHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', id, userTenantPermissions);
-  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.edit', id, userTenantPermissions);
-  const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.edit', id, userTenantPermissions);
+  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', id, userTenantPermissions);
+  const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', id, userTenantPermissions);
   const canViewItems = hasMemberTenantPermission('ui-inventory.item.create', id, userTenantPermissions);
 
   if (isEmpty(holdingsRecords)) return null;
