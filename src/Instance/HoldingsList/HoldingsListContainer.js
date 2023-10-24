@@ -18,9 +18,9 @@ const HoldingsListContainer = ({
   const stripes = useStripes();
   const { holdingsRecords: holdings, isLoading } = useInstanceHoldingsQuery(instance.id, { tenantId });
 
-  const canViewHoldings = stripes.hasPerm('ui-inventory.instance.view');
+  const canViewHoldings = stripes.hasPerm('ui-inventory.holdings.create');
   const canCreateItem = stripes.hasPerm('ui-inventory.item.edit');
-  const canViewItems = stripes.hasPerm('ui-inventory.instance.view');
+  const canViewItems = stripes.hasPerm('ui-inventory.item.create');
 
   if (isLoading) return <Loading size="large" />;
 
