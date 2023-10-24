@@ -559,6 +559,7 @@ describe('InstancesList', () => {
             params: {
               query: `${option}=="${_query}"`,
             },
+            tenant: 'diku',
           });
         });
       });

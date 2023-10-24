@@ -26,20 +26,13 @@ const ConsortialHoldings = ({
   instance,
   userTenantPermissions,
 }) => {
-  const stripes = useStripes();
-  const instanceId = instance?.id;
-  const prevInstanceId = useRef(instanceId);
-
-  const { consortiaTenantsById } = useContext(DataContext);
-
-  const { tenants } = useSearchForShadowInstanceTenants({ instanceId });
-
-  const memberTenants = tenants
-    .map(tenant => consortiaTenantsById[tenant.id])
-    .filter(tenant => !tenant?.isCentral && (tenant?.id !== stripes.okapi.tenant))
-    .sort((a, b) => a.name.localeCompare(b.name));
-
   const pathToAccordion = ['consortialHoldings', '_state'];
+  const instanceId = instance?.id;
+
+  const stripes = useStripes();
+  const prevInstanceId = useRef(instanceId);
+  const { consortiaTenantsById } = useContext(DataContext);
+  const { tenants } = useSearchForShadowInstanceTenants({ instanceId });
   const [isConsortialAccOpen, setConsortialAccOpen] = useHoldingsAccordionState({ instanceId, pathToAccordion });
 
   useEffect(() => {
@@ -48,6 +41,13 @@ const ConsortialHoldings = ({
       prevInstanceId.current = instanceId;
     }
   }, [instanceId]);
+
+  if (!consortiaTenantsById) return null;
+
+  const memberTenants = tenants
+    .map(tenant => consortiaTenantsById[tenant.id])
+    .filter(tenant => !tenant?.isCentral && (tenant?.id !== stripes.okapi.tenant))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <IfInterface name="consortia">
