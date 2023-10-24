@@ -862,6 +862,7 @@
     "@folio/stripes-components": "^12.0.0",
     "@folio/stripes-connect": "^9.0.0",
     "@folio/stripes-core": "^10.0.0",
+    "@folio/stripes-marc-components": "^1.0.0",
     "@folio/stripes-smart-components": "^9.0.0",
     "@folio/stripes-testing": "^4.6.0",
     "@folio/stripes-util": "^6.0.0",
@@ -882,7 +883,6 @@
     "zustand": "^4.1.1"
   },
   "dependencies": {
-    "@folio/quick-marc": "^7.0.0",
     "@folio/stripes-acq-components": "^5.0.0",
     "classnames": "^2.3.2",
     "file-saver": "^2.0.0",
@@ -904,6 +904,7 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^9.0.0",
+    "@folio/stripes-marc-components": "^1.0.0",
     "react": "^18.2.0",
     "react-intl": "^6.4.4",
     "react-query": "^3.6.0",

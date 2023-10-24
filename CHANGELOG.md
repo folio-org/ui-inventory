@@ -3,6 +3,7 @@
 
 ## [10.1.0] IN PROGRESS
 
+* Replace imports from quick-marc with stripes-marc-components. Refs UIIN-2636.
 
 ## [10.0.1] IN PROGRESS
 
