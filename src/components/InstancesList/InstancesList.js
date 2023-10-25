@@ -1178,6 +1178,7 @@ class InstancesList extends React.Component {
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
             initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}
+            inputType="textarea"
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}

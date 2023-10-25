@@ -3,6 +3,7 @@
 
 ## [10.1.0] IN PROGRESS
 
+* Make Inventory search and browse query boxes expandable. Refs UIIN-2493.
 
 ## [10.0.1] IN PROGRESS
 
