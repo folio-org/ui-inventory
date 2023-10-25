@@ -16,6 +16,7 @@ import {
 import saveAs from 'file-saver';
 import moment from 'moment';
 import classnames from 'classnames';
+import { stringify } from 'query-string';
 
 import {
   Pluggable,
@@ -134,6 +135,7 @@ class InstancesList extends React.Component {
     }),
     stripes: PropTypes.object.isRequired,
     history: PropTypes.shape({
+      push: PropTypes.func,
       listen: PropTypes.func,
       replace: PropTypes.func,
     }),
@@ -956,8 +958,9 @@ class InstancesList extends React.Component {
     const {
       parentResources,
       parentMutator: { itemsByQuery },
-      goTo,
       getParams,
+      stripes,
+      history,
     } = this.props;
     const { query, qindex } = parentResources?.query ?? {};
     const { searchInProgress } = this.state;
@@ -973,7 +976,10 @@ class InstancesList extends React.Component {
     }
 
     itemsByQuery.reset();
-    const items = await itemsByQuery.GET({ params: { query: itemQuery } });
+    const items = await itemsByQuery.GET({
+      params: { query: itemQuery },
+      tenant: stripes.okapi.tenant,
+    });
 
     this.setState({ searchInProgress: false });
 
@@ -984,7 +990,13 @@ class InstancesList extends React.Component {
     }
 
     const { id, holdingsRecordId } = items[0];
-    goTo(`/inventory/view/${instance.id}/${holdingsRecordId}/${id}`, getParams());
+    const search = stringify(getParams());
+
+    history.push({
+      pathname: `/inventory/view/${instance.id}/${holdingsRecordId}/${id}`,
+      search,
+      state: { tenantTo: stripes.okapi.tenant },
+    });
 
     return null;
   }
