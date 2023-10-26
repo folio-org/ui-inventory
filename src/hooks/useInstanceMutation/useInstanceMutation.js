@@ -5,18 +5,18 @@ import { useTenantKy } from '../../common';
 const useInstanceMutation = ({ tenantId, options = {} }) => {
   const ky = useTenantKy({ tenantId });
 
-  const { mutateAsync } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: (instance) => {
       const kyMethod = instance.id ? 'put' : 'post';
       const kyPath = instance.id ? `inventory/instances/${instance.id}` : 'inventory/instances';
 
-      return ky[kyMethod](kyPath, { json: instance });
+      return ky[kyMethod](kyPath, { json: instance }).json();
     },
     ...options,
   });
 
   return {
-    mutateInstance: mutateAsync,
+    mutateInstance: mutate,
   };
 };
 
