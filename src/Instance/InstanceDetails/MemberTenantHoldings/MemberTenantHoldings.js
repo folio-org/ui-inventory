@@ -40,10 +40,9 @@ const MemberTenantHoldings = ({
   const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
-  const canViewHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', id, userTenantPermissions);
+  const canViewHoldingsAndItems = hasMemberTenantPermission('ui-inventory.instance.view', id, userTenantPermissions);
   const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', id, userTenantPermissions);
   const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', id, userTenantPermissions);
-  const canViewItems = hasMemberTenantPermission('ui-inventory.item.create', id, userTenantPermissions);
 
   if (isEmpty(holdingsRecords)) return null;
 
@@ -66,9 +65,9 @@ const MemberTenantHoldings = ({
                 tenantId={id}
                 draggable={false}
                 droppable={false}
-                showViewHoldingsButton={canViewHoldings}
+                showViewHoldingsButton={canViewHoldingsAndItems}
                 showAddItemButton={canCreateItem}
-                isBarcodeAsHotlink={canViewItems}
+                isBarcodeAsHotlink={canViewHoldingsAndItems}
                 pathToAccordionsState={pathToHoldingsAccordion}
               />
             </MoveItemsContext>

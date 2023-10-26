@@ -17,7 +17,10 @@ import {
 } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import withLocation from '../../withLocation';
-import { parseHttpError, switchAffiliation } from '../../utils';
+import {
+  parseHttpError,
+  switchAffiliation,
+} from '../../utils';
 
 const EditHolding = ({
   goTo,

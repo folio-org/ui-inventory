@@ -107,16 +107,6 @@ class ItemView extends React.Component {
     this.accordionStatusRef = createRef();
   }
 
-  /* goToEditItemPage = tenantFrom => {
-    const { id, holdingsrecordid, itemid } = this.props.match.params;
-
-    this.props.history.push({
-      pathname: `/inventory/edit/${id}/${holdingsrecordid}/${itemid}`,
-      search: this.props.location.search,
-      state: { tenantFrom }
-    });
-  } */
-
   onClickEditItem = async (e) => {
     if (e) e.preventDefault();
 
@@ -125,8 +115,6 @@ class ItemView extends React.Component {
       location,
     } = this.props;
     const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
-
-    // await switchAffiliation(stripes, tenantFrom, () => this.goToEditItemPage(location?.state?.tenantTo));
     const { id, holdingsrecordid, itemid } = this.props.match.params;
 
     this.props.history.push({
@@ -1543,6 +1531,9 @@ class ItemView extends React.Component {
 ItemView.propTypes = {
   stripes: PropTypes.shape({
     hasPerm: PropTypes.func.isRequired,
+    okapi: PropTypes.shape({
+      tenant: PropTypes.string,
+    })
   }).isRequired,
   resources: PropTypes.shape({
     instanceRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
