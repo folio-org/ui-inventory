@@ -150,7 +150,7 @@ const InstanceDetails = forwardRef(({
   const renderDetails = () => {
     if (isInstanceSharing) {
       return (
-        <div style={{ paddingTop: '1rem' }}>
+        <div>
           <MessageBanner show={Boolean(isInstanceSharing)} type="warning">
             <FormattedMessage id="ui-inventory.warning.instance.sharingLocalInstance" />
           </MessageBanner>
@@ -160,7 +160,7 @@ const InstanceDetails = forwardRef(({
 
     if (isLoading) {
       return (
-        <div style={{ paddingTop: '1rem' }}>
+        <div>
           <Icon
             icon="spinner-ellipsis"
             width="100px"
