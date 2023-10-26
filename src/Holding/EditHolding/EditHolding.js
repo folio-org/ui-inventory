@@ -17,7 +17,7 @@ import {
 } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import withLocation from '../../withLocation';
-import { parseHttpError } from '../../utils';
+import { parseHttpError, switchAffiliation } from '../../utils';
 
 const EditHolding = ({
   goTo,
@@ -28,7 +28,13 @@ const EditHolding = ({
   referenceTables,
 }) => {
   const callout = useCallout();
-  const { search, state: locationState } = location;
+  const {
+    search,
+    state: {
+      backPathname: locationState,
+      tenantFrom,
+    }
+  } = location;
   const stripes = useStripes();
   const [httpError, setHttpError] = useState();
   const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
@@ -42,17 +48,21 @@ const EditHolding = ({
     referenceTables?.holdingsSources?.find(source => source.id === holding?.sourceId)?.name === 'MARC'
   ), [holding]);
 
-  const onCancel = useCallback(() => {
+  const goBack = useCallback(() => {
     history.push({
       pathname: locationState?.backPathname ?? `/inventory/view/${instanceId}`,
       search,
     });
   }, [search, instanceId]);
 
-  const onSuccess = useCallback(() => {
-    onCancel();
+  const onCancel = useCallback(async () => {
+    await switchAffiliation(stripes, tenantFrom, goBack);
+  }, [stripes, tenantFrom, goBack]);
 
-    return callout.sendCallout({
+  const onSuccess = useCallback(async () => {
+    await onCancel();
+
+    callout.sendCallout({
       type: 'success',
       message: <FormattedMessage
         id="ui-inventory.holdingsRecord.successfullySaved"
