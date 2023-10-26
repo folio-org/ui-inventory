@@ -4,6 +4,7 @@
 
 * Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
 * Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
+* Add immediate warning message when a local instance is shared. Refs UIIN-2617.
 
 ## [10.0.1](https://github.com/folio-org/ui-inventory/tree/v10.0.1) (2023-11-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.0...v10.0.1)

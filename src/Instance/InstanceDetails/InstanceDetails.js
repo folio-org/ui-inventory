@@ -72,6 +72,7 @@ const InstanceDetails = forwardRef(({
   userTenantPermissions,
   isShared,
   isLoading,
+  isInstanceSharing,
   ...rest
 }, ref) => {
   const intl = useIntl();
@@ -85,12 +86,15 @@ const InstanceDetails = forwardRef(({
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
 
+  const isBasicPane = isInstanceSharing || isLoading;
   const tags = instance?.tags?.tagList;
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
 
   const detailsLastMenu = useMemo(() => {
+    if (isBasicPane) return null;
+
     return (
       <PaneMenu>
         {
@@ -106,31 +110,15 @@ const InstanceDetails = forwardRef(({
         }
       </PaneMenu>
     );
-  }, [tagsEnabled, tags, intl]);
-
-  if (isLoading) {
-    return (
-      <Pane
-        id="pane-instancedetails"
-        defaultWidth="fill"
-        paneTitle={intl.formatMessage({ id: 'ui-inventory.edit' })}
-        appIcon={<AppIcon app="inventory" iconKey="instance" />}
-        dismissible
-        onClose={onClose}
-      >
-        <div style={{ paddingTop: '1rem' }}>
-          <Icon
-            icon="spinner-ellipsis"
-            width="100px"
-          />
-        </div>
-      </Pane>
-    );
-  }
-
-  const isConsortialHoldingsVisible = instance?.shared || isInstanceShadowCopy(instance?.source);
+  }, [isBasicPane, tagsEnabled, tags, intl]);
+  const detailsActionMenu = useMemo(
+    () => (isBasicPane ? null : actionMenu),
+    [isBasicPane, actionMenu],
+  );
 
   const renderPaneTitle = () => {
+    if (isBasicPane) return intl.formatMessage({ id: 'ui-inventory.edit' });
+
     const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
 
     return (
@@ -146,6 +134,8 @@ const InstanceDetails = forwardRef(({
   };
 
   const renderPaneSubtitle = () => {
+    if (isBasicPane) return null;
+
     return (
       <FormattedMessage
         id="ui-inventory.instanceRecordSubtitle"
@@ -157,20 +147,32 @@ const InstanceDetails = forwardRef(({
     );
   };
 
-  return (
-    <>
-      <Pane
-        {...rest}
-        data-test-instance-details
-        appIcon={<AppIcon app="inventory" iconKey="instance" />}
-        paneTitle={renderPaneTitle()}
-        paneSub={renderPaneSubtitle()}
-        dismissible
-        onClose={onClose}
-        actionMenu={actionMenu}
-        defaultWidth="fill"
-        lastMenu={detailsLastMenu}
-      >
+  const renderDetails = () => {
+    if (isInstanceSharing) {
+      return (
+        <div>
+          <MessageBanner show={Boolean(isInstanceSharing)} type="warning">
+            <FormattedMessage id="ui-inventory.warning.instance.sharingLocalInstance" />
+          </MessageBanner>
+        </div>
+      );
+    }
+
+    if (isLoading) {
+      return (
+        <div>
+          <Icon
+            icon="spinner-ellipsis"
+            width="100px"
+          />
+        </div>
+      );
+    }
+
+    const isConsortialHoldingsVisible = instance?.shared || isInstanceShadowCopy(instance?.source);
+
+    return (
+      <>
         <TitleManager record={instance.title} />
 
         <AccordionStatus ref={ref}>
@@ -291,6 +293,25 @@ const InstanceDetails = forwardRef(({
             />
           </AccordionSet>
         </AccordionStatus>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <Pane
+        {...rest}
+        data-test-instance-details
+        appIcon={<AppIcon app="inventory" iconKey="instance" />}
+        paneTitle={renderPaneTitle()}
+        paneSub={renderPaneSubtitle()}
+        actionMenu={detailsActionMenu}
+        lastMenu={detailsLastMenu}
+        dismissible
+        onClose={onClose}
+        defaultWidth="fill"
+      >
+        {renderDetails()}
       </Pane>
       { helperApp && <HelperApp appName={helperApp} onClose={setHelperApp} />}
     </>
@@ -306,6 +327,7 @@ InstanceDetails.propTypes = {
   tagsEnabled: PropTypes.bool,
   userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
   isLoading: PropTypes.bool,
+  isInstanceSharing: PropTypes.bool,
   isShared: PropTypes.bool,
 };
 
@@ -313,6 +335,7 @@ InstanceDetails.defaultProps = {
   instance: {},
   tagsEnabled: false,
   isLoading: false,
+  isInstanceSharing: false,
   isShared: false,
 };
 
