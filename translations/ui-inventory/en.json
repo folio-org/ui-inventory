@@ -798,6 +798,7 @@
   "warning.instance.suppressedFromDiscovery": "Warning: Instance is marked suppressed from discovery",
   "warning.instance.staffSuppressed": "Warning: Instance is marked staff suppressed",
   "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "Warning: Instance is marked suppressed from discovery and staff suppressed",
+  "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion.",
   "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
   "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
   "discoverySuppressed": "Suppressed from discovery",
