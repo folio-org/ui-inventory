@@ -48,7 +48,9 @@ const HoldingButtonsGroup = ({
         <Button
           id={`clickable-view-holdings-${holding.id}`}
           data-test-view-holdings
-          onClick={() => switchAffiliation(stripes, tenantId, onViewHolding)}
+          onClick={async () => {
+            await switchAffiliation(stripes, tenantId, onViewHolding);
+          }}
         >
           <FormattedMessage id="ui-inventory.viewHoldings" />
         </Button>
@@ -58,7 +60,9 @@ const HoldingButtonsGroup = ({
           <Button
             id={`clickable-new-item-${holding.id}`}
             data-test-add-item
-            onClick={() => switchAffiliation(stripes, tenantId, onAddItem)}
+            onClick={async () => {
+              await switchAffiliation(stripes, tenantId, onAddItem);
+            }}
             buttonStyle="primary paneHeaderNewButton"
           >
             <FormattedMessage id="ui-inventory.addItem" />

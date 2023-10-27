@@ -13,7 +13,6 @@ import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { PaneLoading } from '../components';
 import { DataContext } from '../contexts';
-import { switchAffiliation } from '../utils';
 
 const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`;
 
@@ -158,28 +157,6 @@ class ItemRoute extends React.Component {
     },
   });
 
-  goBack = () => {
-    const {
-      match: { params: { id } },
-      location: { search },
-      history,
-    } = this.props;
-
-    history.push({
-      pathname: `/inventory/view/${id}`,
-      search,
-    });
-  }
-
-  onClose = () => {
-    const {
-      stripes,
-      location: { state: { tenantFrom } },
-    } = this.props;
-
-    switchAffiliation(stripes, tenantFrom, this.goBack);
-  }
-
   isLoading = () => {
     const {
       resources: {
@@ -208,7 +185,6 @@ class ItemRoute extends React.Component {
         {data => (
           <ItemView
             {...this.props}
-            onCloseViewItem={this.onClose}
             referenceTables={data}
           />
         )}

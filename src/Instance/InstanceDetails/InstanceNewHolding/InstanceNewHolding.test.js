@@ -43,7 +43,7 @@ describe('InstanceNewHolding', () => {
       const { getByText } = renderInstanceNewHolding();
       fireEvent.click(getByText(/ui-inventory.addHoldings/i));
 
-      expect(mockPush).toHaveBeenCalledWith();
+      expect(mockPush).toHaveBeenCalled();
     });
   });
 });

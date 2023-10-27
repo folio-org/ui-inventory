@@ -18,9 +18,8 @@ const HoldingsListContainer = ({
   const stripes = useStripes();
   const { holdingsRecords: holdings, isLoading } = useInstanceHoldingsQuery(instance.id, { tenantId });
 
-  const canViewHoldings = stripes.hasPerm('ui-inventory.instance.view');
-  const canCreateItem = stripes.hasPerm('ui-inventory.item.edit');
-  const canViewItems = stripes.hasPerm('ui-inventory.instance.view');
+  const canViewHoldingsAndItems = stripes.hasPerm('ui-inventory.instance.view');
+  const canCreateItem = stripes.hasPerm('ui-inventory.item.create');
 
   if (isLoading) return <Loading size="large" />;
 
@@ -31,9 +30,9 @@ const HoldingsListContainer = ({
         holdings={holdings}
         instance={instance}
         tenantId={tenantId}
-        showViewHoldingsButton={canViewHoldings}
+        showViewHoldingsButton={canViewHoldingsAndItems}
         showAddItemButton={canCreateItem}
-        isBarcodeAsHotlink={canViewItems}
+        isBarcodeAsHotlink={canViewHoldingsAndItems}
         pathToAccordionsState={pathToAccordionsState}
       />
     ) : (
@@ -42,9 +41,9 @@ const HoldingsListContainer = ({
         holdings={holdings}
         instance={instance}
         tenantId={tenantId}
-        showViewHoldingsButton={canViewHoldings}
+        showViewHoldingsButton={canViewHoldingsAndItems}
         showAddItemButton={canCreateItem}
-        isBarcodeAsHotlink={canViewItems}
+        isBarcodeAsHotlink={canViewHoldingsAndItems}
         pathToAccordionsState={pathToAccordionsState}
       />
     )
