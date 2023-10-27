@@ -36,7 +36,7 @@ const EditHolding = ({
     state: {
       backPathname: locationState,
       tenantFrom,
-    }
+    } = {},
   } = location;
   const stripes = useStripes();
   const [httpError, setHttpError] = useState();

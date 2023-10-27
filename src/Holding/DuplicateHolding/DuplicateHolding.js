@@ -28,7 +28,7 @@ const DuplicateHolding = ({
     state: {
       backPathname: locationState,
       tenantFrom,
-    }
+    } = {},
   },
   referenceTables,
 }) => {
