@@ -69,6 +69,7 @@ import {
   getDateWithTime,
   checkIfArrayIsEmpty,
   handleKeyCommand,
+  switchAffiliation,
 } from '../utils';
 import withLocation from '../withLocation';
 import {
@@ -109,11 +110,17 @@ class ItemView extends React.Component {
   onClickEditItem = e => {
     if (e) e.preventDefault();
 
+    const {
+      stripes,
+      location,
+    } = this.props;
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
     const { id, holdingsrecordid, itemid } = this.props.match.params;
 
     this.props.history.push({
       pathname: `/inventory/edit/${id}/${holdingsrecordid}/${itemid}`,
       search: this.props.location.search,
+      state: { tenantFrom }
     });
   };
 
@@ -149,17 +156,44 @@ class ItemView extends React.Component {
     });
   };
 
+  goBack = (tenantTo) => {
+    const {
+      match: { params: { id } },
+      location: { search },
+      history,
+    } = this.props;
+
+    history.push({
+      pathname: `/inventory/view/${id}`,
+      search,
+      state: { tenantTo },
+    });
+  }
+
+  onCloseViewItem = async () => {
+    const {
+      stripes,
+      location,
+    } = this.props;
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
+
+    await switchAffiliation(stripes, tenantFrom, () => this.goBack(tenantFrom));
+  }
+
   deleteItem = item => {
-    this.props.onCloseViewItem();
+    this.onCloseViewItem();
     this.props.mutator.itemsResource.DELETE(item);
   };
 
   onCopy() {
+    const { stripes, location } = this.props;
     const { itemid, id, holdingsrecordid } = this.props.match.params;
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     this.props.history.push({
       pathname: `/inventory/copy/${id}/${holdingsrecordid}/${itemid}`,
       search: this.props.location.search,
+      state: { tenantFrom },
     });
   }
 
@@ -827,7 +861,7 @@ class ItemView extends React.Component {
                   />
                 )}
                 dismissible
-                onClose={this.props.onCloseViewItem}
+                onClose={this.onCloseViewItem}
                 actionMenu={this.getActionMenu}
               >
 
@@ -1497,6 +1531,9 @@ class ItemView extends React.Component {
 ItemView.propTypes = {
   stripes: PropTypes.shape({
     hasPerm: PropTypes.func.isRequired,
+    okapi: PropTypes.shape({
+      tenant: PropTypes.string,
+    })
   }).isRequired,
   resources: PropTypes.shape({
     instanceRecords: PropTypes.shape({ records: PropTypes.arrayOf(PropTypes.object) }),
@@ -1553,7 +1590,6 @@ ItemView.propTypes = {
     requests: PropTypes.shape({ PUT: PropTypes.func.isRequired }),
     requestOnItem: PropTypes.shape({ replace: PropTypes.func.isRequired }),
   }),
-  onCloseViewItem: PropTypes.func.isRequired,
   updateLocation: PropTypes.func.isRequired,
   goTo: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,

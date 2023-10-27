@@ -76,7 +76,9 @@ const ItemBarcode = ({
         <Button
           buttonStyle="link"
           buttonClass={css.linkWithoutBorder}
-          onClick={() => switchAffiliation(stripes, tenantId, onViewItem)}
+          onClick={async () => {
+            await switchAffiliation(stripes, tenantId, onViewItem);
+          }}
         >
           {itemBarcode}
         </Button>

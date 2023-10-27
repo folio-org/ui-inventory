@@ -9,6 +9,7 @@ import {
   act,
   fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
+import { createMemoryHistory } from 'history';
 
 import '../test/jest/__mock__';
 import buildStripes from '../test/jest/__mock__/stripesCore.mock';
@@ -19,11 +20,21 @@ import {
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
+const mockPush = jest.fn();
+
+const history = createMemoryHistory();
+history.push = mockPush;
+
 jest.mock('./withLocation', () => jest.fn(c => c));
 
 jest.mock('./common', () => ({
   ...jest.requireActual('./common'),
   useTenantKy: jest.fn(),
+}));
+
+jest.mock('./utils', () => ({
+  ...jest.requireActual('./utils'),
+  switchAffiliation: jest.fn(() => mockPush()),
 }));
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
@@ -76,9 +87,7 @@ const defaultProps = {
     query: {},
   },
   stripes: buildStripes(),
-  history: {
-    push: jest.fn(),
-  },
+  history,
   location: {
     search: '/',
     pathname: 'pathname',
@@ -116,21 +125,21 @@ describe('ViewHoldingsRecord actions', () => {
   it('should close view holding page', async () => {
     renderViewHoldingsRecord();
     fireEvent.click(await screen.findByRole('button', { name: 'confirm' }));
-    expect(defaultProps.history.push).toHaveBeenCalled();
+    expect(mockPush).toHaveBeenCalled();
   });
 
   it('should translate to edit holding form page', async () => {
     renderViewHoldingsRecord();
     const editHoldingBtn = await screen.findByTestId('edit-holding-btn');
     fireEvent.click(editHoldingBtn);
-    expect(defaultProps.history.push).toHaveBeenCalled();
+    expect(mockPush).toHaveBeenCalled();
   });
 
   it('should translate to duplicate holding form page', async () => {
     renderViewHoldingsRecord();
     const duplicatHoldingBtn = await screen.findByTestId('duplicate-holding-btn');
     fireEvent.click(duplicatHoldingBtn);
-    expect(defaultProps.history.push).toHaveBeenCalled();
+    expect(mockPush).toHaveBeenCalled();
   });
 
   it('should display "inactive" by an inactive temporary location', async () => {
@@ -158,21 +167,27 @@ describe('ViewHoldingsRecord actions', () => {
       const data = {
         pathname: `/inventory/copy/${defaultProps.id}/${defaultProps.holdingsrecordid}`,
         search: defaultProps.location.search,
-        state: { backPathname: defaultProps.location.pathname },
+        state: {
+          backPathname: defaultProps.location.pathname,
+          tenantFrom: 'testTenantFromId',
+        },
       };
       renderViewHoldingsRecord();
       fireEvent.click(await screen.findByRole('button', { name: 'duplicateRecord' }));
-      expect(defaultProps.history.push).toBeCalledWith(data);
+      expect(mockPush).toBeCalledWith(data);
     });
     it('"onEditHolding" function to be triggered on clicking edit button', async () => {
       const data = {
         pathname: `/inventory/edit/${defaultProps.id}/${defaultProps.holdingsrecordid}`,
         search: defaultProps.location.search,
-        state: { backPathname: defaultProps.location.pathname },
+        state: {
+          backPathname: defaultProps.location.pathname,
+          tenantFrom: 'testTenantFromId',
+        },
       };
       renderViewHoldingsRecord();
       fireEvent.click(await screen.findByRole('button', { name: 'edit' }));
-      expect(defaultProps.history.push).toBeCalledWith(data);
+      expect(mockPush).toBeCalledWith(data);
     });
     it('"goTo" function to be triggered on clicking duplicateRecord button', async () => {
       renderViewHoldingsRecord();

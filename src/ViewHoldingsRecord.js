@@ -212,9 +212,7 @@ class ViewHoldingsRecord extends React.Component {
       });
   };
 
-  onClose = (e) => {
-    if (e) e.preventDefault();
-
+  goToInstanceView = () => {
     const {
       history,
       location: { search, state: locationState },
@@ -227,6 +225,18 @@ class ViewHoldingsRecord extends React.Component {
     });
   }
 
+  onClose = async (e) => {
+    if (e) e.preventDefault();
+
+    const {
+      stripes,
+      location,
+    } = this.props;
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
+
+    await switchAffiliation(stripes, tenantFrom, this.goToInstanceView);
+  }
+
   // Edit Holdings records handlers
   onEditHolding = (e) => {
     if (e) e.preventDefault();
@@ -236,12 +246,18 @@ class ViewHoldingsRecord extends React.Component {
       location,
       id,
       holdingsrecordid,
+      stripes,
     } = this.props;
+
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     history.push({
       pathname: `/inventory/edit/${id}/${holdingsrecordid}`,
       search: location.search,
-      state: { backPathname: location.pathname },
+      state: {
+        backPathname: location.pathname,
+        tenantFrom,
+      },
     });
   }
 
@@ -253,12 +269,18 @@ class ViewHoldingsRecord extends React.Component {
       location,
       id,
       holdingsrecordid,
+      stripes,
     } = this.props;
+
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     history.push({
       pathname: `/inventory/copy/${id}/${holdingsrecordid}`,
       search: location.search,
-      state: { backPathname: location.pathname },
+      state: {
+        backPathname: location.pathname,
+        tenantFrom,
+      },
     });
   }
 
@@ -741,7 +763,9 @@ class ViewHoldingsRecord extends React.Component {
                     updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
                   })}
                   dismissible
-                  onClose={() => switchAffiliation(stripes, tenantFrom, this.onClose)}
+                  onClose={async () => {
+                    await switchAffiliation(stripes, tenantFrom, this.onClose);
+                  }}
                   actionMenu={this.getPaneHeaderActionMenu}
                 >
                   <Row center="xs">

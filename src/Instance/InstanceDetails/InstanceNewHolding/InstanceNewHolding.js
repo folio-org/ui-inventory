@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { useHistory } from 'react-router-dom';
 
-import {
-  IfPermission,
-  useStripes,
-} from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 import {
   Row,
   Col,
@@ -39,21 +36,21 @@ const InstanceNewHolding = ({
   }, [location.search, instance.id]);
 
   return (
-    <IfPermission perm="ui-inventory.holdings.create">
-      <Row>
-        <Col sm={12}>
-          <Button
-            id="clickable-new-holdings-record"
-            aria-label={label}
-            buttonStyle="primary"
-            fullWidth
-            onClick={() => switchAffiliation(stripes, tenantId, onNewHolding)}
-          >
-            {label}
-          </Button>
-        </Col>
-      </Row>
-    </IfPermission>
+    <Row>
+      <Col sm={12}>
+        <Button
+          id="clickable-new-holdings-record"
+          aria-label={label}
+          buttonStyle="primary"
+          fullWidth
+          onClick={async () => {
+            await switchAffiliation(stripes, tenantId, onNewHolding);
+          }}
+        >
+          {label}
+        </Button>
+      </Col>
+    </Row>
   );
 };
 

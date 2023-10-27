@@ -834,7 +834,7 @@ export const switchAffiliation = async (stripes, tenantId, move) => {
   if (stripes.okapi.tenant !== tenantId) {
     await updateTenant(stripes.okapi, tenantId);
 
-    validateUser(
+    await validateUser(
       stripes.okapi.url,
       stripes.store,
       tenantId,
