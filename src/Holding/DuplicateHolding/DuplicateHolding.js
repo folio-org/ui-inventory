@@ -16,13 +16,20 @@ import {
 } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import withLocation from '../../withLocation';
+import { switchAffiliation } from '../../utils';
 
 const DuplicateHolding = ({
   goTo,
   history,
   instanceId,
   holdingId,
-  location: { search, state: locationState },
+  location: {
+    search,
+    state: {
+      backPathname: locationState,
+      tenantFrom,
+    } = {},
+  },
   referenceTables,
 }) => {
   const callout = useCallout();
@@ -37,10 +44,18 @@ const DuplicateHolding = ({
     sourceId,
   }), [holding, sourceId]);
 
+  const goToDuplicatedHolding = useCallback((id) => {
+    history.push({
+      pathname: `/inventory/view/${instanceId}/${id}`,
+      search,
+      state: { tenantTo: stripes.okapi.tenant },
+    });
+  }, [search, instanceId]);
+
   const onSuccess = useCallback(async (response) => {
     const { id, hrid } = await response.json();
 
-    goTo(`/inventory/view/${instanceId}/${id}`);
+    await switchAffiliation(stripes, tenantFrom, () => goToDuplicatedHolding(id));
 
     return callout.sendCallout({
       type: 'success',
@@ -53,12 +68,16 @@ const DuplicateHolding = ({
 
   const { mutateHolding } = useHoldingMutation({ onSuccess });
 
-  const onCancel = useCallback(() => {
+  const goBack = useCallback(() => {
     history.push({
       pathname: locationState?.backPathname ?? `/inventory/view/${instanceId}`,
       search,
     });
   }, [search, instanceId]);
+
+  const onCancel = useCallback(async () => {
+    await switchAffiliation(stripes, tenantFrom, goBack);
+  }, [stripes, tenantFrom, goBack]);
 
   const onSubmit = useCallback(holdingValues => (
     mutateHolding(holdingValues)

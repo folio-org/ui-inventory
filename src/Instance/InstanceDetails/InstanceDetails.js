@@ -90,7 +90,7 @@ const InstanceDetails = forwardRef(({
   const tags = instance?.tags?.tagList;
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
-  const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.edit');
+  const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
 
   const detailsLastMenu = useMemo(() => {
     if (isBasicPane) return null;
