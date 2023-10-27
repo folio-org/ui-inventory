@@ -107,7 +107,7 @@ class ItemView extends React.Component {
     this.accordionStatusRef = createRef();
   }
 
-  onClickEditItem = async (e) => {
+  onClickEditItem = e => {
     if (e) e.preventDefault();
 
     const {
