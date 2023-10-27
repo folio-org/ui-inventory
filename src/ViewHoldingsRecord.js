@@ -81,7 +81,14 @@ class ViewHoldingsRecord extends React.Component {
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
       resourceShouldRefresh: false,
       accumulate: true,
-      tenant: '!{location.state.tenantTo}'
+      tenant: (_q, _p, _r, _l, props) => {
+        const {
+          stripes,
+          location,
+        } = props;
+
+        return location?.state?.tenantTo || stripes.okapi.tenant;
+      },
     },
     items: {
       type: 'okapi',
@@ -97,7 +104,14 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
       accumulate: true,
-      tenant: '!{location.state.tenantTo}'
+      tenant: (_q, _p, _r, _l, props) => {
+        const {
+          stripes,
+          location,
+        } = props;
+
+        return location?.state?.tenantTo || stripes.okapi.tenant;
+      },
     },
     tagSettings: {
       type: 'okapi',

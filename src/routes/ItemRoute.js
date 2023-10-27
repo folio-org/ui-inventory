@@ -25,7 +25,14 @@ class ItemRoute extends React.Component {
       path: 'inventory/items/:{itemid}',
       POST: { path: 'inventory/items' },
       resourceShouldRefresh: true,
-      tenant: '!{location.state.tenantTo}',
+      tenant: (_q, _p, _r, _l, props) => {
+        const {
+          stripes,
+          location,
+        } = props;
+
+        return location?.state?.tenantTo || stripes.okapi.tenant;
+      },
     },
     markItemAsWithdrawn: {
       type: 'okapi',
@@ -102,7 +109,14 @@ class ItemRoute extends React.Component {
     holdingsRecords: {
       type: 'okapi',
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
-      tenant: '!{location.state.tenantTo}',
+      tenant: (_q, _p, _r, _l, props) => {
+        const {
+          stripes,
+          location,
+        } = props;
+
+        return location?.state?.tenantTo || stripes.okapi.tenant;
+      },
     },
     instanceRecords: {
       type: 'okapi',
