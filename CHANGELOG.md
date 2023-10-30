@@ -3,6 +3,7 @@
 
 ## [10.1.0] IN PROGRESS
 
+* Added support for `containsAny` match option in Advanced search. Refs UIIN-2486.
 
 ## [10.0.1] IN PROGRESS
 
