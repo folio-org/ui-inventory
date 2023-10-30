@@ -828,9 +828,10 @@
     "shareLocalInstance.toast.unsuccessful": "本地实例<b> {instanceTitle} </b>未共享",
     "shareLocalInstance.toast.successful": "本地实例<b> {instanceTitle} </b>已成功共享",
     "filters.tenantId": "持有者",
-    "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
-    "consortialHoldings": "Consortial holdings",
-    "unlinkLocalMarcAuthorities.modal.header": "Linked to local authorities",
-    "unlinkLocalMarcAuthorities.modal.message": "If you proceed with sharing this instance, then <b>{linkedAuthoritiesLength}</b> bibliographic fields linked to local authority records will retain authorized values but will become uncontrolled",
-    "unlinkLocalMarcAuthorities.modal.proceed": "Proceed"
+    "permission.consortia.inventory.share.local.instance": "典藏：与联盟共享本地实例",
+    "consortialHoldings": "联盟馆藏",
+    "unlinkLocalMarcAuthorities.modal.header": "链接到本地规范",
+    "unlinkLocalMarcAuthorities.modal.message": "如果继续共享此实例，则链接到本地规范记录的<b> {linkedAuthoritiesLength} </b>书目字段将保留规范值，但将变为不受控",
+    "unlinkLocalMarcAuthorities.modal.proceed": "继续",
+    "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion."
 }
