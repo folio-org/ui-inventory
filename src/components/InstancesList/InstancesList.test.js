@@ -458,10 +458,10 @@ describe('InstancesList', () => {
       it('should have query in search input', () => {
         renderInstancesList({ segment: 'instances' });
 
-        fireEvent.change(screen.getByRole('searchbox', { name: 'Search' }), { target: { value: 'search query' } });
+        fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'search query' } });
         fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
-        expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
+        expect(screen.getByRole('textbox', { name: 'Search' })).toHaveValue('search query');
       });
 
       describe('when the search option is changed', () => {
@@ -549,7 +549,7 @@ describe('InstancesList', () => {
 
           await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: qindex } }));
 
-          fireEvent.change(screen.getByRole('searchbox', { name: 'Search' }), { target: { value: _query } });
+          fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: _query } });
           fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
           const row = screen.getAllByText('ABA Journal')[0];
