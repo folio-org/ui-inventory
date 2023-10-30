@@ -163,7 +163,7 @@ describe('BrowseInventory', () => {
   it('should call "changeSearch" when search query was changed', async () => {
     const { container } = renderBrowseInventory();
 
-    await act(async () => userEvent.type(screen.getByRole('searchbox'), 'newQuery'));
+    await act(async () => userEvent.type(screen.getByRole('textbox'), 'newQuery'));
     await act(async () => userEvent.click(container.querySelector('[data-test-single-search-form-submit="true"]')));
 
     expect(applySearch).toHaveBeenCalled();
