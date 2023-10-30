@@ -159,6 +159,7 @@ const BrowseInventory = () => {
             changeSearchIndex={onChangeSearchIndex}
             selectedIndex={searchIndex}
             searchableIndexesPlaceholder={searchableIndexesPlaceholder}
+            inputType="textarea"
           />
 
           <ResetButton
