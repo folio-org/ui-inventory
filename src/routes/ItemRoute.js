@@ -7,32 +7,8 @@ import { stripesConnect } from '@folio/stripes/core';
 import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { DataContext } from '../contexts';
-import { switchAffiliation } from '../utils';
 
 class ItemRoute extends React.Component {
-  goBack = () => {
-    const {
-      match: { params: { id } },
-      location: { search },
-      history,
-    } = this.props;
-
-    history.push({
-      pathname: `/inventory/view/${id}`,
-      search,
-    });
-  }
-
-  onClose = () => {
-    const {
-      stripes,
-      location,
-    } = this.props;
-    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
-
-    switchAffiliation(stripes, tenantFrom, this.goBack);
-  }
-
   render() {
     const {
       stripes: { okapi },
@@ -45,7 +21,6 @@ class ItemRoute extends React.Component {
           <ItemView
             {...this.props}
             tenantTo={state?.tenantTo || okapi.tenant}
-            onCloseViewItem={this.onClose}
             referenceTables={data}
           />
         )}
