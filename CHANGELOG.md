@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## [11.0.0] IN PROGRESS
+
+* *BREAKING* Replace imports from quick-marc with stripes-marc-components. Refs UIIN-2636.
 
 ## [10.1.0] IN PROGRESS
 
