@@ -832,5 +832,6 @@
     "consortialHoldings": "Participações em consórcios",
     "unlinkLocalMarcAuthorities.modal.header": "Vinculado às autoridades locais",
     "unlinkLocalMarcAuthorities.modal.message": "Se prosseguir com o compartilhamento dessa instância, os campos bibliográficos <b>{linkedAuthoritiesLength}</b> vinculados a registros de autoridades locais manterão os valores autorizados, mas passarão a não ser controlados",
-    "unlinkLocalMarcAuthorities.modal.proceed": "Prosseguir"
+    "unlinkLocalMarcAuthorities.modal.proceed": "Prosseguir",
+    "warning.instance.sharingLocalInstance": "Compartilhar esta instância local levará alguns minutos. Uma mensagem de sucesso e detalhes atualizados serão exibidos após a conclusão."
 }
