@@ -608,13 +608,7 @@ class ItemView extends React.Component {
       },
     } = this.props;
 
-    if (!itemsResource?.hasLoaded ||
-      !instanceRecords?.hasLoaded ||
-      !holdingsRecords?.hasLoaded) {
-      return true;
-    }
-
-    return false;
+    return !itemsResource?.hasLoaded || !instanceRecords?.hasLoaded || !holdingsRecords?.hasLoaded;
   }
 
   render() {
