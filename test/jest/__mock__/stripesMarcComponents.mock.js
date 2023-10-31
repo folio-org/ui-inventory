@@ -6,7 +6,7 @@ jest.mock('@folio/stripes-marc-components', () => ({
     <>
       {marcTitle}
       <button type="button" onClick={onClose}>
-        QuickMarcView
+        MarcView
       </button>
     </>
   )),
