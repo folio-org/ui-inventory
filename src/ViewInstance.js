@@ -176,7 +176,7 @@ class ViewInstance extends React.Component {
     this.log = logger.log.bind(logger);
 
     this.state = {
-      isLoading: false,
+      isInstanceSharing: false,
       marcRecord: null,
       findInstancePluginOpened: false,
       isItemsMovement: false,
@@ -493,14 +493,14 @@ class ViewInstance extends React.Component {
         this.setState({
           isUnlinkAuthoritiesModalOpen: false,
           isShareLocalInstanceModalOpen: false,
-          isLoading: true
+          isInstanceSharing: true,
         });
 
         await this.waitForInstanceSharingComplete({ sourceTenantId, instanceIdentifier, instanceTitle });
       })
       .then(async () => {
         await this.props.refetchInstance();
-        this.setState({ isLoading: false });
+        this.setState({ isInstanceSharing: false });
         this.calloutRef.current.sendCallout({
           type: 'success',
           message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.successful" values={{ instanceTitle }} />,
@@ -883,8 +883,12 @@ class ViewInstance extends React.Component {
       canUseSingleRecordImport,
       isCentralTenantPermissionsLoading,
       isShared,
+      isLoading,
     } = this.props;
-    const { linkedAuthoritiesLength } = this.state;
+    const {
+      linkedAuthoritiesLength,
+      isInstanceSharing,
+    } = this.state;
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
@@ -918,7 +922,7 @@ class ViewInstance extends React.Component {
         handler: (e) => collapseAllSections(e, this.accordionStatusRef),
       },
     ];
-    const isInstanceLoading = this.state.isLoading || !instance || isCentralTenantPermissionsLoading;
+    const isInstanceLoading = isLoading || !instance || isCentralTenantPermissionsLoading;
     const keyInStorageToHoldingsAccsState = ['holdings'];
 
     return (
@@ -938,6 +942,7 @@ class ViewInstance extends React.Component {
               ref={this.accordionStatusRef}
               userTenantPermissions={this.state.userTenantPermissions}
               isLoading={isInstanceLoading}
+              isInstanceSharing={isInstanceSharing}
               isShared={isShared}
             >
               {
@@ -1093,6 +1098,7 @@ ViewInstance.propTypes = {
   }).isRequired,
   tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
 };
 
 export default flowRight(

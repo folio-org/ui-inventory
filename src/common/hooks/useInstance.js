@@ -9,7 +9,7 @@ const useInstance = (id) => {
   const instanceTenantId = _instance?.tenantId;
   const isShared = _instance?.shared;
 
-  const { isLoading, instance: data, refetch } = useInstanceQuery(
+  const { isLoading: isInstanceLoading, instance: data, refetch } = useInstanceQuery(
     id,
     { tenantId: instanceTenantId },
     { enabled: Boolean(id && !isSearchInstanceByIdLoading) }
@@ -22,6 +22,10 @@ const useInstance = (id) => {
       tenantId: instanceTenantId,
     }),
     [data, isShared, instanceTenantId],
+  );
+  const isLoading = useMemo(
+    () => isSearchInstanceByIdLoading || isInstanceLoading,
+    [isSearchInstanceByIdLoading, isInstanceLoading],
   );
 
   return {

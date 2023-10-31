@@ -832,5 +832,6 @@
     "consortialHoldings": "Consortial holdings",
     "unlinkLocalMarcAuthorities.modal.header": "Linked to local authorities",
     "unlinkLocalMarcAuthorities.modal.message": "If you proceed with sharing this instance, then <b>{linkedAuthoritiesLength}</b> bibliographic fields linked to local authority records will retain authorized values but will become uncontrolled",
-    "unlinkLocalMarcAuthorities.modal.proceed": "Proceed"
+    "unlinkLocalMarcAuthorities.modal.proceed": "Proceder",
+    "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion."
 }

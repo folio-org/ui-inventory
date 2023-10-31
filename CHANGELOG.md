@@ -1,9 +1,13 @@
 # Change history for ui-inventory
 
-
 ## [11.0.0] IN PROGRESS
 
 * *BREAKING* Replace imports from quick-marc with stripes-marc-components. Refs UIIN-2636.
+
+## [10.1.0] IN PROGRESS
+
+* Make Inventory search and browse query boxes expandable. Refs UIIN-2493.
+* Added support for `containsAny` match option in Advanced search. Refs UIIN-2486.
 
 ## [10.0.1] IN PROGRESS
 
@@ -19,6 +23,7 @@
 * User receives an error when searching for an item in the Inventory app. Fixes UIIN-2634.
 * Create new instance success toast no longer shows the instance HRID. Fixes UIIN-2635.
 * Optimistic locking message not working for instances in non-consortial tenant. Fixes UIIN-2628.
+* Add immediate warning message when a local instance is shared. Refs UIIN-2617.
 
 ## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)

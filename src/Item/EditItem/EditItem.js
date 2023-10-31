@@ -18,7 +18,7 @@ import {
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
-import { parseHttpError } from '../../utils';
+import { parseHttpError, switchAffiliation } from '../../utils';
 import {
   useItem,
   useItemMutation,
@@ -40,16 +40,21 @@ const EditItem = ({
   const callout = useCallout();
   const stripes = useStripes();
 
-  const onCancel = useCallback(() => {
+  const goBack = useCallback(() => {
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
       search: location.search,
+      state: { tenantTo: stripes.okapi.tenant },
     });
   }, [location.search, instanceId, holdingId, itemId]);
 
+  const onCancel = useCallback(async () => {
+    await switchAffiliation(stripes, location?.state?.tenantFrom, goBack);
+  }, [stripes, location?.state?.tenantFrom, goBack]);
 
-  const onSuccess = useCallback(() => {
-    onCancel();
+
+  const onSuccess = useCallback(async () => {
+    await onCancel();
 
     return callout.sendCallout({
       type: 'success',
