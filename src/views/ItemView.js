@@ -93,8 +93,6 @@ import {
   PaneLoading,
 } from '../components';
 
-const getRequestsPath = `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`;
-
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
 class ItemView extends React.Component {
@@ -218,7 +216,7 @@ class ItemView extends React.Component {
     // return a count of the requests matching the given item and status
     requests: {
       type: 'okapi',
-      path: getRequestsPath,
+      path: `circulation/requests?query=(itemId==:{itemid}) and status==(${requestsStatusString}) sortby requestDate desc&limit=1`,
       records: 'requests',
       PUT: { path: 'circulation/requests/%{requestOnItem.id}' },
     },
