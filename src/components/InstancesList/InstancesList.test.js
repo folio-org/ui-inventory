@@ -221,6 +221,22 @@ describe('InstancesList', () => {
       });
     });
 
+    describe('when search segment is changed', () => {
+      it('should clear selected rows', () => {
+        const {
+          getAllByLabelText,
+          getByText,
+        } = renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.click(getAllByLabelText('Select instance')[0]);
+        fireEvent.click(getByText('Holdings'));
+
+        expect(getAllByLabelText('Select instance')[0].checked).toBeFalsy();
+      });
+    });
+
     describe('when a user performs a search and clicks the `Next` button in the list of records', () => {
       describe('then clicks on the `Browse` lookup tab and then clicks `Search` lookup tab', () => {
         it('should avoid infinity loading by resetting the records on unmounting', () => {
