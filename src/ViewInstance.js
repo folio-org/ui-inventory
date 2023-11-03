@@ -529,7 +529,7 @@ class ViewInstance extends React.Component {
 
     this.props.mutator.authorities.GET({
       params: {
-        query: `id==${authorityIds}`,
+        query: `id==(${authorityIds})`,
       }
     }).then(({ authorities }) => {
       const localAuthorities = authorities.filter(authority => !authority.source.startsWith(CONSORTIUM_PREFIX));
