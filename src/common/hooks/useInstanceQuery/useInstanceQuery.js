@@ -8,7 +8,7 @@ const useInstanceQuery = (instanceId, { tenantId = '' } = {}, options = {}) => {
   const ky = useTenantKy({ tenantId });
   const [namespace] = useNamespace({ key: 'instance' });
 
-  const { isLoading, data: instance = {}, refetch } = useQuery(
+  const { isLoading, data: instance = {}, refetch, ...rest } = useQuery(
     [namespace, instanceId, tenantId],
     () => ky.get(`inventory/instances/${instanceId}`).json(),
     {
@@ -21,6 +21,7 @@ const useInstanceQuery = (instanceId, { tenantId = '' } = {}, options = {}) => {
     isLoading,
     instance,
     refetch,
+    ...rest,
   });
 };
 

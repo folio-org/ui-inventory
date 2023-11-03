@@ -9,7 +9,7 @@ const useInstance = (id) => {
   const instanceTenantId = _instance?.tenantId;
   const isShared = _instance?.shared;
 
-  const { isLoading: isInstanceLoading, instance: data, refetch } = useInstanceQuery(
+  const { isLoading: isInstanceLoading, instance: data, refetch, ...rest } = useInstanceQuery(
     id,
     { tenantId: instanceTenantId },
     { enabled: Boolean(id && !isSearchInstanceByIdLoading) }
@@ -32,6 +32,7 @@ const useInstance = (id) => {
     instance,
     isLoading,
     refetch,
+    ...rest,
   };
 };
 
