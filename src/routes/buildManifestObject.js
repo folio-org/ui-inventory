@@ -2,7 +2,10 @@ import {
   get,
 } from 'lodash';
 
-import { makeQueryFunction } from '@folio/stripes/smart-components';
+import {
+  makeQueryFunction,
+  advancedSearchQueryToRows,
+} from '@folio/stripes/smart-components';
 import {
   CQL_FIND_ALL,
   fieldSearchConfigurations,
@@ -21,38 +24,7 @@ const getQueryTemplateContributor = (queryValue) => `contributors.name==/string 
 const getAdvancedSearchQueryTemplate = (queryIndex, matchOption) => fieldSearchConfigurations[queryIndex]?.[matchOption];
 
 export const getAdvancedSearchTemplate = (queryValue) => {
-  const splitIntoRowsRegex = /(?=\sor\s|\sand\s|\snot\s)/g;
-
-  // split will return array of strings:
-  // ['keyword==test', 'or issn=123', ...]
-  const rows = queryValue.split(splitIntoRowsRegex).map(i => i.trim());
-
-  return rows.map((match, index) => {
-    let bool = '';
-    let query = match;
-
-    // first row doesn't have a bool operator
-    if (index !== 0) {
-      bool = match.substr(0, match.indexOf(' '));
-      query = match.substr(bool.length);
-    }
-
-    const splitIndexAndQueryRegex = /([^=]+)(exactPhrase|containsAll|startsWith)(.+)/g;
-
-
-    const rowParts = [...query.matchAll(splitIndexAndQueryRegex)]?.[0] || [];
-    // eslint-disable-next-line no-unused-vars
-    const [, option, _match, value] = rowParts
-      .map(i => i.trim())
-      .map(i => i.replaceAll('"', ''));
-
-    return {
-      query: value,
-      bool,
-      searchOption: option,
-      match: _match,
-    };
-  }).reduce((acc, row) => {
+  return advancedSearchQueryToRows(queryValue).reduce((acc, row) => {
     const rowTemplate = getAdvancedSearchQueryTemplate(row.searchOption, row.match);
 
     if (!rowTemplate) {

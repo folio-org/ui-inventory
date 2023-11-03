@@ -30,6 +30,7 @@ const stripesStub = {
 
 const resources = {
   holdingsRecords: {
+    hasLoaded: true,
     records: [
       {
         permanentLocationId: 1,
@@ -38,6 +39,7 @@ const resources = {
     ],
   },
   itemsResource: {
+    hasLoaded: true,
     records: [
       {
         id: 'item1',
@@ -86,6 +88,7 @@ const resources = {
     ],
   },
   instanceRecords: {
+    hasLoaded: true,
     records: [
       {
         id: 1,
