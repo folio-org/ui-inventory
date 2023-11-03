@@ -1,10 +1,7 @@
 # Change history for ui-inventory
 
-
-## [10.1.0] IN PROGRESS
-
-
-## [10.0.1] IN PROGRESS
+## [10.0.1](https://github.com/folio-org/ui-inventory/tree/v10.0.1) (2023-11-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.0...v10.0.1)
 
 * Instance 3rd pane: Adjust behavior when returning to instance from holdings/item full screen. Refs UIIN-2453.
 * Consortial holdings accordion is not appearing after the sharing of Instance. Fixes UIIN-2629.
