@@ -1,5 +1,16 @@
 # Change history for ui-inventory
 
+## [10.0.1](https://github.com/folio-org/ui-inventory/tree/v10.0.1) (2023-11-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.0...v10.0.1)
+
+* Instance 3rd pane: Adjust behavior when returning to instance from holdings/item full screen. Refs UIIN-2453.
+* Consortial holdings accordion is not appearing after the sharing of Instance. Fixes UIIN-2629.
+* Reset CheckboxFacet state.more when user resets search form and fewer facet options are loaded. Fixes UIIN-2531.
+* Edit instance success toast no longer shows the instance HRID. Fixes UIIN-2588.
+* Show facet options, if they exist, after clicking the +More button. Refs UIIN-2533.
+* If Shared & Held by facets were selected in the Browse search, then retain them in the Search lookup after clicking the record. Refs UIIN-2608.
+* Remove error message after switch from Instance Edit screen to another app. Fixes UIIN-2600.
+
 ## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)
 
