@@ -112,9 +112,10 @@ ConfirmationModal.mockImplementation(({
   open,
   onCancel,
   onConfirm,
+  heading,
 }) => (open ? (
   <div>
-    <span>Confirmation modal</span>
+    <span>{heading}</span>
     <button
       type="button"
       onClick={onCancel}
@@ -195,6 +196,9 @@ const defaultProp = {
       POST: jest.fn(),
       GET: jest.fn(() => Promise.resolve({ sharingInstances: [{ status: 'COMPLETE' }] })),
     },
+    authorities: {
+      GET: jest.fn(),
+    }
   },
   onClose: mockonClose,
   onCopy: jest.fn(),
@@ -294,6 +298,7 @@ describe('ViewInstance', () => {
 
   it('should show a correct Warning message banner when instance sharing is in progress', async () => {
     defaultProp.mutator.shareInstance.POST.mockResolvedValue({});
+    defaultProp.mutator.authorities.GET.mockResolvedValueOnce({ authorities: [] });
     checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
 
     renderViewInstance({ isShared: false });
@@ -627,7 +632,7 @@ describe('ViewInstance', () => {
             fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
             fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
 
-            expect(screen.getByText('Confirmation modal')).toBeInTheDocument();
+            expect(screen.getByText('Are you sure you want to share this instance?')).toBeInTheDocument();
           });
         });
 
@@ -654,14 +659,20 @@ describe('ViewInstance', () => {
               fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
               fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
 
-              expect(screen.getByText('Confirmation modal')).toBeInTheDocument();
+              expect(screen.getByText('Are you sure you want to share this instance?')).toBeInTheDocument();
             });
 
             describe('when proceed sharing', () => {
-              it('should make POST request to share local instance', () => {
+              it('should make POST request to share local instance', async () => {
+                defaultProp.mutator.authorities.GET.mockResolvedValueOnce({ authorities: [{ source: 'MARC' }] });
+
                 fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
                 fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
                 fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+
+                const localAuthoritiesModal = await screen.findByText('Linked to local authorities');
+                expect(localAuthoritiesModal).toBeInTheDocument();
+
                 fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
 
                 expect(defaultProp.mutator.shareInstance.POST).toHaveBeenCalled();
