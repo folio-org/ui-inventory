@@ -89,18 +89,18 @@ describe('ViewSource', () => {
       });
     });
 
-    it('should render QuickMarcView', () => {
-      expect(screen.getByText('QuickMarcView')).toBeInTheDocument();
+    it('should render MarcView', () => {
+      expect(screen.getByText('MarcView')).toBeInTheDocument();
     });
 
     it('should initiate useGoBack with correct path', () => {
       expect(useGoBack).toBeCalledWith('/inventory/view/instance-id');
     });
 
-    describe('when QuickMarcView is closed', () => {
+    describe('when MarcView is closed', () => {
       it('should call onClose with correct url', async () => {
-        await waitFor(() => expect(screen.getByText('QuickMarcView')).toBeInTheDocument());
-        act(() => fireEvent.click(screen.getByText('QuickMarcView')));
+        await waitFor(() => expect(screen.getByText('MarcView')).toBeInTheDocument());
+        act(() => fireEvent.click(screen.getByText('MarcView')));
         expect(mockGoBack).toBeCalledTimes(1);
       });
     });

@@ -393,6 +393,11 @@ class InstancesList extends React.Component {
     document.getElementById('input-inventory-search').focus();
   }
 
+  handleSearchSegmentChange = (segment) => {
+    this.refocusOnInputSearch(segment);
+    this.setState({ selectedRows: {} });
+  }
+
   onSearchModeSwitch = () => {
     const {
       namespace,
@@ -415,7 +420,7 @@ class InstancesList extends React.Component {
       />
       <FilterNavigation
         segment={this.props.segment}
-        onChange={this.refocusOnInputSearch}
+        onChange={this.handleSearchSegmentChange}
       />
     </>
   );
