@@ -20,6 +20,7 @@
 * Create new instance success toast no longer shows the instance HRID. Fixes UIIN-2635.
 * Optimistic locking message not working for instances in non-consortial tenant. Fixes UIIN-2628.
 * Add immediate warning message when a local instance is shared. Refs UIIN-2617.
+* Show only local MARC Authorities when share local instance. Fixes UIIN-2647.
 
 ## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)
