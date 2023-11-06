@@ -18,7 +18,10 @@ import {
   checkIfUserInMemberTenant,
   checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
-import { ConfirmationModal } from '@folio/stripes/components';
+import {
+  ConfirmationModal,
+  Icon,
+} from '@folio/stripes/components';
 
 import { instances } from '../test/fixtures/instances';
 import { DataContext } from './contexts';
@@ -102,6 +105,8 @@ jest
   .spyOn(StripesConnectedInstance.prototype, 'instance')
   .mockImplementation(() => instance)
   .mockImplementationOnce(() => {});
+
+Icon.mockClear().mockImplementation(({ children, icon }) => (children || <span>{icon}</span>));
 
 ConfirmationModal.mockImplementation(({
   open,
@@ -285,6 +290,35 @@ describe('ViewInstance', () => {
         json: async () => ({}),
       });
     useStripes().hasInterface.mockReturnValue(true);
+  });
+
+  it('should show a correct Warning message banner when instance sharing is in progress', async () => {
+    defaultProp.mutator.shareInstance.POST.mockResolvedValue({});
+    checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+
+    renderViewInstance({ isShared: false });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+
+    await waitFor(() => expect(screen.getByText('Sharing this local instance will take a few moments.' +
+      ' A success message and updated details will be displayed upon completion.')).toBeInTheDocument());
+  });
+  it('should show a correct Warning message banner when user lacks permission to vew shared instance', () => {
+    renderViewInstance({
+      isError: true,
+      isShared: true,
+      error: { response: { status: 403 } },
+    });
+
+    expect(screen.getByText('You do not currently have permission to access details of shared instances. ' +
+      'Contact your FOLIO administrator for more information.')).toBeInTheDocument();
+  });
+  it('should show loading spinner when instance is loading', () => {
+    renderViewInstance({ isLoading: true });
+
+    expect(screen.getByText('spinner-ellipsis')).toBeInTheDocument();
   });
   it('should display action menu items', () => {
     renderViewInstance();

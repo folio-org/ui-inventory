@@ -112,13 +112,6 @@ describe('InstanceDetails', () => {
     expect(screen.getByText('Instance relationship (analytics and bound-with)')).toBeInTheDocument();
   });
 
-  it('should show a correct Warning message banner when instance sharing is in progress', () => {
-    renderInstanceDetails({ isInstanceSharing: true });
-
-    expect(screen.getByText('Sharing this local instance will take a few moments.' +
-      ' A success message and updated details will be displayed upon completion.')).toBeInTheDocument();
-  });
-
   it('should show a correct Warning message banner when staff suppressed', () => {
     const staffSuppressedInstance = {
       ...instance,
