@@ -833,5 +833,6 @@
     "unlinkLocalMarcAuthorities.modal.header": "Propojeno s místními autoritami",
     "unlinkLocalMarcAuthorities.modal.message": "Pokud budete pokračovat ve sdílení tohoto titulu, pak <b>{linkedAuthoritiesLength}</b> bibliografická pole propojená se záznamy místní autority si zachovají autorizované hodnoty, ale stanou se nekontrolovanými",
     "unlinkLocalMarcAuthorities.modal.proceed": "Pokračovat",
-    "warning.instance.sharingLocalInstance": "Sdílení tohoto místního titulu zabere několik okamžiků. Po dokončení se zobrazí zpráva o úspěchu a aktualizované údaje."
+    "warning.instance.sharingLocalInstance": "Sdílení tohoto místního titulu zabere několik okamžiků. Po dokončení se zobrazí zpráva o úspěchu a aktualizované údaje.",
+    "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information."
 }
