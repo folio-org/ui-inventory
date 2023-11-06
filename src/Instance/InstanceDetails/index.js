@@ -11,6 +11,8 @@ export * from './InstanceTitle';
 export * from './InstanceNotesView';
 export * from './InstanceNewHolding';
 
+export { default as InstanceLoadingPane } from './InstanceLoadingPane';
+export { default as InstanceWarningPane } from './InstanceWarningPane';
 export { default as SubInstanceList } from './SubInstanceList';
 export { default as InstanceDetails } from './InstanceDetails';
 export { default as SubInstanceGroup } from './SubInstanceGroup';
