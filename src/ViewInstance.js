@@ -41,6 +41,7 @@ import {
 } from './utils';
 import {
   CONSORTIUM_PREFIX,
+  HTTP_RESPONSE_STATUS_CODES,
   indentifierTypeNames,
   INSTANCE_SHARING_STATUSES,
   layers,
@@ -53,6 +54,8 @@ import {
   HoldingsListContainer,
   MoveItemsContext,
   InstanceDetails,
+  InstanceWarningPane,
+  InstanceLoadingPane,
 } from './Instance';
 import {
   ActionItem,
@@ -881,11 +884,18 @@ class ViewInstance extends React.Component {
       isCentralTenantPermissionsLoading,
       isShared,
       isLoading,
+      isError,
+      error,
     } = this.props;
     const {
       linkedAuthoritiesLength,
       isInstanceSharing,
     } = this.state;
+
+    const isUserLacksPermToViewSharedInstance = isError
+      && error?.response?.status === HTTP_RESPONSE_STATUS_CODES.FORBIDDEN
+      && isShared;
+
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
@@ -922,6 +932,28 @@ class ViewInstance extends React.Component {
     const isInstanceLoading = isLoading || !instance || isCentralTenantPermissionsLoading;
     const keyInStorageToHoldingsAccsState = ['holdings'];
 
+    if (isUserLacksPermToViewSharedInstance) {
+      return (
+        <InstanceWarningPane
+          onClose={onClose}
+          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.accessSharedInstance" />}
+        />
+      );
+    }
+
+    if (isInstanceSharing) {
+      return (
+        <InstanceWarningPane
+          onClose={onClose}
+          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.sharingLocalInstance" />}
+        />
+      );
+    }
+
+    if (isInstanceLoading) {
+      return <InstanceLoadingPane onClose={onClose} />;
+    }
+
     return (
       <DataContext.Consumer>
         {data => (
@@ -938,8 +970,6 @@ class ViewInstance extends React.Component {
               tagsEnabled={tagsEnabled}
               ref={this.accordionStatusRef}
               userTenantPermissions={this.state.userTenantPermissions}
-              isLoading={isInstanceLoading}
-              isInstanceSharing={isInstanceSharing}
               isShared={isShared}
             >
               {
@@ -1099,6 +1129,8 @@ ViewInstance.propTypes = {
   tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
+  error: PropTypes.object,
 };
 
 export default flowRight(
