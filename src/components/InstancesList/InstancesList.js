@@ -544,7 +544,18 @@ class InstancesList extends React.Component {
     }
   }
 
-  toggleNewFastAddModal = () => {
+  toggleNewFastAddModal = ({ instanceRecord }) => {
+    const {
+      history,
+      location,
+    } = this.props;
+
+    if (instanceRecord?.id) {
+      history.push({
+        pathname: `/inventory/view/${instanceRecord.id}`,
+        search: location.search,
+      });
+    }
     this.setState((state) => {
       return { showNewFastAddModal: !state.showNewFastAddModal };
     });
