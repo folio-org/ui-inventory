@@ -4,12 +4,20 @@ import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
 import useInstanceQuery from './useInstanceQuery';
 
 const useInstance = (id) => {
-  const { isLoading: isSearchInstanceByIdLoading, instance: _instance } = useSearchInstanceByIdQuery(id);
+  const {
+    isLoading: isSearchInstanceByIdLoading,
+    instance: _instance,
+  } = useSearchInstanceByIdQuery(id);
 
   const instanceTenantId = _instance?.tenantId;
   const isShared = _instance?.shared;
 
-  const { isLoading: isInstanceLoading, instance: data, refetch, ...rest } = useInstanceQuery(
+  const {
+    isLoading: isInstanceLoading,
+    instance: data,
+    refetch,
+    ...rest
+  } = useInstanceQuery(
     id,
     { tenantId: instanceTenantId },
     { enabled: Boolean(id && !isSearchInstanceByIdLoading) }
