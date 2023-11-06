@@ -298,6 +298,7 @@ describe('ViewInstance', () => {
 
   it('should show a correct Warning message banner when instance sharing is in progress', async () => {
     defaultProp.mutator.shareInstance.POST.mockResolvedValue({});
+    defaultProp.mutator.authorities.GET.mockResolvedValueOnce({ authorities: [] });
     checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
 
     renderViewInstance({ isShared: false });
