@@ -145,7 +145,6 @@ class ViewInstance extends React.Component {
       path: 'data-export/quick-export',
       throwErrors: false,
       clientGeneratePk: false,
-      tenant: '!{tenantId}',
     },
     instanceRelationshipTypes: {
       type: 'okapi',

@@ -7,6 +7,10 @@
 * Added support for `containsAny` match option in Advanced search. Refs UIIN-2486.
 * Inventory search/browse: Do not retain checkbox selections when toggling search segment. Refs UIIN-2477.
 
+## [10.0.3] IN PROGRESS
+
+* Single instance export - MARC files sent to central tenant from member tenant. Fixes UIIN-2613.
+
 ## [10.0.2] IN PROGRESS
 
 * Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
