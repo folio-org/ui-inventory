@@ -9,7 +9,6 @@ import {
 import {
   flowRight,
   isEmpty,
-  pick,
 } from 'lodash';
 
 import {
@@ -38,9 +37,10 @@ import {
   handleKeyCommand,
   isInstanceShadowCopy,
   isMARCSource,
+  getLinkedAuthorityIds,
 } from './utils';
 import {
-  AUTHORITY_LINKED_FIELDS,
+  CONSORTIUM_PREFIX,
   HTTP_RESPONSE_STATUS_CODES,
   indentifierTypeNames,
   INSTANCE_SHARING_STATUSES,
@@ -170,6 +170,12 @@ class ViewInstance extends React.Component {
       accumulate: true,
       throwErrors: false,
     },
+    authorities: {
+      type: 'okapi',
+      path: 'authority-storage/authorities',
+      accumulate: true,
+      throwErrors: false,
+    }
   });
 
   constructor(props) {
@@ -522,34 +528,25 @@ class ViewInstance extends React.Component {
   }
 
   checkIfHasLinkedAuthorities = (instance = {}) => {
-    const linkedAuthorities = pick(this.props.selectedInstance, AUTHORITY_LINKED_FIELDS);
+    const authorityIds = getLinkedAuthorityIds(instance).join(' or ');
 
-    const findLinkedAuthorities = authorities => {
-      const linkedAuthoritiesLength = AUTHORITY_LINKED_FIELDS.reduce((total, field) => {
-        const authoritiesAmount = authorities[field].filter(item => item.authorityId).length;
-        return total + authoritiesAmount;
-      }, 0);
+    this.props.mutator.authorities.GET({
+      params: {
+        query: `id==(${authorityIds})`,
+      }
+    }).then(({ authorities }) => {
+      const localAuthorities = authorities.filter(authority => !authority.source.startsWith(CONSORTIUM_PREFIX));
 
-      return {
-        hasLinkedAuthorities: !!linkedAuthoritiesLength,
-        linkedAuthoritiesLength,
-      };
-    };
-
-    const {
-      hasLinkedAuthorities,
-      linkedAuthoritiesLength,
-    } = findLinkedAuthorities(linkedAuthorities);
-
-    if (hasLinkedAuthorities) {
-      this.setState({
-        linkedAuthoritiesLength,
-        isShareLocalInstanceModalOpen: false,
-        isUnlinkAuthoritiesModalOpen: true,
-      });
-    } else {
-      this.handleShareLocalInstance(instance);
-    }
+      if (localAuthorities.length) {
+        this.setState({
+          linkedAuthoritiesLength: localAuthorities.length,
+          isShareLocalInstanceModalOpen: false,
+          isUnlinkAuthoritiesModalOpen: true,
+        });
+      } else {
+        this.handleShareLocalInstance(instance);
+      }
+    });
   }
 
   toggleCopyrightModal = () => {
@@ -1094,6 +1091,9 @@ ViewInstance.propTypes = {
     }).isRequired,
     shareInstance: PropTypes.shape({
       POST: PropTypes.func.isRequired,
+      GET: PropTypes.func.isRequired,
+    }).isRequired,
+    authorities: PropTypes.shape({
       GET: PropTypes.func.isRequired,
     }).isRequired,
   }),
