@@ -7,16 +7,20 @@
 * Added support for `containsAny` match option in Advanced search. Refs UIIN-2486.
 * Inventory search/browse: Do not retain checkbox selections when toggling search segment. Refs UIIN-2477.
 
-## [10.0.2] IN PROGRESS
+## [10.0.3] IN PROGRESS
 
-* Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
-* Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
-* User receives an error when searching for an item in the Inventory app. Fixes UIIN-2634.
-* Create new instance success toast no longer shows the instance HRID. Fixes UIIN-2635.
-* Optimistic locking message not working for instances in non-consortial tenant. Fixes UIIN-2628.
-* Add immediate warning message when a local instance is shared. Refs UIIN-2617.
 * ECS: Show info message when user in member tenant tries to view shared instance details without permission. Refs UIIN-2590.
 * Show only local MARC Authorities when share local instance. Fixes UIIN-2647.
+
+## [10.0.2](https://github.com/folio-org/ui-inventory/tree/v10.0.2) (2023-11-07)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.1...v10.0.2)
+
+* Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
+* Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
+* Add immediate warning message when a local instance is shared. Refs UIIN-2617.
+* Optimistic locking message not working for instances in non-consortial tenant. Fixes UIIN-2628.
+* User receives an error when searching for an item in the Inventory app. Fixes UIIN-2634.
+* Create new instance success toast no longer shows the instance HRID. Fixes UIIN-2635.
 
 ## [10.0.1](https://github.com/folio-org/ui-inventory/tree/v10.0.1) (2023-11-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.0...v10.0.1)
