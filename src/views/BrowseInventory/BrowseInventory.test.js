@@ -222,7 +222,7 @@ describe('BrowseInventory', () => {
       renderBrowseInventory();
 
       fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
-      userEvent.type(screen.getByRole('textbox'), 'test')
+      userEvent.type(screen.getByRole('textbox'), 'test');
       fireEvent.click(screen.getByRole('button', { name: 'Search' }));
       fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
 
