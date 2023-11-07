@@ -556,6 +556,7 @@ class InstancesList extends React.Component {
         search: location.search,
       });
     }
+
     this.setState((state) => {
       return { showNewFastAddModal: !state.showNewFastAddModal };
     });
