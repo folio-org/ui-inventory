@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [10.0.2] IN PROGRESS
+## [10.0.2](https://github.com/folio-org/ui-inventory/tree/v10.0.2) (2023-11-07)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.1...v10.0.2)
 
 * Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
 * Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
