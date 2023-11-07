@@ -7,7 +7,6 @@
 * Added support for `containsAny` match option in Advanced search. Refs UIIN-2486.
 * Inventory search/browse: Do not retain checkbox selections when toggling search segment. Refs UIIN-2477.
 
-
 ## [10.0.3] IN PROGRESS
 
 * ECS: Show info message when user in member tenant tries to view shared instance details without permission. Refs UIIN-2590.
