@@ -531,27 +531,28 @@ class ViewInstance extends React.Component {
     const { selectedInstance } = this.props;
     const authorityIds = getLinkedAuthorityIds(selectedInstance);
 
-    if (!isEmpty(authorityIds)) {
-      this.props.mutator.authorities.GET({
-        params: {
-          query: `id==(${authorityIds.join(' or ')})`,
-        }
-      }).then(({ authorities }) => {
-        const localAuthorities = authorities.filter(authority => !authority.source.startsWith(CONSORTIUM_PREFIX));
-
-        if (localAuthorities.length) {
-          this.setState({
-            linkedAuthoritiesLength: localAuthorities.length,
-            isShareLocalInstanceModalOpen: false,
-            isUnlinkAuthoritiesModalOpen: true,
-          });
-        } else {
-          this.handleShareLocalInstance(selectedInstance);
-        }
-      });
-    } else {
+    if (isEmpty(authorityIds)) {
       this.handleShareLocalInstance(selectedInstance);
+      return;
     }
+
+    this.props.mutator.authorities.GET({
+      params: {
+        query: `id==(${authorityIds.join(' or ')})`,
+      }
+    }).then(({ authorities }) => {
+      const localAuthorities = authorities.filter(authority => !authority.source.startsWith(CONSORTIUM_PREFIX));
+
+      if (localAuthorities.length) {
+        this.setState({
+          linkedAuthoritiesLength: localAuthorities.length,
+          isShareLocalInstanceModalOpen: false,
+          isUnlinkAuthoritiesModalOpen: true,
+        });
+      } else {
+        this.handleShareLocalInstance(selectedInstance);
+      }
+    });
   }
 
   toggleCopyrightModal = () => {
