@@ -216,4 +216,17 @@ describe('BrowseInventory', () => {
     expect(getByText('Contributors')).toBeDefined();
     expect(getByText('Subjects')).toBeDefined();
   });
+
+  describe('when user clicks on Reset all', () => {
+    it('should move focus to query input', () => {
+      renderBrowseInventory();
+
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+      userEvent.type(screen.getByRole('textbox'), 'test')
+      fireEvent.click(screen.getByRole('button', { name: 'Search' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+      expect(screen.getByRole('textbox')).toHaveFocus();
+    });
+  });
 });

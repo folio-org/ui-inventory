@@ -221,6 +221,20 @@ describe('InstancesList', () => {
       });
     });
 
+    describe('when user clicks Reset all', () => {
+      it('should move focus to query input', () => {
+        renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'test' } });
+        fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
+        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+        expect(screen.getByRole('textbox', { name: 'Search' })).toHaveFocus();
+      });
+    });
+
     describe('when search segment is changed', () => {
       it('should clear selected rows', () => {
         const {
@@ -490,7 +504,7 @@ describe('InstancesList', () => {
           renderInstancesList({ segment: 'instances' });
 
           fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+          indexRef(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
             target: { value: 'test2' }
           });
           const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
@@ -515,7 +529,7 @@ describe('InstancesList', () => {
         renderInstancesList({ segment: 'instances' });
 
         fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+        indexRef(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
           target: { value: 'test' }
         });
 
@@ -531,7 +545,7 @@ describe('InstancesList', () => {
     it('should show Save Holdings UUIDs button', () => {
       renderInstancesList({ segment: 'holdings' });
 
-      fireEvent.change(screen.getByRole('combobox'), {
+      indexRef(screen.getByRole('combobox'), {
         target: { value: 'all' }
       });
 
