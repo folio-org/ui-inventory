@@ -526,12 +526,18 @@ class ViewInstance extends React.Component {
       });
   }
 
-  checkIfHasLinkedAuthorities = (instance = {}) => {
-    const authorityIds = getLinkedAuthorityIds(instance).join(' or ');
+  checkIfHasLinkedAuthorities = () => {
+    const { selectedInstance } = this.props;
+    const authorityIds = getLinkedAuthorityIds(selectedInstance);
+
+    if (isEmpty(authorityIds)) {
+      this.handleShareLocalInstance(selectedInstance);
+      return;
+    }
 
     this.props.mutator.authorities.GET({
       params: {
-        query: `id==(${authorityIds})`,
+        query: `id==(${authorityIds.join(' or ')})`,
       }
     }).then(({ authorities }) => {
       const localAuthorities = authorities.filter(authority => !authority.source.startsWith(CONSORTIUM_PREFIX));
@@ -543,7 +549,7 @@ class ViewInstance extends React.Component {
           isUnlinkAuthoritiesModalOpen: true,
         });
       } else {
-        this.handleShareLocalInstance(instance);
+        this.handleShareLocalInstance(selectedInstance);
       }
     });
   }
@@ -1027,7 +1033,7 @@ class ViewInstance extends React.Component {
               message={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.message" values={{ instanceTitle: instance?.title }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.confirmButton" />}
               onCancel={() => this.setState({ isShareLocalInstanceModalOpen: false })}
-              onConfirm={() => this.checkIfHasLinkedAuthorities(instance)}
+              onConfirm={this.checkIfHasLinkedAuthorities}
             />
 
             <ConfirmationModal
