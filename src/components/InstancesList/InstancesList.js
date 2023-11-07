@@ -173,6 +173,7 @@ class InstancesList extends React.Component {
     };
   }
 
+
   componentDidMount() {
     const {
       history,
@@ -185,7 +186,7 @@ class InstancesList extends React.Component {
       if (hasReset) {
         // imperative way is used because it's no option in SearchAndSort reset/focus filters from outside
         document.getElementById('clickable-reset-all')?.click();
-        document.getElementById('input-inventory-search')?.focus();
+        this.inputRef.current.focus();
 
         history.replace({ search: 'segment=instances' });
       }
@@ -221,6 +222,9 @@ class InstancesList extends React.Component {
     this.unlisten();
     parentMutator.records.reset();
   }
+
+  inputRef = React.createRef();
+  indexRef = React.createRef();
 
   extraParamsToReset = {
     selectedBrowseResult: false,
@@ -390,7 +394,7 @@ class InstancesList extends React.Component {
     // https://issues.folio.org/browse/UIIN-1358
     storeLastSegment(segment);
     facetsStore.getState().resetFacetSettings();
-    document.getElementById('input-inventory-search').focus();
+    this.inputRef.current.focus();
   }
 
   handleSearchSegmentChange = (segment) => {
@@ -903,6 +907,7 @@ class InstancesList extends React.Component {
     });
 
     facetsStore.getState().resetFacetSettings();
+    this.inputRef.current.focus();
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
@@ -1184,6 +1189,8 @@ class InstancesList extends React.Component {
             initialResultCount={INITIAL_RESULT_COUNT}
             initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}
             inputType="textarea"
+            inputRef={this.inputRef}
+            indexRef={this.indexRef}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
