@@ -47,6 +47,16 @@ jest.mock('../../hooks', () => ({
   }),
 }));
 
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  Pluggable: ({ renderTrigger, onClose }) => (
+    <>
+      {renderTrigger()}
+      <button type="button" onClick={() => onClose({ instanceRecord: { id: 'fast-add-record-id' } })}>Save & close</button>
+    </>
+  ),
+}));
+
 const data = {
   contributorTypes: [],
   contributorNameTypes: [],
@@ -341,6 +351,33 @@ describe('InstancesList', () => {
             openActionMenu();
 
             expect(screen.getByRole('button', { name: 'New local record' })).toBeInTheDocument();
+          });
+        });
+      });
+
+      describe('"New Fast Add record" button', () => {
+        it('should render', () => {
+          renderInstancesList({ segment: 'instances' });
+          openActionMenu();
+
+          expect(screen.getByRole('button', { name: 'New Fast Add Record' })).toBeInTheDocument();
+        });
+
+        describe('when saving the record', () => {
+          it('should redirect to new Instance record', async () => {
+            jest.spyOn(history, 'push');
+            renderInstancesList({ segment: 'instances' });
+            openActionMenu();
+
+            const button = screen.getByRole('button', { name: 'New Fast Add Record' });
+
+            fireEvent.click(button);
+            fireEvent.click(screen.getByText('Save & close'));
+
+            expect(history.push).toHaveBeenCalledWith({
+              pathname: '/inventory/view/fast-add-record-id',
+              search: '',
+            });
           });
         });
       });
