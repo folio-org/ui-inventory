@@ -6,6 +6,7 @@
 * Show only local MARC Authorities when share local instance. Fixes UIIN-2647.
 * Single instance export - MARC files sent to central tenant from member tenant. Fixes UIIN-2613.
 * Fix misspelled Instance notes (all) advanced search query index. Fixes UIIN-2677.
+* Switch from `=` to `==` operator when querying for `holdings-storage/holdings` by hrid. Fixes UIIN-2658.
 
 ## [10.0.2](https://github.com/folio-org/ui-inventory/tree/v10.0.2) (2023-11-07)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.1...v10.0.2)
