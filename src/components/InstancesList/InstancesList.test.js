@@ -541,7 +541,7 @@ describe('InstancesList', () => {
           renderInstancesList({ segment: 'instances' });
 
           fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-          indexRef(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
             target: { value: 'test2' }
           });
           const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
@@ -566,7 +566,7 @@ describe('InstancesList', () => {
         renderInstancesList({ segment: 'instances' });
 
         fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-        indexRef(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
           target: { value: 'test' }
         });
 
@@ -582,7 +582,7 @@ describe('InstancesList', () => {
     it('should show Save Holdings UUIDs button', () => {
       renderInstancesList({ segment: 'holdings' });
 
-      indexRef(screen.getByRole('combobox'), {
+      fireEvent.change(screen.getByRole('combobox'), {
         target: { value: 'all' }
       });
 
