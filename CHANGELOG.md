@@ -6,12 +6,14 @@
 * Make Inventory search and browse query boxes expandable. Refs UIIN-2493.
 * Added support for `containsAny` match option in Advanced search. Refs UIIN-2486.
 * Inventory search/browse: Do not retain checkbox selections when toggling search segment. Refs UIIN-2477.
+* Show Instance record after creating with Fast add option. Refs UIIN-2497.
 
 ## [10.0.3] IN PROGRESS
 
 * ECS: Show info message when user in member tenant tries to view shared instance details without permission. Refs UIIN-2590.
 * Show only local MARC Authorities when share local instance. Fixes UIIN-2647.
 * Single instance export - MARC files sent to central tenant from member tenant. Fixes UIIN-2613.
+* Fix misspelled Instance notes (all) advanced search query index. Fixes UIIN-2677.
 
 ## [10.0.2](https://github.com/folio-org/ui-inventory/tree/v10.0.2) (2023-11-07)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.1...v10.0.2)
