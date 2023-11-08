@@ -132,7 +132,7 @@ export const advancedSearchIndexes = {
     { label: 'ui-inventory.isbn', value: 'isbn' },
     { label: 'ui-inventory.issn', value: 'issn' },
     { label: 'ui-inventory.search.oclc', value: 'oclc' },
-    { label: 'ui-inventory.search.instanceNotes', value: 'isntanceNotes' },
+    { label: 'ui-inventory.search.instanceNotes', value: 'instanceNotes' },
     { label: 'ui-inventory.search.instanceAdministrativeNotes', value: 'instanceAdministrativeNotes' },
     { label: 'ui-inventory.subject', value: 'subject' },
     { label: 'ui-inventory.effectiveCallNumberShelving', value: 'callNumber' },
