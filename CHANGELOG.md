@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [10.0.3] IN PROGRESS
+## [10.0.3](https://github.com/folio-org/ui-inventory/tree/v10.0.3) (2023-11-08)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.2...v10.0.3)
 
 * ECS: Show info message when user in member tenant tries to view shared instance details without permission. Refs UIIN-2590.
 * Show only local MARC Authorities when share local instance. Fixes UIIN-2647.
