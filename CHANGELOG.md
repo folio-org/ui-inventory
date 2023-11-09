@@ -9,6 +9,10 @@
 * Show Instance record after creating with Fast add option. Refs UIIN-2497.
 * Search box/Browse box- Reset all should shift focus back to search box. Refs UIIN-2514.
 
+## [10.0.4] IN PROGRESS
+
+* Fetch sharing of local instance status in the context of member tenant. Refs UIIN-2680.
+
 ## [10.0.3] IN PROGRESS
 
 * ECS: Show info message when user in member tenant tries to view shared instance details without permission. Refs UIIN-2590.
