@@ -12,6 +12,7 @@
 ## [10.0.4] IN PROGRESS
 
 * Fetch sharing of local instance status in the context of member tenant. Refs UIIN-2680.
+* Handle errors when sharing local instances failed. Refs UIIN-2682.
 
 ## [10.0.3](https://github.com/folio-org/ui-inventory/tree/v10.0.3) (2023-11-08)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.2...v10.0.3)
