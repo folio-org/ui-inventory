@@ -443,20 +443,23 @@ class ViewInstance extends React.Component {
     this.setState({ isImportRecordModalOpened: false });
   }
 
+  showUnsuccessfulShareInstanceCallout = (instanceTitle) => {
+    this.calloutRef.current?.sendCallout({
+      type: 'error',
+      message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
+    });
+  }
+
   checkInstanceSharingProgress = ({ sourceTenantId, instanceIdentifier }) => {
     return this.props.mutator.shareInstance.GET({
       params: { sourceTenantId, instanceIdentifier },
     });
   }
 
-  waitForInstanceSharingComplete = ({ sourceTenantId, instanceIdentifier, instanceTitle }) => {
+  waitForInstanceSharingComplete = ({ sourceTenantId, instanceIdentifier }) => {
     return new Promise((resolve, reject) => {
       this.intervalId = setInterval(() => {
         const onError = error => {
-          this.calloutRef.current.sendCallout({
-            type: 'error',
-            message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
-          });
           clearInterval(this.intervalId);
           reject(error);
         };
@@ -498,7 +501,7 @@ class ViewInstance extends React.Component {
           isInstanceSharing: true,
         });
 
-        await this.waitForInstanceSharingComplete({ sourceTenantId, instanceIdentifier, instanceTitle });
+        await this.waitForInstanceSharingComplete({ sourceTenantId, instanceIdentifier });
       })
       .then(async () => {
         await this.props.refetchInstance();
@@ -512,11 +515,9 @@ class ViewInstance extends React.Component {
         this.setState({
           isUnlinkAuthoritiesModalOpen: false,
           isShareLocalInstanceModalOpen: false,
+          isInstanceSharing: false,
         });
-        this.calloutRef.current?.sendCallout({
-          type: 'error',
-          message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
-        });
+        this.showUnsuccessfulShareInstanceCallout(instanceTitle);
       });
   }
 
@@ -545,6 +546,13 @@ class ViewInstance extends React.Component {
       } else {
         this.handleShareLocalInstance(selectedInstance);
       }
+    }).catch(() => {
+      this.setState({ isShareLocalInstanceModalOpen: false });
+
+      this.calloutRef.current.sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-inventory.communicationProblem" />,
+      });
     });
   }
 
@@ -870,30 +878,89 @@ class ViewInstance extends React.Component {
     );
   };
 
-  render() {
+  renderInstanceDetails = (data, instance) => {
     const {
-      match: { params: { id, holdingsrecordid, itemid } },
-      stripes,
+      match: { params: { holdingsrecordid, itemid } },
       okapi,
-      onCopy,
       onClose,
       tagsEnabled,
-      updateLocation,
-      canUseSingleRecordImport,
       isCentralTenantPermissionsLoading,
       isShared,
       isLoading,
       isError,
       error,
     } = this.props;
-    const {
-      linkedAuthoritiesLength,
-      isInstanceSharing,
-    } = this.state;
+    const { isInstanceSharing } = this.state;
 
     const isUserLacksPermToViewSharedInstance = isError
       && error?.response?.status === HTTP_RESPONSE_STATUS_CODES.FORBIDDEN
       && isShared;
+
+    const isInstanceLoading = isLoading || !instance || isCentralTenantPermissionsLoading;
+    const keyInStorageToHoldingsAccsState = ['holdings'];
+
+    if (isUserLacksPermToViewSharedInstance) {
+      return (
+        <InstanceWarningPane
+          onClose={onClose}
+          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.accessSharedInstance" />}
+        />
+      );
+    }
+
+    if (isInstanceSharing) {
+      return (
+        <InstanceWarningPane
+          onClose={onClose}
+          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.sharingLocalInstance" />}
+        />
+      );
+    }
+
+    if (isInstanceLoading) {
+      return <InstanceLoadingPane onClose={onClose} />;
+    }
+
+    return (
+      <InstanceDetails
+        id="pane-instancedetails"
+        onClose={onClose}
+        actionMenu={this.createActionMenuGetter(instance, data)}
+        instance={instance}
+        tagsEnabled={tagsEnabled}
+        ref={this.accordionStatusRef}
+        userTenantPermissions={this.state.userTenantPermissions}
+        isShared={isShared}
+      >
+        {
+          (!holdingsrecordid && !itemid) ?
+            (
+              <MoveItemsContext>
+                <HoldingsListContainer
+                  instance={instance}
+                  draggable={this.state.isItemsMovement}
+                  tenantId={okapi.tenant}
+                  pathToAccordionsState={keyInStorageToHoldingsAccsState}
+                  droppable
+                />
+              </MoveItemsContext>
+            )
+            :
+            null
+        }
+      </InstanceDetails>
+    );
+  }
+
+  render() {
+    const {
+      match: { params: { id } },
+      stripes,
+      onCopy,
+      updateLocation,
+      canUseSingleRecordImport,
+    } = this.props;
+    const { linkedAuthoritiesLength } = this.state;
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
@@ -928,30 +995,6 @@ class ViewInstance extends React.Component {
         handler: (e) => collapseAllSections(e, this.accordionStatusRef),
       },
     ];
-    const isInstanceLoading = isLoading || !instance || isCentralTenantPermissionsLoading;
-    const keyInStorageToHoldingsAccsState = ['holdings'];
-
-    if (isUserLacksPermToViewSharedInstance) {
-      return (
-        <InstanceWarningPane
-          onClose={onClose}
-          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.accessSharedInstance" />}
-        />
-      );
-    }
-
-    if (isInstanceSharing) {
-      return (
-        <InstanceWarningPane
-          onClose={onClose}
-          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.sharingLocalInstance" />}
-        />
-      );
-    }
-
-    if (isInstanceLoading) {
-      return <InstanceLoadingPane onClose={onClose} />;
-    }
 
     return (
       <DataContext.Consumer>
@@ -961,34 +1004,7 @@ class ViewInstance extends React.Component {
             isWithinScope={checkScope}
             scope={document.body}
           >
-            <InstanceDetails
-              id="pane-instancedetails"
-              onClose={onClose}
-              actionMenu={this.createActionMenuGetter(instance, data)}
-              instance={instance}
-              tagsEnabled={tagsEnabled}
-              ref={this.accordionStatusRef}
-              userTenantPermissions={this.state.userTenantPermissions}
-              isShared={isShared}
-            >
-              {
-                (!holdingsrecordid && !itemid) ?
-                  (
-                    <MoveItemsContext>
-                      <HoldingsListContainer
-                        instance={instance}
-                        draggable={this.state.isItemsMovement}
-                        tenantId={okapi.tenant}
-                        pathToAccordionsState={keyInStorageToHoldingsAccsState}
-                        droppable
-                      />
-                    </MoveItemsContext>
-                  )
-                  :
-                  null
-              }
-            </InstanceDetails>
-
+            {this.renderInstanceDetails(data, instance)}
             <Callout ref={this.calloutRef} />
 
             {this.state.afterCreate && !isEmpty(instance) &&

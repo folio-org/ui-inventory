@@ -12,6 +12,7 @@
 ## [10.0.4] IN PROGRESS
 
 * Fetch sharing of local instance status in the context of member tenant. Refs UIIN-2680.
+* Handle errors when sharing local instances failed. Refs UIIN-2682.
 
 ## [10.0.3] IN PROGRESS
 
