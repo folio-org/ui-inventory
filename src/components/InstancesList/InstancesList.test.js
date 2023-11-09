@@ -231,6 +231,20 @@ describe('InstancesList', () => {
       });
     });
 
+    describe('when user clicks Reset all', () => {
+      it('should move focus to query input', () => {
+        renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'test' } });
+        fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
+        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+        expect(screen.getByRole('textbox', { name: 'Search' })).toHaveFocus();
+      });
+    });
+
     describe('when search segment is changed', () => {
       it('should clear selected rows', () => {
         const {

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useState, useEffect, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -46,6 +46,8 @@ const BrowseInventory = () => {
   const { isFiltersOpened, toggleFilters } = useFiltersToogle(`${namespace}/filters`);
   const { deleteItemToView } = useItemToView('browse');
   const [pageConfig, setPageConfig] = useState(getLastBrowseOffset());
+  const inputRef = useRef();
+
   const { search } = location;
 
   useEffect(() => {
@@ -134,6 +136,11 @@ const BrowseInventory = () => {
     changeSearchIndex(e);
   }, []);
 
+  const onReset = useCallback(() => {
+    resetFilters();
+    inputRef.current.focus();
+  }, [inputRef.current]);
+
   return (
     <PersistedPaneset
       appId={namespace}
@@ -160,10 +167,11 @@ const BrowseInventory = () => {
             selectedIndex={searchIndex}
             searchableIndexesPlaceholder={searchableIndexesPlaceholder}
             inputType="textarea"
+            inputRef={inputRef}
           />
 
           <ResetButton
-            reset={resetFilters}
+            reset={onReset}
             disabled={isResetButtonDisabled}
           />
 
