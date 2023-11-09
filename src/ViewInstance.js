@@ -45,7 +45,6 @@ import {
   indentifierTypeNames,
   INSTANCE_SHARING_STATUSES,
   layers,
-  OKAPI_TENANT_HEADER,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -447,11 +446,6 @@ class ViewInstance extends React.Component {
   checkInstanceSharingProgress = ({ sourceTenantId, instanceIdentifier }) => {
     return this.props.mutator.shareInstance.GET({
       params: { sourceTenantId, instanceIdentifier },
-      headers: {
-        [OKAPI_TENANT_HEADER]: this.props.centralTenantId,
-        'Content-Type': 'application/json',
-        ...(this.props.okapi.token && { 'X-Okapi-Token': this.props.okapi.token }),
-      },
     });
   }
 
