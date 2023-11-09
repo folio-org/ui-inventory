@@ -18,6 +18,7 @@ import {
   omit,
   chunk,
   flatten,
+  pick,
 } from 'lodash';
 import moment from 'moment';
 
@@ -41,6 +42,7 @@ import {
   OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
+  AUTHORITY_LINKED_FIELDS,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -849,4 +851,16 @@ export const switchAffiliation = async (stripes, tenantId, move) => {
   } else {
     move();
   }
+};
+
+export const getLinkedAuthorityIds = instance => {
+  // Pick fields with authorityId
+  const linkedAuthorities = pick(instance, AUTHORITY_LINKED_FIELDS);
+
+  // Retrieve only authorityId
+  const authorityIdList = AUTHORITY_LINKED_FIELDS.map(field => {
+    return linkedAuthorities[field].filter(auth => !!auth.authorityId).map(auth => auth.authorityId);
+  });
+
+  return flatten(authorityIdList);
 };

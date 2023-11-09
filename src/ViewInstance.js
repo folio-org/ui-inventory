@@ -9,7 +9,6 @@ import {
 import {
   flowRight,
   isEmpty,
-  pick,
 } from 'lodash';
 
 import {
@@ -38,9 +37,11 @@ import {
   handleKeyCommand,
   isInstanceShadowCopy,
   isMARCSource,
+  getLinkedAuthorityIds,
 } from './utils';
 import {
-  AUTHORITY_LINKED_FIELDS,
+  CONSORTIUM_PREFIX,
+  HTTP_RESPONSE_STATUS_CODES,
   indentifierTypeNames,
   INSTANCE_SHARING_STATUSES,
   layers,
@@ -53,6 +54,8 @@ import {
   HoldingsListContainer,
   MoveItemsContext,
   InstanceDetails,
+  InstanceWarningPane,
+  InstanceLoadingPane,
 } from './Instance';
 import {
   ActionItem,
@@ -142,7 +145,6 @@ class ViewInstance extends React.Component {
       path: 'data-export/quick-export',
       throwErrors: false,
       clientGeneratePk: false,
-      tenant: '!{tenantId}',
     },
     instanceRelationshipTypes: {
       type: 'okapi',
@@ -167,6 +169,12 @@ class ViewInstance extends React.Component {
       accumulate: true,
       throwErrors: false,
     },
+    authorities: {
+      type: 'okapi',
+      path: 'authority-storage/authorities',
+      accumulate: true,
+      throwErrors: false,
+    }
   });
 
   constructor(props) {
@@ -518,35 +526,32 @@ class ViewInstance extends React.Component {
       });
   }
 
-  checkIfHasLinkedAuthorities = (instance = {}) => {
-    const linkedAuthorities = pick(this.props.selectedInstance, AUTHORITY_LINKED_FIELDS);
+  checkIfHasLinkedAuthorities = () => {
+    const { selectedInstance } = this.props;
+    const authorityIds = getLinkedAuthorityIds(selectedInstance);
 
-    const findLinkedAuthorities = authorities => {
-      const linkedAuthoritiesLength = AUTHORITY_LINKED_FIELDS.reduce((total, field) => {
-        const authoritiesAmount = authorities[field].filter(item => item.authorityId).length;
-        return total + authoritiesAmount;
-      }, 0);
-
-      return {
-        hasLinkedAuthorities: !!linkedAuthoritiesLength,
-        linkedAuthoritiesLength,
-      };
-    };
-
-    const {
-      hasLinkedAuthorities,
-      linkedAuthoritiesLength,
-    } = findLinkedAuthorities(linkedAuthorities);
-
-    if (hasLinkedAuthorities) {
-      this.setState({
-        linkedAuthoritiesLength,
-        isShareLocalInstanceModalOpen: false,
-        isUnlinkAuthoritiesModalOpen: true,
-      });
-    } else {
-      this.handleShareLocalInstance(instance);
+    if (isEmpty(authorityIds)) {
+      this.handleShareLocalInstance(selectedInstance);
+      return;
     }
+
+    this.props.mutator.authorities.GET({
+      params: {
+        query: `id==(${authorityIds.join(' or ')})`,
+      }
+    }).then(({ authorities }) => {
+      const localAuthorities = authorities.filter(authority => !authority.source.startsWith(CONSORTIUM_PREFIX));
+
+      if (localAuthorities.length) {
+        this.setState({
+          linkedAuthoritiesLength: localAuthorities.length,
+          isShareLocalInstanceModalOpen: false,
+          isUnlinkAuthoritiesModalOpen: true,
+        });
+      } else {
+        this.handleShareLocalInstance(selectedInstance);
+      }
+    });
   }
 
   toggleCopyrightModal = () => {
@@ -884,11 +889,18 @@ class ViewInstance extends React.Component {
       isCentralTenantPermissionsLoading,
       isShared,
       isLoading,
+      isError,
+      error,
     } = this.props;
     const {
       linkedAuthoritiesLength,
       isInstanceSharing,
     } = this.state;
+
+    const isUserLacksPermToViewSharedInstance = isError
+      && error?.response?.status === HTTP_RESPONSE_STATUS_CODES.FORBIDDEN
+      && isShared;
+
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
@@ -925,6 +937,28 @@ class ViewInstance extends React.Component {
     const isInstanceLoading = isLoading || !instance || isCentralTenantPermissionsLoading;
     const keyInStorageToHoldingsAccsState = ['holdings'];
 
+    if (isUserLacksPermToViewSharedInstance) {
+      return (
+        <InstanceWarningPane
+          onClose={onClose}
+          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.accessSharedInstance" />}
+        />
+      );
+    }
+
+    if (isInstanceSharing) {
+      return (
+        <InstanceWarningPane
+          onClose={onClose}
+          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.sharingLocalInstance" />}
+        />
+      );
+    }
+
+    if (isInstanceLoading) {
+      return <InstanceLoadingPane onClose={onClose} />;
+    }
+
     return (
       <DataContext.Consumer>
         {data => (
@@ -941,8 +975,6 @@ class ViewInstance extends React.Component {
               tagsEnabled={tagsEnabled}
               ref={this.accordionStatusRef}
               userTenantPermissions={this.state.userTenantPermissions}
-              isLoading={isInstanceLoading}
-              isInstanceSharing={isInstanceSharing}
               isShared={isShared}
             >
               {
@@ -1001,7 +1033,7 @@ class ViewInstance extends React.Component {
               message={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.message" values={{ instanceTitle: instance?.title }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.confirmButton" />}
               onCancel={() => this.setState({ isShareLocalInstanceModalOpen: false })}
-              onConfirm={() => this.checkIfHasLinkedAuthorities(instance)}
+              onConfirm={this.checkIfHasLinkedAuthorities}
             />
 
             <ConfirmationModal
@@ -1066,6 +1098,9 @@ ViewInstance.propTypes = {
       POST: PropTypes.func.isRequired,
       GET: PropTypes.func.isRequired,
     }).isRequired,
+    authorities: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+    }).isRequired,
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
@@ -1099,6 +1134,8 @@ ViewInstance.propTypes = {
   tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
+  error: PropTypes.object,
 };
 
 export default flowRight(

@@ -18,7 +18,10 @@ import {
   checkIfUserInMemberTenant,
   checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
-import { ConfirmationModal } from '@folio/stripes/components';
+import {
+  ConfirmationModal,
+  Icon,
+} from '@folio/stripes/components';
 
 import { instances } from '../test/fixtures/instances';
 import { DataContext } from './contexts';
@@ -103,13 +106,16 @@ jest
   .mockImplementation(() => instance)
   .mockImplementationOnce(() => {});
 
+Icon.mockClear().mockImplementation(({ children, icon }) => (children || <span>{icon}</span>));
+
 ConfirmationModal.mockImplementation(({
   open,
   onCancel,
   onConfirm,
+  heading,
 }) => (open ? (
   <div>
-    <span>Confirmation modal</span>
+    <span>{heading}</span>
     <button
       type="button"
       onClick={onCancel}
@@ -190,6 +196,9 @@ const defaultProp = {
       POST: jest.fn(),
       GET: jest.fn(() => Promise.resolve({ sharingInstances: [{ status: 'COMPLETE' }] })),
     },
+    authorities: {
+      GET: jest.fn(),
+    }
   },
   onClose: mockonClose,
   onCopy: jest.fn(),
@@ -285,6 +294,36 @@ describe('ViewInstance', () => {
         json: async () => ({}),
       });
     useStripes().hasInterface.mockReturnValue(true);
+  });
+
+  it('should show a correct Warning message banner when instance sharing is in progress', async () => {
+    defaultProp.mutator.shareInstance.POST.mockResolvedValue({});
+    defaultProp.mutator.authorities.GET.mockResolvedValueOnce({ authorities: [] });
+    checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+
+    renderViewInstance({ isShared: false });
+
+    fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+
+    await waitFor(() => expect(screen.getByText('Sharing this local instance will take a few moments.' +
+      ' A success message and updated details will be displayed upon completion.')).toBeInTheDocument());
+  });
+  it('should show a correct Warning message banner when user lacks permission to vew shared instance', () => {
+    renderViewInstance({
+      isError: true,
+      isShared: true,
+      error: { response: { status: 403 } },
+    });
+
+    expect(screen.getByText('You do not currently have permission to access details of shared instances. ' +
+      'Contact your FOLIO administrator for more information.')).toBeInTheDocument();
+  });
+  it('should show loading spinner when instance is loading', () => {
+    renderViewInstance({ isLoading: true });
+
+    expect(screen.getByText('spinner-ellipsis')).toBeInTheDocument();
   });
   it('should display action menu items', () => {
     renderViewInstance();
@@ -593,7 +632,7 @@ describe('ViewInstance', () => {
             fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
             fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
 
-            expect(screen.getByText('Confirmation modal')).toBeInTheDocument();
+            expect(screen.getByText('Are you sure you want to share this instance?')).toBeInTheDocument();
           });
         });
 
@@ -620,14 +659,20 @@ describe('ViewInstance', () => {
               fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
               fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
 
-              expect(screen.getByText('Confirmation modal')).toBeInTheDocument();
+              expect(screen.getByText('Are you sure you want to share this instance?')).toBeInTheDocument();
             });
 
             describe('when proceed sharing', () => {
-              it('should make POST request to share local instance', () => {
+              it('should make POST request to share local instance', async () => {
+                defaultProp.mutator.authorities.GET.mockResolvedValueOnce({ authorities: [{ source: 'MARC' }] });
+
                 fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
                 fireEvent.click(screen.getByRole('button', { name: 'Share local instance' }));
                 fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
+
+                const localAuthoritiesModal = await screen.findByText('Linked to local authorities');
+                expect(localAuthoritiesModal).toBeInTheDocument();
+
                 fireEvent.click(screen.getByRole('button', { name: 'Confirm' }));
 
                 expect(defaultProp.mutator.shareInstance.POST).toHaveBeenCalled();
