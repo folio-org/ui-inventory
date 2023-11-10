@@ -355,12 +355,12 @@ describe('InstancesList', () => {
         });
       });
 
-      describe('"New Fast Add record" button', () => {
+      describe('"New fast add record" button', () => {
         it('should render', () => {
           renderInstancesList({ segment: 'instances' });
           openActionMenu();
 
-          expect(screen.getByRole('button', { name: 'New Fast Add Record' })).toBeInTheDocument();
+          expect(screen.getByRole('button', { name: 'New fast add record' })).toBeInTheDocument();
         });
 
         describe('when saving the record', () => {
@@ -369,7 +369,7 @@ describe('InstancesList', () => {
             renderInstancesList({ segment: 'instances' });
             openActionMenu();
 
-            const button = screen.getByRole('button', { name: 'New Fast Add Record' });
+            const button = screen.getByRole('button', { name: 'New fast add record' });
 
             fireEvent.click(button);
             fireEvent.click(screen.getByText('Save & close'));
@@ -382,12 +382,12 @@ describe('InstancesList', () => {
         });
       });
 
-      describe('"New MARC Bib Record" button', () => {
+      describe('"New MARC bibliographic record" button', () => {
         it('should render', () => {
           renderInstancesList({ segment: 'instances' });
           openActionMenu();
 
-          expect(screen.getByRole('button', { name: 'New MARC Bib Record' })).toBeInTheDocument();
+          expect(screen.getByRole('button', { name: 'New MARC bibliographic record' })).toBeInTheDocument();
         });
 
         it('should redirect to the correct layer', async () => {
@@ -395,7 +395,7 @@ describe('InstancesList', () => {
           renderInstancesList({ segment: 'instances' });
           openActionMenu();
 
-          const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
+          const button = screen.getByRole('button', { name: 'New MARC bibliographic record' });
 
           fireEvent.click(button);
 
