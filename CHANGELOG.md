@@ -8,6 +8,7 @@
 * Inventory search/browse: Do not retain checkbox selections when toggling search segment. Refs UIIN-2477.
 * Show Instance record after creating with Fast add option. Refs UIIN-2497.
 * Search box/Browse box- Reset all should shift focus back to search box. Refs UIIN-2514.
+* Updated translations for adding new Instance records. Refs UIIN-2630.
 
 ## [10.0.4] IN PROGRESS
 
