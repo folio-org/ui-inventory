@@ -548,7 +548,7 @@ class InstancesList extends React.Component {
     }
   }
 
-  toggleNewFastAddModal = ({ instanceRecord }) => {
+  toggleNewFastAddModal = ({ instanceRecord } = {}) => {
     const {
       history,
       location,
