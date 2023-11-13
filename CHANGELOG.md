@@ -10,7 +10,8 @@
 * Search box/Browse box- Reset all should shift focus back to search box. Refs UIIN-2514.
 * Updated translations for adding new Instance records. Refs UIIN-2630.
 
-## [10.0.4] IN PROGRESS
+## [10.0.4](https://github.com/folio-org/ui-inventory/tree/v10.0.4) (2023-11-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.3...v10.0.4)
 
 * Fetch sharing of local instance status in the context of member tenant. Refs UIIN-2680.
 * Handle errors when sharing local instances failed. Refs UIIN-2682.
