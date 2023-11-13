@@ -544,7 +544,7 @@
     "moveItems.instance.items.error.server": "Ocorreu um problema ao atualizar os seguintes itens {items}. Por favor, tente novamente ou notifique o administrador do sistema.",
     "moveItems.instance.holdings.error": "Os seguintes coleções não puderam ser movidas {holdings}. Verifique os campos de registro da instância e tente novamente ou notifique o administrador do sistema.",
     "moveItems.instance.holdings.error.server": "Ocorreu um problema ao atualizar os seguintes coleções {holdings}. Por favor, tente novamente ou notifique o administrador do sistema.",
-    "newFastAddRecord": "Novo registro rápido",
+    "newFastAddRecord": "Novo registro de adição rápida",
     "holdingsStatementPublicNote": "Nota pública de declaração de coleções",
     "holdingsStatementStaffNote": "Nota da equipe de declaração de coleções",
     "holdingsStatementForIndexesPublicNote": "Nota pública de declaração de coleções para índices",
@@ -774,7 +774,7 @@
     "info.effectiveCallNumber": "Este campo contém o número de chamada do item, que é herdado do registro de coleção ou é o número de chamada atualizado no registro do item. Ao navegar pelos números de chamada, este campo será pesquisado.",
     "info.shelvingOrder": "Este campo é a forma normalizada do número de chamada que determina como o número de chamada é classificado durante a navegação.",
     "markAsHeader": "Marcar como",
-    "newMARCRecord": "Novo registro MARC Bibliográfico",
+    "newMARCRecord": "Novo registro bibliográfico MARC",
     "boundWithTitles.add": "Adicione encadernados e analíticas",
     "boundWithTitles.enterHoldingsHrid": "Digite o HRID das Coleções",
     "selectCode": "Selecione o código",
@@ -833,5 +833,6 @@
     "unlinkLocalMarcAuthorities.modal.header": "Vinculado às autoridades locais",
     "unlinkLocalMarcAuthorities.modal.message": "Se prosseguir com o compartilhamento dessa instância, os campos bibliográficos <b>{linkedAuthoritiesLength}</b> vinculados a registros de autoridades locais manterão os valores autorizados, mas passarão a não ser controlados",
     "unlinkLocalMarcAuthorities.modal.proceed": "Prosseguir",
-    "warning.instance.sharingLocalInstance": "Compartilhar esta instância local levará alguns minutos. Uma mensagem de sucesso e detalhes atualizados serão exibidos após a conclusão."
+    "warning.instance.sharingLocalInstance": "Compartilhar esta instância local levará alguns minutos. Uma mensagem de sucesso e detalhes atualizados serão exibidos após a conclusão.",
+    "warning.instance.accessSharedInstance": "No momento, você não tem permissão para acessar detalhes de instâncias compartilhadas. Entre em contato com o administrador do FOLIO para obter mais informações."
 }
