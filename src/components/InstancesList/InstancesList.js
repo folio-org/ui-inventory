@@ -548,7 +548,13 @@ class InstancesList extends React.Component {
     }
   }
 
-  toggleNewFastAddModal = ({ instanceRecord } = {}) => {
+  toggleNewFastAddModal = () => {
+    this.setState((state) => {
+      return { showNewFastAddModal: !state.showNewFastAddModal };
+    });
+  }
+
+  handleFastAddModalClose = ({ instanceRecord } = {}) => {
     const {
       history,
       location,
@@ -561,9 +567,7 @@ class InstancesList extends React.Component {
       });
     }
 
-    this.setState((state) => {
-      return { showNewFastAddModal: !state.showNewFastAddModal };
-    });
+    this.toggleNewFastAddModal();
   }
 
   generateHoldingsIdReport = async (sendCallout) => {
@@ -729,7 +733,7 @@ class InstancesList extends React.Component {
           {!checkIfUserInCentralTenant(stripes) && (
             <Pluggable
               id="clickable-create-inventory-records"
-              onClose={this.toggleNewFastAddModal}
+              onClose={this.handleFastAddModalClose}
               open={this.state.showNewFastAddModal} // control the open modal via state var
               renderTrigger={() => (
                 this.getActionItem({
