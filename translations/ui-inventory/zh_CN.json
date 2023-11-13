@@ -833,5 +833,6 @@
     "unlinkLocalMarcAuthorities.modal.header": "链接到本地规范",
     "unlinkLocalMarcAuthorities.modal.message": "如果继续共享此实例，则链接到本地规范记录的<b> {linkedAuthoritiesLength} </b>书目字段将保留规范值，但将变为不受控",
     "unlinkLocalMarcAuthorities.modal.proceed": "继续",
-    "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion."
+    "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion.",
+    "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information."
 }

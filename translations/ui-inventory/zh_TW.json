@@ -774,7 +774,7 @@
     "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
     "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
     "markAsHeader": "Mark as",
-    "newMARCRecord": "New MARC Bib Record",
+    "newMARCRecord": "New MARC bibliographic record",
     "boundWithTitles.add": "Add Bound-with and analytics",
     "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
     "selectCode": "Select code",
@@ -833,5 +833,6 @@
     "unlinkLocalMarcAuthorities.modal.header": "Linked to local authorities",
     "unlinkLocalMarcAuthorities.modal.message": "If you proceed with sharing this instance, then <b>{linkedAuthoritiesLength}</b> bibliographic fields linked to local authority records will retain authorized values but will become uncontrolled",
     "unlinkLocalMarcAuthorities.modal.proceed": "Proceed",
-    "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion."
+    "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion.",
+    "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information."
 }
