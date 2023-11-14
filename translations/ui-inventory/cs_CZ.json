@@ -774,7 +774,7 @@
     "info.effectiveCallNumber": "Toto pole obsahuje signaturu jednotky, která je buď zděděna ze záznamu holdingu, nebo je aktualizovanou signaturou záznamu jednotky. Při procházení signatur se bude vyhledávat v tomto poli.",
     "info.shelvingOrder": "Toto pole je normalizovaná forma signatury, která určuje, jak je signatura při procházení seřazena.",
     "markAsHeader": "Označit jako",
-    "newMARCRecord": "Nový záznam MARC Bib",
+    "newMARCRecord": "Nový MARC bibliografický záznam",
     "boundWithTitles.add": "Přidat Vazbu a analitiku",
     "boundWithTitles.enterHoldingsHrid": "Zadejte HRID holdingů",
     "selectCode": "Vybrat kód",
