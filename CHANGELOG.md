@@ -9,6 +9,7 @@
 * Show Instance record after creating with Fast add option. Refs UIIN-2497.
 * Search box/Browse box- Reset all should shift focus back to search box. Refs UIIN-2514.
 * Updated translations for adding new Instance records. Refs UIIN-2630.
+* Inactive Holdings/items on Central tenant when user have affiliation for separate Member with 0 permissions. Fixes UIIN-2689.
 
 ## [10.0.4](https://github.com/folio-org/ui-inventory/tree/v10.0.4) (2023-11-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.3...v10.0.4)
