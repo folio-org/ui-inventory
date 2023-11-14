@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [10.0.6] IN PROGRESS
+
+* Inactive Holdings/items on Central tenant when user have affiliation for separate Member with 0 permissions. Fixes UIIN-2689.
+
 ## [10.0.5](https://github.com/folio-org/ui-inventory/tree/v10.0.5) (2023-11-22)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.4...v10.0.5)
 
