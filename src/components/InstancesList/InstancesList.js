@@ -56,7 +56,6 @@ import {
   marshalInstance,
   omitFromArray,
   isTestEnv,
-  handleKeyCommand,
   buildSingleItemQuery,
   isUserInConsortiumMode,
 } from '../../utils';
@@ -1174,11 +1173,15 @@ class InstancesList extends React.Component {
     const shortcuts = [
       {
         name: 'new',
-        handler: handleKeyCommand(() => {
+        handler: (e) => {
+          const nodeName = e.target?.nodeName || '';
+          const editTextField = (nodeName === 'TEXTAREA') || (nodeName === 'INPUT');
+          if (editTextField) return;
+
           if (stripes.hasPerm('ui-inventory.instance.create')) {
             this.openCreateInstance();
           }
-        }),
+        },
       },
     ];
 
