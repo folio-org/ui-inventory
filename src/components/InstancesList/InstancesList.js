@@ -1175,8 +1175,8 @@ class InstancesList extends React.Component {
         name: 'new',
         handler: (e) => {
           const nodeName = e.target?.nodeName || '';
-          const editTextField = (nodeName === 'TEXTAREA') || (nodeName === 'INPUT');
-          if (editTextField) return;
+          const isEditTextField = (nodeName === 'TEXTAREA') || (nodeName === 'INPUT');
+          if (isEditTextField) return;
 
           if (stripes.hasPerm('ui-inventory.instance.create')) {
             this.openCreateInstance();
