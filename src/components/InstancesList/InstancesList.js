@@ -733,6 +733,7 @@ class InstancesList extends React.Component {
             <Pluggable
               id="clickable-create-inventory-records"
               onClose={this.handleFastAddModalClose}
+              renderInPaneset={false}
               open={this.state.showNewFastAddModal} // control the open modal via state var
               renderTrigger={() => (
                 this.getActionItem({
