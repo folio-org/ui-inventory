@@ -34,7 +34,6 @@ import {
   Checkbox,
   MenuSection,
   Select,
-  checkScope,
   HasCommand,
   MCLPagingTypes,
   TextLink,
@@ -56,6 +55,7 @@ import {
   marshalInstance,
   omitFromArray,
   isTestEnv,
+  handleKeyCommand,
   buildSingleItemQuery,
   isUserInConsortiumMode,
 } from '../../utils';
@@ -1173,17 +1173,19 @@ class InstancesList extends React.Component {
     const shortcuts = [
       {
         name: 'new',
-        handler: (e) => {
-          const nodeName = e.target?.nodeName || '';
-          const isEditTextField = (nodeName === 'TEXTAREA') || (nodeName === 'INPUT');
-          if (isEditTextField) return;
-
+        handler: handleKeyCommand(() => {
           if (stripes.hasPerm('ui-inventory.instance.create')) {
             this.openCreateInstance();
           }
-        },
+        }),
       },
     ];
+
+    const checkScope = () => {
+      const ignoreElements = ['TEXTAREA', 'INPUT'];
+
+      return !ignoreElements.includes(document.activeElement.tagName);
+    };
 
     return (
       <HasCommand
