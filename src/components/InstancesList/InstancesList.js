@@ -34,7 +34,6 @@ import {
   Checkbox,
   MenuSection,
   Select,
-  checkScope,
   HasCommand,
   MCLPagingTypes,
   TextLink,
@@ -1182,6 +1181,12 @@ class InstancesList extends React.Component {
         }),
       },
     ];
+
+    const checkScope = () => {
+      const ignoreElements = ['TEXTAREA', 'INPUT'];
+
+      return !ignoreElements.includes(document.activeElement.tagName);
+    };
 
     return (
       <HasCommand
