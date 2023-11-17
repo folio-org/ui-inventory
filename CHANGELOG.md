@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [10.0.5] (IN PROGRESS)
+
+* Don't include `sort` parameter in requests to facets. Fixes UIIN-2685.
+
 ## [10.0.4](https://github.com/folio-org/ui-inventory/tree/v10.0.4) (2023-11-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.3...v10.0.4)
 
