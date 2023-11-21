@@ -757,7 +757,7 @@ export const parseHttpError = async httpError => {
 
     // Optimistic locking error is currently returned as a plain text
     // https://issues.folio.org/browse/UIIN-1872?focusedCommentId=125438&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-125438
-    if (jsonError.message.match(/optimistic locking/i)) {
+    if (jsonError.message?.match(/optimistic locking/i)) {
       jsonError.errorType = ERROR_TYPES.OPTIMISTIC_LOCKING;
     }
 

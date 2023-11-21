@@ -74,7 +74,20 @@ const InstanceEdit = ({
   const onError = async error => {
     const response = await error.response;
     const parsedError = await parseHttpError(response);
-    setHttpError(parsedError);
+    const err = {
+      message: parsedError?.errors[0]?.message,
+      status: response.status,
+    }
+
+    setHttpError(err);
+  };
+
+  const getErrorModalContent = () => {
+    return (
+      <div style={{ overflowWrap: "break-word", hyphens: "auto" }}>
+        {httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+      </div>
+    );
   };
 
   const isMemberTenant = checkIfUserInMemberTenant(stripes);
@@ -107,7 +120,7 @@ const InstanceEdit = ({
         <ErrorModal
           open
           label={<FormattedMessage id="ui-inventory.instance.saveError" />}
-          content={httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+          content={getErrorModalContent()}
           onClose={() => setHttpError()}
         />
       }
