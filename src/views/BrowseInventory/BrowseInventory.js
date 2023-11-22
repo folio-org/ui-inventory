@@ -3,6 +3,7 @@ import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import {
+  TitleManager,
   useNamespace,
 } from '@folio/stripes/core';
 import {
@@ -79,6 +80,14 @@ const BrowseInventory = () => {
     return filters;
   }, [filters]);
 
+  const pageTitle = useMemo(() => {
+    if (!withExtraFilters.query) {
+      return null;
+    }
+
+    return intl.formatMessage({ id: 'ui-inventory.documentTitle.browse' }, { query: withExtraFilters.query });
+  }, [withExtraFilters.query]);
+
   const {
     data,
     isFetching,
@@ -146,6 +155,7 @@ const BrowseInventory = () => {
       appId={namespace}
       id="browse-inventory"
     >
+      <TitleManager page={pageTitle} />
       {isFiltersOpened && (
         <FiltersPane
           id="browse-inventory-filters-pane"
