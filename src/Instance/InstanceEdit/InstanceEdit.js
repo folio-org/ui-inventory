@@ -31,6 +31,8 @@ import useLoadSubInstances from '../../hooks/useLoadSubInstances';
 import useCallout from '../../hooks/useCallout';
 import { useInstanceMutation } from '../../hooks';
 
+import css from './InstanceEdit.css';
+
 const InstanceEdit = ({
   instanceId,
   referenceData,
@@ -84,7 +86,7 @@ const InstanceEdit = ({
 
   const getErrorModalContent = () => {
     return (
-      <div style={{ overflowWrap: "break-word", hyphens: "auto" }}>
+      <div className={css.errorModalContent}>
         {httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
       </div>
     );
