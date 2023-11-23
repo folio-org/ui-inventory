@@ -79,7 +79,7 @@ const InstanceEdit = ({
     const err = {
       message: parsedError?.errors[0]?.message,
       status: response.status,
-    }
+    };
 
     setHttpError(err);
   };
