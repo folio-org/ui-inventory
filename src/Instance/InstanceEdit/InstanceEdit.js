@@ -5,7 +5,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
   stripesConnect,
@@ -38,6 +41,7 @@ const InstanceEdit = ({
   referenceData,
   stripes,
 }) => {
+  const { formatMessage } = useIntl();
   const { identifierTypesById, identifierTypesByName } = referenceData ?? {};
   const [httpError, setHttpError] = useState();
   const [initialValues, setInitialValues] = useState();
@@ -76,8 +80,9 @@ const InstanceEdit = ({
   const onError = async error => {
     const response = await error.response;
     const parsedError = await parseHttpError(response);
+    const defaultErrorMessage = formatMessage({ id: 'ui-inventory.communicationProblem' });
     const err = {
-      message: parsedError?.errors[0]?.message,
+      message: parsedError?.message || parsedError?.errors?.[0]?.message || defaultErrorMessage,
       status: response.status,
     };
 
