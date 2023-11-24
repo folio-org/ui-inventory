@@ -12,6 +12,7 @@
 * Inactive Holdings/items on Central tenant when user have affiliation for separate Member with 0 permissions. Fixes UIIN-2689.
 * Ignored hot key command on edit fields. Refs UIIN-2604.
 * Don't render Fast Add record modal in a `<Paneset>` to re-calculate other `<Pane>`'s widths after closing. Fixes UIIN-2690.
+* Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
 
 ## [10.0.5](https://github.com/folio-org/ui-inventory/tree/v10.0.5) (2023-11-22)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.4...v10.0.5)

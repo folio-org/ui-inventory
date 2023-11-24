@@ -104,15 +104,16 @@ const getBrowseResultsFormatter = ({
   return {
     title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
     subject: r => {
-      if (r?.totalRecords) {
-        const subject = getTargetRecord(r?.value, r, browseOption, filters);
-        if (browseOption === browseModeOptions.SUBJECTS && r.authorityId) {
-          return renderMarcAuthoritiesLink(r.authorityId, subject);
-        }
-
-        return subject;
+      if (!r?.totalRecords && r?.isAnchor) {
+        return <MissedMatchItem query={r?.value} />;
       }
-      return <MissedMatchItem query={r?.value} />;
+
+      const subject = getTargetRecord(r?.value, r, browseOption, filters);
+      if (browseOption === browseModeOptions.SUBJECTS && r.authorityId) {
+        return renderMarcAuthoritiesLink(r.authorityId, subject);
+      }
+
+      return subject;
     },
     callNumber: r => {
       if (r?.instance || r?.totalRecords) {
@@ -121,16 +122,17 @@ const getBrowseResultsFormatter = ({
       return <MissedMatchItem query={r.fullCallNumber} />;
     },
     contributor: r => {
-      if (r?.totalRecords) {
-        const fullMatchRecord = getTargetRecord(r.name, r, browseOption, filters);
-
-        if (browseOption === browseModeOptions.CONTRIBUTORS && r.authorityId) {
-          return renderMarcAuthoritiesLink(r.authorityId, fullMatchRecord);
-        }
-
-        return fullMatchRecord;
+      if (!r?.totalRecords && r?.isAnchor) {
+        return <MissedMatchItem query={r.name} />;
       }
-      return <MissedMatchItem query={r.name} />;
+
+      const fullMatchRecord = getTargetRecord(r.name, r, browseOption, filters);
+
+      if (browseOption === browseModeOptions.CONTRIBUTORS && r.authorityId) {
+        return renderMarcAuthoritiesLink(r.authorityId, fullMatchRecord);
+      }
+
+      return fullMatchRecord;
     },
     contributorType: r => data.contributorNameTypes.find(nameType => nameType.id === r.contributorNameTypeId)?.name || '',
     relatorTerm: r => {
@@ -142,7 +144,7 @@ const getBrowseResultsFormatter = ({
         return [...acc, data.contributorTypes.find(type => type.id === contributorTypeId)?.name || ''];
       }, []).filter(name => !!name).join(', ');
     },
-    numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.value && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+    numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.value && !r?.isAnchor) || (r?.name && !r?.isAnchor)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
   };
 };
 
