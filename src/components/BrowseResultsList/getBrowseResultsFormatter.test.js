@@ -151,9 +151,16 @@ describe('getBrowseResultsFormatter', () => {
         contributorTypeId: ['contributorTypeId'],
         contributorNameTypeId: 'contributorNameTypeId',
         totalRecords: 1,
+      },
+      {
+        name: 'Antoniou, Grigoris 2',
+        contributorTypeId: ['contributorTypeId'],
+        contributorNameTypeId: 'contributorNameTypeId',
+        totalRecords: 0,
+        isAnchor: false,
       }
     ];
-    const [anchorRecord, nonAnchorRecord] = contentData;
+    const [anchorRecord, nonAnchorRecord, notClickableRecord] = contentData;
 
     const renderContributorsList = (params = {}) => renderComponent({
       contentData,
@@ -171,6 +178,9 @@ describe('getBrowseResultsFormatter', () => {
       // Default row
       expect(screen.getByText(nonAnchorRecord.name).tagName.toLowerCase()).not.toBe('strong');
       expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
+      // Non clickable row
+      expect(screen.getByText(notClickableRecord.name).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText(notClickableRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
     });
 
     it('should render \'Missed match item\' rows', () => {
@@ -188,6 +198,16 @@ describe('getBrowseResultsFormatter', () => {
       await act(async () => fireEvent.click(screen.getByText(anchorRecord.name)));
 
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
+    });
+
+    it('should not navigate to instance "Search" page when not clickable target column was clicked', async () => {
+      renderContributorsList();
+
+      expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
+
+      await act(async () => fireEvent.click(screen.getByText(notClickableRecord.name)));
+
+      expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
     });
 
     it('should open the record in MARC authority app in new tab when "authority" icon was clicked', async () => {
