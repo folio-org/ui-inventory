@@ -2,6 +2,7 @@
 
 ## [10.0.6] IN PROGRESS
 
+* "Something went wrong" error appears when user selects Shared Instance as "Child/Parent Instance" for Local Instance without permissions at Central tenant. Fixes UIIN-2695.
 * Inactive Holdings/items on Central tenant when user have affiliation for separate Member with 0 permissions. Fixes UIIN-2689.
 
 ## [10.0.5](https://github.com/folio-org/ui-inventory/tree/v10.0.5) (2023-11-22)
