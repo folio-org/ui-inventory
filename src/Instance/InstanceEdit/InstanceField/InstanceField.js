@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
+import { isEmpty } from 'lodash';
 
 import {
   KeyValue,
@@ -46,10 +47,12 @@ const InstanceField = ({
   const publicationDate = publication?.[0]?.dateOfPublication;
 
   const handleSelect = (inst) => {
-    update(index, {
-      ...inst,
-      [titleIdKey]: inst.id,
-    });
+    if (!isEmpty(inst)) {
+      update(index, {
+        ...inst,
+        [titleIdKey]: inst.id,
+      });
+    }
   };
 
   return (
