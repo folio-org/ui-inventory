@@ -47,7 +47,7 @@ const InstanceField = ({
   const publicationDate = publication?.[0]?.dateOfPublication;
 
   const handleSelect = (inst) => {
-    if (!isEmpty((inst))) {
+    if (!isEmpty(inst)) {
       update(index, {
         ...inst,
         [titleIdKey]: inst.id,
