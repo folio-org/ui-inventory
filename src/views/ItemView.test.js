@@ -101,12 +101,13 @@ const resources = {
   location: {},
 };
 
-const referenceTables = {
-  itemNoteTypes: [],
-  locationsById: {
-    inactiveLocation: { name: 'Location 1', isActive: false },
-  },
-};
+const referenceTables = { itemNoteTypes: [] };
+
+const itemLocations = [{
+  id: 'inactiveLocation',
+  name: 'Location 1',
+  isActive: false,
+}];
 
 const ItemViewSetup = () => (
   <Router>
@@ -117,6 +118,7 @@ const ItemViewSetup = () => (
           resources={resources}
           referenceTables={referenceTables}
           stripes={stripesStub}
+          itemLocations={itemLocations}
         />
       </ModuleHierarchyProvider>
     </StripesContext.Provider>
