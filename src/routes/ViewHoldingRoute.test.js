@@ -1,5 +1,3 @@
-import '../../test/jest/__mock__';
-
 import {
   QueryClient,
   QueryClientProvider,
@@ -9,6 +7,8 @@ import {
   render,
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
+
+import '../../test/jest/__mock__';
 
 import ViewHoldingRoute from './ViewHoldingRoute';
 
