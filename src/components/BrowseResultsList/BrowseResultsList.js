@@ -4,11 +4,13 @@ import {
   memo,
   useCallback,
   useContext,
+  useState,
 } from 'react';
 import {
   useLocation,
 } from 'react-router-dom';
 
+import { useNamespace } from '@folio/stripes/core';
 import {
   MCLPagingTypes,
   MultiColumnList,
@@ -28,6 +30,12 @@ import {
 } from './constants';
 import { isRowPreventsClick } from './utils';
 import getBrowseResultsFormatter from './getBrowseResultsFormatter';
+import {
+  getItem,
+  removeItem,
+  setItem,
+} from '../../storage';
+import { useDidUpdate } from '../../hooks';
 
 import css from './BrowseResultsList.css';
 
@@ -52,23 +60,50 @@ const BrowseResultsList = ({
   filters,
 }) => {
   const data = useContext(DataContext);
+  const [namespace] = useNamespace();
   const { search } = useLocation();
   const {
     itemToView,
     setItemToView,
     deleteItemToView,
   } = useItemToView('browse');
+  const selectedRowPersistKey = `${namespace}/browse.selectedRow`;
+
+  const [selectedRow, setSelectedRow] = useState(getItem(selectedRowPersistKey));
+
+  const handleRowClick = (e, row) => {
+    setItem(selectedRowPersistKey, row);
+    setSelectedRow(row);
+  };
+
+  const removeRowSelection = () => {
+    removeItem(selectedRowPersistKey);
+    setSelectedRow(null);
+  };
+
+  const handlePagination = (...params) => {
+    removeRowSelection();
+    onNeedMoreData(...params);
+  };
 
   const browseOption = queryString.parse(search).qindex;
   const listId = `browse-results-list-${browseOption}`;
 
-  const isSelected = useCallback(({ item, rowIndex }) => {
+  const isSelected = useCallback(({ item, rowIndex, criteria }) => {
     if (isRowPreventsClick(item, browseOption)) return false;
+
+    if (!criteria) {
+      return false;
+    }
 
     const itemIndex = itemToView?.selector && getItemToViewIndex(itemToView.selector);
 
     return itemIndex === rowIndex;
   }, [browseOption, itemToView]);
+
+  useDidUpdate(() => {
+    removeRowSelection();
+  }, [search]);
 
   return (
     <MultiColumnList
@@ -80,13 +115,15 @@ const BrowseResultsList = ({
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
       isSelected={isSelected}
+      onRowClick={handleRowClick}
+      selectedRow={selectedRow}
       columnMapping={COLUMNS_MAPPING}
       columnWidths={COLUMNS_WIDTHS[browseOption]}
       loading={isLoading}
       autosize
       virtualize={false}
       hasMargin
-      onNeedMoreData={onNeedMoreData}
+      onNeedMoreData={handlePagination}
       pageAmount={BROWSE_RESULTS_COUNT}
       pagingType={MCLPagingTypes.PREV_NEXT}
       getCellClass={(defaultCellStyle) => `${defaultCellStyle} ${css.cellAlign}`}
