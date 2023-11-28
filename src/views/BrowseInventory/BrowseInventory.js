@@ -13,7 +13,6 @@ import {
   ResetButton,
   SingleSearchForm,
   useFiltersToogle,
-  useItemToView,
   useLocationFilters,
 } from '@folio/stripes-acq-components';
 
@@ -44,7 +43,6 @@ const BrowseInventory = () => {
     storeLastBrowseOffset,
   } = useLastSearchTerms();
   const { isFiltersOpened, toggleFilters } = useFiltersToogle(`${namespace}/filters`);
-  const { deleteItemToView } = useItemToView('browse');
   const [pageConfig, setPageConfig] = useState(getLastBrowseOffset());
   const hasFocusedSearchOptionOnMount = useRef(false);
   const inputRef = useRef();

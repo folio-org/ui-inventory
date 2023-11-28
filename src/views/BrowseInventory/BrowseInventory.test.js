@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { act, screen, fireEvent, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import * as stripesAcqComponents from '@folio/stripes-acq-components';
+import stripesAcqComponents from '@folio/stripes-acq-components';
 
 import {
   renderWithIntl,
