@@ -150,15 +150,9 @@ const BrowseInventory = () => {
       return;
     }
 
-    const handleSearchOptionFocus = () => {
+    if (!search || (search && isFetched && !isFetching)) {
       indexRef.current.focus();
       hasFocusedSearchOptionOnMount.current = true;
-    };
-
-    if (search && isFetched && !isFetching) {
-      handleSearchOptionFocus();
-    } else if (!search) {
-      handleSearchOptionFocus();
     }
   }, [isFetched, search, isFetching]);
 
