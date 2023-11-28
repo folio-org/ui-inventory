@@ -9,16 +9,21 @@
 * Show Instance record after creating with Fast add option. Refs UIIN-2497.
 * Search box/Browse box- Reset all should shift focus back to search box. Refs UIIN-2514.
 * Updated translations for adding new Instance records. Refs UIIN-2630.
-* Inactive Holdings/items on Central tenant when user have affiliation for separate Member with 0 permissions. Fixes UIIN-2689.
 * Ignored hot key command on edit fields. Refs UIIN-2604.
 * Don't render Fast Add record modal in a `<Paneset>` to re-calculate other `<Pane>`'s widths after closing. Fixes UIIN-2690.
+* "Saving instance failed" modal does not show error message. Fixes UIIN-2686.
 * Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
+
+## [10.0.6](https://github.com/folio-org/ui-inventory/tree/v10.0.6) (2023-11-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.5...v10.0.6)
+
+* "Something went wrong" error appears when user selects Shared Instance as "Child/Parent Instance" for Local Instance without permissions at Central tenant. Fixes UIIN-2695.
+* Inactive Holdings/items on Central tenant when user have affiliation for separate Member with 0 permissions. Fixes UIIN-2689.
 
 ## [10.0.5](https://github.com/folio-org/ui-inventory/tree/v10.0.5) (2023-11-22)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.4...v10.0.5)
 
 * Don't include `sort` parameter in requests to facets. Fixes UIIN-2685.
-* "Saving instance failed" modal does not show error message. Fixes UIIN-2686.
 
 ## [10.0.4](https://github.com/folio-org/ui-inventory/tree/v10.0.4) (2023-11-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.3...v10.0.4)
