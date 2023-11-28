@@ -6,7 +6,6 @@ import {
   values,
   sortBy,
   flowRight,
-  keyBy,
 } from 'lodash';
 import { parameterize } from 'inflected';
 
@@ -629,7 +628,6 @@ class ItemView extends React.Component {
       referenceTables,
       goTo,
       stripes,
-      itemLocations,
     } = this.props;
 
     const {
@@ -654,13 +652,12 @@ class ItemView extends React.Component {
       </Link> :
       '-';
 
-    const itemLocationsById = keyBy(itemLocations, 'id');
-
     const instance = instanceRecords.records[0];
     const item = itemsResource.records[0] || {};
     const holdingsRecord = holdingsRecords.records[0];
-    const permanentHoldingsLocation = itemLocationsById[holdingsRecord.permanentLocationId];
-    const temporaryHoldingsLocation = itemLocationsById[holdingsRecord.temporaryLocationId];
+    const { locationsById } = referenceTables;
+    const permanentHoldingsLocation = locationsById[holdingsRecord.permanentLocationId];
+    const temporaryHoldingsLocation = locationsById[holdingsRecord.temporaryLocationId];
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
     const requestCount = requests.other?.totalRecords ?? 0;
@@ -849,15 +846,15 @@ class ItemView extends React.Component {
     const itemLocation = {
       permanentLocation: {
         name: get(item, ['permanentLocation', 'name'], '-'),
-        isActive: itemLocationsById[item.permanentLocation?.id]?.isActive,
+        isActive: locationsById[item.permanentLocation?.id]?.isActive,
       },
       temporaryLocation: {
         name: get(item, ['temporaryLocation', 'name'], '-'),
-        isActive: itemLocationsById[item.temporaryLocation?.id]?.isActive,
+        isActive: locationsById[item.temporaryLocation?.id]?.isActive,
       },
       effectiveLocation: {
         name: get(item, ['effectiveLocation', 'name'], '-'),
-        isActive: itemLocationsById[item.effectiveLocation.id]?.isActive,
+        isActive: locationsById[item.effectiveLocation.id]?.isActive,
       },
     };
 
@@ -1767,7 +1764,6 @@ ItemView.propTypes = {
   goTo: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  itemLocations: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default flowRight(

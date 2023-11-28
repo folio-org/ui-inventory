@@ -48,12 +48,10 @@ const defaultProps = {
   holdingsrecordid: 'holdingId',
   referenceTables: {
     holdingsSources: [{ id: 'sourceId', name: 'MARC' }],
+    locationsById: {
+      inactiveLocation: { name: 'Location 1', isActive: false },
+    },
   },
-  holdingsLocations: [{
-    id: 'inactiveLocation',
-    name: 'Location 1',
-    isActive: false,
-  }],
   resources: {
     holdingsRecords: {
       records: [

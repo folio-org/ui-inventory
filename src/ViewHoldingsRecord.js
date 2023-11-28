@@ -6,7 +6,6 @@ import {
   orderBy,
   last,
   flowRight,
-  keyBy,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -503,7 +502,6 @@ class ViewHoldingsRecord extends React.Component {
       goTo,
       stripes,
       location,
-      holdingsLocations,
     } = this.props;
     const { instance } = this.state;
     const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
@@ -511,13 +509,12 @@ class ViewHoldingsRecord extends React.Component {
     if (this.isAwaitingResource()) return <LoadingView />;
 
     const holdingsRecord = this.getMostRecentHolding();
-    const holdingsLocationsById = keyBy(holdingsLocations, 'id');
 
     const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord.sourceId);
-    const holdingsPermanentLocation = holdingsLocationsById[holdingsRecord?.permanentLocationId];
+    const holdingsPermanentLocation = referenceTables?.locationsById[holdingsRecord?.permanentLocationId];
     const holdingsPermanentLocationName = get(holdingsPermanentLocation, ['name'], '-');
-    const holdingsTemporaryLocation = holdingsLocationsById[holdingsRecord?.temporaryLocationId];
-    const holdingsEffectiveLocation = holdingsLocationsById[holdingsRecord?.effectiveLocationId];
+    const holdingsTemporaryLocation = referenceTables?.locationsById[holdingsRecord?.temporaryLocationId];
+    const holdingsEffectiveLocation = referenceTables?.locationsById[holdingsRecord?.effectiveLocationId];
     const itemCount = get(items, 'records.length', 0);
     const holdingsSourceName = holdingsSource?.name;
     const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
@@ -1138,7 +1135,6 @@ ViewHoldingsRecord.propTypes = {
     }),
   }).isRequired,
   location: PropTypes.object,
-  holdingsLocations: PropTypes.arrayOf(PropTypes.object),
   history: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
   holdingsrecordid: PropTypes.string.isRequired,

@@ -7,16 +7,12 @@ import { stripesConnect } from '@folio/stripes/core';
 import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { DataContext } from '../contexts';
-import { useLocationsQuery } from '../hooks';
 
 const ItemRoute = props => {
   const {
     stripes: { okapi },
     location: { state },
   } = props;
-
-  const tenantId = state?.tenantTo || okapi.tenant;
-  const { data: itemLocations } = useLocationsQuery({ tenantId });
 
   return (
     <DataContext.Consumer>
@@ -25,7 +21,6 @@ const ItemRoute = props => {
           {...props}
           tenantTo={state?.tenantTo || okapi.tenant}
           referenceTables={data}
-          itemLocations={itemLocations}
         />
       )}
     </DataContext.Consumer>
