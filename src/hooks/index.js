@@ -12,4 +12,3 @@ export { default as useLastSearchTerms } from './useLastSearchTerms';
 export { default as useLogout } from './useLogout';
 export { default as useSearchForShadowInstanceTenants } from './useSearchForShadowInstanceTenants';
 export { default as useUserTenantPermissions } from './useUserTenantPermissions';
-export { default as useDidUpdate } from './useDidUpdate';
