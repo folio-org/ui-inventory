@@ -509,6 +509,7 @@ class ViewHoldingsRecord extends React.Component {
     if (this.isAwaitingResource()) return <LoadingView />;
 
     const holdingsRecord = this.getMostRecentHolding();
+
     const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord.sourceId);
     const holdingsPermanentLocation = referenceTables?.locationsById[holdingsRecord?.permanentLocationId];
     const holdingsPermanentLocationName = get(holdingsPermanentLocation, ['name'], '-');
