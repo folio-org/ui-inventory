@@ -26,6 +26,7 @@ const BrowseResultsPane = ({
   isFetching,
   isFiltersOpened,
   pagination,
+  paneTitleRef,
   toggleFiltersPane,
   totalRecords,
 }) => {
@@ -78,6 +79,7 @@ const BrowseResultsPane = ({
       data-testid="browse-results-pane"
       id="browse-inventory-results-pane"
       padContent={false}
+      paneTitleRef={paneTitleRef}
       defaultWidth="fill"
       appIcon={<AppIcon app={namespace} />}
       paneTitle={<FormattedMessage id="ui-inventory.title.browseCall" />}
@@ -102,6 +104,7 @@ BrowseResultsPane.propTypes = {
   filters: PropTypes.object.isRequired,
   isFetching: PropTypes.bool,
   isFiltersOpened: PropTypes.bool.isRequired,
+  paneTitleRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   pagination: PropTypes.shape({
     hasPrevPage: PropTypes.bool,
     hasNextPage: PropTypes.bool,

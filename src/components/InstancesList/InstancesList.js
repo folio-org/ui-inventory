@@ -154,6 +154,8 @@ class InstancesList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.paneTitleRef = React.createRef();
+
     this.state = {
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
@@ -177,7 +179,10 @@ class InstancesList extends React.Component {
     const {
       history,
       namespace,
+      getParams,
     } = this.props;
+
+    const params = getParams();
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -190,6 +195,10 @@ class InstancesList extends React.Component {
         history.replace({ search: 'segment=instances' });
       }
     });
+
+    if (params.selectedBrowseResult === 'true') {
+      this.paneTitleRef.current.focus();
+    }
 
     this.processLastSearchTerms();
 
@@ -1218,6 +1227,7 @@ class InstancesList extends React.Component {
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
             onSelectRow={this.onSelectRow}
+            paneTitleRef={this.paneTitleRef}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
