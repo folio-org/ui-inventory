@@ -641,6 +641,7 @@ class ViewInstance extends React.Component {
       && !isInstanceShadowCopy(source);
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
+    const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
     const numberOfRequests = instanceRequests.other?.totalRecords;
     const canReorderRequests = titleLevelRequestsFeatureEnabled && hasReorderPermissions && numberOfRequests && canReorder;
     const canViewRequests = !checkIfUserInCentralTenant(stripes) && !titleLevelRequestsFeatureEnabled;
@@ -767,12 +768,14 @@ class ViewInstance extends React.Component {
                 }}
               />
             )}
-            <ActionItem
-              id="quick-export-trigger"
-              icon="download"
-              messageId="ui-inventory.exportInstanceInMARC"
-              onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
-            />
+            {canExportMarc && (
+              <ActionItem
+                id="quick-export-trigger"
+                icon="download"
+                messageId="ui-inventory.exportInstanceInMARC"
+                onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
+              />
+            )}
             {canCreateOrder && (
               <ActionItem
                 id="clickable-create-order"

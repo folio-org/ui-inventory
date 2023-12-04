@@ -15,6 +15,7 @@
 * Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
 * Browse Lists | Focus updates. Fixes UIIN-2267.
 * Correctly display location data for holdings and items when tenant is changed. Fixes UIIN-2697.
+* Users with data export view only permission. Refs UIIN-2660.
 
 ## [10.0.6](https://github.com/folio-org/ui-inventory/tree/v10.0.6) (2023-11-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.5...v10.0.6)
