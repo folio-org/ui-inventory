@@ -36,6 +36,10 @@ const DataProvider = ({
     });
   }, [consortium?.id]);
 
+  useEffect(() => {
+    mutator.locations.GET({ tenant: stripes.okapi.tenant });
+  }, [stripes.okapi.tenant]);
+
   const isLoading = useMemo(() => {
     // eslint-disable-next-line guard-for-in
     for (const key in manifest) {
@@ -161,6 +165,7 @@ DataProvider.manifest = {
       limit: (q, p, r, l, props) => props?.stripes?.config?.maxUnpagedResourceCount || 1000,
       query: 'cql.allRecords=1 sortby name',
     },
+    accumulate: true,
     resourceShouldRefresh: true,
   },
   instanceRelationshipTypes: {

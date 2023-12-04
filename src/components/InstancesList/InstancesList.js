@@ -26,6 +26,7 @@ import {
   stripesConnect,
   withNamespace,
   checkIfUserInCentralTenant,
+  TitleManager,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -154,6 +155,8 @@ class InstancesList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.paneTitleRef = React.createRef();
+
     this.state = {
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
@@ -177,7 +180,10 @@ class InstancesList extends React.Component {
     const {
       history,
       namespace,
+      getParams,
     } = this.props;
+
+    const params = getParams();
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -190,6 +196,10 @@ class InstancesList extends React.Component {
         history.replace({ search: 'segment=instances' });
       }
     });
+
+    if (params.selectedBrowseResult === 'true') {
+      this.paneTitleRef.current.focus();
+    }
 
     this.processLastSearchTerms();
 
@@ -233,6 +243,19 @@ class InstancesList extends React.Component {
   getInstanceIdFromLocation = (location) => {
     return location.pathname.split('/')[3];
   };
+
+  getPageTitle = () => {
+    const {
+      data: { query },
+      intl,
+    } = this.props;
+
+    if (!query.query) {
+      return intl.formatMessage({ id: 'ui-inventory.meta.title' });
+    }
+
+    return intl.formatMessage({ id: 'ui-inventory.documentTitle.search' }, { query: query.query });
+  }
 
   clearStorage = () => {
     const {
@@ -1194,6 +1217,7 @@ class InstancesList extends React.Component {
         isWithinScope={checkScope}
         scope={document.body}
       >
+        <TitleManager page={this.getPageTitle()} />
         <div data-test-inventory-instances className={css.inventoryInstances}>
           <SearchAndSort
             key={searchAndSortKey}
@@ -1218,6 +1242,7 @@ class InstancesList extends React.Component {
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
             onSelectRow={this.onSelectRow}
+            paneTitleRef={this.paneTitleRef}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
