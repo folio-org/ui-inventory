@@ -13,6 +13,7 @@
 * Don't render Fast Add record modal in a `<Paneset>` to re-calculate other `<Pane>`'s widths after closing. Fixes UIIN-2690.
 * "Saving instance failed" modal does not show error message. Fixes UIIN-2686.
 * Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
+* Disable the "Share" button after clicking it once on "Are you sure you want to share this instance?" modal window. Refs UIIN-2704.
 
 ## [10.0.6](https://github.com/folio-org/ui-inventory/tree/v10.0.6) (2023-11-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.5...v10.0.6)
