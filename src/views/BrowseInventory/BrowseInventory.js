@@ -47,7 +47,10 @@ const BrowseInventory = () => {
   const { isFiltersOpened, toggleFilters } = useFiltersToogle(`${namespace}/filters`);
   const { deleteItemToView } = useItemToView('browse');
   const [pageConfig, setPageConfig] = useState(getLastBrowseOffset());
+  const hasFocusedSearchOptionOnMount = useRef(false);
   const inputRef = useRef();
+  const indexRef = useRef();
+  const paneTitleRef = useRef();
 
   const { search } = location;
 
@@ -90,6 +93,7 @@ const BrowseInventory = () => {
 
   const {
     data,
+    isFetched,
     isFetching,
     pagination,
     totalRecords,
@@ -137,7 +141,10 @@ const BrowseInventory = () => {
   const onApplySearch = useCallback(() => {
     const isSearchQueryValid = validateDataQuery(searchQuery);
 
-    if (isSearchQueryValid) applySearch();
+    if (isSearchQueryValid) {
+      applySearch();
+      paneTitleRef.current.focus();
+    }
   }, [searchQuery, filters]);
 
   const onChangeSearchIndex = useCallback((e) => {
@@ -149,6 +156,17 @@ const BrowseInventory = () => {
     resetFilters();
     inputRef.current.focus();
   }, [inputRef.current]);
+
+  useEffect(() => {
+    if (hasFocusedSearchOptionOnMount.current) {
+      return;
+    }
+
+    if (!search || (search && isFetched && !isFetching)) {
+      indexRef.current.focus();
+      hasFocusedSearchOptionOnMount.current = true;
+    }
+  }, [isFetched, search, isFetching]);
 
   return (
     <PersistedPaneset
@@ -166,6 +184,7 @@ const BrowseInventory = () => {
           />
 
           <SingleSearchForm
+            autoFocus={false}
             applySearch={onApplySearch}
             changeSearch={changeSearch}
             disabled={!searchIndex}
@@ -177,6 +196,7 @@ const BrowseInventory = () => {
             selectedIndex={searchIndex}
             searchableIndexesPlaceholder={searchableIndexesPlaceholder}
             inputType="textarea"
+            indexRef={indexRef}
             inputRef={inputRef}
           />
 
@@ -199,6 +219,7 @@ const BrowseInventory = () => {
         isFetching={isFetching}
         isFiltersOpened={isFiltersOpened}
         pagination={pagination}
+        paneTitleRef={paneTitleRef}
         toggleFiltersPane={toggleFilters}
         totalRecords={totalRecords}
       />

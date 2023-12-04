@@ -8,9 +8,17 @@ import {
 } from '../../constants';
 
 export const isRowPreventsClick = (row, browseOption) => {
-  const isMissedMatchItemRow = !!row.isAnchor && row.totalRecords === 0;
+  /**
+   * there is a special case when contributors and subject search can return shared records even with "Shared - No" in facets
+   * in this case there will be a non-anchor item with 0 total results. we need to show it as item with 0 results
+   * and make it not clickable
+   *
+   * items with isAnchor=false and totalRecords=0 should not appear in any other case,
+   * so we can safely just check for totalRecords here
+   */
+  const isItemHasNoRecords = row.totalRecords === 0;
 
-  return isMissedMatchItemRow || (
+  return isItemHasNoRecords || (
     (browseOption === browseModeOptions.CALL_NUMBERS && !row.shelfKey) ||
     (browseOption === browseModeOptions.CONTRIBUTORS && !row.contributorNameTypeId) ||
     (browseOption === browseModeOptions.SUBJECTS && !row.totalRecords)
