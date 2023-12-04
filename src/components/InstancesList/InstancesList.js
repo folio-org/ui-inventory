@@ -26,6 +26,7 @@ import {
   stripesConnect,
   withNamespace,
   checkIfUserInCentralTenant,
+  TitleManager,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -242,6 +243,19 @@ class InstancesList extends React.Component {
   getInstanceIdFromLocation = (location) => {
     return location.pathname.split('/')[3];
   };
+
+  getPageTitle = () => {
+    const {
+      data: { query },
+      intl,
+    } = this.props;
+
+    if (!query.query) {
+      return intl.formatMessage({ id: 'ui-inventory.meta.title' });
+    }
+
+    return intl.formatMessage({ id: 'ui-inventory.documentTitle.search' }, { query: query.query });
+  }
 
   clearStorage = () => {
     const {
@@ -1203,6 +1217,7 @@ class InstancesList extends React.Component {
         isWithinScope={checkScope}
         scope={document.body}
       >
+        <TitleManager page={this.getPageTitle()} />
         <div data-test-inventory-instances className={css.inventoryInstances}>
           <SearchAndSort
             key={searchAndSortKey}
