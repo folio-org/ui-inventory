@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [10.0.7] (IN PROGRESS)
+## [10.0.7](https://github.com/folio-org/ui-inventory/tree/v10.0.7) (2023-12-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.6...v10.0.7)
 
 * Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
 
