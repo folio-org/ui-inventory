@@ -16,6 +16,7 @@
 * Browse Lists | Focus updates. Fixes UIIN-2267.
 * Correctly display location data for holdings and items when tenant is changed. Fixes UIIN-2697.
 * Disable the "Share" button after clicking it once on "Are you sure you want to share this instance?" modal window. Refs UIIN-2704.
+* Refactor CSS away from `color()` function. Refs  UIIN-2716.
 
 ## [10.0.6](https://github.com/folio-org/ui-inventory/tree/v10.0.6) (2023-11-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.5...v10.0.6)
