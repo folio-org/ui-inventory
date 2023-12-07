@@ -55,6 +55,9 @@ jest.mock('@folio/stripes/core', () => ({
       <button type="button" onClick={() => onClose({ instanceRecord: { id: 'fast-add-record-id' } })}>Save & close</button>
     </>
   ),
+  TitleManager: ({ page }) => (
+    <div>{page}</div>
+  ),
 }));
 
 const data = {
@@ -164,6 +167,22 @@ describe('InstancesList', () => {
         const search = '?qindex=title&query=book&sort=title';
         act(() => { history.push({ search }); });
         expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
+      });
+
+      describe('when query is present', () => {
+        it('should display correct document title', () => {
+          renderInstancesList({
+            segment: 'instances',
+            data: {
+              ...data,
+              query: {
+                query: 'test',
+              },
+            },
+          });
+
+          expect(screen.getByText('Inventory - test - Search')).toBeInTheDocument();
+        });
       });
 
       describe('and browse result was selected', () => {

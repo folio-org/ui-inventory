@@ -15,6 +15,7 @@
 * Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
 * Browse Lists | Focus updates. Fixes UIIN-2267.
 * Correctly display location data for holdings and items when tenant is changed. Fixes UIIN-2697.
+* Disable the "Share" button after clicking it once on "Are you sure you want to share this instance?" modal window. Refs UIIN-2704.
 * Users with data export view only permission. Refs UIIN-2660.
 
 ## [10.0.6](https://github.com/folio-org/ui-inventory/tree/v10.0.6) (2023-11-24)
@@ -27,6 +28,7 @@
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.4...v10.0.5)
 
 * Don't include `sort` parameter in requests to facets. Fixes UIIN-2685.
+* Inventory app > Search and Browse Results > Update HTML page title with search term entered. Refs UIIN-2581.
 
 ## [10.0.4](https://github.com/folio-org/ui-inventory/tree/v10.0.4) (2023-11-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.3...v10.0.4)

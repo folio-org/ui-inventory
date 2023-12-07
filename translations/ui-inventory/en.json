@@ -1,5 +1,7 @@
 {
   "meta.title": "Inventory",
+  "documentTitle.search": "Inventory - {query} - Search",
+  "documentTitle.browse": "Inventory - {query} - Browse",
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
   "appMenu.inventorySearch": "Inventory app search",
   "quickMARC.label": "quickMARC",
