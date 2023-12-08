@@ -701,6 +701,7 @@ class InstancesList extends React.Component {
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
+    const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
@@ -819,7 +820,7 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(this.generateCQLQueryReport),
             isDisabled: isInstancesListEmpty,
           })}
-          {this.getActionItem({
+          {canExportMarc && this.getActionItem({
             id: 'dropdown-clickable-export-marc',
             icon: 'download',
             messageId: 'ui-inventory.exportInstancesInMARC',
