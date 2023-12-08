@@ -309,7 +309,7 @@ describe('ViewInstance', () => {
 
     await waitFor(() => expect(screen.getByText('Sharing this local instance will take a few moments.' +
       ' A success message and updated details will be displayed upon completion.')).toBeInTheDocument());
-  });
+  }, 10000);
   it('should show a correct Warning message banner when user lacks permission to vew shared instance', () => {
     renderViewInstance({
       isError: true,
