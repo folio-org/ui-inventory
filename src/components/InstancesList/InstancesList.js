@@ -16,6 +16,7 @@ import {
 import saveAs from 'file-saver';
 import moment from 'moment';
 import classnames from 'classnames';
+import { stringify } from 'query-string';
 
 import {
   Pluggable,
@@ -25,6 +26,7 @@ import {
   stripesConnect,
   withNamespace,
   checkIfUserInCentralTenant,
+  TitleManager,
 } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
@@ -33,7 +35,6 @@ import {
   Checkbox,
   MenuSection,
   Select,
-  checkScope,
   HasCommand,
   MCLPagingTypes,
   TextLink,
@@ -134,6 +135,7 @@ class InstancesList extends React.Component {
     }),
     stripes: PropTypes.object.isRequired,
     history: PropTypes.shape({
+      push: PropTypes.func,
       listen: PropTypes.func,
       replace: PropTypes.func,
     }),
@@ -153,6 +155,8 @@ class InstancesList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.paneTitleRef = React.createRef();
+
     this.state = {
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
@@ -171,11 +175,15 @@ class InstancesList extends React.Component {
     };
   }
 
+
   componentDidMount() {
     const {
       history,
       namespace,
+      getParams,
     } = this.props;
+
+    const params = getParams();
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -183,11 +191,15 @@ class InstancesList extends React.Component {
       if (hasReset) {
         // imperative way is used because it's no option in SearchAndSort reset/focus filters from outside
         document.getElementById('clickable-reset-all')?.click();
-        document.getElementById('input-inventory-search')?.focus();
+        this.inputRef.current.focus();
 
         history.replace({ search: 'segment=instances' });
       }
     });
+
+    if (params.selectedBrowseResult === 'true') {
+      this.paneTitleRef.current.focus();
+    }
 
     this.processLastSearchTerms();
 
@@ -220,6 +232,9 @@ class InstancesList extends React.Component {
     parentMutator.records.reset();
   }
 
+  inputRef = React.createRef();
+  indexRef = React.createRef();
+
   extraParamsToReset = {
     selectedBrowseResult: false,
     authorityId: '',
@@ -228,6 +243,19 @@ class InstancesList extends React.Component {
   getInstanceIdFromLocation = (location) => {
     return location.pathname.split('/')[3];
   };
+
+  getPageTitle = () => {
+    const {
+      data: { query },
+      intl,
+    } = this.props;
+
+    if (!query.query) {
+      return intl.formatMessage({ id: 'ui-inventory.meta.title' });
+    }
+
+    return intl.formatMessage({ id: 'ui-inventory.documentTitle.search' }, { query: query.query });
+  }
 
   clearStorage = () => {
     const {
@@ -388,7 +416,12 @@ class InstancesList extends React.Component {
     // https://issues.folio.org/browse/UIIN-1358
     storeLastSegment(segment);
     facetsStore.getState().resetFacetSettings();
-    document.getElementById('input-inventory-search').focus();
+    this.inputRef.current.focus();
+  }
+
+  handleSearchSegmentChange = (segment) => {
+    this.refocusOnInputSearch(segment);
+    this.setState({ selectedRows: {} });
   }
 
   onSearchModeSwitch = () => {
@@ -413,7 +446,7 @@ class InstancesList extends React.Component {
       />
       <FilterNavigation
         segment={this.props.segment}
-        onChange={this.refocusOnInputSearch}
+        onChange={this.handleSearchSegmentChange}
       />
     </>
   );
@@ -543,6 +576,22 @@ class InstancesList extends React.Component {
     });
   }
 
+  handleFastAddModalClose = ({ instanceRecord } = {}) => {
+    const {
+      history,
+      location,
+    } = this.props;
+
+    if (instanceRecord?.id) {
+      history.push({
+        pathname: `/inventory/view/${instanceRecord.id}`,
+        search: location.search,
+      });
+    }
+
+    this.toggleNewFastAddModal();
+  }
+
   generateHoldingsIdReport = async (sendCallout) => {
     const { holdingsIdExportInProgress } = this.state;
 
@@ -652,6 +701,7 @@ class InstancesList extends React.Component {
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
+    const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
@@ -706,7 +756,8 @@ class InstancesList extends React.Component {
           {!checkIfUserInCentralTenant(stripes) && (
             <Pluggable
               id="clickable-create-inventory-records"
-              onClose={this.toggleNewFastAddModal}
+              onClose={this.handleFastAddModalClose}
+              renderInPaneset={false}
               open={this.state.showNewFastAddModal} // control the open modal via state var
               renderTrigger={() => (
                 this.getActionItem({
@@ -769,7 +820,7 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(this.generateCQLQueryReport),
             isDisabled: isInstancesListEmpty,
           })}
-          {this.getActionItem({
+          {canExportMarc && this.getActionItem({
             id: 'dropdown-clickable-export-marc',
             icon: 'download',
             messageId: 'ui-inventory.exportInstancesInMARC',
@@ -896,6 +947,7 @@ class InstancesList extends React.Component {
     });
 
     facetsStore.getState().resetFacetSettings();
+    this.inputRef.current.focus();
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
@@ -956,8 +1008,9 @@ class InstancesList extends React.Component {
     const {
       parentResources,
       parentMutator: { itemsByQuery },
-      goTo,
       getParams,
+      stripes,
+      history,
     } = this.props;
     const { query, qindex } = parentResources?.query ?? {};
     const { searchInProgress } = this.state;
@@ -973,7 +1026,10 @@ class InstancesList extends React.Component {
     }
 
     itemsByQuery.reset();
-    const items = await itemsByQuery.GET({ params: { query: itemQuery } });
+    const items = await itemsByQuery.GET({
+      params: { query: itemQuery },
+      tenant: stripes.okapi.tenant,
+    });
 
     this.setState({ searchInProgress: false });
 
@@ -984,7 +1040,13 @@ class InstancesList extends React.Component {
     }
 
     const { id, holdingsRecordId } = items[0];
-    goTo(`/inventory/view/${instance.id}/${holdingsRecordId}/${id}`, getParams());
+    const search = stringify(getParams());
+
+    history.push({
+      pathname: `/inventory/view/${instance.id}/${holdingsRecordId}/${id}`,
+      search,
+      state: { tenantTo: stripes.okapi.tenant },
+    });
 
     return null;
   }
@@ -1144,12 +1206,19 @@ class InstancesList extends React.Component {
       },
     ];
 
+    const checkScope = () => {
+      const ignoreElements = ['TEXTAREA', 'INPUT'];
+
+      return !ignoreElements.includes(document.activeElement.tagName);
+    };
+
     return (
       <HasCommand
         commands={shortcuts}
         isWithinScope={checkScope}
         scope={document.body}
       >
+        <TitleManager page={this.getPageTitle()} />
         <div data-test-inventory-instances className={css.inventoryInstances}>
           <SearchAndSort
             key={searchAndSortKey}
@@ -1166,11 +1235,15 @@ class InstancesList extends React.Component {
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
             initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}
+            inputType="textarea"
+            inputRef={this.inputRef}
+            indexRef={this.indexRef}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
             onChangeIndex={onChangeIndex}
             onSelectRow={this.onSelectRow}
+            paneTitleRef={this.paneTitleRef}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,

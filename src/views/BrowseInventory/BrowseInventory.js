@@ -1,8 +1,9 @@
-import React, { useCallback, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useState, useEffect, useMemo, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import {
+  TitleManager,
   useNamespace,
 } from '@folio/stripes/core';
 import {
@@ -46,6 +47,11 @@ const BrowseInventory = () => {
   const { isFiltersOpened, toggleFilters } = useFiltersToogle(`${namespace}/filters`);
   const { deleteItemToView } = useItemToView('browse');
   const [pageConfig, setPageConfig] = useState(getLastBrowseOffset());
+  const hasFocusedSearchOptionOnMount = useRef(false);
+  const inputRef = useRef();
+  const indexRef = useRef();
+  const paneTitleRef = useRef();
+
   const { search } = location;
 
   useEffect(() => {
@@ -77,8 +83,17 @@ const BrowseInventory = () => {
     return filters;
   }, [filters]);
 
+  const pageTitle = useMemo(() => {
+    if (!withExtraFilters.query) {
+      return null;
+    }
+
+    return intl.formatMessage({ id: 'ui-inventory.documentTitle.browse' }, { query: withExtraFilters.query });
+  }, [withExtraFilters.query]);
+
   const {
     data,
+    isFetched,
     isFetching,
     pagination,
     totalRecords,
@@ -126,7 +141,10 @@ const BrowseInventory = () => {
   const onApplySearch = useCallback(() => {
     const isSearchQueryValid = validateDataQuery(searchQuery);
 
-    if (isSearchQueryValid) applySearch();
+    if (isSearchQueryValid) {
+      applySearch();
+      paneTitleRef.current.focus();
+    }
   }, [searchQuery, filters]);
 
   const onChangeSearchIndex = useCallback((e) => {
@@ -134,11 +152,28 @@ const BrowseInventory = () => {
     changeSearchIndex(e);
   }, []);
 
+  const onReset = useCallback(() => {
+    resetFilters();
+    inputRef.current.focus();
+  }, [inputRef.current]);
+
+  useEffect(() => {
+    if (hasFocusedSearchOptionOnMount.current) {
+      return;
+    }
+
+    if (!search || (search && isFetched && !isFetching)) {
+      indexRef.current.focus();
+      hasFocusedSearchOptionOnMount.current = true;
+    }
+  }, [isFetched, search, isFetching]);
+
   return (
     <PersistedPaneset
       appId={namespace}
       id="browse-inventory"
     >
+      <TitleManager page={pageTitle} />
       {isFiltersOpened && (
         <FiltersPane
           id="browse-inventory-filters-pane"
@@ -149,6 +184,7 @@ const BrowseInventory = () => {
           />
 
           <SingleSearchForm
+            autoFocus={false}
             applySearch={onApplySearch}
             changeSearch={changeSearch}
             disabled={!searchIndex}
@@ -159,10 +195,13 @@ const BrowseInventory = () => {
             changeSearchIndex={onChangeSearchIndex}
             selectedIndex={searchIndex}
             searchableIndexesPlaceholder={searchableIndexesPlaceholder}
+            inputType="textarea"
+            indexRef={indexRef}
+            inputRef={inputRef}
           />
 
           <ResetButton
-            reset={resetFilters}
+            reset={onReset}
             disabled={isResetButtonDisabled}
           />
 
@@ -180,6 +219,7 @@ const BrowseInventory = () => {
         isFetching={isFetching}
         isFiltersOpened={isFiltersOpened}
         pagination={pagination}
+        paneTitleRef={paneTitleRef}
         toggleFiltersPane={toggleFilters}
         totalRecords={totalRecords}
       />

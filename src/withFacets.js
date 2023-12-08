@@ -189,7 +189,7 @@ function withFacets(WrappedComponent) {
       } = mutator.facets;
 
       // Browse page does not use query resource: query params are stored in "activeFilters" of "useLocationFilters" hook
-      const query = resources.query || this.props.activeFilters;
+      const query = omit(resources.query || this.props.activeFilters, ['sort']);
 
       // temporary query value
       const params = { query: 'id = *' };

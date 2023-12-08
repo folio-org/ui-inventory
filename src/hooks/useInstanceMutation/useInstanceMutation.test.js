@@ -50,7 +50,7 @@ describe('useInstanceMutation', () => {
       { wrapper },
     );
 
-    await act(async () => { result.current.mutateInstance({ id: 'isntanceId' }); });
+    await act(async () => { result.current.mutateInstance({ id: 'instanceId' }); });
 
     expect(putMock).toHaveBeenCalled();
   });

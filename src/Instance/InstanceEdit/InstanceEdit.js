@@ -5,7 +5,10 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
   stripesConnect,
@@ -31,11 +34,14 @@ import useLoadSubInstances from '../../hooks/useLoadSubInstances';
 import useCallout from '../../hooks/useCallout';
 import { useInstanceMutation } from '../../hooks';
 
+import css from './InstanceEdit.css';
+
 const InstanceEdit = ({
   instanceId,
   referenceData,
   stripes,
 }) => {
+  const { formatMessage } = useIntl();
   const { identifierTypesById, identifierTypesByName } = referenceData ?? {};
   const [httpError, setHttpError] = useState();
   const [initialValues, setInitialValues] = useState();
@@ -72,22 +78,34 @@ const InstanceEdit = ({
   }, [callout, goBack]);
 
   const onError = async error => {
-    const parsedError = await parseHttpError(error);
-    setHttpError(parsedError);
+    const response = await error.response;
+    const parsedError = await parseHttpError(response);
+    const defaultErrorMessage = formatMessage({ id: 'ui-inventory.communicationProblem' });
+    const err = {
+      message: parsedError?.message || parsedError?.errors?.[0]?.message || defaultErrorMessage,
+      status: response.status,
+    };
+
+    setHttpError(err);
+  };
+
+  const getErrorModalContent = () => {
+    return (
+      <div className={css.errorModalContent}>
+        {httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+      </div>
+    );
   };
 
   const isMemberTenant = checkIfUserInMemberTenant(stripes);
   const tenantId = (isMemberTenant && instance?.shared) ? stripes.user.user.consortium.centralTenantId : stripes.okapi.tenant;
 
-  const { mutateInstance } = useInstanceMutation({
-    options: { onSuccess, onError },
-    tenantId,
-  });
+  const { mutateInstance } = useInstanceMutation({ tenantId });
 
   const onSubmit = useCallback((initialInstance) => {
     const updatedInstance = marshalInstance(initialInstance, identifierTypesByName);
 
-    return mutateInstance(updatedInstance);
+    return mutateInstance(updatedInstance, { onSuccess, onError });
   }, [mutateInstance]);
 
   if (isInstanceLoading) return <LoadingView />;
@@ -109,7 +127,7 @@ const InstanceEdit = ({
         <ErrorModal
           open
           label={<FormattedMessage id="ui-inventory.instance.saveError" />}
-          content={httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+          content={getErrorModalContent()}
           onClose={() => setHttpError()}
         />
       }

@@ -81,7 +81,7 @@ class ViewHoldingsRecord extends React.Component {
       path: 'holdings-storage/holdings/:{holdingsrecordid}',
       resourceShouldRefresh: false,
       accumulate: true,
-      tenant: '!{location.state.tenantTo}'
+      tenant: '!{tenantTo}',
     },
     items: {
       type: 'okapi',
@@ -97,7 +97,7 @@ class ViewHoldingsRecord extends React.Component {
       type: 'okapi',
       path: 'inventory/instances/:{id}',
       accumulate: true,
-      tenant: '!{location.state.tenantTo}'
+      tenant: '!{tenantTo}',
     },
     tagSettings: {
       type: 'okapi',
@@ -198,9 +198,7 @@ class ViewHoldingsRecord extends React.Component {
       });
   };
 
-  onClose = (e) => {
-    if (e) e.preventDefault();
-
+  goToInstanceView = () => {
     const {
       history,
       location: { search, state: locationState },
@@ -213,6 +211,18 @@ class ViewHoldingsRecord extends React.Component {
     });
   }
 
+  onClose = async (e) => {
+    if (e) e.preventDefault();
+
+    const {
+      stripes,
+      location,
+    } = this.props;
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
+
+    await switchAffiliation(stripes, tenantFrom, this.goToInstanceView);
+  }
+
   // Edit Holdings records handlers
   onEditHolding = (e) => {
     if (e) e.preventDefault();
@@ -222,12 +232,18 @@ class ViewHoldingsRecord extends React.Component {
       location,
       id,
       holdingsrecordid,
+      stripes,
     } = this.props;
+
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     history.push({
       pathname: `/inventory/edit/${id}/${holdingsrecordid}`,
       search: location.search,
-      state: { backPathname: location.pathname },
+      state: {
+        backPathname: location.pathname,
+        tenantFrom,
+      },
     });
   }
 
@@ -239,12 +255,18 @@ class ViewHoldingsRecord extends React.Component {
       location,
       id,
       holdingsrecordid,
+      stripes,
     } = this.props;
+
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     history.push({
       pathname: `/inventory/copy/${id}/${holdingsrecordid}`,
       search: location.search,
-      state: { backPathname: location.pathname },
+      state: {
+        backPathname: location.pathname,
+        tenantFrom,
+      },
     });
   }
 
@@ -479,13 +501,15 @@ class ViewHoldingsRecord extends React.Component {
       referenceTables,
       goTo,
       stripes,
-      location: { state: { tenantFrom } },
+      location,
     } = this.props;
     const { instance } = this.state;
+    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     if (this.isAwaitingResource()) return <LoadingView />;
 
     const holdingsRecord = this.getMostRecentHolding();
+
     const holdingsSource = referenceTables?.holdingsSources?.find(source => source.id === holdingsRecord.sourceId);
     const holdingsPermanentLocation = referenceTables?.locationsById[holdingsRecord?.permanentLocationId];
     const holdingsPermanentLocationName = get(holdingsPermanentLocation, ['name'], '-');
@@ -726,7 +750,9 @@ class ViewHoldingsRecord extends React.Component {
                     updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
                   })}
                   dismissible
-                  onClose={() => switchAffiliation(stripes, tenantFrom, this.onClose)}
+                  onClose={async () => {
+                    await switchAffiliation(stripes, tenantFrom, this.onClose);
+                  }}
                   actionMenu={this.getPaneHeaderActionMenu}
                 >
                   <Row center="xs">

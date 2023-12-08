@@ -31,8 +31,8 @@ const CreateItem = ({
       state: {
         tenantTo,
         tenantFrom,
-      },
-    },
+      } = {},
+    } = {},
   } = useHistory();
 
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId, { tenantId: tenantTo });
@@ -53,14 +53,14 @@ const CreateItem = ({
     });
   }, [instanceId, search]);
 
-  const onCancel = useCallback(() => {
-    switchAffiliation(stripes, tenantFrom, goBack);
+  const onCancel = useCallback(async () => {
+    await switchAffiliation(stripes, tenantFrom, goBack);
   }, [stripes, tenantFrom]);
 
   const onSuccess = useCallback(async (response) => {
     const { hrid } = await response.json();
 
-    onCancel();
+    await onCancel();
 
     return callout.sendCallout({
       type: 'success',

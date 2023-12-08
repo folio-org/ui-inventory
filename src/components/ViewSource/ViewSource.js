@@ -10,9 +10,11 @@ import {
   LoadingView,
 } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
-import MarcView from '@folio/quick-marc/src/QuickMarcView/QuickMarcView';
-import PrintPopup from '@folio/quick-marc/src/QuickMarcView/PrintPopup';
-import { getHeaders } from '@folio/quick-marc/src/QuickMarcEditor/utils';
+import {
+  MarcView,
+  PrintPopup,
+  getHeaders,
+} from '@folio/stripes-marc-components';
 
 import { useGoBack } from '../../common/hooks';
 

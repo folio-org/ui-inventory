@@ -1,10 +1,62 @@
 # Change history for ui-inventory
 
+## [11.0.0] IN PROGRESS
 
-## [10.1.0] IN PROGRESS
+* *BREAKING* Replace imports from quick-marc with stripes-marc-components. Refs UIIN-2636.
+* Make Inventory search and browse query boxes expandable. Refs UIIN-2493.
+* Added support for `containsAny` match option in Advanced search. Refs UIIN-2486.
+* Inventory search/browse: Do not retain checkbox selections when toggling search segment. Refs UIIN-2477.
+* Show Instance record after creating with Fast add option. Refs UIIN-2497.
+* Search box/Browse box- Reset all should shift focus back to search box. Refs UIIN-2514.
+* Updated translations for adding new Instance records. Refs UIIN-2630.
+* Ignored hot key command on edit fields. Refs UIIN-2604.
+* Don't render Fast Add record modal in a `<Paneset>` to re-calculate other `<Pane>`'s widths after closing. Fixes UIIN-2690.
+* "Saving instance failed" modal does not show error message. Fixes UIIN-2686.
+* Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
+* Browse Lists | Focus updates. Fixes UIIN-2267.
+* Correctly display location data for holdings and items when tenant is changed. Fixes UIIN-2697.
+* Disable the "Share" button after clicking it once on "Are you sure you want to share this instance?" modal window. Refs UIIN-2704.
+* Users with data export view only permission. Refs UIIN-2660.
 
+## [10.0.6](https://github.com/folio-org/ui-inventory/tree/v10.0.6) (2023-11-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.5...v10.0.6)
 
-## [10.0.1] IN PROGRESS
+* "Something went wrong" error appears when user selects Shared Instance as "Child/Parent Instance" for Local Instance without permissions at Central tenant. Fixes UIIN-2695.
+* Inactive Holdings/items on Central tenant when user have affiliation for separate Member with 0 permissions. Fixes UIIN-2689.
+
+## [10.0.5](https://github.com/folio-org/ui-inventory/tree/v10.0.5) (2023-11-22)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.4...v10.0.5)
+
+* Don't include `sort` parameter in requests to facets. Fixes UIIN-2685.
+* Inventory app > Search and Browse Results > Update HTML page title with search term entered. Refs UIIN-2581.
+
+## [10.0.4](https://github.com/folio-org/ui-inventory/tree/v10.0.4) (2023-11-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.3...v10.0.4)
+
+* Fetch sharing of local instance status in the context of member tenant. Refs UIIN-2680.
+* Handle errors when sharing local instances failed. Refs UIIN-2682.
+
+## [10.0.3](https://github.com/folio-org/ui-inventory/tree/v10.0.3) (2023-11-08)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.2...v10.0.3)
+
+* ECS: Show info message when user in member tenant tries to view shared instance details without permission. Refs UIIN-2590.
+* Show only local MARC Authorities when share local instance. Fixes UIIN-2647.
+* Single instance export - MARC files sent to central tenant from member tenant. Fixes UIIN-2613.
+* Fix misspelled Instance notes (all) advanced search query index. Fixes UIIN-2677.
+* Switch from `=` to `==` operator when querying for `holdings-storage/holdings` by hrid. Fixes UIIN-2658.
+
+## [10.0.2](https://github.com/folio-org/ui-inventory/tree/v10.0.2) (2023-11-07)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.1...v10.0.2)
+
+* Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
+* Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
+* Add immediate warning message when a local instance is shared. Refs UIIN-2617.
+* Optimistic locking message not working for instances in non-consortial tenant. Fixes UIIN-2628.
+* User receives an error when searching for an item in the Inventory app. Fixes UIIN-2634.
+* Create new instance success toast no longer shows the instance HRID. Fixes UIIN-2635.
+
+## [10.0.1](https://github.com/folio-org/ui-inventory/tree/v10.0.1) (2023-11-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.0...v10.0.1)
 
 * Instance 3rd pane: Adjust behavior when returning to instance from holdings/item full screen. Refs UIIN-2453.
 * Consortial holdings accordion is not appearing after the sharing of Instance. Fixes UIIN-2629.
@@ -12,9 +64,7 @@
 * Edit instance success toast no longer shows the instance HRID. Fixes UIIN-2588.
 * Show facet options, if they exist, after clicking the +More button. Refs UIIN-2533.
 * If Shared & Held by facets were selected in the Browse search, then retain them in the Search lookup after clicking the record. Refs UIIN-2608.
-* Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
 * Remove error message after switch from Instance Edit screen to another app. Fixes UIIN-2600.
-* Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
 
 ## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)

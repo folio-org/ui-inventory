@@ -19,7 +19,6 @@ import {
   PaneMenu,
   Row,
   MessageBanner,
-  Icon,
 } from '@folio/stripes/components';
 
 import { InstanceTitle } from './InstanceTitle';
@@ -71,7 +70,6 @@ const InstanceDetails = forwardRef(({
   tagsEnabled,
   userTenantPermissions,
   isShared,
-  isLoading,
   ...rest
 }, ref) => {
   const intl = useIntl();
@@ -85,10 +83,10 @@ const InstanceDetails = forwardRef(({
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
 
+  const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
   const tags = instance?.tags?.tagList;
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
-
-  const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.edit');
+  const isConsortialHoldingsVisible = instance?.shared || isInstanceShadowCopy(instance?.source);
 
   const detailsLastMenu = useMemo(() => {
     return (
@@ -107,28 +105,6 @@ const InstanceDetails = forwardRef(({
       </PaneMenu>
     );
   }, [tagsEnabled, tags, intl]);
-
-  if (isLoading) {
-    return (
-      <Pane
-        id="pane-instancedetails"
-        defaultWidth="fill"
-        paneTitle={intl.formatMessage({ id: 'ui-inventory.edit' })}
-        appIcon={<AppIcon app="inventory" iconKey="instance" />}
-        dismissible
-        onClose={onClose}
-      >
-        <div style={{ paddingTop: '1rem' }}>
-          <Icon
-            icon="spinner-ellipsis"
-            width="100px"
-          />
-        </div>
-      </Pane>
-    );
-  }
-
-  const isConsortialHoldingsVisible = instance?.shared || isInstanceShadowCopy(instance?.source);
 
   const renderPaneTitle = () => {
     const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
@@ -165,11 +141,11 @@ const InstanceDetails = forwardRef(({
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
         paneTitle={renderPaneTitle()}
         paneSub={renderPaneSubtitle()}
+        actionMenu={actionMenu}
+        lastMenu={detailsLastMenu}
         dismissible
         onClose={onClose}
-        actionMenu={actionMenu}
         defaultWidth="fill"
-        lastMenu={detailsLastMenu}
       >
         <TitleManager record={instance.title} />
 
@@ -305,14 +281,12 @@ InstanceDetails.propTypes = {
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
   userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
-  isLoading: PropTypes.bool,
   isShared: PropTypes.bool,
 };
 
 InstanceDetails.defaultProps = {
   instance: {},
   tagsEnabled: false,
-  isLoading: false,
   isShared: false,
 };
 

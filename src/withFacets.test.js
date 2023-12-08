@@ -42,6 +42,67 @@ describe('withFacets', () => {
     jest.clearAllMocks();
   });
 
+  describe('when query contains sort parameter', () => {
+    it('should remove the sort parameter from request', () => {
+      const resources = {
+        query: {
+          qindex: browseModeOptions.CONTRIBUTORS,
+          query: '',
+          sort: 'relevance',
+        },
+      };
+
+      const { getByText } = render(
+        <FacetsHoc
+          mutator={mutator}
+          resources={resources}
+          properties={{ facetToOpen: FACETS.CONTRIBUTORS_SHARED }}
+          isBrowseLookup
+        />
+      );
+
+      fireEvent.click(getByText('fetchFacetsButton'));
+
+      expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+        params: {
+          facet: `${FACETS_CQL.INSTANCES_SHARED}:6`,
+          query: '(cql.allRecords=1)',
+        },
+        path: 'search/contributors/facets',
+      }));
+    });
+  });
+
+  describe('when active filters contain sort parameter', () => {
+    it('should remove the sort parameter from request', () => {
+      const activeFilters = {
+        qindex: browseModeOptions.CONTRIBUTORS,
+        query: '',
+        sort: 'relevance',
+      };
+
+      const { getByText } = render(
+        <FacetsHoc
+          mutator={mutator}
+          resources={{}}
+          activeFilters={activeFilters}
+          properties={{ facetToOpen: FACETS.CONTRIBUTORS_SHARED }}
+          isBrowseLookup
+        />
+      );
+
+      fireEvent.click(getByText('fetchFacetsButton'));
+
+      expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+        params: {
+          facet: `${FACETS_CQL.INSTANCES_SHARED}:6`,
+          query: '(cql.allRecords=1)',
+        },
+        path: 'search/contributors/facets',
+      }));
+    });
+  });
+
   describe('when opening a contributots shared facet', () => {
     describe('and there are no selected options in other facets', () => {
       it('should make a request with correct request options', () => {

@@ -9,7 +9,6 @@ import {
 import {
   flowRight,
   isEmpty,
-  pick,
 } from 'lodash';
 
 import {
@@ -38,13 +37,14 @@ import {
   handleKeyCommand,
   isInstanceShadowCopy,
   isMARCSource,
+  getLinkedAuthorityIds,
 } from './utils';
 import {
-  AUTHORITY_LINKED_FIELDS,
+  CONSORTIUM_PREFIX,
+  HTTP_RESPONSE_STATUS_CODES,
   indentifierTypeNames,
   INSTANCE_SHARING_STATUSES,
   layers,
-  OKAPI_TENANT_HEADER,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -53,6 +53,8 @@ import {
   HoldingsListContainer,
   MoveItemsContext,
   InstanceDetails,
+  InstanceWarningPane,
+  InstanceLoadingPane,
 } from './Instance';
 import {
   ActionItem,
@@ -142,7 +144,6 @@ class ViewInstance extends React.Component {
       path: 'data-export/quick-export',
       throwErrors: false,
       clientGeneratePk: false,
-      tenant: '!{tenantId}',
     },
     instanceRelationshipTypes: {
       type: 'okapi',
@@ -167,6 +168,12 @@ class ViewInstance extends React.Component {
       accumulate: true,
       throwErrors: false,
     },
+    authorities: {
+      type: 'okapi',
+      path: 'authority-storage/authorities',
+      accumulate: true,
+      throwErrors: false,
+    }
   });
 
   constructor(props) {
@@ -176,13 +183,14 @@ class ViewInstance extends React.Component {
     this.log = logger.log.bind(logger);
 
     this.state = {
-      isLoading: false,
+      isInstanceSharing: false,
       marcRecord: null,
       findInstancePluginOpened: false,
       isItemsMovement: false,
       isImportRecordModalOpened: false,
       isCopyrightModalOpened: false,
       isShareLocalInstanceModalOpen: false,
+      isShareButtonDisabled: false,
       isUnlinkAuthoritiesModalOpen: false,
       linkedAuthoritiesLength: 0,
       isNewOrderModalOpen: false,
@@ -436,25 +444,23 @@ class ViewInstance extends React.Component {
     this.setState({ isImportRecordModalOpened: false });
   }
 
-  checkInstanceSharingProgress = ({ sourceTenantId, instanceIdentifier }) => {
-    return this.props.mutator.shareInstance.GET({
-      params: { sourceTenantId, instanceIdentifier },
-      headers: {
-        [OKAPI_TENANT_HEADER]: this.props.centralTenantId,
-        'Content-Type': 'application/json',
-        ...(this.props.okapi.token && { 'X-Okapi-Token': this.props.okapi.token }),
-      },
+  showUnsuccessfulShareInstanceCallout = (instanceTitle) => {
+    this.calloutRef.current?.sendCallout({
+      type: 'error',
+      message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
     });
   }
 
-  waitForInstanceSharingComplete = ({ sourceTenantId, instanceIdentifier, instanceTitle }) => {
+  checkInstanceSharingProgress = ({ sourceTenantId, instanceIdentifier }) => {
+    return this.props.mutator.shareInstance.GET({
+      params: { sourceTenantId, instanceIdentifier },
+    });
+  }
+
+  waitForInstanceSharingComplete = ({ sourceTenantId, instanceIdentifier }) => {
     return new Promise((resolve, reject) => {
       this.intervalId = setInterval(() => {
         const onError = error => {
-          this.calloutRef.current.sendCallout({
-            type: 'error',
-            message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
-          });
           clearInterval(this.intervalId);
           reject(error);
         };
@@ -493,14 +499,15 @@ class ViewInstance extends React.Component {
         this.setState({
           isUnlinkAuthoritiesModalOpen: false,
           isShareLocalInstanceModalOpen: false,
-          isLoading: true
+          isInstanceSharing: true,
+          isShareButtonDisabled: false,
         });
 
-        await this.waitForInstanceSharingComplete({ sourceTenantId, instanceIdentifier, instanceTitle });
+        await this.waitForInstanceSharingComplete({ sourceTenantId, instanceIdentifier });
       })
       .then(async () => {
         await this.props.refetchInstance();
-        this.setState({ isLoading: false });
+        this.setState({ isInstanceSharing: false });
         this.calloutRef.current.sendCallout({
           type: 'success',
           message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.successful" values={{ instanceTitle }} />,
@@ -510,43 +517,58 @@ class ViewInstance extends React.Component {
         this.setState({
           isUnlinkAuthoritiesModalOpen: false,
           isShareLocalInstanceModalOpen: false,
+          isInstanceSharing: false,
+          isShareButtonDisabled: false,
         });
-        this.calloutRef.current?.sendCallout({
-          type: 'error',
-          message: <FormattedMessage id="ui-inventory.shareLocalInstance.toast.unsuccessful" values={{ instanceTitle }} />,
-        });
+        this.showUnsuccessfulShareInstanceCallout(instanceTitle);
       });
   }
 
-  checkIfHasLinkedAuthorities = (instance = {}) => {
-    const linkedAuthorities = pick(this.props.selectedInstance, AUTHORITY_LINKED_FIELDS);
+  checkIfHasLinkedAuthorities = () => {
+    this.setState({ isShareButtonDisabled: true });
 
-    const findLinkedAuthorities = authorities => {
-      const linkedAuthoritiesLength = AUTHORITY_LINKED_FIELDS.reduce((total, field) => {
-        const authoritiesAmount = authorities[field].filter(item => item.authorityId).length;
-        return total + authoritiesAmount;
-      }, 0);
+    const { selectedInstance } = this.props;
+    const authorityIds = getLinkedAuthorityIds(selectedInstance);
 
-      return {
-        hasLinkedAuthorities: !!linkedAuthoritiesLength,
-        linkedAuthoritiesLength,
-      };
-    };
-
-    const {
-      hasLinkedAuthorities,
-      linkedAuthoritiesLength,
-    } = findLinkedAuthorities(linkedAuthorities);
-
-    if (hasLinkedAuthorities) {
-      this.setState({
-        linkedAuthoritiesLength,
-        isShareLocalInstanceModalOpen: false,
-        isUnlinkAuthoritiesModalOpen: true,
-      });
-    } else {
-      this.handleShareLocalInstance(instance);
+    if (isEmpty(authorityIds)) {
+      this.handleShareLocalInstance(selectedInstance);
+      return;
     }
+
+    this.props.mutator.authorities.GET({
+      params: {
+        query: `id==(${authorityIds.join(' or ')})`,
+      }
+    }).then(({ authorities }) => {
+      const localAuthorities = authorities.filter(authority => !authority.source.startsWith(CONSORTIUM_PREFIX));
+
+      if (localAuthorities.length) {
+        this.setState({
+          linkedAuthoritiesLength: localAuthorities.length,
+          isShareLocalInstanceModalOpen: false,
+          isUnlinkAuthoritiesModalOpen: true,
+        });
+      } else {
+        this.handleShareLocalInstance(selectedInstance);
+      }
+    }).catch(() => {
+      this.setState({
+        isShareLocalInstanceModalOpen: false,
+        isShareButtonDisabled: false,
+      });
+
+      this.calloutRef.current.sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-inventory.communicationProblem" />,
+      });
+    });
+  }
+
+  handleCloseUnlinkModal = () => {
+    this.setState({
+      isUnlinkAuthoritiesModalOpen: false,
+      isShareButtonDisabled: false,
+    });
   }
 
   toggleCopyrightModal = () => {
@@ -634,6 +656,7 @@ class ViewInstance extends React.Component {
       && !isInstanceShadowCopy(source);
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
+    const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
     const numberOfRequests = instanceRequests.other?.totalRecords;
     const canReorderRequests = titleLevelRequestsFeatureEnabled && hasReorderPermissions && numberOfRequests && canReorder;
     const canViewRequests = !checkIfUserInCentralTenant(stripes) && !titleLevelRequestsFeatureEnabled;
@@ -760,12 +783,14 @@ class ViewInstance extends React.Component {
                 }}
               />
             )}
-            <ActionItem
-              id="quick-export-trigger"
-              icon="download"
-              messageId="ui-inventory.exportInstanceInMARC"
-              onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
-            />
+            {canExportMarc && (
+              <ActionItem
+                id="quick-export-trigger"
+                icon="download"
+                messageId="ui-inventory.exportInstanceInMARC"
+                onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
+              />
+            )}
             {canCreateOrder && (
               <ActionItem
                 id="clickable-create-order"
@@ -871,20 +896,93 @@ class ViewInstance extends React.Component {
     );
   };
 
-  render() {
+  renderInstanceDetails = (data, instance) => {
     const {
-      match: { params: { id, holdingsrecordid, itemid } },
-      stripes,
+      match: { params: { holdingsrecordid, itemid } },
       okapi,
-      onCopy,
       onClose,
       tagsEnabled,
-      updateLocation,
-      canUseSingleRecordImport,
       isCentralTenantPermissionsLoading,
       isShared,
+      isLoading,
+      isError,
+      error,
     } = this.props;
-    const { linkedAuthoritiesLength } = this.state;
+    const { isInstanceSharing } = this.state;
+
+    const isUserLacksPermToViewSharedInstance = isError
+      && error?.response?.status === HTTP_RESPONSE_STATUS_CODES.FORBIDDEN
+      && isShared;
+
+    const isInstanceLoading = isLoading || !instance || isCentralTenantPermissionsLoading;
+    const keyInStorageToHoldingsAccsState = ['holdings'];
+
+    if (isUserLacksPermToViewSharedInstance) {
+      return (
+        <InstanceWarningPane
+          onClose={onClose}
+          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.accessSharedInstance" />}
+        />
+      );
+    }
+
+    if (isInstanceSharing) {
+      return (
+        <InstanceWarningPane
+          onClose={onClose}
+          messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.sharingLocalInstance" />}
+        />
+      );
+    }
+
+    if (isInstanceLoading) {
+      return <InstanceLoadingPane onClose={onClose} />;
+    }
+
+    return (
+      <InstanceDetails
+        id="pane-instancedetails"
+        onClose={onClose}
+        actionMenu={this.createActionMenuGetter(instance, data)}
+        instance={instance}
+        tagsEnabled={tagsEnabled}
+        ref={this.accordionStatusRef}
+        userTenantPermissions={this.state.userTenantPermissions}
+        isShared={isShared}
+      >
+        {
+          (!holdingsrecordid && !itemid) ?
+            (
+              <MoveItemsContext>
+                <HoldingsListContainer
+                  instance={instance}
+                  draggable={this.state.isItemsMovement}
+                  tenantId={okapi.tenant}
+                  pathToAccordionsState={keyInStorageToHoldingsAccsState}
+                  droppable
+                />
+              </MoveItemsContext>
+            )
+            :
+            null
+        }
+      </InstanceDetails>
+    );
+  }
+
+  render() {
+    const {
+      match: { params: { id } },
+      stripes,
+      onCopy,
+      updateLocation,
+      canUseSingleRecordImport,
+    } = this.props;
+    const {
+      linkedAuthoritiesLength,
+      isShareButtonDisabled,
+    } = this.state;
+
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
@@ -918,8 +1016,6 @@ class ViewInstance extends React.Component {
         handler: (e) => collapseAllSections(e, this.accordionStatusRef),
       },
     ];
-    const isInstanceLoading = this.state.isLoading || !instance || isCentralTenantPermissionsLoading;
-    const keyInStorageToHoldingsAccsState = ['holdings'];
 
     return (
       <DataContext.Consumer>
@@ -929,40 +1025,12 @@ class ViewInstance extends React.Component {
             isWithinScope={checkScope}
             scope={document.body}
           >
-            <InstanceDetails
-              id="pane-instancedetails"
-              onClose={onClose}
-              actionMenu={this.createActionMenuGetter(instance, data)}
-              instance={instance}
-              tagsEnabled={tagsEnabled}
-              ref={this.accordionStatusRef}
-              userTenantPermissions={this.state.userTenantPermissions}
-              isLoading={isInstanceLoading}
-              isShared={isShared}
-            >
-              {
-                (!holdingsrecordid && !itemid) ?
-                  (
-                    <MoveItemsContext>
-                      <HoldingsListContainer
-                        instance={instance}
-                        draggable={this.state.isItemsMovement}
-                        tenantId={okapi.tenant}
-                        pathToAccordionsState={keyInStorageToHoldingsAccsState}
-                        droppable
-                      />
-                    </MoveItemsContext>
-                  )
-                  :
-                  null
-              }
-            </InstanceDetails>
-
+            {this.renderInstanceDetails(data, instance)}
             <Callout ref={this.calloutRef} />
 
-            {this.state.afterCreate &&
+            {this.state.afterCreate && !isEmpty(instance) &&
               <CalloutRenderer
-                message={<FormattedMessage id="ui-inventory.instance.successfullySaved" values={{ hrid: instance?.hrid }} />}
+                message={<FormattedMessage id="ui-inventory.instance.successfullySaved" values={{ hrid: instance.hrid }} />}
               />
             }
 
@@ -996,7 +1064,8 @@ class ViewInstance extends React.Component {
               message={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.message" values={{ instanceTitle: instance?.title }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.confirmButton" />}
               onCancel={() => this.setState({ isShareLocalInstanceModalOpen: false })}
-              onConfirm={() => this.checkIfHasLinkedAuthorities(instance)}
+              onConfirm={this.checkIfHasLinkedAuthorities}
+              isConfirmButtonDisabled={isShareButtonDisabled}
             />
 
             <ConfirmationModal
@@ -1004,7 +1073,7 @@ class ViewInstance extends React.Component {
               heading={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.header" />}
               message={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.message" values={{ linkedAuthoritiesLength }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.proceed" />}
-              onCancel={() => this.setState({ isUnlinkAuthoritiesModalOpen: false })}
+              onCancel={this.handleCloseUnlinkModal}
               onConfirm={() => this.handleShareLocalInstance(instance)}
             />
 
@@ -1061,6 +1130,9 @@ ViewInstance.propTypes = {
       POST: PropTypes.func.isRequired,
       GET: PropTypes.func.isRequired,
     }).isRequired,
+    authorities: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
+    }).isRequired,
   }),
   onClose: PropTypes.func,
   onCopy: PropTypes.func,
@@ -1093,6 +1165,9 @@ ViewInstance.propTypes = {
   }).isRequired,
   tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool,
+  isError: PropTypes.bool,
+  error: PropTypes.object,
 };
 
 export default flowRight(

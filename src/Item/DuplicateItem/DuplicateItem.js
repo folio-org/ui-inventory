@@ -27,6 +27,7 @@ import {
 } from '../hooks';
 
 import { itemStatusesMap } from '../../constants';
+import { switchAffiliation } from '../../utils';
 
 const OMITTED_INITIAL_FIELDS = ['id', 'hrid', 'barcode', 'lastCheckIn'];
 
@@ -53,13 +54,18 @@ const DuplicateItem = ({
     return duplicatedItem;
   }, [item]);
 
-  const onSuccess = useCallback(async (response) => {
-    const { id, hrid } = await response.json();
-
+  const goToDuplicatedItem = useCallback((id) => {
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${id}`,
       search: location.search,
+      state: { tenantTo: stripes.okapi.tenant },
     });
+  }, [location.search, instanceId]);
+
+  const onSuccess = useCallback(async (response) => {
+    const { id, hrid } = await response.json();
+
+    await switchAffiliation(stripes, location?.state?.tenantFrom, () => goToDuplicatedItem(id));
 
     return callout.sendCallout({
       type: 'success',
@@ -72,12 +78,17 @@ const DuplicateItem = ({
 
   const { mutateItem } = useItemMutation({ onSuccess });
 
-  const onCancel = useCallback(() => {
+  const goBack = useCallback(() => {
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
       search: location.search,
+      state: { tenantTo: stripes.okapi.tenant },
     });
   }, [location.search, instanceId, holdingId, itemId]);
+
+  const onCancel = useCallback(async () => {
+    await switchAffiliation(stripes, location?.state?.tenantFrom, goBack);
+  }, [stripes, location?.state?.tenantFrom, goBack]);
 
   const onSubmit = useCallback((values) => {
     if (!values.barcode) {

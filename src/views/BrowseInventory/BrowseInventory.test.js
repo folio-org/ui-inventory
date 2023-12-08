@@ -3,9 +3,9 @@ import '../../../test/jest/__mock__';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { act, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import { act, screen, fireEvent, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { useLocationFilters } from '@folio/stripes-acq-components';
+import stripesAcqComponents from '@folio/stripes-acq-components';
 
 import {
   renderWithIntl,
@@ -20,10 +20,13 @@ import {
   useInventoryBrowse,
 } from '../../hooks';
 
+const { useLocationFilters } = stripesAcqComponents;
+
 const mockGetLastSearch = jest.fn();
 const mockGetLastBrowseOffset = jest.fn().mockImplementation(() => INIT_PAGE_CONFIG);
 const mockStoreLastBrowse = jest.fn();
 const mockStoreLastBrowseOffset = jest.fn();
+const mockFocusPaneTitle = jest.fn();
 
 jest.mock('../../storage');
 jest.mock('@folio/stripes-acq-components', () => ({
@@ -32,7 +35,10 @@ jest.mock('@folio/stripes-acq-components', () => ({
 }));
 jest.mock('../../components', () => ({
   BrowseInventoryFilters: jest.fn(() => <>BrowseInventoryFilters</>),
-  BrowseResultsPane: jest.fn(() => <>BrowseResultsPane</>),
+  BrowseResultsPane: jest.fn(({ paneTitleRef }) => {
+    paneTitleRef.current = { focus: mockFocusPaneTitle };
+    return <>BrowseResultsPane</>;
+  }),
   SearchModeNavigation: jest.fn(() => <>SearchModeNavigation</>),
 }));
 jest.mock('../../hooks', () => ({
@@ -81,21 +87,18 @@ const getFiltersUtils = ({
 describe('BrowseInventory', () => {
   beforeEach(() => {
     history = createMemoryHistory();
-    applySearch.mockClear();
-    applyFilters.mockClear();
-    changeSearch.mockClear();
-    resetFilters.mockClear();
-    changeSearchIndex.mockClear();
-    mockGetLastSearch.mockClear();
-    mockGetLastBrowseOffset.mockClear();
-    mockStoreLastBrowse.mockClear();
-    mockStoreLastBrowseOffset.mockClear();
+    jest.clearAllMocks();
     useLocationFilters.mockClear().mockReturnValue(getFiltersUtils());
     useLastSearchTerms.mockClear().mockReturnValue({
       getLastSearch: mockGetLastSearch,
       getLastBrowseOffset: mockGetLastBrowseOffset,
       storeLastBrowse: mockStoreLastBrowse,
       storeLastBrowseOffset: mockStoreLastBrowseOffset,
+    });
+    useInventoryBrowse.mockReturnValue({
+      data: [],
+      isFetched: false,
+      isFetching: false,
     });
   });
 
@@ -163,7 +166,7 @@ describe('BrowseInventory', () => {
   it('should call "changeSearch" when search query was changed', async () => {
     const { container } = renderBrowseInventory();
 
-    await act(async () => userEvent.type(screen.getByRole('searchbox'), 'newQuery'));
+    await act(async () => userEvent.type(screen.getByRole('textbox'), 'newQuery'));
     await act(async () => userEvent.click(container.querySelector('[data-test-single-search-form-submit="true"]')));
 
     expect(applySearch).toHaveBeenCalled();
@@ -179,6 +182,86 @@ describe('BrowseInventory', () => {
     await act(async () => userEvent.click(container.querySelector('[data-test-single-search-form-submit="true"]')));
 
     expect(applySearch).not.toHaveBeenCalled();
+  });
+
+  describe('when a new search query is submitted', () => {
+    it('should focus pane title', async () => {
+      const { getByRole } = renderBrowseInventory();
+
+      userEvent.type(getByRole('textbox'), 'newQuery');
+      userEvent.click(getByRole('button', { name: 'Search' }));
+
+      await waitFor(() => {
+        expect(mockFocusPaneTitle).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('when page is mounted without predefined search', () => {
+    it('should focus search option once', async () => {
+      const mockSearchOptionFocus = jest.fn();
+
+      jest.spyOn(stripesAcqComponents, 'SingleSearchForm')
+        .mockImplementation(({ indexRef }) => {
+          indexRef.current = { focus: mockSearchOptionFocus };
+          return <>SingleSearchForm</>;
+        });
+
+      const { rerender } = renderBrowseInventory();
+
+      useInventoryBrowse.mockReturnValue({
+        isFetching: false,
+      });
+
+      renderBrowseInventory({}, rerender);
+
+      expect(mockSearchOptionFocus).toHaveBeenCalledTimes(1);
+
+      jest.spyOn(stripesAcqComponents, 'SingleSearchForm').mockRestore();
+    });
+  });
+
+  describe('when page is mounted and data of last search is loaded', () => {
+    it('should focus search option', async () => {
+      const mockSearchOptionFocus = jest.fn();
+
+      jest.spyOn(stripesAcqComponents, 'SingleSearchForm')
+        .mockImplementation(({ indexRef }) => {
+          indexRef.current = { focus: mockSearchOptionFocus };
+          return <>SingleSearchForm</>;
+        });
+
+      history.push({ search: '?qindex=browseSubjects&query=book' });
+
+      useInventoryBrowse.mockReturnValue({
+        isFetched: false,
+        isFetching: true,
+      });
+
+      const { rerender } = renderBrowseInventory();
+
+      expect(mockSearchOptionFocus).not.toHaveBeenCalled();
+
+      useInventoryBrowse.mockReturnValue({
+        isFetched: true,
+        isFetching: true,
+      });
+
+      renderBrowseInventory({}, rerender);
+
+      expect(mockSearchOptionFocus).not.toHaveBeenCalled();
+
+      useInventoryBrowse.mockReturnValue({
+        isFetched: true,
+        isFetching: false,
+      });
+
+      renderBrowseInventory({}, rerender);
+
+      expect(mockSearchOptionFocus).toHaveBeenCalledTimes(1);
+
+      jest.spyOn(stripesAcqComponents, 'SingleSearchForm').mockRestore();
+    });
   });
 
   describe('when the selected qindex is one of those that should comprise the callNumberType param', () => {
@@ -215,5 +298,18 @@ describe('BrowseInventory', () => {
     expect(getByText('Superintendent of Documents classification')).toBeDefined();
     expect(getByText('Contributors')).toBeDefined();
     expect(getByText('Subjects')).toBeDefined();
+  });
+
+  describe('when user clicks on Reset all', () => {
+    it('should move focus to query input', () => {
+      renderBrowseInventory();
+
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+      userEvent.type(screen.getByRole('textbox'), 'test');
+      fireEvent.click(screen.getByRole('button', { name: 'Search' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+      expect(screen.getByRole('textbox')).toHaveFocus();
+    });
   });
 });

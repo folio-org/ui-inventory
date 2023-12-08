@@ -712,7 +712,7 @@
     "instances.columns.callNumber": "Call number",
     "instances.columns.numberOfTitles": "Number of titles",
     "viewAndReorderRequestsQueue": "View requests & reorder ({number})",
-    "browseCallNumbers.missedMatch": "יהיה כאן.",
+    "browseCallNumbers.missedMatch": "would be here",
     "search.allFields": "All",
     "acq.dateOpened": "Date opened",
     "moveItems.selectHolding": "Select holdings",
@@ -831,7 +831,7 @@
     "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
     "consortialHoldings": "Consortial holdings",
     "unlinkLocalMarcAuthorities.modal.header": "Linked to local authorities",
-    "unlinkLocalMarcAuthorities.modal.message": "If you proceed with sharing this instance, then <b>{linkedAuthoritiesLength}</b> bibliographic fields linked to local authority records will retain authorized values but will become uncontrolled",
+    "unlinkLocalMarcAuthorities.modal.message": "Ak budete pokračovať v zdieľaní tejto inštancie, potom bibliografické polia <b>{linkedAuthoritiesLength}</b> prepojené s lokálnymi záznamami autorít si zachovajú autorizované hodnoty, ale stanú sa neriadenými",
     "unlinkLocalMarcAuthorities.modal.proceed": "Proceed",
     "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion.",
     "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information."

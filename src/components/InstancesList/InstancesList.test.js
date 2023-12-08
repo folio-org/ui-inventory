@@ -47,6 +47,19 @@ jest.mock('../../hooks', () => ({
   }),
 }));
 
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  Pluggable: ({ renderTrigger, onClose }) => (
+    <>
+      {renderTrigger()}
+      <button type="button" onClick={() => onClose({ instanceRecord: { id: 'fast-add-record-id' } })}>Save & close</button>
+    </>
+  ),
+  TitleManager: ({ page }) => (
+    <div>{page}</div>
+  ),
+}));
+
 const data = {
   contributorTypes: [],
   contributorNameTypes: [],
@@ -156,6 +169,22 @@ describe('InstancesList', () => {
         expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
       });
 
+      describe('when query is present', () => {
+        it('should display correct document title', () => {
+          renderInstancesList({
+            segment: 'instances',
+            data: {
+              ...data,
+              query: {
+                query: 'test',
+              },
+            },
+          });
+
+          expect(screen.getByText('Inventory - test - Search')).toBeInTheDocument();
+        });
+      });
+
       describe('and browse result was selected', () => {
         it('should reset offset', () => {
           mockResultOffsetReplace.mockClear();
@@ -218,6 +247,36 @@ describe('InstancesList', () => {
 
           expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
         });
+      });
+    });
+
+    describe('when user clicks Reset all', () => {
+      it('should move focus to query input', () => {
+        renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'test' } });
+        fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
+        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+        expect(screen.getByRole('textbox', { name: 'Search' })).toHaveFocus();
+      });
+    });
+
+    describe('when search segment is changed', () => {
+      it('should clear selected rows', () => {
+        const {
+          getAllByLabelText,
+          getByText,
+        } = renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.click(getAllByLabelText('Select instance')[0]);
+        fireEvent.click(getByText('Holdings'));
+
+        expect(getAllByLabelText('Select instance')[0].checked).toBeFalsy();
       });
     });
 
@@ -315,12 +374,39 @@ describe('InstancesList', () => {
         });
       });
 
-      describe('"New MARC Bib Record" button', () => {
+      describe('"New fast add record" button', () => {
         it('should render', () => {
           renderInstancesList({ segment: 'instances' });
           openActionMenu();
 
-          expect(screen.getByRole('button', { name: 'New MARC Bib Record' })).toBeInTheDocument();
+          expect(screen.getByRole('button', { name: 'New fast add record' })).toBeInTheDocument();
+        });
+
+        describe('when saving the record', () => {
+          it('should redirect to new Instance record', async () => {
+            jest.spyOn(history, 'push');
+            renderInstancesList({ segment: 'instances' });
+            openActionMenu();
+
+            const button = screen.getByRole('button', { name: 'New fast add record' });
+
+            fireEvent.click(button);
+            fireEvent.click(screen.getByText('Save & close'));
+
+            expect(history.push).toHaveBeenCalledWith({
+              pathname: '/inventory/view/fast-add-record-id',
+              search: '',
+            });
+          });
+        });
+      });
+
+      describe('"New MARC bibliographic record" button', () => {
+        it('should render', () => {
+          renderInstancesList({ segment: 'instances' });
+          openActionMenu();
+
+          expect(screen.getByRole('button', { name: 'New MARC bibliographic record' })).toBeInTheDocument();
         });
 
         it('should redirect to the correct layer', async () => {
@@ -328,7 +414,7 @@ describe('InstancesList', () => {
           renderInstancesList({ segment: 'instances' });
           openActionMenu();
 
-          const button = screen.getByRole('button', { name: 'New MARC Bib Record' });
+          const button = screen.getByRole('button', { name: 'New MARC bibliographic record' });
 
           fireEvent.click(button);
 
@@ -458,10 +544,10 @@ describe('InstancesList', () => {
       it('should have query in search input', () => {
         renderInstancesList({ segment: 'instances' });
 
-        fireEvent.change(screen.getByRole('searchbox', { name: 'Search' }), { target: { value: 'search query' } });
+        fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'search query' } });
         fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
-        expect(screen.getByRole('searchbox', { name: 'Search' })).toHaveValue('search query');
+        expect(screen.getByRole('textbox', { name: 'Search' })).toHaveValue('search query');
       });
 
       describe('when the search option is changed', () => {
@@ -549,7 +635,7 @@ describe('InstancesList', () => {
 
           await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: qindex } }));
 
-          fireEvent.change(screen.getByRole('searchbox', { name: 'Search' }), { target: { value: _query } });
+          fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: _query } });
           fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
           const row = screen.getAllByText('ABA Journal')[0];
@@ -559,6 +645,7 @@ describe('InstancesList', () => {
             params: {
               query: `${option}=="${_query}"`,
             },
+            tenant: 'diku',
           });
         });
       });

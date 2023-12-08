@@ -18,6 +18,7 @@ import {
   omit,
   chunk,
   flatten,
+  pick,
 } from 'lodash';
 import moment from 'moment';
 
@@ -41,6 +42,7 @@ import {
   OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
+  AUTHORITY_LINKED_FIELDS,
 } from './constants';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
@@ -755,7 +757,7 @@ export const parseHttpError = async httpError => {
 
     // Optimistic locking error is currently returned as a plain text
     // https://issues.folio.org/browse/UIIN-1872?focusedCommentId=125438&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-125438
-    if (jsonError.message.match(/optimistic locking/i)) {
+    if (jsonError.message?.match(/optimistic locking/i)) {
       jsonError.errorType = ERROR_TYPES.OPTIMISTIC_LOCKING;
     }
 
@@ -790,7 +792,7 @@ export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia
 
 export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
 
-export const getUserTenantsPermissions = (stripes, tenants = []) => {
+export const getUserTenantsPermissions = async (stripes, tenants = []) => {
   const {
     user: { user: { id } },
     okapi: {
@@ -815,7 +817,9 @@ export const getUserTenantsPermissions = (stripes, tenants = []) => {
     return { tenantId, ...json };
   });
 
-  return Promise.all(promises);
+  const userTenantsPermissions = await Promise.allSettled(promises);
+
+  return userTenantsPermissions.map(userTenantsPermission => userTenantsPermission.value);
 };
 
 export const hasMemberTenantPermission = (permissionName, tenantId, permissions = []) => {
@@ -834,7 +838,7 @@ export const switchAffiliation = async (stripes, tenantId, move) => {
   if (stripes.okapi.tenant !== tenantId) {
     await updateTenant(stripes.okapi, tenantId);
 
-    validateUser(
+    await validateUser(
       stripes.okapi.url,
       stripes.store,
       tenantId,
@@ -849,4 +853,16 @@ export const switchAffiliation = async (stripes, tenantId, move) => {
   } else {
     move();
   }
+};
+
+export const getLinkedAuthorityIds = instance => {
+  // Pick fields with authorityId
+  const linkedAuthorities = pick(instance, AUTHORITY_LINKED_FIELDS);
+
+  // Retrieve only authorityId
+  const authorityIdList = AUTHORITY_LINKED_FIELDS.map(field => {
+    return linkedAuthorities[field].filter(auth => !!auth.authorityId).map(auth => auth.authorityId);
+  });
+
+  return flatten(authorityIdList);
 };
