@@ -672,9 +672,9 @@
     "acq.orderType.One-Time": "One-time",
     "acq.orderType.Ongoing": "Ongoing",
     "boundWith": "and {boundWithCount, plural, one {one more title} other {other titles}}",
-    "receivingHistory.receivedDate": "Receipt date",
+    "receivingHistory.receivedDate": "Data odbioru",
     "receivingHistory.comment": "Comment",
-    "receivingHistory.source": "Source",
+    "receivingHistory.source": "Źródło",
     "receivingHistory.source.receiving": "Receiving",
     "receivingHistory.source.user": "User",
     "holdingsLabelShort": "Holdings:",
@@ -780,7 +780,7 @@
     "selectCode": "Select code",
     "actions.menuSection.sortBy": "Sort by",
     "actions.menuSection.sortBy.relevance": "Relevance",
-    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.title": "Tytuł",
     "actions.menuSection.sortBy.contributors": "Contributors",
     "exportInstanceInMARC": "Export instance (MARC)",
     "editInstance.title": "Edit instance • {title}",
@@ -834,5 +834,7 @@
     "unlinkLocalMarcAuthorities.modal.message": "If you proceed with sharing this instance, then <b>{linkedAuthoritiesLength}</b> bibliographic fields linked to local authority records will retain authorized values but will become uncontrolled",
     "unlinkLocalMarcAuthorities.modal.proceed": "Proceed",
     "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion.",
-    "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information."
+    "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information.",
+    "documentTitle.search": "Inventory - {query} - Search",
+    "documentTitle.browse": "Inventory - {query} - Browse"
 }
