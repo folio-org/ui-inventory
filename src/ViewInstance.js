@@ -190,6 +190,7 @@ class ViewInstance extends React.Component {
       isImportRecordModalOpened: false,
       isCopyrightModalOpened: false,
       isShareLocalInstanceModalOpen: false,
+      isShareButtonDisabled: false,
       isUnlinkAuthoritiesModalOpen: false,
       linkedAuthoritiesLength: 0,
       isNewOrderModalOpen: false,
@@ -499,6 +500,7 @@ class ViewInstance extends React.Component {
           isUnlinkAuthoritiesModalOpen: false,
           isShareLocalInstanceModalOpen: false,
           isInstanceSharing: true,
+          isShareButtonDisabled: false,
         });
 
         await this.waitForInstanceSharingComplete({ sourceTenantId, instanceIdentifier });
@@ -516,12 +518,15 @@ class ViewInstance extends React.Component {
           isUnlinkAuthoritiesModalOpen: false,
           isShareLocalInstanceModalOpen: false,
           isInstanceSharing: false,
+          isShareButtonDisabled: false,
         });
         this.showUnsuccessfulShareInstanceCallout(instanceTitle);
       });
   }
 
   checkIfHasLinkedAuthorities = () => {
+    this.setState({ isShareButtonDisabled: true });
+
     const { selectedInstance } = this.props;
     const authorityIds = getLinkedAuthorityIds(selectedInstance);
 
@@ -547,12 +552,22 @@ class ViewInstance extends React.Component {
         this.handleShareLocalInstance(selectedInstance);
       }
     }).catch(() => {
-      this.setState({ isShareLocalInstanceModalOpen: false });
+      this.setState({
+        isShareLocalInstanceModalOpen: false,
+        isShareButtonDisabled: false,
+      });
 
       this.calloutRef.current.sendCallout({
         type: 'error',
         message: <FormattedMessage id="ui-inventory.communicationProblem" />,
       });
+    });
+  }
+
+  handleCloseUnlinkModal = () => {
+    this.setState({
+      isUnlinkAuthoritiesModalOpen: false,
+      isShareButtonDisabled: false,
     });
   }
 
@@ -641,6 +656,7 @@ class ViewInstance extends React.Component {
       && !isInstanceShadowCopy(source);
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
+    const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
     const numberOfRequests = instanceRequests.other?.totalRecords;
     const canReorderRequests = titleLevelRequestsFeatureEnabled && hasReorderPermissions && numberOfRequests && canReorder;
     const canViewRequests = !checkIfUserInCentralTenant(stripes) && !titleLevelRequestsFeatureEnabled;
@@ -767,12 +783,14 @@ class ViewInstance extends React.Component {
                 }}
               />
             )}
-            <ActionItem
-              id="quick-export-trigger"
-              icon="download"
-              messageId="ui-inventory.exportInstanceInMARC"
-              onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
-            />
+            {canExportMarc && (
+              <ActionItem
+                id="quick-export-trigger"
+                icon="download"
+                messageId="ui-inventory.exportInstanceInMARC"
+                onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
+              />
+            )}
             {canCreateOrder && (
               <ActionItem
                 id="clickable-create-order"
@@ -962,7 +980,10 @@ class ViewInstance extends React.Component {
       updateLocation,
       canUseSingleRecordImport,
     } = this.props;
-    const { linkedAuthoritiesLength } = this.state;
+    const {
+      linkedAuthoritiesLength,
+      isShareButtonDisabled,
+    } = this.state;
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
@@ -1046,6 +1067,7 @@ class ViewInstance extends React.Component {
               confirmLabel={<FormattedMessage id="ui-inventory.shareLocalInstance.modal.confirmButton" />}
               onCancel={() => this.setState({ isShareLocalInstanceModalOpen: false })}
               onConfirm={this.checkIfHasLinkedAuthorities}
+              isConfirmButtonDisabled={isShareButtonDisabled}
             />
 
             <ConfirmationModal
@@ -1053,7 +1075,7 @@ class ViewInstance extends React.Component {
               heading={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.header" />}
               message={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.message" values={{ linkedAuthoritiesLength }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.unlinkLocalMarcAuthorities.modal.proceed" />}
-              onCancel={() => this.setState({ isUnlinkAuthoritiesModalOpen: false })}
+              onCancel={this.handleCloseUnlinkModal}
               onConfirm={() => this.handleShareLocalInstance(instance)}
             />
 

@@ -83,6 +83,7 @@ const useInventoryBrowse = ({
 
   const {
     data = {},
+    isFetched,
     isFetching,
     isLoading,
   } = useQuery(
@@ -127,6 +128,7 @@ const useInventoryBrowse = ({
 
   return {
     data: data.items,
+    isFetched,
     isFetching,
     isLoading,
     pagination: {
