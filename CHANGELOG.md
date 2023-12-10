@@ -12,6 +12,7 @@
 * Inactive Holdings/items on Central tenant when user have affiliation for separate Member with 0 permissions. Fixes UIIN-2689.
 * Ignored hot key command on edit fields. Refs UIIN-2604.
 * Don't render Fast Add record modal in a `<Paneset>` to re-calculate other `<Pane>`'s widths after closing. Fixes UIIN-2690.
+* The quantity of assigned tags to the instance is not displaying in the little tag icon after assigning. Fixes UIIN-2559.
 
 ## [10.0.6] IN PROGRESS
 

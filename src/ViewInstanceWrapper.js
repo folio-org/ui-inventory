@@ -5,7 +5,10 @@ import { checkIfUserInMemberTenant } from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
 
 import ViewInstance from './ViewInstance';
-import { useUserTenantPermissions } from './hooks';
+import {
+  useInstanceMutation,
+  useUserTenantPermissions,
+} from './hooks';
 import { useInstance } from './common';
 
 const ViewInstanceWrapper = (props) => {
@@ -28,6 +31,7 @@ const ViewInstanceWrapper = (props) => {
   const isShared = Boolean(instance?.shared);
   const tenantId = instance?.tenantId ?? stripes.okapi.tenant;
 
+  const { mutateInstance: mutateEntity } = useInstanceMutation({ tenantId });
   const {
     userPermissions: centralTenantPermissions,
     isFetching: isCentralTenantPermissionsLoading,
@@ -38,6 +42,10 @@ const ViewInstanceWrapper = (props) => {
     enabled: Boolean(isShared && checkIfUserInMemberTenant(stripes)),
   });
 
+  const mutateInstance = (entity, { onError }) => {
+    mutateEntity(entity, { onSuccess: refetch, onError });
+  }
+
   return (
     <ViewInstance
       {...props}
@@ -46,6 +54,7 @@ const ViewInstanceWrapper = (props) => {
       centralTenantId={centralTenantId}
       consortiumId={consortiumId}
       refetchInstance={refetch}
+      mutateInstance={mutateInstance}
       selectedInstance={instance}
       isLoading={isLoading}
       isError={isError}
