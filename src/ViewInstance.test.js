@@ -310,6 +310,7 @@ describe('ViewInstance', () => {
     await waitFor(() => expect(screen.getByText('Sharing this local instance will take a few moments.' +
       ' A success message and updated details will be displayed upon completion.')).toBeInTheDocument());
   }, 10000);
+
   it('should show a correct Warning message banner when user lacks permission to vew shared instance', () => {
     renderViewInstance({
       isError: true,
@@ -320,21 +321,25 @@ describe('ViewInstance', () => {
     expect(screen.getByText('You do not currently have permission to access details of shared instances. ' +
       'Contact your FOLIO administrator for more information.')).toBeInTheDocument();
   });
+
   it('should show loading spinner when instance is loading', () => {
     renderViewInstance({ isLoading: true });
 
     expect(screen.getByText('spinner-ellipsis')).toBeInTheDocument();
   });
+
   it('should display action menu items', () => {
     renderViewInstance();
     expect(screen.getByText('Move items within an instance')).toBeInTheDocument();
     expect(screen.getByText('Move holdings/items to another instance')).toBeInTheDocument();
   });
+
   it('should display \'move\' action menu items when instance was opened from Browse page', () => {
     renderViewInstance();
     expect(screen.queryByText('Move items within an instance')).toBeInTheDocument();
     expect(screen.queryByText('Move holdings/items to another instance')).toBeInTheDocument();
   });
+
   describe('instance header', () => {
     describe('for non-consortia users', () => {
       it('should render instance title, publisher, and publication date', () => {

@@ -735,7 +735,7 @@
     "effectiveCallNumberShelving": "Efektivní signatura (jednotka), pořadí regálů",
     "browseContributors.results.error": "Chyba při vracení výsledků. Zkuste prosím znovu nebo upravte vyhledávání.",
     "remote.warning.common.items": "Jednotka byla úspěšně přesunuta do FOLIO. Chcete-li dokončit odstranění této jednotky ze vzdáleného úložiště, spusťte výstup o výjimce nebo to sdělte přímo lokaci vzdáleného úložiště.",
-    "search": "Vyhledávání",
+    "search": "Vyhledat",
     "linkedToMarcAuthority": "Propojeno s MARC autoritou",
     "browse.callNumbers": "Signatury",
     "browse.contributors": "Autoři",
@@ -834,5 +834,7 @@
     "unlinkLocalMarcAuthorities.modal.message": "Pokud budete pokračovat ve sdílení tohoto titulu, pak <b>{linkedAuthoritiesLength}</b> bibliografická pole propojená se záznamy místní autority si zachovají autorizované hodnoty, ale stanou se nekontrolovanými",
     "unlinkLocalMarcAuthorities.modal.proceed": "Pokračovat",
     "warning.instance.sharingLocalInstance": "Sdílení tohoto místního titulu zabere několik okamžiků. Po dokončení se zobrazí zpráva o úspěchu a aktualizované údaje.",
-    "warning.instance.accessSharedInstance": "Aktuálně nemáte oprávnění pro přístup k podrobnostem sdílených titulech. Další informace vám poskytne správce FOLIO."
+    "warning.instance.accessSharedInstance": "Aktuálně nemáte oprávnění pro přístup k podrobnostem sdílených titulech. Další informace vám poskytne správce FOLIO.",
+    "documentTitle.search": "Katalog - {query} - Vyhledat",
+    "documentTitle.browse": "Katalog - {query} - Procházet"
 }
