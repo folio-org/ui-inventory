@@ -902,6 +902,7 @@ class ViewInstance extends React.Component {
       okapi,
       onClose,
       tagsEnabled,
+      mutateInstance,
       isCentralTenantPermissionsLoading,
       isShared,
       isLoading,
@@ -949,6 +950,7 @@ class ViewInstance extends React.Component {
         ref={this.accordionStatusRef}
         userTenantPermissions={this.state.userTenantPermissions}
         isShared={isShared}
+        mutateInstance={mutateInstance}
       >
         {
           (!holdingsrecordid && !itemid) ?
@@ -1168,6 +1170,7 @@ ViewInstance.propTypes = {
   isLoading: PropTypes.bool,
   isError: PropTypes.bool,
   error: PropTypes.object,
+  mutateInstance: PropTypes.func,
 };
 
 export default flowRight(

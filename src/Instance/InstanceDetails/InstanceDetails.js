@@ -1,4 +1,9 @@
-import React, { useMemo, useState, useContext, forwardRef } from 'react';
+import React, {
+  useMemo,
+  useState,
+  useContext,
+  forwardRef,
+} from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -68,6 +73,7 @@ const InstanceDetails = forwardRef(({
   onClose,
   actionMenu,
   tagsEnabled,
+  mutateInstance,
   userTenantPermissions,
   isShared,
   ...rest
@@ -105,6 +111,8 @@ const InstanceDetails = forwardRef(({
       </PaneMenu>
     );
   }, [tagsEnabled, tags, intl]);
+
+  const getEntity = () => instance;
 
   const renderPaneTitle = () => {
     const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
@@ -268,7 +276,14 @@ const InstanceDetails = forwardRef(({
           </AccordionSet>
         </AccordionStatus>
       </Pane>
-      { helperApp && <HelperApp appName={helperApp} onClose={setHelperApp} />}
+      { helperApp &&
+        <HelperApp
+          getEntity={getEntity}
+          mutateEntity={mutateInstance}
+          appName={helperApp}
+          onClose={setHelperApp}
+        />
+      }
     </>
   );
 });
@@ -277,6 +292,7 @@ InstanceDetails.propTypes = {
   children: PropTypes.node,
   actionMenu: PropTypes.func,
   onClose: PropTypes.func.isRequired,
+  mutateInstance: PropTypes.func,
   instance: PropTypes.object,
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
