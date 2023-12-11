@@ -1170,6 +1170,7 @@ ViewInstance.propTypes = {
   isLoading: PropTypes.bool,
   isError: PropTypes.bool,
   error: PropTypes.object,
+  mutateInstance: PropTypes.func,
 };
 
 export default flowRight(

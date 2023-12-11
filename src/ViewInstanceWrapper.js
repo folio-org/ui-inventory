@@ -44,7 +44,7 @@ const ViewInstanceWrapper = (props) => {
 
   const mutateInstance = (entity, { onError }) => {
     mutateEntity(entity, { onSuccess: refetch, onError });
-  }
+  };
 
   return (
     <ViewInstance
