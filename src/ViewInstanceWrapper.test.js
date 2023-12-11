@@ -7,7 +7,10 @@ import buildStripes from '../test/jest/__mock__/stripesCore.mock';
 import { renderWithIntl, translationsProperties } from '../test/jest/helpers';
 import ViewInstanceWrapper from './ViewInstanceWrapper';
 import ViewInstance from './ViewInstance';
-import { useUserTenantPermissions } from './hooks';
+import {
+  useInstanceMutation,
+  useUserTenantPermissions,
+} from './hooks';
 import { useInstance } from './common';
 import {
   CONSORTIUM_PREFIX,
@@ -18,6 +21,7 @@ jest.mock('./ViewInstance', () => jest.fn(() => <div>ViewInstance</div>));
 
 jest.mock('./hooks', () => ({
   ...jest.requireActual('./hooks'),
+  useInstanceMutation: jest.fn(),
   useUserTenantPermissions: jest.fn(),
 }));
 jest.mock('./common', () => ({
@@ -46,6 +50,7 @@ const renderViewInstanceWrapper = (props = {}) => renderWithIntl(
 describe('ViewInstanceWrapper', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    useInstanceMutation.mockReturnValue({ mutateInstance: () => {} });
     useUserTenantPermissions.mockReturnValue({
       userPermissions: [],
       isFetching: false,

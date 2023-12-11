@@ -15,6 +15,7 @@
 * Browse Lists | Focus updates. Fixes UIIN-2267.
 * Users with data export view only permission. Refs UIIN-2660.
 * Always highlight the first list row after pagination is clicked. Refs UIIN-2708.
+* The quantity of assigned tags to the instance is not displaying in the little tag icon after assigning. Fixes UIIN-2559.
 
 ## [10.0.8](https://github.com/folio-org/ui-inventory/tree/v10.0.8) (2023-12-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.7...v10.0.8)
