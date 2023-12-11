@@ -100,7 +100,6 @@ const BrowseInventory = () => {
   } = useInventoryBrowse({
     filters: withExtraFilters,
     pageParams: { pageConfig, setPageConfig },
-    options: { onSettled: deleteItemToView },
   });
 
   const { validateDataQuery } = useBrowseValidation(searchIndex);
@@ -148,6 +147,7 @@ const BrowseInventory = () => {
   }, [searchQuery, filters]);
 
   const onChangeSearchIndex = useCallback((e) => {
+    deleteItemToView();
     resetFilters();
     changeSearchIndex(e);
   }, []);
