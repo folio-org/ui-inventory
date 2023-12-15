@@ -7,7 +7,10 @@ import {
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { AppContextMenu } from '@folio/stripes/core';
+import {
+  AppContextMenu,
+  coreEvents,
+} from '@folio/stripes/core';
 import {
   checkScope,
   CommandList,
@@ -196,6 +199,12 @@ const InventoryRouting = (props) => {
       </HoldingsProvider>
     </DataProvider>
   );
+};
+
+InventoryRouting.eventHandler = (event) => {
+  if ([coreEvents.LOGIN, 'SWITCH_ACTIVE_AFFILIATION'].includes(event)) {
+    sessionStorage.clear();
+  }
 };
 
 InventoryRouting.propTypes = {

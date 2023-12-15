@@ -80,7 +80,6 @@ import {
   setItem,
 } from '../../storage';
 import facetsStore from '../../stores/facetsStore';
-import registerLogoutListener from '../../hooks/useLogout/utils';
 import { advancedSearchIndexes } from '../../filterConfig';
 
 import css from './instances.css';
@@ -202,8 +201,6 @@ class InstancesList extends React.Component {
     }
 
     this.processLastSearchTerms();
-
-    registerLogoutListener(this.clearStorage, namespace, 'instances-list-logout', history);
   }
 
   componentDidUpdate(prevProps) {
@@ -255,16 +252,6 @@ class InstancesList extends React.Component {
     }
 
     return intl.formatMessage({ id: 'ui-inventory.documentTitle.search' }, { query: query.query });
-  }
-
-  clearStorage = () => {
-    const {
-      namespace,
-    } = this.props;
-
-    Object.values(segments).forEach((segment) => {
-      setItem(`${namespace}.${segment}.lastOpenRecord`, null);
-    });
   }
 
   processLastSearchTerms = () => {
