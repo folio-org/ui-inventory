@@ -178,7 +178,6 @@ class InstancesList extends React.Component {
   componentDidMount() {
     const {
       history,
-      namespace,
       getParams,
     } = this.props;
 
