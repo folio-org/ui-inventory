@@ -43,6 +43,8 @@ import {
 } from './routes';
 import Settings from './settings';
 import { DataProvider, HoldingsProvider, LastSearchTermsProvider } from './providers';
+import { EVENTS } from './constants';
+import { clearStorage } from './utils';
 
 const InventoryRouting = (props) => {
   const history = useHistory();
@@ -202,8 +204,8 @@ const InventoryRouting = (props) => {
 };
 
 InventoryRouting.eventHandler = (event) => {
-  if ([coreEvents.LOGIN, 'SWITCH_ACTIVE_AFFILIATION'].includes(event)) {
-    sessionStorage.clear();
+  if ([coreEvents.LOGIN, EVENTS.SWITCH_ACTIVE_AFFILIATION].includes(event)) {
+    clearStorage();
   }
 };
 
