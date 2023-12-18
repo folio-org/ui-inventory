@@ -132,7 +132,7 @@
     "enumerationData": "Daten zur Zählung",
     "itemPublicNote": "Exemplar öffentliche Anmerkung",
     "holdingsHrid": "Bestands-HRID",
-    "instanceHrid": "Titel-HRID",
+    "instanceHrid": "Instanz-HRID",
     "viewSource": "Quelle anzeigen",
     "itemHrid": "Exemplar-HRID",
     "administrativeData": "Administrative Daten",
