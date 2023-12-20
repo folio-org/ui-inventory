@@ -15,7 +15,7 @@ const searchTermsExpectations = () => {
   expect(removeItem).toHaveBeenNthCalledWith(6, '@folio/inventory/search.holdings.lastOffset');
   expect(removeItem).toHaveBeenNthCalledWith(7, '@folio/inventory/search.items.lastOffset');
   expect(removeItem).toHaveBeenNthCalledWith(8, '@folio/inventory/browse.lastOffset');
-}
+};
 
 describe('InventoryRouting', () => {
   beforeEach(() => {
