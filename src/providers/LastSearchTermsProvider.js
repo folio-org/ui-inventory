@@ -6,25 +6,10 @@ import { useNamespace } from '@folio/stripes/core';
 import { LastSearchTermsContext } from '../contexts';
 import { getItem, setItem } from '../storage';
 import { INIT_PAGE_CONFIG } from '../hooks/useInventoryBrowse';
-import { useLogout } from '../hooks';
 import { segments } from '../constants';
 
 const LastSearchTermsProvider = ({ children }) => {
   const [namespace] = useNamespace();
-
-  const resetStorageAfterLogout = () => {
-    setItem(`${namespace}/search.${segments.instances}.lastSearch`, null);
-    setItem(`${namespace}/search.${segments.holdings}.lastSearch`, null);
-    setItem(`${namespace}/search.${segments.items}.lastSearch`, null);
-    setItem(`${namespace}/browse.lastSearch`, null);
-    setItem(`${namespace}/search.${segments.instances}.lastOffset`, null);
-    setItem(`${namespace}/search.${segments.holdings}.lastOffset`, null);
-    setItem(`${namespace}/search.${segments.items}.lastOffset`, null);
-    setItem(`${namespace}/browse.lastOffset`, null);
-    setItem(`${namespace}/search.lastSegment`, null);
-  };
-
-  useLogout(resetStorageAfterLogout);
 
   const getLastSegment = () => getItem(`${namespace}/search.lastSegment`) || segments.instances;
   const getLastSearch = (segment = getLastSegment()) => getItem(`${namespace}/search.${segment}.lastSearch`) || '';

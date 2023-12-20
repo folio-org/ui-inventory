@@ -11,8 +11,10 @@
   "stripes": {
     "actsAs": [
       "app",
+      "handler",
       "settings"
     ],
+    "handlerName": "eventHandler",
     "displayName": "ui-inventory.meta.title",
     "route": "/inventory",
     "home": "/inventory?filters=&sort=title",

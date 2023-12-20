@@ -43,7 +43,9 @@ import {
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
+  segments,
 } from './constants';
+import { removeItem } from './storage';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
   ? (isEmpty(item) || item.every(element => !element || element === '-'))
@@ -865,4 +867,22 @@ export const getLinkedAuthorityIds = instance => {
   });
 
   return flatten(authorityIdList);
+};
+
+export const clearStorage = () => {
+  const namespace = '@folio/inventory';
+
+  removeItem(`${namespace}/search.${segments.instances}.lastSearch`);
+  removeItem(`${namespace}/search.${segments.holdings}.lastSearch`);
+  removeItem(`${namespace}/search.${segments.items}.lastSearch`);
+  removeItem(`${namespace}/browse.lastSearch`);
+  removeItem(`${namespace}/search.${segments.instances}.lastOffset`);
+  removeItem(`${namespace}/search.${segments.holdings}.lastOffset`);
+  removeItem(`${namespace}/search.${segments.items}.lastOffset`);
+  removeItem(`${namespace}/browse.lastOffset`);
+  removeItem(`${namespace}/search.lastSegment`);
+
+  Object.values(segments).forEach((segment) => {
+    removeItem(`${namespace}.${segment}.lastOpenRecord`);
+  });
 };
