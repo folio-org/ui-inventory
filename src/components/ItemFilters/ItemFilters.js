@@ -90,33 +90,33 @@ const ItemFilters = (props) => {
     [FACETS.ITEMS_STATISTICAL_CODE_IDS]: activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS],
   };
 
-  const getNewRecords = (records) => {
+  const getNewRecords = (records, handleFetchFacets) => {
     return _.reduce(FACETS_SETTINGS, (accum, name, recordName) => {
       if (records[recordName]) {
         const recordValues = records[recordName].values;
-        const commonProps = [recordValues, accum, name];
+        const commonProps = [recordValues, accum, name, handleFetchFacets];
 
         switch (recordName) {
           case FACETS_CQL.SHARED:
             accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
             break;
           case FACETS_CQL.HELD_BY:
-            processFacetOptions(activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
+            processFacetOptions(FACETS.HELD_BY, activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_STATUSES:
-            processItemsStatuses(activeFilters[FACETS.ITEM_STATUS], itemStatuses, intl, ...commonProps);
+            processItemsStatuses(FACETS.ITEM_STATUS, activeFilters[FACETS.ITEM_STATUS], itemStatuses, intl, ...commonProps);
             break;
           case FACETS_CQL.EFFECTIVE_LOCATION:
-            processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
+            processFacetOptions(FACETS.EFFECTIVE_LOCATION, activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
             break;
           case FACETS_CQL.HOLDINGS_PERMANENT_LOCATION:
-            processFacetOptions(activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION], locations, ...commonProps);
+            processFacetOptions(FACETS.HOLDINGS_PERMANENT_LOCATION, activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION], locations, ...commonProps);
             break;
           case FACETS_CQL.MATERIAL_TYPES:
-            processFacetOptions(activeFilters[FACETS.MATERIAL_TYPE], materialTypes, ...commonProps);
+            processFacetOptions(FACETS.MATERIAL_TYPE, activeFilters[FACETS.MATERIAL_TYPE], materialTypes, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_STATISTICAL_CODE_IDS:
-            processStatisticalCodes(activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
+            processStatisticalCodes(FACETS.ITEMS_STATISTICAL_CODE_IDS, activeFilters[FACETS.ITEMS_STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS], recordValues);

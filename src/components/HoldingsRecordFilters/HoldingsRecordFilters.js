@@ -91,39 +91,39 @@ const HoldingsRecordFilters = (props) => {
     [FACETS.HOLDINGS_TYPE]: activeFilters[FACETS.HOLDINGS_TYPE],
   };
 
-  const getNewRecords = (records) => {
+  const getNewRecords = (records, handleFetchFacets) => {
     return reduce(FACETS_SETTINGS, (accum, name, recordName) => {
       if (records[recordName]) {
         const recordValues = records[recordName].values;
-        const commonProps = [recordValues, accum, name];
+        const commonProps = [recordValues, accum, name, handleFetchFacets];
 
         switch (recordName) {
           case FACETS_CQL.SHARED:
             accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
             break;
           case FACETS_CQL.HELD_BY:
-            processFacetOptions(activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
+            processFacetOptions(FACETS.HELD_BY, activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
             break;
           case FACETS_CQL.EFFECTIVE_LOCATION:
-            processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
+            processFacetOptions(FACETS.EFFECTIVE_LOCATION, activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
             break;
           case FACETS_CQL.HOLDINGS_PERMANENT_LOCATION:
-            processFacetOptions(activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION], locations, ...commonProps);
+            processFacetOptions(FACETS.HOLDINGS_PERMANENT_LOCATION, activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION], locations, ...commonProps);
             break;
           case FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.HOLDINGS_DISCOVERY_SUPPRESS], recordValues);
             break;
           case FACETS_CQL.HOLDINGS_STATISTICAL_CODE_IDS:
-            processStatisticalCodes(activeFilters[FACETS.HOLDINGS_STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
+            processStatisticalCodes(FACETS.HOLDINGS_STATISTICAL_CODE_IDS, activeFilters[FACETS.HOLDINGS_STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.HOLDINGS_SOURCE:
-            processFacetOptions(activeFilters[FACETS.HOLDINGS_SOURCE], holdingsSources, ...commonProps);
+            processFacetOptions(FACETS.HOLDINGS_SOURCE, activeFilters[FACETS.HOLDINGS_SOURCE], holdingsSources, ...commonProps);
             break;
           case FACETS_CQL.HOLDINGS_TAGS:
             accum[name] = getSourceOptions(activeFilters[FACETS.HOLDINGS_TAGS], recordValues);
             break;
           case FACETS_CQL.HOLDINGS_TYPE:
-            processFacetOptions(activeFilters[FACETS.HOLDINGS_TYPE], holdingsTypes, ...commonProps);
+            processFacetOptions(FACETS.HOLDINGS_TYPE, activeFilters[FACETS.HOLDINGS_TYPE], holdingsTypes, ...commonProps);
             break;
           default:
         }

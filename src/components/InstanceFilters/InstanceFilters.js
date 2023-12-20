@@ -114,36 +114,36 @@ const InstanceFilters = props => {
     [FACETS.STATISTICAL_CODE_IDS]: activeFilters[FACETS.STATISTICAL_CODE_IDS],
   };
 
-  const getNewRecords = (records) => {
+  const getNewRecords = (records, handleFetchFacets) => {
     return _.reduce(FACETS_SETTINGS, (accum, name, recordName) => {
       if (records[recordName]) {
         const recordValues = records[recordName].values;
-        const commonProps = [recordValues, accum, name];
+        const commonProps = [recordValues, accum, name, handleFetchFacets];
 
         switch (recordName) {
           case FACETS_CQL.SHARED:
             accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
             break;
           case FACETS_CQL.HELD_BY:
-            processFacetOptions(activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
+            processFacetOptions(FACETS.HELD_BY, activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
             break;
           case FACETS_CQL.EFFECTIVE_LOCATION:
-            processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
+            processFacetOptions(FACETS.EFFECTIVE_LOCATION, activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
             break;
           case FACETS_CQL.LANGUAGES:
             accum[name] = languageOptionsES(activeFilters[FACETS.LANGUAGE], intl, recordValues);
             break;
           case FACETS_CQL.INSTANCE_TYPE:
-            processFacetOptions(activeFilters[FACETS.RESOURCE], resourceTypes, ...commonProps);
+            processFacetOptions(FACETS.RESOURCE, activeFilters[FACETS.RESOURCE], resourceTypes, ...commonProps);
             break;
           case FACETS_CQL.INSTANCE_FORMAT:
-            processFacetOptions(activeFilters[FACETS.FORMAT], instanceFormats, ...commonProps);
+            processFacetOptions(FACETS.FORMAT, activeFilters[FACETS.FORMAT], instanceFormats, ...commonProps);
             break;
           case FACETS_CQL.MODE_OF_ISSUANCE:
-            processFacetOptions(activeFilters[FACETS.MODE], modesOfIssuance, ...commonProps);
+            processFacetOptions(FACETS.MODE, activeFilters[FACETS.MODE], modesOfIssuance, ...commonProps);
             break;
           case FACETS_CQL.NATURE_OF_CONTENT:
-            processFacetOptions(activeFilters[FACETS.NATURE_OF_CONTENT], natureOfContentTerms, ...commonProps);
+            processFacetOptions(FACETS.NATURE_OF_CONTENT, activeFilters[FACETS.NATURE_OF_CONTENT], natureOfContentTerms, ...commonProps);
             break;
           case FACETS_CQL.STAFF_SUPPRESS:
             accum[name] = getSuppressedOptions(activeFilters[FACETS.STAFF_SUPPRESS], recordValues);
@@ -155,10 +155,10 @@ const InstanceFilters = props => {
             accum[name] = getSourceOptions(activeFilters[FACETS.SOURCE], recordValues);
             break;
           case FACETS_CQL.STATUS:
-            processFacetOptions(activeFilters[FACETS.STATUS], instanceStatuses, ...commonProps);
+            processFacetOptions(FACETS.STATUS, activeFilters[FACETS.STATUS], instanceStatuses, ...commonProps);
             break;
           case FACETS_CQL.STATISTICAL_CODE_IDS:
-            processStatisticalCodes(activeFilters[FACETS.STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
+            processStatisticalCodes(FACETS.STATISTICAL_CODE_IDS, activeFilters[FACETS.STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
             break;
           case FACETS_CQL.INSTANCES_TAGS:
             accum[name] = getSourceOptions(activeFilters[FACETS.INSTANCES_TAGS], recordValues);

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import {DEFAULT_FILTERS_NUMBER} from "./constants";
 
 const getFacetDataMap = (facetData, key = 'id') => {
   const facetDataMap = new Map();
@@ -248,30 +249,48 @@ const parseStatisticalCodeOption = (entry, count) => {
   return option;
 };
 
-export const processStatisticalCodes = (selectedFiltersId, recordValues, facetData, allFilters, name) => {
-  if (facetData) {
-    allFilters[name] = getFacetOptions(selectedFiltersId, facetData, recordValues, 'id', parseStatisticalCodeOption);
+const processOptions = ({ facetName, facetData, getOptions, handleFetchFacets, allFilters, name }) => {
+  if (!facetData) {
+    return;
   }
+
+  const facetOptions = getOptions();
+  const hasDeletedOption = facetOptions.some(option => option.isDeleted);
+
+  if (hasDeletedOption && facetOptions.length === DEFAULT_FILTERS_NUMBER) {
+    handleFetchFacets({ facetAlwaysRequiredAllOptions: facetName });
+    return;
+  }
+
+  allFilters[name] = facetOptions.filter(option => !option.isDeleted);
+};
+
+export const processStatisticalCodes = (facetName, selectedFiltersId, recordValues, facetData, allFilters, name, handleFetchFacets) => {
+  const getOptions = () => getFacetOptions(selectedFiltersId, facetData, recordValues, 'id', parseStatisticalCodeOption);
+
+  processOptions({ facetName, facetData, getOptions, handleFetchFacets, allFilters, name });
 };
 
 /**
  * Turns facet data into an array of label/value/count representation used by UI
  *
+ * @param {String} facetName facet name in the FACETS constant
  * @param {String} selectedFiltersId selected filters id (is this being used?)
  * @param {Array} recordValues all dictionary records for given filter
  * @param {Array} facetData ids of records returned from facets
  * @param {Object} allFilters object which holds currently active filters
  * @param {String} name name of the options key defined in https://github.com/folio-org/ui-inventory/blob/8c20a728d41dcf764c7d894a31c19d8d3215316a/src/constants.js#L245
- * @param {String} key - primiary key in dictionary (usually id)
+ * @param {Function} handleFetchFacets - function to fetch facets from useFacets
  */
-export const processFacetOptions = (selectedFiltersId, recordValues, facetData, allFilters, name, key) => {
-  if (facetData) {
-    allFilters[name] = getFacetOptions(selectedFiltersId, facetData, recordValues, key);
-  }
-};
 
-export const processItemsStatuses = (selectedFiltersId, itemStatuses, intl, recordValues, accum, name) => {
-  if (itemStatuses) {
-    accum[name] = getItemStatusesOptions(selectedFiltersId, recordValues, itemStatuses, intl);
-  }
+export const processFacetOptions = (facetName, selectedFiltersId, recordValues, facetData, allFilters, name, handleFetchFacets) => {
+  const getOptions = () => getFacetOptions(selectedFiltersId, facetData, recordValues);
+
+  processOptions({facetName, facetData, getOptions, handleFetchFacets, allFilters, name});
+}
+
+export const processItemsStatuses = (facetName, selectedFiltersId, itemStatuses, intl, recordValues, allFilters, name, handleFetchFacets) => {
+  const getOptions = () => getItemStatusesOptions(selectedFiltersId, recordValues, itemStatuses, intl);
+
+  processOptions({facetName, facetData: itemStatuses, getOptions, handleFetchFacets, allFilters, name});
 };

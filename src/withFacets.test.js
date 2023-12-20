@@ -15,7 +15,9 @@ import {
 const WrappedComponent = ({
   fetchFacets,
   data = {},
-  properties = {},
+  properties = {
+    facetsAlwaysRequiredAllOptions: {},
+  },
   isBrowseLookup,
 }) => {
   return (
@@ -597,6 +599,7 @@ describe('withFacets', () => {
       const properties = {
         accordions: { resource: true, format: true },
         accordionsData: {},
+        facetsAlwaysRequiredAllOptions: {},
       };
 
       const { getByText } = render(
@@ -633,6 +636,7 @@ describe('withFacets', () => {
         accordionsData: {
           resource: { isSelected: true },
         },
+        facetsAlwaysRequiredAllOptions: {},
       };
 
       const { getByText } = render(
@@ -671,6 +675,7 @@ describe('withFacets', () => {
             resource: { isOnMoreClicked: true },
             format: { isSelected: true },
           },
+          facetsAlwaysRequiredAllOptions: {},
         };
 
         const { getByText } = render(

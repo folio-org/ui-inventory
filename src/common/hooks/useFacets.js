@@ -39,6 +39,8 @@ const useFacets = (
   const [facetNameToOpen, setFacetNameToOpen] = useState('');
   const [showLoadingForAllFacets, setShowLoadingForAllFacets] = useState(false);
 
+  const facetsAlwaysRequiredAllOptions = useRef({});
+
   const prevAccordionsState = useRef(accordions);
   const prevFilters = useRef({});
   const prevUrl = useRef({});
@@ -120,6 +122,7 @@ const useFacets = (
     onFetchFacets({
       accordions,
       accordionsData: facetsData,
+      facetsAlwaysRequiredAllOptions: facetsAlwaysRequiredAllOptions.current,
     });
   }, [
     accordions,
@@ -134,9 +137,10 @@ const useFacets = (
       focusedFacet,
       facetToOpen,
       dateFacet,
+      facetAlwaysRequiredAllOptions,
     } = property;
 
-    const facetName = facetToOpen || onMoreClickedFacet || focusedFacet || dateFacet;
+    const facetName = facetToOpen || onMoreClickedFacet || focusedFacet || dateFacet || facetAlwaysRequiredAllOptions;
 
     if (facetName) {
       setFacetNameToOpen(facetName);
@@ -152,6 +156,9 @@ const useFacets = (
       processOnMoreClicking(onMoreClickedFacet);
     } else if (focusedFacet) {
       onFetchFacets({ focusedFacet });
+    } else if (facetAlwaysRequiredAllOptions) {
+      facetsAlwaysRequiredAllOptions.current[facetAlwaysRequiredAllOptions] = true;
+      onFetchFacets({ facetAlwaysRequiredAllOptions });
     } else {
       processAllFacets();
     }
@@ -177,10 +184,17 @@ const useFacets = (
 
   useEffect(() => {
     if (!_.isEmpty(records)) {
-      const newRecords = getNewRecords(records);
+      const newRecords = getNewRecords(records, handleFetchFacets);
+
+      // newRecords can be an empty object when all facet options are already deleted (more details in processOptions),
+      // so no need to rerender everything.
+      if (_.isEmpty(newRecords)) {
+        return;
+      }
+
       setFacetsOptions(prevFacetOptions => ({ ...prevFacetOptions, ...newRecords }));
     }
-  }, [records]);
+  }, [records, handleFetchFacets]);
 
   useEffect(() => {
     let facetToOpen = '';

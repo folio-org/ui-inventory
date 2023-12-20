@@ -77,29 +77,29 @@ const InstanceFiltersBrowse = props => {
     [FACETS.NAME_TYPE]: activeFilters[FACETS.NAME_TYPE],
   };
 
-  const getNewRecords = (records) => {
+  const getNewRecords = (records, handleFetchFacets) => {
     return _.reduce(FACETS_SETTINGS, (accum, name, recordName) => {
       if (records[recordName]) {
         const recordValues = records[recordName].values;
-        const commonProps = [recordValues, accum, name];
+        const commonProps = [recordValues, accum, name, handleFetchFacets];
 
         if (recordName === FACETS_CQL.EFFECTIVE_LOCATION) {
-          processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
+          processFacetOptions(FACETS.EFFECTIVE_LOCATION, activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
         }
         if (recordName === FACETS_CQL.NAME_TYPE) {
-          processFacetOptions(activeFilters[FACETS.NAME_TYPE], contributorNameTypes, ...commonProps);
+          processFacetOptions(FACETS.NAME_TYPE, activeFilters[FACETS.NAME_TYPE], contributorNameTypes, ...commonProps);
         }
         if (recordName === FACETS_CQL.INSTANCES_SHARED) {
           accum[name] = getSharedOptions(activeFilters[FACETS.CONTRIBUTORS_SHARED], recordValues);
         }
         if (recordName === FACETS_CQL.INSTANCES_HELD_BY) {
-          processFacetOptions(activeFilters[FACETS.CONTRIBUTORS_HELD_BY], consortiaTenants, ...commonProps);
+          processFacetOptions(FACETS.CONTRIBUTORS_HELD_BY, activeFilters[FACETS.CONTRIBUTORS_HELD_BY], consortiaTenants, ...commonProps);
         }
         if (recordName === FACETS_CQL.SHARED) {
           accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
         }
         if (recordName === FACETS_CQL.HELD_BY) {
-          processFacetOptions(activeFilters[FACETS.CALL_NUMBERS_HELD_BY], consortiaTenants, ...commonProps);
+          processFacetOptions(FACETS.CALL_NUMBERS_HELD_BY, activeFilters[FACETS.CALL_NUMBERS_HELD_BY], consortiaTenants, ...commonProps);
         }
       }
       return accum;

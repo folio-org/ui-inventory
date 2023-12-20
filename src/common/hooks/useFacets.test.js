@@ -201,6 +201,7 @@ describe('useFacets', () => {
         expect(_data.onFetchFacets).toHaveBeenCalledWith({
           accordions: { resource: true, format: true },
           accordionsData: {},
+          facetsAlwaysRequiredAllOptions: {},
         });
       });
     });
@@ -247,6 +248,7 @@ describe('useFacets', () => {
           accordionsData: {
             resource: { isSelected: true },
           },
+          facetsAlwaysRequiredAllOptions: {},
         });
       });
     });
@@ -354,6 +356,7 @@ describe('useFacets', () => {
           expect(_data.onFetchFacets).toHaveBeenCalledWith({
             accordions: { format: false, resource: true },
             accordionsData: expect.anything(),
+            facetsAlwaysRequiredAllOptions: {},
           });
         });
       });

@@ -52,9 +52,7 @@ function CheckboxFacetList({
           <FormattedMessage id="ui-inventory.noMatchingOptions" />
         }
 
-        {!isPending && dataOptions
-          .filter(({ isDeleted }) => !isDeleted)
-          .map(({ count, value, label, disabled, readOnly }) => {
+        {!isPending && dataOptions.map(({ count, value, label, disabled, readOnly }) => {
             const name = typeof label === 'string' ? label : value;
             return (
               <Checkbox

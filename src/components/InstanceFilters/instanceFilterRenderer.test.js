@@ -18,6 +18,7 @@ import {
   processStatisticalCodes,
 } from '../../facetUtils';
 import { languageOptionsES } from './languages';
+import {FACETS, FACETS_OPTIONS} from "../../constants";
 
 jest.mock('./languages', () => ({
   ...jest.requireActual('./languages'),
@@ -94,12 +95,12 @@ describe('instanceFilterRenderer', () => {
   });
   it('processFacetOptions should be called when instanceFilterRenderer renders', () => {
     renderFilters();
-    expect(processFacetOptions).toBeCalledWith(undefined, DATA.locations, undefined, expect.anything(), expect.anything());
-    expect(processFacetOptions).toBeCalledWith(undefined, DATA.instanceTypes, undefined, expect.anything(), expect.anything());
-    expect(processFacetOptions).toBeCalledWith(undefined, DATA.instanceFormats, undefined, expect.anything(), expect.anything());
-    expect(processFacetOptions).toBeCalledWith(undefined, DATA.modesOfIssuance, undefined, expect.anything(), expect.anything());
-    expect(processFacetOptions).toBeCalledWith(undefined, DATA.natureOfContentTerms, undefined, expect.anything(), expect.anything());
-    expect(processFacetOptions).toBeCalledWith(undefined, DATA.instanceStatuses, undefined, expect.anything(), expect.anything());
+    expect(processFacetOptions).toBeCalledWith(FACETS.EFFECTIVE_LOCATION, undefined, DATA.locations, undefined, expect.anything(), FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS, expect.anything());
+    expect(processFacetOptions).toBeCalledWith(FACETS.RESOURCE, undefined, DATA.instanceTypes, undefined, expect.anything(), FACETS_OPTIONS.RESOURCE_TYPE_OPTIONS, expect.anything());
+    expect(processFacetOptions).toBeCalledWith(FACETS.FORMAT, undefined, DATA.instanceFormats, undefined, expect.anything(), FACETS_OPTIONS.FORMAT_OPTIONS, expect.anything());
+    expect(processFacetOptions).toBeCalledWith(FACETS.MODE, undefined, DATA.modesOfIssuance, undefined, expect.anything(), FACETS_OPTIONS.MODE_OF_ISSUANCE_OPTIONS, expect.anything());
+    expect(processFacetOptions).toBeCalledWith(FACETS.NATURE_OF_CONTENT, undefined, DATA.natureOfContentTerms, undefined, expect.anything(), FACETS_OPTIONS.NATURE_OF_CONTENT_OPTIONS, expect.anything());
+    expect(processFacetOptions).toBeCalledWith(FACETS.STATUS, undefined, DATA.instanceStatuses, undefined, expect.anything(), FACETS_OPTIONS.STATUSES_OPTIONS, expect.anything());
   });
   it('languageOptionsES should be called when instanceFilterRenderer renders', () => {
     renderFilters();
@@ -115,7 +116,7 @@ describe('instanceFilterRenderer', () => {
   });
   it('processStatisticalCodes should be called when instanceFilterRenderer renders', () => {
     renderFilters();
-    expect(processStatisticalCodes).toBeCalledWith(undefined, DATA.statisticalCodes, undefined, expect.anything(), expect.anything());
+    expect(processStatisticalCodes).toBeCalledWith(FACETS.STATISTICAL_CODE_IDS, undefined, DATA.statisticalCodes, undefined, expect.anything(), FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS, expect.anything());
   });
   it('onChange function to be called when clearfilter button is clicked', () => {
     renderFilters();

@@ -8,6 +8,7 @@ import {
   processFacetOptions,
   processItemsStatuses,
 } from './facetUtils';
+import {FACETS} from "./constants";
 
 describe('getFacetOptions', () => {
   it('getFacetOptions returns the expected options with valid input', () => {
@@ -196,8 +197,10 @@ describe('processStatisticalCodes', () => {
   ];
   const allFilters = {};
   const name = 'statisticalCodes';
+  const facetName = FACETS.EFFECTIVE_LOCATION;
+  const handleFetchFacets = jest.fn();
   it('extracts statistical code options from facetData and recordValues', () => {
-    processStatisticalCodes(selectedFiltersId, recordValues, facetData, allFilters, name);
+    processStatisticalCodes(facetName, selectedFiltersId, recordValues, facetData, allFilters, name, handleFetchFacets);
     expect(allFilters[name]).toHaveLength(0);
   });
   it('filters out statistical code options without totalRecords', () => {
@@ -228,8 +231,9 @@ describe('processFacetOptions', () => {
     const facetData = null;
     const allFilters = {};
     const name = 'test';
-    const key = 'id';
-    processFacetOptions(selectedFiltersId, recordValues, facetData, allFilters, name, key);
+    const facetName = FACETS.EFFECTIVE_LOCATION;
+    const handleFetchFacets = jest.fn();
+    processFacetOptions(facetName, selectedFiltersId, recordValues, facetData, allFilters, name, handleFetchFacets);
     expect(allFilters).not.toHaveProperty(name);
     expect(allFilters).toEqual({});
   });
@@ -253,7 +257,9 @@ describe('processItemsStatuses', () => {
     ];
     const accum = {};
     const name = 'itemStatuses';
-    processItemsStatuses(selectedFiltersId, itemStatuses, intl, recordValues, accum, name);
+    const facetName = FACETS.EFFECTIVE_LOCATION;
+    const handleFetchFacets = jest.fn();
+    processItemsStatuses(facetName, selectedFiltersId, itemStatuses, intl, recordValues, accum, name, handleFetchFacets);
     expect(accum).toEqual({
       itemStatuses: [
         { label: 'Status 1', value: 'status1', count: 5 },

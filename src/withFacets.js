@@ -86,7 +86,7 @@ function withFacets(WrappedComponent) {
       }),
     };
 
-    getFacets = (accordions, accordionsData) => {
+    getFacets = (accordions, accordionsData, facetsAlwaysRequiredAllOptions) => {
       let index = 0;
 
       return reduce(accordions, (accum, isFacetOpened, facetName) => {
@@ -100,7 +100,9 @@ function withFacets(WrappedComponent) {
           const isFacetValue = accordionsData?.[facetName]?.value;
           const isFilterSelected = accordionsData?.[facetName]?.isSelected;
           const isOnMoreClicked = accordionsData?.[facetName]?.isOnMoreClicked;
+          const isFacetAlwaysRequiredAllOptions = facetsAlwaysRequiredAllOptions[facetName];
           const isNeedAllFilters =
+            isFacetAlwaysRequiredAllOptions ||
             isOnMoreClicked ||
             isFacetValue ||
             isFilterSelected;
@@ -178,6 +180,8 @@ function withFacets(WrappedComponent) {
         accordions,
         accordionsData,
         facetToOpen,
+        facetAlwaysRequiredAllOptions,
+        facetsAlwaysRequiredAllOptions,
       } = properties;
       const {
         resources,
@@ -193,7 +197,7 @@ function withFacets(WrappedComponent) {
 
       // temporary query value
       const params = { query: 'id = *' };
-      const facetName = facetToOpen || onMoreClickedFacet || focusedFacet;
+      const facetName = facetToOpen || onMoreClickedFacet || focusedFacet || facetAlwaysRequiredAllOptions;
       const facetNameToRequest = FACETS_TO_REQUEST[facetName];
       const paramsUrl = new URLSearchParams(window.location.search);
       const queryIndex = paramsUrl.get('qindex') || query?.qindex;
@@ -206,10 +210,10 @@ function withFacets(WrappedComponent) {
       if (facetToOpen) {
         const defaultFiltersNumber = `:${DEFAULT_FILTERS_NUMBER}`;
         params.facet = `${facetNameToRequest}${defaultFiltersNumber}`;
-      } else if (onMoreClickedFacet || focusedFacet) {
+      } else if (onMoreClickedFacet || focusedFacet || facetAlwaysRequiredAllOptions) {
         params.facet = facetNameToRequest;
       } else {
-        const facets = this.getFacets(accordions, accordionsData);
+        const facets = this.getFacets(accordions, accordionsData, facetsAlwaysRequiredAllOptions);
 
         if (facets) {
           params.facet = facets;
