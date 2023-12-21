@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [10.0.10] (IN PROGRESS)
+
+* ECS: id of member tenant is undefined when rendering consortial holdings. Fixes UIIN-2724.
+
 ## [10.0.9](https://github.com/folio-org/ui-inventory/tree/v10.0.8) (2023-12-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.8...v10.0.9)
 

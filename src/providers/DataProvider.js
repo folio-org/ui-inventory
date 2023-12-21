@@ -35,7 +35,7 @@ const DataProvider = ({
     }
 
     mutator.consortiaTenants.GET({
-      path: `consortia/${consortium?.id}/tenants`,
+      path: `consortia/${consortium?.id}/tenants?limit=1000`,
       headers: {
         [OKAPI_TENANT_HEADER]: consortium?.centralTenantId,
       },
