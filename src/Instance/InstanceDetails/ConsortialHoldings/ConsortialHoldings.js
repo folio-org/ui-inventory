@@ -46,7 +46,7 @@ const ConsortialHoldings = ({
 
   const memberTenants = tenants
     .map(tenant => consortiaTenantsById[tenant.id])
-    .filter(tenant => !tenant?.isCentral && (tenant?.id !== stripes.okapi.tenant))
+    .filter(tenant => !!tenant && !tenant?.isCentral && (tenant?.id !== stripes.okapi.tenant))
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
