@@ -105,6 +105,8 @@ const mockStripesCore = {
   updateTenant: jest.fn(() => {}),
 
   validateUser: jest.fn(() => {}),
+
+  useTenantKy: jest.fn(),
 };
 
 jest.mock('@folio/stripes/core', () => ({

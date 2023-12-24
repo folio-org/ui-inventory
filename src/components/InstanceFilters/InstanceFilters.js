@@ -17,6 +17,7 @@ import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import HeldByFacet from '../HeldByFacet';
 import DateRangeFilter from '../DateRangeFilter';
+import EffectiveLocationFacet from '../EffectiveLocationFacet';
 import {
   getSourceOptions,
   getSharedOptions,
@@ -219,26 +220,17 @@ const InstanceFilters = props => {
         onFetchFacets={handleFetchFacets}
         onFilterSearch={handleFilterSearch}
       />
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
-        id={FACETS.EFFECTIVE_LOCATION}
+      <EffectiveLocationFacet
+        open={accordions[FACETS.EFFECTIVE_LOCATION]}
+        selectedOptions={activeFilters[FACETS.EFFECTIVE_LOCATION]}
+        facetOptions={facetsOptions[FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]}
+        isLoadingFacets={getIsPending(FACETS.EFFECTIVE_LOCATION)}
         name={FACETS.EFFECTIVE_LOCATION}
-        separator={false}
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.EFFECTIVE_LOCATION]?.length > 0}
-        onClearFilter={() => onClear(FACETS.EFFECTIVE_LOCATION)}
-      >
-        <CheckboxFacet
-          name={FACETS.EFFECTIVE_LOCATION}
-          dataOptions={facetsOptions[FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]}
-          selectedValues={activeFilters[FACETS.EFFECTIVE_LOCATION]}
-          onChange={onChange}
-          onSearch={handleFilterSearch}
-          isFilterable
-          isPending={getIsPending(FACETS.EFFECTIVE_LOCATION)}
-          onFetch={handleFetchFacets}
-        />
-      </Accordion>
+        onChange={onChange}
+        onClear={onClear}
+        onFetchFacets={handleFetchFacets}
+        onFilterSearch={handleFilterSearch}
+      />
       <Accordion
         label={<FormattedMessage id={`ui-inventory.instances.${FACETS.LANGUAGE}`} />}
         id={FACETS.LANGUAGE}

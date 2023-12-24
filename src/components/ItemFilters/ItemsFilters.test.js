@@ -1,5 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 import { noop } from 'lodash';
 
 import '../../../test/jest/__mock__';
@@ -31,17 +35,21 @@ const data = {
   parentResources: resources,
 };
 
+const queryClient = new QueryClient();
+
 const renderItemFilters = () => {
   return renderWithIntl(
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
-        <ItemFilters
-          activeFilters={{ 'language': ['eng'] }}
-          data={data}
-          onChange={noop}
-          onClear={noop}
-          parentResources={resources}
-        />
+        <QueryClientProvider client={queryClient}>
+          <ItemFilters
+            activeFilters={{ 'language': ['eng'] }}
+            data={data}
+            onChange={noop}
+            onClear={noop}
+            parentResources={resources}
+          />
+        </QueryClientProvider>
       </ModuleHierarchyProvider>
     </Router>
   );

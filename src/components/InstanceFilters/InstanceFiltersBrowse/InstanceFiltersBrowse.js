@@ -16,6 +16,7 @@ import {
 import CheckboxFacet from '../../CheckboxFacet';
 import HeldByFacet from '../../HeldByFacet';
 import { MultiSelectionFacet } from '../../MultiSelectionFacet';
+import EffectiveLocationFacet from '../../EffectiveLocationFacet';
 import {
   getSharedOptions,
   processFacetOptions,
@@ -161,27 +162,18 @@ const InstanceFiltersBrowse = props => {
             onFetchFacets={handleFetchFacets}
             onFilterSearch={handleFilterSearch}
           />
-          <Accordion
+          <EffectiveLocationFacet
             closedByDefault
-            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
-            id={FACETS.EFFECTIVE_LOCATION}
+            open={accordions[FACETS.EFFECTIVE_LOCATION]}
+            selectedOptions={activeFilters[FACETS.EFFECTIVE_LOCATION]}
+            facetOptions={facetsOptions[FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]}
+            isLoadingFacets={getIsPending(FACETS.EFFECTIVE_LOCATION)}
             name={FACETS.EFFECTIVE_LOCATION}
-            separator={false}
-            header={FilterAccordionHeader}
-            displayClearButton={activeFilters[FACETS.EFFECTIVE_LOCATION]?.length > 0}
-            onClearFilter={() => onClear(FACETS.EFFECTIVE_LOCATION)}
-          >
-            <CheckboxFacet
-              name={FACETS.EFFECTIVE_LOCATION}
-              dataOptions={facetsOptions[FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]}
-              selectedValues={activeFilters[FACETS.EFFECTIVE_LOCATION]}
-              onChange={onChange}
-              onSearch={handleFilterSearch}
-              isFilterable
-              isPending={getIsPending(FACETS.EFFECTIVE_LOCATION)}
-              onFetch={handleFetchFacets}
-            />
-          </Accordion>
+            onChange={onChange}
+            onClear={onClear}
+            onFetchFacets={handleFetchFacets}
+            onFilterSearch={handleFilterSearch}
+          />
         </>
       )}
       {browseType === browseModeOptions.CONTRIBUTORS && (

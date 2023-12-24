@@ -55,6 +55,11 @@ jest.mock('../../common/hooks', () => ({
   ])),
 }));
 
+jest.mock('../../utils', () => ({
+  ...jest.requireActual('../../utils'),
+  isUserInConsortiumMode: jest.fn().mockReturnValue(false),
+}));
+
 const defaultProps = {
   activeFilters: {},
   applyFilters: jest.fn(),

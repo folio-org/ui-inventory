@@ -1,6 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
+import {
   noop,
   cloneDeep,
 } from 'lodash';
@@ -82,18 +86,22 @@ const activeFilters = {
   nameType: ['nameType1'],
 };
 
+const queryClient = new QueryClient();
+
 const renderInstanceFilters = (props = {}) => {
   return renderWithIntl(
     <Router>
-      <ModuleHierarchyProvider module="@folio/inventory">
-        <InstanceFiltersBrowse
-          activeFilters={activeFilters}
-          data={data}
-          onChange={mockOnChange}
-          onClear={mockOnClear}
-          {...props}
-        />
-      </ModuleHierarchyProvider>
+      <QueryClientProvider client={queryClient}>
+        <ModuleHierarchyProvider module="@folio/inventory">
+          <InstanceFiltersBrowse
+            activeFilters={activeFilters}
+            data={data}
+            onChange={mockOnChange}
+            onClear={mockOnClear}
+            {...props}
+          />
+        </ModuleHierarchyProvider>
+      </QueryClientProvider>
     </Router>,
     translations
   );

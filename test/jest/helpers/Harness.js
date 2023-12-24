@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 import PropTypes from 'prop-types';
 import { noop } from 'lodash';
 import { IntlProvider } from 'react-intl';
@@ -7,13 +11,18 @@ import { CalloutContext } from '@folio/stripes/core';
 import translations from '../../../translations/ui-inventory/en';
 import prefixKeys from './prefixKeys';
 
+import { DataContext } from '../../../src/contexts';
+
+const queryClient = new QueryClient();
+
 const Harness = ({
   children,
   translations: translationsConfig,
+  dataContextValue = {},
 }) => {
   const allTranslations = prefixKeys(translations);
 
-  translationsConfig.forEach(tx => {
+  translationsConfig?.forEach(tx => {
     Object.assign(allTranslations, prefixKeys(tx.translations, tx.prefix));
   });
 
@@ -24,19 +33,23 @@ const Harness = ({
   }, {});
 
   return (
-    <CalloutContext.Provider value={{ sendCallout: () => { } }}>
-      <IntlProvider
-        locale="en"
-        key="en"
-        timeZone="UTC"
-        onWarn={noop}
-        onError={noop}
-        defaultRichTextElements={defaultRichTextElements}
-        messages={allTranslations}
-      >
-        {children}
-      </IntlProvider>
-    </CalloutContext.Provider>
+    <DataContext.Provider value={dataContextValue}>
+      <QueryClientProvider client={queryClient}>
+        <CalloutContext.Provider value={{ sendCallout: () => { } }}>
+          <IntlProvider
+            locale="en"
+            key="en"
+            timeZone="UTC"
+            onWarn={noop}
+            onError={noop}
+            defaultRichTextElements={defaultRichTextElements}
+            messages={allTranslations}
+          >
+            {children}
+          </IntlProvider>
+        </CalloutContext.Provider>
+      </QueryClientProvider>
+    </DataContext.Provider>
   );
 };
 

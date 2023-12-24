@@ -65,6 +65,7 @@ export const getFacetOptions = (selectedFiltersId, entries, facetData, key, pars
     } else {
       accum.push({
         id: entry.id,
+        totalRecords: entry.totalRecords,
         isDeleted: true,
       });
     }

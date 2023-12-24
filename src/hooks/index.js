@@ -11,3 +11,4 @@ export { default as useLocationsQuery } from './useLocationsQuery';
 export { default as useLastSearchTerms } from './useLastSearchTerms';
 export { default as useSearchForShadowInstanceTenants } from './useSearchForShadowInstanceTenants';
 export { default as useUserTenantPermissions } from './useUserTenantPermissions';
+export { default as useLocationsOfAllTenantsQuery } from './useLocationsOfAllTenantsQuery';

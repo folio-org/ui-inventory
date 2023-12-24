@@ -72,6 +72,7 @@ const DataProvider = ({
       statisticalCodeTypes,
       statisticalCodes,
       consortiaTenants,
+      allTenantIds,
     } = loadedData;
 
     loadedData.locationsById = keyBy(locations, 'id');
@@ -80,6 +81,7 @@ const DataProvider = ({
     loadedData.holdingsSourcesByName = keyBy(holdingsSources, 'name');
     loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
     loadedData.consortiaTenantsById = keyBy(consortiaTenants, 'id');
+    loadedData.allTenantIds = allTenantIds[0]?.['holdings.tenantId'].values.map(({ id }) => id) || [];
     const statisticalCodeTypesById = keyBy(statisticalCodeTypes, 'id');
 
     // attach full statisticalCodeType object to each statisticalCode
@@ -296,7 +298,17 @@ DataProvider.manifest = {
     },
     records: 'holdingsRecordsSources',
     resourceShouldRefresh: true,
-  }
+  },
+  allTenantIds: {
+    type: 'okapi',
+    path: 'search/instances/facets',
+    params: {
+      query: 'id=*',
+      facet: 'holdings.tenantId',
+    },
+    records: 'facets',
+    throwErrors: false,
+  },
 };
 
 export default stripesConnect(DataProvider);
