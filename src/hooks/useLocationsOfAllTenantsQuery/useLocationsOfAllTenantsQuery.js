@@ -6,7 +6,7 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { useConsortiumTenants } from '..';
+import useConsortiumTenants from '../useConsortiumTenants';
 import { isUserInConsortiumMode } from '../../utils';
 import {
   CQL_FIND_ALL,

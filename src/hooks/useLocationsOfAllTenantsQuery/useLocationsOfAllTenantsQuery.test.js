@@ -12,6 +12,15 @@ import {
 
 import useLocationsOfAllTenantsQuery from './useLocationsOfAllTenantsQuery';
 
+jest.mock('../useConsortiumTenants/useConsortiumTenants', () => () => ({
+  tenants: [{
+    id: 'cs00000int',
+  }, {
+    id: 'cs00000int_0002',
+  }],
+  isLoading: false,
+}));
+
 const queryClient = new QueryClient();
 
 const wrapper = ({ children }) => (
@@ -19,11 +28,6 @@ const wrapper = ({ children }) => (
     {children}
   </QueryClientProvider>
 );
-
-const tenantIds = [
-  'cs00000int',
-  'cs00000int_0002'
-];
 
 describe('useLocationsOfAllTenantsQuery', () => {
   beforeEach(() => {
@@ -39,7 +43,7 @@ describe('useLocationsOfAllTenantsQuery', () => {
   });
 
   it('should fetch locations of all tenants', async () => {
-    const { result } = renderHook(() => useLocationsOfAllTenantsQuery({ enabled: true, tenantIds }), { wrapper });
+    const { result } = renderHook(() => useLocationsOfAllTenantsQuery(), { wrapper });
 
     await act(() => !result.current.isLoading);
 
