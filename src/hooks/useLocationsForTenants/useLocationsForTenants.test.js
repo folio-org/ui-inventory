@@ -12,15 +12,6 @@ import {
 
 import useLocationsForTenants from './useLocationsForTenants';
 
-jest.mock('../useConsortiumTenants/useConsortiumTenants', () => () => ({
-  tenants: [{
-    id: 'cs00000int',
-  }, {
-    id: 'cs00000int_0002',
-  }],
-  isLoading: false,
-}));
-
 const queryClient = new QueryClient();
 
 const wrapper = ({ children }) => (
@@ -30,11 +21,13 @@ const wrapper = ({ children }) => (
 );
 
 describe('useLocationsForTenants', () => {
+  const mockGet = jest.fn().mockReturnValue({
+    json: () => Promise.resolve({ locations: [{ id: 'location-id' }] }),
+  });
+
   beforeEach(() => {
     useOkapiKy.mockClear().mockReturnValue({
-      get: () => ({
-        json: () => Promise.resolve({ locations: [{ id: 'location-id' }] }),
-      }),
+      get: mockGet,
     });
   });
 
@@ -42,8 +35,10 @@ describe('useLocationsForTenants', () => {
     jest.clearAllMocks();
   });
 
+  const tenantIds = ['cs00000int', 'cs00000int_0002'];
+
   it('should fetch locations of all tenants', async () => {
-    const { result } = renderHook(() => useLocationsForTenants(), { wrapper });
+    const { result } = renderHook(() => useLocationsForTenants({ tenantIds }), { wrapper });
 
     await act(() => !result.current.isLoading);
 
@@ -51,5 +46,13 @@ describe('useLocationsForTenants', () => {
       { id: 'location-id' },
       { id: 'location-id' },
     ]);
+  });
+
+  describe('when tenantIds is empty', () => {
+    it('should not make a request', () => {
+      renderHook(() => useLocationsForTenants({ tenantIds: [] }), { wrapper });
+
+      expect(mockGet).not.toHaveBeenCalled();
+    });
   });
 });
