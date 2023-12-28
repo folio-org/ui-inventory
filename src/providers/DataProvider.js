@@ -11,7 +11,7 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { useLocationsOfAllTenantsQuery } from '../hooks';
+import { useLocationsForTenants } from '../hooks';
 import { DataContext } from '../contexts';
 import { OKAPI_TENANT_HEADER } from '../constants';
 import { isUserInConsortiumMode } from '../utils';
@@ -42,7 +42,9 @@ const DataProvider = ({
     });
   }, [consortium?.id]);
 
-  const { data: locationsOfAllTenants } = useLocationsOfAllTenantsQuery();
+  const tenantIds = resources.consortiaTenants.records.map(tenant => tenant.id);
+
+  const { data: locationsOfAllTenants } = useLocationsForTenants({ tenantIds });
 
   useEffect(() => {
     mutator.locations.GET({ tenant: stripes.okapi.tenant });

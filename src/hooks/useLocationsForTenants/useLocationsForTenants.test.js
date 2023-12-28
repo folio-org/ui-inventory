@@ -10,7 +10,7 @@ import {
   act,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import useLocationsOfAllTenantsQuery from './useLocationsOfAllTenantsQuery';
+import useLocationsForTenants from './useLocationsForTenants';
 
 jest.mock('../useConsortiumTenants/useConsortiumTenants', () => () => ({
   tenants: [{
@@ -29,7 +29,7 @@ const wrapper = ({ children }) => (
   </QueryClientProvider>
 );
 
-describe('useLocationsOfAllTenantsQuery', () => {
+describe('useLocationsForTenants', () => {
   beforeEach(() => {
     useOkapiKy.mockClear().mockReturnValue({
       get: () => ({
@@ -43,7 +43,7 @@ describe('useLocationsOfAllTenantsQuery', () => {
   });
 
   it('should fetch locations of all tenants', async () => {
-    const { result } = renderHook(() => useLocationsOfAllTenantsQuery(), { wrapper });
+    const { result } = renderHook(() => useLocationsForTenants(), { wrapper });
 
     await act(() => !result.current.isLoading);
 
