@@ -19,6 +19,10 @@
 * Reset search/browse query when user switches affiliation. Refs UIIN-2715.
 * ECS: id of member tenant is undefined when rendering consortial holdings. Fixes UIIN-2724.
 
+## [10.0.9] IN PROGRESS
+
+* ECS: Effective location facet is not showing other member tenants. Fixes UIIN-2728.
+
 ## [10.0.8](https://github.com/folio-org/ui-inventory/tree/v10.0.8) (2023-12-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.7...v10.0.8)
 
