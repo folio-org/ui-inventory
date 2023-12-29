@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [10.0.9] IN PROGRESS
+## [10.0.9](https://github.com/folio-org/ui-inventory/tree/v10.0.8) (2023-12-29)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.8...v10.0.9)
 
 * ECS: Effective location facet is not showing other member tenants. Fixes UIIN-2728.
 
