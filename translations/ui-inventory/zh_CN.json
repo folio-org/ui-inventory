@@ -422,7 +422,7 @@
     "reports.inTransitItem.requestType": "请求类型",
     "reports.inTransitItem.requesterPatronGroup": "请求者读者组",
     "reports.inTransitItem.requestCreationDate": "请求创建日期",
-    "reports.inTransitItem.requestExpirationDate": "请求到期日",
+    "reports.inTransitItem.requestExpirationDate": "请求失效日期",
     "reports.inTransitItem.requestPickupServicePoint": "请求取件服务点",
     "reports.inTransitItem.tags": "标签",
     "reports.inTransitItem.emptyReport.label": "没有要导出的内容",
@@ -835,6 +835,6 @@
     "unlinkLocalMarcAuthorities.modal.proceed": "继续",
     "warning.instance.sharingLocalInstance": "共享此本地实例需要一些时间。完成后将显示成功消息和更新的详细信息。",
     "warning.instance.accessSharedInstance": "您当前无权访问共享实例的详细信息。请联系 FOLIO 管理员以获取更多信息。",
-    "documentTitle.search": "Inventory - {query} - Search",
-    "documentTitle.browse": "Inventory - {query} - Browse"
+    "documentTitle.search": "典藏 - {query} - 搜索",
+    "documentTitle.browse": "典藏 - {query} - 浏览"
 }
