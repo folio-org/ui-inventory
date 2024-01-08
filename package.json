@@ -702,7 +702,7 @@
       },
       {
         "permissionName": "ui-inventory.instance.view-staff-suppressed-records",
-        "displayName": "Inventory: View instance records being suppressed for staff",
+        "displayName": "Inventory: Enable staff suppress facet",
         "subPermissions": [
           "ui-inventory.instance.view"
         ],
