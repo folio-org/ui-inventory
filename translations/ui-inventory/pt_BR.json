@@ -558,7 +558,7 @@
     "moveItems.modal.message.holdings": "{count, number} {count, plural, one {coleção} other {coleções}} será(ão) movido(s) para {targetName}",
     "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {itens}} será(ão) movido(s) para {targetName}",
     "save": "Salvar",
-    "defaultDiscoverySuppress": "Suprimir da descoberta por padrão",
+    "defaultDiscoverySuppress": "Ocultar na ferramenta de descoberta por padrão",
     "defaultInstanceStatus": "Status padrão da instância",
     "fastAdd": "Registro rápido",
     "uniqueCode": "O código deve ser único",
@@ -642,7 +642,7 @@
     "warning.instance.staffSuppressed": "Aviso: a instância está marcada como suprimida pela equipe",
     "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "Aviso: Instância foi marcada suprimida para a descoberta e para a equipe",
     "discoverySuppressed": "Suprimido da descoberta",
-    "staffSuppressed": "Suprimido pela equipe",
+    "staffSuppressed": "Ocultado para a equipe",
     "copycat.callout.no-id.created": "O registro {xid} foi enfileirado para importação, mas ainda não está disponível",
     "copycat.callout.no-id.updated": "O registro {xid} foi enfileirado para atualização, mas o processo ainda não está completo",
     "instances.typeOfRelation": "Tipo de relação: {name}",
@@ -836,5 +836,6 @@
     "warning.instance.sharingLocalInstance": "Compartilhar esta instância local levará alguns minutos. Uma mensagem de sucesso e detalhes atualizados serão exibidos após a conclusão.",
     "warning.instance.accessSharedInstance": "No momento, você não tem permissão para acessar detalhes de instâncias compartilhadas. Entre em contato com o administrador do FOLIO para obter mais informações.",
     "documentTitle.search": "Inventário - {query} - Buscar",
-    "documentTitle.browse": "Inventário - {query} - Navegar"
+    "documentTitle.browse": "Inventário - {query} - Navegar",
+    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress"
 }
