@@ -639,6 +639,7 @@ class ViewInstance extends React.Component {
 
     const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
     const editInstancePerm = 'ui-inventory.instance.edit';
+    const setForDeletionAndSuppressPerm = 'ui-inventory.instance.set-deletion-and-staff-suppress';
     const isSourceMARC = isMARCSource(source);
     const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
@@ -662,8 +663,15 @@ class ViewInstance extends React.Component {
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
-    // const canSetForDeletion = stripes.hasPerm('ui-inventory.instance.set-deletion-and-staff-suppress');
-    const canSetForDeletion = true;
+
+    const hasSetForDeletionPermission = stripes.hasPerm(setForDeletionAndSuppressPerm);
+    const canCentralTenantSetForDeletion = hasSetForDeletionPermission && isShared;
+    const canMemberTenantSetForDeletion = (isShared && this.hasCentralTenantPerm(setForDeletionAndSuppressPerm)) || (!isShared && hasSetForDeletionPermission);
+    const canSetForDeletion = hasSetForDeletionPermission || canCentralTenantSetForDeletion || canMemberTenantSetForDeletion;
+    const isRecordSuppressed = instance.discoverySuppress && instance?.staffSuppress;
+    const isRecordSetForDeletion = !instance.discoverySuppress && !instance?.deleted && instance?.leaderRecordStatus === 'd';
+    const isInstanceSuppressed = isRecordSuppressed || isRecordSetForDeletion;
+
     const numberOfRequests = instanceRequests.other?.totalRecords;
     const canReorderRequests = titleLevelRequestsFeatureEnabled && hasReorderPermissions && numberOfRequests && canReorder;
     const canViewRequests = !checkIfUserInCentralTenant(stripes) && !titleLevelRequestsFeatureEnabled;
@@ -798,7 +806,7 @@ class ViewInstance extends React.Component {
                 onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
               />
             )}
-            {canSetForDeletion && (
+            {canSetForDeletion && !isInstanceSuppressed && (
               <ActionItem
                 id="quick-export-trigger"
                 icon="flag"
@@ -1002,7 +1010,6 @@ class ViewInstance extends React.Component {
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
-    console.log(instance);
 
     const shortcuts = [
       {
