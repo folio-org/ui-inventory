@@ -836,5 +836,6 @@
     "warning.instance.sharingLocalInstance": "Sdílení tohoto místního titulu zabere několik okamžiků. Po dokončení se zobrazí zpráva o úspěchu a aktualizované údaje.",
     "warning.instance.accessSharedInstance": "Aktuálně nemáte oprávnění pro přístup k podrobnostem sdílených titulech. Další informace vám poskytne správce FOLIO.",
     "documentTitle.search": "Katalog - {query} - Vyhledat",
-    "documentTitle.browse": "Katalog - {query} - Procházet"
+    "documentTitle.browse": "Katalog - {query} - Procházet",
+    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress"
 }
