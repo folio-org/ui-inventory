@@ -21,6 +21,7 @@
 * Moving items between holdings records doesn't update correctly in UI. Fixes UIIN-2692.
 * Update permission for Staff suppressed facet. Refs UIIN-2705.
 * Add permission for setting record for deletion. Refs UIIN-2593.
+* Mock ResizeObserver to fix failed tests. Refs UIIN-2738.
 
 ## [10.0.9](https://github.com/folio-org/ui-inventory/tree/v10.0.9) (2023-12-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.8...v10.0.9)
