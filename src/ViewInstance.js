@@ -46,6 +46,7 @@ import {
   INSTANCE_SHARING_STATUSES,
   layers,
   REQUEST_OPEN_STATUSES,
+  SOURCE_VALUES,
 } from './constants';
 import { DataContext } from './contexts';
 
@@ -668,8 +669,12 @@ class ViewInstance extends React.Component {
     const canCentralTenantSetForDeletion = hasSetForDeletionPermission && isShared;
     const canMemberTenantSetForDeletion = (isShared && this.hasCentralTenantPerm(setForDeletionAndSuppressPerm)) || (!isShared && hasSetForDeletionPermission);
     const canSetForDeletion = hasSetForDeletionPermission || canCentralTenantSetForDeletion || canMemberTenantSetForDeletion;
+
     const isRecordSuppressed = instance.discoverySuppress && instance?.staffSuppress;
-    const isRecordSetForDeletion = !instance.discoverySuppress && !instance?.deleted && instance?.leaderRecordStatus === 'd';
+    const isRecordSetForDeletion = instance.source === SOURCE_VALUES.MARC
+      && !instance.discoverySuppress
+      && !instance?.deleted
+      && instance?.leaderRecordStatus === 'd';
     const isInstanceSuppressed = isRecordSuppressed || isRecordSetForDeletion;
 
     const numberOfRequests = instanceRequests.other?.totalRecords;
@@ -1108,7 +1113,8 @@ class ViewInstance extends React.Component {
               message={<FormattedMessage id="ui-inventory.setForDeletion.modal.message" values={{ instanceTitle: instance?.title }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.confirm" />}
               onCancel={this.handleCloseSetForDeletionModal}
-              onConfirm={() => console.log('confirmed')}
+              // Implement setting record for deletion in scope of UIIN-2595
+              // onConfirm={noop}
             />
 
           </HasCommand>
