@@ -186,7 +186,10 @@ describe('ViewHoldingsRecord actions', () => {
 
     describe('when source is MARC', () => {
       it('should enable View Source and Edit in quickMARC buttons', async () => {
-        const { getByText } = renderViewHoldingsRecord({
+        const {
+          getByText,
+          getByRole,
+        } = renderViewHoldingsRecord({
           stripes: {
             ...buildStripes({ okapi: { tenant: 'member' } }),
           },
@@ -194,8 +197,8 @@ describe('ViewHoldingsRecord actions', () => {
 
         await waitFor(() => getByText('Actions'));
 
-        expect(getByText('View source')).toBeInTheDocument();
-        expect(getByText('Edit in quickMARC')).toBeInTheDocument();
+        expect(getByRole('button', { name: 'View source' })).toBeEnabled();
+        expect(getByText('button', { name: 'Edit in quickMARC' })).toBeEnabled();
       });
     });
   });
