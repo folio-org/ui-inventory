@@ -836,5 +836,6 @@
     "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion.",
     "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information.",
     "documentTitle.search": "Inventory - {query} - Search",
-    "documentTitle.browse": "Inventory - {query} - Browse"
+    "documentTitle.browse": "Inventory - {query} - Browse",
+    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress"
 }
