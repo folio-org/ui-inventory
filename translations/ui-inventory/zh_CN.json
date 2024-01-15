@@ -836,5 +836,6 @@
     "warning.instance.sharingLocalInstance": "共享此本地实例需要一些时间。完成后将显示成功消息和更新的详细信息。",
     "warning.instance.accessSharedInstance": "您当前无权访问共享实例的详细信息。请联系 FOLIO 管理员以获取更多信息。",
     "documentTitle.search": "典藏 - {query} - 搜索",
-    "documentTitle.browse": "典藏 - {query} - 浏览"
+    "documentTitle.browse": "典藏 - {query} - 浏览",
+    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress"
 }
