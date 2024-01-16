@@ -1094,9 +1094,15 @@ describe('ViewInstance', () => {
 
       describe('when user doesn\'t have permissions', () => {
         it('should not see "Set record for deletion" action item', () => {
-          defaultProp.stripes.hasPerm.mockReturnValue(false);
+          const stripes = useStripes();
+          stripes.hasPerm.mockImplementationOnce(() => false);
 
-          renderViewInstance();
+          renderViewInstance({
+            stripes: {
+              ...defaultProp.stripes,
+              hasPerm: jest.fn().mockReturnValue(false),
+            },
+          });
 
           expect(screen.queryByText('button', { name: 'Set record for deletion' })).not.toBeInTheDocument();
         });

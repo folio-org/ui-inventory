@@ -46,7 +46,6 @@ import {
   INSTANCE_SHARING_STATUSES,
   layers,
   REQUEST_OPEN_STATUSES,
-  SOURCE_VALUES,
 } from './constants';
 import { DataContext } from './contexts';
 
@@ -671,7 +670,7 @@ class ViewInstance extends React.Component {
     const canSetForDeletion = hasSetForDeletionPermission || canCentralTenantSetForDeletion || canMemberTenantSetForDeletion;
 
     const isRecordSuppressed = instance.discoverySuppress && instance?.staffSuppress;
-    const isRecordSetForDeletion = instance.source === SOURCE_VALUES.MARC
+    const isRecordSetForDeletion = isSourceMARC
       && !instance.discoverySuppress
       && !instance?.deleted
       && instance?.leaderRecordStatus === 'd';
