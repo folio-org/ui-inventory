@@ -196,9 +196,10 @@ describe('ViewHoldingsRecord actions', () => {
         });
 
         await waitFor(() => getByText('Actions'));
+        fireEvent.click(getByText('Actions'));
 
-        expect(getByRole('button', { name: 'View source' })).toBeEnabled();
-        expect(getByText('button', { name: 'Edit in quickMARC' })).toBeEnabled();
+        await waitFor(() => expect(getByRole('button', { name: 'View source' })).toBeEnabled());
+        await waitFor(() => expect(getByRole('button', { name: 'Edit in quickMARC' })).toBeEnabled());
       });
     });
   });
