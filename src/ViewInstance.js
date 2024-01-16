@@ -45,6 +45,7 @@ import {
   indentifierTypeNames,
   INSTANCE_SHARING_STATUSES,
   layers,
+  LEADER_RECORD_STATUSES,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -673,7 +674,7 @@ class ViewInstance extends React.Component {
     const isRecordSetForDeletion = isSourceMARC
       && instance.discoverySuppress
       && instance?.deleted
-      && instance?.leaderRecordStatus === 'd';
+      && instance?.leaderRecordStatus === LEADER_RECORD_STATUSES.DELETED;
     const isInstanceSuppressed = isRecordSuppressed || isRecordSetForDeletion;
 
     const numberOfRequests = instanceRequests.other?.totalRecords;
