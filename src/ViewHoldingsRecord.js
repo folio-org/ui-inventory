@@ -147,12 +147,15 @@ class ViewHoldingsRecord extends React.Component {
     Promise.all([holdingsRecordPromise, instances1Promise])
       .then(([, instances1Response]) => {
         this.setInstance(instances1Response);
-
-        if (this.state.instance?.source) {
-          if (this.isMARCSource() && !this.state.marcRecord) {
-            this.getMARCRecord();
-          }
+        if (!instances1Response.source) {
+          return;
         }
+
+        if (!this.isMARCSource() || this.state.marcRecord) {
+          return;
+        }
+
+        this.getMARCRecord();
       });
   }
 
