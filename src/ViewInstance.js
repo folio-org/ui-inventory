@@ -671,8 +671,8 @@ class ViewInstance extends React.Component {
 
     const isRecordSuppressed = instance.discoverySuppress && instance?.staffSuppress;
     const isRecordSetForDeletion = isSourceMARC
-      && !instance.discoverySuppress
-      && !instance?.deleted
+      && instance.discoverySuppress
+      && instance?.deleted
       && instance?.leaderRecordStatus === 'd';
     const isInstanceSuppressed = isRecordSuppressed || isRecordSetForDeletion;
 
