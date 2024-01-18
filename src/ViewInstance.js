@@ -9,6 +9,7 @@ import {
 import {
   flowRight,
   isEmpty,
+  noop,
 } from 'lodash';
 
 import {
@@ -666,13 +667,13 @@ class ViewInstance extends React.Component {
     const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
 
     const hasSetForDeletionPermission = stripes.hasPerm(setForDeletionAndSuppressPerm);
-    const canCentralTenantSetForDeletion = hasSetForDeletionPermission && isShared;
+    const canCentralTenantSetForDeletion = checkIfUserInCentralTenant(stripes) && hasSetForDeletionPermission;
     const canMemberTenantSetForDeletion = (isShared && this.hasCentralTenantPerm(setForDeletionAndSuppressPerm)) || (!isShared && hasSetForDeletionPermission);
     const canSetForDeletion = hasSetForDeletionPermission || canCentralTenantSetForDeletion || canMemberTenantSetForDeletion;
 
-    const isRecordSuppressed = instance.discoverySuppress && instance?.staffSuppress;
+    const isRecordSuppressed = instance?.discoverySuppress && instance?.staffSuppress;
     const isRecordSetForDeletion = isSourceMARC
-      && instance.discoverySuppress
+      && instance?.discoverySuppress
       && instance?.deleted
       && instance?.leaderRecordStatus === LEADER_RECORD_STATUSES.DELETED;
     const isInstanceSuppressed = isRecordSuppressed || isRecordSetForDeletion;
@@ -1114,7 +1115,7 @@ class ViewInstance extends React.Component {
               confirmLabel={<FormattedMessage id="ui-inventory.confirm" />}
               onCancel={this.handleCloseSetForDeletionModal}
               // Implement setting record for deletion in scope of UIIN-2595
-              // onConfirm={noop}
+              onConfirm={noop}
             />
 
           </HasCommand>

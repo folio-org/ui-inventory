@@ -1055,7 +1055,7 @@ describe('ViewInstance', () => {
         });
       });
 
-      describe('when user is in central tenant and instance is shared', () => {
+      describe('when user is in central tenant', () => {
         it('should render "Set record for deletion" action item', () => {
           const stripes = {
             ...defaultProp.stripes,
@@ -1069,10 +1069,7 @@ describe('ViewInstance', () => {
           };
           checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
 
-          renderViewInstance({
-            stripes,
-            isShared: true,
-          });
+          renderViewInstance({ stripes });
 
           checkActionItemExists('Set record for deletion');
         });
