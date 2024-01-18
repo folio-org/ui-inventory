@@ -522,7 +522,7 @@
     "permission.holdings.create": "Inventário: Ver, criar coleções",
     "permission.holdings.edit": "Inventário: Ver, criar, editar coleções",
     "permission.holdings.delete": "Inventário: Ver, criar, editar, excluir coleções",
-    "permission.instance.view-staff-suppressed-records": "Inventário: Visualizar os registros da instância que estão sendo suprimidos para a equipe",
+    "permission.instance.view-staff-suppressed-records": "Inventário: Habilitar faceta de supressão da equipe",
     "permission.settings.list.view": "Configurações (Inventário): Ver lista de páginas de ajustes",
     "permission.items.mark-items-withdrawn": "Inventário: Marcar itens como descartado",
     "moveItems.selectAll": "Marque/desmarque todos os itens para movimento",
@@ -837,5 +837,5 @@
     "warning.instance.accessSharedInstance": "No momento, você não tem permissão para acessar detalhes de instâncias compartilhadas. Entre em contato com o administrador do FOLIO para obter mais informações.",
     "documentTitle.search": "Inventário - {query} - Buscar",
     "documentTitle.browse": "Inventário - {query} - Navegar",
-    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress"
+    "permission.instance.set-deletion-and-staff-suppress": "Inventário: Definir registros para exclusão e supressão de pessoal"
 }
