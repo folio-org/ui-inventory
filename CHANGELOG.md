@@ -23,6 +23,7 @@
 * Mock ResizeObserver to fix failed tests. Refs UIIN-2738.
 * Fix "Edit in quickMARC" and "View source" options are disabled in the expanded dropdown on the holdings details view. Fixes UIIN-2735.
 * Add Set record for deletion option in Actions menu with Confirmation modal. Refs UIIN-2594.
+* Use `onSave` prop for quickMARC to handle saving records separately. Refs UIIN-2743.
 
 ## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)
