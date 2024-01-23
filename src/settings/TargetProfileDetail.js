@@ -1,9 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { isEmpty } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  TitleManager,
+} from '@folio/stripes/core';
 import {
   Col,
   KeyValue,
@@ -50,6 +56,7 @@ const TargetProfileDetail = props => {
       allowedUpdateJobProfileIds = [],
     }
   } = props;
+  const intl = useIntl();
 
   const { allowedJobProfiles: allowedCreateJobProfiles = [] } = useAllowedJobProfiles(allowedCreateJobProfileIds);
   const { allowedJobProfiles: allowedUpdateJobProfiles = [] } = useAllowedJobProfiles(allowedUpdateJobProfileIds);
@@ -82,110 +89,116 @@ const TargetProfileDetail = props => {
   const updateJobProfilesFormatter = getJobProfilesFormatter(updateJobProfileId);
 
   return (
-    <div>
-      <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.name" />}
-            value={initialValues.name}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.url" />}
-            value={initialValues.url}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.authentication" />}
-            value={initialValues.authentication}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.externalIdQueryMap" />}
-            value={initialValues.externalIdQueryMap}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.internalIdEmbedPath" />}
-            value={initialValues.internalIdEmbedPath}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          {isEmpty(createJobProfilesContent)
-            ? <KeyValue label={<FormattedMessage id="ui-inventory.createJobProfileIds" />} />
-            : (
-              <MultiColumnList
-                contentData={createJobProfilesContent}
-                columnMapping={{
-                  [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.createJobProfileIds" />,
-                  [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
-                }}
-                formatter={createJobProfilesFormatter}
-                visibleColumns={jobProfilesVisibleColumns}
-                columnIdPrefix="create-job-profiles"
-              />
-            )
+    <TitleManager
+      prefix={`${intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })} - `}
+      page={intl.formatMessage({ id: 'ui-inventory.targetProfiles' })}
+      record={initialValues.name}
+    >
+      <div>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.name" />}
+              value={initialValues.name}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.url" />}
+              value={initialValues.url}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.authentication" />}
+              value={initialValues.authentication}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.externalIdQueryMap" />}
+              value={initialValues.externalIdQueryMap}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.internalIdEmbedPath" />}
+              value={initialValues.internalIdEmbedPath}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            {isEmpty(createJobProfilesContent)
+              ? <KeyValue label={<FormattedMessage id="ui-inventory.createJobProfileIds" />} />
+              : (
+                <MultiColumnList
+                  contentData={createJobProfilesContent}
+                  columnMapping={{
+                    [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.createJobProfileIds" />,
+                    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
+                  }}
+                  formatter={createJobProfilesFormatter}
+                  visibleColumns={jobProfilesVisibleColumns}
+                  columnIdPrefix="create-job-profiles"
+                />
+              )
           }
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          {isEmpty(updateJobProfilesContent)
-            ? <KeyValue label={<FormattedMessage id="ui-inventory.updateJobProfileIds" />} />
-            : (
-              <MultiColumnList
-                contentData={updateJobProfilesContent}
-                columnMapping={{
-                  [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.updateJobProfileIds" />,
-                  [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
-                }}
-                formatter={updateJobProfilesFormatter}
-                visibleColumns={jobProfilesVisibleColumns}
-                columnIdPrefix="update-job-profiles"
-              />
-            )
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            {isEmpty(updateJobProfilesContent)
+              ? <KeyValue label={<FormattedMessage id="ui-inventory.updateJobProfileIds" />} />
+              : (
+                <MultiColumnList
+                  contentData={updateJobProfilesContent}
+                  columnMapping={{
+                    [JOB_PROFILES_COLUMNS_NAME.ID]: <FormattedMessage id="ui-inventory.updateJobProfileIds" />,
+                    [JOB_PROFILES_COLUMNS_NAME.IS_DEFAULT]: <FormattedMessage id="ui-inventory.defaultJobProfile" />,
+                  }}
+                  formatter={updateJobProfilesFormatter}
+                  visibleColumns={jobProfilesVisibleColumns}
+                  columnIdPrefix="update-job-profiles"
+                />
+              )
           }
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.targetOptions" />}
-            value={targetOptions}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
-            value={props.resources.identifierType.records?.[0]?.name}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.enabled" />}
-            value={initialValues.enabled ? '✓' : '✕'}
-          />
-        </Col>
-      </Row>
-    </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.targetOptions" />}
+              value={targetOptions}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.externalIdentifierType" />}
+              value={props.resources.identifierType.records?.[0]?.name}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.enabled" />}
+              value={initialValues.enabled ? '✓' : '✕'}
+            />
+          </Col>
+        </Row>
+      </div>
+    </TitleManager>
   );
 };
 

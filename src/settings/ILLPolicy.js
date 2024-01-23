@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
 
 class ILLPolicy extends React.Component {
   static propTypes = {
@@ -25,26 +28,31 @@ class ILLPolicy extends React.Component {
     return (
       <IntlConsumer>
         {intl => (
-          <this.connectedControlledVocab
-            {...this.props}
-            baseUrl="ill-policies"
-            records="illPolicies"
-            label={<FormattedMessage id="ui-inventory.ILLPolicy" />}
-            labelSingular={intl.formatMessage({ id: 'ui-inventory.ILLPolicy' })}
-            objectLabel={<FormattedMessage id="ui-inventory.ILLPolicy" />}
-            visibleFields={['name', 'source']}
-            columnMapping={{
-              name: intl.formatMessage({ id: 'ui-inventory.name' }),
-              source: intl.formatMessage({ id: 'ui-inventory.source' }),
-            }}
-            readOnlyFields={['source']}
-            itemTemplate={{ source: 'local' }}
-            hiddenFields={['description', 'numberOfObjects']}
-            nameKey="name"
-            id="ILLPolicy"
-            sortby="name"
-            editable={hasPerm}
-          />
+          <TitleManager
+            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+            record={intl.formatMessage({ id: 'ui-inventory.ILLPolicy' })}
+          >
+            <this.connectedControlledVocab
+              {...this.props}
+              baseUrl="ill-policies"
+              records="illPolicies"
+              label={<FormattedMessage id="ui-inventory.ILLPolicy" />}
+              labelSingular={intl.formatMessage({ id: 'ui-inventory.ILLPolicy' })}
+              objectLabel={<FormattedMessage id="ui-inventory.ILLPolicy" />}
+              visibleFields={['name', 'source']}
+              columnMapping={{
+                name: intl.formatMessage({ id: 'ui-inventory.name' }),
+                source: intl.formatMessage({ id: 'ui-inventory.source' }),
+              }}
+              readOnlyFields={['source']}
+              itemTemplate={{ source: 'local' }}
+              hiddenFields={['description', 'numberOfObjects']}
+              nameKey="name"
+              id="ILLPolicy"
+              sortby="name"
+              editable={hasPerm}
+            />
+          </TitleManager>
         )}
       </IntlConsumer>
     );

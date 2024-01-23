@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
 import { getSourceSuppressor } from '@folio/stripes/util';
 
 import { RECORD_SOURCE } from '../constants';
@@ -33,30 +36,35 @@ class ResourceTypesSettings extends React.Component {
     return (
       <IntlConsumer>
         {intl => (
-          <this.connectedControlledVocab
-            {...this.props}
-            baseUrl="instance-types"
-            records="instanceTypes"
-            label={<FormattedMessage id="ui-inventory.resourceTypes" />}
-            labelSingular={intl.formatMessage({ id: 'ui-inventory.resourceType' })}
-            objectLabel={<FormattedMessage id="ui-inventory.resourceTypes" />}
-            visibleFields={['name', 'code', 'source']}
-            columnMapping={{
-              name: intl.formatMessage({ id: 'ui-inventory.name' }),
-              code: intl.formatMessage({ id: 'ui-inventory.code' }),
-              source: intl.formatMessage({ id: 'ui-inventory.source' }),
-            }}
-            readOnlyFields={['source']}
-            itemTemplate={{ source: 'local' }}
-            hiddenFields={['description', 'numberOfObjects']}
-            nameKey="name"
-            // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: suppress, delete: suppress }}
-            id="instance-types"
-            sortby="name"
-            validate={validateNameAndCode}
-            editable={hasPerm}
-          />
+          <TitleManager
+            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+            record={intl.formatMessage({ id: 'ui-inventory.resourceTypes' })}
+          >
+            <this.connectedControlledVocab
+              {...this.props}
+              baseUrl="instance-types"
+              records="instanceTypes"
+              label={<FormattedMessage id="ui-inventory.resourceTypes" />}
+              labelSingular={intl.formatMessage({ id: 'ui-inventory.resourceType' })}
+              objectLabel={<FormattedMessage id="ui-inventory.resourceTypes" />}
+              visibleFields={['name', 'code', 'source']}
+              columnMapping={{
+                name: intl.formatMessage({ id: 'ui-inventory.name' }),
+                code: intl.formatMessage({ id: 'ui-inventory.code' }),
+                source: intl.formatMessage({ id: 'ui-inventory.source' }),
+              }}
+              readOnlyFields={['source']}
+              itemTemplate={{ source: 'local' }}
+              hiddenFields={['description', 'numberOfObjects']}
+              nameKey="name"
+              // columnWidths={{ 'name': 300, 'code': 50 }}
+              actionSuppressor={{ edit: suppress, delete: suppress }}
+              id="instance-types"
+              sortby="name"
+              validate={validateNameAndCode}
+              editable={hasPerm}
+            />
+          </TitleManager>
         )}
       </IntlConsumer>
     );

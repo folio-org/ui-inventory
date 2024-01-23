@@ -7,7 +7,10 @@ import {
   isEmpty,
 } from 'lodash';
 
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
 
 import {
   Col,
@@ -90,6 +93,10 @@ class FastAddSettings extends Component {
         <IntlConsumer>
           {intl => (
             <>
+              <TitleManager
+                page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+                record={intl.formatMessage({ id: 'ui-inventory.fastAdd' })}
+              />
               <Row>
                 <Col
                   xs={4}

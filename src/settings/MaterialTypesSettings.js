@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
 import { getSourceSuppressor } from '@folio/stripes/util';
 
 import { RECORD_SOURCE } from '../constants';
@@ -31,27 +34,32 @@ class MaterialTypesSettings extends React.Component {
     return (
       <IntlConsumer>
         {intl => (
-          <this.connectedControlledVocab
-            {...this.props}
-            baseUrl="material-types"
-            records="mtypes"
-            label={<FormattedMessage id="ui-inventory.materialTypes" />}
-            labelSingular={intl.formatMessage({ id: 'ui-inventory.materialType' })}
-            objectLabel={<FormattedMessage id="ui-inventory.items" />}
-            visibleFields={['name', 'source']}
-            columnMapping={{
-              name: intl.formatMessage({ id: 'ui-inventory.name' }),
-              source: intl.formatMessage({ id: 'ui-inventory.source' }),
-            }}
-            actionSuppressor={actionSuppressor}
-            readOnlyFields={['source']}
-            itemTemplate={{ source: 'local' }}
-            hiddenFields={['description', 'numberOfObjects']}
-            nameKey="name"
-            id="materialtypes"
-            sortby="name"
-            editable={hasPerm}
-          />
+          <TitleManager
+            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+            record={intl.formatMessage({ id: 'ui-inventory.materialTypes' })}
+          >
+            <this.connectedControlledVocab
+              {...this.props}
+              baseUrl="material-types"
+              records="mtypes"
+              label={<FormattedMessage id="ui-inventory.materialTypes" />}
+              labelSingular={intl.formatMessage({ id: 'ui-inventory.materialType' })}
+              objectLabel={<FormattedMessage id="ui-inventory.items" />}
+              visibleFields={['name', 'source']}
+              columnMapping={{
+                name: intl.formatMessage({ id: 'ui-inventory.name' }),
+                source: intl.formatMessage({ id: 'ui-inventory.source' }),
+              }}
+              actionSuppressor={actionSuppressor}
+              readOnlyFields={['source']}
+              itemTemplate={{ source: 'local' }}
+              hiddenFields={['description', 'numberOfObjects']}
+              nameKey="name"
+              id="materialtypes"
+              sortby="name"
+              editable={hasPerm}
+            />
+          </TitleManager>
         )}
       </IntlConsumer>
     );
