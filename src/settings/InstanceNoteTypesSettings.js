@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
 import { getSourceSuppressor } from '@folio/stripes/util';
 
 import { RECORD_SOURCE } from '../constants';
@@ -31,27 +34,32 @@ class InstanceNoteTypesSettings extends React.Component {
     return (
       <IntlConsumer>
         {intl => (
-          <this.connectedControlledVocab
-            {...this.props}
-            baseUrl="instance-note-types"
-            records="instanceNoteTypes"
-            label={<FormattedMessage id="ui-inventory.instanceNoteTypes" />}
-            labelSingular={intl.formatMessage({ id: 'ui-inventory.instanceNoteType' })}
-            objectLabel={<FormattedMessage id="ui-inventory.instanceNoteTypes" />}
-            visibleFields={['name', 'source']}
-            columnMapping={{
-              name: intl.formatMessage({ id: 'ui-inventory.name' }),
-              source: intl.formatMessage({ id: 'ui-inventory.source' }),
-            }}
-            actionSuppressor={actionSuppressor}
-            readOnlyFields={['source']}
-            itemTemplate={{ source: 'local' }}
-            hiddenFields={['description', 'numberOfObjects']}
-            nameKey="name"
-            id="instanceNoteTypes"
-            sortby="name"
-            editable={hasPerm}
-          />
+          <TitleManager
+            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+            record={intl.formatMessage({ id: 'ui-inventory.instanceNoteTypes' })}
+          >
+            <this.connectedControlledVocab
+              {...this.props}
+              baseUrl="instance-note-types"
+              records="instanceNoteTypes"
+              label={<FormattedMessage id="ui-inventory.instanceNoteTypes" />}
+              labelSingular={intl.formatMessage({ id: 'ui-inventory.instanceNoteType' })}
+              objectLabel={<FormattedMessage id="ui-inventory.instanceNoteTypes" />}
+              visibleFields={['name', 'source']}
+              columnMapping={{
+                name: intl.formatMessage({ id: 'ui-inventory.name' }),
+                source: intl.formatMessage({ id: 'ui-inventory.source' }),
+              }}
+              actionSuppressor={actionSuppressor}
+              readOnlyFields={['source']}
+              itemTemplate={{ source: 'local' }}
+              hiddenFields={['description', 'numberOfObjects']}
+              nameKey="name"
+              id="instanceNoteTypes"
+              sortby="name"
+              editable={hasPerm}
+            />
+          </TitleManager>
         )}
       </IntlConsumer>
     );
