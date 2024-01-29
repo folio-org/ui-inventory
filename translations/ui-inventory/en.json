@@ -287,6 +287,7 @@
   "status": "Status",
   "loanTypeTemporary": "Temporary loan type",
   "caption": "Caption",
+  "displaySummary": "Display summary",
   "enumeration": "Enumeration",
   "enumerationData": "Enumeration data",
   "volume": "Volume",
