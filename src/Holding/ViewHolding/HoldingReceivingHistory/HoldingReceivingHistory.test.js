@@ -33,13 +33,13 @@ describe('HoldingReceivingHistory', () => {
   it('should apply sort by a column', () => {
     renderHoldingReceivingHistory({ id: 'holdingUid' });
 
-    const captionHeader = screen.getAllByRole('columnheader')[0];
-    const btn = screen.getByRole('button', { name: 'ui-inventory.caption' });
+    const displaySummaryHeader = screen.getAllByRole('columnheader')[0];
+    const btn = screen.getByRole('button', { name: 'ui-inventory.displaySummary' });
 
     fireEvent.click(btn);
-    expect(captionHeader.getAttribute('aria-sort')).toBe(SORT_DIRECTION.ASCENDING);
+    expect(displaySummaryHeader.getAttribute('aria-sort')).toBe(SORT_DIRECTION.ASCENDING);
 
     fireEvent.click(btn);
-    expect(captionHeader.getAttribute('aria-sort')).toBe(SORT_DIRECTION.DESCENDING);
+    expect(displaySummaryHeader.getAttribute('aria-sort')).toBe(SORT_DIRECTION.DESCENDING);
   });
 });
