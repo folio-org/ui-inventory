@@ -101,7 +101,7 @@
       "orders.holding-summary": "1.0",
       "order-lines": "2.0 3.0",
       "organizations.organizations": "1.0",
-      "pieces": "2.0",
+      "pieces": "2.0 3.0",
       "titles": "1.2"
     },
     "permissionSets": [
