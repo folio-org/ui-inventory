@@ -26,6 +26,7 @@
 * Use `onSave` prop for quickMARC to handle saving records separately. Refs UIIN-2743.
 * Set Inventory settings HTML page title this format - `<<App name>> settings - <<selected page name>> - FOLIO`. Refs UIIN-2713.
 * Add "Display summary" field to item enumeration data accordion. Refs UIIN-2740.
+* Display the 'Holdings detail' page after saving the holding changes. Fixes UIIN-2734.
 
 ## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)
