@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { keyBy } from 'lodash';
@@ -14,7 +14,6 @@ import { callNumberLabel } from '../../../utils';
 
 import HoldingButtonsGroup from './HoldingButtonsGroup';
 import {
-  useHoldingsAccordionState,
   useLocationsQuery,
   useHoldingItemsQuery,
 } from '../../../hooks';
@@ -29,7 +28,6 @@ const HoldingAccordion = ({
   tenantId,
   showViewHoldingsButton,
   showAddItemButton,
-  instanceId,
   pathToAccordionsState,
 }) => {
   const searchParams = {
@@ -38,8 +36,6 @@ const HoldingAccordion = ({
   };
 
   const pathToAccordion = [...pathToAccordionsState, holding?.id];
-  const [open, setOpen] = useHoldingsAccordionState({ instanceId, pathToAccordion });
-  const [openFirstTime, setOpenFirstTime] = useState(false);
   const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'itemCount', tenantId });
   const { data: locations } = useLocationsQuery({ tenantId });
 
@@ -49,15 +45,7 @@ const HoldingAccordion = ({
   const labelLocation = locationsById[holding.permanentLocationId];
   const labelLocationName = labelLocation?.name ?? '';
 
-  const handleAccordionToggle = () => {
-    if (!open && !openFirstTime) {
-      setOpenFirstTime(true);
-    }
-
-    setOpen(!open);
-  };
-
-  const holdingButtonsGroup = <HoldingButtonsGroup
+  const holdingButtonsGroup = isOpen => <HoldingButtonsGroup
     holding={holding}
     holdings={holdings}
     itemCount={isFetching ? null : totalRecords}
@@ -65,7 +53,7 @@ const HoldingAccordion = ({
     onViewHolding={onViewHolding}
     onAddItem={onAddItem}
     withMoveDropdown={withMoveDropdown}
-    isOpen={open}
+    isOpen={isOpen}
     tenantId={tenantId}
     showViewHoldingsButton={showViewHoldingsButton}
     showAddItemButton={showAddItemButton}
@@ -80,11 +68,11 @@ const HoldingAccordion = ({
       }}
     />;
 
+  const accId = pathToAccordion.join('.');
+
   return (
     <Accordion
-      id={holding.id}
-      open={open}
-      onToggle={handleAccordionToggle}
+      id={accId}
       label={(
         <>
           <FormattedMessage
@@ -106,17 +94,18 @@ const HoldingAccordion = ({
           }
         </>
       )}
-      displayWhenOpen={holdingButtonsGroup}
-      displayWhenClosed={holdingButtonsGroup}
+      displayWhenOpen={holdingButtonsGroup(true)}
+      displayWhenClosed={holdingButtonsGroup(false)}
     >
-      {
-        (open || openFirstTime) &&
-        <Row>
-          <Col sm={12}>
-            {children}
-          </Col>
-        </Row>
-      }
+      {open => (
+        open && (
+          <Row>
+            <Col sm={12}>
+              {children}
+            </Col>
+          </Row>
+        )
+      )}
     </Accordion>
   );
 };
@@ -125,7 +114,6 @@ HoldingAccordion.propTypes = {
   holding: PropTypes.object.isRequired,
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
-  instanceId: PropTypes.string.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
   withMoveDropdown: PropTypes.bool,
   children: PropTypes.object,
@@ -134,7 +122,5 @@ HoldingAccordion.propTypes = {
   showViewHoldingsButton: PropTypes.bool,
   showAddItemButton: PropTypes.bool,
 };
-
-HoldingAccordion.defaultProps = { pathToAccordionsState: [] };
 
 export default HoldingAccordion;

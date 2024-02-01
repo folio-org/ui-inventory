@@ -1,7 +1,6 @@
 import React, {
   useContext,
   useEffect,
-  useRef,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -13,34 +12,48 @@ import {
 import {
   Accordion,
   AccordionSet,
+  ExpandAllButton,
 } from '@folio/stripes/components';
 
 import { MemberTenantHoldings } from '../MemberTenantHoldings';
 import { DataContext } from '../../../contexts';
 import {
-  useHoldingsAccordionState,
   useSearchForShadowInstanceTenants,
+  useHoldingsFromStorage,
 } from '../../../hooks';
 
 const ConsortialHoldings = ({
   instance,
+  prevInstanceId,
+  updatePrevInstanceId,
   userTenantPermissions,
+  isAllExpanded,
 }) => {
-  const pathToAccordion = ['consortialHoldings', '_state'];
   const instanceId = instance?.id;
 
   const stripes = useStripes();
-  const prevInstanceId = useRef(instanceId);
   const { consortiaTenantsById } = useContext(DataContext);
   const { tenants } = useSearchForShadowInstanceTenants({ instanceId });
-  const [isConsortialAccOpen, setConsortialAccOpen] = useHoldingsAccordionState({ instanceId, pathToAccordion });
+  const [status, updateStatus] = useHoldingsFromStorage({ defaultValue: {} });
 
   useEffect(() => {
-    if (instanceId !== prevInstanceId.current) {
-      setConsortialAccOpen(false);
-      prevInstanceId.current = instanceId;
+    if (instanceId !== prevInstanceId) {
+      updateStatus({});
+      updatePrevInstanceId(instanceId);
     }
   }, [instanceId]);
+
+  useEffect(() => {
+    if (typeof isAllExpanded === 'boolean') {
+      updateStatus(curStatus => {
+        const newStatus = {};
+        Object.keys(curStatus).forEach((s) => {
+          newStatus[s] = isAllExpanded;
+        });
+        return newStatus;
+      });
+    }
+  }, [isAllExpanded]);
 
   if (!consortiaTenantsById) return null;
 
@@ -49,37 +62,67 @@ const ConsortialHoldings = ({
     .filter(tenant => !!tenant && !tenant?.isCentral && (tenant?.id !== stripes.okapi.tenant))
     .sort((a, b) => a.name.localeCompare(b.name));
 
+  const onToggle = ({ id }) => {
+    updateStatus(current => ({
+      ...current,
+      [id]: !current[id],
+    }));
+  };
+
+  const onRegisterNewAcc = id => {
+    updateStatus(current => ({
+      ...current,
+      [id]: current[id] || false,
+    }));
+  };
+
+  const renderExpandAllButton = (
+    <ExpandAllButton
+      accordionStatus={status}
+      setStatus={updateStatus}
+    />
+  );
+
   return (
     <IfInterface name="consortia">
-      <Accordion
-        id="consortial-holdings"
-        label={<FormattedMessage id="ui-inventory.consortialHoldings" />}
-        open={isConsortialAccOpen}
-        onToggle={() => setConsortialAccOpen(prevState => !prevState)}
+      <AccordionSet
+        accordionStatus={status}
+        onToggle={onToggle}
+        onRegisterAccordion={onRegisterNewAcc}
       >
-        {!memberTenants.length
-          ? <FormattedMessage id="stripes-components.tableEmpty" />
-          : (
-            <AccordionSet>
-              {memberTenants.map(memberTenant => (
-                <MemberTenantHoldings
-                  key={`${memberTenant.id}.${instanceId}`}
-                  memberTenant={memberTenant}
-                  instance={instance}
-                  userTenantPermissions={userTenantPermissions}
-                />
-              ))}
-            </AccordionSet>
-          )
-        }
-      </Accordion>
+        <Accordion
+          id="consortialHoldings"
+          label={<FormattedMessage id="ui-inventory.consortialHoldings" />}
+          displayWhenClosed={renderExpandAllButton}
+          displayWhenOpen={renderExpandAllButton}
+        >
+          {!memberTenants.length
+            ? <FormattedMessage id="stripes-components.tableEmpty" />
+            : (
+              <>
+                {memberTenants.map(memberTenant => (
+                  <MemberTenantHoldings
+                    key={`${memberTenant.id}.${instanceId}`}
+                    memberTenant={memberTenant}
+                    instance={instance}
+                    userTenantPermissions={userTenantPermissions}
+                  />
+                ))}
+              </>
+            )
+          }
+        </Accordion>
+      </AccordionSet>
     </IfInterface>
   );
 };
 
 ConsortialHoldings.propTypes = {
   instance: PropTypes.object.isRequired,
+  prevInstanceId: PropTypes.string,
+  updatePrevInstanceId: PropTypes.func,
   userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
+  isAllExpanded: PropTypes.bool,
 };
 
 export default ConsortialHoldings;
