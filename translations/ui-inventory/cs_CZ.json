@@ -840,5 +840,7 @@
     "permission.instance.set-deletion-and-staff-suppress": "Katalog: Nastavit záznamy pro smazání a potlačení zaměstnancům",
     "setForDeletion.modal.header": "Opravdu chcete nastavit tento záznam ke smazání?",
     "setForDeletion.modal.message": "Zvolili jste nastavení <b>{instanceTitle}</b> ke <b>smazání</b>. Když je záznam nastaven ke smazání, titul bude Potlačen z vyhledávání a zaměstnancům. Pokud je zdrojem titulu MARC, pak bude MARC LDR 05 nastaven na \"d\".",
-    "setRecordForDeletion": "Nastavit záznam pro smazání"
+    "setRecordForDeletion": "Nastavit záznam pro smazání",
+    "settings.inventory.title": "Nastavení katalogu",
+    "displaySummary": "Display summary"
 }
