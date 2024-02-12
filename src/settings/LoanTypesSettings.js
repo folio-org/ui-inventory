@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
 import { getSourceSuppressor } from '@folio/stripes/util';
 
 import { RECORD_SOURCE } from '../constants';
@@ -31,20 +34,25 @@ class LoanTypesSettings extends React.Component {
     return (
       <IntlConsumer>
         {intl => (
-          <this.connectedControlledVocab
-            {...this.props}
-            baseUrl="loan-types"
-            records="loantypes"
-            label={<FormattedMessage id="ui-inventory.loanTypes" />}
-            labelSingular={intl.formatMessage({ id: 'ui-inventory.loanType' })}
-            objectLabel={<FormattedMessage id="ui-inventory.loans" />}
-            actionSuppressor={actionSuppressor}
-            hiddenFields={['description', 'numberOfObjects']}
-            nameKey="name"
-            id="loantypes"
-            sortby="name"
-            editable={hasPerm}
-          />
+          <TitleManager
+            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+            record={intl.formatMessage({ id: 'ui-inventory.loanTypes' })}
+          >
+            <this.connectedControlledVocab
+              {...this.props}
+              baseUrl="loan-types"
+              records="loantypes"
+              label={<FormattedMessage id="ui-inventory.loanTypes" />}
+              labelSingular={intl.formatMessage({ id: 'ui-inventory.loanType' })}
+              objectLabel={<FormattedMessage id="ui-inventory.loans" />}
+              actionSuppressor={actionSuppressor}
+              hiddenFields={['description', 'numberOfObjects']}
+              nameKey="name"
+              id="loantypes"
+              sortby="name"
+              editable={hasPerm}
+            />
+          </TitleManager>
         )}
       </IntlConsumer>
     );

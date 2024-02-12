@@ -837,5 +837,10 @@
     "warning.instance.accessSharedInstance": "No momento, você não tem permissão para acessar detalhes de instâncias compartilhadas. Entre em contato com o administrador do FOLIO para obter mais informações.",
     "documentTitle.search": "Inventário - {query} - Buscar",
     "documentTitle.browse": "Inventário - {query} - Navegar",
-    "permission.instance.set-deletion-and-staff-suppress": "Inventário: Definir registros para exclusão e supressão de pessoal"
+    "permission.instance.set-deletion-and-staff-suppress": "Inventário: Definir registros para exclusão e supressão de pessoal",
+    "setForDeletion.modal.header": "Tem certeza de que deseja excluir este registro?",
+    "setForDeletion.modal.message": "Você optou por <b>excluir</b> o <b>{instanceTitle}</b>. Quando um registro é excluído, a instância será suprimida da descoberta e da equipe. Se a origem da instância for MARC, o MARC LDR 05 será definido como \"d\"",
+    "setRecordForDeletion": "Excluir registro",
+    "settings.inventory.title": "Configurações de inventário",
+    "displaySummary": "Exibir resumo"
 }

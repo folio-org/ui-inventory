@@ -805,6 +805,7 @@ class ItemView extends React.Component {
     };
 
     const enumerationData = {
+      displaySummary: get(item, 'displaySummary', '-'),
       enumeration: get(item, 'enumeration', '-'),
       chronology: get(item, 'chronology', '-'),
       volume: get(item, 'volume', '-'),
@@ -1320,6 +1321,17 @@ class ItemView extends React.Component {
                       id="acc03"
                       label={<FormattedMessage id="ui-inventory.enumerationData" />}
                     >
+                      <Row>
+                        <Col
+                          smOffset={0}
+                          sm={4}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.displaySummary" />}
+                            value={checkIfElementIsEmpty(enumerationData.displaySummary)}
+                          />
+                        </Col>
+                      </Row>
                       <Row>
                         <Col
                           smOffset={0}

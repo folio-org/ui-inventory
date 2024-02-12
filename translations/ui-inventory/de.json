@@ -202,7 +202,7 @@
     "callNumberSuffix": "Signatur-Suffix",
     "publicNote": "Öffentliche Anmerkung",
     "numberOfItems": "Exemplarzahl",
-    "formerHoldingsId": "Vorherige Bestands-ID",
+    "formerHoldingsId": "Ehemalige Bestands-ID",
     "holdingsStatementForIndexes": "Bestandsangabe für Indizes",
     "holdingsStatementsForIndexes": "Bestandsangaben für Indizes",
     "holdingsStatementForIndexesNote": "Bestandsangabe für Indizes Anmerkung",
@@ -224,7 +224,7 @@
     "acquisitionFormat": "Bestellungsformat",
     "electronicBookplate": "Elektronisches Exlibris",
     "add": "Hinzufügen",
-    "addFormerHoldingsId": "Frühere Bestands-ID hinzufügen",
+    "addFormerHoldingsId": "Ehemalige Bestands-ID hinzufügen",
     "addHoldingsStatement": "Bestandsangabe hinzufügen",
     "addHoldingsStatementForIndexes": "Bestandsangabe für Indizes hinzufügen",
     "addHoldingsStatementForSupplements": "Bestandsangabe für Supplemente hinzufügen",
@@ -837,5 +837,10 @@
     "warning.instance.accessSharedInstance": "Derzeit keine Berechtigung, auf Details von gemeinsam genutzten Instanzen zuzugreifen. Den FOLIO-Administrator für weitere Informationen kontaktieren.",
     "documentTitle.search": "Katalog - {query} - Suche",
     "documentTitle.browse": "Katalog - {query} - Browse",
-    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress"
+    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress",
+    "setForDeletion.modal.header": "Are you sure you want to set this record for deletion?",
+    "setForDeletion.modal.message": "You have chosen to set <b>{instanceTitle}</b> for <b>deletion</b>. When a record is set for deletion, the instance will be Suppressed from discovery and Staff suppressed. If the instance source is MARC, then the MARC LDR 05 will be set to \"d\"",
+    "setRecordForDeletion": "Set record for deletion",
+    "settings.inventory.title": "Inventory settings",
+    "displaySummary": "Display summary"
 }
