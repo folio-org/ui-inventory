@@ -9,7 +9,6 @@ import {
 import {
   flowRight,
   isEmpty,
-  noop,
 } from 'lodash';
 
 import {
@@ -169,6 +168,14 @@ class ViewInstance extends React.Component {
       path: 'consortia/!{consortiumId}/sharing/instances',
       accumulate: true,
       throwErrors: false,
+    },
+    setForDeletion: {
+      type: 'okapi',
+      throwErrors: false,
+      accumulate: true,
+      DELETE: {
+        path: 'inventory/instances/:{id}/mark-deleted',
+      },
     },
     authorities: {
       type: 'okapi',
@@ -576,6 +583,34 @@ class ViewInstance extends React.Component {
 
   handleCloseSetForDeletionModal = () => {
     this.setState({ isSetForDeletionModalOpen: false });
+  }
+
+  handleSetForDeletion = () => {
+    const {
+      mutator,
+      refetchInstance,
+      selectedInstance: {
+        title: instanceTitle,
+        id,
+      },
+    } = this.props;
+    mutator.setForDeletion.DELETE(id)
+      .then(async () => {
+        this.handleCloseSetForDeletionModal();
+
+        await refetchInstance();
+        this.calloutRef.current.sendCallout({
+          type: 'success',
+          message: <FormattedMessage id="ui-inventory.setForDeletion.toast.successful" values={{ instanceTitle }} />,
+        });
+      })
+      .catch(() => {
+        this.handleCloseSetForDeletionModal();
+        this.calloutRef.current.sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-inventory.setForDeletion.toast.unsuccessful" values={{ instanceTitle }} />,
+        });
+      });
   }
 
   toggleCopyrightModal = () => {
@@ -1114,8 +1149,7 @@ class ViewInstance extends React.Component {
               message={<FormattedMessage id="ui-inventory.setForDeletion.modal.message" values={{ instanceTitle: instance?.title }} />}
               confirmLabel={<FormattedMessage id="ui-inventory.confirm" />}
               onCancel={this.handleCloseSetForDeletionModal}
-              // Implement setting record for deletion in scope of UIIN-2595
-              onConfirm={noop}
+              onConfirm={this.handleSetForDeletion}
             />
 
           </HasCommand>
@@ -1170,6 +1204,9 @@ ViewInstance.propTypes = {
     shareInstance: PropTypes.shape({
       POST: PropTypes.func.isRequired,
       GET: PropTypes.func.isRequired,
+    }).isRequired,
+    setForDeletion: PropTypes.shape({
+      DELETE: PropTypes.func.isRequired,
     }).isRequired,
     authorities: PropTypes.shape({
       GET: PropTypes.func.isRequired,
