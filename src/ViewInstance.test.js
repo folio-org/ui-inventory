@@ -196,6 +196,9 @@ const defaultProp = {
       POST: jest.fn(),
       GET: jest.fn(() => Promise.resolve({ sharingInstances: [{ status: 'COMPLETE' }] })),
     },
+    setForDeletion: {
+      DELETE: jest.fn(),
+    },
     authorities: {
       GET: jest.fn(),
     }
@@ -1102,6 +1105,33 @@ describe('ViewInstance', () => {
           });
 
           expect(screen.queryByText('button', { name: 'Set record for deletion' })).not.toBeInTheDocument();
+        });
+      });
+
+      describe('when click "Set record for deletion" action item', () => {
+        it('should invoke function for setting record for deletion', () => {
+          defaultProp.mutator.setForDeletion.DELETE.mockResolvedValue({});
+
+          renderViewInstance();
+
+          fireEvent.click(screen.getByText('Set record for deletion'));
+          fireEvent.click(screen.getByText('Confirm'));
+
+          expect(defaultProp.mutator.setForDeletion.DELETE).toHaveBeenCalled();
+        });
+
+        describe('when there\'s an error', () => {
+          it('should throw an error with id of the instance', () => {
+            defaultProp.mutator.setForDeletion.DELETE.mockRejectedValueOnce();
+
+            renderViewInstance();
+
+            fireEvent.click(screen.getByText('Set record for deletion'));
+            fireEvent.click(screen.getByText('Confirm'));
+
+            expect(defaultProp.mutator.setForDeletion.DELETE).toHaveBeenCalled();
+            expect(defaultProp.mutator.setForDeletion.DELETE).toHaveBeenCalledWith(defaultProp.selectedInstance.id);
+          });
         });
       });
     });

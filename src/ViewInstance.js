@@ -594,6 +594,7 @@ class ViewInstance extends React.Component {
         id,
       },
     } = this.props;
+
     mutator.setForDeletion.DELETE(id)
       .then(async () => {
         this.handleCloseSetForDeletionModal();
