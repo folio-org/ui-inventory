@@ -703,9 +703,10 @@ class ViewInstance extends React.Component {
     const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
 
     const hasSetForDeletionPermission = stripes.hasPerm(setForDeletionAndSuppressPerm);
+    const canNonConsortialTenantSetForDeletion = !stripes.hasInterface('consortia') && hasSetForDeletionPermission;
     const canCentralTenantSetForDeletion = checkIfUserInCentralTenant(stripes) && hasSetForDeletionPermission;
     const canMemberTenantSetForDeletion = (isShared && this.hasCentralTenantPerm(setForDeletionAndSuppressPerm)) || (!isShared && hasSetForDeletionPermission);
-    const canSetForDeletion = hasSetForDeletionPermission || canCentralTenantSetForDeletion || canMemberTenantSetForDeletion;
+    const canSetForDeletion = canNonConsortialTenantSetForDeletion || canCentralTenantSetForDeletion || canMemberTenantSetForDeletion;
 
     const isRecordSuppressed = instance?.discoverySuppress && instance?.staffSuppress;
     const isRecordSetForDeletion = isSourceMARC
