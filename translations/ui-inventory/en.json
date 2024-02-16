@@ -621,6 +621,8 @@
   "exportInstancesInMARC": "Export instances (MARC)",
   "exportInstanceInMARC": "Export instance (MARC)",
   "setRecordForDeletion": "Set record for deletion",
+  "setForDeletion.toast.successful": "<b>{instanceTitle}</b> has been set for deletion",
+  "setForDeletion.toast.unsuccessful": "<b>{instanceTitle}</b> was not set for deletion",
   "exportInstancesInMARCLimitExceeded": "Selected record limit of {count, number} exceeded",
   "exportInstancesInJSON": "Export instances (JSON)",
   "reports.inTransitItem.barcode": "Item barcode",
