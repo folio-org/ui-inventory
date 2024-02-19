@@ -191,6 +191,7 @@ export const instances = [
     'alternativeTitles': [],
     'editions': [],
     'series': [],
+    'items': [{ tenantId: 'college' }],
     'identifiers': [{
       'identifierTypeId': '913300b2-03ed-469a-8179-c1092c991227',
       'value': '0747-0088'

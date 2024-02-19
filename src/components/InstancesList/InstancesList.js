@@ -59,12 +59,16 @@ import {
   handleKeyCommand,
   buildSingleItemQuery,
   isUserInConsortiumMode,
+  switchAffiliation,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
   queryIndexes,
   segments,
+  OKAPI_TENANT_HEADER,
+  CONTENT_TYPE_HEADER,
+  OKAPI_TOKEN_HEADER,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -1011,10 +1015,16 @@ class InstancesList extends React.Component {
       this.setState({ searchInProgress: false });
     }
 
+    const tenantItemBelongsTo = instance?.items?.[0]?.tenantId;
+
     itemsByQuery.reset();
     const items = await itemsByQuery.GET({
       params: { query: itemQuery },
-      tenant: stripes.okapi.tenant,
+      headers: {
+        [OKAPI_TENANT_HEADER]: tenantItemBelongsTo || stripes.okapi.tenant,
+        [CONTENT_TYPE_HEADER]: 'application/json',
+        ...(stripes.okapi.token && { [OKAPI_TOKEN_HEADER]: stripes.okapi.token }),
+      },
     });
 
     this.setState({ searchInProgress: false });
@@ -1028,11 +1038,18 @@ class InstancesList extends React.Component {
     const { id, holdingsRecordId } = items[0];
     const search = stringify(getParams());
 
-    history.push({
-      pathname: `/inventory/view/${instance.id}/${holdingsRecordId}/${id}`,
-      search,
-      state: { tenantTo: stripes.okapi.tenant },
-    });
+    const navigateToItemView = () => {
+      history.push({
+        pathname: `/inventory/view/${instance.id}/${holdingsRecordId}/${id}`,
+        search,
+        state: {
+          tenantTo: tenantItemBelongsTo,
+          tenantFrom: stripes.okapi.tenant,
+        },
+      });
+    };
+
+    await switchAffiliation(stripes, tenantItemBelongsTo, navigateToItemView);
 
     return null;
   }

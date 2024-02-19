@@ -31,7 +31,10 @@ const mockRecordsReset = jest.fn();
 const mockGetLastSearchOffset = jest.fn();
 const mockStoreLastSearchOffset = jest.fn();
 const mockGetLastSearch = jest.fn();
-const mockItemsByQuery = jest.fn();
+const mockItemsByQuery = jest.fn().mockResolvedValue([{
+  id: 'itemId',
+  holdingsRecordId: 'holdingsRecordId',
+}]);
 const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 const spyOnCheckIfUserInCentralTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInCentralTenant');
 
@@ -633,21 +636,56 @@ describe('InstancesList', () => {
             },
           });
 
-          await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: qindex } }));
+          await act(() => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: qindex } }));
+          await act(() => fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: _query } }));
 
-          fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: _query } });
           fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
 
           const row = screen.getAllByText('ABA Journal')[0];
-          fireEvent.click(row);
+
+          await act(() => fireEvent.click(row));
 
           expect(mockItemsByQuery).toHaveBeenCalledWith({
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Okapi-Tenant': 'college',
+            },
             params: {
               query: `${option}=="${_query}"`,
             },
-            tenant: 'diku',
           });
         });
+      });
+    });
+
+    describe('when there is one item found', () => {
+      it('should navigate to item details page', async () => {
+        renderInstancesList({
+          segment: 'items',
+          parentResources: {
+            ...resources,
+            query: {
+              ...query,
+              qindex: 'items.barcode',
+              query: '1234567(89)',
+            },
+          },
+        });
+
+        jest.spyOn(history, 'push');
+
+        await act(() => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'items.barcode' } }));
+        await act(() => fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: '1234567(89)' } }));
+
+        fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
+
+        await waitFor(() => expect(history.push).toHaveBeenCalledWith(expect.objectContaining({
+          pathname: '/inventory/view/69640328-788e-43fc-9c3c-af39e243f3b7/holdingsRecordId/itemId',
+          state: {
+            tenantFrom: 'diku',
+            tenantTo: 'college',
+          },
+        })));
       });
     });
   });
