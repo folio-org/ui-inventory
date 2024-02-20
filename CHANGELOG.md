@@ -29,6 +29,7 @@
 * Display the 'Holdings detail' page after saving the holding changes. Fixes UIIN-2734.
 * *BREAKING* Bump up okapi interfaces for `pieces` (3.0). Refs UIIN-2761.
 * Action when Set record for deletion option is invoked. Refs UIIN-2595.
+* Detail view not opened for non-local items when one shared record found using "Barcode" search on "Item" tab. Fixes UIIN-2698.
 
 ## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)
