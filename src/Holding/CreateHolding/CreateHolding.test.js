@@ -1,5 +1,3 @@
-import '../../../test/jest/__mock__';
-
 import { MemoryRouter } from 'react-router-dom';
 import {
   QueryClient,
