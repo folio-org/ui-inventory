@@ -93,7 +93,7 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[1]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.SHARED);
+      expect(onClear).toHaveBeenCalledWith(FACETS.SHARED);
     });
   });
 
@@ -102,7 +102,7 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[3]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HELD_BY);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HELD_BY);
     });
   });
 
@@ -111,7 +111,7 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[5]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.ITEM_STATUS);
+      expect(onClear).toHaveBeenCalledWith(FACETS.ITEM_STATUS);
     });
   });
 
@@ -120,7 +120,7 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[7]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.EFFECTIVE_LOCATION);
+      expect(onClear).toHaveBeenCalledWith(FACETS.EFFECTIVE_LOCATION);
     });
   });
 
@@ -129,7 +129,7 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[9]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_PERMANENT_LOCATION);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_PERMANENT_LOCATION);
     });
   });
 
@@ -138,7 +138,7 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[11]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.MATERIAL_TYPE);
+      expect(onClear).toHaveBeenCalledWith(FACETS.MATERIAL_TYPE);
     });
   });
 
@@ -147,7 +147,7 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[13]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.ITEMS_DISCOVERY_SUPPRESS);
+      expect(onClear).toHaveBeenCalledWith(FACETS.ITEMS_DISCOVERY_SUPPRESS);
     });
   });
 
@@ -156,7 +156,7 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[15]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.ITEMS_STATISTICAL_CODE_IDS);
+      expect(onClear).toHaveBeenCalledWith(FACETS.ITEMS_STATISTICAL_CODE_IDS);
     });
   });
 
@@ -165,7 +165,7 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[17]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.ITEMS_CREATED_DATE);
+      expect(onClear).toHaveBeenCalledWith(FACETS.ITEMS_CREATED_DATE);
     });
   });
 
@@ -174,7 +174,16 @@ describe('ItemFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[24]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.ITEMS_UPDATED_DATE);
+      expect(onClear).toHaveBeenCalledWith(FACETS.ITEMS_UPDATED_DATE);
+    });
+  });
+
+  it('should call onChange with default selected Staff suppress value', async () => {
+    renderItemFilters();
+
+    expect(onChange).toHaveBeenCalledWith({
+      name: FACETS.STAFF_SUPPRESS,
+      values: ['false'],
     });
   });
 });

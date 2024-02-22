@@ -1,7 +1,8 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
+
 import {
   Accordion,
   AccordionSet,
@@ -145,6 +146,13 @@ const ItemFilters = (props) => {
     getNewRecords,
     props.data
   );
+
+  useEffect(() => {
+    onChange({
+      name: FACETS.STAFF_SUPPRESS,
+      values: ['false'],
+    });
+  }, []);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 

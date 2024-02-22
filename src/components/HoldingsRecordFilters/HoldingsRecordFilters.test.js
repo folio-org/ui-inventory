@@ -99,7 +99,7 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[1]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.SHARED);
+      expect(onClear).toHaveBeenCalledWith(FACETS.SHARED);
     });
   });
 
@@ -110,7 +110,7 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[3]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HELD_BY);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HELD_BY);
     });
   });
 
@@ -121,7 +121,7 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[5]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.EFFECTIVE_LOCATION);
+      expect(onClear).toHaveBeenCalledWith(FACETS.EFFECTIVE_LOCATION);
     });
   });
 
@@ -132,7 +132,7 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[7]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_PERMANENT_LOCATION);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_PERMANENT_LOCATION);
     });
   });
 
@@ -143,7 +143,7 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[9]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_TYPE);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_TYPE);
     });
   });
 
@@ -154,7 +154,7 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[11]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_DISCOVERY_SUPPRESS);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_DISCOVERY_SUPPRESS);
     });
   });
 
@@ -165,7 +165,7 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[13]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_STATISTICAL_CODE_IDS);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_STATISTICAL_CODE_IDS);
     });
   });
 
@@ -176,7 +176,7 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[15]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_CREATED_DATE);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_CREATED_DATE);
     });
   });
 
@@ -187,9 +187,10 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[22]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_UPDATED_DATE);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_UPDATED_DATE);
     });
   });
+
   it('Should Render holdingsSource, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
     const holdingsSource = screen.getByRole('button', { name: /Source/i });
@@ -197,7 +198,16 @@ describe('HoldingsRecordFilters', () => {
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[29]);
     await waitFor(() => {
-      expect(onClear).toBeCalledWith(FACETS.HOLDINGS_SOURCE);
+      expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_SOURCE);
+    });
+  });
+
+  it('should call onChange with default selected Staff suppress value', async () => {
+    renderHoldingsRecordFilters();
+
+    expect(onChange).toHaveBeenCalledWith({
+      name: FACETS.STAFF_SUPPRESS,
+      values: ['false'],
     });
   });
 });

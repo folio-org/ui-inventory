@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { reduce } from 'lodash';
@@ -146,6 +146,13 @@ const HoldingsRecordFilters = (props) => {
     getNewRecords,
     props.data
   );
+
+  useEffect(() => {
+    onChange({
+      name: FACETS.STAFF_SUPPRESS,
+      values: ['false'],
+    });
+  }, []);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
