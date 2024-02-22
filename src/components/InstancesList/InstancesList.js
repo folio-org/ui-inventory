@@ -1015,13 +1015,13 @@ class InstancesList extends React.Component {
       this.setState({ searchInProgress: false });
     }
 
-    const tenantItemBelongsTo = instance?.items?.[0]?.tenantId;
+    const tenantItemBelongsTo = instance?.items?.[0]?.tenantId || stripes.okapi.tenant;
 
     itemsByQuery.reset();
     const items = await itemsByQuery.GET({
       params: { query: itemQuery },
       headers: {
-        [OKAPI_TENANT_HEADER]: tenantItemBelongsTo || stripes.okapi.tenant,
+        [OKAPI_TENANT_HEADER]: tenantItemBelongsTo,
         [CONTENT_TYPE_HEADER]: 'application/json',
         ...(stripes.okapi.token && { [OKAPI_TOKEN_HEADER]: stripes.okapi.token }),
       },
