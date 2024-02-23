@@ -130,6 +130,7 @@ const buildRecordsManifest = (options = {}) => {
     GET: {
       path,
       params: {
+        expandAll: true,
         query: buildQuery,
       },
     },
