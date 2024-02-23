@@ -45,6 +45,7 @@ import {
   indentifierTypeNames,
   INSTANCE_SHARING_STATUSES,
   layers,
+  LEADER_RECORD_STATUSES,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -168,6 +169,14 @@ class ViewInstance extends React.Component {
       accumulate: true,
       throwErrors: false,
     },
+    setForDeletion: {
+      type: 'okapi',
+      throwErrors: false,
+      accumulate: true,
+      DELETE: {
+        path: 'inventory/instances/:{id}/mark-deleted',
+      },
+    },
     authorities: {
       type: 'okapi',
       path: 'authority-storage/authorities',
@@ -192,6 +201,7 @@ class ViewInstance extends React.Component {
       isShareLocalInstanceModalOpen: false,
       isShareButtonDisabled: false,
       isUnlinkAuthoritiesModalOpen: false,
+      isSetForDeletionModalOpen: false,
       linkedAuthoritiesLength: 0,
       isNewOrderModalOpen: false,
       afterCreate: false,
@@ -571,6 +581,39 @@ class ViewInstance extends React.Component {
     });
   }
 
+  handleCloseSetForDeletionModal = () => {
+    this.setState({ isSetForDeletionModalOpen: false });
+  }
+
+  handleSetForDeletion = () => {
+    const {
+      mutator,
+      refetchInstance,
+      selectedInstance: {
+        title: instanceTitle,
+        id,
+      },
+    } = this.props;
+
+    mutator.setForDeletion.DELETE(id)
+      .then(async () => {
+        this.handleCloseSetForDeletionModal();
+
+        await refetchInstance();
+        this.calloutRef.current.sendCallout({
+          type: 'success',
+          message: <FormattedMessage id="ui-inventory.setForDeletion.toast.successful" values={{ instanceTitle }} />,
+        });
+      })
+      .catch(() => {
+        this.handleCloseSetForDeletionModal();
+        this.calloutRef.current.sendCallout({
+          type: 'error',
+          message: <FormattedMessage id="ui-inventory.setForDeletion.toast.unsuccessful" values={{ instanceTitle }} />,
+        });
+      });
+  }
+
   toggleCopyrightModal = () => {
     this.setState(prevState => ({ isCopyrightModalOpened: !prevState.isCopyrightModalOpened }));
   };
@@ -634,6 +677,7 @@ class ViewInstance extends React.Component {
 
     const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
     const editInstancePerm = 'ui-inventory.instance.edit';
+    const setForDeletionAndSuppressPerm = 'ui-inventory.instance.set-deletion-and-staff-suppress';
     const isSourceMARC = isMARCSource(source);
     const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
@@ -657,6 +701,20 @@ class ViewInstance extends React.Component {
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
+
+    const hasSetForDeletionPermission = stripes.hasPerm(setForDeletionAndSuppressPerm);
+    const canNonConsortialTenantSetForDeletion = !stripes.hasInterface('consortia') && hasSetForDeletionPermission;
+    const canCentralTenantSetForDeletion = checkIfUserInCentralTenant(stripes) && hasSetForDeletionPermission;
+    const canMemberTenantSetForDeletion = (isShared && this.hasCentralTenantPerm(setForDeletionAndSuppressPerm)) || (!isShared && hasSetForDeletionPermission);
+    const canSetForDeletion = canNonConsortialTenantSetForDeletion || canCentralTenantSetForDeletion || canMemberTenantSetForDeletion;
+
+    const isRecordSuppressed = instance?.discoverySuppress && instance?.staffSuppress;
+    const isRecordSetForDeletion = isSourceMARC
+      && instance?.discoverySuppress
+      && instance?.deleted
+      && instance?.leaderRecordStatus === LEADER_RECORD_STATUSES.DELETED;
+    const isInstanceSuppressed = isRecordSuppressed || isRecordSetForDeletion;
+
     const numberOfRequests = instanceRequests.other?.totalRecords;
     const canReorderRequests = titleLevelRequestsFeatureEnabled && hasReorderPermissions && numberOfRequests && canReorder;
     const canViewRequests = !checkIfUserInCentralTenant(stripes) && !titleLevelRequestsFeatureEnabled;
@@ -789,6 +847,14 @@ class ViewInstance extends React.Component {
                 icon="download"
                 messageId="ui-inventory.exportInstanceInMARC"
                 onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
+              />
+            )}
+            {canSetForDeletion && !isInstanceSuppressed && (
+              <ActionItem
+                id="quick-export-trigger"
+                icon="flag"
+                messageId="ui-inventory.setRecordForDeletion"
+                onClickHandler={() => this.setState({ isSetForDeletionModalOpen: true })}
               />
             )}
             {canCreateOrder && (
@@ -1079,6 +1145,15 @@ class ViewInstance extends React.Component {
               onConfirm={() => this.handleShareLocalInstance(instance)}
             />
 
+            <ConfirmationModal
+              open={this.state.isSetForDeletionModalOpen}
+              heading={<FormattedMessage id="ui-inventory.setForDeletion.modal.header" />}
+              message={<FormattedMessage id="ui-inventory.setForDeletion.modal.message" values={{ instanceTitle: instance?.title }} />}
+              confirmLabel={<FormattedMessage id="ui-inventory.confirm" />}
+              onCancel={this.handleCloseSetForDeletionModal}
+              onConfirm={this.handleSetForDeletion}
+            />
+
           </HasCommand>
         )}
       </DataContext.Consumer>
@@ -1131,6 +1206,9 @@ ViewInstance.propTypes = {
     shareInstance: PropTypes.shape({
       POST: PropTypes.func.isRequired,
       GET: PropTypes.func.isRequired,
+    }).isRequired,
+    setForDeletion: PropTypes.shape({
+      DELETE: PropTypes.func.isRequired,
     }).isRequired,
     authorities: PropTypes.shape({
       GET: PropTypes.func.isRequired,

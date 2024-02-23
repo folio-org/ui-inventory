@@ -17,13 +17,26 @@
 * Always highlight the first list row after pagination is clicked. Refs UIIN-2708.
 * The quantity of assigned tags to the instance is not displaying in the little tag icon after assigning. Fixes UIIN-2559.
 * Reset search/browse query when user switches affiliation. Refs UIIN-2715.
-* ECS: id of member tenant is undefined when rendering consortial holdings. Fixes UIIN-2724.
 * Moving items between holdings records doesn't update correctly in UI. Fixes UIIN-2692.
 * Update permission for Staff suppressed facet. Refs UIIN-2705.
 * Add permission for setting record for deletion. Refs UIIN-2593.
 * Mock ResizeObserver to fix failed tests. Refs UIIN-2738.
 * Fix "Edit in quickMARC" and "View source" options are disabled in the expanded dropdown on the holdings details view. Fixes UIIN-2735.
+* Add Set record for deletion option in Actions menu with Confirmation modal. Refs UIIN-2594.
+* Use `onSave` prop for quickMARC to handle saving records separately. Refs UIIN-2743.
+* Set Inventory settings HTML page title this format - `<<App name>> settings - <<selected page name>> - FOLIO`. Refs UIIN-2713.
+* Add "Display summary" field to item enumeration data accordion. Refs UIIN-2740.
+* Display the 'Holdings detail' page after saving the holding changes. Fixes UIIN-2734.
+* *BREAKING* Bump up okapi interfaces for `pieces` (3.0). Refs UIIN-2761.
+* Action when Set record for deletion option is invoked. Refs UIIN-2595.
+* Detail view not opened for non-local items when one shared record found using "Barcode" search on "Item" tab. Fixes UIIN-2698.
+* Jest/RTL: Cover CreateHoldings component with unit tests. Refs UIIN-2663.
 * Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
+
+## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)
+
+* ECS: id of member tenant is undefined when rendering consortial holdings. Fixes UIIN-2724.
 
 ## [10.0.9](https://github.com/folio-org/ui-inventory/tree/v10.0.9) (2023-12-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.8...v10.0.9)

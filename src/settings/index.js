@@ -3,6 +3,10 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { Settings } from '@folio/stripes/smart-components';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
 
 import MaterialTypesSettings from './MaterialTypesSettings';
 import LoanTypesSettings from './LoanTypesSettings';
@@ -231,13 +235,19 @@ class InventorySettings extends React.Component {
 
   render() {
     return (
-      <Settings
-        {...this.props}
-        sections={this.sections}
-        paneTitle={<FormattedMessage id="ui-inventory.inventory.label" />}
-        paneTitleRef={this.paneTitleRef}
-        data-test-inventory-settings
-      />
+      <IntlConsumer>
+        {intl => (
+          <TitleManager page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}>
+            <Settings
+              {...this.props}
+              sections={this.sections}
+              paneTitle={<FormattedMessage id="ui-inventory.inventory.label" />}
+              paneTitleRef={this.paneTitleRef}
+              data-test-inventory-settings
+            />
+          </TitleManager>
+        )}
+      </IntlConsumer>
     );
   }
 }

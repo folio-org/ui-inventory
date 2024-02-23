@@ -593,6 +593,18 @@ class ItemForm extends React.Component {
                     <Row>
                       <Col sm={3}>
                         <Field
+                          label={<FormattedMessage id="ui-inventory.displaySummary" />}
+                          name="displaySummary"
+                          id="additem_displaySummary"
+                          component={TextField}
+                          rows={1}
+                          fullWidth
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={3}>
+                        <Field
                           label={<FormattedMessage id="ui-inventory.enumeration" />}
                           name="enumeration"
                           id="additem_enumeration"

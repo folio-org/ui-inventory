@@ -12,10 +12,8 @@ import {
 } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
-import {
-  useInstance,
-} from '../../common/hooks';
-import useCallout from '../../hooks/useCallout';
+import { useInstance } from '../../common/hooks';
+import { useCallout } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import { switchAffiliation } from '../../utils';
 

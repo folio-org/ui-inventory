@@ -17,7 +17,7 @@ import { SORT_DIRECTION } from '../../../constants';
 const { ASCENDING, DESCENDING } = SORT_DIRECTION;
 
 const columnMapping = {
-  'caption': <FormattedMessage id="ui-inventory.caption" />,
+  'displaySummary': <FormattedMessage id="ui-inventory.displaySummary" />,
   'copyNumber': <FormattedMessage id="ui-inventory.copyNumber" />,
   'enumeration': <FormattedMessage id="ui-inventory.enumeration" />,
   'chronology': <FormattedMessage id="ui-inventory.chronology" />,
@@ -25,9 +25,9 @@ const columnMapping = {
   'comment': <FormattedMessage id="ui-inventory.receivingHistory.comment" />,
   'source': <FormattedMessage id="ui-inventory.receivingHistory.source" />,
 };
-const visibleColumns = ['caption', 'copyNumber', 'enumeration', 'chronology', 'receivedDate', 'comment', 'source'];
+const visibleColumns = ['displaySummary', 'copyNumber', 'enumeration', 'chronology', 'receivedDate', 'comment', 'source'];
 const columnFormatter = {
-  'caption': i => i.caption || <NoValue />,
+  'displaySummary': i => i.displaySummary || <NoValue />,
   'copyNumber': i => i.copyNumber || <NoValue />,
   'enumeration': i => i.enumeration || <NoValue />,
   'chronology': i => i.chronology || <NoValue />,
@@ -36,7 +36,7 @@ const columnFormatter = {
   'source': i => <FormattedMessage id={`ui-inventory.receivingHistory.source.${i.source || 'user'}`} />,
 };
 const sorters = {
-  'caption': ({ caption }) => caption,
+  'displaySummary': ({ displaySummary }) => displaySummary,
   'copyNumber': ({ copyNumber }) => copyNumber,
   'chronology': ({ chronology }) => chronology,
   'enumeration': ({ enumeration }) => enumeration,

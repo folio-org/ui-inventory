@@ -16,7 +16,11 @@ import {
   isEqual,
 } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  stripesConnect,
+  TitleManager,
+} from '@folio/stripes/core';
 import {
   Col,
   Checkbox,
@@ -154,119 +158,128 @@ class HRIDHandlingSettings extends Component {
     const initialValues = this.getInitialValues();
 
     return (
-      <HRIDHandlingForm
-        initialValues={initialValues}
-        mutator={mutator}
-        onSubmit={data => this.onSubmit(data)}
-        render={form => (
-          <>
-            <FormattedMessage id="ui-inventory.hridHandling.checkbox.label">
-              {([label]) => (
-                <div data-test-remove-zeroes-checkbox>
-                  <Field
-                    name="commonRetainLeadingZeroes"
-                    type="checkbox"
-                    isEqual={isEqual}
-                    format={value => (value === undefined ? false : !value)}
-                    parse={value => !value}
-                    render={fieldProps => (
-                      <Checkbox
-                        {...fieldProps.input}
-                        label={label}
-                        checked={fieldProps.input.checked}
-                        onChange={event => {
-                          fieldProps.input.onChange(event);
-                          this.toggleRemoveZeroes(form, event.target.checked);
-                        }}
-                        inline
-                        labelClass={css.checkboxLabel}
-                      />
+      <IntlConsumer>
+        {intl => (
+          <TitleManager
+            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+            record={intl.formatMessage({ id: 'ui-inventory.hridHandling' })}
+          >
+            <HRIDHandlingForm
+              initialValues={initialValues}
+              mutator={mutator}
+              onSubmit={data => this.onSubmit(data)}
+              render={form => (
+                <>
+                  <FormattedMessage id="ui-inventory.hridHandling.checkbox.label">
+                    {([label]) => (
+                      <div data-test-remove-zeroes-checkbox>
+                        <Field
+                          name="commonRetainLeadingZeroes"
+                          type="checkbox"
+                          isEqual={isEqual}
+                          format={value => (value === undefined ? false : !value)}
+                          parse={value => !value}
+                          render={fieldProps => (
+                            <Checkbox
+                              {...fieldProps.input}
+                              label={label}
+                              checked={fieldProps.input.checked}
+                              onChange={event => {
+                                fieldProps.input.onChange(event);
+                                this.toggleRemoveZeroes(form, event.target.checked);
+                              }}
+                              inline
+                              labelClass={css.checkboxLabel}
+                            />
+                          )}
+                        />
+                      </div>
                     )}
+                  </FormattedMessage>
+                  {hridSettingsSections.map((record, index) => (
+                    <Fragment key={index}>
+                      <Row className={css.headlineRow}>
+                        <Col xs={12}>
+                          <Headline>
+                            <FormattedMessage id={record.title} />
+                          </Headline>
+                        </Col>
+                      </Row>
+                      <Row className={css.inputRow}>
+                        <Col className={css.inputLabel}>
+                          <FormattedMessage id="ui-inventory.hridHandling.label.startWith">
+                            {([inputLabel]) => (
+                              <div id={`start-with-field-${index}`}>
+                                {inputLabel}
+                                <span className={commonCSS.asterisk}>*</span>
+                              </div>
+                            )}
+                          </FormattedMessage>
+                        </Col>
+                        <Col>
+                          <div
+                            data-test-start-with-field
+                            className={css.inputField}
+                          >
+                            <Field
+                              name={`${record.type}.startNumber`}
+                              ariaLabelledBy={`start-with-field-${index}`}
+                              required
+                              component={TextField}
+                              className={`${css.margin0} startWithField startWithField--${record.type}`}
+                              validate={composeValidators(validateNumericField, validateRequiredField, validateStartWithMaxLength)}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+                      <Row className={css.inputRow}>
+                        <Col className={css.inputLabel}>
+                          <div id={`assign-prefix-field-${index}`}>
+                            <FormattedMessage id="ui-inventory.hridHandling.label.assignPrefix" />
+                          </div>
+                        </Col>
+                        <Col>
+                          <div
+                            data-test-assign-prefix-field
+                            className={css.inputField}
+                          >
+                            <Field
+                              name={`${record.type}.prefix`}
+                              ariaLabelledBy={`assign-prefix-field-${index}`}
+                              component={TextField}
+                              className={`${css.margin0} assignPrefixField assignPrefixField--${record.type}`}
+                              validate={composeValidators(validateAlphaNumericField, validateAssignPrefixMaxLength)}
+                            />
+                          </div>
+                        </Col>
+                      </Row>
+                    </Fragment>
+                  ))}
+                  <ConfirmationModal
+                    id="confirm-edit-hrid-settings-modal"
+                    open={this.state.isConfirmModalOpen}
+                    heading={<FormattedMessage id="ui-inventory.hridHandling.modal.header" />}
+                    message={<FormattedMessage id="ui-inventory.hridHandling.modal.body" />}
+                    confirmLabel={<FormattedMessage id="ui-inventory.hridHandling.modal.button.confirm" />}
+                    cancelLabel={<FormattedMessage id="ui-inventory.hridHandling.modal.button.close" />}
+                    onConfirm={() => {
+                      this.setState({ isConfirmModalOpen: false });
+                      this.onEdit();
+                    }}
+                    onCancel={() => {
+                      this.setState({ isConfirmModalOpen: false });
+                      form.reset();
+                    }}
+                    buttonStyle="default"
+                    cancelButtonStyle="primary"
                   />
-                </div>
+                  <Callout ref={this.calloutRef} />
+                </>
               )}
-            </FormattedMessage>
-            {hridSettingsSections.map((record, index) => (
-              <Fragment key={index}>
-                <Row className={css.headlineRow}>
-                  <Col xs={12}>
-                    <Headline>
-                      <FormattedMessage id={record.title} />
-                    </Headline>
-                  </Col>
-                </Row>
-                <Row className={css.inputRow}>
-                  <Col className={css.inputLabel}>
-                    <FormattedMessage id="ui-inventory.hridHandling.label.startWith">
-                      {([inputLabel]) => (
-                        <div id={`start-with-field-${index}`}>
-                          {inputLabel}
-                          <span className={commonCSS.asterisk}>*</span>
-                        </div>
-                      )}
-                    </FormattedMessage>
-                  </Col>
-                  <Col>
-                    <div
-                      data-test-start-with-field
-                      className={css.inputField}
-                    >
-                      <Field
-                        name={`${record.type}.startNumber`}
-                        ariaLabelledBy={`start-with-field-${index}`}
-                        required
-                        component={TextField}
-                        className={`${css.margin0} startWithField startWithField--${record.type}`}
-                        validate={composeValidators(validateNumericField, validateRequiredField, validateStartWithMaxLength)}
-                      />
-                    </div>
-                  </Col>
-                </Row>
-                <Row className={css.inputRow}>
-                  <Col className={css.inputLabel}>
-                    <div id={`assign-prefix-field-${index}`}>
-                      <FormattedMessage id="ui-inventory.hridHandling.label.assignPrefix" />
-                    </div>
-                  </Col>
-                  <Col>
-                    <div
-                      data-test-assign-prefix-field
-                      className={css.inputField}
-                    >
-                      <Field
-                        name={`${record.type}.prefix`}
-                        ariaLabelledBy={`assign-prefix-field-${index}`}
-                        component={TextField}
-                        className={`${css.margin0} assignPrefixField assignPrefixField--${record.type}`}
-                        validate={composeValidators(validateAlphaNumericField, validateAssignPrefixMaxLength)}
-                      />
-                    </div>
-                  </Col>
-                </Row>
-              </Fragment>
-            ))}
-            <ConfirmationModal
-              id="confirm-edit-hrid-settings-modal"
-              open={this.state.isConfirmModalOpen}
-              heading={<FormattedMessage id="ui-inventory.hridHandling.modal.header" />}
-              message={<FormattedMessage id="ui-inventory.hridHandling.modal.body" />}
-              confirmLabel={<FormattedMessage id="ui-inventory.hridHandling.modal.button.confirm" />}
-              cancelLabel={<FormattedMessage id="ui-inventory.hridHandling.modal.button.close" />}
-              onConfirm={() => {
-                this.setState({ isConfirmModalOpen: false });
-                this.onEdit();
-              }}
-              onCancel={() => {
-                this.setState({ isConfirmModalOpen: false });
-                form.reset();
-              }}
-              buttonStyle="default"
-              cancelButtonStyle="primary"
             />
-            <Callout ref={this.calloutRef} />
-          </>
+          </TitleManager>
         )}
-      />
+      </IntlConsumer>
     );
   }
 }
