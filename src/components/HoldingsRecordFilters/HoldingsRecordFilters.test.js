@@ -62,7 +62,9 @@ const data = {
   tagsRecords: [],
   natureOfContentTerms: [],
   consortiaTenants: [],
-  query: [],
+  query: {
+    filters: 'language.eng',
+  },
   onFetchFacets: jest.fn(),
   parentResources: resources,
 };

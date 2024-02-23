@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import _ from 'lodash';
@@ -9,7 +9,6 @@ import {
   FilterAccordionHeader,
 } from '@folio/stripes/components';
 import {
-  IfPermission,
   checkIfUserInMemberTenant,
   useStripes,
 } from '@folio/stripes/core';
@@ -18,6 +17,7 @@ import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import HeldByFacet from '../HeldByFacet';
 import DateRangeFilter from '../DateRangeFilter';
+import { useStaffSuppressInitialValue } from '../../hooks';
 import {
   getSourceOptions,
   getSharedOptions,
@@ -188,12 +188,7 @@ const InstanceFilters = props => {
 
   const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
 
-  useEffect(() => {
-    onChange({
-      name: FACETS.STAFF_SUPPRESS,
-      values: ['false'],
-    });
-  }, []);
+  useStaffSuppressInitialValue(onChange, props.data.query);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 

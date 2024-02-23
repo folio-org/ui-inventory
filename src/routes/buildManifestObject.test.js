@@ -3,6 +3,7 @@ import '../../test/jest/__mock__';
 import { queryIndexes } from '../constants';
 import { instanceIndexes } from '../filterConfig';
 import { buildQuery } from './buildManifestObject';
+import buildStripes from '../../test/jest/__mock__/stripesCore.mock';
 
 const getQueryTemplate = (qindex) => instanceIndexes.find(({ value }) => value === qindex).queryTemplate;
 
@@ -11,10 +12,11 @@ const getBuildQueryArgs = ({
   pathComponents = {},
   resourceData = {},
   logger = { log: jest.fn() },
+  props = { stripes: buildStripes() }
 } = {}) => {
   const resData = { query: { ...queryParams }, ...resourceData };
 
-  return [queryParams, pathComponents, resData, logger];
+  return [queryParams, pathComponents, resData, logger, props];
 };
 
 const defaultQueryParamsMap = {

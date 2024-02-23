@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { reduce } from 'lodash';
@@ -18,6 +18,7 @@ import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import { useFacets } from '../../common/hooks';
 import HeldByFacet from '../HeldByFacet';
+import { useStaffSuppressInitialValue } from '../../hooks';
 import {
   getSourceOptions,
   getSharedOptions,
@@ -147,12 +148,7 @@ const HoldingsRecordFilters = (props) => {
     props.data
   );
 
-  useEffect(() => {
-    onChange({
-      name: FACETS.STAFF_SUPPRESS,
-      values: ['false'],
-    });
-  }, []);
+  useStaffSuppressInitialValue(onChange, props.data.query);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
