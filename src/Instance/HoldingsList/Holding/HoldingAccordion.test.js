@@ -70,6 +70,10 @@ describe('HoldingAccordion', () => {
     });
   });
 
+  it('should render closed holdings accordion by default', () => {
+    expect(screen.getByRole('button', { name: /holdings: inactive >/i, expanded: false })).toBeInTheDocument();
+  });
+
   it('should render items counter', () => {
     expect(screen.getByText('3')).toBeInTheDocument();
   });

@@ -96,6 +96,7 @@ const HoldingAccordion = ({
       )}
       displayWhenOpen={holdingButtonsGroup(true)}
       displayWhenClosed={holdingButtonsGroup(false)}
+      closedByDefault
     >
       {open => (
         open && (
