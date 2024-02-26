@@ -3,6 +3,12 @@ import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 import useStaffSuppressInitialValue from './useStaffSuppressInitialValue';
 import { FACETS } from '../../constants';
 
+jest.mock('react-router-dom', () => ({
+  useLocation: jest.fn().mockReturnValue({
+    search: 'filters=language.eng',
+  }),
+}));
+
 const mockOnChange = jest.fn();
 
 describe('useStaffSuppressInitialValue', () => {

@@ -180,7 +180,7 @@ function withFacets(WrappedComponent) {
 
       if (isStaffSuppressFilterAvailable) {
         // do nothing - don't remove anything, don't add anything.
-        // let the user handle what Staff Suppress filter values they want selected
+        // default value is added in filters components
       } else if (!query.filters) {
         query.filters = staffSuppressFalse;
       } else if (!query.filters?.includes(staffSuppressFalse)) {

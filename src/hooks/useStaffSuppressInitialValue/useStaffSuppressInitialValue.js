@@ -1,17 +1,25 @@
-import { useEffect, useRef } from 'react';
+import {
+  useEffect,
+  useRef,
+} from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { FACETS } from '../../constants';
 
 const useStaffSuppressInitialValue = (onChange, query) => {
-  const isFiltersFirstSet = useRef(Boolean(query.filters));
+  const location = useLocation();
+  const isQueryFiltersSet = Boolean(query.filters);
+  const isDefaultValueSet = useRef(false);
+
+  const hasFilters = new URLSearchParams(location.search).get('filters')?.length > 0;
 
   useEffect(() => {
-    isFiltersFirstSet.current = Boolean(query.filters);
-  }, [query.filters]);
+    if (isDefaultValueSet.current) {
+      return;
+    }
 
-  useEffect(() => {
     // need to wait until query.filters is set because calling onChange before that happens will override filters that are coming from location.search
-    if (!isFiltersFirstSet.current) {
+    if (!isQueryFiltersSet && hasFilters) {
       return;
     }
 
@@ -19,7 +27,8 @@ const useStaffSuppressInitialValue = (onChange, query) => {
       name: FACETS.STAFF_SUPPRESS,
       values: ['false'],
     });
-  }, [isFiltersFirstSet.current]);
+    isDefaultValueSet.current = true;
+  }, [isQueryFiltersSet]);
 };
 
 export default useStaffSuppressInitialValue;
