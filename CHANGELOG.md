@@ -32,6 +32,7 @@
 * Detail view not opened for non-local items when one shared record found using "Barcode" search on "Item" tab. Fixes UIIN-2698.
 * Jest/RTL: Cover CreateHoldings component with unit tests. Refs UIIN-2663.
 * Display Holdings/Item Electronic Access URIs consistent with Instances. Fixes UIIN-2778.
+* Add a new search option for instances called `LCCN normalization`. Refs UIIN-2245.
 
 ## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)

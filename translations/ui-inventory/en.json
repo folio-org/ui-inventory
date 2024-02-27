@@ -217,6 +217,7 @@
   "isbn": "ISBN",
   "isbnNormalized": "ISBN, normalized",
   "issn": "ISSN",
+  "lccn": "LCCN, normalized",
   "callNumberEyeReadable": "Call number, eye readable",
   "callNumberNormalized": "Call number, normalized",
   "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
