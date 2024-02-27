@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [10.0.11] IN PROGRESS
+
+* Display Holdings/Item Electronic Access URIs consistent with Instances. Fixes UIIN-2778.
+
 ## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.8) (2024-01-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)
 
