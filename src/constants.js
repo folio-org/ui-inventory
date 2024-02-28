@@ -492,6 +492,12 @@ export const fieldSearchConfigurations = {
     startsWith: 'issn="%{query.query}*"',
     containsAny: 'issn any "*%{query.query}*"',
   },
+  lccn: {
+    exactPhrase: 'lccn=="%{query.query}"',
+    containsAll: 'lccn="*%{query.query}*"',
+    startsWith: 'lccn="%{query.query}*"',
+    containsAny: 'lccn any "*%{query.query}*"',
+  },
   identifier: {
     exactPhrase: 'identifiers.value=="%{query.query}"',
     containsAll: 'identifiers.value="*%{query.query}*"',
