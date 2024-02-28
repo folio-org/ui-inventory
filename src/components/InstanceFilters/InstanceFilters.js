@@ -17,6 +17,7 @@ import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import HeldByFacet from '../HeldByFacet';
 import DateRangeFilter from '../DateRangeFilter';
+import { useStaffSuppressInitialValue } from '../../hooks';
 import {
   getSourceOptions,
   getSharedOptions,
@@ -185,6 +186,10 @@ const InstanceFilters = props => {
     props.data
   );
 
+  const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
+
+  useStaffSuppressInitialValue(onChange, props.data.query);
+
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   return (
@@ -339,23 +344,25 @@ const InstanceFilters = props => {
           onFetch={handleFetchFacets}
         />
       </Accordion>
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.STAFF_SUPPRESS}`} />}
-        id={FACETS.STAFF_SUPPRESS}
-        name={FACETS.STAFF_SUPPRESS}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.STAFF_SUPPRESS]?.length > 0}
-        onClearFilter={() => onClear(FACETS.STAFF_SUPPRESS)}
-      >
-        <CheckboxFacet
+      {isStaffSuppressFilterAvailable && (
+        <Accordion
+          label={<FormattedMessage id={`ui-inventory.${FACETS.STAFF_SUPPRESS}`} />}
+          id={FACETS.STAFF_SUPPRESS}
           name={FACETS.STAFF_SUPPRESS}
-          dataOptions={facetsOptions[FACETS_OPTIONS.SUPPRESSED_OPTIONS]}
-          selectedValues={activeFilters[FACETS.STAFF_SUPPRESS]}
-          isPending={getIsPending(FACETS.STAFF_SUPPRESS)}
-          onChange={onChange}
-        />
-      </Accordion>
+          closedByDefault
+          header={FilterAccordionHeader}
+          displayClearButton={activeFilters[FACETS.STAFF_SUPPRESS]?.length > 0}
+          onClearFilter={() => onClear(FACETS.STAFF_SUPPRESS)}
+        >
+          <CheckboxFacet
+            name={FACETS.STAFF_SUPPRESS}
+            dataOptions={facetsOptions[FACETS_OPTIONS.SUPPRESSED_OPTIONS]}
+            selectedValues={activeFilters[FACETS.STAFF_SUPPRESS]}
+            isPending={getIsPending(FACETS.STAFF_SUPPRESS)}
+            onChange={onChange}
+          />
+        </Accordion>
+      )}
       <Accordion
         label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
         id={FACETS.INSTANCES_DISCOVERY_SUPPRESS}

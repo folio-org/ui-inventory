@@ -348,6 +348,11 @@ export const holdingFilterConfig = [
     cql: FACETS_CQL.HOLDINGS_SOURCE,
     values: [],
   },
+  {
+    name: FACETS_CQL.STAFF_SUPPRESS, // this facet is not shown, but we need the config to apply default filter value
+    cql: FACETS_CQL.STAFF_SUPPRESS,
+    values: [],
+  },
 ];
 
 export const itemIndexes = [
@@ -429,6 +434,11 @@ export const itemFilterConfig = [
   {
     name: FACETS.ITEMS_TAGS,
     cql: FACETS_CQL.ITEMS_TAGS,
+    values: [],
+  },
+  {
+    name: FACETS_CQL.STAFF_SUPPRESS, // this facet is not shown, but we need the config to apply default filter value
+    cql: FACETS_CQL.STAFF_SUPPRESS,
     values: [],
   },
 ];

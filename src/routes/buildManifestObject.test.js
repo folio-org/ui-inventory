@@ -3,6 +3,7 @@ import '../../test/jest/__mock__';
 import { queryIndexes } from '../constants';
 import { instanceIndexes } from '../filterConfig';
 import { buildQuery } from './buildManifestObject';
+import buildStripes from '../../test/jest/__mock__/stripesCore.mock';
 
 const getQueryTemplate = (qindex) => instanceIndexes.find(({ value }) => value === qindex).queryTemplate;
 
@@ -11,10 +12,11 @@ const getBuildQueryArgs = ({
   pathComponents = {},
   resourceData = {},
   logger = { log: jest.fn() },
+  props = { stripes: buildStripes() }
 } = {}) => {
   const resData = { query: { ...queryParams }, ...resourceData };
 
-  return [queryParams, pathComponents, resData, logger];
+  return [queryParams, pathComponents, resData, logger, props];
 };
 
 const defaultQueryParamsMap = {
@@ -94,6 +96,43 @@ describe('buildQuery', () => {
         expect(cql).toContain(
           '(keyword all "test")'
         );
+      });
+    });
+
+    describe('when user has staff suppress facet permission', () => {
+      it('should not apply staffSuppress.false facet by default', () => {
+        const qindex = queryIndexes.SUBJECT;
+        const queryParams = { ...defaultQueryParamsMap[qindex] };
+        const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+        expect(cql).toEqual('(subjects.value==/string "Some \\"subject\\" query") sortby title');
+      });
+
+      describe('when staff suppress is already selected', () => {
+        it('should not apply staffSuppress.false facet again ', () => {
+          const qindex = queryIndexes.SUBJECT;
+          const queryParams = { ...defaultQueryParamsMap[qindex], filters: 'staffSuppress.false' };
+          const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+          expect(cql).toEqual('((subjects.value==/string "Some \\"subject\\" query") and staffSuppress=="false") sortby title');
+        });
+      });
+    });
+
+    describe('when user does not have staff suppress facet permission', () => {
+      it('should apply staffSuppress.false facet by default', () => {
+        const qindex = queryIndexes.SUBJECT;
+        const queryParams = { ...defaultQueryParamsMap[qindex] };
+        const cql = buildQuery(...getBuildQueryArgs({
+          queryParams,
+          props: {
+            stripes: buildStripes({
+              hasPerm: () => false,
+            }),
+          },
+        }));
+
+        expect(cql).toEqual('((subjects.value==/string "Some \\"subject\\" query") and staffSuppress=="false") sortby title');
       });
     });
   });

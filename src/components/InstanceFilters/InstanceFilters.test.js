@@ -1,15 +1,17 @@
 import React from 'react';
 import '../../../test/jest/__mock__';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import {
-  FACETS
-} from '../../constants';
+  ModuleHierarchyProvider,
+  useStripes,
+} from '@folio/stripes/core';
+
+import { FACETS } from '../../constants';
 import InstanceFilters from './InstanceFilters';
+import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
 jest.mock('../CheckboxFacet/CheckboxFacet', () => jest.fn().mockReturnValue('CheckboxFacet'));
@@ -18,6 +20,13 @@ jest.mock('../../facetUtils', () => ({
   ...jest.requireActual('../../facetUtils'),
   getSourceOptions: jest.fn(),
   getSuppressedOptions: jest.fn(),
+}));
+
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useStripes: jest.fn().mockReturnValue({
+    hasPerm: jest.fn().mockReturnValue(true),
+  }),
 }));
 
 const activeFilters = {
@@ -72,7 +81,9 @@ const data = {
   consortiaTenants: [],
   tagsRecords: [],
   natureOfContentTerms: [],
-  query: [],
+  query: {
+    filters: 'language.eng',
+  },
   onFetchFacets: jest.fn(),
   parentResources: resources,
 };
@@ -108,6 +119,7 @@ describe('InstanceFilters', () => {
       expect(onClear).toBeCalledWith(FACETS.SHARED);
     });
   });
+
   it('Should Clear selected filters for Held By', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
@@ -116,6 +128,7 @@ describe('InstanceFilters', () => {
       expect(onClear).toBeCalledWith(FACETS.HELD_BY);
     });
   });
+
   it('Should Clear selected filters for effective Location', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
@@ -124,6 +137,7 @@ describe('InstanceFilters', () => {
       expect(onClear).toBeCalledWith(FACETS.EFFECTIVE_LOCATION);
     });
   });
+
   it('Should Clear selected filters for language', async () => {
     renderInstanceFilters();
     const Clearselectedfilters = screen.getAllByRole('button');
@@ -230,6 +244,30 @@ describe('InstanceFilters', () => {
     userEvent.click(Clearselectedfilters[39]);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.SOURCE);
+    });
+  });
+
+  it('should call onChange with default selected Staff suppress value', async () => {
+    renderInstanceFilters();
+
+    expect(onChange).toHaveBeenCalledWith({
+      name: FACETS.STAFF_SUPPRESS,
+      values: ['false'],
+    });
+  });
+
+  describe('when users do not have permissions to view Staff Suppress facet', () => {
+    beforeEach(() => {
+      useStripes.mockClear().mockReturnValue({
+        hasPerm: () => false,
+      });
+    });
+
+    it('should not render the facet', async () => {
+      renderInstanceFilters();
+      const staffSuppressFacet = screen.queryByRole('button', { name: 'Staff suppress filter list' });
+
+      expect(staffSuppressFacet).not.toBeInTheDocument();
     });
   });
 });

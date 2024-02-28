@@ -1,3 +1,5 @@
+import React from 'react';
+
 import {
   render,
   fireEvent,
@@ -103,7 +105,7 @@ describe('withFacets', () => {
     });
   });
 
-  describe('when opening a contributots shared facet', () => {
+  describe('when opening a contributors shared facet', () => {
     describe('and there are no selected options in other facets', () => {
       it('should make a request with correct request options', () => {
         const resources = {
@@ -690,6 +692,32 @@ describe('withFacets', () => {
           },
         }));
       });
+    });
+  });
+
+  describe('when user has staff suppress facet permission', () => {
+    it('should not apply staffSuppress.false facet by default', () => {
+      const resources = {
+        query: {},
+      };
+
+      const { getByText } = render(
+        <FacetsHoc
+          mutator={mutator}
+          resources={resources}
+          properties={{ facetToOpen: FACETS.SHARED }}
+        />
+      );
+
+      fireEvent.click(getByText('fetchFacetsButton'));
+
+      expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+        params: {
+          facet: `${FACETS_CQL.SHARED}:6`,
+          query: 'id = *',
+        },
+        path: 'search/instances/facets',
+      }));
     });
   });
 });
