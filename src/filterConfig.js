@@ -131,6 +131,7 @@ export const advancedSearchIndexes = {
     { label: 'ui-inventory.identifierAll', value: 'identifier' },
     { label: 'ui-inventory.isbn', value: 'isbn' },
     { label: 'ui-inventory.issn', value: 'issn' },
+    { label: 'ui-inventory.lccn', value: 'lccn' },
     { label: 'ui-inventory.search.oclc', value: 'oclc' },
     { label: 'ui-inventory.search.instanceNotes', value: 'instanceNotes' },
     { label: 'ui-inventory.search.instanceAdministrativeNotes', value: 'instanceAdministrativeNotes' },
@@ -180,6 +181,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}" or isbn="%{query.query}"' },
   { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
   { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
+  { label: 'ui-inventory.lccn', value: 'lccn', queryTemplate: 'lccn="%{query.query}"' },
   { label: 'ui-inventory.search.oclc', value: 'oclc', queryTemplate: 'oclc="%{query.query}"' },
   { label: 'ui-inventory.search.instanceNotes', value: 'instanceNotes', queryTemplate: 'notes.note all "%{query.query}" or administrativeNotes all "%{query.query}"' },
   { label: 'ui-inventory.search.instanceAdministrativeNotes', value: 'instanceAdministrativeNotes', queryTemplate: 'administrativeNotes all "%{query.query}"' },
@@ -346,6 +348,11 @@ export const holdingFilterConfig = [
     cql: FACETS_CQL.HOLDINGS_SOURCE,
     values: [],
   },
+  {
+    name: FACETS_CQL.STAFF_SUPPRESS, // this facet is not shown, but we need the config to apply default filter value
+    cql: FACETS_CQL.STAFF_SUPPRESS,
+    values: [],
+  },
 ];
 
 export const itemIndexes = [
@@ -427,6 +434,11 @@ export const itemFilterConfig = [
   {
     name: FACETS.ITEMS_TAGS,
     cql: FACETS_CQL.ITEMS_TAGS,
+    values: [],
+  },
+  {
+    name: FACETS_CQL.STAFF_SUPPRESS, // this facet is not shown, but we need the config to apply default filter value
+    cql: FACETS_CQL.STAFF_SUPPRESS,
     values: [],
   },
 ];

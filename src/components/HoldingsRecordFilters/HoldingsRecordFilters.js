@@ -18,6 +18,7 @@ import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import { useFacets } from '../../common/hooks';
 import HeldByFacet from '../HeldByFacet';
+import { useStaffSuppressInitialValue } from '../../hooks';
 import {
   getSourceOptions,
   getSharedOptions,
@@ -146,6 +147,8 @@ const HoldingsRecordFilters = (props) => {
     getNewRecords,
     props.data
   );
+
+  useStaffSuppressInitialValue(onChange, props.data.query);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
