@@ -51,6 +51,52 @@ const NumberGeneratorOptionsForm = () => {
           <Accordion
             label={
               <h3>
+                <FormattedMessage id="ui-inventory.holdings" />
+              </h3>
+            }
+            id="number-generator-options-holdings"
+          >
+            <Row>
+              <Col xs={12}>
+                <div className={css.marginBottomGutter}>
+                  <Label>
+                    <FormattedMessage id="ui-inventory.callNumber" />
+                  </Label>
+                  <Field
+                    component={RadioButton}
+                    id="useTextFieldCallNumberHoldings"
+                    label={
+                      <div className={disableAccessionNumberAndCallNumberOffOptions ? css.greyLabel : null}>
+                        <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useTextFieldForCallNumber" />
+                      </div>
+                    }
+                    name="callNumberGeneratorSettingHoldings"
+                    type="radio"
+                    value="useTextField"
+                  />
+                  <Field
+                    component={RadioButton}
+                    id="useBothCallNumberHoldings"
+                    label={<FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useBothForCallNumber" />}
+                    name="callNumberGeneratorSettingHoldings"
+                    type="radio"
+                    value="useBoth"
+                  />
+                  <Field
+                    component={RadioButton}
+                    id="useGeneratorCallNumberHoldings"
+                    label={<FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useGeneratorForCallNumber" />}
+                    name="callNumberGeneratorSettingHoldings"
+                    type="radio"
+                    value="useGenerator"
+                  />
+                </div>
+              </Col>
+            </Row>
+          </Accordion>
+          <Accordion
+            label={
+              <h3>
                 <FormattedMessage id="ui-inventory.items" />
               </h3>
             }
@@ -212,52 +258,6 @@ const NumberGeneratorOptionsForm = () => {
                       <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useAccessionNumberForCallNumberWarning" />
                     </MessageBanner>
                   }
-                </div>
-              </Col>
-            </Row>
-          </Accordion>
-          <Accordion
-            label={
-              <h3>
-                <FormattedMessage id="ui-inventory.holdings" />
-              </h3>
-            }
-            id="number-generator-options-holdings"
-          >
-            <Row>
-              <Col xs={12}>
-                <div className={css.marginBottomGutter}>
-                  <Label>
-                    <FormattedMessage id="ui-inventory.callNumber" />
-                  </Label>
-                  <Field
-                    component={RadioButton}
-                    id="useTextFieldCallNumberHoldings"
-                    label={
-                      <div className={disableAccessionNumberAndCallNumberOffOptions ? css.greyLabel : null}>
-                        <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useTextFieldForCallNumber" />
-                      </div>
-                    }
-                    name="callNumberGeneratorSettingHoldings"
-                    type="radio"
-                    value="useTextField"
-                  />
-                  <Field
-                    component={RadioButton}
-                    id="useBothCallNumberHoldings"
-                    label={<FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useBothForCallNumber" />}
-                    name="callNumberGeneratorSettingHoldings"
-                    type="radio"
-                    value="useBoth"
-                  />
-                  <Field
-                    component={RadioButton}
-                    id="useGeneratorCallNumberHoldings"
-                    label={<FormattedMessage id="ui-inventory.settings.numberGeneratorOptions.useGeneratorForCallNumber" />}
-                    name="callNumberGeneratorSettingHoldings"
-                    type="radio"
-                    value="useGenerator"
-                  />
                 </div>
               </Col>
             </Row>
