@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import _ from 'lodash';
@@ -186,10 +186,19 @@ const InstanceFilters = props => {
     props.data
   );
 
-  const handleStaffSuppressChange = useCallback((...args) => {
+  const clearStaffSuppressStorageFlag = useCallback(() => {
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
+  }, []);
+
+  const handleChange = useCallback((...args) => {
+    clearStaffSuppressStorageFlag();
     onChange(...args);
-  });
+  }, [onChange]);
+
+  const handleClearFilter = useCallback((name) => {
+    clearStaffSuppressStorageFlag();
+    onClear(name);
+  }, [onClear]);
 
   const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
@@ -354,14 +363,14 @@ const InstanceFilters = props => {
           closedByDefault
           header={FilterAccordionHeader}
           displayClearButton={activeFilters[FACETS.STAFF_SUPPRESS]?.length > 0}
-          onClearFilter={() => onClear(FACETS.STAFF_SUPPRESS)}
+          onClearFilter={() => handleClearFilter(FACETS.STAFF_SUPPRESS)}
         >
           <CheckboxFacet
             name={FACETS.STAFF_SUPPRESS}
             dataOptions={facetsOptions[FACETS_OPTIONS.SUPPRESSED_OPTIONS]}
             selectedValues={activeFilters[FACETS.STAFF_SUPPRESS]}
             isPending={getIsPending(FACETS.STAFF_SUPPRESS)}
-            onChange={handleStaffSuppressChange}
+            onChange={handleChange}
           />
         </Accordion>
       )}

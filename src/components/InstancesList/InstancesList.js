@@ -200,6 +200,8 @@ class InstancesList extends React.Component {
       }
     });
 
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
+
     if (params.selectedBrowseResult === 'true') {
       this.paneTitleRef.current.focus();
     }
@@ -233,6 +235,7 @@ class InstancesList extends React.Component {
 
     this.unlisten();
     parentMutator.records.reset();
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   }
 
   inputRef = React.createRef();
@@ -243,11 +246,19 @@ class InstancesList extends React.Component {
     authorityId: '',
   };
 
+  handleBeforeUnload = () => {
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+  }
+
   applyDefaultStaffSuppressFilter = () => {
     const {
       history,
       location,
     } = this.props;
+
+    if (JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY))) {
+      return;
+    }
 
     const searchParams = new URLSearchParams(location.search);
     const filters = searchParams.get('filters');
