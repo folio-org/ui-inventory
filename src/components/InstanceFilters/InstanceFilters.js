@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import _ from 'lodash';
 
 import {
@@ -38,7 +38,6 @@ import {
   makeDateRangeFilterString,
   retrieveDatesFromDateRangeFilterString,
 } from '../../utils';
-
 
 const InstanceFilters = props => {
   const {

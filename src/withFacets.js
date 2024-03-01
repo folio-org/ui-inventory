@@ -24,7 +24,6 @@ import {
   browseModeMap,
   browseCallNumberOptions,
   queryIndexes,
-  FACETS,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
