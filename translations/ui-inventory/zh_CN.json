@@ -842,5 +842,8 @@
     "setForDeletion.modal.message": "已选择将<b> {instanceTitle} </b>设置为<b>删除</b> 。当记录设置为删除时，该实例将在发现中隐藏，且员工也不可见。如果实例源是 MARC，则 MARC头标05将设置为“d”",
     "setRecordForDeletion": "设置删除记录",
     "settings.inventory.title": "典藏设置",
-    "displaySummary": "显示摘要"
+    "displaySummary": "显示摘要",
+    "setForDeletion.toast.successful": "<b>{instanceTitle}</b> has been set for deletion",
+    "setForDeletion.toast.unsuccessful": "<b>{instanceTitle}</b> was not set for deletion",
+    "lccn": "LCCN, normalized"
 }

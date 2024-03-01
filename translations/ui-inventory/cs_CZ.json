@@ -842,5 +842,8 @@
     "setForDeletion.modal.message": "Zvolili jste nastavení <b>{instanceTitle}</b> ke <b>smazání</b>. Když je záznam nastaven ke smazání, titul bude Potlačen z vyhledávání a zaměstnancům. Pokud je zdrojem titulu MARC, pak bude MARC LDR 05 nastaven na \"d\".",
     "setRecordForDeletion": "Nastavit záznam pro smazání",
     "settings.inventory.title": "Nastavení katalogu",
-    "displaySummary": "Display summary"
+    "displaySummary": "Zobrazit souhrn",
+    "setForDeletion.toast.successful": "<b>{instanceTitle}</b> byl nastaven ke smazání",
+    "setForDeletion.toast.unsuccessful": "<b>{instanceTitle}</b> nebyl nastaven k vymazání",
+    "lccn": "LCCN, normalized"
 }

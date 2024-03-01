@@ -842,5 +842,8 @@
     "setForDeletion.modal.message": "You have chosen to set <b>{instanceTitle}</b> for <b>deletion</b>. When a record is set for deletion, the instance will be Suppressed from discovery and Staff suppressed. If the instance source is MARC, then the MARC LDR 05 will be set to \"d\"",
     "setRecordForDeletion": "Set record for deletion",
     "settings.inventory.title": "Inventory settings",
-    "displaySummary": "Display summary"
+    "displaySummary": "Display summary",
+    "setForDeletion.toast.successful": "<b>{instanceTitle}</b> has been set for deletion",
+    "setForDeletion.toast.unsuccessful": "<b>{instanceTitle}</b> was not set for deletion",
+    "lccn": "LCCN, normalized"
 }
