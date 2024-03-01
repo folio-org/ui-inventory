@@ -179,13 +179,4 @@ describe('ItemFilters', () => {
       expect(onClear).toHaveBeenCalledWith(FACETS.ITEMS_UPDATED_DATE);
     });
   });
-
-  it('should call onChange with default selected Staff suppress value', async () => {
-    renderItemFilters();
-
-    expect(onChange).toHaveBeenCalledWith({
-      name: FACETS.STAFF_SUPPRESS,
-      values: ['false'],
-    });
-  });
 });

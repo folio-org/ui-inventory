@@ -17,7 +17,6 @@ import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import HeldByFacet from '../HeldByFacet';
-import { useStaffSuppressInitialValue } from '../../hooks';
 import { useFacets } from '../../common/hooks';
 import {
   getSourceOptions,
@@ -147,8 +146,6 @@ const ItemFilters = (props) => {
     getNewRecords,
     props.data
   );
-
-  useStaffSuppressInitialValue(onChange, props.data.query);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 

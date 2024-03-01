@@ -69,6 +69,8 @@ import {
   OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
+  FACETS,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -178,7 +180,6 @@ class InstancesList extends React.Component {
     };
   }
 
-
   componentDidMount() {
     const {
       history,
@@ -204,7 +205,11 @@ class InstancesList extends React.Component {
     }
 
     this.processLastSearchTerms();
+
+    this.applyDefaultStaffSuppressFilter();
   }
+
+
 
   componentDidUpdate(prevProps) {
     const sortBy = this.getSortFromParams();
@@ -223,6 +228,11 @@ class InstancesList extends React.Component {
     } else if (prevId) {
       setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, null);
     }
+
+    // if (!this.isdefaultstaffsuppressset && Boolean(this.props.data.query.filters) === Boolean(new URLSearchParams(this.props.location.search).get('filters')?.length)) {
+    //   this.onFilterChangeHandler({ name: FACETS.STAFF_SUPPRESS, values: ['false'] });
+    //   this.isdefaultstaffsuppressset = true;
+    // }
   }
 
   componentWillUnmount() {
@@ -239,6 +249,28 @@ class InstancesList extends React.Component {
     selectedBrowseResult: false,
     authorityId: '',
   };
+
+  applyDefaultStaffSuppressFilter = () => {
+    const {
+      history,
+      location,
+    } = this.props;
+
+    const searchParams = new URLSearchParams(location.search);
+    const filters = searchParams.get('filters');
+
+    if (!filters?.includes(FACETS.STAFF_SUPPRESS)) {
+      const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
+      const newFiltersValue = filters ? `${filters},${staffSuppressFalse}` : staffSuppressFalse;
+
+      searchParams.set('filters', newFiltersValue);
+      history.replace({
+        pathname: location.pathname,
+        search: searchParams.toString(),
+        state: location.state,
+      });
+    }
+  }
 
   getInstanceIdFromLocation = (location) => {
     return location.pathname.split('/')[3];
@@ -938,6 +970,7 @@ class InstancesList extends React.Component {
 
     facetsStore.getState().resetFacetSettings();
     this.inputRef.current.focus();
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {

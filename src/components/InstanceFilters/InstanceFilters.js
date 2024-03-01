@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
 import _ from 'lodash';
@@ -17,7 +17,6 @@ import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import HeldByFacet from '../HeldByFacet';
 import DateRangeFilter from '../DateRangeFilter';
-import { useStaffSuppressInitialValue } from '../../hooks';
 import {
   getSourceOptions,
   getSharedOptions,
@@ -31,6 +30,7 @@ import {
   FACETS_OPTIONS,
   FACETS_SETTINGS,
   FACETS_CQL,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../../constants';
 import { useFacets } from '../../common/hooks';
 import { languageOptionsES } from './languages';
@@ -186,17 +186,19 @@ const InstanceFilters = props => {
     props.data
   );
 
+  const handleStaffSuppressChange = useCallback((...args) => {
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
+    onChange(...args);
+  });
+
   const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
-
-  useStaffSuppressInitialValue(onChange, props.data.query);
-
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   return (
     <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
       {isUserInMemberTenant && (
         <Accordion
-          label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
+          label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
           id={FACETS.SHARED}
           name={FACETS.SHARED}
           separator={false}
@@ -225,7 +227,7 @@ const InstanceFilters = props => {
         onFilterSearch={handleFilterSearch}
       />
       <Accordion
-        label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
+        label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
         id={FACETS.EFFECTIVE_LOCATION}
         name={FACETS.EFFECTIVE_LOCATION}
         separator={false}
@@ -245,7 +247,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id={`ui-inventory.instances.${FACETS.LANGUAGE}`} />}
+        label={intl.formatMessage({ id: `ui-inventory.instances.${FACETS.LANGUAGE}` })}
         id={FACETS.LANGUAGE}
         name={FACETS.LANGUAGE}
         closedByDefault
@@ -265,7 +267,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.instances.resourceType" />}
+        label={intl.formatMessage({ id: 'ui-inventory.instances.resourceType' })}
         id={FACETS.RESOURCE}
         name={FACETS.RESOURCE}
         closedByDefault
@@ -285,7 +287,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.instanceFormat" />}
+        label={intl.formatMessage({ id: 'ui-inventory.instanceFormat' })}
         id={FACETS.FORMAT}
         name={FACETS.FORMAT}
         closedByDefault
@@ -305,7 +307,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.modeOfIssuance" />}
+        label={intl.formatMessage({ id: 'ui-inventory.modeOfIssuance' })}
         id={FACETS.MODE}
         name={FACETS.MODE}
         closedByDefault
@@ -325,7 +327,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.natureOfContentTerms" />}
+        label={intl.formatMessage({ id: 'ui-inventory.natureOfContentTerms' })}
         id={FACETS.NATURE_OF_CONTENT}
         name={FACETS.NATURE_OF_CONTENT}
         closedByDefault
@@ -346,7 +348,7 @@ const InstanceFilters = props => {
       </Accordion>
       {isStaffSuppressFilterAvailable && (
         <Accordion
-          label={<FormattedMessage id={`ui-inventory.${FACETS.STAFF_SUPPRESS}`} />}
+          label={intl.formatMessage({ id: `ui-inventory.${FACETS.STAFF_SUPPRESS}` })}
           id={FACETS.STAFF_SUPPRESS}
           name={FACETS.STAFF_SUPPRESS}
           closedByDefault
@@ -359,12 +361,12 @@ const InstanceFilters = props => {
             dataOptions={facetsOptions[FACETS_OPTIONS.SUPPRESSED_OPTIONS]}
             selectedValues={activeFilters[FACETS.STAFF_SUPPRESS]}
             isPending={getIsPending(FACETS.STAFF_SUPPRESS)}
-            onChange={onChange}
+            onChange={handleStaffSuppressChange}
           />
         </Accordion>
       )}
       <Accordion
-        label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
+        label={intl.formatMessage({ id: 'ui-inventory.discoverySuppress' })}
         id={FACETS.INSTANCES_DISCOVERY_SUPPRESS}
         name={FACETS.INSTANCES_DISCOVERY_SUPPRESS}
         closedByDefault
@@ -382,7 +384,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.statisticalCode" />}
+        label={intl.formatMessage({ id: 'ui-inventory.statisticalCode' })}
         id={FACETS.STATISTICAL_CODE_IDS}
         name={FACETS.STATISTICAL_CODE_IDS}
         closedByDefault
@@ -402,7 +404,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.CREATED_DATE}`} />}
+        label={intl.formatMessage({ id: `ui-inventory.${FACETS.CREATED_DATE}` })}
         id={FACETS.CREATED_DATE}
         name={FACETS.CREATED_DATE}
         closedByDefault
@@ -419,7 +421,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.UPDATED_DATE}`} />}
+        label={intl.formatMessage({ id: `ui-inventory.${FACETS.UPDATED_DATE}` })}
         id={FACETS.UPDATED_DATE}
         name={FACETS.UPDATED_DATE}
         closedByDefault
@@ -436,7 +438,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id="ui-inventory.instanceStatusShort" />}
+        label={intl.formatMessage({ id: 'ui-inventory.instanceStatusShort' })}
         id={FACETS.STATUS}
         name={FACETS.STATUS}
         closedByDefault
@@ -457,7 +459,7 @@ const InstanceFilters = props => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.SOURCE}`} />}
+        label={intl.formatMessage({ id: `ui-inventory.${FACETS.SOURCE}` })}
         id={FACETS.SOURCE}
         name={FACETS.SOURCE}
         closedByDefault

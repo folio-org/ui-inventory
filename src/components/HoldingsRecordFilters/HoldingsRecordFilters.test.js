@@ -203,13 +203,4 @@ describe('HoldingsRecordFilters', () => {
       expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_SOURCE);
     });
   });
-
-  it('should call onChange with default selected Staff suppress value', async () => {
-    renderHoldingsRecordFilters();
-
-    expect(onChange).toHaveBeenCalledWith({
-      name: FACETS.STAFF_SUPPRESS,
-      values: ['false'],
-    });
-  });
 });

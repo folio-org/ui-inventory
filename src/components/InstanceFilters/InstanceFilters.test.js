@@ -1,32 +1,26 @@
-import React from 'react';
 import '../../../test/jest/__mock__';
+
+import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import {
-  ModuleHierarchyProvider,
-  useStripes,
-} from '@folio/stripes/core';
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
-import { FACETS } from '../../constants';
 import InstanceFilters from './InstanceFilters';
+import { FACETS, USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '../../constants';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
-jest.mock('../CheckboxFacet/CheckboxFacet', () => jest.fn().mockReturnValue('CheckboxFacet'));
+
+jest.mock('../CheckboxFacet/CheckboxFacet', () => ({ name, onChange }) => ((
+  <button type="button" onClick={() => onChange()}>change facet {name}</button>
+)));
 
 jest.mock('../../facetUtils', () => ({
   ...jest.requireActual('../../facetUtils'),
   getSourceOptions: jest.fn(),
   getSuppressedOptions: jest.fn(),
-}));
-
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useStripes: jest.fn().mockReturnValue({
-    hasPerm: jest.fn().mockReturnValue(true),
-  }),
 }));
 
 const activeFilters = {
@@ -113,8 +107,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for shared', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[1]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Shared"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.SHARED);
     });
@@ -122,8 +116,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for Held By', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[3]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Held by"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.HELD_BY);
     });
@@ -131,8 +125,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for effective Location', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[5]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Effective location (item)"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.EFFECTIVE_LOCATION);
     });
@@ -140,9 +134,9 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for language', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Language"' });
 
-    userEvent.click(Clearselectedfilters[7]);
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.LANGUAGE);
     });
@@ -150,8 +144,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for resource', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[9]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Resource Type"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.RESOURCE);
     });
@@ -159,8 +153,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for format', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[11]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Format"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.FORMAT);
     });
@@ -168,8 +162,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for mode', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[13]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Mode of issuance"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.MODE);
     });
@@ -177,8 +171,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for nature Of Content', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[15]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Nature of content"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.NATURE_OF_CONTENT);
     });
@@ -186,8 +180,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for staffSuppress', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[17]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Staff suppress"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.STAFF_SUPPRESS);
     });
@@ -195,8 +189,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for Suppress from discovery', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[19]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Suppress from discovery"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.INSTANCES_DISCOVERY_SUPPRESS);
     });
@@ -204,8 +198,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for Statistical code filter list', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[21]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Statistical code"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.STATISTICAL_CODE_IDS);
     });
@@ -213,8 +207,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for Date created filter list', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[23]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Date created"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.CREATED_DATE);
     });
@@ -222,8 +216,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for Date updated filter list', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[30]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Date updated"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.UPDATED_DATE);
     });
@@ -231,8 +225,8 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for Instance status filter list', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[37]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Instance status"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.STATUS);
     });
@@ -240,34 +234,30 @@ describe('InstanceFilters', () => {
 
   it('Should Clear selected filters for Source filter list', async () => {
     renderInstanceFilters();
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[39]);
+    const Clearselectedfilters = screen.getByRole('button', { name: 'Clear selected filters for "Source"' });
+    userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.SOURCE);
     });
   });
 
-  it('should call onChange with default selected Staff suppress value', async () => {
-    renderInstanceFilters();
-
-    expect(onChange).toHaveBeenCalledWith({
-      name: FACETS.STAFF_SUPPRESS,
-      values: ['false'],
-    });
-  });
-
-  describe('when users do not have permissions to view Staff Suppress facet', () => {
+  describe('when user selects staff suppress options', () => {
+    const mockSetItem = jest.fn();
     beforeEach(() => {
-      useStripes.mockClear().mockReturnValue({
-        hasPerm: () => false,
-      });
+      global.Storage.prototype.setItem = mockSetItem;
     });
 
-    it('should not render the facet', async () => {
+    afterEach(() => {
+      global.Storage.prototype.setItem.mockReset();
+    });
+
+    it('should set a flag that user selected some option', async () => {
       renderInstanceFilters();
       const staffSuppressFacet = screen.queryByRole('button', { name: 'Staff suppress filter list' });
+      fireEvent.click(staffSuppressFacet);
+      fireEvent.click(screen.getByText('change facet staffSuppress'));
 
-      expect(staffSuppressFacet).not.toBeInTheDocument();
+      expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
     });
   });
 });

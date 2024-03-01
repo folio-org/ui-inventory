@@ -99,40 +99,37 @@ describe('buildQuery', () => {
       });
     });
 
-    describe('when user has staff suppress facet permission', () => {
-      it('should not apply staffSuppress.false facet by default', () => {
-        const qindex = queryIndexes.SUBJECT;
-        const queryParams = { ...defaultQueryParamsMap[qindex] };
-        const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+    describe('when query is empty and filters only contain staff suppress', () => {
+      describe('when user did not touch staff suppress', () => {
+        it('should return empty query and filters', () => {
+          const queryParams = {
+            qindex: queryIndexes.SUBJECT,
+            query: '',
+            filters: 'staffSuppress.false',
+          };
 
-        expect(cql).toEqual('(subjects.value==/string "Some \\"subject\\" query") sortby title');
-      });
-
-      describe('when staff suppress is already selected', () => {
-        it('should not apply staffSuppress.false facet again ', () => {
-          const qindex = queryIndexes.SUBJECT;
-          const queryParams = { ...defaultQueryParamsMap[qindex], filters: 'staffSuppress.false' };
           const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
-          expect(cql).toEqual('((subjects.value==/string "Some \\"subject\\" query") and staffSuppress=="false") sortby title');
+          expect(cql).toEqual(null);
         });
       });
-    });
 
-    describe('when user does not have staff suppress facet permission', () => {
-      it('should apply staffSuppress.false facet by default', () => {
-        const qindex = queryIndexes.SUBJECT;
-        const queryParams = { ...defaultQueryParamsMap[qindex] };
-        const cql = buildQuery(...getBuildQueryArgs({
-          queryParams,
-          props: {
-            stripes: buildStripes({
-              hasPerm: () => false,
-            }),
-          },
-        }));
+      describe('when user did not touch staff suppress', () => {
+        beforeEach(() => {
+          global.Storage.prototype.getItem = jest.fn().mockReturnValue('true');
+        });
 
-        expect(cql).toEqual('((subjects.value==/string "Some \\"subject\\" query") and staffSuppress=="false") sortby title');
+        it('should return empty query and filters', () => {
+          const queryParams = {
+            qindex: queryIndexes.SUBJECT,
+            query: '',
+            filters: 'staffSuppress.false',
+          };
+
+          const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+          expect(cql).toEqual('(staffSuppress=="false") sortby title');
+        });
       });
     });
   });
