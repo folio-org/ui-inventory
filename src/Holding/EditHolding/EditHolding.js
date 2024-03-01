@@ -56,10 +56,10 @@ const EditHolding = ({
 
   const goBack = useCallback(() => {
     history.push({
-      pathname: locationState?.backPathname ?? `/inventory/view/${instanceId}`,
+      pathname: locationState?.backPathname ?? `/inventory/view/${instanceId}/${holdingId}`,
       search,
     });
-  }, [search, instanceId]);
+  }, [search, instanceId, holdingId]);
 
   const onCancel = useCallback(async () => {
     await switchAffiliation(stripes, tenantFrom, goBack);

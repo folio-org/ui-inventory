@@ -7,7 +7,10 @@ import {
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { AppContextMenu } from '@folio/stripes/core';
+import {
+  AppContextMenu,
+  coreEvents,
+} from '@folio/stripes/core';
 import {
   checkScope,
   CommandList,
@@ -40,6 +43,8 @@ import {
 } from './routes';
 import Settings from './settings';
 import { DataProvider, HoldingsProvider, LastSearchTermsProvider } from './providers';
+import { EVENTS } from './constants';
+import { clearStorage } from './utils';
 
 const InventoryRouting = (props) => {
   const history = useHistory();
@@ -196,6 +201,12 @@ const InventoryRouting = (props) => {
       </HoldingsProvider>
     </DataProvider>
   );
+};
+
+InventoryRouting.eventHandler = (event) => {
+  if ([coreEvents.LOGIN, EVENTS.SWITCH_ACTIVE_AFFILIATION].includes(event)) {
+    clearStorage();
+  }
 };
 
 InventoryRouting.propTypes = {

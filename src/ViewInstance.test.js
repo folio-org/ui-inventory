@@ -196,6 +196,9 @@ const defaultProp = {
       POST: jest.fn(),
       GET: jest.fn(() => Promise.resolve({ sharingInstances: [{ status: 'COMPLETE' }] })),
     },
+    setForDeletion: {
+      DELETE: jest.fn(),
+    },
     authorities: {
       GET: jest.fn(),
     }
@@ -309,7 +312,8 @@ describe('ViewInstance', () => {
 
     await waitFor(() => expect(screen.getByText('Sharing this local instance will take a few moments.' +
       ' A success message and updated details will be displayed upon completion.')).toBeInTheDocument());
-  });
+  }, 10000);
+
   it('should show a correct Warning message banner when user lacks permission to vew shared instance', () => {
     renderViewInstance({
       isError: true,
@@ -320,21 +324,25 @@ describe('ViewInstance', () => {
     expect(screen.getByText('You do not currently have permission to access details of shared instances. ' +
       'Contact your FOLIO administrator for more information.')).toBeInTheDocument();
   });
+
   it('should show loading spinner when instance is loading', () => {
     renderViewInstance({ isLoading: true });
 
     expect(screen.getByText('spinner-ellipsis')).toBeInTheDocument();
   });
+
   it('should display action menu items', () => {
     renderViewInstance();
     expect(screen.getByText('Move items within an instance')).toBeInTheDocument();
     expect(screen.getByText('Move holdings/items to another instance')).toBeInTheDocument();
   });
+
   it('should display \'move\' action menu items when instance was opened from Browse page', () => {
     renderViewInstance();
     expect(screen.queryByText('Move items within an instance')).toBeInTheDocument();
     expect(screen.queryByText('Move holdings/items to another instance')).toBeInTheDocument();
   });
+
   describe('instance header', () => {
     describe('for non-consortia users', () => {
       it('should render instance title, publisher, and publication date', () => {
@@ -991,6 +999,140 @@ describe('ViewInstance', () => {
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
           expect(screen.queryByRole('button', { name: 'Add MARC holdings record' })).not.toBeInTheDocument();
+        });
+      });
+    });
+    describe('"Set record for deletion" action item', () => {
+      it('should be rendered', () => {
+        renderViewInstance();
+        checkActionItemExists('Set record for deletion');
+      });
+
+      describe('when click "Set record for deletion" button', () => {
+        it('should render the confirmation modal', () => {
+          renderViewInstance();
+
+          fireEvent.click(screen.getByText('Set record for deletion'));
+
+          expect(screen.getByText('Are you sure you want to set this record for deletion?')).toBeInTheDocument();
+        });
+
+        describe('when cancel setting record for deletion', () => {
+          it('should close the confirmation modal', () => {
+            renderViewInstance();
+
+            fireEvent.click(screen.getByText('Set record for deletion'));
+            fireEvent.click(screen.getByText('Cancel'));
+
+            expect(screen.queryByText('Are you sure you want to set this record for deletion?')).not.toBeInTheDocument();
+          });
+        });
+      });
+
+      describe('when instance is suppressed from staff and discovery', () => {
+        it('should not see "Set record for deletion" action item', () => {
+          StripesConnectedInstance.prototype.instance.mockImplementation(() => ({
+            ...instance,
+            discoverySuppress: true,
+            staffSuppress: true,
+          }));
+
+          renderViewInstance();
+
+          expect(screen.queryByText('button', { name: 'Set record for deletion' })).not.toBeInTheDocument();
+        });
+      });
+
+      describe('when instance has source = "MARC" and it is marked as deleted', () => {
+        it('should not see "Set record for deletion" action item', () => {
+          StripesConnectedInstance.prototype.instance.mockImplementation(() => ({
+            ...instance,
+            discoverySuppress: true,
+            leaderRecordStatus: 'd',
+            deleted: true,
+          }));
+
+          renderViewInstance();
+
+          expect(screen.queryByText('button', { name: 'Set record for deletion' })).not.toBeInTheDocument();
+        });
+      });
+
+      describe('when user is in central tenant', () => {
+        it('should render "Set record for deletion" action item', () => {
+          const stripes = {
+            ...defaultProp.stripes,
+            okapi: { tenant: 'consortium' },
+            user: {
+              user: {
+                consortium: { centralTenantId: 'consortium' },
+                tenants: ['testTenantId'],
+              },
+            },
+          };
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
+
+          renderViewInstance({ stripes });
+
+          checkActionItemExists('Set record for deletion');
+        });
+      });
+
+      describe('when user is in member tenant and instance is shared and has central tenant permission to set record for deletion', () => {
+        it('should render "Set record for deletion" action item', () => {
+          renderViewInstance({
+            centralTenantPermissions: [{
+              permissionName: 'ui-inventory.instance.set-deletion-and-staff-suppress',
+            }],
+            isShared: true,
+            tenantId: 'tenantId',
+          });
+
+          checkActionItemExists('Set record for deletion');
+        });
+      });
+
+      describe('when user doesn\'t have permissions', () => {
+        it('should not see "Set record for deletion" action item', () => {
+          const stripes = useStripes();
+          stripes.hasPerm.mockImplementationOnce(() => false);
+
+          renderViewInstance({
+            stripes: {
+              ...defaultProp.stripes,
+              hasPerm: jest.fn().mockReturnValue(false),
+            },
+          });
+
+          expect(screen.queryByText('button', { name: 'Set record for deletion' })).not.toBeInTheDocument();
+        });
+      });
+
+      describe('when click "Set record for deletion" action item', () => {
+        it('should invoke function for setting record for deletion and show successful message', () => {
+          defaultProp.mutator.setForDeletion.DELETE.mockResolvedValue({});
+
+          renderViewInstance();
+
+          fireEvent.click(screen.getByText('Set record for deletion'));
+          fireEvent.click(screen.getByText('Confirm'));
+
+          expect(defaultProp.mutator.setForDeletion.DELETE).toHaveBeenCalledWith(defaultProp.selectedInstance.id);
+          expect(screen.queryByText(`${defaultProp.selectedInstance.title} has been set for deletion`)).toBeDefined();
+        });
+
+        describe('when there\'s an error', () => {
+          it('should throw an error with id of the instance and show error message', async () => {
+            defaultProp.mutator.setForDeletion.DELETE.mockRejectedValueOnce();
+
+            renderViewInstance();
+
+            fireEvent.click(screen.getByText('Set record for deletion'));
+            fireEvent.click(screen.getByText('Confirm'));
+
+            expect(defaultProp.mutator.setForDeletion.DELETE).toHaveBeenCalledWith(defaultProp.selectedInstance.id);
+            expect(screen.queryByText(`${defaultProp.selectedInstance.title} was not set for deletion`)).toBeDefined();
+          });
         });
       });
     });

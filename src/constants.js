@@ -492,6 +492,12 @@ export const fieldSearchConfigurations = {
     startsWith: 'issn="%{query.query}*"',
     containsAny: 'issn any "*%{query.query}*"',
   },
+  lccn: {
+    exactPhrase: 'lccn=="%{query.query}"',
+    containsAll: 'lccn="*%{query.query}*"',
+    startsWith: 'lccn="%{query.query}*"',
+    containsAny: 'lccn any "*%{query.query}*"',
+  },
   identifier: {
     exactPhrase: 'identifiers.value=="%{query.query}"',
     containsAll: 'identifiers.value="*%{query.query}*"',
@@ -680,4 +686,12 @@ export const INSTANCE_SHARING_STATUSES = {
 
 export const HTTP_RESPONSE_STATUS_CODES = {
   FORBIDDEN: 403,
+};
+
+export const EVENTS = {
+  SWITCH_ACTIVE_AFFILIATION: 'SWITCH_ACTIVE_AFFILIATION',
+};
+
+export const LEADER_RECORD_STATUSES = {
+  DELETED: 'd',
 };

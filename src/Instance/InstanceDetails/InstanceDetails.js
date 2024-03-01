@@ -1,7 +1,14 @@
-import React, { useMemo, useState, useContext, forwardRef } from 'react';
+import React, {
+  useMemo,
+  useState,
+  useContext,
+  forwardRef,
+  useRef,
+} from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { uniqueId } from 'lodash';
 
 import {
   AppIcon,
@@ -68,6 +75,7 @@ const InstanceDetails = forwardRef(({
   onClose,
   actionMenu,
   tagsEnabled,
+  mutateInstance,
   userTenantPermissions,
   isShared,
   ...rest
@@ -79,9 +87,11 @@ const InstanceDetails = forwardRef(({
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
+  const prevInstanceId = useRef(instance?.id);
   const referenceData = useContext(DataContext);
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
+  const [isAllExpanded, setIsAllExpanded] = useState();
 
   const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
   const tags = instance?.tags?.tagList;
@@ -105,6 +115,12 @@ const InstanceDetails = forwardRef(({
       </PaneMenu>
     );
   }, [tagsEnabled, tags, intl]);
+
+  const updatePrevInstanceId = id => {
+    prevInstanceId.current = id;
+  };
+
+  const getEntity = () => instance;
 
   const renderPaneTitle = () => {
     const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
@@ -131,6 +147,12 @@ const InstanceDetails = forwardRef(({
         }}
       />
     );
+  };
+
+  const onToggle = newState => {
+    const isExpanded = Object.values(newState)[0];
+
+    setIsAllExpanded(isExpanded);
   };
 
   return (
@@ -163,7 +185,7 @@ const InstanceDetails = forwardRef(({
               </MessageBanner>
             </Col>
             <Col data-test-expand-all xs={2}>
-              <ExpandAllButton />
+              <ExpandAllButton onToggle={onToggle} />
             </Col>
           </Row>
 
@@ -184,8 +206,12 @@ const InstanceDetails = forwardRef(({
 
             {isConsortialHoldingsVisible && (
               <ConsortialHoldings
+                key={uniqueId(instance?.id)}
                 instance={instance}
+                prevInstanceId={prevInstanceId.current}
+                updatePrevInstanceId={updatePrevInstanceId}
                 userTenantPermissions={userTenantPermissions}
+                isAllExpanded={isAllExpanded}
               />
             )}
 
@@ -268,7 +294,14 @@ const InstanceDetails = forwardRef(({
           </AccordionSet>
         </AccordionStatus>
       </Pane>
-      { helperApp && <HelperApp appName={helperApp} onClose={setHelperApp} />}
+      { helperApp &&
+        <HelperApp
+          getEntity={getEntity}
+          mutateEntity={mutateInstance}
+          appName={helperApp}
+          onClose={setHelperApp}
+        />
+      }
     </>
   );
 });
@@ -277,6 +310,7 @@ InstanceDetails.propTypes = {
   children: PropTypes.node,
   actionMenu: PropTypes.func,
   onClose: PropTypes.func.isRequired,
+  mutateInstance: PropTypes.func,
   instance: PropTypes.object,
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,

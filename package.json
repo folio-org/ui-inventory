@@ -11,11 +11,13 @@
   "stripes": {
     "actsAs": [
       "app",
+      "handler",
       "settings"
     ],
+    "handlerName": "eventHandler",
     "displayName": "ui-inventory.meta.title",
     "route": "/inventory",
-    "home": "/inventory?filters=&sort=title",
+    "home": "/inventory?filters=staffSuppress.false&sort=title",
     "queryResource": "query",
     "icons": [
       {
@@ -99,8 +101,8 @@
       "orders.holding-summary": "1.0",
       "order-lines": "2.0 3.0",
       "organizations.organizations": "1.0",
-      "pieces": "2.0",
       "servint": "2.0 3.0",
+      "pieces": "3.0",
       "titles": "1.2"
     },
     "permissionSets": [
@@ -709,9 +711,18 @@
       },
       {
         "permissionName": "ui-inventory.instance.view-staff-suppressed-records",
-        "displayName": "Inventory: View instance records being suppressed for staff",
+        "displayName": "Inventory: Enable staff suppress facet",
         "subPermissions": [
           "ui-inventory.instance.view"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.instance.set-deletion-and-staff-suppress",
+        "displayName": "Inventory: Set records for deletion and staff suppress",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "source-storage.records.update"
         ],
         "visible": true
       },
@@ -910,7 +921,8 @@
     "react-final-form-arrays": "^3.1.0",
     "react-final-form-listeners": "^1.0.2",
     "react-router-prop-types": "^1.0.4",
-    "redux-form": "^8.3.7"
+    "redux-form": "^8.3.7",
+    "use-session-storage-state": "^18.2.0"
   },
   "peerDependencies": {
     "@folio/service-interaction": "^2.0.0",

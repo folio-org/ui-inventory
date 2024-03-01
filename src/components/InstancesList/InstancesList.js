@@ -59,12 +59,16 @@ import {
   handleKeyCommand,
   buildSingleItemQuery,
   isUserInConsortiumMode,
+  switchAffiliation,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
   queryIndexes,
   segments,
+  OKAPI_TENANT_HEADER,
+  CONTENT_TYPE_HEADER,
+  OKAPI_TOKEN_HEADER,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -80,7 +84,6 @@ import {
   setItem,
 } from '../../storage';
 import facetsStore from '../../stores/facetsStore';
-import registerLogoutListener from '../../hooks/useLogout/utils';
 import { advancedSearchIndexes } from '../../filterConfig';
 
 import css from './instances.css';
@@ -179,7 +182,6 @@ class InstancesList extends React.Component {
   componentDidMount() {
     const {
       history,
-      namespace,
       getParams,
     } = this.props;
 
@@ -202,8 +204,6 @@ class InstancesList extends React.Component {
     }
 
     this.processLastSearchTerms();
-
-    registerLogoutListener(this.clearStorage, namespace, 'instances-list-logout', history);
   }
 
   componentDidUpdate(prevProps) {
@@ -255,16 +255,6 @@ class InstancesList extends React.Component {
     }
 
     return intl.formatMessage({ id: 'ui-inventory.documentTitle.search' }, { query: query.query });
-  }
-
-  clearStorage = () => {
-    const {
-      namespace,
-    } = this.props;
-
-    Object.values(segments).forEach((segment) => {
-      setItem(`${namespace}.${segment}.lastOpenRecord`, null);
-    });
   }
 
   processLastSearchTerms = () => {
@@ -1025,10 +1015,16 @@ class InstancesList extends React.Component {
       this.setState({ searchInProgress: false });
     }
 
+    const tenantItemBelongsTo = instance?.items?.[0]?.tenantId || stripes.okapi.tenant;
+
     itemsByQuery.reset();
     const items = await itemsByQuery.GET({
       params: { query: itemQuery },
-      tenant: stripes.okapi.tenant,
+      headers: {
+        [OKAPI_TENANT_HEADER]: tenantItemBelongsTo,
+        [CONTENT_TYPE_HEADER]: 'application/json',
+        ...(stripes.okapi.token && { [OKAPI_TOKEN_HEADER]: stripes.okapi.token }),
+      },
     });
 
     this.setState({ searchInProgress: false });
@@ -1042,11 +1038,18 @@ class InstancesList extends React.Component {
     const { id, holdingsRecordId } = items[0];
     const search = stringify(getParams());
 
-    history.push({
-      pathname: `/inventory/view/${instance.id}/${holdingsRecordId}/${id}`,
-      search,
-      state: { tenantTo: stripes.okapi.tenant },
-    });
+    const navigateToItemView = () => {
+      history.push({
+        pathname: `/inventory/view/${instance.id}/${holdingsRecordId}/${id}`,
+        search,
+        state: {
+          tenantTo: tenantItemBelongsTo,
+          tenantFrom: stripes.okapi.tenant,
+        },
+      });
+    };
+
+    await switchAffiliation(stripes, tenantItemBelongsTo, navigateToItemView);
 
     return null;
   }

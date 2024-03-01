@@ -12,11 +12,52 @@
 * Ignored hot key command on edit fields. Refs UIIN-2604.
 * Don't render Fast Add record modal in a `<Paneset>` to re-calculate other `<Pane>`'s widths after closing. Fixes UIIN-2690.
 * "Saving instance failed" modal does not show error message. Fixes UIIN-2686.
-* Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
 * Browse Lists | Focus updates. Fixes UIIN-2267.
+* Users with data export view only permission. Refs UIIN-2660.
+* Always highlight the first list row after pagination is clicked. Refs UIIN-2708.
+* The quantity of assigned tags to the instance is not displaying in the little tag icon after assigning. Fixes UIIN-2559.
+* Reset search/browse query when user switches affiliation. Refs UIIN-2715.
+* Moving items between holdings records doesn't update correctly in UI. Fixes UIIN-2692.
+* Update permission for Staff suppressed facet. Refs UIIN-2705.
+* Add permission for setting record for deletion. Refs UIIN-2593.
+* Mock ResizeObserver to fix failed tests. Refs UIIN-2738.
+* Fix "Edit in quickMARC" and "View source" options are disabled in the expanded dropdown on the holdings details view. Fixes UIIN-2735.
+* Add Set record for deletion option in Actions menu with Confirmation modal. Refs UIIN-2594.
+* Use `onSave` prop for quickMARC to handle saving records separately. Refs UIIN-2743.
+* Set Inventory settings HTML page title this format - `<<App name>> settings - <<selected page name>> - FOLIO`. Refs UIIN-2713.
+* Add "Display summary" field to item enumeration data accordion. Refs UIIN-2740.
+* Display the 'Holdings detail' page after saving the holding changes. Fixes UIIN-2734.
+* *BREAKING* Bump up okapi interfaces for `pieces` (3.0). Refs UIIN-2761.
+* Action when Set record for deletion option is invoked. Refs UIIN-2595.
+* Detail view not opened for non-local items when one shared record found using "Barcode" search on "Item" tab. Fixes UIIN-2698.
+* Jest/RTL: Cover CreateHoldings component with unit tests. Refs UIIN-2663.
+* Display Holdings/Item Electronic Access URIs consistent with Instances. Fixes UIIN-2778.
+* Staff suppress facet - use `No` as default value. Hide the facet when users don't have permissions to use it. Refs UIIN-2596.
+* Add a new search option for instances called `LCCN normalization`. Refs UIIN-2245.
+* Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
+
+## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)
+
+* ECS: id of member tenant is undefined when rendering consortial holdings. Fixes UIIN-2724.
+
+## [10.0.9](https://github.com/folio-org/ui-inventory/tree/v10.0.9) (2023-12-29)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.8...v10.0.9)
+
+* ECS: Effective location facet is not showing other member tenants. Fixes UIIN-2728.
+
+## [10.0.8](https://github.com/folio-org/ui-inventory/tree/v10.0.8) (2023-12-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.7...v10.0.8)
+
 * Correctly display location data for holdings and items when tenant is changed. Fixes UIIN-2697.
 * Disable the "Share" button after clicking it once on "Are you sure you want to share this instance?" modal window. Refs UIIN-2704.
 * Users with data export view only permission. Refs UIIN-2660.
+* Refactor CSS away from `color()` function. Refs  UIIN-2716.
+
+## [10.0.7](https://github.com/folio-org/ui-inventory/tree/v10.0.7) (2023-12-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.6...v10.0.7)
+
+* Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
 
 ## [10.0.6](https://github.com/folio-org/ui-inventory/tree/v10.0.6) (2023-11-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.5...v10.0.6)

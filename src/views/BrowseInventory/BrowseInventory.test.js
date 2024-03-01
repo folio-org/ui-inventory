@@ -312,4 +312,19 @@ describe('BrowseInventory', () => {
       expect(screen.getByRole('textbox')).toHaveFocus();
     });
   });
+
+  describe('when search option is changed', () => {
+    it('should reset itemToView to not highlight the first row', () => {
+      const mockDeleteItemToView = jest.fn();
+
+      jest.spyOn(stripesAcqComponents, 'useItemToView').mockReturnValueOnce({
+        deleteItemToView: mockDeleteItemToView,
+      });
+
+      renderBrowseInventory();
+
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+      expect(mockDeleteItemToView).toHaveBeenCalled();
+    });
+  });
 });

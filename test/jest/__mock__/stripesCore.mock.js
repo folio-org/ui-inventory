@@ -46,7 +46,7 @@ const STRIPES = buildStripes();
 
 const mockStripesCore = {
   stripesConnect: Component => ({ mutator, resources, stripes, ...rest }) => {
-    const fakeMutator = mutator || Object.keys(Component.manifest).reduce((acc, mutatorName) => {
+    const fakeMutator = mutator || Object.keys(Component.manifest || {}).reduce((acc, mutatorName) => {
       const returnValue = Component.manifest[mutatorName].records ? [] : {};
 
       acc[mutatorName] = {
@@ -62,7 +62,7 @@ const mockStripesCore = {
       return acc;
     }, {});
 
-    const fakeResources = resources || Object.keys(Component.manifest).reduce((acc, resourceName) => {
+    const fakeResources = resources || Object.keys(Component.manifest || {}).reduce((acc, resourceName) => {
       acc[resourceName] = {
         records: [],
       };

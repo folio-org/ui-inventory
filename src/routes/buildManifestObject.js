@@ -9,7 +9,8 @@ import {
 import {
   CQL_FIND_ALL,
   fieldSearchConfigurations,
-  queryIndexes
+  queryIndexes,
+  FACETS,
 } from '../constants';
 import {
   getQueryTemplate,
@@ -36,6 +37,23 @@ export const getAdvancedSearchTemplate = (queryValue) => {
     const formattedRow = `${row.bool} ${rowQuery}`.trim();
     return `${acc} ${formattedRow}`;
   }, '').trim();
+};
+
+const applyDefaultStaffSuppressFilter = (query, isStaffSuppressFilterAvailable) => {
+  const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
+
+  if (!query.query && query.filters === staffSuppressFalse) {
+    // if query is empty and the only filter value is staffSuppress.false - that means that search was not initiated by user action but by default applied
+    // staffSuppress filter. need to clear the query.filters here to not automatically search when Inventory search is opened
+    query.filters = undefined;
+  } else if (isStaffSuppressFilterAvailable) {
+    // if we have a query and/or filters and user has access to Staff Suppress filter - then do nothing - don't remove anything, don't add anything.
+    // let the user handle what Staff Suppress filter values they want selected
+  } else if ((query.query || query.filters) && !query.filters?.includes(staffSuppressFalse)) {
+    // if user doesn't have access to Staff Suppress filter and query and/or filters are not empty and don't already contain staffSuppress
+    // then add staffSuppress.false to filters
+    query.filters = `${query.filters},${staffSuppressFalse}`;
+  }
 };
 
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
@@ -74,7 +92,14 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     query.sort = DEFAULT_SORT;
   }
 
-  resourceData.query = { ...query, qindex: '' };
+  const isStaffSuppressFilterAvailable = props.stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
+
+  applyDefaultStaffSuppressFilter(query, isStaffSuppressFilterAvailable);
+
+  resourceData.query = {
+    ...query,
+    qindex: '',
+  };
 
   // makeQueryFunction escapes quote and backslash characters by default,
   // but when submitting a raw CQL query (i.e. when queryIndex === 'querySearch')
@@ -105,6 +130,7 @@ const buildRecordsManifest = (options = {}) => {
     GET: {
       path,
       params: {
+        expandAll: true,
         query: buildQuery,
       },
     },

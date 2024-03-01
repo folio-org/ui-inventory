@@ -1,14 +1,20 @@
-import keyBy from 'lodash/keyBy';
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, {
+  useMemo,
+  useRef,
+  useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
+import keyBy from 'lodash/keyBy';
 
 import {
   stripesConnect,
   useStripes,
 } from '@folio/stripes/core';
 
+import { useLocationsForTenants } from '../hooks';
 import { DataContext } from '../contexts';
 import { OKAPI_TENANT_HEADER } from '../constants';
+import { isUserInConsortiumMode } from '../utils';
 
 // Provider which loads dictionary data used in various places in ui-inventory.
 // The data is fetched once when the ui-inventory module is loaded.
@@ -29,12 +35,16 @@ const DataProvider = ({
     }
 
     mutator.consortiaTenants.GET({
-      path: `consortia/${consortium?.id}/tenants`,
+      path: `consortia/${consortium?.id}/tenants?limit=1000`,
       headers: {
         [OKAPI_TENANT_HEADER]: consortium?.centralTenantId,
       },
     });
   }, [consortium?.id]);
+
+  const tenantIds = resources.consortiaTenants.records.map(tenant => tenant.id);
+
+  const { data: locationsOfAllTenants } = useLocationsForTenants({ tenantIds });
 
   useEffect(() => {
     mutator.locations.GET({ tenant: stripes.okapi.tenant });
@@ -63,6 +73,10 @@ const DataProvider = ({
     Object.keys(manifest).forEach(key => {
       loadedData[key] = resources?.[key]?.records ?? [];
     });
+
+    if (isUserInConsortiumMode(stripes)) {
+      loadedData.locations = locationsOfAllTenants;
+    }
 
     const {
       locations,

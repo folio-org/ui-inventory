@@ -3,12 +3,6 @@ import '../../test/jest/__mock__';
 import LastSearchTermsProvider from './LastSearchTermsProvider';
 import { LastSearchTermsContext } from '../contexts';
 import { getItem, setItem } from '../storage';
-import { useLogout } from '../hooks';
-
-jest.mock('../hooks', () => ({
-  ...jest.requireActual('../hooks'),
-  useLogout: jest.fn(),
-}));
 
 jest.mock('../storage');
 
@@ -72,23 +66,5 @@ describe('LastSearchTermsProvider', () => {
     expect(getByTestId('initialBrowse')).toHaveTextContent('');
     expect(getByTestId('initialSearchOffset')).toHaveTextContent('0');
     expect(getByTestId('initialBrowseOffset')).toHaveTextContent('[0,null,null]');
-  });
-
-  describe('when the user logs out', () => {
-    it('should reset data in session storage', () => {
-      useLogout.mockImplementation(cb => cb());
-      customRender();
-
-      expect(setItem).toHaveBeenNthCalledWith(1, '@folio/inventory/search.instances.lastSearch', null);
-      expect(setItem).toHaveBeenNthCalledWith(2, '@folio/inventory/search.holdings.lastSearch', null);
-      expect(setItem).toHaveBeenNthCalledWith(3, '@folio/inventory/search.items.lastSearch', null);
-      expect(setItem).toHaveBeenNthCalledWith(4, '@folio/inventory/browse.lastSearch', null);
-      expect(setItem).toHaveBeenNthCalledWith(5, '@folio/inventory/search.instances.lastOffset', null);
-      expect(setItem).toHaveBeenNthCalledWith(6, '@folio/inventory/search.holdings.lastOffset', null);
-      expect(setItem).toHaveBeenNthCalledWith(7, '@folio/inventory/search.items.lastOffset', null);
-      expect(setItem).toHaveBeenNthCalledWith(8, '@folio/inventory/browse.lastOffset', null);
-
-      useLogout.mockRestore();
-    });
   });
 });

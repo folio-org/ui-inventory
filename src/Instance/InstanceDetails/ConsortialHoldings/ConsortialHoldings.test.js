@@ -29,7 +29,12 @@ const providerValue = {
 const renderConsortialHoldings = () => {
   const component = (
     <DataContext.Provider value={providerValue}>
-      <ConsortialHoldings instance={instance} />
+      <ConsortialHoldings
+        instance={instance}
+        prevInstanceId="prevInstanceId"
+        updatePrevInstanceId={() => {}}
+        isAllExpanded={false}
+      />
     </DataContext.Provider>
   );
 

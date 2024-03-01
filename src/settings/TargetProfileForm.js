@@ -6,7 +6,10 @@ import { FieldArray } from 'react-final-form-arrays';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Prompt } from 'react-router-dom';
 import { isEmpty } from 'lodash';
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  TitleManager,
+} from '@folio/stripes/core';
 
 import {
   Button,
@@ -160,6 +163,10 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
     return <div className={css.hasError}>{intl.formatMessage({ id: 'ui-inventory.selectToContinue' })}</div>;
   };
 
+  const title = initialValues?.id
+    ? initialValues?.name
+    : intl.formatMessage({ id: 'stripes-components.addNew' });
+
   return (
     <Form
       mutators={{ ...arrayMutators }}
@@ -178,13 +185,15 @@ const TargetProfileForm = ({ initialValues, onSubmit, onCancel, intl, resources 
         errors,
       }) => (
         <form id="form-patron-notice" noValidate data-test-notice-form onSubmit={handleSubmit}>
+          <TitleManager
+            prefix={`${intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })} - `}
+            page={intl.formatMessage({ id: 'ui-inventory.targetProfiles' })}
+            record={title}
+          />
           <Paneset isRoot>
             <Pane
               defaultWidth="100%"
-              paneTitle={initialValues?.id
-                ? initialValues?.name
-                : <FormattedMessage id="stripes-components.addNew" />
-              }
+              paneTitle={title}
               firstMenu={
                 <PaneMenu>
                   <FormattedMessage id="stripes-components.cancel">

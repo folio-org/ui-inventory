@@ -522,7 +522,7 @@
     "permission.holdings.create": "Inventory: visualizzare, creare holding",
     "permission.holdings.edit": "Inventory: visualizzare, creare, modificare holding",
     "permission.holdings.delete": "Inventory: visualizzare, creare, modificare, eliminare holding",
-    "permission.instance.view-staff-suppressed-records": "Inventory: View instance records being suppressed for staff",
+    "permission.instance.view-staff-suppressed-records": "Inventory: Enable staff suppress facet",
     "permission.settings.list.view": "Impostazioni (inventory): visualizzare l'elenco delle pagine delle impostazioni",
     "permission.items.mark-items-withdrawn": "Inventory: Mark items withdrawn",
     "moveItems.selectAll": "Select/unselect all items for movement",
@@ -834,5 +834,13 @@
     "unlinkLocalMarcAuthorities.modal.message": "If you proceed with sharing this instance, then <b>{linkedAuthoritiesLength}</b> bibliographic fields linked to local authority records will retain authorized values but will become uncontrolled",
     "unlinkLocalMarcAuthorities.modal.proceed": "Proceed",
     "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion.",
-    "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information."
+    "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information.",
+    "documentTitle.search": "Inventory - {query} - Search",
+    "documentTitle.browse": "Inventory - {query} - Browse",
+    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress",
+    "setForDeletion.modal.header": "Are you sure you want to set this record for deletion?",
+    "setForDeletion.modal.message": "You have chosen to set <b>{instanceTitle}</b> for <b>deletion</b>. When a record is set for deletion, the instance will be Suppressed from discovery and Staff suppressed. If the instance source is MARC, then the MARC LDR 05 will be set to \"d\"",
+    "setRecordForDeletion": "Set record for deletion",
+    "settings.inventory.title": "Inventory settings",
+    "displaySummary": "Display summary"
 }

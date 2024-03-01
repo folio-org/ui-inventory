@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
+
 import {
   Accordion,
   AccordionSet,
@@ -16,6 +17,7 @@ import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
 import CheckboxFacet from '../CheckboxFacet';
 import HeldByFacet from '../HeldByFacet';
+import { useStaffSuppressInitialValue } from '../../hooks';
 import { useFacets } from '../../common/hooks';
 import {
   getSourceOptions,
@@ -145,6 +147,8 @@ const ItemFilters = (props) => {
     getNewRecords,
     props.data
   );
+
+  useStaffSuppressInitialValue(onChange, props.data.query);
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
