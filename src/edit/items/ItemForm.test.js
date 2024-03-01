@@ -63,6 +63,7 @@ const ItemFormSetup = (props = {}) => (
         }}
         >
           <ItemForm
+            configs={{}}
             initialValues={mockInitialValues}
             onSubmit={mockOnSubmit}
             onCancel={mockOnCancel}

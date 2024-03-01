@@ -76,6 +76,7 @@ const HoldingsFormSetup = (props = {}) => (
         >
           <HoldingsForm
             initialValues={mockInitialValues}
+            configs={{}}
             onSubmit={mockOnSubmit}
             onCancel={mockOnCancel}
             instance={mockInstance}

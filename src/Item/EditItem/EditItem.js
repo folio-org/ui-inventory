@@ -17,14 +17,13 @@ import {
   useHolding,
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
-import useCallout from '../../hooks/useCallout';
 import { parseHttpError, switchAffiliation } from '../../utils';
 import {
   useItem,
   useItemMutation,
   useBoundWithsMutation,
 } from '../hooks';
-import { useConfigurationQuery } from '../../hooks';
+import { useCallout, useConfigurationQuery } from '../../hooks';
 
 const EditItem = ({
   referenceData,

@@ -15,6 +15,7 @@ import CreateHolding from './CreateHolding';
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useCallout: () => ({ sendCallout: jest.fn() }),
+  useConfigurationQuery: () => ({ configs: {} })
 }));
 
 jest.mock('../../common/hooks', () => ({

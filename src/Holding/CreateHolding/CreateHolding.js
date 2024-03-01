@@ -13,9 +13,8 @@ import {
 import { LoadingView } from '@folio/stripes/components';
 
 import { useInstance } from '../../common/hooks';
-import { useCallout } from '../../hooks';
+import { useCallout, useConfigurationQuery } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
-import { useConfigurationQuery } from '../../hooks';
 import { switchAffiliation } from '../../utils';
 
 const CreateHolding = ({
