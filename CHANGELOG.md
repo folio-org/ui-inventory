@@ -1,15 +1,16 @@
 # Change history for ui-inventory
 
-## [10.0.11] IN PROGRESS
+## [10.0.11](https://github.com/folio-org/ui-inventory/tree/v10.0.11) (2024-03-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.10...v10.0.11)
 
 * Display Holdings/Item Electronic Access URIs consistent with Instances. Fixes UIIN-2778.
 
-## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.8) (2024-01-17)
+## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)
 
 * ECS: id of member tenant is undefined when rendering consortial holdings. Fixes UIIN-2724.
 
-## [10.0.9](https://github.com/folio-org/ui-inventory/tree/v10.0.8) (2023-12-29)
+## [10.0.9](https://github.com/folio-org/ui-inventory/tree/v10.0.9) (2023-12-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.8...v10.0.9)
 
 * ECS: Effective location facet is not showing other member tenants. Fixes UIIN-2728.
