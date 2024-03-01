@@ -19,6 +19,10 @@ import { DataContext } from '../../contexts';
 
 import HoldingsForm from './HoldingsForm';
 
+jest.mock('@folio/service-interaction', () => ({
+  NumberGeneratorModalButton: () => <div>NumberGeneratorModalButton</div>
+}));
+
 jest.mock('../common', () => ({
   LocationSelectionWithCheck: () => <div>LocationSelection</div>,
 }));
