@@ -228,11 +228,6 @@ class InstancesList extends React.Component {
     } else if (prevId) {
       setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, null);
     }
-
-    // if (!this.isdefaultstaffsuppressset && Boolean(this.props.data.query.filters) === Boolean(new URLSearchParams(this.props.location.search).get('filters')?.length)) {
-    //   this.onFilterChangeHandler({ name: FACETS.STAFF_SUPPRESS, values: ['false'] });
-    //   this.isdefaultstaffsuppressset = true;
-    // }
   }
 
   componentWillUnmount() {
