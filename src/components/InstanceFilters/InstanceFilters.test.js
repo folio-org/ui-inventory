@@ -3,7 +3,7 @@ import '../../../test/jest/__mock__';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { fireEvent, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
@@ -254,8 +254,8 @@ describe('InstanceFilters', () => {
     it('should set a flag that user selected some option', async () => {
       renderInstanceFilters();
       const staffSuppressFacet = screen.queryByRole('button', { name: 'Staff suppress filter list' });
-      fireEvent.click(staffSuppressFacet);
-      fireEvent.click(screen.getByText('change facet staffSuppress'));
+      await userEvent.click(staffSuppressFacet);
+      await userEvent.click(screen.getByText('change facet staffSuppress'));
 
       expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
     });

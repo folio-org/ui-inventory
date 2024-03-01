@@ -209,8 +209,6 @@ class InstancesList extends React.Component {
     this.applyDefaultStaffSuppressFilter();
   }
 
-
-
   componentDidUpdate(prevProps) {
     const sortBy = this.getSortFromParams();
 
