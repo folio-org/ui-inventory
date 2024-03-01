@@ -34,6 +34,7 @@
 * Display Holdings/Item Electronic Access URIs consistent with Instances. Fixes UIIN-2778.
 * Staff suppress facet - use `No` as default value. Hide the facet when users don't have permissions to use it. Refs UIIN-2596.
 * Add a new search option for instances called `LCCN normalization`. Refs UIIN-2245.
+* Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
 
 ## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)

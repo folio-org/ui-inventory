@@ -911,7 +911,8 @@
     "react-final-form-arrays": "^3.1.0",
     "react-final-form-listeners": "^1.0.2",
     "react-router-prop-types": "^1.0.4",
-    "redux-form": "^8.3.7"
+    "redux-form": "^8.3.7",
+    "use-session-storage-state": "^18.2.0"
   },
   "peerDependencies": {
     "@folio/stripes": "^9.0.0",

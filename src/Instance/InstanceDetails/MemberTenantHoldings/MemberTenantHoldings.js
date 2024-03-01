@@ -17,7 +17,6 @@ import { MoveItemsContext } from '../../MoveItemsContext';
 
 import { useInstanceHoldingsQuery } from '../../../providers';
 import { hasMemberTenantPermission } from '../../../utils';
-import { useHoldingsAccordionState } from '../../../hooks';
 
 import css from './MemberTenantHoldings.css';
 
@@ -28,31 +27,26 @@ const MemberTenantHoldings = ({
 }) => {
   const {
     name,
-    id,
+    id: memberTenantId,
   } = memberTenant;
-  const instanceId = instance?.id;
   const stripes = useStripes();
 
-  const pathToAccordion = ['consortialHoldings', id, '_state'];
-  const pathToHoldingsAccordion = ['consortialHoldings', id];
-  const [isMemberTenantAccOpen, setMemberTenantAccOpen] = useHoldingsAccordionState({ instanceId, pathToAccordion });
+  const pathToHoldingsAccordion = ['consortialHoldings', memberTenantId];
 
-  const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId: id });
+  const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId: memberTenantId });
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
-  const canViewHoldingsAndItems = hasMemberTenantPermission('ui-inventory.instance.view', id, userTenantPermissions);
-  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', id, userTenantPermissions);
-  const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', id, userTenantPermissions);
+  const canViewHoldingsAndItems = hasMemberTenantPermission('ui-inventory.instance.view', memberTenantId, userTenantPermissions);
+  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', memberTenantId, userTenantPermissions);
+  const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', memberTenantId, userTenantPermissions);
 
   if (isEmpty(holdingsRecords)) return null;
 
   return (
     <Accordion
       className={css.memberTenantHoldings}
-      id={`${name}-holdings`}
+      id={memberTenantId}
       label={name}
-      open={isMemberTenantAccOpen}
-      onToggle={() => setMemberTenantAccOpen(prevValue => !prevValue)}
     >
       <div className={css.memberTenantHoldings}>
         {isLoading
@@ -62,7 +56,7 @@ const MemberTenantHoldings = ({
               <HoldingsList
                 holdings={holdingsRecords}
                 instance={instance}
-                tenantId={id}
+                tenantId={memberTenantId}
                 draggable={false}
                 droppable={false}
                 showViewHoldingsButton={canViewHoldingsAndItems}
@@ -76,7 +70,7 @@ const MemberTenantHoldings = ({
       {!isUserInCentralTenant && canCreateHoldings && (
         <InstanceNewHolding
           instance={instance}
-          tenantId={id}
+          tenantId={memberTenantId}
         />
       )}
     </Accordion>

@@ -3,10 +3,12 @@ import React, {
   useState,
   useContext,
   forwardRef,
+  useRef,
 } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { uniqueId } from 'lodash';
 
 import {
   AppIcon,
@@ -85,9 +87,11 @@ const InstanceDetails = forwardRef(({
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
+  const prevInstanceId = useRef(instance?.id);
   const referenceData = useContext(DataContext);
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
+  const [isAllExpanded, setIsAllExpanded] = useState();
 
   const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
   const tags = instance?.tags?.tagList;
@@ -111,6 +115,10 @@ const InstanceDetails = forwardRef(({
       </PaneMenu>
     );
   }, [tagsEnabled, tags, intl]);
+
+  const updatePrevInstanceId = id => {
+    prevInstanceId.current = id;
+  };
 
   const getEntity = () => instance;
 
@@ -139,6 +147,12 @@ const InstanceDetails = forwardRef(({
         }}
       />
     );
+  };
+
+  const onToggle = newState => {
+    const isExpanded = Object.values(newState)[0];
+
+    setIsAllExpanded(isExpanded);
   };
 
   return (
@@ -171,7 +185,7 @@ const InstanceDetails = forwardRef(({
               </MessageBanner>
             </Col>
             <Col data-test-expand-all xs={2}>
-              <ExpandAllButton />
+              <ExpandAllButton onToggle={onToggle} />
             </Col>
           </Row>
 
@@ -192,8 +206,12 @@ const InstanceDetails = forwardRef(({
 
             {isConsortialHoldingsVisible && (
               <ConsortialHoldings
+                key={uniqueId(instance?.id)}
                 instance={instance}
+                prevInstanceId={prevInstanceId.current}
+                updatePrevInstanceId={updatePrevInstanceId}
                 userTenantPermissions={userTenantPermissions}
+                isAllExpanded={isAllExpanded}
               />
             )}
 
