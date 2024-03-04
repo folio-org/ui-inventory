@@ -695,3 +695,5 @@ export const EVENTS = {
 export const LEADER_RECORD_STATUSES = {
   DELETED: 'd',
 };
+
+export const USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY = 'folio_user_touched_staff_suppress';

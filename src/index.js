@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, {
+  useEffect,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   Route,
-  Switch, useHistory,
+  Switch,
+  useHistory,
 } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -42,14 +46,27 @@ import {
   BrowseRoute,
 } from './routes';
 import Settings from './settings';
-import { DataProvider, HoldingsProvider, LastSearchTermsProvider } from './providers';
-import { EVENTS } from './constants';
+import {
+  DataProvider,
+  HoldingsProvider,
+  LastSearchTermsProvider,
+} from './providers';
+import {
+  EVENTS,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+} from './constants';
 import { clearStorage } from './utils';
 
 const InventoryRouting = (props) => {
   const history = useHistory();
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
   const { showSettings, match: { path } } = props;
+
+  useEffect(() => {
+    return () => {
+      sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+    };
+  }, []);
 
   const focusSearchField = () => {
     const el = document.getElementById('input-inventory-search');

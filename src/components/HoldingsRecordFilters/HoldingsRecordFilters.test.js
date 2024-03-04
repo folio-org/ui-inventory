@@ -96,7 +96,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render shared, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const shared = screen.getByRole('button', { name: /Shared/i });
+    const shared = screen.getByRole('button', { name: 'Shared filter list' });
     userEvent.click(shared);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[1]);
@@ -107,7 +107,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render Held by, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const heldBy = screen.getByRole('button', { name: /held by/i });
+    const heldBy = screen.getByRole('button', { name: 'Held by filter list' });
     userEvent.click(heldBy);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[3]);
@@ -118,7 +118,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render effectiveLocation, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const effectiveLocation = screen.getByRole('button', { name: /Effective location \(item\)/i });
+    const effectiveLocation = screen.getByRole('button', { name: 'Effective location (item) filter list' });
     userEvent.click(effectiveLocation);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[5]);
@@ -129,7 +129,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsPermanentLocation, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsPermanentLocation = screen.getByRole('button', { name: /Holdings permanent location/i });
+    const holdingsPermanentLocation = screen.getByRole('button', { name: 'Holdings permanent location filter list' });
     userEvent.click(holdingsPermanentLocation);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[7]);
@@ -140,7 +140,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsType, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsType = screen.getByRole('button', { name: /Holdings type/i });
+    const holdingsType = screen.getByRole('button', { name: 'Holdings type filter list' });
     userEvent.click(holdingsType);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[9]);
@@ -151,7 +151,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsDiscoverySuppress, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsDiscoverySuppress = screen.getByRole('button', { name: /Suppress from discovery/i });
+    const holdingsDiscoverySuppress = screen.getByRole('button', { name: 'Suppress from discovery filter list' });
     userEvent.click(holdingsDiscoverySuppress);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[11]);
@@ -162,7 +162,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsStatisticalCodeIds, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsStatisticalCodeIds = screen.getByRole('button', { name: /Statistical code/i });
+    const holdingsStatisticalCodeIds = screen.getByRole('button', { name: 'Statistical code filter list' });
     userEvent.click(holdingsStatisticalCodeIds);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[13]);
@@ -173,7 +173,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsCreatedDate, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsCreatedDate = screen.getByRole('button', { name: /Date created/i });
+    const holdingsCreatedDate = screen.getByRole('button', { name: 'Date created filter list' });
     userEvent.click(holdingsCreatedDate);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[15]);
@@ -184,7 +184,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsUpdatedDate, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsUpdatedDate = screen.getByRole('button', { name: /Date updated/i });
+    const holdingsUpdatedDate = screen.getByRole('button', { name: 'Date updated filter list' });
     userEvent.click(holdingsUpdatedDate);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[22]);
@@ -195,21 +195,12 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render holdingsSource, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const holdingsSource = screen.getByRole('button', { name: /Source/i });
+    const holdingsSource = screen.getByRole('button', { name: 'Source filter list' });
     userEvent.click(holdingsSource);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[29]);
     await waitFor(() => {
       expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_SOURCE);
-    });
-  });
-
-  it('should call onChange with default selected Staff suppress value', async () => {
-    renderHoldingsRecordFilters();
-
-    expect(onChange).toHaveBeenCalledWith({
-      name: FACETS.STAFF_SUPPRESS,
-      values: ['false'],
     });
   });
 });

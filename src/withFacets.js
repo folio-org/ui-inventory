@@ -24,7 +24,6 @@ import {
   browseModeMap,
   browseCallNumberOptions,
   queryIndexes,
-  FACETS,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
@@ -174,21 +173,6 @@ function withFacets(WrappedComponent) {
       return buildQuery(query, {}, { ...data, query }, { log: () => null }) || '';
     }
 
-    applyDefaultStaffSuppressFilters = (query) => {
-      const isStaffSuppressFilterAvailable = this.props.stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
-      const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
-
-      if (isStaffSuppressFilterAvailable) {
-        // do nothing - don't remove anything, don't add anything.
-        // default value is added in filters components
-      } else if (!query.filters) {
-        query.filters = staffSuppressFalse;
-      } else if (!query.filters?.includes(staffSuppressFalse)) {
-        // if query is not empty or filters are not empty and don't already contain staffSuppress - add staffSuppress.false to filters
-        query.filters = `${query.filters},${staffSuppressFalse}`;
-      }
-    }
-
     fetchFacets = (data, isBrowseLookup) => async (properties = {}) => {
       const {
         onMoreClickedFacet,
@@ -208,9 +192,6 @@ function withFacets(WrappedComponent) {
 
       // Browse page does not use query resource: query params are stored in "activeFilters" of "useLocationFilters" hook
       const query = omit(resources.query || this.props.activeFilters, ['sort']);
-
-
-      this.applyDefaultStaffSuppressFilters(query);
 
       // temporary query value
       const params = { query: 'id = *' };
