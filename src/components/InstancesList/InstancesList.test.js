@@ -20,7 +20,10 @@ import { instances as instancesFixture } from '../../../test/fixtures/instances'
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
-import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
+import {
+  SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+} from '../../constants';
 import * as utils from '../../utils';
 
 const updateMock = jest.fn();
@@ -163,6 +166,20 @@ describe('InstancesList', () => {
       jest.clearAllMocks();
     });
 
+    describe('when staffSuppress filter is not present', () => {
+      it('should replace history with selected facet value', async () => {
+        jest.spyOn(history, 'replace');
+
+        renderInstancesList({ segment: 'instances' });
+
+        await waitFor(() => expect(history.replace).toHaveBeenCalledWith({
+          pathname: '/',
+          search: 'filters=staffSuppress.false',
+          state: undefined,
+        }));
+      });
+    });
+
     describe('when the component is mounted', () => {
       it('should write location.search to the session storage', () => {
         renderInstancesList({ segment: 'instances' });
@@ -254,6 +271,15 @@ describe('InstancesList', () => {
     });
 
     describe('when user clicks Reset all', () => {
+      const mockSetItem = jest.fn();
+      beforeEach(() => {
+        global.Storage.prototype.setItem = mockSetItem;
+      });
+
+      afterEach(() => {
+        global.Storage.prototype.setItem.mockReset();
+      });
+
       it('should move focus to query input', () => {
         renderInstancesList({
           segment: 'instances',
@@ -264,6 +290,18 @@ describe('InstancesList', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
 
         expect(screen.getByRole('textbox', { name: 'Search' })).toHaveFocus();
+      });
+
+      it('should clear "user touched staff suppress" session storage flag', () => {
+        renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'test' } });
+        fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
+        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+        expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
       });
     });
 
@@ -398,7 +436,7 @@ describe('InstancesList', () => {
 
             expect(history.push).toHaveBeenCalledWith({
               pathname: '/inventory/view/fast-add-record-id',
-              search: '',
+              search: '?filters=staffSuppress.false',
             });
           });
         });
@@ -421,7 +459,7 @@ describe('InstancesList', () => {
 
           fireEvent.click(button);
 
-          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bib?');
+          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bib?filters=staffSuppress.false');
         });
       });
 
@@ -576,7 +614,7 @@ describe('InstancesList', () => {
           await waitFor(() => {
             expect(history.push).toHaveBeenCalledTimes(1);
             expect(history.push).toHaveBeenCalledWith(
-              '/?filters=language.eng&qindex=advancedSearch&query=keyword%20containsAll%20test2'
+              '/?filters=language.eng%2CstaffSuppress.false&qindex=advancedSearch&query=keyword%20containsAll%20test2'
             );
           });
         });

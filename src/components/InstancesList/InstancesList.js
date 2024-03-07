@@ -69,6 +69,8 @@ import {
   OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
+  FACETS,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -178,7 +180,6 @@ class InstancesList extends React.Component {
     };
   }
 
-
   componentDidMount() {
     const {
       history,
@@ -199,11 +200,15 @@ class InstancesList extends React.Component {
       }
     });
 
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
+
     if (params.selectedBrowseResult === 'true') {
       this.paneTitleRef.current.focus();
     }
 
     this.processLastSearchTerms();
+
+    this.applyDefaultStaffSuppressFilter();
   }
 
   componentDidUpdate(prevProps) {
@@ -230,6 +235,7 @@ class InstancesList extends React.Component {
 
     this.unlisten();
     parentMutator.records.reset();
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   }
 
   inputRef = React.createRef();
@@ -239,6 +245,36 @@ class InstancesList extends React.Component {
     selectedBrowseResult: false,
     authorityId: '',
   };
+
+  handleBeforeUnload = () => {
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+  }
+
+  applyDefaultStaffSuppressFilter = () => {
+    const {
+      history,
+      location,
+    } = this.props;
+
+    if (JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY))) {
+      return;
+    }
+
+    const searchParams = new URLSearchParams(location.search);
+    const filters = searchParams.get('filters');
+
+    if (!filters?.includes(FACETS.STAFF_SUPPRESS)) {
+      const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
+      const newFiltersValue = filters ? `${filters},${staffSuppressFalse}` : staffSuppressFalse;
+
+      searchParams.set('filters', newFiltersValue);
+      history.replace({
+        pathname: location.pathname,
+        search: searchParams.toString(),
+        state: location.state,
+      });
+    }
+  }
 
   getInstanceIdFromLocation = (location) => {
     return location.pathname.split('/')[3];
@@ -938,6 +974,7 @@ class InstancesList extends React.Component {
 
     facetsStore.getState().resetFacetSettings();
     this.inputRef.current.focus();
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
