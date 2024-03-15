@@ -91,6 +91,7 @@ import {
   AdministrativeNoteList,
   ItemViewSubheader,
   PaneLoading,
+  CreateRequestButton,
 } from '../components';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
@@ -495,17 +496,7 @@ class ItemView extends React.Component {
         </Icon>
       </Button>
     );
-    const newRequestActionItem = (
-      <Button
-        to={newRequestLink}
-        buttonStyle="dropdownItem"
-        data-test-inventory-create-request-action
-      >
-        <Icon icon="plus-sign">
-          <FormattedMessage id="ui-inventory.newRequest" />
-        </Icon>
-      </Button>
-    );
+    const newRequestActionItem = <CreateRequestButton newRequestLink={newRequestLink} />;
     const markAsMissingActionItem = (
       <Button
         id="clickable-missing-item"
