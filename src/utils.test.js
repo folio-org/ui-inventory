@@ -15,7 +15,12 @@ import {
   switchAffiliation,
   setRecordForDeletion,
 } from './utils';
-import { CONTENT_TYPE_HEADER, OKAPI_TENANT_HEADER, OKAPI_TOKEN_HEADER, browseModeOptions } from './constants';
+import {
+  CONTENT_TYPE_HEADER,
+  OKAPI_TENANT_HEADER,
+  OKAPI_TOKEN_HEADER,
+  browseModeOptions,
+} from './constants';
 
 describe('validateRequiredField', () => {
   const expectedResult = <FormattedMessage id="ui-inventory.hridHandling.validation.enterValue" />;
