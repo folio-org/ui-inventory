@@ -886,3 +886,33 @@ export const clearStorage = () => {
     removeItem(`${namespace}.${segment}.lastOpenRecord`);
   });
 };
+
+export const setRecordForDeletion = async (okapi, id, tenantId) => {
+  const {
+    url,
+    token,
+  } = okapi;
+
+  try {
+    const path = `${url}/inventory/instances/${id}/mark-deleted`;
+    const response = await fetch(path, {
+      method: 'DELETE',
+      headers: {
+        [OKAPI_TENANT_HEADER]: tenantId,
+        [CONTENT_TYPE_HEADER]: 'application/json',
+        ...(token && { [OKAPI_TOKEN_HEADER]: token }),
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Cannot set record for deletion');
+    }
+
+    return response;
+  } catch (error) {
+    console.error(error); // eslint-disable-line no-console
+
+    return error;
+  }
+};
