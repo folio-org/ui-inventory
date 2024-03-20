@@ -69,6 +69,7 @@ const applySearch = jest.fn();
 const changeSearch = jest.fn();
 const resetFilters = jest.fn();
 const changeSearchIndex = jest.fn();
+const clearFilters = jest.fn();
 const getFiltersUtils = ({
   filters = {},
   searchQuery = 'searchQuery',
@@ -82,6 +83,7 @@ const getFiltersUtils = ({
   resetFilters,
   changeSearchIndex,
   searchIndex,
+  clearFilters,
 ];
 
 describe('BrowseInventory', () => {
@@ -264,28 +266,6 @@ describe('BrowseInventory', () => {
     });
   });
 
-  describe('when the selected qindex is one of those that should comprise the callNumberType param', () => {
-    it('should be added to the useInventoryBrowse filters', () => {
-      const filters = {
-        query: 'fakeQuery',
-        qindex: browseModeOptions.DEWEY,
-      };
-
-      useLocationFilters.mockReturnValue(getFiltersUtils({
-        filters,
-      }));
-
-      renderBrowseInventory();
-
-      const expectedFilters = {
-        ...filters,
-        callNumberType: filters.qindex,
-      };
-
-      expect(useInventoryBrowse).toHaveBeenCalledWith(expect.objectContaining({ filters: expectedFilters }));
-    });
-  });
-
   it('should display search indexes', () => {
     const { getByText } = renderBrowseInventory();
 
@@ -325,6 +305,19 @@ describe('BrowseInventory', () => {
 
       fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
       expect(mockDeleteItemToView).toHaveBeenCalled();
+    });
+
+    it('should not reset query value', () => {
+      const mockDeleteItemToView = jest.fn();
+
+      jest.spyOn(stripesAcqComponents, 'useItemToView').mockReturnValueOnce({
+        deleteItemToView: mockDeleteItemToView,
+      });
+
+      renderBrowseInventory();
+
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+      expect(screen.getByRole('textbox')).toHaveValue('searchQuery');
     });
   });
 });
