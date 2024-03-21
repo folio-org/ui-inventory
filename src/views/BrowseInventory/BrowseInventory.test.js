@@ -308,12 +308,6 @@ describe('BrowseInventory', () => {
     });
 
     it('should not reset query value', () => {
-      const mockDeleteItemToView = jest.fn();
-
-      jest.spyOn(stripesAcqComponents, 'useItemToView').mockReturnValueOnce({
-        deleteItemToView: mockDeleteItemToView,
-      });
-
       renderBrowseInventory();
 
       fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
