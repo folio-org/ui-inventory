@@ -895,7 +895,8 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
 
   try {
     const path = `${url}/inventory/instances/${id}/mark-deleted`;
-    const response = await fetch(path, {
+
+    await fetch(path, {
       method: 'DELETE',
       headers: {
         [OKAPI_TENANT_HEADER]: tenantId,
@@ -904,15 +905,7 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
       },
       credentials: 'include',
     });
-
-    if (!response.ok) {
-      throw new Error('Cannot set record for deletion');
-    }
-
-    return response;
   } catch (error) {
-    console.error(error); // eslint-disable-line no-console
-
-    return error;
+    throw new Error(error);
   }
 };
