@@ -905,15 +905,22 @@ class ItemView extends React.Component {
     const electronicAccessFormatter = {
       'URL relationship': x => refLookup(referenceTables.electronicAccessRelationships,
         get(x, ['relationshipId'])).name || noValue,
-      'URI': x => (get(x, ['uri'])
-        ? (
-          <a
-            href={get(x, ['uri'])}
-            style={wrappingCell}
-          >
-            {get(x, ['uri'])}
-          </a>)
-        : noValue),
+      'URI': x => {
+        const uri = x?.uri;
+
+        return uri
+          ? (
+            <a
+              href={uri}
+              rel="noreferrer noopener"
+              target="_blank"
+              style={wrappingCell}
+            >
+              {uri}
+            </a>
+          )
+          : noValue;
+      },
       'Link text': x => get(x, ['linkText']) || noValue,
       'Materials specified': x => get(x, ['materialsSpecification']) || noValue,
       'URL public note': x => get(x, ['publicNote']) || noValue,
