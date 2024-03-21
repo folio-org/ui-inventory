@@ -9,7 +9,7 @@ import { keyBy } from 'lodash';
 import { useTenantKy } from '../common';
 
 const API = 'holdings-storage/holdings';
-const LIMIT = 1000;
+const LIMIT = 5000;
 
 
 const Context = createContext({});
