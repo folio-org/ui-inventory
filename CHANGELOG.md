@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [11.0.0] IN PROGRESS
+## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v11.0.0)
 
 * *BREAKING* Replace imports from quick-marc with stripes-marc-components. Refs UIIN-2636.
 * Make Inventory search and browse query boxes expandable. Refs UIIN-2493.
