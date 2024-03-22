@@ -892,20 +892,15 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
     url,
     token,
   } = okapi;
+  const path = `${url}/inventory/instances/${id}/mark-deleted`;
 
-  try {
-    const path = `${url}/inventory/instances/${id}/mark-deleted`;
-
-    await fetch(path, {
-      method: 'DELETE',
-      headers: {
-        [OKAPI_TENANT_HEADER]: tenantId,
-        [CONTENT_TYPE_HEADER]: 'application/json',
-        ...(token && { [OKAPI_TOKEN_HEADER]: token }),
-      },
-      credentials: 'include',
-    });
-  } catch (error) {
-    throw new Error(error);
-  }
+  await fetch(path, {
+    method: 'DELETE',
+    headers: {
+      [OKAPI_TENANT_HEADER]: tenantId,
+      [CONTENT_TYPE_HEADER]: 'application/json',
+      ...(token && { [OKAPI_TOKEN_HEADER]: token }),
+    },
+    credentials: 'include',
+  });
 };
