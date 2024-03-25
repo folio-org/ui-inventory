@@ -2,6 +2,8 @@
 
 ## [10.1.0] (IN PROGRESS)
 
+* Remove unused code related to auto-open record detail view. Refs UIIN-2819.
+
 ## [10.0.1] (IN PROGRESS)
 
 * Keep query and results list when switching Browse options. Refs UIIN-2802.
