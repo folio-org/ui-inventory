@@ -1,6 +1,16 @@
-import React, { useCallback, useState, useEffect, useMemo, useRef } from 'react';
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import { useIntl } from 'react-intl';
-import { useHistory, useLocation } from 'react-router-dom';
+import {
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
+import querystring from 'query-string';
 
 import {
   TitleManager,
@@ -30,7 +40,6 @@ import {
   useLastSearchTerms,
 } from '../../hooks';
 import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
-import { INDEXES_WITH_CALL_NUMBER_TYPE_PARAM } from '../../constants';
 import css from './BrowseInventory.css';
 
 const BrowseInventory = () => {
@@ -57,7 +66,7 @@ const BrowseInventory = () => {
   useEffect(() => {
     storeLastBrowse(search);
     storeLastBrowseOffset(pageConfig);
-  }, [search, pageConfig]);
+  }, [search, pageConfig, storeLastBrowse, storeLastBrowseOffset]);
 
   const [
     filters,
@@ -65,23 +74,23 @@ const BrowseInventory = () => {
     applyFilters,
     applySearch,
     changeSearch,
-    resetFilters,
+    resetAll,
     changeSearchIndex,
     searchIndex,
+    clearFilters,
   ] = useLocationFilters(location, history, () => {
     setPageConfig(INIT_PAGE_CONFIG);
   });
 
   const withExtraFilters = useMemo(() => {
-    if (filters.query && INDEXES_WITH_CALL_NUMBER_TYPE_PARAM.includes(filters.qindex)) {
-      return {
-        ...filters,
-        callNumberType: filters.qindex,
-      };
-    }
+    const { qindex, query } = querystring.parse(search);
 
-    return filters;
-  }, [filters]);
+    return {
+      ...filters,
+      qindex,
+      query,
+    };
+  }, [filters, search]);
 
   const pageTitle = useMemo(() => {
     if (!withExtraFilters.query) {
@@ -89,7 +98,7 @@ const BrowseInventory = () => {
     }
 
     return intl.formatMessage({ id: 'ui-inventory.documentTitle.browse' }, { query: withExtraFilters.query });
-  }, [withExtraFilters.query]);
+  }, [intl, withExtraFilters.query]);
 
   const {
     data,
@@ -148,14 +157,19 @@ const BrowseInventory = () => {
 
   const onChangeSearchIndex = useCallback((e) => {
     deleteItemToView();
-    resetFilters();
+    /*
+      useLocationFilters hook returns `resetLocationFilters` function, but it also resets search index and query, which we want to avoid in our case
+      it really should be called `resetAll` ¯\_(ツ)_/¯
+      as a work-around we can call `clearFilters` to clear filters only
+    */
     changeSearchIndex(e);
-  }, []);
+    clearFilters();
+  }, [deleteItemToView, clearFilters, changeSearchIndex]);
 
   const onReset = useCallback(() => {
-    resetFilters();
+    resetAll();
     inputRef.current.focus();
-  }, [inputRef.current]);
+  }, [inputRef.current, resetAll]);
 
   useEffect(() => {
     if (hasFocusedSearchOptionOnMount.current) {
