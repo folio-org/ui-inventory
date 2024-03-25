@@ -16,6 +16,8 @@ import {
 import {
   getQueryTemplate,
   getIsbnIssnTemplate,
+  removeFilter,
+  replaceFilter,
 } from '../utils';
 import { getFilterConfig } from '../filterConfig';
 
@@ -40,15 +42,23 @@ export const getAdvancedSearchTemplate = (queryValue) => {
   }, '').trim();
 };
 
-const applyDefaultStaffSuppressFilter = (query) => {
+const applyDefaultStaffSuppressFilter = (stripes, query) => {
   const isUserTouchedStaffSuppress = JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY));
 
   const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
+  const staffSuppressTrue = `${FACETS.STAFF_SUPPRESS}.true`;
 
   if (!query.query && query.filters === staffSuppressFalse && !isUserTouchedStaffSuppress) {
-    // if query is empty and the only filter value is staffSuppress.false and search was not initiated by user action
+    // if query is empty and th~ only filter value is staffSuppress.false and search was not initiated by user action
     // then we need to clear the query.filters here to not automatically search when Inventory search is opened
     query.filters = undefined;
+  }
+
+  const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
+  const isStaffSuppressTrueSelected = query.filters.includes(`${FACETS.STAFF_SUPPRESS}.true`);
+
+  if (!isStaffSuppressFilterAvailable && isStaffSuppressTrueSelected) {
+    query.filters = replaceFilter(query.filters, staffSuppressTrue, staffSuppressFalse);
   }
 };
 
@@ -88,7 +98,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     query.sort = DEFAULT_SORT;
   }
 
-  applyDefaultStaffSuppressFilter(query);
+  applyDefaultStaffSuppressFilter(props.stripes, query);
 
   resourceData.query = {
     ...query,
