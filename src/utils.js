@@ -44,7 +44,6 @@ import {
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
   segments,
-  FACETS,
 } from './constants';
 import { removeItem } from './storage';
 

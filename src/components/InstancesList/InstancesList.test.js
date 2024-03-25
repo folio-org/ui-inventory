@@ -111,7 +111,7 @@ const openActionMenu = () => {
   fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 };
 
-const getInstancesListTree = ({ segment, ...rest }, initialEntries) => {
+const getInstancesListTree = ({ segment, ...rest }) => {
   const {
     indexes,
     indexesES,
@@ -120,7 +120,7 @@ const getInstancesListTree = ({ segment, ...rest }, initialEntries) => {
 
   return (
     <Harness translations={translationsProperties}>
-      <Router history={history} initialEntries={initialEntries}>
+      <Router history={history}>
         <ModuleHierarchyProvider module="@folio/inventory">
           <InstancesList
             parentResources={resources}
@@ -158,7 +158,7 @@ const getInstancesListTree = ({ segment, ...rest }, initialEntries) => {
   );
 };
 
-const renderInstancesList = (props, initialEntries) => render(getInstancesListTree(props, initialEntries));
+const renderInstancesList = (props) => render(getInstancesListTree(props));
 
 describe('InstancesList', () => {
   describe('rendering InstancesList with instances segment', () => {
@@ -170,10 +170,7 @@ describe('InstancesList', () => {
       it('should replace history with selected facet value', async () => {
         jest.spyOn(history, 'replace');
 
-        renderInstancesList({ segment: 'instances' }, [{
-          pathname: '/',
-          search: 'filters=staffSuppress.true',
-        }]);
+        renderInstancesList({ segment: 'instances' });
 
         await waitFor(() => expect(history.replace).toHaveBeenCalledWith({
           pathname: '/',
@@ -188,6 +185,10 @@ describe('InstancesList', () => {
         it('should replace history with selected facet value', async () => {
           jest.spyOn(history, 'replace');
 
+          history.push({
+            pathname: '/',
+            search: 'filters=staffSuppress.true',
+          });
           renderInstancesList({
             segment: 'instances',
             stripes: {
@@ -211,8 +212,6 @@ describe('InstancesList', () => {
           jest.spyOn(history, 'replace');
 
           const { rerender } = renderInstancesList({ segment: 'instances' });
-
-          jest.clearAllMocks();
 
           history.push({
             pathname: '/',
