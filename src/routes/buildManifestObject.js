@@ -55,7 +55,7 @@ const applyDefaultStaffSuppressFilter = (stripes, query) => {
   }
 
   const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
-  const isStaffSuppressTrueSelected = query.filters.includes(`${FACETS.STAFF_SUPPRESS}.true`);
+  const isStaffSuppressTrueSelected = query.filters?.includes(`${FACETS.STAFF_SUPPRESS}.true`);
 
   if (!isStaffSuppressFilterAvailable && isStaffSuppressTrueSelected) {
     query.filters = replaceFilter(query.filters, staffSuppressTrue, staffSuppressFalse);

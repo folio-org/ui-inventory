@@ -163,7 +163,7 @@ const BrowseInventory = () => {
       as a work-around we can call `clearFilters` to clear filters only
     */
     changeSearchIndex(e);
-    //clearFilters();
+    clearFilters();
   }, [deleteItemToView, clearFilters, changeSearchIndex]);
 
   const onReset = useCallback(() => {
