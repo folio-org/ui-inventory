@@ -226,25 +226,28 @@ describe('setRecordForDeletion', () => {
   });
 
   describe('when the request was fulfilled with an error', () => {
-    it('should the appropriate response', () => {
+    it('should return the appropriate response', async () => {
       global.fetch = jest.fn().mockReturnValue({ ok: false });
 
-      setRecordForDeletion(okapi, instanceId, tenantId);
+      try {
+        await setRecordForDeletion(okapi, instanceId, tenantId);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.ok).toBe(false);
 
-      expect(global.fetch).toHaveBeenCalledWith(
-        `${okapi.url}/inventory/instances/${instanceId}/mark-deleted`,
-        {
-          credentials: 'include',
-          headers: expect.objectContaining({
-            [OKAPI_TENANT_HEADER]: tenantId,
-            [OKAPI_TOKEN_HEADER]: okapi.token,
-            [CONTENT_TYPE_HEADER]: 'application/json',
-          }),
-          method: 'DELETE',
-        },
-      );
-
-      expect(global.fetch.mock.results[0].value.ok).toBe(false);
+        expect(global.fetch).toHaveBeenCalledWith(
+          `${okapi.url}/inventory/instances/${instanceId}/mark-deleted`,
+          {
+            credentials: 'include',
+            headers: expect.objectContaining({
+              [OKAPI_TENANT_HEADER]: tenantId,
+              [OKAPI_TOKEN_HEADER]: okapi.token,
+              [CONTENT_TYPE_HEADER]: 'application/json',
+            }),
+            method: 'DELETE',
+          },
+        );
+      }
     });
   });
 });
