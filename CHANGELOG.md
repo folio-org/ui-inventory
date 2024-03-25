@@ -1,5 +1,11 @@
 # Change history for ui-inventory
 
+## [10.1.0] (IN PROGRESS)
+
+## [10.0.1] (IN PROGRESS)
+
+* Keep query and results list when switching Browse options. Refs UIIN-2802.
+
 ## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v11.0.0)
 
@@ -37,7 +43,6 @@
 * Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
 * Increase holdings limit to 5000. Fixes UIIN-2785.
 * User with "Inventory: All permissions" permission only should not be seeing the "Staff suppress" facet. Fixes UIIN-2807.
-* Keep query and results list when switching Browse options. UIIN-2802.
 
 ## [10.0.11](https://github.com/folio-org/ui-inventory/tree/v10.0.11) (2024-03-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.10...v10.0.11)
