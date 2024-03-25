@@ -16,7 +16,6 @@ import {
 import {
   getQueryTemplate,
   getIsbnIssnTemplate,
-  removeFilter,
   replaceFilter,
 } from '../utils';
 import { getFilterConfig } from '../filterConfig';
@@ -49,7 +48,7 @@ const applyDefaultStaffSuppressFilter = (stripes, query) => {
   const staffSuppressTrue = `${FACETS.STAFF_SUPPRESS}.true`;
 
   if (!query.query && query.filters === staffSuppressFalse && !isUserTouchedStaffSuppress) {
-    // if query is empty and th~ only filter value is staffSuppress.false and search was not initiated by user action
+    // if query is empty and the only filter value is staffSuppress.false and search was not initiated by user action
     // then we need to clear the query.filters here to not automatically search when Inventory search is opened
     query.filters = undefined;
   }

@@ -8,13 +8,13 @@ import {
   screen,
   waitFor,
   within,
+  render,
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 
-import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
@@ -25,6 +25,7 @@ import {
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../../constants';
 import * as utils from '../../utils';
+import Harness from '../../../test/jest/helpers/Harness';
 
 const updateMock = jest.fn();
 const mockQueryReplace = jest.fn();
@@ -110,55 +111,54 @@ const openActionMenu = () => {
   fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 };
 
-const renderInstancesList = ({
-  segment,
-  ...rest
-}, rerender) => {
+const getInstancesListTree = ({ segment, ...rest }, initialEntries) => {
   const {
     indexes,
     indexesES,
     renderer,
   } = getFilterConfig(segment);
 
-  return renderWithIntl(
-    <Router history={history}>
-      <ModuleHierarchyProvider module="@folio/inventory">
-        <InstancesList
-          parentResources={resources}
-          parentMutator={{
-            resultOffset: { replace: mockResultOffsetReplace },
-            resultCount: { replace: noop },
-            query: { update: updateMock, replace: mockQueryReplace },
-            records: { reset: mockRecordsReset },
-            itemsByQuery: { reset: noop, GET: mockItemsByQuery },
-          }}
-          data={{
-            ...data,
-            query
-          }}
-          onSelectRow={noop}
-          renderFilters={renderer({
-            ...data,
-            query,
-            parentResources: resources,
-          })}
-          segment={segment}
-          searchableIndexes={indexes}
-          searchableIndexesES={indexesES}
-          fetchFacets={noop}
-          getLastBrowse={jest.fn()}
-          getLastSearchOffset={mockGetLastSearchOffset}
-          storeLastSearch={mockStoreLastSearch}
-          storeLastSearchOffset={mockStoreLastSearchOffset}
-          storeLastSegment={noop}
-          {...rest}
-        />
-      </ModuleHierarchyProvider>
-    </Router>,
-    translationsProperties,
-    rerender,
+  return (
+    <Harness translations={translationsProperties}>
+      <Router history={history} initialEntries={initialEntries}>
+        <ModuleHierarchyProvider module="@folio/inventory">
+          <InstancesList
+            parentResources={resources}
+            parentMutator={{
+              resultOffset: { replace: mockResultOffsetReplace },
+              resultCount: { replace: noop },
+              query: { update: updateMock, replace: mockQueryReplace },
+              records: { reset: mockRecordsReset },
+              itemsByQuery: { reset: noop, GET: mockItemsByQuery },
+            }}
+            data={{
+              ...data,
+              query
+            }}
+            onSelectRow={noop}
+            renderFilters={renderer({
+              ...data,
+              query,
+              parentResources: resources,
+            })}
+            segment={segment}
+            searchableIndexes={indexes}
+            searchableIndexesES={indexesES}
+            fetchFacets={noop}
+            getLastBrowse={jest.fn()}
+            getLastSearchOffset={mockGetLastSearchOffset}
+            storeLastSearch={mockStoreLastSearch}
+            storeLastSearchOffset={mockStoreLastSearchOffset}
+            storeLastSegment={noop}
+            {...rest}
+          />
+        </ModuleHierarchyProvider>
+      </Router>
+    </Harness>
   );
 };
+
+const renderInstancesList = (props, initialEntries) => render(getInstancesListTree(props, initialEntries));
 
 describe('InstancesList', () => {
   describe('rendering InstancesList with instances segment', () => {
@@ -170,13 +170,62 @@ describe('InstancesList', () => {
       it('should replace history with selected facet value', async () => {
         jest.spyOn(history, 'replace');
 
-        renderInstancesList({ segment: 'instances' });
+        renderInstancesList({ segment: 'instances' }, [{
+          pathname: '/',
+          search: 'filters=staffSuppress.true',
+        }]);
 
         await waitFor(() => expect(history.replace).toHaveBeenCalledWith({
           pathname: '/',
           search: 'filters=staffSuppress.false',
           state: undefined,
         }));
+      });
+    });
+
+    describe('when a user does not have Staff Suppress permissions', () => {
+      describe('and staffSuppress.true filter is present', () => {
+        it('should replace history with selected facet value', async () => {
+          jest.spyOn(history, 'replace');
+
+          renderInstancesList({
+            segment: 'instances',
+            stripes: {
+              hasPerm: () => false,
+              hasInterface: () => true,
+            },
+          });
+
+          await waitFor(() => expect(history.replace).toHaveBeenCalledWith({
+            pathname: '/',
+            search: 'filters=staffSuppress.false',
+            state: undefined,
+          }));
+        });
+      });
+    });
+
+    describe('when switching to Holdings tab', () => {
+      describe('when staffSuppress filter is not present', () => {
+        it('should replace history with selected facet value', async () => {
+          jest.spyOn(history, 'replace');
+
+          const { rerender } = renderInstancesList({ segment: 'instances' });
+
+          jest.clearAllMocks();
+
+          history.push({
+            pathname: '/',
+            search: 'segment=holdings',
+          });
+          rerender(getInstancesListTree({ segment: 'holdings' }));
+
+          await waitFor(() => expect(history.replace).toHaveBeenCalledWith({
+            pathname: '/',
+            search: 'segment=holdings&filters=staffSuppress.false',
+            state: undefined,
+          }));
+        });
       });
     });
 
@@ -257,13 +306,13 @@ describe('InstancesList', () => {
 
           const { rerender } = renderInstancesList({ segment: 'instances' });
 
-          renderInstancesList({
+          rerender(getInstancesListTree({
             segment: 'instances',
             parentResources: {
               ...resources,
               resultOffset: offset,
             },
-          }, rerender);
+          }));
 
           expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
         });

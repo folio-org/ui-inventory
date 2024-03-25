@@ -888,11 +888,6 @@ export const clearStorage = () => {
   });
 };
 
-export const removeFilter = (filters, filterNameAndValue) => {
-  const filtersArray = filters.split(',');
-  return filtersArray.filter(_filter => _filter !== filterNameAndValue).join(',');
-};
-
 export const addFilter = (filters, filterNameAndValue) => {
   return filters ? `${filters},${filterNameAndValue}` : filterNameAndValue;
 };
