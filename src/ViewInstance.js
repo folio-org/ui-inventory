@@ -38,6 +38,7 @@ import {
   isInstanceShadowCopy,
   isMARCSource,
   getLinkedAuthorityIds,
+  setRecordForDeletion,
 } from './utils';
 import {
   CONSORTIUM_PREFIX,
@@ -168,14 +169,6 @@ class ViewInstance extends React.Component {
       path: 'consortia/!{consortiumId}/sharing/instances',
       accumulate: true,
       throwErrors: false,
-    },
-    setForDeletion: {
-      type: 'okapi',
-      throwErrors: false,
-      accumulate: true,
-      DELETE: {
-        path: 'inventory/instances/:{id}/mark-deleted',
-      },
     },
     authorities: {
       type: 'okapi',
@@ -587,15 +580,19 @@ class ViewInstance extends React.Component {
 
   handleSetForDeletion = () => {
     const {
-      mutator,
+      okapi,
+      isShared,
+      centralTenantId,
       refetchInstance,
       selectedInstance: {
         title: instanceTitle,
         id,
+        source,
       },
     } = this.props;
+    const tenantId = isShared && !isInstanceShadowCopy(source) ? centralTenantId : okapi.tenant;
 
-    mutator.setForDeletion.DELETE(id)
+    setRecordForDeletion(okapi, id, tenantId)
       .then(async () => {
         this.handleCloseSetForDeletionModal();
 
@@ -1206,9 +1203,6 @@ ViewInstance.propTypes = {
     shareInstance: PropTypes.shape({
       POST: PropTypes.func.isRequired,
       GET: PropTypes.func.isRequired,
-    }).isRequired,
-    setForDeletion: PropTypes.shape({
-      DELETE: PropTypes.func.isRequired,
     }).isRequired,
     authorities: PropTypes.shape({
       GET: PropTypes.func.isRequired,
