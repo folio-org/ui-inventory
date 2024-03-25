@@ -1,8 +1,8 @@
-import queryString from 'query-string';
 import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
+import queryString from 'query-string';
 
 import {
   useNamespace,
@@ -13,13 +13,14 @@ import {
   getFiltersCount,
 } from '@folio/stripes-acq-components';
 
+import usePrevious from '../usePrevious';
 import {
   BROWSE_RESULTS_COUNT,
   FACETS_TO_REQUEST,
+  INDEXES_WITH_CALL_NUMBER_TYPE_PARAM,
   PAGE_DIRECTIONS,
   undefinedAsString,
 } from '../../constants';
-import usePrevious from '../usePrevious';
 import {
   INITIAL_SEARCH_PARAMS_MAP,
   PAGINATION_SEARCH_PARAMS_MAP,
@@ -66,15 +67,16 @@ const useInventoryBrowse = ({
   const {
     qindex,
     query: searchQuery,
-    callNumberType,
     ...otherFilters
   } = normalizedFilters;
+
+  const shouldAddCallNumberType = filters.query && INDEXES_WITH_CALL_NUMBER_TYPE_PARAM.includes(filters.qindex);
 
   const baseSearchParams = {
     highlightMatch: !!searchQuery && !regExp.test(searchQuery),
     limit: BROWSE_RESULTS_COUNT,
     precedingRecordsCount: PRECEDING_RECORDS_COUNT,
-    ...(callNumberType && { callNumberType }),
+    ...(shouldAddCallNumberType && { callNumberType: qindex }),
   };
 
   const path = PATH_MAP[qindex];
@@ -87,7 +89,7 @@ const useInventoryBrowse = ({
     isFetching,
     isLoading,
   } = useQuery(
-    [namespace, filters, qindex, prevSearchIndex, pageConfig],
+    [namespace, filters, qindex, pageConfig],
     async () => {
       if (!hasFilters) return {};
 
