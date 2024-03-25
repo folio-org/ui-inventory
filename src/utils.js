@@ -886,3 +886,5 @@ export const clearStorage = () => {
     removeItem(`${namespace}.${segment}.lastOpenRecord`);
   });
 };
+
+export const parseEmptyFormValue = value => value;

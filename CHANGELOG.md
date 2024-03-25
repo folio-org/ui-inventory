@@ -5,6 +5,7 @@
 ## [10.0.1] (IN PROGRESS)
 
 * Keep query and results list when switching Browse options. Refs UIIN-2802.
+* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
 
 ## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v11.0.0)
