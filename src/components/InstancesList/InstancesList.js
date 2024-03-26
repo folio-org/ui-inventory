@@ -104,7 +104,6 @@ const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 class InstancesList extends React.Component {
   static defaultProps = {
     canUseSingleRecordImport: false,
-    showSingleResult: true,
     segment: segments.instances,
   };
 
@@ -113,7 +112,6 @@ class InstancesList extends React.Component {
     data: PropTypes.object,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object,
-    showSingleResult: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
@@ -175,7 +173,6 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       searchAndSortKey: 0,
       segmentsSortBy: this.getInitialSegmentsSortBy(),
-      isSingleResult: this.props.showSingleResult,
       searchInProgress: false,
     };
   }
@@ -1125,7 +1122,6 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened,
       selectedRows,
       searchAndSortKey,
-      isSingleResult
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
@@ -1208,10 +1204,6 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
-    const onChangeIndex = () => {
-      this.setState({ isSingleResult: true });
-    };
-
     const formattedSearchableIndexes = searchableIndexes.map(this.formatSearchableIndex);
 
     const advancedSearchOptions = advancedSearchIndexes[segment].map(this.formatSearchableIndex);
@@ -1281,7 +1273,6 @@ class InstancesList extends React.Component {
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
-            onChangeIndex={onChangeIndex}
             onSelectRow={this.onSelectRow}
             paneTitleRef={this.paneTitleRef}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
@@ -1323,7 +1314,7 @@ class InstancesList extends React.Component {
             }}
             basePath={path}
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
-            showSingleResult={isSingleResult}
+            showSingleResult
             renderFilters={renderFilters}
             onFilterChange={this.onFilterChangeHandler}
             onSubmitSearch={this.onSubmitSearch}
