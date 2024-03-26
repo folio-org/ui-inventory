@@ -13,8 +13,14 @@ import {
   validateAlphaNumericField,
   getQueryTemplate,
   switchAffiliation,
+  setRecordForDeletion,
 } from './utils';
-import { browseModeOptions } from './constants';
+import {
+  CONTENT_TYPE_HEADER,
+  OKAPI_TENANT_HEADER,
+  OKAPI_TOKEN_HEADER,
+  browseModeOptions,
+} from './constants';
 
 describe('validateRequiredField', () => {
   const expectedResult = <FormattedMessage id="ui-inventory.hridHandling.validation.enterValue" />;
@@ -176,6 +182,72 @@ describe('switchAffiliation', () => {
       switchAffiliation(stripes, 'university', moveMock);
 
       expect(updateTenant).toHaveBeenCalled();
+    });
+  });
+});
+
+describe('setRecordForDeletion', () => {
+  afterEach(() => {
+    global.fetch.mockClear();
+  });
+
+  afterAll(() => {
+    delete global.fetch;
+  });
+
+  const instanceId = 'testInstanceId';
+  const tenantId = 'testTenantId';
+  const okapi = {
+    token: 'token',
+    url: 'url/test',
+  };
+
+  describe('when the request was fulfilled successfuly', () => {
+    it('should return the appropriate response', () => {
+      global.fetch = jest.fn().mockReturnValue({ ok: true });
+
+      setRecordForDeletion(okapi, instanceId, tenantId);
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        `${okapi.url}/inventory/instances/${instanceId}/mark-deleted`,
+        {
+          credentials: 'include',
+          headers: expect.objectContaining({
+            [OKAPI_TENANT_HEADER]: tenantId,
+            [OKAPI_TOKEN_HEADER]: okapi.token,
+            [CONTENT_TYPE_HEADER]: 'application/json',
+          }),
+          method: 'DELETE',
+        },
+      );
+
+      expect(global.fetch.mock.results[0].value.ok).toBe(true);
+    });
+  });
+
+  describe('when the request was fulfilled with an error', () => {
+    it('should return the appropriate response', async () => {
+      global.fetch = jest.fn().mockReturnValue({ ok: false });
+
+      try {
+        await setRecordForDeletion(okapi, instanceId, tenantId);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.ok).toBe(false);
+
+        expect(global.fetch).toHaveBeenCalledWith(
+          `${okapi.url}/inventory/instances/${instanceId}/mark-deleted`,
+          {
+            credentials: 'include',
+            headers: expect.objectContaining({
+              [OKAPI_TENANT_HEADER]: tenantId,
+              [OKAPI_TOKEN_HEADER]: okapi.token,
+              [CONTENT_TYPE_HEADER]: 'application/json',
+            }),
+            method: 'DELETE',
+          },
+        );
+      }
     });
   });
 });
