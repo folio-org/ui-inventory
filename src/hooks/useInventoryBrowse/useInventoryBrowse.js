@@ -1,8 +1,9 @@
-import { useCallback } from 'react';
+import {
+  useCallback,
+  useRef,
+} from 'react';
 import { useQuery } from 'react-query';
-import { useLocation } from 'react-router-dom';
 import noop from 'lodash/noop';
-import queryString from 'query-string';
 
 import {
   useNamespace,
@@ -13,7 +14,6 @@ import {
   getFiltersCount,
 } from '@folio/stripes-acq-components';
 
-import usePrevious from '../usePrevious';
 import {
   BROWSE_RESULTS_COUNT,
   FACETS_TO_REQUEST,
@@ -52,8 +52,8 @@ const useInventoryBrowse = ({
   options = {},
 }) => {
   const ky = useOkapiKy();
-  const { search } = useLocation();
   const [namespace] = useNamespace();
+  const prevSearchIndex = useRef();
   const { pageConfig = [], setPageConfig = noop } = pageParams;
 
   const normalizedFilters = {
@@ -80,8 +80,8 @@ const useInventoryBrowse = ({
   };
 
   const path = PATH_MAP[qindex];
-  const prevSearchIndex = usePrevious(qindex || queryString.parse(search).qindex);
-  const hasFilters = getFiltersCount(normalizedFilters) > 0;
+  const hasFilters = getFiltersCount(otherFilters) > 0;
+  const hasSearchParameters = getFiltersCount(filters) > 0;
 
   const {
     data = {},
@@ -91,7 +91,7 @@ const useInventoryBrowse = ({
   } = useQuery(
     [namespace, filters, qindex, pageConfig],
     async () => {
-      if (!hasFilters) return {};
+      if (!hasSearchParameters) return {};
 
       const [pageNumber, direction, anchor] = pageConfig;
 
@@ -105,6 +105,8 @@ const useInventoryBrowse = ({
         undefined,
         false,
       );
+
+      prevSearchIndex.current = qindex;
 
       return ky.get(path, {
         searchParams: {
