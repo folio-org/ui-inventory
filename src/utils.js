@@ -910,3 +910,5 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
 
   return response;
 };
+
+export const parseEmptyFormValue = value => value;
