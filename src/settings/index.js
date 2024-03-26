@@ -32,6 +32,7 @@ import ModesOfIssuanceSettings from './ModesOfIssuanceSettings';
 import InstanceNoteTypesSettings from './InstanceNoteTypesSettings';
 import NatureOfContentTermsSettings from './NatureOfContentTermsSettings';
 import FastAddSettings from './FastAdd/FastAddSettings';
+import NumberGeneratorOptions from './NumberGeneratorOptions';
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -198,6 +199,13 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.callNumberTypes" />,
             component: CallNumberTypes,
             perm: this.addPerm('ui-inventory.settings.call-number-types'),
+          },
+          {
+            route: 'numbergeneratoroptions',
+            label: <FormattedMessage id="ui-inventory.settings.numberGeneratorOptions" />,
+            component: NumberGeneratorOptions,
+            interface: 'servint',
+            perm: 'ui-inventory.settings.numberGenerator.manage'
           },
         ]
       },

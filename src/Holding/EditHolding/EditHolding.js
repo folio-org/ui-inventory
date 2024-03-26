@@ -12,6 +12,7 @@ import {
 } from '../../common/hooks';
 import {
   useCallout,
+  useConfigurationQuery,
   useHoldingItemsQuery,
   useHoldingMutation,
 } from '../../hooks';
@@ -31,6 +32,8 @@ const EditHolding = ({
   referenceTables,
 }) => {
   const callout = useCallout();
+  const { configs } = useConfigurationQuery('number_generator');
+
   const {
     search,
     state: {
@@ -38,6 +41,7 @@ const EditHolding = ({
       tenantFrom,
     } = {},
   } = location;
+
   const stripes = useStripes();
   const [httpError, setHttpError] = useState();
   const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
@@ -45,7 +49,6 @@ const EditHolding = ({
   const { totalRecords: itemCount, isLoading: isItemsLoading } = useHoldingItemsQuery(holdingId, {
     searchParams: { limit: 1 },
   });
-
 
   const isMARCRecord = useMemo(() => (
     referenceTables?.holdingsSources?.find(source => source.id === holding?.sourceId)?.name === 'MARC'
@@ -95,6 +98,7 @@ const EditHolding = ({
   return (
     <>
       <HoldingsForm
+        configs={configs}
         httpError={httpError}
         location={location}
         initialValues={holding}

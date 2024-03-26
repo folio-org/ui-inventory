@@ -13,7 +13,7 @@ import {
 import { LoadingView } from '@folio/stripes/components';
 
 import { useInstance } from '../../common/hooks';
-import { useCallout } from '../../hooks';
+import { useCallout, useConfigurationQuery } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import { switchAffiliation } from '../../utils';
 
@@ -26,6 +26,8 @@ const CreateHolding = ({
   mutator,
 }) => {
   const callout = useCallout();
+  const { configs } = useConfigurationQuery('number_generator');
+
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
   const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
   const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
@@ -65,6 +67,7 @@ const CreateHolding = ({
 
   return (
     <HoldingsForm
+      configs={configs}
       form={instance.id}
       id={instance.id}
       initialValues={initialValues}

@@ -20,6 +20,7 @@ jest.mock('../../edit/holdings/HoldingsForm', () => jest.fn().mockReturnValue('H
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useCallout: () => jest.fn().mockReturnValue({ sendCallout: jest.fn() }),
+  useConfigurationQuery: () => ({ configs: {} }),
   useHoldingItemsQuery: jest.fn().mockReturnValue({ totalRecords: 1, isLoading: false }),
   useHoldingMutation: jest.fn().mockReturnValue({ mutateHolding: jest.fn() }),
 }));

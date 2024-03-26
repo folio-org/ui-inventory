@@ -18,6 +18,10 @@ import { DataContext } from '../../contexts';
 
 import ItemForm from './ItemForm';
 
+jest.mock('@folio/service-interaction', () => ({
+  NumberGeneratorModalButton: () => <div>NumberGeneratorModalButton</div>
+}));
+
 jest.mock('../common', () => ({
   LocationSelectionWithCheck: () => <div>LocationSelection</div>,
 }));
@@ -63,6 +67,7 @@ const ItemFormSetup = (props = {}) => (
         }}
         >
           <ItemForm
+            configs={{}}
             initialValues={mockInitialValues}
             onSubmit={mockOnSubmit}
             onCancel={mockOnCancel}

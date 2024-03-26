@@ -17,13 +17,13 @@ import {
   useHolding,
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
-import useCallout from '../../hooks/useCallout';
 import { parseHttpError, switchAffiliation } from '../../utils';
 import {
   useItem,
   useItemMutation,
   useBoundWithsMutation,
 } from '../hooks';
+import { useCallout, useConfigurationQuery } from '../../hooks';
 
 const EditItem = ({
   referenceData,
@@ -39,6 +39,7 @@ const EditItem = ({
   const { isLoading: isItemLoading, item } = useItem(itemId);
   const callout = useCallout();
   const stripes = useStripes();
+  const { configs } = useConfigurationQuery('number_generator');
 
   const goBack = useCallback(() => {
     history.push({
@@ -114,6 +115,7 @@ const EditItem = ({
   return (
     <>
       <ItemForm
+        configs={configs}
         httpError={httpError}
         form={`itemform_${holding.id}`}
         id={holding.id}
