@@ -44,7 +44,7 @@ const LimitedHolding = ({
   const canViewHoldingsAndItems = hasMemberTenantPermission('ui-inventory.instance.view', tenantId, userTenantPermissions);
   const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', tenantId, userTenantPermissions);
 
-  const { totalRecords: itemCount } = useConsortiumItems(instance.id, holding.id, tenantId);
+  const { totalRecords: itemCount } = useConsortiumItems(instance.id, holding.id, tenantId, { searchParams: { limit: 0 } });
 
   const onViewHolding = useCallback(() => {
     navigateToHoldingsViewPage(history, location, instance, holding, tenantId, stripes.okapi.tenant);

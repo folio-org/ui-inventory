@@ -9,8 +9,9 @@ const LimitedHoldingsList = ({
   userTenantPermissions,
   pathToAccordionsState,
 }) => {
-  return holdings.map(holding => (
+  return holdings.map((holding, i) => (
     <LimitedHolding
+      key={`${holding.id}_${i}`}
       instance={instance}
       holding={holding}
       tenantId={tenantId}
