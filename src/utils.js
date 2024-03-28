@@ -887,6 +887,22 @@ export const clearStorage = () => {
   });
 };
 
+export const addFilter = (filters, filterNameAndValue) => {
+  return filters ? `${filters},${filterNameAndValue}` : filterNameAndValue;
+};
+
+export const replaceFilter = (filters, filterToReplace, filterToReplaceWith) => {
+  const filtersArray = filters.split(',');
+
+  return filtersArray.reduce((acc, _filter) => {
+    if (_filter === filterToReplace) {
+      return [...acc, filterToReplaceWith];
+    }
+
+    return [...acc, _filter];
+  }, []).join(',');
+};
+
 export const setRecordForDeletion = async (okapi, id, tenantId) => {
   const {
     url,
