@@ -8,6 +8,7 @@
 
 * Keep query and results list when switching Browse options. Refs UIIN-2802.
 * Set central tenant id in the request when Member tenant deletes a shared record. Fixes UIIN-2784.
+* Apply staff suppress filter for first search in Holdings/Items. Fixes UIIN-2814.
 * Pass tenantId when open holding details during moving holdings/items. Fixes UIIN-2815.
 
 ## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
