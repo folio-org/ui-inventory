@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## [10.0.1] (IN PROGRESS)
+* ECS - Member consortial accordion is not displaying when user have according affiliation but don't have permissions for view holdings. Fixes UIIN-2780.
+
 ## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v11.0.0)
 
