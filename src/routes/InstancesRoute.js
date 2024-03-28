@@ -16,7 +16,6 @@ class InstancesRoute extends React.Component {
   static propTypes = {
     resources: PropTypes.object.isRequired,
     mutator: PropTypes.object.isRequired,
-    showSingleResult: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     onSelectRow: PropTypes.func,
     getParams: PropTypes.func,
@@ -29,7 +28,6 @@ class InstancesRoute extends React.Component {
   };
 
   static defaultProps = {
-    showSingleResult: true,
     disableRecordCreation: false,
   };
 
@@ -37,7 +35,6 @@ class InstancesRoute extends React.Component {
 
   render() {
     const {
-      showSingleResult,
       onSelectRow,
       disableRecordCreation,
       resources,
@@ -62,7 +59,6 @@ class InstancesRoute extends React.Component {
             parentResources={parentResources}
             parentMutator={mutator}
             data={{ ...data, query }}
-            showSingleResult={showSingleResult}
             onSelectRow={onSelectRow}
             disableRecordCreation={disableRecordCreation}
             renderFilters={renderer({

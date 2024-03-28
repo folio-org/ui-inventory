@@ -198,7 +198,7 @@ function withFacets(WrappedComponent) {
       const facetName = facetToOpen || onMoreClickedFacet || focusedFacet;
       const facetNameToRequest = FACETS_TO_REQUEST[facetName];
       const paramsUrl = new URLSearchParams(window.location.search);
-      const queryIndex = paramsUrl.get('qindex') || query?.qindex;
+      const queryIndex = query?.qindex || paramsUrl.get('qindex');
       const cqlQuery = this.getCqlQuery(isBrowseLookup, query, queryIndex, data);
 
       if (cqlQuery) {

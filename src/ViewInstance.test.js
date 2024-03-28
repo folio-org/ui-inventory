@@ -82,6 +82,7 @@ const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components')
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
 
 const spyOnGetUserTenantsPermissions = jest.spyOn(utils, 'getUserTenantsPermissions');
+const spyOnSetRecordForDeletion = jest.spyOn(utils, 'setRecordForDeletion');
 
 const location = {
   pathname: '/testPathName',
@@ -1117,20 +1118,28 @@ describe('ViewInstance', () => {
           fireEvent.click(screen.getByText('Set record for deletion'));
           fireEvent.click(screen.getByText('Confirm'));
 
-          expect(defaultProp.mutator.setForDeletion.DELETE).toHaveBeenCalledWith(defaultProp.selectedInstance.id);
+          expect(spyOnSetRecordForDeletion).toHaveBeenCalledWith(
+            { tenant: defaultProp.okapi.tenant },
+            defaultProp.selectedInstance.id,
+            defaultProp.okapi.tenant,
+          );
           expect(screen.queryByText(`${defaultProp.selectedInstance.title} has been set for deletion`)).toBeDefined();
         });
 
         describe('when there\'s an error', () => {
           it('should throw an error with id of the instance and show error message', async () => {
-            defaultProp.mutator.setForDeletion.DELETE.mockRejectedValueOnce();
+            global.fetch.mockRejectedValueOnce({ ok: false });
 
             renderViewInstance();
 
             fireEvent.click(screen.getByText('Set record for deletion'));
             fireEvent.click(screen.getByText('Confirm'));
 
-            expect(defaultProp.mutator.setForDeletion.DELETE).toHaveBeenCalledWith(defaultProp.selectedInstance.id);
+            expect(spyOnSetRecordForDeletion).toHaveBeenCalledWith(
+              { tenant: defaultProp.okapi.tenant },
+              defaultProp.selectedInstance.id,
+              defaultProp.okapi.tenant,
+            );
             expect(screen.queryByText(`${defaultProp.selectedInstance.title} was not set for deletion`)).toBeDefined();
           });
         });

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+// import { useCallback } from 'react';
+// import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -9,13 +10,11 @@ import {
 import {
   checkIfUserInCentralTenant,
   useStripes,
+  updateTenant,
 } from '@folio/stripes/core';
-
-import { switchAffiliation } from '../../utils';
 
 const CreateRequestButton = ({ newRequestLink }) => {
   const stripes = useStripes();
-  const history = useHistory();
 
   // if multi tenants
   if (stripes.hasInterface('consortia') && stripes.hasInterface('ecs-tlr')) {
@@ -36,9 +35,12 @@ const CreateRequestButton = ({ newRequestLink }) => {
       );
     }
 
-    const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
-    const onCreateRequest = () => {
-      history.push(newRequestLink);
+    const goToRequests = async () => {
+      const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
+
+      await updateTenant(stripes.okapi, centralTenantId);
+
+      window.location.href = window.location.origin + newRequestLink;
     };
 
     // if data tenant
@@ -46,9 +48,7 @@ const CreateRequestButton = ({ newRequestLink }) => {
       <>
         <Button
           buttonStyle="dropdownItem"
-          onClick={async () => {
-            await switchAffiliation(stripes, centralTenantId, onCreateRequest);
-          }}
+          onClick={goToRequests}
         >
           <Icon icon="plus-sign">
             New request in central tenant

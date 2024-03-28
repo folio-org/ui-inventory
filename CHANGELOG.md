@@ -1,6 +1,17 @@
 # Change history for ui-inventory
 
-## [11.0.0] IN PROGRESS
+## [10.1.0] (IN PROGRESS)
+
+* Remove unused code related to auto-open record detail view. Refs UIIN-2819.
+
+## [10.0.1] (IN PROGRESS)
+
+* Keep query and results list when switching Browse options. Refs UIIN-2802.
+* Set central tenant id in the request when Member tenant deletes a shared record. Fixes UIIN-2784.
+* Apply staff suppress filter for first search in Holdings/Items. Fixes UIIN-2814.
+
+## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v11.0.0)
 
 * *BREAKING* Replace imports from quick-marc with stripes-marc-components. Refs UIIN-2636.
 * Make Inventory search and browse query boxes expandable. Refs UIIN-2493.
@@ -31,10 +42,16 @@
 * Action when Set record for deletion option is invoked. Refs UIIN-2595.
 * Detail view not opened for non-local items when one shared record found using "Barcode" search on "Item" tab. Fixes UIIN-2698.
 * Jest/RTL: Cover CreateHoldings component with unit tests. Refs UIIN-2663.
-* Display Holdings/Item Electronic Access URIs consistent with Instances. Fixes UIIN-2778.
 * Staff suppress facet - use `No` as default value. Hide the facet when users don't have permissions to use it. Refs UIIN-2596.
 * Add a new search option for instances called `LCCN normalization`. Refs UIIN-2245.
 * Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
+* Increase holdings limit to 5000. Fixes UIIN-2785.
+* User with "Inventory: All permissions" permission only should not be seeing the "Staff suppress" facet. Fixes UIIN-2807.
+
+## [10.0.11](https://github.com/folio-org/ui-inventory/tree/v10.0.11) (2024-03-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.10...v10.0.11)
+
+* Display Holdings/Item Electronic Access URIs consistent with Instances. Fixes UIIN-2778.
 
 ## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)

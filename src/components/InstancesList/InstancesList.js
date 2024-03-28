@@ -60,6 +60,8 @@ import {
   buildSingleItemQuery,
   isUserInConsortiumMode,
   switchAffiliation,
+  addFilter,
+  replaceFilter,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -104,7 +106,6 @@ const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 class InstancesList extends React.Component {
   static defaultProps = {
     canUseSingleRecordImport: false,
-    showSingleResult: true,
     segment: segments.instances,
   };
 
@@ -113,7 +114,6 @@ class InstancesList extends React.Component {
     data: PropTypes.object,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object,
-    showSingleResult: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
@@ -175,7 +175,6 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened: false,
       searchAndSortKey: 0,
       segmentsSortBy: this.getInitialSegmentsSortBy(),
-      isSingleResult: this.props.showSingleResult,
       searchInProgress: false,
     };
   }
@@ -228,6 +227,10 @@ class InstancesList extends React.Component {
     } else if (prevId) {
       setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, null);
     }
+
+    if (prevProps.segment !== this.props.segment) {
+      this.applyDefaultStaffSuppressFilter();
+    }
   }
 
   componentWillUnmount() {
@@ -250,11 +253,21 @@ class InstancesList extends React.Component {
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
 
-  applyDefaultStaffSuppressFilter = () => {
+  redirectToSearchParams = (searchParams) => {
     const {
       history,
       location,
     } = this.props;
+
+    history.replace({
+      pathname: location.pathname,
+      search: searchParams.toString(),
+      state: location.state,
+    });
+  }
+
+  applyDefaultStaffSuppressFilter = () => {
+    const { location } = this.props;
 
     if (JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY))) {
       return;
@@ -263,16 +276,26 @@ class InstancesList extends React.Component {
     const searchParams = new URLSearchParams(location.search);
     const filters = searchParams.get('filters');
 
+    const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
+    const staffSuppressTrue = `${FACETS.STAFF_SUPPRESS}.true`;
+
     if (!filters?.includes(FACETS.STAFF_SUPPRESS)) {
-      const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
-      const newFiltersValue = filters ? `${filters},${staffSuppressFalse}` : staffSuppressFalse;
+      const newFiltersValue = addFilter(filters, staffSuppressFalse);
 
       searchParams.set('filters', newFiltersValue);
-      history.replace({
-        pathname: location.pathname,
-        search: searchParams.toString(),
-        state: location.state,
-      });
+      this.redirectToSearchParams(searchParams);
+
+      return;
+    }
+
+    const isStaffSuppressFilterAvailable = this.props.stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
+    const isStaffSuppressTrueSelected = filters.includes(`${FACETS.STAFF_SUPPRESS}.true`);
+
+    if (!isStaffSuppressFilterAvailable && isStaffSuppressTrueSelected) {
+      const newFiltersValue = replaceFilter(filters, staffSuppressTrue, staffSuppressFalse);
+
+      searchParams.set('filters', newFiltersValue);
+      this.redirectToSearchParams(searchParams);
     }
   }
 
@@ -1125,7 +1148,6 @@ class InstancesList extends React.Component {
       isImportRecordModalOpened,
       selectedRows,
       searchAndSortKey,
-      isSingleResult
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
@@ -1208,10 +1230,6 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
-    const onChangeIndex = () => {
-      this.setState({ isSingleResult: true });
-    };
-
     const formattedSearchableIndexes = searchableIndexes.map(this.formatSearchableIndex);
 
     const advancedSearchOptions = advancedSearchIndexes[segment].map(this.formatSearchableIndex);
@@ -1281,7 +1299,6 @@ class InstancesList extends React.Component {
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
-            onChangeIndex={onChangeIndex}
             onSelectRow={this.onSelectRow}
             paneTitleRef={this.paneTitleRef}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
@@ -1323,7 +1340,7 @@ class InstancesList extends React.Component {
             }}
             basePath={path}
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
-            showSingleResult={isSingleResult}
+            showSingleResult
             renderFilters={renderFilters}
             onFilterChange={this.onFilterChangeHandler}
             onSubmitSearch={this.onSubmitSearch}
