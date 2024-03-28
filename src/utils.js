@@ -886,3 +886,43 @@ export const clearStorage = () => {
     removeItem(`${namespace}.${segment}.lastOpenRecord`);
   });
 };
+
+export const addFilter = (filters, filterNameAndValue) => {
+  return filters ? `${filters},${filterNameAndValue}` : filterNameAndValue;
+};
+
+export const replaceFilter = (filters, filterToReplace, filterToReplaceWith) => {
+  const filtersArray = filters.split(',');
+
+  return filtersArray.reduce((acc, _filter) => {
+    if (_filter === filterToReplace) {
+      return [...acc, filterToReplaceWith];
+    }
+
+    return [...acc, _filter];
+  }, []).join(',');
+};
+
+export const setRecordForDeletion = async (okapi, id, tenantId) => {
+  const {
+    url,
+    token,
+  } = okapi;
+  const path = `${url}/inventory/instances/${id}/mark-deleted`;
+
+  const response = await fetch(path, {
+    method: 'DELETE',
+    headers: {
+      [OKAPI_TENANT_HEADER]: tenantId,
+      [CONTENT_TYPE_HEADER]: 'application/json',
+      ...(token && { [OKAPI_TOKEN_HEADER]: token }),
+    },
+    credentials: 'include',
+  });
+
+  if (!response.ok) {
+    throw response;
+  }
+
+  return response;
+};
