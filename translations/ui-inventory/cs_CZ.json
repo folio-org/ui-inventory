@@ -354,7 +354,7 @@
     "classificationIdentifierTypes": "Typy identifikátorů klasifikace",
     "instanceNoteType": "Typ poznámky titulu",
     "natureOfContentTerms": "Povaha obsahu",
-    "natureOfContentTerm": "Povaha termínu obsahu",
+    "natureOfContentTerm": "Povaha obsahového pojmu",
     "instanceTitle": "Titul: {title}.",
     "items.damageStatus.damaged": "Poškozená",
     "items.damageStatus.notdamaged": "Nepoškozeno",
@@ -845,5 +845,5 @@
     "displaySummary": "Zobrazit souhrn",
     "setForDeletion.toast.successful": "<b>{instanceTitle}</b> byl nastaven ke smazání",
     "setForDeletion.toast.unsuccessful": "<b>{instanceTitle}</b> nebyl nastaven k vymazání",
-    "lccn": "LCCN, normalized"
+    "lccn": "LCCN, normalizované"
 }
