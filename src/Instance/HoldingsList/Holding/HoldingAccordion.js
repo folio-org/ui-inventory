@@ -7,12 +7,10 @@ import {
   Accordion,
   Row,
   Col,
-  Icon,
 } from '@folio/stripes/components';
 
-import { callNumberLabel } from '../../../utils';
-
-import HoldingButtonsGroup from './HoldingButtonsGroup';
+import { HoldingButtonsGroup } from './HoldingButtonsGroup';
+import HoldingAccordionLabel from './HoldingAccordionLabel';
 import {
   useLocationsQuery,
   useHoldingItemsQuery,
@@ -69,31 +67,17 @@ const HoldingAccordion = ({
     />;
 
   const accId = pathToAccordion.join('.');
+  const accordionLabel = (
+    <HoldingAccordionLabel
+      location={location}
+      holding={holding}
+    />
+  );
 
   return (
     <Accordion
       id={accId}
-      label={(
-        <>
-          <FormattedMessage
-            id="ui-inventory.holdingsHeader"
-            values={{
-              location,
-              callNumber: callNumberLabel(holding),
-              copyNumber: holding.copyNumber,
-            }}
-          />
-          {holding.discoverySuppress &&
-          <span>
-            <Icon
-              size="medium"
-              icon="exclamation-circle"
-              status="warn"
-            />
-          </span>
-          }
-        </>
-      )}
+      label={accordionLabel}
       displayWhenOpen={holdingButtonsGroup(true)}
       displayWhenClosed={holdingButtonsGroup(false)}
       closedByDefault

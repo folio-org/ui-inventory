@@ -17,8 +17,8 @@ jest.mock('../InstanceDetails/ControllableDetail/ControllableDetail', () => jest
 jest.mock('../InstanceDetails/SubInstanceGroup/SubInstanceGroup', () => jest.fn().mockReturnValue('SubInstanceGroup'));
 jest.mock('../InstanceDetails/InstanceAcquisition/InstanceAcquisition', () => jest.fn().mockReturnValue('InstanceAcquisition'));
 jest.mock('../InstanceDetails/InstanceTitleData/InstanceTitleData', () => jest.fn().mockReturnValue('InstanceTitleData'));
-jest.mock('./ConsortialHoldings', () => ({
-  ...jest.requireActual('./ConsortialHoldings'),
+jest.mock('../HoldingsList/consortium/ConsortialHoldings', () => ({
+  ...jest.requireActual('../HoldingsList/consortium/ConsortialHoldings'),
   ConsortialHoldings: () => <button type="button">Consortial holdings</button>,
 }));
 
