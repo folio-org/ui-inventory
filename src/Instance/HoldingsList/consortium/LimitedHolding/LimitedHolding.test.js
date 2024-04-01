@@ -55,13 +55,12 @@ describe('LimitedHolding', () => {
     })).toBeInTheDocument();
   });
 
-  it('should render disabled View holdings button', () => {
+  it('should not render View holdings button', () => {
     renderLimitedHolding();
 
-    const viewHoldingsButton = screen.getByRole('button', { name: /view holdings/i });
+    const viewHoldingsButton = screen.queryByRole('button', { name: /view holdings/i });
 
-    expect(viewHoldingsButton).toBeInTheDocument();
-    expect(viewHoldingsButton).toHaveAttribute('disabled');
+    expect(viewHoldingsButton).not.toBeInTheDocument();
   });
 
   it('should render items count badge', () => {
