@@ -1,11 +1,11 @@
 # Change history for ui-inventory
 
-## [10.1.0] (IN PROGRESS)
+## [11.1.0] (IN PROGRESS)
 
 * Remove unused code related to auto-open record detail view. Refs UIIN-2819.
-* Replace `all` with the `=` operator to get correct results when using the `All` search option.
+* Replace `all` with the `=` operator to get correct results when using the `All` search option. Refs UIIN-2816.
 
-## [10.0.1] (IN PROGRESS)
+## [11.0.1] (IN PROGRESS)
 
 * Keep query and results list when switching Browse options. Refs UIIN-2802.
 * Set central tenant id in the request when Member tenant deletes a shared record. Fixes UIIN-2784.

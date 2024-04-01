@@ -749,6 +749,7 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
     const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
+    const canCreateItemsInTransitReport = stripes.hasPerm('ui-inventory.items.create-in-transit-report');
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
@@ -839,7 +840,7 @@ class InstancesList extends React.Component {
               icon: 'report',
               messageId: 'ui-inventory.exportInProgress',
             }) :
-            !checkIfUserInCentralTenant(stripes) && this.getActionItem({
+            canCreateItemsInTransitReport && !checkIfUserInCentralTenant(stripes) && this.getActionItem({
               id: 'dropdown-clickable-get-report',
               icon: 'report',
               messageId: 'ui-inventory.inTransitReport',
