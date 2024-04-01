@@ -64,12 +64,13 @@ const LimitedHolding = ({
   const renderHoldingsButtons = (isOpen) => {
     return (
       <>
-        <ViewHoldingsButton
-          holding={holding}
-          tenantId={tenantId}
-          onViewHolding={onViewHolding}
-          disabled={!canViewHoldingsAndItems}
-        />
+        {canViewHoldingsAndItems && (
+          <ViewHoldingsButton
+            holding={holding}
+            tenantId={tenantId}
+            onViewHolding={onViewHolding}
+          />
+        )}
         {!isUserInCentralTenant && canCreateItem && (
           <AddItemButton
             holding={holding}
