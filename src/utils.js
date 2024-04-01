@@ -928,6 +928,8 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
   return response;
 };
 
+export const parseEmptyFormValue = value => value;
+
 export const getTemplateForSelectedFromBrowseRecord = (queryParams, queryIndex, queryValue) => {
   if (!queryParams?.selectedBrowseResult) {
     return null;
