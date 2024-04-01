@@ -5,17 +5,11 @@ import React, {
 import PropTypes from 'prop-types';
 
 import { Droppable } from 'react-beautiful-dnd';
-import {
-  useStripes,
-} from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
 
 import DnDContext from '../../DnDContext';
-import {
-  InstanceDetails,
-} from '../../InstanceDetails';
-import {
-  HoldingsListContainer,
-} from '../../HoldingsList';
+import { InstanceDetails } from '../../InstanceDetails';
+import { HoldingsListContainer } from '../../HoldingsList';
 
 import InstanceMovementDetailsActions from './InstanceMovementDetailsActions';
 
@@ -79,6 +73,7 @@ const InstanceMovementDetails = ({
               isHoldingsMove={canMoveHoldings}
               draggable={canMoveItems}
               droppable={canMoveItems}
+              tenantId={stripes.okapi.tenant}
             />
 
             {provided.placeholder}

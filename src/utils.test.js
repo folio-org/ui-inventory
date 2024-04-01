@@ -14,6 +14,7 @@ import {
   getQueryTemplate,
   switchAffiliation,
   setRecordForDeletion,
+  parseEmptyFormValue,
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
@@ -249,5 +250,31 @@ describe('setRecordForDeletion', () => {
         );
       }
     });
+  });
+});
+
+describe('parseEmptyFormValue', () => {
+  it('should return the same value when not empty', () => {
+    const value = 'test';
+
+    expect(parseEmptyFormValue(value)).toEqual(value);
+  });
+
+  it('should return empty string when value is empty', () => {
+    const value = '';
+
+    expect(parseEmptyFormValue(value)).toEqual('');
+  });
+
+  it('should return null when value is null', () => {
+    const value = null;
+
+    expect(parseEmptyFormValue(value)).toEqual(null);
+  });
+
+  it('should return undefined when value is undefined', () => {
+    const value = undefined;
+
+    expect(parseEmptyFormValue(value)).toEqual(undefined);
   });
 });
