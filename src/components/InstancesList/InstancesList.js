@@ -628,17 +628,15 @@ class InstancesList extends React.Component {
   setSegmentSortBy = (sortBy) => {
     const { segment } = this.props;
 
-    const segmentsSortBy = this.state.segmentsSortBy.map((key) => {
-      if (key.name === segment) {
-        key.sort = sortBy;
+    this.setState(prevState => ({
+      segmentsSortBy: prevState.segmentsSortBy.map((key) => {
+        if (key.name === segment) {
+          key.sort = sortBy;
+          return key;
+        }
         return key;
-      }
-      return key;
-    });
-
-    this.setState({
-      segmentsSortBy
-    });
+      }),
+    }));
   }
 
   getActionMenu = ({ onToggle }) => {
