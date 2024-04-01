@@ -3,6 +3,7 @@
 ## [10.1.0] (IN PROGRESS)
 
 * Remove unused code related to auto-open record detail view. Refs UIIN-2819.
+* Replace `all` with the `=` operator to get correct results when using the `All` search option.
 
 ## [10.0.1] (IN PROGRESS)
 
