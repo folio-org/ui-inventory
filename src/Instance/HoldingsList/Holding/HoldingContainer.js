@@ -11,6 +11,10 @@ import { FormattedMessage } from 'react-intl';
 import { useStripes } from '@folio/stripes/core';
 
 import Holding from './Holding';
+import {
+  navigateToHoldingsViewPage,
+  navigateToItemCreatePage,
+} from '../../utils';
 
 const dragStyles = {
   background: '#333',
@@ -126,25 +130,11 @@ const HoldingContainer = ({
   const stripes = useStripes();
 
   const onViewHolding = useCallback(() => {
-    history.push({
-      pathname: `/inventory/view/${instance.id}/${holding.id}`,
-      search: location.search,
-      state: {
-        tenantTo: tenantId,
-        tenantFrom: stripes.okapi.tenant,
-      },
-    });
+    navigateToHoldingsViewPage(history, location, instance, holding, tenantId, stripes.okapi.tenant);
   }, [location.search, instance.id, holding.id]);
 
   const onAddItem = useCallback(() => {
-    history.push({
-      pathname: `/inventory/create/${instance.id}/${holding.id}/item`,
-      search: location.search,
-      state: {
-        tenantTo: tenantId,
-        tenantFrom: stripes.okapi.tenant,
-      },
-    });
+    navigateToItemCreatePage(history, location, instance, holding, tenantId, stripes.okapi.tenant);
   }, [location.search, instance.id, holding.id]);
 
   return isDraggable ? (

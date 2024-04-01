@@ -3,7 +3,7 @@
 ## [11.1.0] (IN PROGRESS)
 
 * Remove unused code related to auto-open record detail view. Refs UIIN-2819.
-* Replace `all` with the `=` operator to get correct results when using the `All` search option.
+* Replace `all` with the `=` operator to get correct results when using the `All` search option. Refs UIIN-2816.
 * Keyboard shortcuts modal: Add quickMARC shortcuts to modal. Refs UIIN-2795.
 
 ## [11.0.1] (IN PROGRESS)
@@ -13,6 +13,7 @@
 * Apply staff suppress filter for first search in Holdings/Items. Fixes UIIN-2814.
 * Pass tenantId when open holding details during moving holdings/items. Fixes UIIN-2815.
 * Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
+* ECS - Member consortial accordion is not displaying when user have according affiliation but don't have permissions for view holdings. Fixes UIIN-2780.
 
 ## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v11.0.0)

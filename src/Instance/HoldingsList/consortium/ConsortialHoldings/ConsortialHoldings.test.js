@@ -1,22 +1,22 @@
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../../../../test/jest/__mock__';
+import '../../../../../test/jest/__mock__';
 import {
   renderWithIntl,
   translationsProperties,
-} from '../../../../test/jest/helpers';
+} from '../../../../../test/jest/helpers';
 
-import { instance } from '../../../../test/fixtures';
+import { instance } from '../../../../../test/fixtures';
 
-import { DataContext } from '../../../contexts';
+import { DataContext } from '../../../../contexts';
 import ConsortialHoldings from './ConsortialHoldings';
 
 jest.mock('../MemberTenantHoldings', () => ({
   ...jest.requireActual('../MemberTenantHoldings'),
   MemberTenantHoldings: ({ memberTenant }) => <>{memberTenant.name} accordion</>,
 }));
-jest.mock('../../../hooks', () => ({
-  ...jest.requireActual('../../../hooks'),
+jest.mock('../../../../hooks', () => ({
+  ...jest.requireActual('../../../../hooks'),
   useSearchForShadowInstanceTenants: () => ({ tenants: [{ id: 'college' }] }),
 }));
 

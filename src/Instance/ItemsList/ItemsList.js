@@ -21,6 +21,7 @@ import {
 
 import {
   DEFAULT_ITEM_TABLE_SORTBY_FIELD,
+  ITEM_TABLE_PAGE_AMOUNT,
   itemStatuses,
   noValue,
 } from '../../constants';
@@ -150,7 +151,6 @@ const visibleColumns = [
 ];
 const dragVisibleColumns = ['dnd', 'select', ...visibleColumns];
 const rowMetadata = ['id', 'holdingsRecordId'];
-const pageAmount = 200;
 
 const ItemsList = ({
   holding,
@@ -178,7 +178,7 @@ const ItemsList = ({
 
   const { locationsById } = useContext(DataContext);
   const pagingCanGoPrevious = offset > 0;
-  const pagingCanGoNext = offset < total && total - offset > pageAmount;
+  const pagingCanGoNext = offset < total && total - offset > ITEM_TABLE_PAGE_AMOUNT;
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
@@ -251,7 +251,7 @@ const ItemsList = ({
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}
       rowFormatter={ItemsListRow}
-      pageAmount={pageAmount}
+      pageAmount={ITEM_TABLE_PAGE_AMOUNT}
       rowProps={rowProps}
       pagingCanGoPrevious={pagingCanGoPrevious}
       pagingCanGoNext={pagingCanGoNext}

@@ -30,7 +30,7 @@ export const HoldingsProvider = ({ ...rest }) => {
 };
 
 
-export const useInstanceHoldingsQuery = (instanceId, { tenantId } = {}) => {
+export const useInstanceHoldingsQuery = (instanceId, { tenantId, enabled } = {}) => {
   const ky = useTenantKy({ tenantId });
 
   const holdings = useHoldings();
@@ -45,7 +45,12 @@ export const useInstanceHoldingsQuery = (instanceId, { tenantId } = {}) => {
 
   const onSuccess = data => holdings?.update(data.holdingsRecords);
 
-  const { data, ...rest } = useQuery({ queryKey, queryFn, onSuccess });
+  const { data, ...rest } = useQuery({
+    queryKey,
+    queryFn,
+    onSuccess,
+    enabled,
+  });
 
   return { ...data, ...rest };
 };
