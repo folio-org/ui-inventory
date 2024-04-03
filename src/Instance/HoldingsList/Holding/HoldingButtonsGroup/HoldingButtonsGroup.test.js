@@ -2,17 +2,17 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../../../../test/jest/__mock__';
+import '../../../../../test/jest/__mock__';
 
-import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
-import translations from '../../../../test/jest/helpers/translationsProperties';
+import renderWithIntl from '../../../../../test/jest/helpers/renderWithIntl';
+import translations from '../../../../../test/jest/helpers/translationsProperties';
 
-import { switchAffiliation } from '../../../utils';
+import { switchAffiliation } from '../../../../utils';
 
 import HoldingButtonsGroup from './HoldingButtonsGroup';
 
-jest.mock('../../../utils', () => ({
-  ...jest.requireActual('../../../utils'),
+jest.mock('../../../../utils', () => ({
+  ...jest.requireActual('../../../../utils'),
   switchAffiliation: jest.fn(),
 }));
 

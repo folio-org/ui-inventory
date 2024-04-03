@@ -16,11 +16,11 @@ import {
 } from '@folio/stripes/components';
 
 import { MemberTenantHoldings } from '../MemberTenantHoldings';
-import { DataContext } from '../../../contexts';
+import { DataContext } from '../../../../contexts';
 import {
   useSearchForShadowInstanceTenants,
   useHoldingsFromStorage,
-} from '../../../hooks';
+} from '../../../../hooks';
 
 const ConsortialHoldings = ({
   instance,

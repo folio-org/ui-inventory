@@ -44,7 +44,7 @@ import { InstanceAcquisition } from './InstanceAcquisition';
 import HelperApp from '../../components/HelperApp';
 
 import { DataContext } from '../../contexts';
-import { ConsortialHoldings } from './ConsortialHoldings';
+import { ConsortialHoldings } from '../HoldingsList/consortium/ConsortialHoldings';
 import {
   getAccordionState,
   getPublishingInfo,

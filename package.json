@@ -845,6 +845,14 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.items.create-in-transit-report",
+        "displayName": "Inventory: Create and download In transit items report",
+        "subPermissions": [
+          "circulation.inventory.items-in-transit-report.get"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.single-record-import",
         "displayName": "Inventory: Import single bibliographic records",
         "subPermissions": [
