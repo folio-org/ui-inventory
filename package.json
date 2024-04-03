@@ -252,6 +252,16 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.classification-browse",
+        "displayName": "Settings (Inventory): Configure classification browse",
+        "subPermissions": [
+          "settings.inventory.enabled",
+          "browse.config.collection.get",
+          "browse.config.item.put"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.classification-types",
         "displayName": "Settings (Inventory): Create, edit, delete classification identifier types",
         "subPermissions": [
