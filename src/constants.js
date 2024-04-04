@@ -554,8 +554,8 @@ export const fieldSearchConfigurations = {
   },
   allFields: {
     exactPhrase: 'cql.all=="%{query.query}"',
-    containsAll: 'cql.all all "%{query.query}"',
-    startsWith: 'cql.all all "%{query.query}*"',
+    containsAll: 'cql.all="%{query.query}"',
+    startsWith: 'cql.all="%{query.query}*"',
     containsAny: 'cql.all any "%{query.query}"',
   },
   holdingsFullCallNumbers: {
@@ -670,6 +670,7 @@ export const OKAPI_TOKEN_HEADER = 'X-Okapi-Token';
 export const CONTENT_TYPE_HEADER = 'Content-Type';
 
 export const DEFAULT_ITEM_TABLE_SORTBY_FIELD = 'barcode';
+export const ITEM_TABLE_PAGE_AMOUNT = 200;
 
 export const AUTHORITY_LINKED_FIELDS = [
   'alternativeTitles',

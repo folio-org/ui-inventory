@@ -35,3 +35,25 @@ export const selectItems = (prevItemsMap, holdingId, items) => {
     [holdingId]: newHolding,
   };
 };
+
+export const navigateToItemCreatePage = (history, location, instance, holding, tenantTo, tenantFrom) => {
+  history.push({
+    pathname: `/inventory/create/${instance.id}/${holding.id}/item`,
+    search: location.search,
+    state: {
+      tenantTo,
+      tenantFrom,
+    },
+  });
+};
+
+export const navigateToHoldingsViewPage = (history, location, instance, holding, tenantTo, tenantFrom) => {
+  history.push({
+    pathname: `/inventory/view/${instance.id}/${holding.id}`,
+    search: location.search,
+    state: {
+      tenantTo,
+      tenantFrom,
+    },
+  });
+};
