@@ -111,7 +111,6 @@ const ClassificationBrowseSettings = () => {
   }
 
   if (isCentralTenantPermissionsLoading || isClassificationTypesLoading) {
-    console.log(isCentralTenantPermissionsLoading, isClassificationTypesLoading);
     return <LoadingPane />;
   }
 
@@ -124,6 +123,7 @@ const ClassificationBrowseSettings = () => {
         stripes={stripes}
         baseUrl="browse/config/instance-classification"
         records="configs"
+        objectLabel={null}
         label={<FormattedMessage id="ui-inventory.classificationBrowse" />}
         labelSingular={intl.formatMessage({ id: 'ui-inventory.name' })}
         visibleFields={[CLASSIFICATION_BROWSE_COLUMNS.NAME, CLASSIFICATION_BROWSE_COLUMNS.TYPE_IDS]}

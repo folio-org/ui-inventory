@@ -1,7 +1,10 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { useStripes } from '@folio/stripes/core';
+import {
+  useStripes,
+  stripesConnect,
+} from '@folio/stripes/core';
 
 import {
   renderWithIntl,
@@ -20,6 +23,7 @@ import {
 } from '../../hooks';
 
 jest.unmock('@folio/stripes/components');
+jest.unmock('@folio/stripes/smart-components');
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useClassificationIdentifierTypes: jest.fn(),
@@ -76,7 +80,7 @@ describe('ClassificationBrowseSettings', () => {
     it('should not render the settings page', () => {
       const { queryByText } = renderClassificationBrowseSettings();
 
-      expect(queryByText('ControlledVocab')).not.toBeInTheDocument();
+      expect(queryByText('Classification browse')).not.toBeInTheDocument();
     });
   });
 
@@ -95,14 +99,35 @@ describe('ClassificationBrowseSettings', () => {
     it('should not render the settings page', () => {
       const { queryByText } = renderClassificationBrowseSettings();
 
-      expect(queryByText('ControlledVocab')).not.toBeInTheDocument();
+      expect(queryByText('Classification browse')).not.toBeInTheDocument();
     });
   });
 
   describe('when data is loaded', () => {
+    const mutator = {
+      values: {
+        GET: jest.fn(),
+      },
+    };
+
+    const resources = {
+      values: {
+        records: [{
+          id: 'all',
+          typeIds: ['type-1', 'type-2'],
+        }],
+      },
+    };
+
     beforeEach(() => {
       useClassificationIdentifierTypes.mockClear().mockReturnValue({
-        classificationTypes: [],
+        classificationTypes: [{
+          id: 'type-1',
+          name: 'Type 1',
+        }, {
+          id: 'type-2',
+          name: 'Type 2',
+        }],
         isLoading: false,
       });
       useUserTenantPermissions.mockClear().mockReturnValue({
@@ -113,13 +138,39 @@ describe('ClassificationBrowseSettings', () => {
       useStripes.mockClear().mockReturnValue(buildStripes({
         hasInterface: () => false,
         hasPerm: () => true,
+        connect: Component => (props) => (
+          <Component
+            resources={resources}
+            mutator={mutator}
+            {...props}
+          />
+        ),
       }));
     });
 
     it('should render the settings page', () => {
+      const { getAllByText } = renderClassificationBrowseSettings();
+
+      expect(getAllByText('Classification browse')).toBeDefined();
+    });
+
+    it('should render Classification browse config name', () => {
       const { getByText } = renderClassificationBrowseSettings();
 
-      expect(getByText('ControlledVocab')).toBeInTheDocument();
+      expect(getByText('Classification (all)')).toBeInTheDocument();
+    });
+
+    it('should render Classification identifier type names', () => {
+      const { getByText } = renderClassificationBrowseSettings();
+
+      expect(getByText('Type 1')).toBeInTheDocument();
+      expect(getByText('Type 2')).toBeInTheDocument();
+    });
+
+    it('should not render "+ New" button', () => {
+      const { queryByText } = renderClassificationBrowseSettings();
+
+      expect(queryByText('+ New')).not.toBeInTheDocument();
     });
   });
 });
