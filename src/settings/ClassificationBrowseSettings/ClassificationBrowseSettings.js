@@ -111,6 +111,7 @@ const ClassificationBrowseSettings = () => {
   }
 
   if (isCentralTenantPermissionsLoading || isClassificationTypesLoading) {
+    console.log(isCentralTenantPermissionsLoading, isClassificationTypesLoading);
     return <LoadingPane />;
   }
 

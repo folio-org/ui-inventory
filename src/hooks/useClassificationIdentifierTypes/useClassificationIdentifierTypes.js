@@ -12,7 +12,7 @@ import {
 
 const useClassificationIdentifierTypes = () => {
   const ky = useOkapiKy();
-  const [namespace] = useNamespace({ key: 'locations' });
+  const [namespace] = useNamespace({ key: 'classification-identifier-types' });
 
   const query = useQuery({
     queryKey: [namespace, 'classification-types'],
