@@ -75,7 +75,6 @@ const ElectronicAccessFields = props => {
           aria-label={urlRelationshipLabel}
           name={`${field}.relationshipId`}
           component={Select}
-          parse={parseEmptyFormValue}
           dataOptions={[{ label: formatMessage({ id: 'ui-inventory.selectType' }), value: '' }, ...relationshipOptions]}
           disabled={!canEdit}
         />
@@ -95,7 +94,6 @@ const ElectronicAccessFields = props => {
           aria-label={linkTextLabel}
           name={`${field}.linkText`}
           component={TextArea}
-          parse={parseEmptyFormValue}
           rows={1}
           disabled={!canEdit}
         />
@@ -105,7 +103,6 @@ const ElectronicAccessFields = props => {
           aria-label={materialsSpecificationLabel}
           name={`${field}.materialsSpecification`}
           component={TextArea}
-          parse={parseEmptyFormValue}
           rows={1}
           disabled={!canEdit}
         />
@@ -115,7 +112,6 @@ const ElectronicAccessFields = props => {
           aria-label={urlPublicNoteLabel}
           name={`${field}.publicNote`}
           component={TextArea}
-          parse={parseEmptyFormValue}
           rows={1}
           disabled={!canEdit}
         />
@@ -129,13 +125,7 @@ const ElectronicAccessFields = props => {
       component={RepeatableField}
       legend={<FormattedMessage id="ui-inventory.electronicAccess" />}
       addLabel={<FormattedMessage id="ui-inventory.addElectronicAccess" />}
-      onAdd={fields => fields.push({
-        relationshipId: '',
-        uri: '',
-        linkText: '',
-        materialsSpecification: '',
-        publicNote: '',
-      })}
+      onAdd={fields => fields.push({ uri: '' })}
       headLabels={headLabels}
       renderField={renderField}
       canAdd={canAdd}
