@@ -1,14 +1,11 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
-import {
-  useStripes,
-  stripesConnect,
-} from '@folio/stripes/core';
+import { useStripes } from '@folio/stripes/core';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
-  stripesStub,
   translationsProperties,
 } from '../../../test/jest/helpers';
 
@@ -146,6 +143,14 @@ describe('ClassificationBrowseSettings', () => {
           />
         ),
       }));
+    });
+
+    it('should render with no axe errors', async () => {
+      const { container } = renderClassificationBrowseSettings();
+
+      await runAxeTest({
+        rootNode: container,
+      });
     });
 
     it('should render the settings page', () => {

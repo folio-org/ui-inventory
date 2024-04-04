@@ -77,7 +77,7 @@ const ClassificationBrowseSettings = () => {
 
     return {
       ...classificationType,
-      name: intl.formatMessage({ id: `ui-inventory.settings.instanceClassification.${classificationType.id}`}),
+      name: intl.formatMessage({ id: `ui-inventory.settings.instanceClassification.${classificationType.id}` }),
       [CLASSIFICATION_BROWSE_COLUMNS.TYPE_IDS]: classificationIdentifierType,
     };
   }, [classificationIdentifierTypes]);
