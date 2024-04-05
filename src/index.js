@@ -67,12 +67,12 @@ const InventoryRouting = (props) => {
     {
       label: <FormattedMessage id="ui-inventory.shortcut.nextSubfield" />,
       name: 'NEXT_SUBFIELD',
-      shortcut: 'Control + ]',
+      shortcut: 'Ctrl + ]',
     },
     {
       label: <FormattedMessage id="ui-inventory.shortcut.prevSubfield" />,
       name: 'PREV_SUBFIELD',
-      shortcut: 'Control + [',
+      shortcut: 'Ctrl + [',
     },
     ...defaultKeyboardShortcuts.slice(9),
   ];
