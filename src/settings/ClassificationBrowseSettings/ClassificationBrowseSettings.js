@@ -97,15 +97,6 @@ const ClassificationBrowseSettings = () => {
     />
   );
 
-  // by default OkapiResource uses Accept: text/plain for PUT request. /browse/config/instance-classification however requiers application/json
-  const optionsForUpdate = useMemo(() => ({
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-      [OKAPI_TENANT_HEADER]: stripes.okapi.tenant,
-    },
-  }));
-
   if (!hasRequiredPermissions) {
     return null;
   }
@@ -141,7 +132,6 @@ const ClassificationBrowseSettings = () => {
         fieldComponents={getFieldComponents(fieldLabels, classificationIdentifierTypes)}
         canCreate={false}
         parseRow={formatRowData}
-        optionsForUpdate={optionsForUpdate}
         actionSuppressor={{
           delete: () => true,
           edit: () => false,
