@@ -14,6 +14,7 @@
 * Pass tenantId when open holding details during moving holdings/items. Fixes UIIN-2815.
 * Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
 * ECS - Member consortial accordion is not displaying when user have according affiliation but don't have permissions for view holdings. Fixes UIIN-2780.
+* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
 
 ## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v11.0.0)
