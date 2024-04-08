@@ -23,17 +23,16 @@ import {
   useUserTenantPermissions,
 } from '../../hooks';
 import getFieldComponents from './getFieldComponents';
-import { OKAPI_TENANT_HEADER } from '../../constants';
 import { CLASSIFICATION_BROWSE_COLUMNS } from './constants';
 
 const ClassificationBrowseSettings = () => {
   const stripes = useStripes();
   const intl = useIntl();
-  const { classificationTypes, isLoading: isClassificationTypesLoading } = useClassificationIdentifierTypes();
+  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
+  const { classificationTypes, isLoading: isClassificationTypesLoading } = useClassificationIdentifierTypes(centralTenantId);
   const ConnectedControlledVocab = useMemo(() => stripes.connect(ControlledVocab), [stripes]);
 
   const userId = stripes?.user?.user?.id;
-  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
   const {
     userPermissions: centralTenantPermissions,
@@ -140,6 +139,7 @@ const ClassificationBrowseSettings = () => {
           termUpdated: 'ui-inventory.settings.instanceClassification.termUpdated'
         }}
         hideCreateButton
+        tenant={centralTenantId}
       />
     </TitleManager>
   );

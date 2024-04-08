@@ -10,8 +10,8 @@ import {
   LIMIT_MAX,
 } from '../../constants';
 
-const useClassificationIdentifierTypes = () => {
-  const ky = useOkapiKy();
+const useClassificationIdentifierTypes = (tenant) => {
+  const ky = useOkapiKy({ tenant });
   const [namespace] = useNamespace({ key: 'classification-identifier-types' });
 
   const query = useQuery({
