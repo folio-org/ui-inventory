@@ -207,6 +207,26 @@ describe('InstancesList', () => {
     });
 
     describe('when switching to Holdings tab', () => {
+      const mockSetItem = jest.fn();
+
+      beforeEach(() => {
+        global.Storage.prototype.setItem = mockSetItem;
+      });
+
+      afterEach(() => {
+        global.Storage.prototype.setItem.mockReset();
+      });
+
+      it ('should clear USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY', async () => {
+        renderInstancesList({ segment: 'instances' });
+
+        const search = '?segment=instances&sort=title';
+        act(() => { history.push({ search }); });
+        await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
+
+        expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+      });
+
       describe('when staffSuppress filter is not present', () => {
         it('should replace history with selected facet value', async () => {
           jest.spyOn(history, 'replace');
