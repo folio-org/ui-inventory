@@ -14,8 +14,8 @@ import {
   useHolding,
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
-import useCallout from '../../hooks/useCallout';
 import { useItemMutation } from '../hooks';
+import { useCallout, useConfigurationQuery } from '../../hooks';
 import { switchAffiliation } from '../../utils';
 
 const CreateItem = ({
@@ -38,6 +38,7 @@ const CreateItem = ({
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId, { tenantId: tenantTo });
   const callout = useCallout();
   const stripes = useStripes();
+  const { configs } = useConfigurationQuery('number_generator');
 
   const initialValues = useMemo(() => ({
     status: { name: 'Available' },
@@ -79,6 +80,7 @@ const CreateItem = ({
 
   return (
     <ItemForm
+      configs={configs}
       form={`itemform_${holding.id}`}
       id={holding.id}
       key={holding.id}

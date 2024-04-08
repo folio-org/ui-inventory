@@ -8,6 +8,7 @@ export { default as useHoldingsFromStorage } from './useHoldingsFromStorage';
 export { default as useInstanceMutation } from './useInstanceMutation';
 export { default as useHoldingsQueryByHrids } from './useHoldingsQueryByHrids';
 export { default as useInventoryBrowse } from './useInventoryBrowse';
+export { default as useConfigurationQuery } from './useConfigurationQuery';
 export { default as useLocationsQuery } from './useLocationsQuery';
 export { default as useLastSearchTerms } from './useLastSearchTerms';
 export { default as useSearchForShadowInstanceTenants } from './useSearchForShadowInstanceTenants';

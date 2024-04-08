@@ -51,6 +51,8 @@ import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
 import styles from './ItemForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
+import getNumberGeneratorModals from './getNumberGeneratorModals';
+
 import {
   BoundWithTitlesFields,
   CirculationNotesFields,
@@ -197,6 +199,8 @@ class ItemForm extends React.Component {
 
   render() {
     const {
+      configs,
+      form: { change },
       onCancel,
       initialValues,
       instance,
@@ -311,6 +315,15 @@ class ItemForm extends React.Component {
         handler: handleKeyCommand(() => history.push('/inventory')),
       },
     ];
+
+    const {
+      disableAccessionNumberField,
+      disableBarcodeField,
+      disableCallNumberField,
+      renderAccessionNumberGenerator,
+      renderBarcodeGenerator,
+      renderCallNumberGenerator
+    } = getNumberGeneratorModals(configs, change);
 
     return (
       <form
@@ -437,6 +450,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
+                          disabled={disableBarcodeField}
                           label={<FormattedMessage id="ui-inventory.barcode" />}
                           name="barcode"
                           id="additem_barcode"
@@ -445,15 +459,18 @@ class ItemForm extends React.Component {
                           autoFocus
                           fullWidth
                         />
+                        {renderBarcodeGenerator()}
                       </Col>
                       <Col sm={2}>
                         <Field
+                          disabled={disableAccessionNumberField}
                           label={<FormattedMessage id="ui-inventory.accessionNumber" />}
                           name="accessionNumber"
                           id="additem_accessionnumber"
                           component={TextField}
                           fullWidth
                         />
+                        {renderAccessionNumberGenerator()}
                       </Col>
                       <Col sm={2}>
                         <Field
@@ -547,6 +564,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
+                          disabled={disableCallNumberField}
                           label={<FormattedMessage id="ui-inventory.callNumber" />}
                           name="itemLevelCallNumber"
                           id="additem_callnumber"
@@ -554,6 +572,7 @@ class ItemForm extends React.Component {
                           rows={1}
                           fullWidth
                         />
+                        {renderCallNumberGenerator()}
                       </Col>
                       <Col sm={2}>
                         <Field
@@ -852,6 +871,7 @@ class ItemForm extends React.Component {
 }
 
 ItemForm.propTypes = {
+  configs: PropTypes.object,
   onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
   newItem: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   handleSubmit: PropTypes.func.isRequired,

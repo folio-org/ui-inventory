@@ -14,7 +14,12 @@ import EditItem from './EditItem';
 import ItemForm from '../../edit/items/ItemForm';
 
 jest.mock('../../edit/items/ItemForm', () => jest.fn().mockReturnValue('ItemForm'));
-jest.mock('../../hooks/useCallout', () => jest.fn().mockReturnValue({ sendCallout: jest.fn() }));
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useCallout: () => jest.fn().mockReturnValue({ sendCallout: jest.fn() }),
+  useConfigurationQuery: () => ({ configs: {} }),
+}));
+
 jest.mock('../../common/hooks', () => ({
   ...jest.requireActual('../../common/hooks'),
   useInstanceQuery: jest.fn().mockReturnValue({ instance: {}, isLoading: false }),
