@@ -217,7 +217,7 @@ describe('InstancesList', () => {
         global.Storage.prototype.setItem.mockReset();
       });
 
-      it ('should clear USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY', async () => {
+      it('should clear USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY', async () => {
         renderInstancesList({ segment: 'instances' });
 
         const search = '?segment=instances&sort=title';
