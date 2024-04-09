@@ -70,7 +70,11 @@ describe('ViewInstanceWrapper', () => {
     it('should fetch the central tenant permissions', () => {
       const userPermissions = [{
         permissionName: 'ui-quick-marc.quick-marc-editor.all',
+        subPermissions: ['ui-inventory.instance.create'],
+      }, {
+        permissionName: 'ui-inventory.instance.create',
       }];
+      const flattenUserPermissions = new Set(['ui-quick-marc.quick-marc-editor.all', 'ui-inventory.instance.create']);
 
       useInstance.mockReturnValue({
         instance: {
@@ -95,7 +99,7 @@ describe('ViewInstanceWrapper', () => {
         enabled: true,
       });
 
-      expect(ViewInstance.mock.calls[0][0].centralTenantPermissions).toEqual(userPermissions);
+      expect(ViewInstance.mock.calls[0][0].centralTenantPermissions).toEqual(flattenUserPermissions);
       expect(ViewInstance.mock.calls[0][0].isCentralTenantPermissionsLoading).toBeFalsy();
     });
   });

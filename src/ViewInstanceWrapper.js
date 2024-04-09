@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { checkIfUserInMemberTenant } from '@folio/stripes/core';
@@ -42,6 +42,17 @@ const ViewInstanceWrapper = (props) => {
     enabled: Boolean(isShared && checkIfUserInMemberTenant(stripes)),
   });
 
+  const flattenCentralTenantPermissions = useMemo(() => {
+    // Set is used to collect unique permission names because subPermissions can duplicate
+    return new Set(centralTenantPermissions?.reduce((acc, currentPermission) => {
+      return [
+        ...acc,
+        currentPermission.permissionName,
+        ...currentPermission.subPermissions,
+      ];
+    }, []));
+  }, [centralTenantPermissions]);
+
   const mutateInstance = (entity, { onError }) => {
     mutateEntity(entity, { onSuccess: refetch, onError });
   };
@@ -59,7 +70,7 @@ const ViewInstanceWrapper = (props) => {
       isLoading={isLoading}
       isError={isError}
       error={error}
-      centralTenantPermissions={centralTenantPermissions}
+      centralTenantPermissions={flattenCentralTenantPermissions}
       isCentralTenantPermissionsLoading={isCentralTenantPermissionsLoading}
     />
   );
