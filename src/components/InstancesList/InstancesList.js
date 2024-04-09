@@ -474,6 +474,7 @@ class InstancesList extends React.Component {
   handleSearchSegmentChange = (segment) => {
     this.refocusOnInputSearch(segment);
     this.setState({ selectedRows: {} });
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
 
   onSearchModeSwitch = () => {
