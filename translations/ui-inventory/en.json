@@ -507,6 +507,7 @@
   "resourceTypes": "Resource types",
   "subjectHeadings": "Subject headings",
   "classification": "Classification",
+  "classificationBrowse": "Classification browse",
   "classificationIdentifierType": "Classification identifier type",
   "classificationIdentifierTypes": "Classification identifier types",
   "seriesStatement": "Series statement",
@@ -704,6 +705,12 @@
   "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
   "quickMarcNotAvailable": "No plugin available!",
 
+  "settings.instanceClassification.all": "Classification (all)",
+  "settings.instanceClassification.dewey": "Dewey Decimal classification",
+  "settings.instanceClassification.lc": "Library of Congress classification",
+  "settings.instanceClassification.termUpdated": "The Classification browse type <b>{term}</b> was successfully <b>updated</b>",
+  "settings.instanceClassification.identifierTypesPopover": "Please note that if no classification identifier types are selected for a browse option, this option will display all classification identifier types.",
+
   "permission.all-permissions.TEMPORARY": "Inventory: All permissions",
   "permission.settings.materialtypes": "Settings (Inventory): Create, edit, delete material types",
   "permission.settings.loantypes": "Settings (Inventory): Create, edit, delete loan types",
@@ -711,6 +718,7 @@
   "permission.settings.instance-formats": "Settings (Inventory): Create, edit, delete formats",
   "permission.settings.electronic-access-relationships": "Settings (Inventory): Create, edit, delete URL relationships",
   "permission.settings.holdings-types": "Settings (Inventory): Create, edit, delete holdings types",
+  "permission.settings.classification-browse": "Settings (Inventory): Configure classification browse",
   "permission.settings.classification-types": "Settings (Inventory): Create, edit, delete classification identifier types",
   "permission.settings.identifier-types": "Settings (Inventory): Create, edit, delete resource identifier types",
   "permission.settings.instance-statuses": "Settings (Inventory): Create, edit, delete instance status types",
@@ -845,6 +853,7 @@
   "receivingHistory.receivedDate": "Receipt date",
   "receivingHistory.comment": "Comment",
   "receivingHistory.source": "Source",
+  "receivingHistory.displayToPublic": "Public display",
   "receivingHistory.source.receiving": "Receiving",
   "receivingHistory.source.user": "User",
 

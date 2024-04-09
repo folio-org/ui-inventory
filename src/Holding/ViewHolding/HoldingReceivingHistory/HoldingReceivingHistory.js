@@ -5,6 +5,7 @@ import { orderBy } from 'lodash';
 
 import {
   Accordion,
+  Checkbox,
   FormattedDate,
   MultiColumnList,
   NoValue,
@@ -23,9 +24,10 @@ const columnMapping = {
   'chronology': <FormattedMessage id="ui-inventory.chronology" />,
   'receivedDate': <FormattedMessage id="ui-inventory.receivingHistory.receivedDate" />,
   'comment': <FormattedMessage id="ui-inventory.receivingHistory.comment" />,
+  'displayToPublic': <FormattedMessage id="ui-inventory.receivingHistory.displayToPublic" />,
   'source': <FormattedMessage id="ui-inventory.receivingHistory.source" />,
 };
-const visibleColumns = ['displaySummary', 'copyNumber', 'enumeration', 'chronology', 'receivedDate', 'comment', 'source'];
+const visibleColumns = ['displaySummary', 'copyNumber', 'enumeration', 'chronology', 'receivedDate', 'comment', 'displayToPublic', 'source'];
 const columnFormatter = {
   'displaySummary': i => i.displaySummary || <NoValue />,
   'copyNumber': i => i.copyNumber || <NoValue />,
@@ -33,6 +35,7 @@ const columnFormatter = {
   'chronology': i => i.chronology || <NoValue />,
   'receivedDate': i => (i.receivedDate ? <FormattedDate value={i.receivedDate} /> : <NoValue />),
   'comment': i => i.comment || <NoValue />,
+  'displayToPublic': i => <Checkbox checked={i.displayToPublic} disabled />,
   'source': i => <FormattedMessage id={`ui-inventory.receivingHistory.source.${i.source || 'user'}`} />,
 };
 const sorters = {
