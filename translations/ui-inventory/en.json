@@ -853,6 +853,7 @@
   "receivingHistory.receivedDate": "Receipt date",
   "receivingHistory.comment": "Comment",
   "receivingHistory.source": "Source",
+  "receivingHistory.displayToPublic": "Public display",
   "receivingHistory.source.receiving": "Receiving",
   "receivingHistory.source.user": "User",
 
