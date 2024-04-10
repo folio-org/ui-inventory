@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [10.0.13] (IN PROGRESS)
+
+* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
+
 ## [10.0.12](https://github.com/folio-org/ui-inventory/tree/v10.0.12) (2024-04-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v10.0.12)
 
