@@ -15,6 +15,9 @@ export const PATH_MAP = {
   [browseModeOptions.LOCAL]: 'browse/call-numbers/instances',
   [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: 'browse/call-numbers/instances',
   [browseModeOptions.OTHER]: 'browse/call-numbers/instances',
+  [browseModeOptions.CLASSIFICATION_ALL]: 'browse/classification-numbers/all/instances',
+  [browseModeOptions.DEWEY_CLASSIFICATION]: 'browse/classification-numbers/dewey/instances',
+  [browseModeOptions.LC_CLASSIFICATION]: 'browse/classification-numbers/lc/instances',
   [browseModeOptions.SUPERINTENDENT]: 'browse/call-numbers/instances',
   [browseModeOptions.CONTRIBUTORS]: 'browse/contributors/instances',
 };
@@ -27,6 +30,9 @@ export const INITIAL_SEARCH_PARAMS_MAP = {
   [browseModeOptions.LOCAL]: 'typedCallNumber',
   [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: 'typedCallNumber',
   [browseModeOptions.OTHER]: 'typedCallNumber',
+  [browseModeOptions.CLASSIFICATION_ALL]: 'number',
+  [browseModeOptions.DEWEY_CLASSIFICATION]: 'number',
+  [browseModeOptions.LC_CLASSIFICATION]: 'number',
   [browseModeOptions.SUPERINTENDENT]: 'typedCallNumber',
   [browseModeOptions.CONTRIBUTORS]: 'name',
 };
@@ -40,5 +46,8 @@ export const PAGINATION_SEARCH_PARAMS_MAP = {
   [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: 'itemEffectiveShelvingOrder',
   [browseModeOptions.OTHER]: 'itemEffectiveShelvingOrder',
   [browseModeOptions.SUPERINTENDENT]: 'itemEffectiveShelvingOrder',
+  [browseModeOptions.CLASSIFICATION_ALL]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.CLASSIFICATION_ALL],
+  [browseModeOptions.DEWEY_CLASSIFICATION]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.DEWEY_CLASSIFICATION],
+  [browseModeOptions.LC_CLASSIFICATION]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.LC_CLASSIFICATION],
   [browseModeOptions.CONTRIBUTORS]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.CONTRIBUTORS],
 };
