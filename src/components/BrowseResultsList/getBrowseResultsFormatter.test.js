@@ -277,4 +277,58 @@ describe('getBrowseResultsFormatter', () => {
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
     });
   });
+
+  describe('Classification', () => {
+    const classificationNumber = 'BD638 .T46 2018';
+
+    const formatter = getBrowseResultsFormatter({
+      browseOption: browseModeOptions.CLASSIFICATION_ALL,
+      filters: {
+        qindex: 'classificationAll',
+        query: classificationNumber,
+      },
+    });
+    const missedMatchRecord = {
+      classificationNumber: 'foo',
+      isAnchor: true,
+      totalRecords: 0,
+    };
+    const contentData = [
+      {
+        classificationNumber,
+        classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+        isAnchor: true,
+        totalRecords: 1,
+      },
+      {
+        classificationNumber: '981. 06',
+        classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+        totalRecords: 2,
+      },
+    ];
+    const [anchorRecord] = contentData;
+
+    const renderClassificationList = (params = {}) => renderComponent({
+      visibleColumns: ['classificationNumber', 'numberOfTitles'],
+      contentData,
+      formatter,
+      ...params,
+    });
+
+    describe('when search query coincides with one of the classification numbers in the results', () => {
+      it('should make this number bold', () => {
+        const { getByText } = renderClassificationList();
+
+        expect(getByText(anchorRecord.classificationNumber).tagName.toLowerCase()).toBe('strong');
+        expect(getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
+      });
+    });
+
+    it('should render \'Missed match item\' row', () => {
+      const { getByText } = renderClassificationList({ contentData: [missedMatchRecord] });
+
+      expect(getByText(missedMatchRecord.classificationNumber)).toBeInTheDocument();
+      expect(getByText(missedMatchText)).toBeInTheDocument();
+    });
+  });
 });

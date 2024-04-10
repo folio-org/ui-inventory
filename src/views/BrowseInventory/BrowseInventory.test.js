@@ -267,15 +267,18 @@ describe('BrowseInventory', () => {
   });
 
   it('should display search indexes', () => {
-    const { getByText } = renderBrowseInventory();
+    const { getByText, getAllByText } = renderBrowseInventory();
 
     expect(getByText('Call numbers (all)')).toBeDefined();
-    expect(getByText('Dewey Decimal classification')).toBeDefined();
-    expect(getByText('Library of Congress classification')).toBeDefined();
+    expect(getAllByText('Dewey Decimal classification')[0]).toBeDefined();
+    expect(getAllByText('Library of Congress classification')[0]).toBeDefined();
     expect(getByText('Local')).toBeDefined();
     expect(getByText('National Library of Medicine classification')).toBeDefined();
     expect(getByText('Other scheme')).toBeDefined();
     expect(getByText('Superintendent of Documents classification')).toBeDefined();
+    expect(getByText('Classification (all)')).toBeDefined();
+    expect(getAllByText('Dewey Decimal classification')[1]).toBeDefined();
+    expect(getAllByText('Library of Congress classification')[1]).toBeDefined();
     expect(getByText('Contributors')).toBeDefined();
     expect(getByText('Subjects')).toBeDefined();
   });
