@@ -150,6 +150,7 @@ const BrowseInventory = () => {
     const isSearchQueryValid = validateDataQuery(searchQuery);
 
     if (isSearchQueryValid) {
+      deleteItemToView();
       applySearch();
       paneTitleRef.current.focus();
     }

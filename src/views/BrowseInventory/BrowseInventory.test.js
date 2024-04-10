@@ -197,6 +197,23 @@ describe('BrowseInventory', () => {
         expect(mockFocusPaneTitle).toHaveBeenCalled();
       });
     });
+
+    it('should remove the background from the previously selected record', async () => {
+      const mockDeleteItemToView = jest.fn();
+
+      jest.spyOn(stripesAcqComponents, 'useItemToView').mockReturnValueOnce({
+        deleteItemToView: mockDeleteItemToView,
+      });
+
+      const { getByRole } = renderBrowseInventory();
+
+      userEvent.type(getByRole('textbox'), 'newQuery');
+      userEvent.click(getByRole('button', { name: 'Search' }));
+
+      await waitFor(() => {
+        expect(mockDeleteItemToView).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('when page is mounted without predefined search', () => {
