@@ -1,6 +1,10 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
+import {
+  useUserTenantPermissions
+} from '@folio/stripes/core';
+
 import '../test/jest/__mock__';
 import buildStripes from '../test/jest/__mock__/stripesCore.mock';
 
@@ -9,7 +13,6 @@ import ViewInstanceWrapper from './ViewInstanceWrapper';
 import ViewInstance from './ViewInstance';
 import {
   useInstanceMutation,
-  useUserTenantPermissions,
 } from './hooks';
 import { useInstance } from './common';
 import {
@@ -17,6 +20,13 @@ import {
   SOURCE_VALUES,
 } from './constants';
 
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useUserTenantPermissions: jest.fn().mockReturnValue({
+    userPermissions: [],
+    isFetching: false,
+  }),
+}));
 jest.mock('./ViewInstance', () => jest.fn(() => <div>ViewInstance</div>));
 
 jest.mock('./hooks', () => ({
@@ -90,7 +100,6 @@ describe('ViewInstanceWrapper', () => {
 
       expect(useUserTenantPermissions).toHaveBeenCalledWith({
         tenantId: 'consortia',
-        userId: 'b1add99d-530b-5912-94f3-4091b4d87e2c',
       }, {
         enabled: true,
       });

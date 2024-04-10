@@ -7,6 +7,7 @@
 * Keyboard shortcuts modal: Add quickMARC shortcuts to modal. Refs UIIN-2795.
 * Create new settings for classification type sorting. Refs UIIN-2775.
 * Add "Display to public" column to receiving history on Holdings. Refs UIIN-2826.
+* Import `useUserTenantPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
 
 ## [11.0.1] (IN PROGRESS)
 

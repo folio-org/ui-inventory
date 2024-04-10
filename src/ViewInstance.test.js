@@ -80,8 +80,8 @@ jest.mock('react-beautiful-dnd', () => ({
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
+const spyOnGetUserTenantsPermissions = jest.spyOn(require('@folio/stripes/core'), 'getUserTenantsPermissions');
 
-const spyOnGetUserTenantsPermissions = jest.spyOn(utils, 'getUserTenantsPermissions');
 const spyOnSetRecordForDeletion = jest.spyOn(utils, 'setRecordForDeletion');
 
 const location = {
@@ -106,8 +106,6 @@ jest
   .spyOn(StripesConnectedInstance.prototype, 'instance')
   .mockImplementation(() => instance)
   .mockImplementationOnce(() => {});
-
-Icon.mockClear().mockImplementation(({ children, icon }) => (children || <span>{icon}</span>));
 
 ConfirmationModal.mockImplementation(({
   open,

@@ -38,6 +38,7 @@ jest.mock('@folio/stripes/components', () => ({
       </>;
     return component;
   },
+  Icon: ({ children, icon }) => (children || <span>{icon}</span>),
   Loading: () => <div>Loading</div>,
   LoadingPane: () => <div>LoadingPane</div>,
   LoadingView: jest.fn(() => <div>LoadingView</div>),

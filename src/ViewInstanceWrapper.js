@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { checkIfUserInMemberTenant } from '@folio/stripes/core';
+import {
+  checkIfUserInMemberTenant,
+  useUserTenantPermissions,
+} from '@folio/stripes/core';
 import { withTags } from '@folio/stripes/smart-components';
 
 import ViewInstance from './ViewInstance';
 import {
   useInstanceMutation,
-  useUserTenantPermissions,
 } from './hooks';
 import { useInstance } from './common';
 
@@ -17,7 +19,6 @@ const ViewInstanceWrapper = (props) => {
     stripes,
   } = props;
 
-  const userId = stripes?.user?.user?.id;
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
   const consortiumId = stripes.user.user?.consortium?.id;
   const {
@@ -36,7 +37,6 @@ const ViewInstanceWrapper = (props) => {
     userPermissions: centralTenantPermissions,
     isFetching: isCentralTenantPermissionsLoading,
   } = useUserTenantPermissions({
-    userId,
     tenantId: centralTenantId,
   }, {
     enabled: Boolean(isShared && checkIfUserInMemberTenant(stripes)),
