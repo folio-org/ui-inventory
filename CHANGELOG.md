@@ -6,6 +6,7 @@
 * Replace `all` with the `=` operator to get correct results when using the `All` search option. Refs UIIN-2816.
 * Keyboard shortcuts modal: Add quickMARC shortcuts to modal. Refs UIIN-2795.
 * Create new settings for classification type sorting. Refs UIIN-2775.
+* Add "Display to public" column to receiving history on Holdings. Refs UIIN-2826.
 * Add new browse options for Instance classification numbers. Refs UIIN-2624.
 
 ## [11.0.1] (IN PROGRESS)
