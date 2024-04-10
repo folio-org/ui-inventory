@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "10.0.11",
+  "version": "10.0.12",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -91,6 +91,7 @@
     },
     "optionalOkapiInterfaces": {
       "consortia": "1.0",
+      "consortium-search": "1.0",
       "copycat-imports": "1.1",
       "copycat-profiles": "1.2",
       "remote-storage-mappings": "1.0 2.0",
