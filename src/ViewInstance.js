@@ -652,7 +652,7 @@ class ViewInstance extends React.Component {
   };
 
   hasCentralTenantPerm = (perm) => {
-    return this.props.centralTenantPermissions.some(({ permissionName }) => permissionName === perm);
+    return this.props.centralTenantPermissions.has(perm);
   }
 
   createActionMenuGetter = (instance, data) => ({ onToggle }) => {
@@ -1161,7 +1161,7 @@ class ViewInstance extends React.Component {
 ViewInstance.propTypes = {
   isShared: PropTypes.bool,
   canUseSingleRecordImport: PropTypes.bool,
-  centralTenantPermissions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  centralTenantPermissions: PropTypes.instanceOf(Set).isRequired,
   selectedInstance:  PropTypes.object,
   centralTenantId: PropTypes.string,
   refetchInstance: PropTypes.func,
