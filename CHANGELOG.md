@@ -15,7 +15,7 @@
 * Apply staff suppress filter for first search in Holdings/Items. Fixes UIIN-2814.
 * Pass tenantId when open holding details during moving holdings/items. Fixes UIIN-2815.
 * Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
-* ECS - Member consortial accordion is not displaying when user have according affiliation but don't have permissions for view holdings. Fixes UIIN-2780.
+* ECS - Member consortial accordion is not displaying when a user has affiliations but does not have permission to view holdings. Fixes UIIN-2843.
 * Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
 * ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
 
@@ -56,6 +56,11 @@
 * Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
 * Increase holdings limit to 5000. Fixes UIIN-2785.
 * User with "Inventory: All permissions" permission only should not be seeing the "Staff suppress" facet. Fixes UIIN-2807.
+
+## [10.0.12](https://github.com/folio-org/ui-inventory/tree/v10.0.12) (2024-04-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v10.0.12)
+
+* ECS - Member consortial accordion is not displaying when a user has affiliations but does not have permission to view holdings. Fixes UIIN-2780.
 
 ## [10.0.11](https://github.com/folio-org/ui-inventory/tree/v10.0.11) (2024-03-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.10...v10.0.11)
