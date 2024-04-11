@@ -63,6 +63,12 @@ const getExtraFilters = (row, qindex, allFilters) => {
 export const getSearchParams = (row, qindex, allFilters) => {
   const filters = getExtraFilters(row, qindex, allFilters);
 
+  const classificationOption = {
+    qindex: queryIndexes.QUERY_SEARCH,
+    query: `classifications.classificationNumber=="${row.classificationNumber}"`,
+    ...filters,
+  };
+
   const optionsMap = {
     [browseModeOptions.CALL_NUMBERS]: {
       qindex: queryIndexes.CALL_NUMBER,
@@ -99,6 +105,9 @@ export const getSearchParams = (row, qindex, allFilters) => {
       query: row.shelfKey,
       ...filters,
     },
+    [browseModeOptions.CLASSIFICATION_ALL]: classificationOption,
+    [browseModeOptions.DEWEY_CLASSIFICATION]: classificationOption,
+    [browseModeOptions.LC_CLASSIFICATION]: classificationOption,
     [browseModeOptions.CONTRIBUTORS]: {
       qindex: queryIndexes.CONTRIBUTOR,
       query: row.name,

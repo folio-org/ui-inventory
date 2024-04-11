@@ -252,6 +252,15 @@ export const browseInstanceIndexes = [
       { label: 'ui-inventory.browse.superintendent', value: browseModeOptions.SUPERINTENDENT },
     ],
   },
+  {
+    label: 'ui-inventory.browse.classification',
+    queryTemplate: '%{query.query}',
+    subIndexes: [
+      { label: 'ui-inventory.browse.classification.all', value: browseModeOptions.CLASSIFICATION_ALL },
+      { label: 'ui-inventory.browse.classification.dewey', value: browseModeOptions.DEWEY_CLASSIFICATION },
+      { label: 'ui-inventory.browse.classification.lc', value: browseModeOptions.LC_CLASSIFICATION },
+    ],
+  },
   { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];

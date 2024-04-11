@@ -151,7 +151,7 @@ const mockStripes = {
   },
 };
 const defaultProp = {
-  centralTenantPermissions: [],
+  centralTenantPermissions: new Set([]),
   selectedInstance: instance,
   centralTenantId: 'centralTenantId',
   consortiumId: 'consortiumId',
@@ -861,9 +861,7 @@ describe('ViewInstance', () => {
           StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
 
           renderViewInstance({
-            centralTenantPermissions: [{
-              permissionName: 'ui-quick-marc.quick-marc-editor.all',
-            }],
+            centralTenantPermissions: new Set(['ui-quick-marc.quick-marc-editor.all']),
             isShared: true,
             tenantId: 'tenantId',
           });
@@ -884,7 +882,7 @@ describe('ViewInstance', () => {
           StripesConnectedInstance.prototype.instance.mockImplementation(() => sharedInstance);
 
           renderViewInstance({
-            centralTenantPermissions: [],
+            centralTenantPermissions: new Set([]),
             isShared: true,
             tenantId: 'tenantId',
           });
@@ -912,9 +910,7 @@ describe('ViewInstance', () => {
           };
 
           renderViewInstance({
-            centralTenantPermissions: [{
-              permissionName: 'ui-quick-marc.quick-marc-editor.all',
-            }],
+            centralTenantPermissions: new Set(['ui-quick-marc.quick-marc-editor.all']),
             stripes,
             isShared: true,
             tenantId: 'tenantId',
@@ -1080,9 +1076,7 @@ describe('ViewInstance', () => {
       describe('when user is in member tenant and instance is shared and has central tenant permission to set record for deletion', () => {
         it('should render "Set record for deletion" action item', () => {
           renderViewInstance({
-            centralTenantPermissions: [{
-              permissionName: 'ui-inventory.instance.set-deletion-and-staff-suppress',
-            }],
+            centralTenantPermissions: new Set(['ui-inventory.instance.set-deletion-and-staff-suppress']),
             isShared: true,
             tenantId: 'tenantId',
           });

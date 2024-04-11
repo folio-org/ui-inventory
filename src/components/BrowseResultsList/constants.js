@@ -9,6 +9,9 @@ export const VISIBLE_COLUMNS_MAP = {
   [browseModeOptions.LOCAL]: ['callNumber', 'title', 'numberOfTitles'],
   [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: ['callNumber', 'title', 'numberOfTitles'],
   [browseModeOptions.OTHER]: ['callNumber', 'title', 'numberOfTitles'],
+  [browseModeOptions.CLASSIFICATION_ALL]: ['classificationNumber', 'numberOfTitles'],
+  [browseModeOptions.DEWEY_CLASSIFICATION]: ['classificationNumber', 'numberOfTitles'],
+  [browseModeOptions.LC_CLASSIFICATION]: ['classificationNumber', 'numberOfTitles'],
   [browseModeOptions.SUPERINTENDENT]: ['callNumber', 'title', 'numberOfTitles'],
   [browseModeOptions.CONTRIBUTORS]: ['contributor', 'contributorType', 'relatorTerm', 'numberOfTitles'],
 };
@@ -24,6 +27,7 @@ export const COLUMNS_MAPPING = {
   contributor: <FormattedMessage id="ui-inventory.instances.columns.contributor" />,
   contributorType: <FormattedMessage id="ui-inventory.instances.columns.contributorType" />,
   relatorTerm: <FormattedMessage id="ui-inventory.instances.columns.relatorTerm" />,
+  classificationNumber: <FormattedMessage id="ui-inventory.instances.columns.classificationNumber" />,
 };
 
 export const COLUMNS_WIDTHS = {

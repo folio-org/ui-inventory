@@ -115,8 +115,15 @@ export const browseCallNumberOptions = {
   SUPERINTENDENT: 'sudoc',
 };
 
+export const browseClassificationOptions = {
+  CLASSIFICATION_ALL: 'classificationAll',
+  DEWEY_CLASSIFICATION: 'deweyClassification',
+  LC_CLASSIFICATION: 'lcClassification',
+};
+
 export const browseModeOptions = {
   ...browseCallNumberOptions,
+  ...browseClassificationOptions,
   CONTRIBUTORS: 'contributors',
   SUBJECTS: 'browseSubjects',
 };
@@ -201,6 +208,9 @@ export const queryIndexes = {
   NATIONAL_LIBRARY_OF_MEDICINE: 'nlm',
   OTHER: 'other',
   SUPERINTENDENT: 'sudoc',
+  CLASSIFICATION_ALL: browseClassificationOptions.CLASSIFICATION_ALL,
+  DEWEY_CLASSIFICATION: browseClassificationOptions.DEWEY_CLASSIFICATION,
+  LC_CLASSIFICATION: browseClassificationOptions.LC_CLASSIFICATION,
   CONTRIBUTOR: 'contributor',
   ADVANCED_SEARCH: 'advancedSearch',
 };

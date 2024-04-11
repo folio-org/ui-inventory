@@ -17,6 +17,7 @@ import {
   INVENTORY_ROUTE,
   browseCallNumberOptions,
   FACETS,
+  browseClassificationOptions,
 } from '../../constants';
 import { DataContext } from '../../contexts';
 import BrowseResultsList from './BrowseResultsList';
@@ -158,6 +159,46 @@ describe('BrowseResultsList', () => {
         fireEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber));
 
         expect(history.location.search).toContain('?filters=shared.true%2Cshared.false%2CtenantId.college');
+      });
+    });
+  });
+
+  describe.each([
+    { searchOption: browseClassificationOptions.CLASSIFICATION_ALL },
+    { searchOption: browseClassificationOptions.DEWEY_CLASSIFICATION },
+    { searchOption: browseClassificationOptions.LC_CLASSIFICATION },
+  ])('when the search option is $searchOption', ({ searchOption }) => {
+    describe('and a user hits on a classification number in the list', () => {
+      it('should be navigated to the Search lookup', async () => {
+        const classificationNumber = 'BD638 .T46 2018';
+
+        history = createMemoryHistory({
+          initialEntries: [{
+            pathname: BROWSE_INVENTORY_ROUTE,
+            search: `qindex=${searchOption}&query=${classificationNumber}`,
+          }],
+        });
+
+        renderBrowseResultsList({
+          filters: {
+            qindex: searchOption,
+            query: classificationNumber,
+          },
+          browseData: [
+            {
+              classificationNumber,
+              classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+              isAnchor: true,
+              totalRecords: 1,
+            },
+          ]
+        });
+
+        fireEvent.click(screen.getByText(classificationNumber));
+
+        expect(history.location.search).toBe(
+          '?qindex=querySearch&query=classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22&selectedBrowseResult=true'
+        );
       });
     });
   });
