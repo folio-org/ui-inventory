@@ -1,8 +1,7 @@
 # Change history for ui-inventory
 
-## [11.1.0] (IN PROGRESS)
-
-## [11.0.1] (IN PROGRESS)
+## [11.0.1](https://github.com/folio-org/ui-inventory/tree/v11.0.1) (2024-04-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.0...v11.0.1)
 
 * Keep query and results list when switching Browse options. Refs UIIN-2802.
 * Set central tenant id in the request when Member tenant deletes a shared record. Fixes UIIN-2784.
