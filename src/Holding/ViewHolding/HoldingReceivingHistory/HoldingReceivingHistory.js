@@ -35,7 +35,7 @@ const columnFormatter = {
   'chronology': i => i.chronology || <NoValue />,
   'receivedDate': i => (i.receivedDate ? <FormattedDate value={i.receivedDate} /> : <NoValue />),
   'comment': i => i.comment || <NoValue />,
-  'displayToPublic': i => <Checkbox checked={i.displayToPublic} disabled />,
+  'displayToPublic': i => <Checkbox checked={i.displayToPublic || i.publicDisplay} disabled />,
   'source': i => <FormattedMessage id={`ui-inventory.receivingHistory.source.${i.source || 'user'}`} />,
 };
 const sorters = {
