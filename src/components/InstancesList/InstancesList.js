@@ -60,6 +60,8 @@ import {
   buildSingleItemQuery,
   isUserInConsortiumMode,
   switchAffiliation,
+  addFilter,
+  replaceFilter,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -228,6 +230,10 @@ class InstancesList extends React.Component {
     } else if (prevId) {
       setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, null);
     }
+
+    if (prevProps.segment !== this.props.segment) {
+      this.applyDefaultStaffSuppressFilter();
+    }
   }
 
   componentWillUnmount() {
@@ -250,11 +256,21 @@ class InstancesList extends React.Component {
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
 
-  applyDefaultStaffSuppressFilter = () => {
+  redirectToSearchParams = (searchParams) => {
     const {
       history,
       location,
     } = this.props;
+
+    history.replace({
+      pathname: location.pathname,
+      search: searchParams.toString(),
+      state: location.state,
+    });
+  }
+
+  applyDefaultStaffSuppressFilter = () => {
+    const { location } = this.props;
 
     if (JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY))) {
       return;
@@ -263,16 +279,26 @@ class InstancesList extends React.Component {
     const searchParams = new URLSearchParams(location.search);
     const filters = searchParams.get('filters');
 
+    const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
+    const staffSuppressTrue = `${FACETS.STAFF_SUPPRESS}.true`;
+
     if (!filters?.includes(FACETS.STAFF_SUPPRESS)) {
-      const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
-      const newFiltersValue = filters ? `${filters},${staffSuppressFalse}` : staffSuppressFalse;
+      const newFiltersValue = addFilter(filters, staffSuppressFalse);
 
       searchParams.set('filters', newFiltersValue);
-      history.replace({
-        pathname: location.pathname,
-        search: searchParams.toString(),
-        state: location.state,
-      });
+      this.redirectToSearchParams(searchParams);
+
+      return;
+    }
+
+    const isStaffSuppressFilterAvailable = this.props.stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
+    const isStaffSuppressTrueSelected = filters.includes(`${FACETS.STAFF_SUPPRESS}.true`);
+
+    if (!isStaffSuppressFilterAvailable && isStaffSuppressTrueSelected) {
+      const newFiltersValue = replaceFilter(filters, staffSuppressTrue, staffSuppressFalse);
+
+      searchParams.set('filters', newFiltersValue);
+      this.redirectToSearchParams(searchParams);
     }
   }
 
@@ -448,6 +474,7 @@ class InstancesList extends React.Component {
   handleSearchSegmentChange = (segment) => {
     this.refocusOnInputSearch(segment);
     this.setState({ selectedRows: {} });
+    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
 
   onSearchModeSwitch = () => {
@@ -701,17 +728,15 @@ class InstancesList extends React.Component {
   setSegmentSortBy = (sortBy) => {
     const { segment } = this.props;
 
-    const segmentsSortBy = this.state.segmentsSortBy.map((key) => {
-      if (key.name === segment) {
-        key.sort = sortBy;
+    this.setState(prevState => ({
+      segmentsSortBy: prevState.segmentsSortBy.map((key) => {
+        if (key.name === segment) {
+          key.sort = sortBy;
+          return key;
+        }
         return key;
-      }
-      return key;
-    });
-
-    this.setState({
-      segmentsSortBy
-    });
+      }),
+    }));
   }
 
   getActionMenu = ({ onToggle }) => {

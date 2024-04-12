@@ -1,21 +1,16 @@
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
 import {
   checkIfUserInCentralTenant,
   IfPermission,
   useStripes,
 } from '@folio/stripes/core';
-import {
-  Button,
-  Badge,
-  Icon,
-} from '@folio/stripes/components';
 
-import { switchAffiliation } from '../../../utils';
-
-import { MoveToDropdown } from './MoveToDropdown';
+import { MoveToDropdown } from '../MoveToDropdown';
+import ViewHoldingsButton from './ViewHoldingsButton';
+import AddItemButton from './AddItemButton';
+import ItemsCountBadge from './ItemsCountBadge';
 
 const HoldingButtonsGroup = ({
   withMoveDropdown,
@@ -45,31 +40,22 @@ const HoldingButtonsGroup = ({
         )
       }
       {showViewHoldingsButton &&
-        <Button
-          id={`clickable-view-holdings-${holding.id}`}
-          data-test-view-holdings
-          onClick={async () => {
-            await switchAffiliation(stripes, tenantId, onViewHolding);
-          }}
-        >
-          <FormattedMessage id="ui-inventory.viewHoldings" />
-        </Button>
+        <ViewHoldingsButton
+          holding={holding}
+          tenantId={tenantId}
+          onViewHolding={onViewHolding}
+        />
       }
       {!isUserInCentralTenant && showAddItemButton && (
         <IfPermission perm="ui-inventory.item.create">
-          <Button
-            id={`clickable-new-item-${holding.id}`}
-            data-test-add-item
-            onClick={async () => {
-              await switchAffiliation(stripes, tenantId, onAddItem);
-            }}
-            buttonStyle="primary paneHeaderNewButton"
-          >
-            <FormattedMessage id="ui-inventory.addItem" />
-          </Button>
+          <AddItemButton
+            holding={holding}
+            tenantId={tenantId}
+            onAddItem={onAddItem}
+          />
         </IfPermission>
       )}
-      {!isOpen && <Badge>{itemCount ?? <Icon icon="spinner-ellipsis" width="10px" />}</Badge>}
+      {!isOpen && <ItemsCountBadge itemCount={itemCount} />}
     </>
   );
 };
