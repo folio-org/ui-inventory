@@ -80,7 +80,6 @@ jest.mock('react-beautiful-dnd', () => ({
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
-const spyOnGetUserTenantsPermissions = jest.spyOn(require('@folio/stripes/core'), 'getUserTenantsPermissions');
 
 const spyOnSetRecordForDeletion = jest.spyOn(utils, 'setRecordForDeletion');
 
@@ -106,6 +105,8 @@ jest
   .spyOn(StripesConnectedInstance.prototype, 'instance')
   .mockImplementation(() => instance)
   .mockImplementationOnce(() => {});
+
+Icon.mockClear().mockImplementation(({ children, icon }) => (children || <span>{icon}</span>));
 
 ConfirmationModal.mockImplementation(({
   open,
@@ -286,10 +287,6 @@ describe('ViewInstance', () => {
     jest.clearAllMocks();
     StripesConnectedInstance.prototype.instance.mockImplementation(() => instance);
     checkIfUserInCentralTenant.mockReturnValue(false);
-    spyOnGetUserTenantsPermissions.mockResolvedValueOnce([{
-      tenantId: 'testTenantId',
-      permissionNames: ['test permission 1'],
-    }]);
     global.fetch
       .mockResolvedValueOnce({
         ok: true,
