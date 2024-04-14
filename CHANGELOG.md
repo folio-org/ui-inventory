@@ -10,16 +10,20 @@
 * Add new browse options for Instance classification numbers. Refs UIIN-2624.
 * Import `useUserTenantPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
 
-## [11.0.1] (IN PROGRESS)
+## [11.0.2] (IN PROGRESS)
+
+* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
+* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
+* Restricted status displays as Order Closed. Fixes UIIN-2821.
+
+## [11.0.1](https://github.com/folio-org/ui-inventory/tree/v11.0.1) (2024-04-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.0...v11.0.1)
 
 * Keep query and results list when switching Browse options. Refs UIIN-2802.
 * Set central tenant id in the request when Member tenant deletes a shared record. Fixes UIIN-2784.
 * Apply staff suppress filter for first search in Holdings/Items. Fixes UIIN-2814.
 * Pass tenantId when open holding details during moving holdings/items. Fixes UIIN-2815.
-* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
 * ECS - Member consortial accordion is not displaying when a user has affiliations but does not have permission to view holdings. Fixes UIIN-2843.
-* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
-* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
 
 ## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v11.0.0)
