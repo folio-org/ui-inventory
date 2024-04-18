@@ -13,7 +13,7 @@
 ## [11.0.2] (IN PROGRESS)
 
 * Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
-* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
+* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2845.
 * Restricted status displays as Order Closed. Fixes UIIN-2821.
 * Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
 
@@ -63,6 +63,11 @@
 * Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
 * Increase holdings limit to 5000. Fixes UIIN-2785.
 * User with "Inventory: All permissions" permission only should not be seeing the "Staff suppress" facet. Fixes UIIN-2807.
+
+## [10.0.13](https://github.com/folio-org/ui-inventory/tree/v10.0.13) (2024-04-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.12...v10.0.13)
+
+* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
 
 ## [10.0.12](https://github.com/folio-org/ui-inventory/tree/v10.0.12) (2024-04-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v10.0.12)
