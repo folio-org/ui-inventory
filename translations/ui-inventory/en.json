@@ -741,7 +741,7 @@
   "permission.holdings.move": "Inventory: Move holdings",
   "permission.holdings.delete": "Inventory: View, create, edit, delete holdings",
   "permission.instance.view-staff-suppressed-records": "Inventory: Enable staff suppress facet",
-  "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress",
+  "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion",
   "permission.settings.list.view": "Settings (Inventory): View list of settings pages",
   "permission.items.mark-items-withdrawn": "Inventory: Mark items withdrawn",
   "permission.items.mark-intellectual-item": "Inventory: Mark items intellectual item",

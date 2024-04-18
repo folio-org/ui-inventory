@@ -711,7 +711,7 @@
       },
       {
         "permissionName": "ui-inventory.instance.set-deletion-and-staff-suppress",
-        "displayName": "Inventory: Set records for deletion and staff suppress",
+        "displayName": "Inventory: Set records for deletion",
         "subPermissions": [
           "ui-inventory.instance.view",
           "source-storage.records.update"
