@@ -9,6 +9,7 @@
 * Add "Display to public" column to receiving history on Holdings. Refs UIIN-2826.
 * Add new browse options for Instance classification numbers. Refs UIIN-2624.
 * Add new Instance search option `Classification, normalized` for the `Instance` toggle and advanced search modal. Refs UIIN-2801.
+* Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
 
 ## [11.0.2] (IN PROGRESS)
 
