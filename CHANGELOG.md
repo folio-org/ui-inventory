@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [11.0.2] (IN PROGRESS)
+## [11.0.2](https://github.com/folio-org/ui-inventory/tree/v11.0.2) (2024-04-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.1...v11.0.2)
 
 * ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2845.
 * Restricted status displays as Order Closed. Fixes UIIN-2821.
