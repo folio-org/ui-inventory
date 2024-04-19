@@ -518,6 +518,12 @@ export const fieldSearchConfigurations = {
     startsWith: 'identifiers.value="%{query.query}*"',
     containsAny: 'identifiers.value any "*%{query.query}*"',
   },
+  normalizedClassificationNumber: {
+    exactPhrase: 'normalizedClassificationNumber=="%{query.query}"',
+    containsAll: 'normalizedClassificationNumber="*%{query.query}*"',
+    startsWith: 'normalizedClassificationNumber="%{query.query}*"',
+    containsAny: 'normalizedClassificationNumber any "*%{query.query}*"',
+  },
   oclc: {
     exactPhrase: 'oclc=="%{query.query}"',
     containsAll: 'oclc="*%{query.query}*"',
