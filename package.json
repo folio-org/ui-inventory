@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "11.0.1",
+  "version": "11.0.2",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -119,7 +119,9 @@
           "search.config.languages.collection.get",
           "search.config.languages.item.delete",
           "search.index.inventory.reindex.post",
-          "search.facets.collection.get"
+          "search.facets.collection.get",
+          "consortium-search.holdings.collection.get",
+          "consortium-search.items.collection.get"
         ]
       },
       {
@@ -831,6 +833,14 @@
         "displayName": "Inventory: Mark items in process",
         "subPermissions": [
           "inventory.items.item.mark-in-process.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.items.create-in-transit-report",
+        "displayName": "Inventory: Create and download In transit items report",
+        "subPermissions": [
+          "circulation.inventory.items-in-transit-report.get"
         ],
         "visible": true
       },
