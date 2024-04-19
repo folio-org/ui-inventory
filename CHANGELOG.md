@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [10.0.14] (IN PROGRESS)
+
+* Include mod-search permissions to "Inventory: Module is enabled" UI permission. Refs UIIN-2860.
+
 ## [10.0.13](https://github.com/folio-org/ui-inventory/tree/v10.0.13) (2024-04-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.12...v10.0.13)
 
