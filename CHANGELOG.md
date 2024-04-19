@@ -17,6 +17,7 @@
 * ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2845.
 * Restricted status displays as Order Closed. Fixes UIIN-2821.
 * Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
+* Include mod-search permissions to "Inventory: Module is enabled" UI permission. Refs UIIN-2860.
 
 ## [11.0.1](https://github.com/folio-org/ui-inventory/tree/v11.0.1) (2024-04-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.0...v11.0.1)

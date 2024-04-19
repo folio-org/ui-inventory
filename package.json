@@ -118,7 +118,9 @@
           "search.config.languages.collection.get",
           "search.config.languages.item.delete",
           "search.index.inventory.reindex.post",
-          "search.facets.collection.get"
+          "search.facets.collection.get",
+          "consortium-search.holdings.collection.get",
+          "consortium-search.items.collection.get"
         ]
       },
       {
