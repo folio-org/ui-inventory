@@ -24,11 +24,17 @@ const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
 const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
-const getAdvancedSearchQueryTemplate = (queryIndex, matchOption) => fieldSearchConfigurations[queryIndex]?.[matchOption];
+const getAdvancedSearchQueryTemplate = (queryIndex, matchOption, query) => {
+  const template = fieldSearchConfigurations[queryIndex]?.[matchOption];
+
+  return typeof template === 'function'
+    ? template({ query })
+    : template;
+};
 
 export const getAdvancedSearchTemplate = (queryValue) => {
   return advancedSearchQueryToRows(queryValue).reduce((acc, row) => {
-    const rowTemplate = getAdvancedSearchQueryTemplate(row.searchOption, row.match);
+    const rowTemplate = getAdvancedSearchQueryTemplate(row.searchOption, row.match, row.query);
 
     if (!rowTemplate) {
       return acc;

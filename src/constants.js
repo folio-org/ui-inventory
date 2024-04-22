@@ -522,7 +522,15 @@ export const fieldSearchConfigurations = {
     exactPhrase: 'normalizedClassificationNumber=="%{query.query}"',
     containsAll: 'normalizedClassificationNumber="*%{query.query}*"',
     startsWith: 'normalizedClassificationNumber="%{query.query}*"',
-    containsAny: 'normalizedClassificationNumber any "*%{query.query}*"',
+    containsAny: ({ query }) => {
+      // BE doesn't support the `any` operator for `normalizedClassificationNumber` due to its normalization.
+      // But UI can split the user input by spaces to get correct results.
+      return query.split(/\s/)
+        .filter(Boolean)
+        .map(q => q.replaceAll('"', '\\"'))
+        .map(q => `normalizedClassificationNumber any "*${q}*"`)
+        .join(' or ');
+    },
   },
   oclc: {
     exactPhrase: 'oclc=="%{query.query}"',
