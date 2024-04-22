@@ -359,6 +359,71 @@ describe('useFacets', () => {
       });
     });
 
+    describe('when a user hits a Browse result then redirects to the Search lookup and a request is made', () => {
+      describe('and then hits the search button (the only change is to the `selectedBrowseResult` parameter)', () => {
+        it('should call onFetchFacets for all open facets', () => {
+          const search = '?filters=searchContributors.2b4007a7-2d96-4262-a360-c9f760e355c3&qindex=contributor&query=test&selectedBrowseResult=true';
+
+          useFacetSettings.mockReturnValue([{}, jest.fn()]);
+          useLocation.mockReturnValue({ search });
+
+          const { result, rerender } = renderHook(({ newData, newSelectedFacetFilters }) => useFacets(
+            _segmentAccordions,
+            _segmentOptions,
+            newSelectedFacetFilters,
+            _getNewRecords,
+            newData,
+          ), {
+            initialProps: {
+              newData: {
+                ..._data,
+                query: {
+                  ..._data.query,
+                  query: 'test',
+                  qindex: 'contributor',
+                  filters: 'searchContributors.2b4007a7-2d96-4262-a360-c9f760e355c3',
+                  selectedBrowseResult: 'true',
+                },
+              },
+              newSelectedFacetFilters: _selectedFacetFilters,
+            },
+          });
+
+          const onToggleSection = result.current[1];
+
+          act(() => { onToggleSection({ id: 'resource' }); });
+
+          _data.onFetchFacets.mockClear();
+
+          useLocation.mockReturnValue({
+            search: search.replace('&selectedBrowseResult=true', ''),
+          });
+
+          rerender({
+            newData: {
+              ..._data,
+              query: {
+                ..._data.query,
+                query: 'test',
+                qindex: 'contributor',
+                filters: 'searchContributors.2b4007a7-2d96-4262-a360-c9f760e355c3',
+              },
+            },
+            newSelectedFacetFilters: _selectedFacetFilters,
+          });
+
+          expect(_data.onFetchFacets).toHaveBeenCalledTimes(1);
+          expect(_data.onFetchFacets).toHaveBeenCalledWith({
+            accordions: {
+              format: false,
+              resource: true,
+            },
+            accordionsData: expect.any(Object),
+          });
+        });
+      });
+    });
+
     describe('when the "Browse" lookup and there is a value in the search box and facet option is selected', () => {
       describe('and the user reset the search', () => {
         it('should not call onFetchFacets', () => {

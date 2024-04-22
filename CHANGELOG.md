@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [11.0.3] (IN PROGRESS)
+
+* Fetch facets with the same query as `Contributor` records when the search is done by selecting browse result. Refs UIIN-2859.
+
 ## [11.0.2](https://github.com/folio-org/ui-inventory/tree/v11.0.2) (2024-04-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.1...v11.0.2)
 
