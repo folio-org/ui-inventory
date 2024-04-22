@@ -10,6 +10,8 @@ import { useFacetSettings } from '../../stores/facetsStore';
 // - when the user places the cursor in a facet's input field, all options for it must be fetched;
 // - when multiple facets are open and the user enters a value in the search box, options must be fetched for all open facets.
 // - when multiple facets are open and the user selects an option of any facet, options must be fetched for all open facets.
+// - when a facet option is selected, and then another is selected from another facet, the first selected facet option may
+// become with count 0, and it should still be visible and moved to the bottom of the provided options. This is done in `getFacetOptions`.
 
 const useFacets = (
   segmentAccordions,

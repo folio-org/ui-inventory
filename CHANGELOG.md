@@ -10,6 +10,7 @@
 * Add new browse options for Instance classification numbers. Refs UIIN-2624.
 * Add new Instance search option `Classification, normalized` for the `Instance` toggle and advanced search modal. Refs UIIN-2801.
 * Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
+* ECS Member tenant - add `Shared` and `Held by` facets for the `Classification` browse. Refs UIIN-2813.
 
 ## [11.0.2] (IN PROGRESS)
 
