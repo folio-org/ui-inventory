@@ -12,6 +12,10 @@
 * Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
 * ECS Member tenant - add `Shared` and `Held by` facets for the `Classification` browse. Refs UIIN-2813.
 
+## [11.0.3] (IN PROGRESS)
+
+* Fetch facets with the same query as `Contributor` records when the search is done by selecting browse result. Refs UIIN-2859.
+
 ## [11.0.2] (IN PROGRESS)
 
 * Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.

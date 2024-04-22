@@ -12,6 +12,11 @@ import { useFacetSettings } from '../../stores/facetsStore';
 // - when multiple facets are open and the user selects an option of any facet, options must be fetched for all open facets.
 // - when a facet option is selected, and then another is selected from another facet, the first selected facet option may
 // become with count 0, and it should still be visible and moved to the bottom of the provided options. This is done in `getFacetOptions`.
+// - the "Contributor" search utilizes distinct queries for the "Search" lookup and the "Browse" search. When a user
+// selects a contributor record from the "Browse" search, they are redirected to the "Search" lookup. This redirection
+// request uses one specific query. If the user then clicks the search button again, without making any changes,
+// a different query is generated because the `selectedBrowseResult` parameter is removed. Therefore, even if the only
+// change made is to the `selectedBrowseResult`, all open facets need to be fetched.
 
 const useFacets = (
   segmentAccordions,
@@ -26,6 +31,7 @@ const useFacets = (
       query,
       qindex,
       filters = '',
+      selectedBrowseResult,
     },
     onFetchFacets,
     parentResources: { facets },
@@ -244,7 +250,7 @@ const useFacets = (
       handleFetchFacets();
       prevUrl.current.all = location.search;
     }
-  }, [query]);
+  }, [query, selectedBrowseResult]);
 
   return [
     accordions,

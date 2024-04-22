@@ -720,4 +720,37 @@ describe('withFacets', () => {
       }));
     });
   });
+
+  describe('when opening the Contributor`s facet', () => {
+    describe('and the `selectedBrowseResult` parameter is true', () => {
+      it('should make a request with correct request options', () => {
+        const resources = {
+          query: {
+            qindex: 'contributor',
+            query: 'test',
+            filters: 'searchContributors.2b4007a7-2d96-4262-a360-c9f760e355c3',
+            selectedBrowseResult: 'true',
+          },
+        };
+
+        const { getByText } = render(
+          <FacetsHoc
+            mutator={mutator}
+            resources={resources}
+            properties={{ facetToOpen: FACETS.RESOURCE }}
+          />
+        );
+
+        fireEvent.click(getByText('fetchFacetsButton'));
+
+        expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+          params: {
+            facet: `${FACETS_CQL.INSTANCE_TYPE}:6`,
+            query: '(contributors.name==/string "test") and contributors.contributorNameTypeId=="2b4007a7-2d96-4262-a360-c9f760e355c3"',
+          },
+          path: 'search/instances/facets',
+        }));
+      });
+    });
+  });
 });

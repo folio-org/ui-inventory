@@ -11,6 +11,7 @@ import { buildFilterQuery } from '@folio/stripes-acq-components';
 
 import {
   getQueryTemplate,
+  getTemplateForSelectedFromBrowseRecord,
 } from './utils';
 import {
   browseConfig,
@@ -33,6 +34,12 @@ function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const queryValue = queryParams?.query ?? '';
   const { indexes, filters } = browseModeMap[queryIndex] ? browseConfig : getFilterConfig(queryParams.segment);
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
+
+  const template = getTemplateForSelectedFromBrowseRecord(queryParams, queryIndex, queryValue);
+
+  if (template) {
+    queryTemplate = template;
+  }
 
   if (queryIndex === queryIndexes.ADVANCED_SEARCH) {
     queryTemplate = getAdvancedSearchTemplate(queryValue);
