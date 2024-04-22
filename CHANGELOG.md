@@ -10,13 +10,15 @@
 * Add new browse options for Instance classification numbers. Refs UIIN-2624.
 * Add new Instance search option `Classification, normalized` for the `Instance` toggle and advanced search modal. Refs UIIN-2801.
 * Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
-
-## [11.0.2] (IN PROGRESS)
-
 * Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
+* Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
+
+## [11.0.2](https://github.com/folio-org/ui-inventory/tree/v11.0.2) (2024-04-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.1...v11.0.2)
+
 * ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2845.
 * Restricted status displays as Order Closed. Fixes UIIN-2821.
-* Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
+* Add a new "Inventory: Create and download In transit items report" permission. Fixes UIIN-2776.
 * Include mod-search permissions to "Inventory: Module is enabled" UI permission. Refs UIIN-2860.
 
 ## [11.0.1](https://github.com/folio-org/ui-inventory/tree/v11.0.1) (2024-04-11)
