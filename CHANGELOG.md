@@ -12,6 +12,7 @@
 * Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
 * Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
 * Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
+* ECS Member tenant - add `Shared` and `Held by` facets for the `Classification` browse. Refs UIIN-2813.
 
 ## [11.0.2](https://github.com/folio-org/ui-inventory/tree/v11.0.2) (2024-04-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.1...v11.0.2)
