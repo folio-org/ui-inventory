@@ -35,6 +35,15 @@ export const COLUMNS_WIDTHS = {
     callNumber: '15%',
     title: '40%',
   },
+  [browseModeOptions.CLASSIFICATION_ALL]: {
+    classificationNumber: '50%',
+  },
+  [browseModeOptions.DEWEY_CLASSIFICATION]: {
+    classificationNumber: '50%',
+  },
+  [browseModeOptions.LC_CLASSIFICATION]: {
+    classificationNumber: '50%',
+  },
   [browseModeOptions.CONTRIBUTORS]: {
     contributor: '50%',
     contributorType: '15%',
