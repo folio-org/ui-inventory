@@ -44,6 +44,7 @@ import {
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
   segments,
+  queryIndexes,
 } from './constants';
 import { removeItem } from './storage';
 
@@ -898,3 +899,17 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
 };
 
 export const parseEmptyFormValue = value => value;
+
+export const getTemplateForSelectedFromBrowseRecord = (queryParams, queryIndex, queryValue) => {
+  if (!queryParams?.selectedBrowseResult) {
+    return null;
+  }
+
+  if (queryIndex === queryIndexes.CONTRIBUTOR) {
+    const escapedQueryValue = queryValue.replaceAll('"', '\\"');
+
+    return `contributors.name==/string "${escapedQueryValue}"`;
+  }
+
+  return null;
+};
