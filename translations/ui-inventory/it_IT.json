@@ -837,7 +837,7 @@
     "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information.",
     "documentTitle.search": "Inventory - {query} - Search",
     "documentTitle.browse": "Inventory - {query} - Browse",
-    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion and staff suppress",
+    "permission.instance.set-deletion-and-staff-suppress": "Inventory: Set records for deletion",
     "setForDeletion.modal.header": "Are you sure you want to set this record for deletion?",
     "setForDeletion.modal.message": "You have chosen to set <b>{instanceTitle}</b> for <b>deletion</b>. When a record is set for deletion, the instance will be Suppressed from discovery and Staff suppressed. If the instance source is MARC, then the MARC LDR 05 will be set to \"d\"",
     "setRecordForDeletion": "Set record for deletion",
@@ -861,5 +861,6 @@
     "browse.classification": "Classification",
     "browse.classification.all": "Classification (all)",
     "browse.classification.dewey": "Dewey Decimal classification",
-    "browse.classification.lc": "Library of Congress classification"
+    "browse.classification.lc": "Library of Congress classification",
+    "normalizedClassificationNumber": "Classification, normalized"
 }
