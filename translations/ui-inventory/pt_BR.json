@@ -861,5 +861,6 @@
     "browse.classification": "Classificação",
     "browse.classification.all": "Classificação (todas)",
     "browse.classification.dewey": "Classificação decimal de Dewey",
-    "browse.classification.lc": "Classificação da Biblioteca do Congresso (LC)"
+    "browse.classification.lc": "Classificação da Biblioteca do Congresso (LC)",
+    "normalizedClassificationNumber": "Classificação, normalizada"
 }
