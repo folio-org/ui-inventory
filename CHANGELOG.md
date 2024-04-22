@@ -9,6 +9,7 @@
 * Add "Display to public" column to receiving history on Holdings. Refs UIIN-2826.
 * Add new browse options for Instance classification numbers. Refs UIIN-2624.
 * Add new Instance search option `Classification, normalized` for the `Instance` toggle and advanced search modal. Refs UIIN-2801.
+* Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
 * ECS Member tenant - add `Shared` and `Held by` facets for the `Classification` browse. Refs UIIN-2813.
 
 ## [11.0.2] (IN PROGRESS)
@@ -17,6 +18,7 @@
 * ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2845.
 * Restricted status displays as Order Closed. Fixes UIIN-2821.
 * Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
+* Include mod-search permissions to "Inventory: Module is enabled" UI permission. Refs UIIN-2860.
 
 ## [11.0.1](https://github.com/folio-org/ui-inventory/tree/v11.0.1) (2024-04-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.0...v11.0.1)
