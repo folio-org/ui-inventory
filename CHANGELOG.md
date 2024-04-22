@@ -9,6 +9,7 @@
 * Add "Display to public" column to receiving history on Holdings. Refs UIIN-2826.
 * Add new browse options for Instance classification numbers. Refs UIIN-2624.
 * Add new Instance search option `Classification, normalized` for the `Instance` toggle and advanced search modal. Refs UIIN-2801.
+* Add callout noting user's active affiliation when it changes after selecting holding or item. Refs UIIN-2831.
 
 ## [11.0.2] (IN PROGRESS)
 

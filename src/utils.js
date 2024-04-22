@@ -928,3 +928,26 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
 };
 
 export const parseEmptyFormValue = value => value;
+
+export const sendCalloutOnAffiliationChange = (stripes, tenantId, callout) => {
+  if (stripes.okapi.tenant !== tenantId) {
+    const name = stripes.user.user.tenants.find(tenant => tenant.id === tenantId)?.name;
+
+    if (name) {
+      callout.sendCallout({
+        type: 'info',
+        message: (
+          <FormattedMessage
+            id="ui-inventory.affiliationChanging.namedNotification"
+            values={{ name }}
+          />
+        ),
+      });
+    } else {
+      callout.sendCallout({
+        type: 'info',
+        message: <FormattedMessage id="ui-inventory.affiliationChanging.notification" />,
+      });
+    }
+  }
+};
