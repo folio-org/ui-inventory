@@ -86,16 +86,34 @@ describe('buildQuery', () => {
       });
 
       describe('when not valid query is passed', () => {
-        const qindex = queryIndexes.ADVANCED_SEARCH;
-        const queryParams = {
-          qindex,
-          query: 'keyword containsAll test or invalidOption exactPhrase hello',
-        };
-        const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+        it('should use keyword search', () => {
+          const qindex = queryIndexes.ADVANCED_SEARCH;
+          const queryParams = {
+            qindex,
+            query: 'keyword containsAll test or invalidOption exactPhrase hello',
+          };
+          const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
 
-        expect(cql).toContain(
-          '(keyword all "test")'
-        );
+          expect(cql).toContain(
+            '(keyword all "test")'
+          );
+        });
+      });
+
+      describe('when a search option is "Classification, normalized"', () => {
+        describe('and match option is containsAll', () => {
+          it('should build correct query', () => {
+            const queryParams = {
+              qindex: queryIndexes.ADVANCED_SEARCH,
+              query: 'normalizedClassificationNumber containsAny test1 test2',
+            };
+            const cql = buildQuery(...getBuildQueryArgs({ queryParams }));
+
+            expect(cql).toContain(
+              '(normalizedClassificationNumber any "*test1*" or normalizedClassificationNumber any "*test2*")'
+            );
+          });
+        });
       });
     });
 
