@@ -101,7 +101,7 @@ describe('buildQuery', () => {
       });
 
       describe('when a search option is "Classification, normalized"', () => {
-        describe('and match option is containsAll', () => {
+        describe('and match option is containsAny', () => {
           it('should build correct query', () => {
             const queryParams = {
               qindex: queryIndexes.ADVANCED_SEARCH,
