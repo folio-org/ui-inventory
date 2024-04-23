@@ -16,11 +16,11 @@ import {
 import {
   TitleManager,
   useStripes,
+  useUserTenantPermissions,
 } from '@folio/stripes/core';
 
 import {
   useClassificationIdentifierTypes,
-  useUserTenantPermissions,
 } from '../../hooks';
 import getFieldComponents from './getFieldComponents';
 import { CLASSIFICATION_BROWSE_COLUMNS } from './constants';
@@ -32,13 +32,10 @@ const ClassificationBrowseSettings = () => {
   const { classificationTypes, isLoading: isClassificationTypesLoading } = useClassificationIdentifierTypes(centralTenantId);
   const ConnectedControlledVocab = useMemo(() => stripes.connect(ControlledVocab), [stripes]);
 
-  const userId = stripes?.user?.user?.id;
-
   const {
     userPermissions: centralTenantPermissions,
     isFetching: isCentralTenantPermissionsLoading,
   } = useUserTenantPermissions({
-    userId,
     tenantId: centralTenantId,
   });
 

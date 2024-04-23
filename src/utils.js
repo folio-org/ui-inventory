@@ -44,6 +44,7 @@ import {
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
   segments,
+  queryIndexes,
 } from './constants';
 import { removeItem } from './storage';
 
@@ -794,36 +795,6 @@ export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia
 
 export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
 
-export const getUserTenantsPermissions = async (stripes, tenants = []) => {
-  const {
-    user: { user: { id } },
-    okapi: {
-      url,
-      token,
-    }
-  } = stripes;
-  const userTenantIds = tenants.map(tenant => tenant.id || tenant);
-
-  const promises = userTenantIds.map(async (tenantId) => {
-    const result = await fetch(`${url}/perms/users/${id}/permissions?full=true&indexField=userId`, {
-      headers: {
-        [OKAPI_TENANT_HEADER]: tenantId,
-        [CONTENT_TYPE_HEADER]: 'application/json',
-        ...(token && { [OKAPI_TOKEN_HEADER]: token }),
-      },
-      credentials: 'include',
-    });
-
-    const json = await result.json();
-
-    return { tenantId, ...json };
-  });
-
-  const userTenantsPermissions = await Promise.allSettled(promises);
-
-  return userTenantsPermissions.map(userTenantsPermission => userTenantsPermission.value);
-};
-
 export const hasMemberTenantPermission = (permissionName, tenantId, permissions = []) => {
   const tenantPermissions = permissions?.find(permission => permission?.tenantId === tenantId)?.permissionNames || [];
 
@@ -928,3 +899,17 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
 };
 
 export const parseEmptyFormValue = value => value;
+
+export const getTemplateForSelectedFromBrowseRecord = (queryParams, queryIndex, queryValue) => {
+  if (!queryParams?.selectedBrowseResult) {
+    return null;
+  }
+
+  if (queryIndex === queryIndexes.CONTRIBUTOR) {
+    const escapedQueryValue = queryValue.replaceAll('"', '\\"');
+
+    return `contributors.name==/string "${escapedQueryValue}"`;
+  }
+
+  return null;
+};

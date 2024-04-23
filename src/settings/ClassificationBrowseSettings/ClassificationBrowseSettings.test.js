@@ -1,7 +1,10 @@
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { useStripes } from '@folio/stripes/core';
+import {
+  useStripes,
+  useUserTenantPermissions,
+} from '@folio/stripes/core';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import {
@@ -16,7 +19,6 @@ import ClassificationBrowseSettings from './ClassificationBrowseSettings';
 
 import {
   useClassificationIdentifierTypes,
-  useUserTenantPermissions,
 } from '../../hooks';
 
 jest.unmock('@folio/stripes/components');
@@ -24,10 +26,6 @@ jest.unmock('@folio/stripes/smart-components');
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useClassificationIdentifierTypes: jest.fn(),
-  useUserTenantPermissions: jest.fn().mockReturnValue({
-    userPermissions: [],
-    isFetching: false,
-  }),
 }));
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
@@ -41,6 +39,10 @@ jest.mock('@folio/stripes/core', () => ({
   useOkapiKy: jest.fn().mockReturnValue({
     get: jest.fn(),
     extend: jest.fn(),
+  }),
+  useUserTenantPermissions: jest.fn().mockReturnValue({
+    userPermissions: [],
+    isFetching: false,
   }),
 }));
 

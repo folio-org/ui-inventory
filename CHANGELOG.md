@@ -9,13 +9,23 @@
 * Add "Display to public" column to receiving history on Holdings. Refs UIIN-2826.
 * Add new browse options for Instance classification numbers. Refs UIIN-2624.
 * Add new Instance search option `Classification, normalized` for the `Instance` toggle and advanced search modal. Refs UIIN-2801.
+* Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
+* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
+* Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
+* ECS Member tenant - add `Shared` and `Held by` facets for the `Classification` browse. Refs UIIN-2813.
 * Jest/RTL: Cover CalloutRenderer component with unit tests. Refs UIIN-2665.
 
-## [11.0.2] (IN PROGRESS)
+## [11.0.3] (IN PROGRESS)
 
-* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
-* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
+* Fetch facets with the same query as `Contributor` records when the search is done by selecting browse result. Refs UIIN-2859.
+
+## [11.0.2](https://github.com/folio-org/ui-inventory/tree/v11.0.2) (2024-04-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.1...v11.0.2)
+
+* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2845.
 * Restricted status displays as Order Closed. Fixes UIIN-2821.
+* Add a new "Inventory: Create and download In transit items report" permission. Fixes UIIN-2776.
+* Include mod-search permissions to "Inventory: Module is enabled" UI permission. Refs UIIN-2860.
 
 ## [11.0.1](https://github.com/folio-org/ui-inventory/tree/v11.0.1) (2024-04-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.0...v11.0.1)
@@ -63,6 +73,11 @@
 * Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
 * Increase holdings limit to 5000. Fixes UIIN-2785.
 * User with "Inventory: All permissions" permission only should not be seeing the "Staff suppress" facet. Fixes UIIN-2807.
+
+## [10.0.13](https://github.com/folio-org/ui-inventory/tree/v10.0.13) (2024-04-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.12...v10.0.13)
+
+* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
 
 ## [10.0.12](https://github.com/folio-org/ui-inventory/tree/v10.0.12) (2024-04-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v10.0.12)

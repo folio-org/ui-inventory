@@ -16,6 +16,7 @@ import {
   stripesConnect,
   checkIfUserInMemberTenant,
   checkIfUserInCentralTenant,
+  getUserTenantsPermissions,
 } from '@folio/stripes/core';
 import {
   MenuSection,
@@ -33,7 +34,6 @@ import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
 import {
   isUserInConsortiumMode,
-  getUserTenantsPermissions,
   handleKeyCommand,
   isInstanceShadowCopy,
   isMARCSource,
