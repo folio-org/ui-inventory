@@ -17,13 +17,13 @@ import {
   getQueryTemplate,
   getIsbnIssnTemplate,
   replaceFilter,
+  getTemplateForSelectedFromBrowseRecord,
 } from '../utils';
 import { getFilterConfig } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
 
-const getQueryTemplateContributor = (queryValue) => `contributors.name==/string "${queryValue}"`;
 const getAdvancedSearchQueryTemplate = (queryIndex, matchOption, query) => {
   const template = fieldSearchConfigurations[queryIndex]?.[matchOption];
 
@@ -74,14 +74,10 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
   const queryValue = get(queryParams, 'query', '');
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
-  if (queryParams?.selectedBrowseResult) {
-    if (queryIndex === queryIndexes.CONTRIBUTOR) {
-      const escapedQueryValue = queryValue.replaceAll('"', '\\"');
+  const template = getTemplateForSelectedFromBrowseRecord(queryParams, queryIndex, queryValue);
 
-      queryTemplate = getQueryTemplateContributor(escapedQueryValue);
-    }
-
-    query.selectedBrowseResult = null; // reset this parameter so the next search uses `=` instead of `==/string`
+  if (template) {
+    queryTemplate = template;
   }
 
   if (queryIndex === queryIndexes.ADVANCED_SEARCH) {
