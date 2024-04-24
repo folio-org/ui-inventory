@@ -25,6 +25,8 @@ import {
   browseModeMap,
   browseCallNumberOptions,
   queryIndexes,
+  browseClassificationOptions,
+  FACETS,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
@@ -134,10 +136,14 @@ function withFacets(WrappedComponent) {
         return 'search/subjects/facets';
       }
 
+      if (Object.values(browseClassificationOptions).includes(queryIndex)) {
+        return 'search/classifications/facets';
+      }
+
       return 'search/instances/facets';
     }
 
-    getCqlQuery = (isBrowseLookup, query, queryIndex, data) => {
+    getCqlQuery = (isBrowseLookup, query, queryIndex, data, facetName) => {
       if (isBrowseLookup) {
         const normalizedFilters = {
           ...Object.entries(query).reduce((acc, [key, value]) => ({
@@ -154,14 +160,14 @@ function withFacets(WrappedComponent) {
 
         const isTypedCallNumber = Object.values(browseCallNumberOptions).includes(queryIndex)
           && queryIndex !== browseCallNumberOptions.CALL_NUMBERS;
+        const isCallNumbersEffectiveLocFacet = queryIndex === browseCallNumberOptions.CALL_NUMBERS
+          && (facetName === FACETS.EFFECTIVE_LOCATION || query[FACETS.EFFECTIVE_LOCATION]);
 
-        if (hasSelectedFacetOption) {
-          if (isTypedCallNumber) {
-            queryForBrowseFacets = `callNumberType="${queryIndex}"`;
-          }
-        } else if (isTypedCallNumber) {
+        if (isTypedCallNumber) {
           queryForBrowseFacets = `callNumberType="${queryIndex}"`;
-        } else {
+        } else if (isCallNumbersEffectiveLocFacet) {
+          queryForBrowseFacets = 'items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder==""';
+        } else if (!hasSelectedFacetOption) {
           queryForBrowseFacets = 'cql.allRecords=1';
         }
 
@@ -206,7 +212,7 @@ function withFacets(WrappedComponent) {
       const facetNameToRequest = FACETS_TO_REQUEST[facetName];
       const paramsUrl = new URLSearchParams(window.location.search);
       const queryIndex = query?.qindex || paramsUrl.get('qindex');
-      const cqlQuery = this.getCqlQuery(isBrowseLookup, query, queryIndex, data);
+      const cqlQuery = this.getCqlQuery(isBrowseLookup, query, queryIndex, data, facetName);
 
       if (cqlQuery) {
         params.query = cqlQuery;
