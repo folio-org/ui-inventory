@@ -6,6 +6,7 @@ import { DataContext } from '../../contexts';
 import { identifierTypes, instanceRelationshipTypes } from '../../../test/fixtures';
 import ConnectedTitle from './ConnectedTitle';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
+import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
 jest.mock('../InstancePlugin/InstancePlugin', () => ({ onSelect, onClose }) => {
   return (
@@ -43,7 +44,8 @@ const renderConnectedTitle = (props = {}) => renderWithIntl(
         {...props}
       />
     </DataContext.Provider>
-  </Router>
+  </Router>,
+  translationsProperties
 );
 
 
@@ -51,18 +53,18 @@ describe('ConnectedTitle', () => {
   it('should render correct titles', () => {
     const { queryByText } = renderConnectedTitle();
 
-    expect(queryByText('ui-inventory.precedingField.title')).toBeInTheDocument();
-    expect(queryByText('ui-inventory.precedingField.connected')).toBeInTheDocument();
-    expect(queryByText('ui-inventory.instanceHrid')).toBeInTheDocument();
-    expect(queryByText('ui-inventory.isbn')).toBeInTheDocument();
-    expect(queryByText('ui-inventory.issn')).toBeInTheDocument();
+    expect(queryByText('Title')).toBeInTheDocument();
+    expect(queryByText('Connected')).toBeInTheDocument();
+    expect(queryByText('Instance HRID')).toBeInTheDocument();
+    expect(queryByText('ISBN')).toBeInTheDocument();
+    expect(queryByText('ISSN')).toBeInTheDocument();
   });
 
   it('should render fallback data if props are not present', () => {
     const { queryAllByText } = renderConnectedTitle();
 
     // 3 - means for isbn, issn and hrid
-    expect(queryAllByText('ui-inventory.notAvailable').length).toBe(3);
+    expect(queryAllByText('N/A').length).toBe(3);
   });
 
   it('should render correct data based on props', () => {
@@ -77,7 +79,7 @@ describe('ConnectedTitle', () => {
       },
     });
 
-    expect(queryByText('ui-inventory.notAvailable')).not.toBeInTheDocument();
+    expect(queryByText('N/A')).not.toBeInTheDocument();
 
     expect(queryByText('test-title')).toBeInTheDocument();
     expect(queryByText('test-hrid')).toBeInTheDocument();
