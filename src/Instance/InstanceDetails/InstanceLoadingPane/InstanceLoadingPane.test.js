@@ -5,8 +5,6 @@ import {
 
 import '../../../../test/jest/__mock__';
 
-import { Icon } from '@folio/stripes/components';
-
 import {
   renderWithIntl,
   translationsProperties,
@@ -14,7 +12,10 @@ import {
 
 import InstanceLoadingPane from './InstanceLoadingPane';
 
-Icon.mockClear().mockImplementation(({ icon }) => <span>{icon}</span>);
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  Icon: jest.fn(({ children, icon }) => (children || <span>{icon}</span>)),
+}));
 
 const mockOnClose = jest.fn();
 
