@@ -160,13 +160,14 @@ function withFacets(WrappedComponent) {
 
         const isTypedCallNumber = Object.values(browseCallNumberOptions).includes(queryIndex)
           && queryIndex !== browseCallNumberOptions.CALL_NUMBERS;
-        const isCallNumbersEffectiveLocFacet = queryIndex === browseCallNumberOptions.CALL_NUMBERS
-          && (facetName === FACETS.EFFECTIVE_LOCATION || query[FACETS.EFFECTIVE_LOCATION]);
+        // We shouldn’t count "Instances" with "Holdings": 1) without "Items"
+        // or 2) with "Items" with empty "Effective call number" field.
+        const itemsEffectiveShelvingOrder = 'items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder==""';
 
         if (isTypedCallNumber) {
-          queryForBrowseFacets = `callNumberType="${queryIndex}"`;
-        } else if (isCallNumbersEffectiveLocFacet) {
-          queryForBrowseFacets = 'items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder==""';
+          queryForBrowseFacets = `callNumberType="${queryIndex}" and ${itemsEffectiveShelvingOrder}`;
+        } else if (queryIndex === browseCallNumberOptions.CALL_NUMBERS) {
+          queryForBrowseFacets = itemsEffectiveShelvingOrder;
         } else if (!hasSelectedFacetOption) {
           queryForBrowseFacets = 'cql.allRecords=1';
         }
