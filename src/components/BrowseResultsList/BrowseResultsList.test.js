@@ -164,10 +164,10 @@ describe('BrowseResultsList', () => {
   });
 
   describe.each([
-    { searchOption: browseClassificationOptions.CLASSIFICATION_ALL, shared: FACETS.CLASSIFICATION_SHARED, heldBy: FACETS.CLASSIFICATION_HELD_BY },
-    { searchOption: browseClassificationOptions.DEWEY_CLASSIFICATION, shared: FACETS.CLASSIFICATION_SHARED, heldBy: FACETS.CLASSIFICATION_HELD_BY },
-    { searchOption: browseClassificationOptions.LC_CLASSIFICATION, shared: FACETS.CLASSIFICATION_SHARED, heldBy: FACETS.CLASSIFICATION_HELD_BY },
-  ])('when the search option is $searchOption and the Shared and/or HeldBy facets are selected', ({ searchOption, shared, heldBy }) => {
+    { searchOption: browseClassificationOptions.CLASSIFICATION_ALL, shared: FACETS.CLASSIFICATION_SHARED },
+    { searchOption: browseClassificationOptions.DEWEY_CLASSIFICATION, shared: FACETS.CLASSIFICATION_SHARED },
+    { searchOption: browseClassificationOptions.LC_CLASSIFICATION, shared: FACETS.CLASSIFICATION_SHARED },
+  ])('when the search option is $searchOption and the Shared facets is selected', ({ searchOption, shared }) => {
     describe('and a user hits on a classification number in the list', () => {
       it('should be navigated to the Search lookup with those filters', async () => {
         const classificationNumber = 'BD638 .T46 2018';
@@ -175,7 +175,7 @@ describe('BrowseResultsList', () => {
         history = createMemoryHistory({
           initialEntries: [{
             pathname: BROWSE_INVENTORY_ROUTE,
-            search: `${heldBy}=college&qindex=${searchOption}&query=${classificationNumber}&${shared}=true&${shared}=false`,
+            search: `qindex=${searchOption}&query=${classificationNumber}&${shared}=true&${shared}=false`,
           }],
         });
 
@@ -184,7 +184,6 @@ describe('BrowseResultsList', () => {
             qindex: searchOption,
             query: classificationNumber,
             [shared]: ['true', 'false'],
-            [heldBy]: ['college'],
           },
           browseData: [
             {
@@ -199,7 +198,7 @@ describe('BrowseResultsList', () => {
         fireEvent.click(screen.getByText(classificationNumber));
 
         expect(history.location.search).toBe(
-          '?filters=shared.true%2Cshared.false%2CtenantId.college&qindex=querySearch&query=classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22&selectedBrowseResult=true'
+          '?filters=shared.true%2Cshared.false&qindex=querySearch&query=classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22&selectedBrowseResult=true'
         );
       });
     });
