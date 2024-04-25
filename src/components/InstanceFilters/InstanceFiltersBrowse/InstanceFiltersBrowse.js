@@ -53,7 +53,6 @@ const InstanceFiltersBrowse = props => {
     [FACETS.SHARED]: false,
     [FACETS.CALL_NUMBERS_HELD_BY]: false,
     [FACETS.CLASSIFICATION_SHARED]: false,
-    [FACETS.CLASSIFICATION_HELD_BY]: false,
     [FACETS.CONTRIBUTORS_SHARED]: false,
     [FACETS.CONTRIBUTORS_HELD_BY]: false,
     [FACETS.SUBJECTS_SHARED]: false,
@@ -75,7 +74,6 @@ const InstanceFiltersBrowse = props => {
     [FACETS.CONTRIBUTORS_SHARED]: activeFilters[FACETS.CONTRIBUTORS_SHARED],
     [FACETS.CONTRIBUTORS_HELD_BY]: activeFilters[FACETS.CONTRIBUTORS_HELD_BY],
     [FACETS.CLASSIFICATION_SHARED]: activeFilters[FACETS.CLASSIFICATION_SHARED],
-    [FACETS.CLASSIFICATION_HELD_BY]: activeFilters[FACETS.CLASSIFICATION_HELD_BY],
     [FACETS.SUBJECTS_SHARED]: activeFilters[FACETS.SUBJECTS_SHARED],
     [FACETS.SUBJECTS_HELD_BY]: activeFilters[FACETS.SUBJECTS_HELD_BY],
     [FACETS.EFFECTIVE_LOCATION]: activeFilters[FACETS.EFFECTIVE_LOCATION],
@@ -94,9 +92,6 @@ const InstanceFiltersBrowse = props => {
   };
 
   const heldByFacetMap = {
-    [browseModeOptions.CLASSIFICATION_ALL]: FACETS.CLASSIFICATION_HELD_BY,
-    [browseModeOptions.DEWEY_CLASSIFICATION]: FACETS.CLASSIFICATION_HELD_BY,
-    [browseModeOptions.LC_CLASSIFICATION]: FACETS.CLASSIFICATION_HELD_BY,
     [browseModeOptions.CONTRIBUTORS]: FACETS.CONTRIBUTORS_HELD_BY,
     [browseModeOptions.SUBJECTS]: FACETS.SUBJECTS_HELD_BY,
   };
@@ -178,16 +173,6 @@ const InstanceFiltersBrowse = props => {
                 onChange={onChange}
               />
             </Accordion>
-            <HeldByFacet
-              activeFilters={activeFilters}
-              facetsOptions={facetsOptions}
-              getIsPending={getIsPending}
-              name={FACETS.CLASSIFICATION_HELD_BY}
-              onChange={onChange}
-              onClear={onClear}
-              onFetchFacets={handleFetchFacets}
-              onFilterSearch={handleFilterSearch}
-            />
           </>
         )
       )}
