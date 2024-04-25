@@ -26,7 +26,6 @@ import {
   browseCallNumberOptions,
   queryIndexes,
   browseClassificationOptions,
-  FACETS,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
@@ -143,7 +142,7 @@ function withFacets(WrappedComponent) {
       return 'search/instances/facets';
     }
 
-    getCqlQuery = (isBrowseLookup, query, queryIndex, data, facetName) => {
+    getCqlQuery = (isBrowseLookup, query, queryIndex, data) => {
       if (isBrowseLookup) {
         const normalizedFilters = {
           ...Object.entries(query).reduce((acc, [key, value]) => ({
@@ -160,13 +159,14 @@ function withFacets(WrappedComponent) {
 
         const isTypedCallNumber = Object.values(browseCallNumberOptions).includes(queryIndex)
           && queryIndex !== browseCallNumberOptions.CALL_NUMBERS;
-        const isCallNumbersEffectiveLocFacet = queryIndex === browseCallNumberOptions.CALL_NUMBERS
-          && (facetName === FACETS.EFFECTIVE_LOCATION || query[FACETS.EFFECTIVE_LOCATION]);
+        // We shouldn’t count "Instances" with "Holdings": 1) without "Items"
+        // or 2) with "Items" with empty "Effective call number" field.
+        const itemsEffectiveShelvingOrder = 'items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder==""';
 
         if (isTypedCallNumber) {
-          queryForBrowseFacets = `callNumberType="${queryIndex}"`;
-        } else if (isCallNumbersEffectiveLocFacet) {
-          queryForBrowseFacets = 'items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder==""';
+          queryForBrowseFacets = `callNumberType="${queryIndex}" and ${itemsEffectiveShelvingOrder}`;
+        } else if (queryIndex === browseCallNumberOptions.CALL_NUMBERS) {
+          queryForBrowseFacets = itemsEffectiveShelvingOrder;
         } else if (!hasSelectedFacetOption) {
           queryForBrowseFacets = 'cql.allRecords=1';
         }
@@ -212,7 +212,7 @@ function withFacets(WrappedComponent) {
       const facetNameToRequest = FACETS_TO_REQUEST[facetName];
       const paramsUrl = new URLSearchParams(window.location.search);
       const queryIndex = query?.qindex || paramsUrl.get('qindex');
-      const cqlQuery = this.getCqlQuery(isBrowseLookup, query, queryIndex, data, facetName);
+      const cqlQuery = this.getCqlQuery(isBrowseLookup, query, queryIndex, data);
 
       if (cqlQuery) {
         params.query = cqlQuery;
