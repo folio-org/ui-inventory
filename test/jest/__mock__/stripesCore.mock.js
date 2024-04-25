@@ -97,6 +97,8 @@ const mockStripesCore = {
   // eslint-disable-next-line react/prop-types
   IfPermission: jest.fn(props => <>{props.children}</>),
 
+  withOkapiKy: jest.fn((Component) => (props) => <Component {...props} />),
+
   // eslint-disable-next-line react/prop-types
   IfInterface: jest.fn(props => <>{props.children}</>),
 
