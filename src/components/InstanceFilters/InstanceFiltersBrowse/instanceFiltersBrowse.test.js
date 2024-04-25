@@ -223,17 +223,6 @@ describe('InstanceFilters', () => {
       expect(getByText('Shared')).toBeInTheDocument();
     });
 
-    it('should display "Held by" facet', () => {
-      const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          browseType: browseModeOptions.CLASSIFICATION_ALL,
-        },
-      });
-
-      expect(getByText('Held by')).toBeInTheDocument();
-    });
-
     describe('when the "Shared" facet option with 0 count', () => {
       it('should be visible', () => {
         const parentResources = {
@@ -247,16 +236,6 @@ describe('InstanceFilters', () => {
                   }],
                   'totalRecords': 1
                 },
-                'instances.tenantId': {
-                  'values': [{
-                    'id': 'college',
-                    'totalRecords': 1,
-                  }, {
-                    'id': 'consortium',
-                    'totalRecords': 1,
-                  }],
-                  'totalRecords': 2
-                }
               }
             ]
           }
@@ -265,7 +244,6 @@ describe('InstanceFilters', () => {
         const { getByText, getByRole } = renderInstanceFilters({
           activeFilters: {
             classificationShared: ['false', 'true'],
-            classificationTenantId: ['college'],
           },
           browseType: 'deweyClassification',
           data: {

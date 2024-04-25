@@ -54,7 +54,6 @@ const getExtraFilters = (row, qindex, allFilters) => {
     heldByFacetName = FACETS.CALL_NUMBERS_HELD_BY;
   } else if (Object.values(browseClassificationOptions).includes(qindex)) {
     sharedFacetName = FACETS.CLASSIFICATION_SHARED;
-    heldByFacetName = FACETS.CLASSIFICATION_HELD_BY;
   }
 
   const sharedExtraFacets = facetsToString(filtersOnly, sharedFacetName, FACETS.SHARED);
