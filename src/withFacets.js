@@ -26,7 +26,6 @@ import {
   browseCallNumberOptions,
   queryIndexes,
   browseClassificationOptions,
-  FACETS,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
@@ -143,7 +142,7 @@ function withFacets(WrappedComponent) {
       return 'search/instances/facets';
     }
 
-    getCqlQuery = (isBrowseLookup, query, queryIndex, data, facetName) => {
+    getCqlQuery = (isBrowseLookup, query, queryIndex, data) => {
       if (isBrowseLookup) {
         const normalizedFilters = {
           ...Object.entries(query).reduce((acc, [key, value]) => ({
@@ -213,7 +212,7 @@ function withFacets(WrappedComponent) {
       const facetNameToRequest = FACETS_TO_REQUEST[facetName];
       const paramsUrl = new URLSearchParams(window.location.search);
       const queryIndex = query?.qindex || paramsUrl.get('qindex');
-      const cqlQuery = this.getCqlQuery(isBrowseLookup, query, queryIndex, data, facetName);
+      const cqlQuery = this.getCqlQuery(isBrowseLookup, query, queryIndex, data);
 
       if (cqlQuery) {
         params.query = cqlQuery;
