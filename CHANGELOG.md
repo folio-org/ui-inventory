@@ -14,6 +14,7 @@
 * Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
 * ECS Member tenant - add `Shared` and `Held by` facets for the `Classification` browse. Refs UIIN-2813.
 * Jest/RTL: Cover CalloutRenderer component with unit tests. Refs UIIN-2665.
+* Jest/RTL: Cover ConnectedTitle component with unit tests. Refs UIIN-2666.
 * Jest/RTL: Cover InstancePlugin component with unit tests. Refs UIIN-2668.
 
 ## [11.0.3] (IN PROGRESS)

@@ -317,7 +317,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: '(cql.allRecords=1)',
+            query: '(items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="")',
           },
           path: 'search/instances/facets',
         }));
@@ -348,7 +348,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: 'instances.tenantId==("college")',
+            query: '(items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") and instances.tenantId==("college")',
           },
           path: 'search/instances/facets',
         }));
@@ -379,7 +379,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: 'instances.tenantId==("college")',
+            query: '(items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") and instances.tenantId==("college")',
           },
           path: 'search/instances/facets',
         }));
@@ -411,7 +411,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: '(callNumberType="dewey")',
+            query: '(callNumberType="dewey" and items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="")',
           },
           path: 'search/instances/facets',
         }));
@@ -442,7 +442,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: '(callNumberType="dewey") and instances.tenantId==("college")',
+            query: '(callNumberType="dewey" and items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") and instances.tenantId==("college")',
           },
           path: 'search/instances/facets',
         }));
@@ -473,7 +473,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: '(callNumberType="dewey") and instances.tenantId==("college")',
+            query: '(callNumberType="dewey" and items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") and instances.tenantId==("college")',
           },
           path: 'search/instances/facets',
         }));
