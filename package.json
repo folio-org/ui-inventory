@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "10.0.13",
+  "version": "10.0.14",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -118,7 +118,9 @@
           "search.config.languages.collection.get",
           "search.config.languages.item.delete",
           "search.index.inventory.reindex.post",
-          "search.facets.collection.get"
+          "search.facets.collection.get",
+          "consortium-search.holdings.collection.get",
+          "consortium-search.items.collection.get"
         ]
       },
       {
@@ -860,10 +862,10 @@
     "@folio/jest-config-stripes": "^2.0.0",
     "@folio/stripes": "^9.0.0",
     "@folio/stripes-cli": "^3.0.0",
-    "@folio/stripes-components": "^12.0.0",
-    "@folio/stripes-connect": "^9.0.0",
-    "@folio/stripes-core": "^10.0.0",
-    "@folio/stripes-smart-components": "^9.0.0",
+    "@folio/stripes-components": "~12.0.0",
+    "@folio/stripes-connect": "~9.0.0",
+    "@folio/stripes-core": "~10.0.0",
+    "@folio/stripes-smart-components": "~9.0.0",
     "@folio/stripes-testing": "^4.6.0",
     "@folio/stripes-util": "^6.0.0",
     "@formatjs/cli": "^6.1.3",

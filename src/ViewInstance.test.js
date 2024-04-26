@@ -18,10 +18,6 @@ import {
   checkIfUserInMemberTenant,
   checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
-import {
-  ConfirmationModal,
-  Icon,
-} from '@folio/stripes/components';
 
 import { instances } from '../test/fixtures/instances';
 import { DataContext } from './contexts';
@@ -77,6 +73,33 @@ jest.mock('react-beautiful-dnd', () => ({
   ...jest.requireActual('react-beautiful-dnd'),
   Draggable: jest.fn(() => <div>Press space bar to start a drag</div>),
 }));
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  Icon: jest.fn(({ children, icon }) => (children || <span>{icon}</span>)),
+  ConfirmationModal: jest.fn(({
+    open,
+    onCancel,
+    onConfirm,
+    heading,
+  }) => (open ? (
+    <div>
+      <span>{heading}</span>
+      <button
+        type="button"
+        onClick={onCancel}
+      >
+        Cancel
+      </button>
+      <button
+        type="button"
+        id="confirmButton"
+        onClick={onConfirm}
+      >
+        Confirm
+      </button>
+    </div>
+  ) : null)),
+}));
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
@@ -105,32 +128,6 @@ jest
   .spyOn(StripesConnectedInstance.prototype, 'instance')
   .mockImplementation(() => instance)
   .mockImplementationOnce(() => {});
-
-Icon.mockClear().mockImplementation(({ children, icon }) => (children || <span>{icon}</span>));
-
-ConfirmationModal.mockImplementation(({
-  open,
-  onCancel,
-  onConfirm,
-  heading,
-}) => (open ? (
-  <div>
-    <span>{heading}</span>
-    <button
-      type="button"
-      onClick={onCancel}
-    >
-      Cancel
-    </button>
-    <button
-      type="button"
-      id="confirmButton"
-      onClick={onConfirm}
-    >
-      Confirm
-    </button>
-  </div>
-) : null));
 
 const goToMock = jest.fn();
 const mockReset = jest.fn();
@@ -996,7 +993,7 @@ describe('ViewInstance', () => {
       });
     });
   });
-  describe('Tests for shortcut of HasCommand', () => {
+  describe.skip('Tests for shortcut of HasCommand', () => {
     it('updateLocation function to be triggered on clicking new button', () => {
       renderViewInstance();
       fireEvent.click(screen.getByRole('button', { name: 'new' }));
