@@ -317,7 +317,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: '(cql.allRecords=1)',
+            query: '(items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="")',
           },
           path: 'search/instances/facets',
         }));
@@ -348,7 +348,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: 'instances.tenantId==("college")',
+            query: '(items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") and instances.tenantId==("college")',
           },
           path: 'search/instances/facets',
         }));
@@ -379,7 +379,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: 'instances.tenantId==("college")',
+            query: '(items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") and instances.tenantId==("college")',
           },
           path: 'search/instances/facets',
         }));
@@ -411,7 +411,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: '(callNumberType="dewey")',
+            query: '(callNumberType="dewey" and items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="")',
           },
           path: 'search/instances/facets',
         }));
@@ -442,7 +442,7 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: '(callNumberType="dewey") and instances.tenantId==("college")',
+            query: '(callNumberType="dewey" and items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") and instances.tenantId==("college")',
           },
           path: 'search/instances/facets',
         }));
@@ -473,7 +473,112 @@ describe('withFacets', () => {
         expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
           params: {
             facet: `${FACETS_CQL.SHARED}:6`,
-            query: '(callNumberType="dewey") and instances.tenantId==("college")',
+            query: '(callNumberType="dewey" and items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") and instances.tenantId==("college")',
+          },
+          path: 'search/instances/facets',
+        }));
+      });
+    });
+  });
+
+  describe('when opening call numbers browse "Effective location (item)" facet', () => {
+    describe('and there are no selected options in other facets', () => {
+      it('should make a request with correct request options', () => {
+        const resources = {
+          query: {
+            qindex: browseCallNumberOptions.CALL_NUMBERS,
+            query: '',
+          },
+        };
+
+        const { getByText } = render(
+          <FacetsHoc
+            mutator={mutator}
+            resources={resources}
+            properties={{ facetToOpen: FACETS.EFFECTIVE_LOCATION }}
+            isBrowseLookup
+          />
+        );
+
+        fireEvent.click(getByText('fetchFacetsButton'));
+
+        expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+          params: {
+            facet: `${FACETS_CQL.EFFECTIVE_LOCATION}:6`,
+            query: '(items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="")',
+          },
+          path: 'search/instances/facets',
+        }));
+      });
+    });
+
+    describe('and there is a selected option in another facet', () => {
+      it.each([
+        'facetToOpen',
+        'onMoreClickedFacet',
+        'focusedFacet'
+      ])('should make correct request with "%s" property', (property) => {
+        const resources = {
+          query: {
+            qindex: browseCallNumberOptions.CALL_NUMBERS,
+            query: '',
+            contributorsTenantId: ['college'],
+          },
+        };
+
+        const { getByText } = render(
+          <FacetsHoc
+            mutator={mutator}
+            resources={resources}
+            properties={{ [property]: FACETS.EFFECTIVE_LOCATION }}
+            isBrowseLookup
+          />
+        );
+
+        fireEvent.click(getByText('fetchFacetsButton'));
+
+        expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+          params: {
+            facet: property === 'facetToOpen'
+              ? `${FACETS_CQL.EFFECTIVE_LOCATION}:6`
+              : `${FACETS_CQL.EFFECTIVE_LOCATION}`,
+            query: '(items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") ' +
+              'and instances.tenantId==("college")',
+          },
+          path: 'search/instances/facets',
+        }));
+      });
+    });
+
+    describe('and there is a value in the search box and user selects a facet option', () => {
+      it('should make a request with correct request options', () => {
+        const resources = {
+          query: {
+            qindex: browseCallNumberOptions.CALL_NUMBERS,
+            query: 'Marc Twain',
+            effectiveLocation: ['b9dc25a2-a7fb-48ad-8da5-8f68e35ba0af'],
+          },
+        };
+
+        const { getByText } = render(
+          <FacetsHoc
+            mutator={mutator}
+            resources={resources}
+            properties={{
+              accordions: { effectiveLocation: true },
+              accordionsData: { effectiveLocation: { isSelected: true } },
+            }}
+            isBrowseLookup
+          />
+        );
+
+        fireEvent.click(getByText('fetchFacetsButton'));
+
+        expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+          params: {
+            facet: `${FACETS_CQL.EFFECTIVE_LOCATION}`,
+            query: '(items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder=="") ' +
+              'and items.effectiveLocationId==("b9dc25a2-a7fb-48ad-8da5-8f68e35ba0af")',
           },
           path: 'search/instances/facets',
         }));
@@ -718,6 +823,39 @@ describe('withFacets', () => {
         },
         path: 'search/instances/facets',
       }));
+    });
+  });
+
+  describe('when opening the Contributor`s facet', () => {
+    describe('and the `selectedBrowseResult` parameter is true', () => {
+      it('should make a request with correct request options', () => {
+        const resources = {
+          query: {
+            qindex: 'contributor',
+            query: 'test',
+            filters: 'searchContributors.2b4007a7-2d96-4262-a360-c9f760e355c3',
+            selectedBrowseResult: 'true',
+          },
+        };
+
+        const { getByText } = render(
+          <FacetsHoc
+            mutator={mutator}
+            resources={resources}
+            properties={{ facetToOpen: FACETS.RESOURCE }}
+          />
+        );
+
+        fireEvent.click(getByText('fetchFacetsButton'));
+
+        expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+          params: {
+            facet: `${FACETS_CQL.INSTANCE_TYPE}:6`,
+            query: '(contributors.name==/string "test") and contributors.contributorNameTypeId=="2b4007a7-2d96-4262-a360-c9f760e355c3"',
+          },
+          path: 'search/instances/facets',
+        }));
+      });
     });
   });
 });

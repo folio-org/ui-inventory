@@ -16,6 +16,8 @@ import {
   Label,
 } from '@folio/stripes/components';
 
+import { parseEmptyFormValue } from '../utils';
+
 const ElectronicAccessFields = props => {
   const { formatMessage } = useIntl();
 
@@ -82,6 +84,7 @@ const ElectronicAccessFields = props => {
           aria-label={uriLabel}
           name={`${field}.uri`}
           component={TextArea}
+          parse={parseEmptyFormValue}
           rows={1}
           disabled={!canEdit}
         />
@@ -122,13 +125,7 @@ const ElectronicAccessFields = props => {
       component={RepeatableField}
       legend={<FormattedMessage id="ui-inventory.electronicAccess" />}
       addLabel={<FormattedMessage id="ui-inventory.addElectronicAccess" />}
-      onAdd={fields => fields.push({
-        relationshipId: '',
-        uri: '',
-        linkText: '',
-        materialsSpecification: '',
-        publicNote: '',
-      })}
+      onAdd={fields => fields.push({ uri: '' })}
       headLabels={headLabels}
       renderField={renderField}
       canAdd={canAdd}
