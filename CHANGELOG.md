@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [11.0.3] (IN PROGRESS)
+## [11.0.3](https://github.com/folio-org/ui-inventory/tree/v11.0.3) (2024-04-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.2...v11.0.3)
 
 * Fetch facets with the same query as `Contributor` records when the search is done by selecting browse result. Refs UIIN-2859.
 * Change the `Effective location` call numbers facet query to not see locations assigned to items with an empty `Effective call number` field. Refs UIIN-2871.
