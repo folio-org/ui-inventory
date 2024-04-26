@@ -105,7 +105,7 @@ describe('HoldingsRecordFilters', () => {
 
   it('Should Render Held by, Clear selectedfilters buttons', async () => {
     renderHoldingsRecordFilters();
-    const heldBy = screen.getByRole('button', { name: /Held by/i });
+    const heldBy = screen.getByRole('button', { name: /Held by filter list/i });
     userEvent.click(heldBy);
     const Clearselectedfilters = screen.getAllByRole('button');
     userEvent.click(Clearselectedfilters[3]);
