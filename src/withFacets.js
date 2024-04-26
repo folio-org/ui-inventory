@@ -25,7 +25,6 @@ import {
   browseModeMap,
   browseCallNumberOptions,
   queryIndexes,
-  browseClassificationOptions,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
@@ -133,10 +132,6 @@ function withFacets(WrappedComponent) {
 
       if (queryIndex === browseModeOptions.SUBJECTS) {
         return 'search/subjects/facets';
-      }
-
-      if (Object.values(browseClassificationOptions).includes(queryIndex)) {
-        return 'search/classifications/facets';
       }
 
       return 'search/instances/facets';
