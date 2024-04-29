@@ -92,7 +92,7 @@ const renderMoveHoldingContext = () => renderWithIntl(
 
 
 describe('MoveHoldingContext', () => {
-  it('should render correct holdings accordion for left pane', async () => {
+  it('should render correct holdings accordion for left pane', () => {
     const { getByTestId } = renderMoveHoldingContext();
 
     const leftPane = getByTestId('movement-from-instance-details');
@@ -107,7 +107,7 @@ describe('MoveHoldingContext', () => {
     expect(within(leftPane).getByText(/Drop holding/)).toBeInTheDocument();
   });
 
-  it('"Select holdings" checkbox functionality works as expected', async () => {
+  it('"Select holdings" checkbox functionality works as expected', () => {
     const { getByTestId } = renderMoveHoldingContext();
 
     const selectHoldingCheckbox = getByTestId('select-holding-c4a15834-0184-4a6f-9c0c-0ca5bad8286d');
@@ -143,6 +143,30 @@ describe('MoveHoldingContext', () => {
 
       expect(grid).toBeVisible();
       expect(rows).toHaveLength(3);
+
+      // render correct table headers
+      const titles = [
+        'Item: barcode',
+        'Status',
+        'Copy number',
+        'Loan type',
+        'Effective location',
+        'Enumeration',
+        'Chronology',
+        'Volume',
+        'Year, caption',
+        'Material type'
+      ];
+
+      titles.forEach(title => {
+        expect(within(rows[0]).getByText(title)).toBeInTheDocument();
+      });
+
+      // second row should have 'Inactive' cell
+      expect(within(rows[1]).getByText('Inactive')).toBeInTheDocument();
+
+      // should render 'End of list' indicator
+      expect(within(grid).getByText('End of list')).toBeInTheDocument();
     });
 
     fireEvent.click(within(rows[1]).getByRole('checkbox'));
