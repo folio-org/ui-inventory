@@ -63,6 +63,21 @@
 * Increase holdings limit to 5000. Fixes UIIN-2785.
 * User with "Inventory: All permissions" permission only should not be seeing the "Staff suppress" facet. Fixes UIIN-2807.
 
+## [10.0.14](https://github.com/folio-org/ui-inventory/tree/v10.0.14) (2024-04-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.13...v10.0.14)
+
+* Include mod-search permissions to "Inventory: Module is enabled" UI permission. Refs UIIN-2860.
+
+## [10.0.13](https://github.com/folio-org/ui-inventory/tree/v10.0.13) (2024-04-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.12...v10.0.13)
+
+* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
+
+## [10.0.12](https://github.com/folio-org/ui-inventory/tree/v10.0.12) (2024-04-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v10.0.12)
+
+* ECS - Member consortial accordion is not displaying when user have according affiliation but don't have permissions for view holdings. Fixes UIIN-2780.
+
 ## [10.0.11](https://github.com/folio-org/ui-inventory/tree/v10.0.11) (2024-03-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.10...v10.0.11)
 
