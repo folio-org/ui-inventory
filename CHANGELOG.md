@@ -10,8 +10,6 @@
 * Add new browse options for Instance classification numbers. Refs UIIN-2624.
 * Add new Instance search option `Classification, normalized` for the `Instance` toggle and advanced search modal. Refs UIIN-2801.
 * Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
-* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
-* Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
 * ECS Member tenant - add `Shared` and `Held by` facets for the `Classification` browse. Refs UIIN-2813.
 * Jest/RTL: Cover CalloutRenderer component with unit tests. Refs UIIN-2665.
 * Jest/RTL: Cover ConnectedTitle component with unit tests. Refs UIIN-2666.
@@ -19,10 +17,13 @@
 * Jest/RTL: Cover ImportRecord component with unit test. Refs UIIN-2667.
 * Jest/RTL: Cover MoveHoldingContext component with unit tests. Refs UIIN-2664.
 
-## [11.0.3] (IN PROGRESS)
+## [11.0.3](https://github.com/folio-org/ui-inventory/tree/v11.0.3) (2024-04-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.2...v11.0.3)
 
 * Fetch facets with the same query as `Contributor` records when the search is done by selecting browse result. Refs UIIN-2859.
 * Change the `Effective location` call numbers facet query to not see locations assigned to items with an empty `Effective call number` field. Refs UIIN-2871.
+* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
+* Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
 
 ## [11.0.2](https://github.com/folio-org/ui-inventory/tree/v11.0.2) (2024-04-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.1...v11.0.2)
@@ -78,6 +79,11 @@
 * Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
 * Increase holdings limit to 5000. Fixes UIIN-2785.
 * User with "Inventory: All permissions" permission only should not be seeing the "Staff suppress" facet. Fixes UIIN-2807.
+
+## [10.0.14](https://github.com/folio-org/ui-inventory/tree/v10.0.14) (2024-04-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.13...v10.0.14)
+
+* Include mod-search permissions to "Inventory: Module is enabled" UI permission. Refs UIIN-2860.
 
 ## [10.0.13](https://github.com/folio-org/ui-inventory/tree/v10.0.13) (2024-04-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.12...v10.0.13)
