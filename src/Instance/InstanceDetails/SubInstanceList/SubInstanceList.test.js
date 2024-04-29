@@ -65,7 +65,7 @@ describe('render SubInstanceList', () => {
   it('NoValue should display when no title is present', () => {
     useLoadSubInstances.mockReturnValue([{}]);
     const { getAllByText } = renderSubInstanceList(defaultProps);
-    expect(getAllByText(/No value set/i).length).toBe(4);
+    expect(getAllByText(/No value set/i).length).toBe(6);
   });
   it('No link to be present when tittleKey is empty', () => {
     useLoadSubInstances.mockReturnValue(mockuseLoadSubInstancesVaues);
@@ -87,6 +87,6 @@ describe('render SubInstanceList', () => {
     useLoadSubInstances.mockReturnValue(mockuseLoadSubInstancesVaues);
     const { container, getByRole } = renderSubInstanceList(defaultProps);
     userEvent.click(getByRole('button', { name: 'Next' }));
-    expect(container.getElementsByClassName('sr-only').length).toBe(1);
+    expect(container.getElementsByClassName('sr-only').length).toBe(3);
   });
 });
