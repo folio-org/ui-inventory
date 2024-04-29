@@ -17,6 +17,7 @@
 * Jest/RTL: Cover ConnectedTitle component with unit tests. Refs UIIN-2666.
 * Jest/RTL: Cover InstancePlugin component with unit tests. Refs UIIN-2668.
 * Jest/RTL: Cover ImportRecord component with unit test. Refs UIIN-2667.
+* Jest/RTL: Cover MoveHoldingContext component with unit tests. Refs UIIN-2664.
 
 ## [11.0.3] (IN PROGRESS)
 
