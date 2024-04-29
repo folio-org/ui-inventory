@@ -5,7 +5,7 @@ import ky from 'ky';
 import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import ImportRecord from './ImportRecord';
 import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
-import '../../../test/jest/__mock__';
+
 import { renderWithIntl } from '../../../test/jest/helpers';
 import renderWithRouter from '../../../test/jest/helpers/renderWithRouter';
 
