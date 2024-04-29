@@ -62,6 +62,21 @@ const InventoryRouting = (props) => {
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
   const { showSettings, match: { path } } = props;
 
+  const keyboardShortcuts = [
+    ...defaultKeyboardShortcuts.slice(0, 9),
+    {
+      label: <FormattedMessage id="ui-inventory.shortcut.nextSubfield" />,
+      name: 'NEXT_SUBFIELD',
+      shortcut: 'Ctrl + ]',
+    },
+    {
+      label: <FormattedMessage id="ui-inventory.shortcut.prevSubfield" />,
+      name: 'PREV_SUBFIELD',
+      shortcut: 'Ctrl + [',
+    },
+    ...defaultKeyboardShortcuts.slice(9),
+  ];
+
   useEffect(() => {
     return () => {
       sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
@@ -210,7 +225,7 @@ const InventoryRouting = (props) => {
           </CommandList>
           {isShortcutsModalOpen && (
             <KeyboardShortcutsModal
-              allCommands={defaultKeyboardShortcuts}
+              allCommands={keyboardShortcuts}
               onClose={toggleModal}
             />
           )}

@@ -77,6 +77,8 @@ const activeFilters = {
   callNumbersTenantId: ['college'],
   contributorsShared: ['true'],
   contributorsTenantId: ['consortium'],
+  classificationShared: ['true'],
+  classificationTenantId: ['college'],
   subjectsShared: ['true'],
   subjectsTenantId: ['consortium'],
   nameType: ['nameType1'],
@@ -206,6 +208,56 @@ describe('InstanceFilters', () => {
 
       expect(getByText('University')).toBeVisible();
       expect(getByText('College')).toBeVisible();
+    });
+  });
+
+  describe('when "Classification (all)" browse sub-type was selected', () => {
+    it('should display "Shared" facet', () => {
+      const { getByText } = renderInstanceFilters({
+        data: {
+          ...data,
+          browseType: browseModeOptions.CLASSIFICATION_ALL,
+        },
+      });
+
+      expect(getByText('Shared')).toBeInTheDocument();
+    });
+
+    describe('when the "Shared" facet option with 0 count', () => {
+      it('should be visible', () => {
+        const parentResources = {
+          facets: {
+            records: [
+              {
+                'instances.shared': {
+                  'values': [{
+                    'id': 'false',
+                    'totalRecords': 1,
+                  }],
+                  'totalRecords': 1
+                },
+              }
+            ]
+          }
+        };
+
+        const { getByText, getByRole } = renderInstanceFilters({
+          activeFilters: {
+            classificationShared: ['false', 'true'],
+          },
+          browseType: 'deweyClassification',
+          data: {
+            ...data,
+            browseType: browseModeOptions.DEWEY_CLASSIFICATION,
+            parentResources,
+          },
+        });
+
+        fireEvent.click(getByText('Shared'));
+
+        expect(getByRole('checkbox', { name: 'No 1' })).toBeVisible();
+        expect(getByRole('checkbox', { name: 'Yes 0' })).toBeVisible();
+      });
     });
   });
 

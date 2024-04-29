@@ -75,7 +75,13 @@ const mockStripesCore = {
     return <Component {...rest} mutator={fakeMutator} resources={fakeResources} stripes={fakeStripes} />;
   },
 
-  useOkapiKy: jest.fn(),
+  useOkapiKy: jest.fn().mockReturnValue({
+    get: jest.fn(),
+    post: jest.fn(),
+    put: jest.fn(),
+    delete: jest.fn(),
+    extend: jest.fn().mockReturnValue(this),
+  }),
 
   useStripes: () => STRIPES,
 
@@ -90,6 +96,8 @@ const mockStripesCore = {
 
   // eslint-disable-next-line react/prop-types
   IfPermission: jest.fn(props => <>{props.children}</>),
+
+  withOkapiKy: jest.fn((Component) => (props) => <Component {...props} />),
 
   // eslint-disable-next-line react/prop-types
   IfInterface: jest.fn(props => <>{props.children}</>),

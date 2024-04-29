@@ -83,8 +83,7 @@
       "material-types": "2.0",
       "modes-of-issuance": "1.0",
       "nature-of-content-terms": "1.0",
-      "permissions": "5.6",
-      "search": "0.7 1.0",
+      "search": "0.7 1.0 1.3",
       "source-storage-records": "3.0",
       "statistical-code-types": "1.0",
       "statistical-codes": "1.0",
@@ -250,6 +249,18 @@
           "inventory-storage.holdings-types.item.post",
           "inventory-storage.holdings-types.item.put",
           "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.classification-browse",
+        "displayName": "Settings (Inventory): Configure classification browse",
+        "subPermissions": [
+          "settings.inventory.enabled",
+          "inventory-storage.classification-types.collection.get",
+          "browse.config.collection.get",
+          "browse.config.item.put",
+          "perms.users.get"
         ],
         "visible": true
       },
@@ -556,6 +567,7 @@
           "browse.call-numbers.instances.collection.get",
           "browse.contributors.instances.collection.get",
           "browse.subjects.instances.collection.get",
+          "browse.classification-numbers.instances.collection.get",
           "perms.users.get",
           "inventory-storage.bound-with-parts.collection.get"
         ],

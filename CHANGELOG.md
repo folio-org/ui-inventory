@@ -1,5 +1,21 @@
 # Change history for ui-inventory
 
+## [11.1.0] (IN PROGRESS)
+
+* Remove unused code related to auto-open record detail view. Refs UIIN-2819.
+* Replace `all` with the `=` operator to get correct results when using the `All` search option. Refs UIIN-2816.
+* Keyboard shortcuts modal: Add quickMARC shortcuts to modal. Refs UIIN-2795.
+* Create new settings for classification type sorting. Refs UIIN-2775.
+* Add "Display to public" column to receiving history on Holdings. Refs UIIN-2826.
+* Add new browse options for Instance classification numbers. Refs UIIN-2624.
+* Add new Instance search option `Classification, normalized` for the `Instance` toggle and advanced search modal. Refs UIIN-2801.
+* Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
+* ECS Member tenant - add `Shared` and `Held by` facets for the `Classification` browse. Refs UIIN-2813.
+* Jest/RTL: Cover CalloutRenderer component with unit tests. Refs UIIN-2665.
+* Jest/RTL: Cover ConnectedTitle component with unit tests. Refs UIIN-2666.
+* Jest/RTL: Cover InstancePlugin component with unit tests. Refs UIIN-2668.
+* Jest/RTL: Cover ImportRecord component with unit test. Refs UIIN-2667.
+
 ## [11.0.3](https://github.com/folio-org/ui-inventory/tree/v11.0.3) (2024-04-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.2...v11.0.3)
 
@@ -76,7 +92,7 @@
 ## [10.0.12](https://github.com/folio-org/ui-inventory/tree/v10.0.12) (2024-04-10)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v10.0.12)
 
-* ECS - Member consortial accordion is not displaying when user have according affiliation but don't have permissions for view holdings. Fixes UIIN-2780.
+* ECS - Member consortial accordion is not displaying when a user has affiliations but does not have permission to view holdings. Fixes UIIN-2780.
 
 ## [10.0.11](https://github.com/folio-org/ui-inventory/tree/v10.0.11) (2024-03-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.10...v10.0.11)

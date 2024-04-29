@@ -115,8 +115,15 @@ export const browseCallNumberOptions = {
   SUPERINTENDENT: 'sudoc',
 };
 
+export const browseClassificationOptions = {
+  CLASSIFICATION_ALL: 'classificationAll',
+  DEWEY_CLASSIFICATION: 'deweyClassification',
+  LC_CLASSIFICATION: 'lcClassification',
+};
+
 export const browseModeOptions = {
   ...browseCallNumberOptions,
+  ...browseClassificationOptions,
   CONTRIBUTORS: 'contributors',
   SUBJECTS: 'browseSubjects',
 };
@@ -201,6 +208,9 @@ export const queryIndexes = {
   NATIONAL_LIBRARY_OF_MEDICINE: 'nlm',
   OTHER: 'other',
   SUPERINTENDENT: 'sudoc',
+  CLASSIFICATION_ALL: browseClassificationOptions.CLASSIFICATION_ALL,
+  DEWEY_CLASSIFICATION: browseClassificationOptions.DEWEY_CLASSIFICATION,
+  LC_CLASSIFICATION: browseClassificationOptions.LC_CLASSIFICATION,
   CONTRIBUTOR: 'contributor',
   ADVANCED_SEARCH: 'advancedSearch',
 };
@@ -253,6 +263,7 @@ export const DEFAULT_FILTERS_NUMBER = 6;
 
 export const FACETS = {
   SHARED: 'shared',
+  CLASSIFICATION_SHARED: 'classificationShared',
   CONTRIBUTORS_SHARED: 'contributorsShared',
   SUBJECTS_SHARED: 'subjectsShared',
   HELD_BY: 'tenantId',
@@ -334,6 +345,7 @@ export const FACETS_CQL = {
 
 export const FACETS_TO_REQUEST = {
   [FACETS.SHARED]: FACETS_CQL.SHARED,
+  [FACETS.CLASSIFICATION_SHARED]: FACETS_CQL.INSTANCES_SHARED,
   [FACETS.CONTRIBUTORS_SHARED]: FACETS_CQL.INSTANCES_SHARED,
   [FACETS.SUBJECTS_SHARED]: FACETS_CQL.INSTANCES_SHARED,
   [FACETS.HELD_BY]: FACETS_CQL.HELD_BY,
@@ -504,6 +516,20 @@ export const fieldSearchConfigurations = {
     startsWith: 'identifiers.value="%{query.query}*"',
     containsAny: 'identifiers.value any "*%{query.query}*"',
   },
+  normalizedClassificationNumber: {
+    exactPhrase: 'normalizedClassificationNumber=="%{query.query}"',
+    containsAll: 'normalizedClassificationNumber="*%{query.query}*"',
+    startsWith: 'normalizedClassificationNumber="%{query.query}*"',
+    containsAny: ({ query }) => {
+      // BE doesn't support the `any` operator for `normalizedClassificationNumber` due to its normalization.
+      // But UI can split the user input by spaces to get correct results.
+      return query.split(/\s/)
+        .filter(Boolean)
+        .map(q => q.replaceAll('"', '\\"'))
+        .map(q => `normalizedClassificationNumber any "*${q}*"`)
+        .join(' or ');
+    },
+  },
   oclc: {
     exactPhrase: 'oclc=="%{query.query}"',
     containsAll: 'oclc="*%{query.query}*"',
@@ -554,8 +580,8 @@ export const fieldSearchConfigurations = {
   },
   allFields: {
     exactPhrase: 'cql.all=="%{query.query}"',
-    containsAll: 'cql.all all "%{query.query}"',
-    startsWith: 'cql.all all "%{query.query}*"',
+    containsAll: 'cql.all="%{query.query}"',
+    startsWith: 'cql.all="%{query.query}*"',
     containsAny: 'cql.all any "%{query.query}"',
   },
   holdingsFullCallNumbers: {

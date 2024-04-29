@@ -32,6 +32,7 @@ import ModesOfIssuanceSettings from './ModesOfIssuanceSettings';
 import InstanceNoteTypesSettings from './InstanceNoteTypesSettings';
 import NatureOfContentTermsSettings from './NatureOfContentTermsSettings';
 import FastAddSettings from './FastAdd/FastAddSettings';
+import ClassificationBrowseSettings from './ClassificationBrowseSettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -46,6 +47,12 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.alternativeTitleTypes" />,
             component: AlternativeTitleTypesSettings,
             perm: this.addPerm('ui-inventory.settings.alternative-title-types'),
+          },
+          {
+            route: 'classificationBrowse',
+            label: <FormattedMessage id="ui-inventory.classificationBrowse" />,
+            component: ClassificationBrowseSettings,
+            perm: 'ui-inventory.settings.classification-browse',
           },
           {
             route: 'classificationTypes',

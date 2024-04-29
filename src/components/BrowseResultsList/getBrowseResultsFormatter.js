@@ -121,6 +121,12 @@ const getBrowseResultsFormatter = ({
       }
       return <MissedMatchItem query={r.fullCallNumber} />;
     },
+    classificationNumber: r => {
+      if (r?.totalRecords) {
+        return getTargetRecord(r?.classificationNumber, r, browseOption, filters);
+      }
+      return <MissedMatchItem query={r.classificationNumber} />;
+    },
     contributor: r => {
       if (!r?.totalRecords && r?.isAnchor) {
         return <MissedMatchItem query={r.name} />;

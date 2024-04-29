@@ -2,6 +2,7 @@ import omit from 'lodash/omit';
 
 import {
   browseCallNumberOptions,
+  browseClassificationOptions,
   browseModeOptions,
   FACETS,
   queryIndexes,
@@ -51,6 +52,8 @@ const getExtraFilters = (row, qindex, allFilters) => {
   } else if (Object.values(browseCallNumberOptions).includes(qindex)) {
     sharedFacetName = FACETS.SHARED;
     heldByFacetName = FACETS.CALL_NUMBERS_HELD_BY;
+  } else if (Object.values(browseClassificationOptions).includes(qindex)) {
+    sharedFacetName = FACETS.CLASSIFICATION_SHARED;
   }
 
   const sharedExtraFacets = facetsToString(filtersOnly, sharedFacetName, FACETS.SHARED);
@@ -62,6 +65,12 @@ const getExtraFilters = (row, qindex, allFilters) => {
 
 export const getSearchParams = (row, qindex, allFilters) => {
   const filters = getExtraFilters(row, qindex, allFilters);
+
+  const classificationOption = {
+    qindex: queryIndexes.QUERY_SEARCH,
+    query: `classifications.classificationNumber=="${row.classificationNumber}"`,
+    ...filters,
+  };
 
   const optionsMap = {
     [browseModeOptions.CALL_NUMBERS]: {
@@ -99,6 +108,9 @@ export const getSearchParams = (row, qindex, allFilters) => {
       query: row.shelfKey,
       ...filters,
     },
+    [browseModeOptions.CLASSIFICATION_ALL]: classificationOption,
+    [browseModeOptions.DEWEY_CLASSIFICATION]: classificationOption,
+    [browseModeOptions.LC_CLASSIFICATION]: classificationOption,
     [browseModeOptions.CONTRIBUTORS]: {
       qindex: queryIndexes.CONTRIBUTOR,
       query: row.name,
