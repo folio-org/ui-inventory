@@ -119,7 +119,7 @@ describe('MoveHoldingContext', () => {
     expect(selectHoldingCheckbox).not.toBeChecked();
   });
 
-  it('should render confirmation modal with initial state in background', async () => {
+  it('should render confirmation modal with initial state in background', () => {
     const { getByText } = renderMoveHoldingContext();
 
     expect(getByText(/ConfirmationModal/)).toBeInTheDocument();
@@ -198,7 +198,7 @@ describe('MoveHoldingContext', () => {
       expect(getByText('1 holding will be moved to')).toBeInTheDocument();
     };
 
-    it('should move selected holdings if "Confirm button" is clicked', async () => {
+    it('should move selected holdings if "Confirm button" is clicked', () => {
       const { getByText, getByTestId } = renderMoveHoldingContext();
 
       clickMoveFlow({ getByText, getByTestId });
@@ -210,7 +210,7 @@ describe('MoveHoldingContext', () => {
       expect(screen.queryByText('Loading')).toBeInTheDocument();
     });
 
-    it('should close modal and stop moving when "Cancel" is clicked', async () => {
+    it('should close modal and stop moving when "Cancel" is clicked', () => {
       const { getByText, getByTestId } = renderMoveHoldingContext();
 
       clickMoveFlow({ getByText, getByTestId });
