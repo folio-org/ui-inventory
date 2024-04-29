@@ -16,6 +16,7 @@
 * Jest/RTL: Cover CalloutRenderer component with unit tests. Refs UIIN-2665.
 * Jest/RTL: Cover ConnectedTitle component with unit tests. Refs UIIN-2666.
 * Jest/RTL: Cover InstancePlugin component with unit tests. Refs UIIN-2668.
+* Jest/RTL: Cover ImportRecord component with unit test. Refs UIIN-2667.
 
 ## [11.0.3] (IN PROGRESS)
 
