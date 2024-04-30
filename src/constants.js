@@ -554,8 +554,8 @@ export const fieldSearchConfigurations = {
   },
   allFields: {
     exactPhrase: 'cql.all=="%{query.query}"',
-    containsAll: 'cql.all all "%{query.query}"',
-    startsWith: 'cql.all all "%{query.query}*"',
+    containsAll: 'cql.all="%{query.query}"',
+    startsWith: 'cql.all="%{query.query}*"',
     containsAny: 'cql.all any "%{query.query}"',
   },
   holdingsFullCallNumbers: {
