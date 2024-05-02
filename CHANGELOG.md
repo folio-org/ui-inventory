@@ -15,6 +15,7 @@
 * Jest/RTL: Cover InstancePlugin component with unit tests. Refs UIIN-2668.
 * Jest/RTL: Cover ImportRecord component with unit test. Refs UIIN-2667.
 * Jest/RTL: Cover MoveHoldingContext component with unit tests. Refs UIIN-2664.
+* Use consolidated locations endpoint to fetch all locations when in central tenant context. Refs UIIN-2811.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
