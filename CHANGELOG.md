@@ -3,7 +3,6 @@
 ## [11.1.0] (IN PROGRESS)
 
 * Remove unused code related to auto-open record detail view. Refs UIIN-2819.
-* Replace `all` with the `=` operator to get correct results when using the `All` search option. Refs UIIN-2816.
 * Keyboard shortcuts modal: Add quickMARC shortcuts to modal. Refs UIIN-2795.
 * Create new settings for classification type sorting. Refs UIIN-2775.
 * Add "Display to public" column to receiving history on Holdings. Refs UIIN-2826.
@@ -17,6 +16,11 @@
 * Jest/RTL: Cover ImportRecord component with unit test. Refs UIIN-2667.
 * Jest/RTL: Cover MoveHoldingContext component with unit tests. Refs UIIN-2664.
 * Use consolidated locations endpoint to fetch all locations when in central tenant context. Refs UIIN-2811.
+
+## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
+
+* Replace `all` with the `=` operator to get correct results when using the `All` search option. Refs UIIN-2816.
 
 ## [11.0.3](https://github.com/folio-org/ui-inventory/tree/v11.0.3) (2024-04-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.2...v11.0.3)
