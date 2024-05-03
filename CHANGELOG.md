@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## **10.0.15** (in progress)
+
+* Use useTenantKy instead of useOkapiKy. Fixes UIIN-2886.
+
 ## [10.0.14](https://github.com/folio-org/ui-inventory/tree/v10.0.14) (2024-04-25)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.13...v10.0.14)
 
