@@ -474,6 +474,8 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
     }
   });
 
+  if (!result.length) return null;
+
   return (
     <div>
       {result.map((value, index) => <div>{`${value}${index !== result.length - 1 ? ',' : ''}`}</div>)}

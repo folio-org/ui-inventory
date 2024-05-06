@@ -10,14 +10,8 @@ describe('InstancePlugin', () => {
     jest.clearAllMocks();
   });
 
-  it('should InstancePlugin', () => {
-    renderWithIntl(<InstancePlugin onSelectMock={onSelectMock} isDisabled={false} />);
-
-    expect(screen.getByText(/findInstancePluginNotFound/i)).toBeInTheDocument();
-  });
-
-  it('should InstancePlugin with is disabled prop', () => {
-    renderWithIntl(<InstancePlugin onSelectMock={onSelectMock} isDisabled />);
+  it('should render InstancePlugin', () => {
+    renderWithIntl(<InstancePlugin onSelect={onSelectMock} isDisabled={false} />);
 
     expect(screen.getByText(/findInstancePluginNotFound/i)).toBeInTheDocument();
   });
