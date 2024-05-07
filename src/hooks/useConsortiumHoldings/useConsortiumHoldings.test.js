@@ -8,15 +8,15 @@ import {
   renderHook,
   act,
 } from '@folio/jest-config-stripes/testing-library/react';
-import { useOkapiKy } from '@folio/stripes/core';
 
 import '../../../test/jest/__mock__';
 
 import useConsortiumHoldings from './useConsortiumHoldings';
+import { useTenantKy } from '../../common';
 
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useOkapiKy: jest.fn(),
+jest.mock('../../common', () => ({
+  ...jest.requireActual('../../common'),
+  useTenantKy: jest.fn(),
 }));
 
 const queryClient = new QueryClient();
@@ -28,7 +28,7 @@ const wrapper = ({ children }) => (
 
 describe('useConsortiumHoldings', () => {
   beforeEach(() => {
-    useOkapiKy.mockClear().mockReturnValue({
+    useTenantKy.mockClear().mockReturnValue({
       get: () => ({
         json: () => Promise.resolve({ holdings: [{ id: 'holdings-id' }] }),
       }),

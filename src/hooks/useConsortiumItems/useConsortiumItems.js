@@ -3,15 +3,16 @@ import { useQuery } from 'react-query';
 import {
   useNamespace,
   useStripes,
-  useOkapiKy,
 } from '@folio/stripes/core';
+
+import { useTenantKy } from '../../common';
 
 const useConsortiumItems = (instanceId, holdingsRecordId, tenant, { searchParams } = {}) => {
   const stripes = useStripes();
   const consortium = stripes.user?.user?.consortium;
   const centralTenantId = consortium?.centralTenantId;
 
-  const ky = useOkapiKy({ tenant: centralTenantId });
+  const ky = useTenantKy({ tenantId: centralTenantId });
   const [namespace] = useNamespace({ key: 'search-tenants-items-by-instance-and-holdings-id' });
 
   const { isLoading, isFetching, data = {} } = useQuery({
