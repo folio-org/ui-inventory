@@ -47,6 +47,10 @@ const DataProvider = ({
   const { data: locationsOfAllTenants } = useLocationsForTenants({ tenantIds });
 
   useEffect(() => {
+    if (isUserInConsortiumMode(stripes)) {
+      return;
+    }
+
     mutator.locations.GET({ tenant: stripes.okapi.tenant });
   }, [stripes.okapi.tenant]);
 
