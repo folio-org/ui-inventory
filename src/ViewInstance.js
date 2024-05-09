@@ -1067,6 +1067,12 @@ class ViewInstance extends React.Component {
         }),
       },
       {
+        name: 'editMARC',
+        handler: handleKeyCommand(() => {
+          if (stripes.hasPerm('ui-quick-marc.quick-marc-editor.all')) this.editInstanceMarc();
+        }),
+      },
+      {
         name: 'duplicateRecord',
         handler: handleKeyCommand(() => {
           if (stripes.hasPerm('ui-inventory.instance.create')) onCopy(instance);
