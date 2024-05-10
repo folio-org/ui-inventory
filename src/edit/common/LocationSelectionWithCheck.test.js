@@ -1,11 +1,13 @@
 import React from 'react';
+
 import {
   screen,
   act,
 } from '@folio/jest-config-stripes/testing-library/react';
 import { fireEvent } from '@folio/jest-config-stripes/testing-library/dom';
-import { LocationSelectionWithCheck } from './LocationSelectionWithCheck';
+
 import '../../../test/jest/__mock__';
+import { LocationSelectionWithCheck } from './LocationSelectionWithCheck';
 import { renderWithFinalForm, renderWithIntl } from '../../../test/jest/helpers';
 import renderWithRouter from '../../../test/jest/helpers/renderWithRouter';
 
@@ -19,11 +21,20 @@ jest.mock('../../RemoteStorageService', () => ({
   },
 }));
 
-jest.mock('@folio/stripes/smart-components', () => ({ ...jest.requireActual('@folio/stripes/smart-components'),
-  LocationSelection: (props) => {
-    const { onSelect, resources } = props;
-    return (<button type="button" data-testid="selection-id" onClick={() => onSelect(resources.locations.records)}>LocationSelection</button>);
-  } }));
+jest.mock('@folio/stripes/smart-components', () => (
+  { ...jest.requireActual('@folio/stripes/smart-components'),
+    LocationSelection: (props) => {
+      const { onSelect, resources } = props;
+      return (
+        <button
+          type="button"
+          data-testid="selection-id"
+          onClick={() => onSelect(resources.locations.records)}
+        >
+          LocationSelection
+        </button>
+      );
+    } }));
 
 const inputMock = {
   value: 'test',
@@ -64,6 +75,7 @@ describe('LocationSelectionWithCheck', () => {
     act(() => fireEvent.click(screen.getByTestId('selection-id')));
 
     fireEvent.click(confirmButton);
+    expect(inputMock.onChange).toHaveBeenCalled();
   });
 
   it('render with selected location and cancel changes', async () => {
@@ -76,5 +88,6 @@ describe('LocationSelectionWithCheck', () => {
     act(() => fireEvent.click(screen.getByTestId('selection-id')));
 
     fireEvent.click(cancelButton);
+    expect(inputMock.onChange).not.toHaveBeenCalled();
   });
 });
