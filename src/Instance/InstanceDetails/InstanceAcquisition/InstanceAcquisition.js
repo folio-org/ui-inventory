@@ -11,7 +11,7 @@ import useInstanceAcquisition from './useInstanceAcquisition';
 
 import TenantAcquisition from './TenantAcquisition';
 
-import css from './TenantAcquisition.css';
+import css from './InstanceAcquisition.css';
 
 const InstanceAcquisition = ({ accordionId, instanceId }) => {
   const stripes = useStripes();
