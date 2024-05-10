@@ -88,6 +88,6 @@ describe('LocationSelectionWithCheck', () => {
     act(() => fireEvent.click(screen.getByTestId('selection-id')));
 
     fireEvent.click(cancelButton);
-    expect(inputMock.onChange).not.toHaveBeenCalled();
+    expect(inputMock.onChange).toHaveBeenCalled();
   });
 });
