@@ -16,6 +16,7 @@
 * Jest/RTL: Cover ImportRecord component with unit test. Refs UIIN-2667.
 * Jest/RTL: Cover MoveHoldingContext component with unit tests. Refs UIIN-2664.
 * Use consolidated locations endpoint to fetch all locations when in central tenant context. Refs UIIN-2811.
+* Change label of eye-readable call number search option in holdings/items. Refs UIIN-2797.
 * Jest/RTL: Cover ModalContent components with unit tests. Refs UIIN-2669.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
