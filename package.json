@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "11.0.3",
+  "version": "11.0.4",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -569,7 +569,8 @@
           "browse.subjects.instances.collection.get",
           "browse.classification-numbers.instances.collection.get",
           "perms.users.get",
-          "inventory-storage.bound-with-parts.collection.get"
+          "inventory-storage.bound-with-parts.collection.get",
+          "consortium-search.locations.collection.get"
         ],
         "visible": true
       },

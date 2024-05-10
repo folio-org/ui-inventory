@@ -47,6 +47,10 @@ const DataProvider = ({
   const { data: locationsOfAllTenants } = useLocationsForTenants({ tenantIds });
 
   useEffect(() => {
+    if (isUserInConsortiumMode(stripes)) {
+      return;
+    }
+
     mutator.locations.GET({ tenant: stripes.okapi.tenant });
   }, [stripes.okapi.tenant]);
 
@@ -134,42 +138,49 @@ DataProvider.manifest = {
     records: 'identifierTypes',
     path: 'identifier-types?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   contributorTypes: {
     type: 'okapi',
     records: 'contributorTypes',
     path: 'contributor-types?limit=400&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   contributorNameTypes: {
     type: 'okapi',
     records: 'contributorNameTypes',
     path: 'contributor-name-types?limit=1000&query=cql.allRecords=1 sortby ordering',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   instanceFormats: {
     type: 'okapi',
     records: 'instanceFormats',
     path: 'instance-formats?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   instanceTypes: {
     type: 'okapi',
     records: 'instanceTypes',
     path: 'instance-types?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   classificationTypes: {
     type: 'okapi',
     records: 'classificationTypes',
     path: 'classification-types?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   alternativeTitleTypes: {
     type: 'okapi',
     records: 'alternativeTitleTypes',
     path: 'alternative-title-types?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   locations: {
     type: 'okapi',
@@ -181,24 +192,28 @@ DataProvider.manifest = {
     },
     accumulate: true,
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   instanceRelationshipTypes: {
     type: 'okapi',
     records: 'instanceRelationshipTypes',
     path: 'instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   instanceStatuses: {
     type: 'okapi',
     records: 'instanceStatuses',
     path: 'instance-statuses?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   modesOfIssuance: {
     type: 'okapi',
     records: 'issuanceModes',
     path: 'modes-of-issuance?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   instanceNoteTypes: {
     type: 'okapi',
@@ -209,48 +224,56 @@ DataProvider.manifest = {
     },
     records: 'instanceNoteTypes',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   electronicAccessRelationships: {
     type: 'okapi',
     records: 'electronicAccessRelationships',
     path: 'electronic-access-relationships?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   statisticalCodeTypes: {
     type: 'okapi',
     records: 'statisticalCodeTypes',
     path: 'statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   statisticalCodes: {
     type: 'okapi',
     records: 'statisticalCodes',
     path: 'statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   illPolicies: {
     type: 'okapi',
     path: 'ill-policies?limit=1000&query=cql.allRecords=1 sortby name',
     records: 'illPolicies',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   holdingsTypes: {
     type: 'okapi',
     path: 'holdings-types?limit=1000&query=cql.allRecords=1 sortby name',
     records: 'holdingsTypes',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   callNumberTypes: {
     type: 'okapi',
     path: 'call-number-types?limit=1000&query=cql.allRecords=1 sortby name',
     records: 'callNumberTypes',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   holdingsNoteTypes: {
     type: 'okapi',
     path: 'holdings-note-types?limit=1000&query=cql.allRecords=1 sortby name',
     records: 'holdingsNoteTypes',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   itemNoteTypes: {
     type: 'okapi',
@@ -261,18 +284,21 @@ DataProvider.manifest = {
     },
     records: 'itemNoteTypes',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   itemDamagedStatuses: {
     type: 'okapi',
     path: 'item-damaged-statuses?limit=1000&query=cql.allRecords=1 sortby name',
     records: 'itemDamageStatuses',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   natureOfContentTerms: {
     type: 'okapi',
     path: 'nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
     records: 'natureOfContentTerms',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   materialTypes: {
     type: 'okapi',
@@ -283,6 +309,7 @@ DataProvider.manifest = {
     },
     records: 'mtypes',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   loanTypes: {
     type: 'okapi',
@@ -293,6 +320,7 @@ DataProvider.manifest = {
     },
     records: 'loantypes',
     resourceShouldRefresh: true,
+    throwErrors: false,
   },
   tags: {
     path: 'tags?limit=10000',  // the same as Tags component in stripes-smart-components
@@ -310,6 +338,7 @@ DataProvider.manifest = {
     },
     records: 'holdingsRecordsSources',
     resourceShouldRefresh: true,
+    throwErrors: false,
   }
 };
 
