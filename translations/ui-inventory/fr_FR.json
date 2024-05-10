@@ -768,7 +768,7 @@
     "ariaLabel.createJobProfile": "Set {profileIndex} job profile for create as default",
     "ariaLabel.updateJobProfile": "Set {profileIndex} job profile for update as default",
     "jobProfiles.info": "Review the listed job profiles carefully before assigning for Inventory single record imports. Only MARC Bibliographic job profiles can be assigned, not MARC Holdings or MARC Authority job profiles.",
-    "copycat.overlaySourceBib": "Overlay source bibliographic record",
+    "copycat.overlaySourceBib": "Écraser la notice bibliographique source",
     "copycat.overlayJobProfileToBeUsed": "Select the profile to be used to overlay the current data",
     "effectiveLocationHoldings": "Effective location for holdings",
     "info.effectiveCallNumber": "This field contains the item call number, which is either inherited from the holdings record, or is the updated call number on the item record. While browsing call numbers, this field will be searched.",
