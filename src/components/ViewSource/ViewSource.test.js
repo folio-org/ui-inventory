@@ -1,5 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  useHistory,
+} from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
 
 import {
@@ -18,6 +21,12 @@ import { CONSORTIUM_PREFIX } from '../../constants';
 import MARC_TYPES from './marcTypes';
 
 jest.mock('../../common/hooks/useGoBack', () => jest.fn());
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: jest.fn().mockReturnValue({
+    push: jest.fn(),
+  }),
+}));
 
 const mutator = {
   marcRecord: {
@@ -26,6 +35,7 @@ const mutator = {
 };
 
 const mockGoBack = jest.fn();
+const mockPush = jest.fn();
 const mockInstance = {
   id: 'instance-id',
   title: 'Instance title',
@@ -49,6 +59,9 @@ const getViewSource = (props = {}) => (
 
 describe('ViewSource', () => {
   beforeEach(() => {
+    useHistory.mockClear().mockReturnValue({
+      push: mockPush,
+    });
     useGoBack.mockReturnValue(mockGoBack);
   });
 
@@ -151,6 +164,23 @@ describe('ViewSource', () => {
 
     it('should display "local marc bibliographic record" message', () => {
       expect(screen.getByText('Local MARC bibliographic record')).toBeInTheDocument();
+    });
+  });
+
+  describe('when using an editMARC shortcut', () => {
+    beforeEach(async () => {
+      await act(async () => {
+        await renderWithIntl(getViewSource(), translations);
+      });
+    });
+
+    it('should redirect to marc edit page', () => {
+      fireEvent.click(screen.getByRole('button', { name: 'editMARC' }));
+
+      expect(mockPush).toHaveBeenLastCalledWith({
+        pathname: `/inventory/quick-marc/edit-bib/${mockInstance.id}`,
+        search: 'shared=false',
+      });
     });
   });
 });

@@ -1162,4 +1162,19 @@ describe('ViewInstance', () => {
       expect(spyOnexpandAllSections).toBeCalled();
     });
   });
+
+  describe('when using an editMARC shortcut', () => {
+    it('should redirect to marc edit page', () => {
+      renderViewInstance({
+        isShared: true,
+      });
+
+      fireEvent.click(screen.getByRole('button', { name: 'editMARC' }));
+
+      expect(mockPush).toHaveBeenLastCalledWith({
+        pathname: `/inventory/quick-marc/edit-bib/${instance.id}`,
+        search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=true',
+      });
+    });
+  });
 });
