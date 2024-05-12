@@ -44,6 +44,7 @@ import {
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
   segments,
+  queryIndexes,
 } from './constants';
 import { removeItem } from './storage';
 
@@ -473,6 +474,8 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
     }
   });
 
+  if (!result.length) return null;
+
   return (
     <div>
       {result.map((value, index) => <div>{`${value}${index !== result.length - 1 ? ',' : ''}`}</div>)}
@@ -899,8 +902,22 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
 
 export const parseEmptyFormValue = value => value;
 
+export const getTemplateForSelectedFromBrowseRecord = (queryParams, queryIndex, queryValue) => {
+  if (!queryParams?.selectedBrowseResult) {
+    return null;
+  }
+
+  if (queryIndex === queryIndexes.CONTRIBUTOR) {
+    const escapedQueryValue = queryValue.replaceAll('"', '\\"');
+
+    return `contributors.name==/string "${escapedQueryValue}"`;
+  }
+
+  return null;
+};
+
 export const sendCalloutOnAffiliationChange = (stripes, tenantId, callout) => {
-  if (stripes.okapi.tenant !== tenantId) {
+  if (tenantId && stripes.okapi.tenant !== tenantId) {
     const name = stripes.user.user.tenants.find(tenant => tenant.id === tenantId)?.name;
 
     if (name) {

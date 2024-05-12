@@ -2,6 +2,7 @@ import omit from 'lodash/omit';
 
 import {
   browseCallNumberOptions,
+  browseClassificationOptions,
   browseModeOptions,
   FACETS,
   queryIndexes,
@@ -51,6 +52,8 @@ const getExtraFilters = (row, qindex, allFilters) => {
   } else if (Object.values(browseCallNumberOptions).includes(qindex)) {
     sharedFacetName = FACETS.SHARED;
     heldByFacetName = FACETS.CALL_NUMBERS_HELD_BY;
+  } else if (Object.values(browseClassificationOptions).includes(qindex)) {
+    sharedFacetName = FACETS.CLASSIFICATION_SHARED;
   }
 
   const sharedExtraFacets = facetsToString(filtersOnly, sharedFacetName, FACETS.SHARED);

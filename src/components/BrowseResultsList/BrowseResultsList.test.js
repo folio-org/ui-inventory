@@ -164,18 +164,18 @@ describe('BrowseResultsList', () => {
   });
 
   describe.each([
-    { searchOption: browseClassificationOptions.CLASSIFICATION_ALL },
-    { searchOption: browseClassificationOptions.DEWEY_CLASSIFICATION },
-    { searchOption: browseClassificationOptions.LC_CLASSIFICATION },
-  ])('when the search option is $searchOption', ({ searchOption }) => {
+    { searchOption: browseClassificationOptions.CLASSIFICATION_ALL, shared: FACETS.CLASSIFICATION_SHARED },
+    { searchOption: browseClassificationOptions.DEWEY_CLASSIFICATION, shared: FACETS.CLASSIFICATION_SHARED },
+    { searchOption: browseClassificationOptions.LC_CLASSIFICATION, shared: FACETS.CLASSIFICATION_SHARED },
+  ])('when the search option is $searchOption and the Shared facets is selected', ({ searchOption, shared }) => {
     describe('and a user hits on a classification number in the list', () => {
-      it('should be navigated to the Search lookup', async () => {
+      it('should be navigated to the Search lookup with those filters', async () => {
         const classificationNumber = 'BD638 .T46 2018';
 
         history = createMemoryHistory({
           initialEntries: [{
             pathname: BROWSE_INVENTORY_ROUTE,
-            search: `qindex=${searchOption}&query=${classificationNumber}`,
+            search: `qindex=${searchOption}&query=${classificationNumber}&${shared}=true&${shared}=false`,
           }],
         });
 
@@ -183,6 +183,7 @@ describe('BrowseResultsList', () => {
           filters: {
             qindex: searchOption,
             query: classificationNumber,
+            [shared]: ['true', 'false'],
           },
           browseData: [
             {
@@ -197,7 +198,7 @@ describe('BrowseResultsList', () => {
         fireEvent.click(screen.getByText(classificationNumber));
 
         expect(history.location.search).toBe(
-          '?qindex=querySearch&query=classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22&selectedBrowseResult=true'
+          '?filters=shared.true%2Cshared.false&qindex=querySearch&query=classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22&selectedBrowseResult=true'
         );
       });
     });

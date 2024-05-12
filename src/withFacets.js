@@ -11,6 +11,7 @@ import { buildFilterQuery } from '@folio/stripes-acq-components';
 
 import {
   getQueryTemplate,
+  getTemplateForSelectedFromBrowseRecord,
 } from './utils';
 import {
   browseConfig,
@@ -24,6 +25,7 @@ import {
   browseModeMap,
   browseCallNumberOptions,
   queryIndexes,
+  browseClassificationOptions,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
@@ -32,6 +34,12 @@ function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const queryValue = queryParams?.query ?? '';
   const { indexes, filters } = browseModeMap[queryIndex] ? browseConfig : getFilterConfig(queryParams.segment);
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
+
+  const template = getTemplateForSelectedFromBrowseRecord(queryParams, queryIndex, queryValue);
+
+  if (template) {
+    queryTemplate = template;
+  }
 
   if (queryIndex === queryIndexes.ADVANCED_SEARCH) {
     queryTemplate = getAdvancedSearchTemplate(queryValue);
@@ -127,6 +135,10 @@ function withFacets(WrappedComponent) {
         return 'search/subjects/facets';
       }
 
+      if (Object.values(browseClassificationOptions).includes(queryIndex)) {
+        return 'search/classifications/facets';
+      }
+
       return 'search/instances/facets';
     }
 
@@ -147,14 +159,15 @@ function withFacets(WrappedComponent) {
 
         const isTypedCallNumber = Object.values(browseCallNumberOptions).includes(queryIndex)
           && queryIndex !== browseCallNumberOptions.CALL_NUMBERS;
+        // We shouldn’t count "Instances" with "Holdings": 1) without "Items"
+        // or 2) with "Items" with empty "Effective call number" field.
+        const itemsEffectiveShelvingOrder = 'items.effectiveShelvingOrder="" NOT items.effectiveShelvingOrder==""';
 
-        if (hasSelectedFacetOption) {
-          if (isTypedCallNumber) {
-            queryForBrowseFacets = `callNumberType="${queryIndex}"`;
-          }
-        } else if (isTypedCallNumber) {
-          queryForBrowseFacets = `callNumberType="${queryIndex}"`;
-        } else {
+        if (isTypedCallNumber) {
+          queryForBrowseFacets = `callNumberType="${queryIndex}" and ${itemsEffectiveShelvingOrder}`;
+        } else if (queryIndex === browseCallNumberOptions.CALL_NUMBERS) {
+          queryForBrowseFacets = itemsEffectiveShelvingOrder;
+        } else if (!hasSelectedFacetOption) {
           queryForBrowseFacets = 'cql.allRecords=1';
         }
 

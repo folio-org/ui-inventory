@@ -1,9 +1,13 @@
-import { useQueries } from 'react-query';
+import {
+  useQueries,
+  useQuery,
+} from 'react-query';
 
 import {
   useNamespace,
   useOkapiKy,
   useStripes,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
 
 import { isUserInConsortiumMode } from '../../utils';
@@ -18,9 +22,11 @@ const useLocationsForTenants = ({ tenantIds = [] }) => {
   const stripes = useStripes();
   const ky = useOkapiKy();
 
+  const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+
   const queries = useQueries(tenantIds.map(tenantId => {
     return {
-      enabled: Boolean(tenantIds.length && isUserInConsortiumMode(stripes)),
+      enabled: Boolean(tenantIds.length && isUserInConsortiumMode(stripes) && !isUserInCentralTenant),
       queryKey: [namespace, 'locations', tenantId],
       queryFn: () => ky.get('locations', {
         searchParams: {
@@ -38,10 +44,18 @@ const useLocationsForTenants = ({ tenantIds = [] }) => {
     };
   }));
 
-  const locationsFromAllTenants = queries.map(({ data }) => data?.locations).filter(Boolean).flat();
+  const { data: consolidatedLocations } = useQuery({
+    queryKey: [namespace, 'consolidatedLocations'],
+    queryFn: () => ky.get('search/consortium/locations').json(),
+    enabled: Boolean(isUserInConsortiumMode(stripes) && isUserInCentralTenant),
+  });
+
+  const locationsFromAllTenants = isUserInCentralTenant
+    ? consolidatedLocations?.locations
+    : queries.map(({ data }) => data?.locations).filter(Boolean).flat();
 
   return {
-    data: locationsFromAllTenants,
+    data: locationsFromAllTenants || [],
     isLoading: queries.some(({ isFetching }) => isFetching),
   };
 };

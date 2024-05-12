@@ -238,6 +238,11 @@ export const browseFiltersConfig = [
     cql: FACETS_CQL.HELD_BY,
     values: [],
   },
+  {
+    name: FACETS.CLASSIFICATION_SHARED,
+    cql: FACETS_CQL.INSTANCES_SHARED,
+    values: [],
+  },
 ];
 
 export const browseInstanceIndexes = [

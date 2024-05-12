@@ -27,6 +27,7 @@ import {
   FACETS_CQL,
   browseModeOptions,
   browseCallNumberOptions,
+  browseClassificationOptions,
 } from '../../../constants';
 import { useFacets } from '../../../common/hooks';
 
@@ -51,6 +52,7 @@ const InstanceFiltersBrowse = props => {
   const segmentAccordions = {
     [FACETS.SHARED]: false,
     [FACETS.CALL_NUMBERS_HELD_BY]: false,
+    [FACETS.CLASSIFICATION_SHARED]: false,
     [FACETS.CONTRIBUTORS_SHARED]: false,
     [FACETS.CONTRIBUTORS_HELD_BY]: false,
     [FACETS.SUBJECTS_SHARED]: false,
@@ -71,10 +73,27 @@ const InstanceFiltersBrowse = props => {
     [FACETS.CALL_NUMBERS_HELD_BY]: activeFilters[FACETS.CALL_NUMBERS_HELD_BY],
     [FACETS.CONTRIBUTORS_SHARED]: activeFilters[FACETS.CONTRIBUTORS_SHARED],
     [FACETS.CONTRIBUTORS_HELD_BY]: activeFilters[FACETS.CONTRIBUTORS_HELD_BY],
+    [FACETS.CLASSIFICATION_SHARED]: activeFilters[FACETS.CLASSIFICATION_SHARED],
     [FACETS.SUBJECTS_SHARED]: activeFilters[FACETS.SUBJECTS_SHARED],
     [FACETS.SUBJECTS_HELD_BY]: activeFilters[FACETS.SUBJECTS_HELD_BY],
     [FACETS.EFFECTIVE_LOCATION]: activeFilters[FACETS.EFFECTIVE_LOCATION],
     [FACETS.NAME_TYPE]: activeFilters[FACETS.NAME_TYPE],
+  };
+
+  // When a facet option is selected, and then another one is selected from another facet, the first selected
+  // facet option may become with count 0, and it should still be visible and moved to the bottom of the
+  // provided options. The `sharedFacetMap` helps to get the correct facet name using the selected search option.
+  const sharedFacetMap = {
+    [browseModeOptions.CLASSIFICATION_ALL]: FACETS.CLASSIFICATION_SHARED,
+    [browseModeOptions.DEWEY_CLASSIFICATION]: FACETS.CLASSIFICATION_SHARED,
+    [browseModeOptions.LC_CLASSIFICATION]: FACETS.CLASSIFICATION_SHARED,
+    [browseModeOptions.CONTRIBUTORS]: FACETS.CONTRIBUTORS_SHARED,
+    [browseModeOptions.SUBJECTS]: FACETS.SUBJECTS_SHARED,
+  };
+
+  const heldByFacetMap = {
+    [browseModeOptions.CONTRIBUTORS]: FACETS.CONTRIBUTORS_HELD_BY,
+    [browseModeOptions.SUBJECTS]: FACETS.SUBJECTS_HELD_BY,
   };
 
   const getNewRecords = (records) => {
@@ -90,10 +109,14 @@ const InstanceFiltersBrowse = props => {
           processFacetOptions(activeFilters[FACETS.NAME_TYPE], contributorNameTypes, ...commonProps);
         }
         if (recordName === FACETS_CQL.INSTANCES_SHARED) {
-          accum[name] = getSharedOptions(activeFilters[FACETS.CONTRIBUTORS_SHARED], recordValues);
+          const facetName = sharedFacetMap[browseType];
+
+          accum[name] = getSharedOptions(activeFilters[facetName], recordValues);
         }
         if (recordName === FACETS_CQL.INSTANCES_HELD_BY) {
-          processFacetOptions(activeFilters[FACETS.CONTRIBUTORS_HELD_BY], consortiaTenants, ...commonProps);
+          const facetName = heldByFacetMap[browseType];
+
+          processFacetOptions(activeFilters[facetName], consortiaTenants, ...commonProps);
         }
         if (recordName === FACETS_CQL.SHARED) {
           accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
@@ -129,6 +152,28 @@ const InstanceFiltersBrowse = props => {
       onToggle={onToggleSection}
       onUnregisterAccordion={onUnregisterAccordion}
     >
+      {Object.values(browseClassificationOptions).includes(browseType) && (
+        isUserInMemberTenant && (
+          <Accordion
+            closedByDefault
+            label={intl.formatMessage({ id: 'ui-inventory.filters.shared' })}
+            id={FACETS.CLASSIFICATION_SHARED}
+            name={FACETS.CLASSIFICATION_SHARED}
+            separator={false}
+            header={FilterAccordionHeader}
+            displayClearButton={activeFilters[FACETS.CLASSIFICATION_SHARED]?.length > 0}
+            onClearFilter={() => onClear(FACETS.CLASSIFICATION_SHARED)}
+          >
+            <CheckboxFacet
+              name={FACETS.CLASSIFICATION_SHARED}
+              dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
+              selectedValues={activeFilters[FACETS.CLASSIFICATION_SHARED]}
+              isPending={getIsPending(FACETS.CLASSIFICATION_SHARED)}
+              onChange={onChange}
+            />
+          </Accordion>
+        )
+      )}
       {Object.values(browseCallNumberOptions).includes(browseType) && (
         <>
           {isUserInMemberTenant && (

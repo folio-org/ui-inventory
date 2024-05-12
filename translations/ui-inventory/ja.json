@@ -465,8 +465,8 @@
     "reports.inTransitItem.copyNumber": "Copy number",
     "settings.goBack": "Go back to inventory settings",
     "item.status.awaitingDelivery": "Awaiting delivery",
-    "callNumberEyeReadable": "Call number, eye readable",
-    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), eye readable",
+    "callNumberEyeReadable": "Call number, not normalized",
+    "itemEffectiveCallNumberEyeReadable": "Effective call number (item), not normalized",
     "notAvailable": "N/A",
     "findInstancePluginNotFound": "find-instance plugin not found",
     "precedingField.title": "タイトル",
@@ -857,9 +857,10 @@
     "settings.instanceClassification.identifierTypesPopover": "参照オプションで分類タイプが選択されていない場合、このオプションではすべての分類タイプが表示されることに注意してください。",
     "permission.settings.classification-browse": "設定（インベントリ）：分類参照の設定",
     "receivingHistory.displayToPublic": "Public display",
-    "instances.columns.classificationNumber": "Classification",
-    "browse.classification": "Classification",
-    "browse.classification.all": "Classification (all)",
-    "browse.classification.dewey": "Dewey Decimal classification",
-    "browse.classification.lc": "Library of Congress classification"
+    "instances.columns.classificationNumber": "分類",
+    "browse.classification": "分類",
+    "browse.classification.all": "分類（全て）",
+    "browse.classification.dewey": "デューイ十進分類（DDC）",
+    "browse.classification.lc": "米国議会図書館十進分類（LCC）",
+    "normalizedClassificationNumber": "Classification, normalized"
 }

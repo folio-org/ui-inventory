@@ -263,6 +263,7 @@ export const DEFAULT_FILTERS_NUMBER = 6;
 
 export const FACETS = {
   SHARED: 'shared',
+  CLASSIFICATION_SHARED: 'classificationShared',
   CONTRIBUTORS_SHARED: 'contributorsShared',
   SUBJECTS_SHARED: 'subjectsShared',
   HELD_BY: 'tenantId',
@@ -344,6 +345,7 @@ export const FACETS_CQL = {
 
 export const FACETS_TO_REQUEST = {
   [FACETS.SHARED]: FACETS_CQL.SHARED,
+  [FACETS.CLASSIFICATION_SHARED]: FACETS_CQL.INSTANCES_SHARED,
   [FACETS.CONTRIBUTORS_SHARED]: FACETS_CQL.INSTANCES_SHARED,
   [FACETS.SUBJECTS_SHARED]: FACETS_CQL.INSTANCES_SHARED,
   [FACETS.HELD_BY]: FACETS_CQL.HELD_BY,
@@ -518,7 +520,15 @@ export const fieldSearchConfigurations = {
     exactPhrase: 'normalizedClassificationNumber=="%{query.query}"',
     containsAll: 'normalizedClassificationNumber="*%{query.query}*"',
     startsWith: 'normalizedClassificationNumber="%{query.query}*"',
-    containsAny: 'normalizedClassificationNumber any "*%{query.query}*"',
+    containsAny: ({ query }) => {
+      // BE doesn't support the `any` operator for `normalizedClassificationNumber` due to its normalization.
+      // But UI can split the user input by spaces to get correct results.
+      return query.split(/\s/)
+        .filter(Boolean)
+        .map(q => q.replaceAll('"', '\\"'))
+        .map(q => `normalizedClassificationNumber any "*${q}*"`)
+        .join(' or ');
+    },
   },
   oclc: {
     exactPhrase: 'oclc=="%{query.query}"',
