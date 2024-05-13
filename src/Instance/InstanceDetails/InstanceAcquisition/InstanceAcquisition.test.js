@@ -60,7 +60,7 @@ describe('InstanceAcquisition', () => {
   });
 
   describe('when user is in central tenant', () => {
-    it('should render central tenant subaccordion with fetched instance acquisition data', () => {
+    it('should display acquisition accordion and fetched instance acquisition data', () => {
       spyOnIsUserInConsortiumMode.mockReturnValue(true);
       useStripes.mockClear().mockReturnValue({
         hasInterface: () => true,
@@ -77,13 +77,12 @@ describe('InstanceAcquisition', () => {
       const { container } = renderInstanceAcquisition({ instanceId: 'instanceId' });
 
       expect(container.querySelector('#accordionId')).toBeInTheDocument();
-      expect(container.querySelector('#active-tenant-acquisition-accordion')).toBeInTheDocument();
       expect(screen.getByText(line.poLineNumber)).toBeInTheDocument();
     });
   });
 
   describe('when user is in member tenant', () => {
-    it('should render central and member tenant subaccordion with fetched instance acquisition data', () => {
+    it('should display central and member tenant subaccordions with fetched instance acquisition data', () => {
       spyOnIsUserInConsortiumMode.mockReturnValue(true);
       useStripes.mockClear().mockReturnValue({
         hasInterface: () => true,
