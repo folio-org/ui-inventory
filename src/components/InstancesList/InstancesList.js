@@ -40,6 +40,10 @@ import {
   TextLink,
   DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
+import {
+  FACETS,
+  facetsStore,
+} from "@folio/stripes-inventory-components";
 
 import { withSingleRecordImport } from '..';
 import FilterNavigation from '../FilterNavigation';
@@ -71,7 +75,6 @@ import {
   OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
-  FACETS,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../../constants';
 import {
@@ -87,7 +90,6 @@ import {
   getItem,
   setItem,
 } from '../../storage';
-import facetsStore from '../../stores/facetsStore';
 import { advancedSearchIndexes } from '../../filterConfig';
 
 import css from './instances.css';

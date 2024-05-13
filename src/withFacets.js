@@ -8,6 +8,10 @@ import PropTypes from 'prop-types';
 import { withStripes } from '@folio/stripes/core';
 import { makeQueryFunction } from '@folio/stripes/smart-components';
 import { buildFilterQuery } from '@folio/stripes-acq-components';
+import {
+  FACETS_TO_REQUEST,
+  DEFAULT_FILTERS_NUMBER,
+} from '@folio/stripes-inventory-components';
 
 import {
   getQueryTemplate,
@@ -18,8 +22,6 @@ import {
   getFilterConfig,
 } from './filterConfig';
 import {
-  DEFAULT_FILTERS_NUMBER,
-  FACETS_TO_REQUEST,
   CQL_FIND_ALL,
   browseModeOptions,
   browseModeMap,

@@ -8,8 +8,7 @@ import {
   FilterAccordionHeader,
   filterState,
 } from '@folio/stripes/components';
-
-import CheckboxFacet from '../CheckboxFacet';
+import { CheckboxFacet } from '@folio/stripes-inventory-components';
 
 const TagsFilter = ({
   id,

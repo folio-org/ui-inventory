@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import _ from 'lodash';
 
-import { useFacetSettings } from '../../stores/facetsStore';
+import { useFacetSettings } from '@folio/stripes-inventory-components';
 
 // Facets behavior (useFacets and withFacets):
 // - when the user opens a facet, the first 6 options must be fetched for it;

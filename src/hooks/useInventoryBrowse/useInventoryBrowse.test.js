@@ -4,10 +4,12 @@ import { act, renderHook, waitFor } from '@folio/jest-config-stripes/testing-lib
 import '../../../test/jest/__mock__';
 
 import { useOkapiKy } from '@folio/stripes/core';
+import {
+  FACETS,
+} from "@folio/stripes-inventory-components";
 
 import {
   browseModeOptions,
-  FACETS,
   PAGE_DIRECTIONS,
 } from '../../constants';
 import { INIT_PAGE_CONFIG } from './constants';

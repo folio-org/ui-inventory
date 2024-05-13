@@ -4,12 +4,14 @@ import {
   render,
   fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  FACETS,
+  FACETS_CQL,
+} from "@folio/stripes-inventory-components";
 
 import withFacets from './withFacets';
 import {
-  FACETS,
   queryIndexes,
-  FACETS_CQL,
   browseCallNumberOptions,
   browseModeOptions,
 } from './constants';

@@ -1,9 +1,10 @@
 import React from 'react';
 import { get } from 'lodash';
 
+import { facetsStore } from '@folio/stripes-inventory-components';
+
 import HoldingsRecordFilters from './HoldingsRecordFilters';
 import { getCurrentFilters } from '../../utils';
-import facetsStore from '../../stores/facetsStore';
 
 // holdingsRecordFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.

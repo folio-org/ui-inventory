@@ -7,10 +7,13 @@ import {
   advancedSearchQueryToRows,
 } from '@folio/stripes/smart-components';
 import {
+  FACETS,
+} from "@folio/stripes-inventory-components";
+
+import {
   CQL_FIND_ALL,
   fieldSearchConfigurations,
   queryIndexes,
-  FACETS,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../constants';
 import {

@@ -3,16 +3,17 @@ import '../../../test/jest/__mock__';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import { FACETS } from '@folio/stripes-inventory-components';
 
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
-import {
-  FACETS
-} from '../../constants';
 import HoldingsRecordFilters from './HoldingsRecordFilters';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
-jest.mock('../CheckboxFacet/CheckboxFacet', () => jest.fn().mockReturnValue('CheckboxFacet'));
+jest.mock('@folio/stripes-inventory-components', () => ({
+  ...jest.requireActual('@folio/stripes-inventory-components'),
+  CheckboxFacet: jest.fn().mockReturnValue('CheckboxFacet'),
+}));
 
 jest.mock('../../facetUtils', () => ({
   ...jest.requireActual('../../facetUtils'),

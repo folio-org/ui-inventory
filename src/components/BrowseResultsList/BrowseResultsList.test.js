@@ -3,6 +3,9 @@ import '../../../test/jest/__mock__';
 import flow from 'lodash/flow';
 import queryString from 'query-string';
 import { act, cleanup, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  FACETS,
+} from "@folio/stripes-inventory-components";
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
@@ -16,7 +19,6 @@ import {
   BROWSE_INVENTORY_ROUTE,
   INVENTORY_ROUTE,
   browseCallNumberOptions,
-  FACETS,
   browseClassificationOptions,
 } from '../../constants';
 import { DataContext } from '../../contexts';

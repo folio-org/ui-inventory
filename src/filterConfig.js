@@ -1,10 +1,13 @@
+import {
+  FACETS,
+  FACETS_CQL,
+} from "@folio/stripes-inventory-components";
+
 import itemFilterRenderer from './components/ItemFilters/itemFilterRenderer';
 import holdingsRecordFilterRenderer from './components/HoldingsRecordFilters/holdingsRecordFilterRenderer';
 import instanceFilterRenderer from './components/InstanceFilters/instanceFilterRenderer';
 
 import {
-  FACETS,
-  FACETS_CQL,
   browseModeOptions,
 } from './constants';
 import {

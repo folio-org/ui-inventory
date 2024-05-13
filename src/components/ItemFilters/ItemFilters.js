@@ -12,11 +12,17 @@ import {
   checkIfUserInMemberTenant,
   useStripes,
 } from '@folio/stripes/core';
+import {
+  HeldByFacet,
+  FACETS,
+  FACETS_OPTIONS,
+  FACETS_SETTINGS,
+  FACETS_CQL,
+  CheckboxFacet,
+} from "@folio/stripes-inventory-components";
 
 import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
-import CheckboxFacet from '../CheckboxFacet';
-import HeldByFacet from '../HeldByFacet';
 import { useFacets } from '../../common/hooks';
 import {
   getSourceOptions,
@@ -28,10 +34,6 @@ import {
 } from '../../facetUtils';
 import {
   DATE_FORMAT,
-  FACETS,
-  FACETS_OPTIONS,
-  FACETS_SETTINGS,
-  FACETS_CQL,
 } from '../../constants';
 import {
   makeDateRangeFilterString,
@@ -171,14 +173,14 @@ const ItemFilters = (props) => {
         </Accordion>
       )}
       <HeldByFacet
-        activeFilters={activeFilters}
-        facetsOptions={facetsOptions}
-        getIsPending={getIsPending}
         name={FACETS.HELD_BY}
+        facetsOptions={facetsOptions}
+        selectedValues={activeFilters[FACETS.HELD_BY]}
         onChange={onChange}
         onClear={onClear}
         onFetchFacets={handleFetchFacets}
         onFilterSearch={handleFilterSearch}
+        onGetIsPending={getIsPending}
       />
       <Accordion
         label={<FormattedMessage id="ui-inventory.item.status" />}

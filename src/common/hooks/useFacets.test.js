@@ -1,18 +1,19 @@
 import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 import { useLocation } from 'react-router-dom';
 import React from 'react';
-import { useFacetSettings } from '../../stores/facetsStore';
+
+import { useFacetSettings } from '@folio/stripes-inventory-components';
+
 import useFacets from './useFacets';
 
 jest.mock('react-router-dom', () => ({
   useLocation: jest.fn(),
 }));
 
-jest.mock('../../stores/facetsStore', () => ({
-  useFacetSettings: jest
-    .fn()
-    .mockReturnValue([{ foo: { value: 'bar' }, quux: { value: 'changed' } }]),
-}));
+jest.mock('@folio/stripes-inventory-components', () => ({
+  ...jest.requireActual('@folio/stripes-inventory-components'),
+  useFacetSettings: jest.fn().mockReturnValue([{ foo: { value: 'bar' }, quux: { value: 'changed' } }]),
+}))
 
 describe('useFacets', () => {
   const segmentAccordions = {

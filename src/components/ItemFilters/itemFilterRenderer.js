@@ -1,10 +1,11 @@
 import React from 'react';
 import { get } from 'lodash';
 
+import { facetsStore } from '@folio/stripes-inventory-components';
+
 import ItemFilters from './ItemFilters';
 import { getCurrentFilters } from '../../utils';
 import { itemStatuses } from '../../constants';
-import facetsStore from '../../stores/facetsStore';
 
 // itemFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.

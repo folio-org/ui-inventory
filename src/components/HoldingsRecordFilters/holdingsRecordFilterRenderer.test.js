@@ -37,12 +37,15 @@ jest.mock('@folio/stripes/components', () => ({
   )),
 }), { virtual: true });
 
-jest.mock('../CheckboxFacet/CheckboxFacet', () => ({ onChange }) => (
-  <div>
-    <div>CheckboxFacet</div>
-    <button type="button" onClick={() => onChange()}>onChange</button>
-  </div>
-));
+jest.mock('@folio/stripes-inventory-components', () => ({
+  ...jest.requireActual('@folio/stripes-inventory-components'),
+  CheckboxFacet: jest.fn(({ onChange }) => (
+    <div>
+      <div>CheckboxFacet</div>
+      <button type="button" onClick={() => onChange()}>onChange</button>
+    </div>
+  )),
+}));
 
 const onChangeMock = jest.fn();
 const resources = {
