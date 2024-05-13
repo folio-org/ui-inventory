@@ -64,12 +64,11 @@ const InventoryRouting = (props) => {
 
   const keyboardShortcuts = [...defaultKeyboardShortcuts];
 
-  keyboardShortcuts.splice(4, 0, {
+  keyboardShortcuts.splice(10, 0, {
     label: (<FormattedMessage id="ui-inventory.shortcut.editMARC" />),
     name: 'editMARC',
     shortcut: 'ctrl+shift+e',
-  });
-  keyboardShortcuts.splice(11, 0, {
+  }, {
     label: <FormattedMessage id="ui-inventory.shortcut.nextSubfield" />,
     name: 'NEXT_SUBFIELD',
     shortcut: 'Ctrl + ]',

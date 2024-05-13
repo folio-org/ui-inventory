@@ -1042,6 +1042,7 @@ class ViewInstance extends React.Component {
       onCopy,
       updateLocation,
       canUseSingleRecordImport,
+      selectedInstance,
     } = this.props;
     const {
       linkedAuthoritiesLength,
@@ -1069,7 +1070,11 @@ class ViewInstance extends React.Component {
       {
         name: 'editMARC',
         handler: handleKeyCommand(() => {
-          if (stripes.hasPerm('ui-quick-marc.quick-marc-editor.all')) this.editInstanceMarc();
+          if (!stripes.hasPerm('ui-quick-marc.quick-marc-editor.all') || !isMARCSource(selectedInstance.source)) {
+            return;
+          }
+
+          this.editInstanceMarc();
         }),
       },
       {

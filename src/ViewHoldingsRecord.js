@@ -692,7 +692,11 @@ class ViewHoldingsRecord extends React.Component {
       {
         name: 'editMARC',
         handler: handleKeyCommand(() => {
-          if (stripes.hasPerm('ui-quick-marc.quick-marc-editor.all')) this.handleEditInQuickMarc();
+          if (!stripes.hasPerm('ui-quick-marc.quick-marc-editor.all') || !this.isMARCSource()) {
+            return;
+          }
+
+          this.handleEditInQuickMarc();
         }),
       },
       {
