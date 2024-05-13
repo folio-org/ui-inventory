@@ -17,6 +17,7 @@
 * Jest/RTL: Cover MoveHoldingContext component with unit tests. Refs UIIN-2664.
 * Use consolidated locations endpoint to fetch all locations when in central tenant context. Refs UIIN-2811.
 * Change label of eye-readable call number search option in holdings/items. Refs UIIN-2797.
+* Jest/RTL: Cover ModalContent components with unit tests. Refs UIIN-2669.
 * Inventory app: Define and implement shortcut key for editing a quickMARC bib record. Refs UIIN-2896.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
