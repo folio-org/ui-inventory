@@ -65,6 +65,10 @@ const restMock = {
 };
 
 describe('LocationSelectionWithCheck', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('render with selected location and confirm changes', async () => {
     renderWithIntl(renderWithRouter(renderWithFinalForm(
       <LocationSelectionWithCheck name="location" input={inputMock} {...restMock} />
@@ -88,6 +92,6 @@ describe('LocationSelectionWithCheck', () => {
     act(() => fireEvent.click(screen.getByTestId('selection-id')));
 
     fireEvent.click(cancelButton);
-    expect(inputMock.onChange).toHaveBeenCalled();
+    expect(inputMock.onChange).not.toHaveBeenCalled();
   });
 });
