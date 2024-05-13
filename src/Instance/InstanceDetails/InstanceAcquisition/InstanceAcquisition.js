@@ -43,7 +43,7 @@ const InstanceAcquisition = ({ accordionId, instanceId }) => {
       label={<FormattedMessage id="ui-inventory.acquisition" />}
       {...controlledAcqAccorion}
     >
-      {isUserInConsortiumMode(stripes) ? (
+      {(isUserInConsortiumMode(stripes) && activeTenant !== centralTenant) ? (
         <>
           <Accordion
             id="active-tenant-acquisition-accordion"
@@ -58,20 +58,19 @@ const InstanceAcquisition = ({ accordionId, instanceId }) => {
             />
           </Accordion>
 
-          {activeTenant !== centralTenant && (
-            <Accordion
-              id="central-tenant-acquisition-accordion"
-              label={getTenantAccordionLabel(stripes.user.user.tenants, centralTenant)}
-              className={css.tenantAcquisitionAccordion}
-              {...controlledCetralTenantAcqAccorion}
-            >
-              <TenantAcquisition
-                acquisitions={centralTenantAcquisition}
-                isLoading={isLoadingCentralTenantAcquisition}
-                tenantId={centralTenant}
-              />
-            </Accordion>
-          )}
+
+          <Accordion
+            id="central-tenant-acquisition-accordion"
+            label={getTenantAccordionLabel(stripes.user.user.tenants, centralTenant)}
+            className={css.tenantAcquisitionAccordion}
+            {...controlledCetralTenantAcqAccorion}
+          >
+            <TenantAcquisition
+              acquisitions={centralTenantAcquisition}
+              isLoading={isLoadingCentralTenantAcquisition}
+              tenantId={centralTenant}
+            />
+          </Accordion>
         </>
       ) : (
         <TenantAcquisition
