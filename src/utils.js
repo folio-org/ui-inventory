@@ -915,3 +915,18 @@ export const getTemplateForSelectedFromBrowseRecord = (queryParams, queryIndex, 
 
   return null;
 };
+
+export const redirectToMarcEditPage = (pathname, instance, location, history) => {
+  const searchParams = new URLSearchParams(location.search);
+
+  searchParams.delete('relatedRecordVersion');
+
+  if (instance.shared) {
+    searchParams.append('shared', instance.shared.toString());
+  }
+
+  history.push({
+    pathname,
+    search: searchParams.toString(),
+  });
+};

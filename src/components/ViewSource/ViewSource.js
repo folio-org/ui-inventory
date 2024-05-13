@@ -29,6 +29,7 @@ import { useGoBack } from '../../common/hooks';
 import {
   isUserInConsortiumMode,
   handleKeyCommand,
+  redirectToMarcEditPage,
 } from '../../utils';
 import MARC_TYPES from './marcTypes';
 
@@ -68,15 +69,7 @@ const ViewSource = ({
     const urlId = isHoldingsRecord ? `${instanceId}/${holdingsRecordId}` : instanceId;
     const pathname = `/inventory/quick-marc/edit-${isHoldingsRecord ? 'holdings' : 'bib'}/${urlId}`;
 
-    const searchParams = new URLSearchParams(location.search);
-
-    searchParams.delete('relatedRecordVersion');
-    searchParams.append('shared', instance.shared?.toString());
-
-    history.push({
-      pathname,
-      search: searchParams.toString(),
-    });
+    redirectToMarcEditPage(pathname, instance, location, history);
   }, [isHoldingsRecord]);
 
   const shortcuts = useMemo(() => [
@@ -86,7 +79,7 @@ const ViewSource = ({
         if (stripes.hasPerm('ui-quick-marc.quick-marc-editor.all')) redirectToMARCEdit();
       }),
     },
-  ]);
+  ], [stripes, redirectToMARCEdit]);
 
   useEffect(() => {
     setIsMarcLoading(true);

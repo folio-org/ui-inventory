@@ -39,6 +39,7 @@ import {
   isMARCSource,
   getLinkedAuthorityIds,
   setRecordForDeletion,
+  redirectToMarcEditPage,
 } from './utils';
 import {
   CONSORTIUM_PREFIX,
@@ -339,21 +340,12 @@ class ViewInstance extends React.Component {
       history,
       location,
       stripes,
-      isShared,
     } = this.props;
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
-    const searchParams = new URLSearchParams(location.search);
-
-    searchParams.delete('relatedRecordVersion');
-    searchParams.append('shared', isShared.toString());
-
-    history.push({
-      pathname: `/inventory/quick-marc/${page}/${instance.id}`,
-      search: searchParams.toString(),
-    });
+    redirectToMarcEditPage(`/inventory/quick-marc/${page}/${instance.id}`, instance, location, history);
   };
 
   editInstanceMarc = () => {

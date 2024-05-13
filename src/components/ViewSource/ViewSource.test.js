@@ -179,7 +179,7 @@ describe('ViewSource', () => {
 
       expect(mockPush).toHaveBeenLastCalledWith({
         pathname: `/inventory/quick-marc/edit-bib/${mockInstance.id}`,
-        search: 'shared=false',
+        search: '',
       });
     });
   });
