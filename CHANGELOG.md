@@ -19,6 +19,7 @@
 * Change label of eye-readable call number search option in holdings/items. Refs UIIN-2797.
 * Jest/RTL: Cover ModalContent components with unit tests. Refs UIIN-2669.
 * Add callout noting user's active affiliation when it changes after selecting holding or item. Refs UIIN-2831, UIIN-2872.
+* Jest/RTL: Cover LocationSelectionWithCheck components with unit tests. Refs UIIN-2670.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
