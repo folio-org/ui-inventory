@@ -102,10 +102,10 @@ describe('InstanceAcquisition', () => {
       const { container } = renderInstanceAcquisition({ instanceId: 'instanceId' });
 
       expect(container.querySelector('#accordionId')).toBeInTheDocument();
-      expect(container.querySelector('#active-tenant-acquisition-accordion')).toBeInTheDocument();
+      expect(container.querySelector('#active-acquisition-accordion')).toBeInTheDocument();
       expect(screen.getAllByText(line.poLineNumber)[0]).toBeInTheDocument();
 
-      expect(container.querySelector('#central-tenant-acquisition-accordion')).toBeInTheDocument();
+      expect(container.querySelector('#central-acquisition-accordion')).toBeInTheDocument();
       expect(screen.getAllByText(line.poLineNumber)[1]).toBeInTheDocument();
     });
   });
