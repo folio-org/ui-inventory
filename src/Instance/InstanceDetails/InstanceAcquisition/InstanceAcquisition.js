@@ -35,7 +35,24 @@ const InstanceAcquisition = ({ accordionId, instanceId }) => {
     stripes.hasInterface('orders') &&
     stripes.hasInterface('acquisitions-units'))) return null;
 
-  const getTenantAccordionLabel = (tenants, id) => tenants?.find(tenant => tenant.id === id).name;
+  const renderTenantAcquisitionAccordion = (accId, tenantId, tenantAcquisitions, isLoading, controlledAccorionProps) => {
+    const getTenantAccordionLabel = (tenants, id) => tenants?.find(tenant => tenant.id === id).name;
+
+    return (
+      <Accordion
+        id={accId}
+        label={getTenantAccordionLabel(stripes.user.user.tenants, tenantId)}
+        className={css.tenantAcquisitionAccordion}
+        {...controlledAccorionProps}
+      >
+        <TenantAcquisition
+          acquisitions={tenantAcquisitions}
+          isLoading={isLoading}
+          tenantId={tenantId}
+        />
+      </Accordion>
+    );
+  };
 
   return (
     <Accordion
@@ -45,32 +62,20 @@ const InstanceAcquisition = ({ accordionId, instanceId }) => {
     >
       {(isUserInConsortiumMode(stripes) && activeTenant !== centralTenant) ? (
         <>
-          <Accordion
-            id="active-tenant-acquisition-accordion"
-            label={getTenantAccordionLabel(stripes.user.user.tenants, activeTenant)}
-            className={css.tenantAcquisitionAccordion}
-            {...controlledActiveTenantAcqAccorion}
-          >
-            <TenantAcquisition
-              acquisitions={activeTenantAcquisition}
-              isLoading={isLoadingActiveTenantAcquisition}
-              tenantId={activeTenant}
-            />
-          </Accordion>
-
-
-          <Accordion
-            id="central-tenant-acquisition-accordion"
-            label={getTenantAccordionLabel(stripes.user.user.tenants, centralTenant)}
-            className={css.tenantAcquisitionAccordion}
-            {...controlledCetralTenantAcqAccorion}
-          >
-            <TenantAcquisition
-              acquisitions={centralTenantAcquisition}
-              isLoading={isLoadingCentralTenantAcquisition}
-              tenantId={centralTenant}
-            />
-          </Accordion>
+          {renderTenantAcquisitionAccordion(
+            'active-acquisition-accordion',
+            activeTenant,
+            activeTenantAcquisition,
+            isLoadingActiveTenantAcquisition,
+            controlledActiveTenantAcqAccorion,
+          )}
+          {renderTenantAcquisitionAccordion(
+            'central-acquisition-accordion',
+            centralTenant,
+            centralTenantAcquisition,
+            isLoadingCentralTenantAcquisition,
+            controlledCetralTenantAcqAccorion,
+          )}
         </>
       ) : (
         <TenantAcquisition
