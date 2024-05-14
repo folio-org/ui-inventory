@@ -9,38 +9,38 @@ import {
 } from '@folio/stripes/components';
 
 import { getDateWithTime } from '../../../utils';
-import { COLUMN_NAMES } from '../../../constants';
+import { ACQISITION_COLUMN_NAMES } from '../../../constants';
 
 const visibleColumns = [
-  COLUMN_NAMES.poLineNumber,
-  COLUMN_NAMES.orderStatus,
-  COLUMN_NAMES.polReceiptStatus,
-  COLUMN_NAMES.dateOrdered,
-  COLUMN_NAMES.acqUnit,
-  COLUMN_NAMES.orderType,
+  ACQISITION_COLUMN_NAMES.poLineNumber,
+  ACQISITION_COLUMN_NAMES.orderStatus,
+  ACQISITION_COLUMN_NAMES.polReceiptStatus,
+  ACQISITION_COLUMN_NAMES.dateOrdered,
+  ACQISITION_COLUMN_NAMES.acqUnit,
+  ACQISITION_COLUMN_NAMES.orderType,
 ];
 
 const columnMapping = {
-  [COLUMN_NAMES.poLineNumber]: <FormattedMessage id="ui-inventory.acq.polNumber" />,
-  [COLUMN_NAMES.orderStatus]: <FormattedMessage id="ui-inventory.acq.orderStatus" />,
-  [COLUMN_NAMES.polReceiptStatus]: <FormattedMessage id="ui-inventory.acq.receiptStatus" />,
-  [COLUMN_NAMES.dateOrdered]: <FormattedMessage id="ui-inventory.acq.dateOpened" />,
-  [COLUMN_NAMES.acqUnit]: <FormattedMessage id="ui-inventory.acq.acqUnit" />,
-  [COLUMN_NAMES.orderType]: <FormattedMessage id="ui-inventory.acq.orderType" />,
+  [ACQISITION_COLUMN_NAMES.poLineNumber]: <FormattedMessage id="ui-inventory.acq.polNumber" />,
+  [ACQISITION_COLUMN_NAMES.orderStatus]: <FormattedMessage id="ui-inventory.acq.orderStatus" />,
+  [ACQISITION_COLUMN_NAMES.polReceiptStatus]: <FormattedMessage id="ui-inventory.acq.receiptStatus" />,
+  [ACQISITION_COLUMN_NAMES.dateOrdered]: <FormattedMessage id="ui-inventory.acq.dateOpened" />,
+  [ACQISITION_COLUMN_NAMES.acqUnit]: <FormattedMessage id="ui-inventory.acq.acqUnit" />,
+  [ACQISITION_COLUMN_NAMES.orderType]: <FormattedMessage id="ui-inventory.acq.orderType" />,
 };
 
 const formatter = {
-  [COLUMN_NAMES.poLineNumber]: i => <Link to={`/orders/lines/view/${i.id}`}>{i.poLineNumber}</Link>,
-  [COLUMN_NAMES.orderStatus]: i => (
+  [ACQISITION_COLUMN_NAMES.poLineNumber]: i => <Link to={`/orders/lines/view/${i.id}`}>{i.poLineNumber}</Link>,
+  [ACQISITION_COLUMN_NAMES.orderStatus]: i => (
     <>
       {i.order?.workflowStatus ? <FormattedMessage id={`ui-inventory.acq.orderStatus.${i.order.workflowStatus}`} /> : <NoValue />}
       {i.order?.orderCloseReason?.reason && ` - ${i.order.orderCloseReason.reason}`}
     </>
   ),
-  [COLUMN_NAMES.polReceiptStatus]: i => <FormattedMessage id={`ui-inventory.acq.receiptStatus.${i.receiptStatus}`} />,
-  [COLUMN_NAMES.dateOrdered]: i => getDateWithTime(i.order?.dateOrdered),
-  [COLUMN_NAMES.acqUnit]: i => i.order?.acqUnits?.map(u => u.name)?.join(', ') || <NoValue />,
-  [COLUMN_NAMES.orderType]: i => (i.order?.orderType ? <FormattedMessage id={`ui-inventory.acq.orderType.${i.order.orderType}`} /> : <NoValue />),
+  [ACQISITION_COLUMN_NAMES.polReceiptStatus]: i => <FormattedMessage id={`ui-inventory.acq.receiptStatus.${i.receiptStatus}`} />,
+  [ACQISITION_COLUMN_NAMES.dateOrdered]: i => getDateWithTime(i.order?.dateOrdered),
+  [ACQISITION_COLUMN_NAMES.acqUnit]: i => i.order?.acqUnits?.map(u => u.name)?.join(', ') || <NoValue />,
+  [ACQISITION_COLUMN_NAMES.orderType]: i => (i.order?.orderType ? <FormattedMessage id={`ui-inventory.acq.orderType.${i.order.orderType}`} /> : <NoValue />),
 };
 
 const TenantAcquisition = ({

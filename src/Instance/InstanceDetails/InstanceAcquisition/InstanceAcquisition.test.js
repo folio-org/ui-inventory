@@ -16,11 +16,6 @@ import useInstanceAcquisition from './useInstanceAcquisition';
 
 import * as utils from '../../../utils';
 
-
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useStripes: jest.fn(),
-}));
 jest.mock('./useInstanceAcquisition', () => jest.fn());
 
 const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
