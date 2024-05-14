@@ -568,6 +568,8 @@
   "marc": "MARC",
   "unknownNoteType": "Unknown note type",
   "communicationProblem": "Server communication problem. Please try again",
+  "affiliationChanging.notification": "Active affiliation has changed",
+  "affiliationChanging.namedNotification": "Active affiliation has changed to {name}",
   "item.status": "Item status",
   "item.status.agedToLost": "Aged to lost",
   "item.status.available": "Available",
