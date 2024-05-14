@@ -1,6 +1,7 @@
 import React, {
   useCallback,
   useMemo,
+  useContext,
 } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
@@ -8,13 +9,17 @@ import { withRouter } from 'react-router';
 import { Draggable } from 'react-beautiful-dnd';
 import { FormattedMessage } from 'react-intl';
 
-import { useStripes } from '@folio/stripes/core';
+import {
+  useStripes,
+  CalloutContext,
+} from '@folio/stripes/core';
 
 import Holding from './Holding';
 import {
   navigateToHoldingsViewPage,
   navigateToItemCreatePage,
 } from '../../utils';
+import { sendCalloutOnAffiliationChange } from '../../../utils';
 
 const dragStyles = {
   background: '#333',
@@ -128,9 +133,12 @@ const HoldingContainer = ({
   ...rest
 }) => {
   const stripes = useStripes();
+  const callout = useContext(CalloutContext);
 
   const onViewHolding = useCallback(() => {
     navigateToHoldingsViewPage(history, location, instance, holding, tenantId, stripes.okapi.tenant);
+
+    sendCalloutOnAffiliationChange(stripes, tenantId, callout);
   }, [location.search, instance.id, holding.id]);
 
   const onAddItem = useCallback(() => {
