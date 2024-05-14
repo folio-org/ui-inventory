@@ -19,6 +19,9 @@ import {
   FACETS_SETTINGS,
   HeldByFacet,
   CheckboxFacet,
+  browseModeOptions,
+  browseCallNumberOptions,
+  browseClassificationOptions,
 } from '@folio/stripes-inventory-components';
 
 import { MultiSelectionFacet } from '../../MultiSelectionFacet';
@@ -26,11 +29,6 @@ import {
   getSharedOptions,
   processFacetOptions,
 } from '../../../facetUtils';
-import {
-  browseModeOptions,
-  browseCallNumberOptions,
-  browseClassificationOptions,
-} from '../../../constants';
 import { useFacets } from '../../../common/hooks';
 
 const InstanceFiltersBrowse = props => {

@@ -3,11 +3,12 @@ import { useContext } from 'react';
 import { flowRight, omit } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { withFacets } from '@folio/stripes-inventory-components';
 
-import withFacets from '../../withFacets';
 import { DataContext } from '../../contexts';
 import { parseFiltersToStr } from '../../utils';
 import { InstanceFiltersBrowse } from '../InstanceFilters';
+import {browseConfig} from "../../filterConfig";
 
 const BrowseInventoryFilters = ({
   activeFilters,
@@ -23,7 +24,11 @@ const BrowseInventoryFilters = ({
   const filtersData = {
     ...data,
     browseType: searchIndex,
-    onFetchFacets: fetchFacets(data, isBrowseLookup),
+    onFetchFacets: fetchFacets({
+      data,
+      isBrowseLookup,
+      filterConfig: browseConfig,
+    }),
     parentResources: resources,
     query: {
       query: activeFilters.query,

@@ -44,7 +44,6 @@ import {
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
   segments,
-  queryIndexes,
 } from './constants';
 import { removeItem } from './storage';
 
@@ -265,18 +264,6 @@ export function filterItemsBy(name) {
 
     return { renderedItems };
   };
-}
-
-export function getQueryTemplate(queryIndex, indexes) {
-  const searchableIndex = indexes.find(({ value, subIndexes }) => {
-    if (subIndexes) {
-      return subIndexes.some(subIndex => subIndex.value === queryIndex);
-    }
-
-    return value === queryIndex;
-  });
-
-  return get(searchableIndex, 'queryTemplate');
 }
 
 export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) {
@@ -890,17 +877,3 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
 };
 
 export const parseEmptyFormValue = value => value;
-
-export const getTemplateForSelectedFromBrowseRecord = (queryParams, queryIndex, queryValue) => {
-  if (!queryParams?.selectedBrowseResult) {
-    return null;
-  }
-
-  if (queryIndex === queryIndexes.CONTRIBUTOR) {
-    const escapedQueryValue = queryValue.replaceAll('"', '\\"');
-
-    return `contributors.name==/string "${escapedQueryValue}"`;
-  }
-
-  return null;
-};

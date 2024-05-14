@@ -6,9 +6,9 @@ import {
   TextLink,
   Tooltip,
 } from '@folio/stripes/components';
+import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 import {
-  browseModeOptions,
   INVENTORY_ROUTE,
 } from '../../constants';
 import {

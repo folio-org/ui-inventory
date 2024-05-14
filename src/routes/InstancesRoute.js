@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import { withFacets } from '@folio/stripes-inventory-components';
 
 import withLocation from '../withLocation';
-import withFacets from '../withFacets';
 import withLastSearchTerms from '../withLastSearchTerms';
 import { InstancesView } from '../views';
 import { getFilterConfig } from '../filterConfig';
@@ -48,7 +48,8 @@ class InstancesRoute extends React.Component {
       storeLastSegment,
     } = this.props;
     const { segment } = getParams(this.props);
-    const { indexes, renderer } = getFilterConfig(segment);
+    const filterConfig = getFilterConfig(segment);
+    const { indexes, renderer } = filterConfig;
     const { query, records } = resources;
     const parentResources = { ...resources, records };
 
@@ -64,7 +65,7 @@ class InstancesRoute extends React.Component {
             renderFilters={renderer({
               ...data,
               query,
-              onFetchFacets: fetchFacets(data),
+              onFetchFacets: fetchFacets({data, filterConfig}),
               parentResources,
             })}
             segment={segment}

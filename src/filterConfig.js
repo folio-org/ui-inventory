@@ -1,15 +1,13 @@
 import {
   FACETS,
   FACETS_CQL,
+  browseModeOptions,
 } from "@folio/stripes-inventory-components";
 
 import itemFilterRenderer from './components/ItemFilters/itemFilterRenderer';
 import holdingsRecordFilterRenderer from './components/HoldingsRecordFilters/holdingsRecordFilterRenderer';
 import instanceFilterRenderer from './components/InstanceFilters/instanceFilterRenderer';
 
-import {
-  browseModeOptions,
-} from './constants';
 import {
   buildDateRangeQuery,
 } from './utils';

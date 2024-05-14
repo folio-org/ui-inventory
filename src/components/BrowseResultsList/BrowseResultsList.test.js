@@ -5,6 +5,9 @@ import queryString from 'query-string';
 import { act, cleanup, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import {
   FACETS,
+  browseModeOptions,
+  browseCallNumberOptions,
+  browseClassificationOptions,
 } from "@folio/stripes-inventory-components";
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
@@ -15,11 +18,8 @@ import {
   translationsProperties,
 } from '../../../test/jest/helpers';
 import {
-  browseModeOptions,
   BROWSE_INVENTORY_ROUTE,
   INVENTORY_ROUTE,
-  browseCallNumberOptions,
-  browseClassificationOptions,
 } from '../../constants';
 import { DataContext } from '../../contexts';
 import BrowseResultsList from './BrowseResultsList';

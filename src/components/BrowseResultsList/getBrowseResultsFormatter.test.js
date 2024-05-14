@@ -5,6 +5,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
 import { MultiColumnList } from '@folio/stripes-components';
+import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 import {
   renderWithIntl,
@@ -12,7 +13,6 @@ import {
 } from '../../../test/jest/helpers';
 
 import {
-  browseModeOptions,
   BROWSE_INVENTORY_ROUTE,
   INVENTORY_ROUTE,
 } from '../../constants';

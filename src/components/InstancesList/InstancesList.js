@@ -43,6 +43,7 @@ import {
 import {
   FACETS,
   facetsStore,
+  queryIndexes,
 } from "@folio/stripes-inventory-components";
 
 import { withSingleRecordImport } from '..';
@@ -70,7 +71,6 @@ import {
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
-  queryIndexes,
   segments,
   OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,

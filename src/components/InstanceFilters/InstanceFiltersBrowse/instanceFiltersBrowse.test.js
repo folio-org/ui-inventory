@@ -12,12 +12,12 @@ import {
 import '../../../../test/jest/__mock__';
 
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 
 import InstanceFiltersBrowse from './InstanceFiltersBrowse';
-import { browseModeOptions } from '../../../constants';
 
 const mockOnChange = jest.fn();
 const mockOnClear = jest.fn();

@@ -1,4 +1,4 @@
-import { browseModeOptions } from '../../constants';
+import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 // [pageNumber, direction, anchor] - E.g. [1, 'prev', 'Fizz Buzz'];
 export const INIT_PAGE_CONFIG = [0, null, null];

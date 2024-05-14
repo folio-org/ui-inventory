@@ -1,5 +1,6 @@
 import { FormattedMessage } from 'react-intl';
-import { browseModeOptions } from '../../constants';
+
+import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 export const VISIBLE_COLUMNS_MAP = {
   [browseModeOptions.SUBJECTS]: ['subject', 'numberOfTitles'],

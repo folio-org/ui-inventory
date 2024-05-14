@@ -9,10 +9,10 @@ import {
   useStripes,
   checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
+import { CQL_FIND_ALL } from '@folio/stripes-inventory-components'
 
 import { isUserInConsortiumMode } from '../../utils';
 import {
-  CQL_FIND_ALL,
   LIMIT_MAX,
   OKAPI_TENANT_HEADER,
 } from '../../constants';

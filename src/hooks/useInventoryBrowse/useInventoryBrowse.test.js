@@ -6,10 +6,10 @@ import '../../../test/jest/__mock__';
 import { useOkapiKy } from '@folio/stripes/core';
 import {
   FACETS,
+  browseModeOptions,
 } from "@folio/stripes-inventory-components";
 
 import {
-  browseModeOptions,
   PAGE_DIRECTIONS,
 } from '../../constants';
 import { INIT_PAGE_CONFIG } from './constants';

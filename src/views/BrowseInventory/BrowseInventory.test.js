@@ -6,12 +6,12 @@ import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { act, screen, fireEvent, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import stripesAcqComponents from '@folio/stripes-acq-components';
+import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import { browseModeOptions } from '../../constants';
 import BrowseInventory from './BrowseInventory';
 import { SearchModeNavigation } from '../../components';
 import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
