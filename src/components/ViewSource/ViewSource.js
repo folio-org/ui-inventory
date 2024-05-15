@@ -18,10 +18,7 @@ import {
 
 import { useGoBack } from '../../common/hooks';
 
-import {
-  isInstanceShadowCopy,
-  isUserInConsortiumMode,
-} from '../../utils';
+import { isUserInConsortiumMode } from '../../utils';
 import MARC_TYPES from './marcTypes';
 
 import styles from './ViewSource.css';
@@ -91,7 +88,7 @@ const ViewSource = ({
     <FormattedMessage
       id={`ui-inventory.marcSourceRecord.${marcType}`}
       values={{
-        shared: isUserInConsortiumMode(stripes) ? (instance.shared || isInstanceShadowCopy(instance?.source)) : null,
+        shared: isUserInConsortiumMode(stripes) ? instance.shared : null,
       }}
     />
   );
