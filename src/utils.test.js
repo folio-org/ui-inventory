@@ -15,6 +15,7 @@ import {
   switchAffiliation,
   setRecordForDeletion,
   parseEmptyFormValue,
+  redirectToMarcEditPage,
   sendCalloutOnAffiliationChange,
 } from './utils';
 import {
@@ -277,6 +278,28 @@ describe('parseEmptyFormValue', () => {
     const value = undefined;
 
     expect(parseEmptyFormValue(value)).toEqual(undefined);
+  });
+});
+
+describe('redirectToMarcEditPage', () => {
+  it('should call history.push with correct arguments', () => {
+    const pathname = 'some-pathname';
+    const instance = {
+      shared: true,
+    };
+    const location = {
+      search: '?someValue=test&relatedRecordVersion=1',
+    };
+    const history = {
+      push: jest.fn(),
+    };
+
+    redirectToMarcEditPage(pathname, instance, location, history);
+
+    expect(history.push).toHaveBeenCalledWith({
+      pathname,
+      search: 'someValue=test&shared=true',
+    });
   });
 });
 
