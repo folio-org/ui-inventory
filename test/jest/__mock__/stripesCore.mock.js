@@ -83,7 +83,7 @@ const mockStripesCore = {
     extend: jest.fn().mockReturnValue(this),
   }),
 
-  useStripes: () => STRIPES,
+  useStripes: jest.fn(() => STRIPES),
 
   withStripes: Component => ({ stripes, ...rest }) => {
     const fakeStripes = stripes || STRIPES;

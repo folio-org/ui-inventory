@@ -20,6 +20,7 @@
 * Jest/RTL: Cover ModalContent components with unit tests. Refs UIIN-2669.
 * Add callout noting user's active affiliation when it changes after selecting holding or item. Refs UIIN-2831, UIIN-2872.
 * Jest/RTL: Cover LocationSelectionWithCheck components with unit tests. Refs UIIN-2670.
+* Populate Acquisitions accordion on instance when central ordering is active. Refs UIIN-2793.
 * Inventory app: Define and implement shortcut key for editing a quickMARC bib record. Refs UIIN-2896.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)

@@ -862,5 +862,7 @@
     "browse.classification.all": "分類法（全部）",
     "browse.classification.dewey": "杜威十進分類法",
     "browse.classification.lc": "美國國會圖書館分類法",
-    "normalizedClassificationNumber": "分類法，標準化"
+    "normalizedClassificationNumber": "分類法，標準化",
+    "affiliationChanging.notification": "Active affiliation has changed",
+    "affiliationChanging.namedNotification": "Active affiliation has changed to {name}"
 }

@@ -862,5 +862,7 @@
     "browse.classification.all": "分類（全て）",
     "browse.classification.dewey": "デューイ十進分類（DDC）",
     "browse.classification.lc": "米国議会図書館十進分類（LCC）",
-    "normalizedClassificationNumber": "Classification, normalized"
+    "normalizedClassificationNumber": "Classification, normalized",
+    "affiliationChanging.notification": "Active affiliation has changed",
+    "affiliationChanging.namedNotification": "Active affiliation has changed to {name}"
 }
