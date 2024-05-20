@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## [11.1.0] (IN PROGRESS)
+## [12.0.0] (IN PROGRESS)
 
 * Remove unused code related to auto-open record detail view. Refs UIIN-2819.
 * Keyboard shortcuts modal: Add quickMARC shortcuts to modal. Refs UIIN-2795.
@@ -21,6 +21,7 @@
 * Add callout noting user's active affiliation when it changes after selecting holding or item. Refs UIIN-2831, UIIN-2872.
 * Jest/RTL: Cover LocationSelectionWithCheck components with unit tests. Refs UIIN-2670.
 * Populate Acquisitions accordion on instance when central ordering is active. Refs UIIN-2793.
+* *BREAKING* Added a new `stripes-inventory-components` dependency. Move some utils to that module. Refs UIIN-2910.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
