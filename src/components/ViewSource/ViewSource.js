@@ -1,13 +1,21 @@
 import React, {
   useState,
   useEffect,
+  useMemo,
+  useCallback,
 } from 'react';
+import {
+  useLocation,
+  useHistory,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
   Button,
   LoadingView,
+  HasCommand,
+  checkScope,
 } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
 import {
@@ -18,7 +26,11 @@ import {
 
 import { useGoBack } from '../../common/hooks';
 
-import { isUserInConsortiumMode } from '../../utils';
+import {
+  isUserInConsortiumMode,
+  handleKeyCommand,
+  redirectToMarcEditPage,
+} from '../../utils';
 import MARC_TYPES from './marcTypes';
 
 import styles from './ViewSource.css';
@@ -33,6 +45,8 @@ const ViewSource = ({
   marcType,
 }) => {
   const stripes = useStripes();
+  const location = useLocation();
+  const history = useHistory();
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
@@ -50,6 +64,22 @@ const ViewSource = ({
 
   const [marc, setMarc] = useState();
   const [isMarcLoading, setIsMarcLoading] = useState(true);
+
+  const redirectToMARCEdit = useCallback(() => {
+    const urlId = isHoldingsRecord ? `${instanceId}/${holdingsRecordId}` : instanceId;
+    const pathname = `/inventory/quick-marc/edit-${isHoldingsRecord ? 'holdings' : 'bib'}/${urlId}`;
+
+    redirectToMarcEditPage(pathname, instance, location, history);
+  }, [isHoldingsRecord]);
+
+  const shortcuts = useMemo(() => [
+    {
+      name: 'editMARC',
+      handler: handleKeyCommand(() => {
+        if (stripes.hasPerm('ui-quick-marc.quick-marc-editor.all')) redirectToMARCEdit();
+      }),
+    },
+  ], [stripes, redirectToMARCEdit]);
 
   useEffect(() => {
     setIsMarcLoading(true);
@@ -94,32 +124,38 @@ const ViewSource = ({
   );
 
   return (
-    <div className={styles.viewSource}>
-      <MarcView
-        paneTitle={paneTitle}
-        marcTitle={marcTitle}
-        marc={marc}
-        onClose={goBack}
-        lastMenu={
-          isPrintAvailable &&
-            <Button
-              marginBottom0
-              buttonStyle="primary"
-              onClick={openPrintPopup}
-            >
-              <FormattedMessage id="ui-quick-marc.print" />
-            </Button>
-        }
-      />
-      {isPrintAvailable && isShownPrintPopup && (
-        <PrintPopup
-          marc={marc}
-          paneTitle={instance.title}
+    <HasCommand
+      commands={shortcuts}
+      isWithinScope={checkScope}
+      scope={document.body}
+    >
+      <div className={styles.viewSource}>
+        <MarcView
+          paneTitle={paneTitle}
           marcTitle={marcTitle}
-          onAfterPrint={closePrintPopup}
+          marc={marc}
+          onClose={goBack}
+          lastMenu={
+            isPrintAvailable &&
+              <Button
+                marginBottom0
+                buttonStyle="primary"
+                onClick={openPrintPopup}
+              >
+                <FormattedMessage id="ui-quick-marc.print" />
+              </Button>
+          }
         />
-      )}
-    </div>
+        {isPrintAvailable && isShownPrintPopup && (
+          <PrintPopup
+            marc={marc}
+            paneTitle={instance.title}
+            marcTitle={marcTitle}
+            onAfterPrint={closePrintPopup}
+          />
+        )}
+      </div>
+    </HasCommand>
   );
 };
 

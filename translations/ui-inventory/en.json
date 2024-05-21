@@ -876,5 +876,6 @@
   "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
 
   "shortcut.nextSubfield": "quickMARC only: Move to the next subfield in a text box",
-  "shortcut.prevSubfield": "quickMARC only: Move to the previous subfield in a text box"
+  "shortcut.prevSubfield": "quickMARC only: Move to the previous subfield in a text box",
+  "shortcut.editMARC": "Edit MARC record"
 }
