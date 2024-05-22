@@ -692,7 +692,15 @@ class ViewHoldingsRecord extends React.Component {
       {
         name: 'editMARC',
         handler: handleKeyCommand(() => {
-          if (!stripes.hasPerm('ui-quick-marc.quick-marc-editor.all') || !this.isMARCSource()) {
+          if (!this.isMARCSource()) {
+            return;
+          }
+
+          if (!stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all')) {
+            this.calloutRef.current.sendCallout({
+              type: 'error',
+              message: <FormattedMessage id="ui-inventory.shortcut.editMARC.noPermission" />,
+            });
             return;
           }
 

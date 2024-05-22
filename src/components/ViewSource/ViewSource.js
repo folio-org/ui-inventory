@@ -9,7 +9,10 @@ import {
   useHistory,
 } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  useIntl,
+  FormattedMessage,
+} from 'react-intl';
 
 import {
   Button,
@@ -17,7 +20,10 @@ import {
   HasCommand,
   checkScope,
 } from '@folio/stripes/components';
-import { useStripes } from '@folio/stripes/core';
+import {
+  useCallout,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   MarcView,
   PrintPopup,
@@ -44,9 +50,11 @@ const ViewSource = ({
   tenantId,
   marcType,
 }) => {
+  const intl = useIntl();
   const stripes = useStripes();
   const location = useLocation();
   const history = useHistory();
+  const callout = useCallout();
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
@@ -76,7 +84,16 @@ const ViewSource = ({
     {
       name: 'editMARC',
       handler: handleKeyCommand(() => {
-        if (stripes.hasPerm('ui-quick-marc.quick-marc-editor.all')) redirectToMARCEdit();
+        if ((marcType === MARC_TYPES.BIB && !stripes.hasPerm('ui-quick-marc.quick-marc-editor.all'))
+        || (marcType === MARC_TYPES.HOLDINGS && !stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all'))) {
+          callout.sendCallout({
+            type: 'error',
+            message: intl.formatMessage({ id: 'ui-inventory.shortcut.editMARC.noPermission' }),
+          });
+          return;
+        }
+
+        redirectToMARCEdit();
       }),
     },
   ], [stripes, redirectToMARCEdit]);

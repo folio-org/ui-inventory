@@ -1062,7 +1062,15 @@ class ViewInstance extends React.Component {
       {
         name: 'editMARC',
         handler: handleKeyCommand(() => {
-          if (!stripes.hasPerm('ui-quick-marc.quick-marc-editor.all') || !isMARCSource(selectedInstance.source)) {
+          if (!isMARCSource(selectedInstance.source)) {
+            return;
+          }
+
+          if (!stripes.hasPerm('ui-quick-marc.quick-marc-editor.all')) {
+            this.calloutRef.current.sendCallout({
+              type: 'error',
+              message: <FormattedMessage id="ui-inventory.shortcut.editMARC.noPermission" />,
+            });
             return;
           }
 
