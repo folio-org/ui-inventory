@@ -877,5 +877,6 @@
 
   "shortcut.nextSubfield": "quickMARC only: Move to the next subfield in a text box",
   "shortcut.prevSubfield": "quickMARC only: Move to the previous subfield in a text box",
-  "shortcut.editMARC": "Edit MARC record"
+  "shortcut.editMARC": "Edit MARC record",
+  "shortcut.editMARC.noPermission": "You do not have permission to edit the record."
 }
