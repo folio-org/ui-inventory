@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {
-  ADVANCED_SEARCH_INDEX,
   browseModeOptions,
 } from '@folio/stripes-inventory-components';
 

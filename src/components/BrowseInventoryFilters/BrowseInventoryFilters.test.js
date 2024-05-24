@@ -2,13 +2,11 @@ import { act, screen, fireEvent } from '@folio/jest-config-stripes/testing-libra
 
 import '../../../test/jest/__mock__';
 
+import { FACETS } from '@folio/stripes-inventory-components';
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import {
-  FACETS,
-} from '../../constants';
 import BrowseInventoryFilters from './BrowseInventoryFilters';
 
 const facetOptions = {
