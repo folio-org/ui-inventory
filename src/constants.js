@@ -1,6 +1,7 @@
 import React from 'react';
 
 import {
+  ADVANCED_SEARCH_INDEX,
   browseModeOptions,
 } from '@folio/stripes-inventory-components';
 
@@ -292,3 +293,12 @@ export const LEADER_RECORD_STATUSES = {
 };
 
 export const USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY = 'folio_user_touched_staff_suppress';
+
+export const ACQUISITION_COLUMN_NAMES = {
+  poLineNumber: 'poLineNumber',
+  orderStatus: 'orderStatus',
+  polReceiptStatus: 'polReceiptStatus',
+  dateOrdered: 'dateOrdered',
+  acqUnit: 'acqUnit',
+  orderType: 'orderType',
+};

@@ -41,6 +41,7 @@ import {
   DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
 import {
+  advancedSearchQueryBuilder,
   deleteFacetStates,
   resetFacetStates,
   FACETS,
@@ -277,6 +278,7 @@ class InstancesList extends React.Component {
     }
 
     const searchParams = new URLSearchParams(location.search);
+
     const filters = searchParams.get('filters');
 
     const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
@@ -1236,25 +1238,6 @@ class InstancesList extends React.Component {
     const formattedSearchableIndexes = searchableIndexes.map(this.formatSearchableIndex);
 
     const advancedSearchOptions = advancedSearchIndexes[segment].map(this.formatSearchableIndex);
-
-    const advancedSearchQueryBuilder = (rows) => {
-      const formatRowCondition = (row) => {
-        // use default row formatter, but wrap each search term with parentheses
-
-        const query = `${row.searchOption} ${row.match} ${row.query}`;
-        return query;
-      };
-
-      return rows.reduce((formattedQuery, row, index) => {
-        const rowCondition = formatRowCondition(row);
-
-        if (index === 0) {
-          return rowCondition;
-        }
-
-        return `${formattedQuery} ${row.bool} ${rowCondition}`;
-      }, '');
-    };
 
     const shortcuts = [
       {

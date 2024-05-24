@@ -567,6 +567,8 @@
   "marc": "MARC",
   "unknownNoteType": "Unknown note type",
   "communicationProblem": "Server communication problem. Please try again",
+  "affiliationChanging.notification": "Active affiliation has changed",
+  "affiliationChanging.namedNotification": "Active affiliation has changed to {name}",
   "item.status": "Item status",
   "item.status.agedToLost": "Aged to lost",
   "item.status.available": "Available",
@@ -870,5 +872,7 @@
   "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
 
   "shortcut.nextSubfield": "quickMARC only: Move to the next subfield in a text box",
-  "shortcut.prevSubfield": "quickMARC only: Move to the previous subfield in a text box"
+  "shortcut.prevSubfield": "quickMARC only: Move to the previous subfield in a text box",
+  "shortcut.editMARC": "Edit MARC record",
+  "shortcut.editMARC.noPermission": "You do not have permission to edit the record."
 }

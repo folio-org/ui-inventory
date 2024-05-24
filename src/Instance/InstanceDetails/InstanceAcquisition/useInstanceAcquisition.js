@@ -6,13 +6,13 @@ import { useOkapiKy, useNamespace, useStripes } from '@folio/stripes/core';
 import { LIMIT_MAX } from '../../../constants';
 import { batchRequest } from '../../../utils';
 
-const useInstanceAcquisition = (id) => {
-  const ky = useOkapiKy();
+const useInstanceAcquisition = (id, tenant) => {
+  const ky = useOkapiKy({ tenant });
   const [namespace] = useNamespace({ key: 'instance-acquisition' });
   const stripes = useStripes();
 
   const { data = [], isLoading } = useQuery(
-    [namespace, 'instance-acquisition', id],
+    [namespace, 'instance-acquisition', id, tenant],
     async () => {
       const { titles = [] } = await ky.get('orders/titles', {
         searchParams: {

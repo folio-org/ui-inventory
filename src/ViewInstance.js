@@ -39,6 +39,7 @@ import {
   isMARCSource,
   getLinkedAuthorityIds,
   setRecordForDeletion,
+  redirectToMarcEditPage,
 } from './utils';
 import {
   CONSORTIUM_PREFIX,
@@ -339,21 +340,12 @@ class ViewInstance extends React.Component {
       history,
       location,
       stripes,
-      isShared,
     } = this.props;
 
     const ci = makeConnectedInstance(this.props, stripes.logger);
     const instance = ci.instance();
 
-    const searchParams = new URLSearchParams(location.search);
-
-    searchParams.delete('relatedRecordVersion');
-    searchParams.append('shared', isShared.toString());
-
-    history.push({
-      pathname: `/inventory/quick-marc/${page}/${instance.id}`,
-      search: searchParams.toString(),
-    });
+    redirectToMarcEditPage(`/inventory/quick-marc/${page}/${instance.id}`, instance, location, history);
   };
 
   editInstanceMarc = () => {
@@ -1042,6 +1034,7 @@ class ViewInstance extends React.Component {
       onCopy,
       updateLocation,
       canUseSingleRecordImport,
+      selectedInstance,
     } = this.props;
     const {
       linkedAuthoritiesLength,
@@ -1064,6 +1057,24 @@ class ViewInstance extends React.Component {
         name: 'edit',
         handler: handleKeyCommand(() => {
           if (stripes.hasPerm('ui-inventory.instance.edit')) this.onClickEditInstance();
+        }),
+      },
+      {
+        name: 'editMARC',
+        handler: handleKeyCommand(() => {
+          if (!isMARCSource(selectedInstance.source)) {
+            return;
+          }
+
+          if (!stripes.hasPerm('ui-quick-marc.quick-marc-editor.all')) {
+            this.calloutRef.current.sendCallout({
+              type: 'error',
+              message: <FormattedMessage id="ui-inventory.shortcut.editMARC.noPermission" />,
+            });
+            return;
+          }
+
+          this.editInstanceMarc();
         }),
       },
       {

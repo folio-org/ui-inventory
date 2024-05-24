@@ -2,6 +2,7 @@ export const line = {
   id: 'lineId',
   purchaseOrderId: 'orderId',
   poLineNumber: '1000',
+  receiptStatus: 'Ongoing',
 };
 export const order = {
   id: line.purchaseOrderId,

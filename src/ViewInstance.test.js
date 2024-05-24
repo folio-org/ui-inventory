@@ -836,7 +836,7 @@ describe('ViewInstance', () => {
         renderViewInstance();
         const expectedValue = {
           pathname: `/inventory/quick-marc/edit-bib/${defaultProp.selectedInstance.id}`,
-          search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
+          search: 'filters=test1&query=test2&sort=test3&qindex=test',
         };
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         const button = screen.getByRole('button', { name: 'Edit MARC bibliographic record' });
@@ -929,7 +929,7 @@ describe('ViewInstance', () => {
         renderViewInstance({ isShared: false });
         const expectedValue = {
           pathname: `/inventory/quick-marc/duplicate-bib/${defaultProp.selectedInstance.id}`,
-          search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=false',
+          search: 'filters=test1&query=test2&sort=test3&qindex=test',
         };
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         const button = screen.getByRole('button', { name: 'Derive new MARC bibliographic record' });
@@ -1160,6 +1160,26 @@ describe('ViewInstance', () => {
       renderViewInstance();
       fireEvent.click(screen.getByRole('button', { name: 'expandAllSections' }));
       expect(spyOnexpandAllSections).toBeCalled();
+    });
+  });
+
+  describe('when using an editMARC shortcut', () => {
+    it('should redirect to marc edit page', () => {
+      const selectedInstance = {
+        ...instances[0],
+        shared: true,
+      };
+
+      StripesConnectedInstance.prototype.instance.mockImplementation(() => selectedInstance);
+
+      renderViewInstance({ selectedInstance });
+
+      fireEvent.click(screen.getByRole('button', { name: 'editMARC' }));
+
+      expect(mockPush).toHaveBeenLastCalledWith({
+        pathname: `/inventory/quick-marc/edit-bib/${instance.id}`,
+        search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=true',
+      });
     });
   });
 });

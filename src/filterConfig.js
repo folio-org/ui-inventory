@@ -1,4 +1,5 @@
 import {
+  ADVANCED_SEARCH_INDEX,
   FACETS,
   FACETS_CQL,
   browseModeOptions,
@@ -195,7 +196,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.authorityId', value: 'authorityId', queryTemplate: 'authorityId == %{query.query}' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: ADVANCED_SEARCH_INDEX, queryTemplate: '%{query.query}' },
 ];
 
 export const browseFiltersConfig = [
@@ -302,7 +303,7 @@ export const holdingIndexes = [
   { label: 'ui-inventory.search.holdings.uuid', value: 'hid', queryTemplate: 'holdings.id=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: ADVANCED_SEARCH_INDEX, queryTemplate: '%{query.query}' },
 ];
 
 export const holdingSortMap = {};
@@ -391,7 +392,7 @@ export const itemIndexes = [
   { label: 'ui-inventory.search.item.uuid', value: 'iid', queryTemplate: 'item.id=="%{query.query}"' },
   { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all="%{query.query}"' },
   { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.advancedSearch', value: 'advancedSearch', queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.advancedSearch', value: ADVANCED_SEARCH_INDEX, queryTemplate: '%{query.query}' },
 ];
 
 export const itemFilterConfig = [
