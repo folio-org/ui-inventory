@@ -1,10 +1,8 @@
 import React from 'react';
-import { get } from 'lodash';
 
-import { facetsStore } from '@folio/stripes-inventory-components';
+import { resetFacetSearchValue } from '@folio/stripes-inventory-components';
 
 import InstanceFilters from './InstanceFilters';
-import { getCurrentFilters } from '../../utils';
 
 // instanceFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
@@ -18,13 +16,10 @@ const instanceFilterRenderer = data => onChange => {
     natureOfContentTerms,
     query,
     tags,
-    onFetchFacets,
-    parentResources,
     statisticalCodes,
     consortiaTenants,
+    filterConfig,
   } = data;
-
-  const activeFilters = getCurrentFilters(get(query, 'filters', ''));
 
   const dataProp = {
     locations,
@@ -35,19 +30,17 @@ const instanceFilterRenderer = data => onChange => {
     natureOfContentTerms,
     statisticalCodes,
     query,
-    onFetchFacets,
-    parentResources,
     instanceStatuses,
     consortiaTenants,
   };
 
   return (
     <InstanceFilters
-      activeFilters={activeFilters}
+      filterConfig={filterConfig}
       data={dataProp}
       onChange={onChange}
       onClear={(name) => {
-        facetsStore.getState().resetFacetByName(name);
+        resetFacetSearchValue(name);
         onChange({ name, values: [] });
       }}
     />

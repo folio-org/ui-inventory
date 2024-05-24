@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
-import _ from 'lodash';
 
 import {
   Accordion,
@@ -14,31 +13,23 @@ import {
 } from '@folio/stripes/core';
 import {
   FACETS,
-  FACETS_CQL,
-  FACETS_OPTIONS,
-  FACETS_SETTINGS,
   HeldByFacet,
   CheckboxFacet,
   browseModeOptions,
   browseCallNumberOptions,
   browseClassificationOptions,
+  useFacets,
+  FACETS_TO_REQUEST,
 } from '@folio/stripes-inventory-components';
 
+import { omit } from 'lodash';
 import { MultiSelectionFacet } from '../../MultiSelectionFacet';
-import {
-  getSharedOptions,
-  processFacetOptions,
-} from '../../../facetUtils';
-import { useFacets } from '../../../common/hooks';
 
 const InstanceFiltersBrowse = props => {
   const {
-    activeFilters,
+    filterConfig,
     data: {
-      locations,
-      browseType,
-      contributorNameTypes,
-      consortiaTenants,
+      query,
     },
     onChange,
     onClear,
@@ -46,10 +37,11 @@ const InstanceFiltersBrowse = props => {
 
   const stripes = useStripes();
   const intl = useIntl();
+  const qindex = query.qindex;
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
-  const segmentAccordions = {
+  const initialAccordionStates = {
     [FACETS.SHARED]: false,
     [FACETS.CALL_NUMBERS_HELD_BY]: false,
     [FACETS.CLASSIFICATION_SHARED]: false,
@@ -61,98 +53,30 @@ const InstanceFiltersBrowse = props => {
     [FACETS.NAME_TYPE]: false,
   };
 
-  const segmentOptions = {
-    [FACETS_OPTIONS.SHARED_OPTIONS]: [],
-    [FACETS_OPTIONS.HELD_BY_OPTIONS]: [],
-    [FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]: [],
-    [FACETS_OPTIONS.NAME_TYPE_OPTIONS]: [],
-  };
+  const activeFilters = useMemo(() => omit(query || {}, ['qindex', 'query']), [query]);
 
-  const selectedFacetFilters = {
-    [FACETS.SHARED]: activeFilters[FACETS.SHARED],
-    [FACETS.CALL_NUMBERS_HELD_BY]: activeFilters[FACETS.CALL_NUMBERS_HELD_BY],
-    [FACETS.CONTRIBUTORS_SHARED]: activeFilters[FACETS.CONTRIBUTORS_SHARED],
-    [FACETS.CONTRIBUTORS_HELD_BY]: activeFilters[FACETS.CONTRIBUTORS_HELD_BY],
-    [FACETS.CLASSIFICATION_SHARED]: activeFilters[FACETS.CLASSIFICATION_SHARED],
-    [FACETS.SUBJECTS_SHARED]: activeFilters[FACETS.SUBJECTS_SHARED],
-    [FACETS.SUBJECTS_HELD_BY]: activeFilters[FACETS.SUBJECTS_HELD_BY],
-    [FACETS.EFFECTIVE_LOCATION]: activeFilters[FACETS.EFFECTIVE_LOCATION],
-    [FACETS.NAME_TYPE]: activeFilters[FACETS.NAME_TYPE],
-  };
-
-  // When a facet option is selected, and then another one is selected from another facet, the first selected
-  // facet option may become with count 0, and it should still be visible and moved to the bottom of the
-  // provided options. The `sharedFacetMap` helps to get the correct facet name using the selected search option.
-  const sharedFacetMap = {
-    [browseModeOptions.CLASSIFICATION_ALL]: FACETS.CLASSIFICATION_SHARED,
-    [browseModeOptions.DEWEY_CLASSIFICATION]: FACETS.CLASSIFICATION_SHARED,
-    [browseModeOptions.LC_CLASSIFICATION]: FACETS.CLASSIFICATION_SHARED,
-    [browseModeOptions.CONTRIBUTORS]: FACETS.CONTRIBUTORS_SHARED,
-    [browseModeOptions.SUBJECTS]: FACETS.SUBJECTS_SHARED,
-  };
-
-  const heldByFacetMap = {
-    [browseModeOptions.CONTRIBUTORS]: FACETS.CONTRIBUTORS_HELD_BY,
-    [browseModeOptions.SUBJECTS]: FACETS.SUBJECTS_HELD_BY,
-  };
-
-  const getNewRecords = (records) => {
-    return _.reduce(FACETS_SETTINGS, (accum, name, recordName) => {
-      if (records[recordName]) {
-        const recordValues = records[recordName].values;
-        const commonProps = [recordValues, accum, name];
-
-        if (recordName === FACETS_CQL.EFFECTIVE_LOCATION) {
-          processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
-        }
-        if (recordName === FACETS_CQL.NAME_TYPE) {
-          processFacetOptions(activeFilters[FACETS.NAME_TYPE], contributorNameTypes, ...commonProps);
-        }
-        if (recordName === FACETS_CQL.INSTANCES_SHARED) {
-          const facetName = sharedFacetMap[browseType];
-
-          accum[name] = getSharedOptions(activeFilters[facetName], recordValues);
-        }
-        if (recordName === FACETS_CQL.INSTANCES_HELD_BY) {
-          const facetName = heldByFacetMap[browseType];
-
-          processFacetOptions(activeFilters[facetName], consortiaTenants, ...commonProps);
-        }
-        if (recordName === FACETS_CQL.SHARED) {
-          accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
-        }
-        if (recordName === FACETS_CQL.HELD_BY) {
-          processFacetOptions(activeFilters[FACETS.CALL_NUMBERS_HELD_BY], consortiaTenants, ...commonProps);
-        }
-      }
-      return accum;
-    }, {});
-  };
-
-  const [
-    accordions,
-    onToggleSection,
-    handleFetchFacets,
-    handleFilterSearch,
-    facetsOptions,
-    getIsPending,
-    onUnregisterAccordion,
-  ] = useFacets(
-    segmentAccordions,
-    segmentOptions,
-    selectedFacetFilters,
-    getNewRecords,
-    props.data,
-    false,
-  );
+  const {
+    accordionStatus,
+    facetOptions,
+    onIsLoading,
+    onToggleAccordion,
+    onInputFocusAndMoreClick,
+    onFacetOptionSearch,
+  } = useFacets({
+    initialAccordionStates,
+    query,
+    isBrowseLookup: true,
+    filterConfig,
+    activeFilters,
+    data: props.data,
+  });
 
   return (
     <AccordionSet
-      accordionStatus={accordions}
-      onToggle={onToggleSection}
-      onUnregisterAccordion={onUnregisterAccordion}
+      accordionStatus={accordionStatus}
+      onToggle={onToggleAccordion}
     >
-      {Object.values(browseClassificationOptions).includes(browseType) && (
+      {Object.values(browseClassificationOptions).includes(qindex) && (
         isUserInMemberTenant && (
           <Accordion
             closedByDefault
@@ -166,15 +90,15 @@ const InstanceFiltersBrowse = props => {
           >
             <CheckboxFacet
               name={FACETS.CLASSIFICATION_SHARED}
-              dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
+              dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.CLASSIFICATION_SHARED]]}
               selectedValues={activeFilters[FACETS.CLASSIFICATION_SHARED]}
-              isPending={getIsPending(FACETS.CLASSIFICATION_SHARED)}
+              isPending={onIsLoading(FACETS.CLASSIFICATION_SHARED)}
               onChange={onChange}
             />
           </Accordion>
         )
       )}
-      {Object.values(browseCallNumberOptions).includes(browseType) && (
+      {Object.values(browseCallNumberOptions).includes(qindex) && (
         <>
           {isUserInMemberTenant && (
             <Accordion
@@ -189,22 +113,22 @@ const InstanceFiltersBrowse = props => {
             >
               <CheckboxFacet
                 name={FACETS.SHARED}
-                dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
+                dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SHARED]]}
                 selectedValues={activeFilters[FACETS.SHARED]}
-                isPending={getIsPending(FACETS.SHARED)}
+                isPending={onIsLoading(FACETS.SHARED)}
                 onChange={onChange}
               />
             </Accordion>
           )}
           <HeldByFacet
             name={FACETS.CALL_NUMBERS_HELD_BY}
-            facetsOptions={facetsOptions}
+            facetOptions={facetOptions}
             selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
+            onIsLoading={onIsLoading}
             onChange={onChange}
             onClear={onClear}
-            onFetchFacets={handleFetchFacets}
-            onFilterSearch={handleFilterSearch}
-            onGetIsPending={getIsPending}
+            onFetchFacets={onInputFocusAndMoreClick}
+            onSearch={onFacetOptionSearch}
           />
           <Accordion
             closedByDefault
@@ -218,18 +142,18 @@ const InstanceFiltersBrowse = props => {
           >
             <CheckboxFacet
               name={FACETS.EFFECTIVE_LOCATION}
-              dataOptions={facetsOptions[FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]}
+              dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.EFFECTIVE_LOCATION]]}
               selectedValues={activeFilters[FACETS.EFFECTIVE_LOCATION]}
               onChange={onChange}
-              onSearch={handleFilterSearch}
+              onSearch={onFacetOptionSearch}
               isFilterable
-              isPending={getIsPending(FACETS.EFFECTIVE_LOCATION)}
-              onFetch={handleFetchFacets}
+              isPending={onIsLoading(FACETS.EFFECTIVE_LOCATION)}
+              onFetch={onInputFocusAndMoreClick}
             />
           </Accordion>
         </>
       )}
-      {browseType === browseModeOptions.CONTRIBUTORS && (
+      {qindex === browseModeOptions.CONTRIBUTORS && (
         <>
           {isUserInMemberTenant && (
             <Accordion
@@ -243,9 +167,9 @@ const InstanceFiltersBrowse = props => {
             >
               <CheckboxFacet
                 name={FACETS.CONTRIBUTORS_SHARED}
-                dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
+                dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.CONTRIBUTORS_SHARED]]}
                 selectedValues={activeFilters[FACETS.CONTRIBUTORS_SHARED]}
-                isPending={getIsPending(FACETS.CONTRIBUTORS_SHARED)}
+                isPending={onIsLoading(FACETS.CONTRIBUTORS_SHARED)}
                 onChange={onChange}
               />
             </Accordion>
@@ -253,29 +177,29 @@ const InstanceFiltersBrowse = props => {
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* <HeldByFacet
             name={FACETS.CONTRIBUTORS_HELD_BY}
-            facetsOptions={facetsOptions}
+            facetOptions={facetOptions}
             selectedValues={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]}
+            onIsLoading={onIsLoading}
             onChange={onChange}
             onClear={onClear}
-            onFetchFacets={handleFetchFacets}
-            onFilterSearch={handleFilterSearch}
-            onGetIsPending={getIsPending}
+            onFetchFacets={onInputFocusAndMoreClick}
+            onSearch={onFacetOptionSearch}
           /> */}
           <MultiSelectionFacet
             id={FACETS.NAME_TYPE}
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
             name={FACETS.NAME_TYPE}
             closedByDefault
-            options={facetsOptions[FACETS_OPTIONS.NAME_TYPE_OPTIONS]}
+            options={facetOptions[FACETS_TO_REQUEST[FACETS.NAME_TYPE]]}
             selectedValues={activeFilters[FACETS.NAME_TYPE]}
             onFilterChange={onChange}
             onClearFilter={() => onClear(FACETS.NAME_TYPE)}
             displayClearButton={!!activeFilters[FACETS.NAME_TYPE]?.length}
-            isPending={getIsPending(FACETS.NAME_TYPE)}
+            isPending={onIsLoading(FACETS.NAME_TYPE)}
           />
         </>
       )}
-      {browseType === browseModeOptions.SUBJECTS && (
+      {qindex === browseModeOptions.SUBJECTS && (
         <>
           {isUserInMemberTenant && (
             <Accordion
@@ -289,9 +213,9 @@ const InstanceFiltersBrowse = props => {
             >
               <CheckboxFacet
                 name={FACETS.SUBJECTS_SHARED}
-                dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS] || []}
+                dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SUBJECTS_SHARED]] || []}
                 selectedValues={activeFilters[FACETS.SUBJECTS_SHARED]}
-                isPending={getIsPending(FACETS.SUBJECTS_SHARED)}
+                isPending={onIsLoading(FACETS.SUBJECTS_SHARED)}
                 onChange={onChange}
               />
             </Accordion>
@@ -299,13 +223,13 @@ const InstanceFiltersBrowse = props => {
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* <HeldByFacet
             name={FACETS.SUBJECTS_HELD_BY}
-            facetsOptions={facetsOptions}
+            facetOptions={facetOptions}
             selectedValues={activeFilters[FACETS.SUBJECTS_HELD_BY]}
+            onIsLoading={onIsLoading}
             onChange={onChange}
             onClear={onClear}
-            onFetchFacets={handleFetchFacets}
-            onFilterSearch={handleFilterSearch}
-            onGetIsPending={getIsPending}
+            onFetchFacets={onInputFocusAndMoreClick}
+            onSearch={onFacetOptionSearch}
           /> */}
         </>
       )}
@@ -316,12 +240,8 @@ const InstanceFiltersBrowse = props => {
 export default InstanceFiltersBrowse;
 
 InstanceFiltersBrowse.propTypes = {
-  activeFilters: PropTypes.object,
+  filterConfig: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   data: PropTypes.object,
-};
-
-InstanceFiltersBrowse.defaultProps = {
-  activeFilters: {},
 };

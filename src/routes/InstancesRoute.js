@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
-import { withFacets } from '@folio/stripes-inventory-components';
 
 import withLocation from '../withLocation';
 import withLastSearchTerms from '../withLastSearchTerms';
@@ -19,7 +18,6 @@ class InstancesRoute extends React.Component {
     disableRecordCreation: PropTypes.bool,
     onSelectRow: PropTypes.func,
     getParams: PropTypes.func,
-    fetchFacets: PropTypes.func,
     getLastBrowse: PropTypes.func.isRequired,
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
@@ -40,7 +38,6 @@ class InstancesRoute extends React.Component {
       resources,
       mutator,
       getParams,
-      fetchFacets,
       getLastBrowse,
       getLastSearchOffset,
       storeLastSearch,
@@ -65,12 +62,10 @@ class InstancesRoute extends React.Component {
             renderFilters={renderer({
               ...data,
               query,
-              onFetchFacets: fetchFacets({ data, filterConfig }),
-              parentResources,
+              filterConfig,
             })}
             segment={segment}
             searchableIndexes={indexes}
-            fetchFacets={fetchFacets}
             getLastBrowse={getLastBrowse}
             getLastSearchOffset={getLastSearchOffset}
             storeLastSearch={storeLastSearch}
@@ -86,6 +81,5 @@ class InstancesRoute extends React.Component {
 export default flowRight(
   stripesConnect,
   withLocation,
-  withFacets,
   withLastSearchTerms,
 )(InstancesRoute);

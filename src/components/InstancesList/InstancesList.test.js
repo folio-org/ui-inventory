@@ -14,6 +14,7 @@ import {
 import '../../../test/jest/__mock__';
 
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import { deleteFacetStates } from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
@@ -144,7 +145,6 @@ const getInstancesListTree = ({ segment, ...rest }) => {
             segment={segment}
             searchableIndexes={indexes}
             searchableIndexesES={indexesES}
-            fetchFacets={noop}
             getLastBrowse={jest.fn()}
             getLastSearchOffset={mockGetLastSearchOffset}
             storeLastSearch={mockStoreLastSearch}
@@ -225,6 +225,16 @@ describe('InstancesList', () => {
         await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
 
         expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+      });
+
+      it('should delete facet states', async () => {
+        renderInstancesList({ segment: 'instances' });
+
+        const search = '?segment=instances&sort=title';
+        act(() => { history.push({ search }); });
+        await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
+
+        expect(deleteFacetStates).toHaveBeenCalled();
       });
 
       describe('when staffSuppress filter is not present', () => {

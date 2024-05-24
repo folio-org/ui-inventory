@@ -1,12 +1,9 @@
-import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import '../../../test/jest/__mock__';
+
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import {
-  FACETS,
-} from '@folio/stripes-inventory-components';
+import { FACETS } from '@folio/stripes-inventory-components';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
@@ -18,42 +15,9 @@ jest.mock('@folio/stripes-inventory-components', () => ({
   CheckboxFacet: jest.fn().mockReturnValue('CheckboxFacet'),
 }));
 
-jest.mock('../../facetUtils', () => ({
-  ...jest.requireActual('../../facetUtils'),
-  getSourceOptions: jest.fn(),
-  getSuppressedOptions: jest.fn(),
-}));
-
-const activeFilters = {
-  [FACETS.SHARED]: ['shared1'],
-  [FACETS.HELD_BY]: ['HELD_BY1'],
-  [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
-  [FACETS.ITEM_STATUS]: ['ITEM_STATUS1'],
-  [FACETS.HOLDINGS_PERMANENT_LOCATION]: ['loc2'],
-  [FACETS.MATERIAL_TYPE]: ['MATERIAL_TYPE]1'],
-  [FACETS.ITEMS_DISCOVERY_SUPPRESS]: ['DISCOVERYSUPPRESS1'],
-  [FACETS.ITEMS_STATISTICAL_CODE_IDS]: ['STATISTICALCODEIDS1'],
-  [FACETS.ITEMS_CREATED_DATE]: ['2022-01-01'],
-  [FACETS.ITEMS_UPDATED_DATE]: ['2022-01-01'],
-};
-
-const resources = {
-  facets: {
-    hasLoaded: true,
-    resource: 'facets',
-    records: [{
-      'shared': { values: ['shared1'] },
-      'holdings.tenantId': { values: ['heldby1'] },
-      'items.effectiveLocationId': { values: ['effectiveLocationId1'] },
-      'holdings.permanentLocationId': { values: ['permanentLocationId1'] },
-      'items.statisticalCodeIds': { values: ['statisticalCodeIds1'] },
-      'items.discoverySuppress': { values: ['discoverySuppress1'] },
-      'items.status.name': { values: ['name1'] },
-      'itemTags': { values: ['itemTags1'] },
-      'items.materialTypeId': { values: ['materialTypeId1'] },
-    }],
-    other: { totalRecords: 0 }
-  },
+const filterConfig = {
+  filters: [],
+  indexes: [],
 };
 
 const data = {
@@ -66,10 +30,9 @@ const data = {
   natureOfContentTerms: [],
   consortiaTenants: [],
   query: {
-    filters: 'language.eng',
+    filters: 'language.eng,shared.true,tenantId.id,itemStatus.i,effectiveLocation.l,holdingsPermanentLocation.pl,' +
+      'materialType.mt,itemsDiscoverySuppress.d,itemsStatisticalCodeIds.sc,itemsCreatedDate.1,itemsUpdatedDate.2',
   },
-  onFetchFacets: jest.fn(),
-  parentResources: resources,
 };
 const onChange = jest.fn();
 const onClear = jest.fn();
@@ -78,11 +41,10 @@ const renderItemFilters = () => {
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
         <ItemFilters
-          activeFilters={activeFilters}
+          filterConfig={filterConfig}
           data={data}
           onChange={onChange}
           onClear={onClear}
-          parentResources={resources}
         />
       </ModuleHierarchyProvider>
     </Router>,
