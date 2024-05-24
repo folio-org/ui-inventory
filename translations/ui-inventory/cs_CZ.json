@@ -862,5 +862,7 @@
     "browse.classification.all": "Klasifikace (vše)",
     "browse.classification.dewey": "Deweyho desítková klasifikace",
     "browse.classification.lc": "Klasifikace Kongresové knihovny",
-    "normalizedClassificationNumber": "Klasifikace, normalizovaná"
+    "normalizedClassificationNumber": "Klasifikace, normalizovaná",
+    "affiliationChanging.notification": "Active affiliation has changed",
+    "affiliationChanging.namedNotification": "Active affiliation has changed to {name}"
 }
