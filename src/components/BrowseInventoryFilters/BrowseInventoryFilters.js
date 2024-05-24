@@ -8,7 +8,7 @@ import { withFacets } from '@folio/stripes-inventory-components';
 import { DataContext } from '../../contexts';
 import { parseFiltersToStr } from '../../utils';
 import { InstanceFiltersBrowse } from '../InstanceFilters';
-import {browseConfig} from "../../filterConfig";
+import { browseConfig } from '../../filterConfig';
 
 const BrowseInventoryFilters = ({
   activeFilters,

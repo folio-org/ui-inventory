@@ -65,7 +65,7 @@ class InstancesRoute extends React.Component {
             renderFilters={renderer({
               ...data,
               query,
-              onFetchFacets: fetchFacets({data, filterConfig}),
+              onFetchFacets: fetchFacets({ data, filterConfig }),
               parentResources,
             })}
             segment={segment}

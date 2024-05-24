@@ -13,7 +13,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('@folio/stripes-inventory-components', () => ({
   ...jest.requireActual('@folio/stripes-inventory-components'),
   useFacetSettings: jest.fn().mockReturnValue([{ foo: { value: 'bar' }, quux: { value: 'changed' } }]),
-}))
+}));
 
 describe('useFacets', () => {
   const segmentAccordions = {

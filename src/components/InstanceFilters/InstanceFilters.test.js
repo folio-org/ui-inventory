@@ -8,7 +8,7 @@ import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import {
   FACETS,
-} from "@folio/stripes-inventory-components";
+} from '@folio/stripes-inventory-components';
 
 import InstanceFilters from './InstanceFilters';
 import { USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '../../constants';

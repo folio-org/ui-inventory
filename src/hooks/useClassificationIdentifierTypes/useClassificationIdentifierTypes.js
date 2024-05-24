@@ -4,7 +4,7 @@ import {
   useNamespace,
   useOkapiKy,
 } from '@folio/stripes/core';
-import { CQL_FIND_ALL } from '@folio/stripes-inventory-components'
+import { CQL_FIND_ALL } from '@folio/stripes-inventory-components';
 
 import {
   LIMIT_MAX,

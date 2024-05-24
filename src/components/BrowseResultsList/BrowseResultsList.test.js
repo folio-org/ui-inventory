@@ -8,7 +8,7 @@ import {
   browseModeOptions,
   browseCallNumberOptions,
   browseClassificationOptions,
-} from "@folio/stripes-inventory-components";
+} from '@folio/stripes-inventory-components';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 

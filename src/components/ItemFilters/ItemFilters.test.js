@@ -6,7 +6,7 @@ import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import {
   FACETS,
-} from "@folio/stripes-inventory-components";
+} from '@folio/stripes-inventory-components';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 

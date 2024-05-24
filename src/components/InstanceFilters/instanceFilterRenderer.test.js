@@ -41,7 +41,7 @@ jest.mock('@folio/stripes-inventory-components', () => ({
       <button type="button" onClick={() => onChange()}>onChange</button>
     </div>
   )),
-}))
+}));
 
 jest.mock('../../facetUtils', () => ({
   ...jest.requireActual('../../facetUtils'),

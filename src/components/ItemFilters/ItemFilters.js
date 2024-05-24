@@ -19,7 +19,7 @@ import {
   FACETS_SETTINGS,
   FACETS_CQL,
   CheckboxFacet,
-} from "@folio/stripes-inventory-components";
+} from '@folio/stripes-inventory-components';
 
 import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
