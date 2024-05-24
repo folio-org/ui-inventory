@@ -1,6 +1,5 @@
 import React, {
   useMemo,
-  useRef,
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -24,7 +23,6 @@ const DataProvider = ({
   mutator,
 }) => {
   const { manifest } = DataProvider;
-  const dataRef = useRef({});
   const stripes = useStripes();
 
   const { consortium } = stripes.user.user;
@@ -44,7 +42,7 @@ const DataProvider = ({
 
   const tenantIds = resources.consortiaTenants.records.map(tenant => tenant.id);
 
-  const { data: locationsOfAllTenants } = useLocationsForTenants({ tenantIds });
+  const { isLoading: isLoadingAllLocations, data: locationsOfAllTenants } = useLocationsForTenants({ tenantIds });
 
   useEffect(() => {
     if (isUserInConsortiumMode(stripes)) {
@@ -57,6 +55,10 @@ const DataProvider = ({
   const isLoading = useMemo(() => {
     // eslint-disable-next-line guard-for-in
     for (const key in manifest) {
+      if (isLoadingAllLocations) {
+        return true;
+      }
+
       const isResourceLoading = !resources?.[key]?.hasLoaded && !resources?.[key]?.failed && resources?.[key]?.isPending;
 
       if (manifest[key].type === 'okapi' && isResourceLoading) {
@@ -65,13 +67,9 @@ const DataProvider = ({
     }
 
     return false;
-  }, [resources, manifest]);
+  }, [resources, manifest, isLoadingAllLocations]);
 
-  useEffect(() => {
-    if (isLoading || !dataRef.current) {
-      return;
-    }
-
+  const data = useMemo(() => {
     const loadedData = {};
 
     Object.keys(manifest).forEach(key => {
@@ -106,15 +104,15 @@ const DataProvider = ({
       return sc;
     });
 
-    dataRef.current = loadedData;
-  }, [resources, manifest, isLoading, dataRef]);
+    return loadedData;
+  }, [resources, manifest, locationsOfAllTenants]);
 
   if (isLoading) {
     return null;
   }
 
   return (
-    <DataContext.Provider value={dataRef.current}>
+    <DataContext.Provider value={data}>
       {children}
     </DataContext.Provider>
   );

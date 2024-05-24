@@ -1,46 +1,53 @@
-import React from 'react';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { noop } from 'lodash';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-
-import '../../../test/jest/__mock__';
 
 import itemFilterRenderer from './itemFilterRenderer';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
+import ItemFilters from './ItemFilters';
+import { itemStatuses } from '../../constants';
 
-jest.mock('./ItemFilters', () => ({ onClear }) => (
-  <div>
-    <button
-      type="button"
-      data-testid="onClear"
-      onClick={() => onClear('name')}
-    >
-      Clear
-    </button>
-  </div>
-));
+jest.mock('./ItemFilters', () => jest.fn(() => <div>ItemFilters</div>));
 
 const DATA = {
   materialTypes: [],
+  statisticalCodes: [],
   locations: [],
   tags: [],
+  consortiaTenants: [],
   query: {},
-  parentResources: { facets: { records: [] } },
+  filterConfig: {},
 };
 
-const renderFilters = (data = DATA, onChange = noop) => (renderWithIntl(
+const mockOnChange = jest.fn();
+
+const renderFilters = (data = DATA, onChange = mockOnChange) => (renderWithIntl(
   <Router>{itemFilterRenderer(data)(onChange)}</Router>,
   translationsProperties
 ));
 
-describe('itemFilterRenderer fn', () => {
-  beforeEach(() => renderFilters());
+describe('itemFilterRenderer', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-  it('should click the clearButton', () => {
-    const clearButton = screen.getByTestId('onClear');
-    expect(clearButton).toBeInTheDocument();
-    userEvent.click(clearButton);
+  it('should be called with correct props', () => {
+    renderFilters();
+
+    const expectedData = {
+      materialTypes: DATA.materialTypes,
+      itemStatuses,
+      statisticalCodes: DATA.statisticalCodes,
+      locations: DATA.locations,
+      tagsRecords: DATA.tags,
+      query: DATA.query,
+      consortiaTenants: DATA.consortiaTenants,
+    };
+
+    expect(ItemFilters).toHaveBeenCalledWith({
+      data: expectedData,
+      filterConfig: DATA.filterConfig,
+      onChange: mockOnChange,
+      onClear: expect.any(Function),
+    }, {});
   });
 });

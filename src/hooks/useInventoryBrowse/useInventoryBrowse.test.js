@@ -7,7 +7,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 import {
   FACETS,
   browseModeOptions,
-} from "@folio/stripes-inventory-components";
+} from '@folio/stripes-inventory-components';
 
 import {
   PAGE_DIRECTIONS,

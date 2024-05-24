@@ -12,7 +12,7 @@ import {
   getQueryTemplate,
   getTemplateForSelectedFromBrowseRecord,
   getAdvancedSearchTemplate,
-} from "@folio/stripes-inventory-components";
+} from '@folio/stripes-inventory-components';
 
 import {
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,

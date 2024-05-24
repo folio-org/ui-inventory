@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { reduce } from 'lodash';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { get } from 'lodash';
 
 import {
   Accordion,
@@ -14,48 +14,38 @@ import {
 } from '@folio/stripes/core';
 import {
   FACETS,
-  FACETS_CQL,
-  FACETS_OPTIONS,
-  FACETS_SETTINGS,
   HeldByFacet,
   CheckboxFacet,
+  useFacets,
+  FACETS_TO_REQUEST,
 } from '@folio/stripes-inventory-components';
 
 import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
-import { useFacets } from '../../common/hooks';
-import {
-  getSourceOptions,
-  getSharedOptions,
-  getSuppressedOptions,
-  processFacetOptions,
-  processStatisticalCodes,
-} from '../../facetUtils';
+
 import {
   DATE_FORMAT,
 } from '../../constants';
 import {
+  getCurrentFilters,
   makeDateRangeFilterString,
   retrieveDatesFromDateRangeFilterString,
 } from '../../utils';
 
 const HoldingsRecordFilters = (props) => {
   const {
-    activeFilters,
+    filterConfig,
     data: {
-      locations,
-      statisticalCodes,
-      holdingsSources,
-      holdingsTypes,
-      consortiaTenants,
+      query,
     },
     onChange,
     onClear,
   } = props;
 
   const stripes = useStripes();
+  const intl = useIntl();
 
-  const segmentAccordions = {
+  const initialAccordionStates = {
     [FACETS.SHARED]: false,
     [FACETS.HELD_BY]: false,
     [FACETS.EFFECTIVE_LOCATION]: false,
@@ -69,90 +59,27 @@ const HoldingsRecordFilters = (props) => {
     [FACETS.HOLDINGS_TYPE]: false,
   };
 
-  const segmentOptions = {
-    [FACETS_OPTIONS.SHARED_OPTIONS]: [],
-    [FACETS_OPTIONS.HELD_BY_OPTIONS]: [],
-    [FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]: [],
-    [FACETS_OPTIONS.HOLDINGS_PERMANENT_LOCATION_OPTIONS]: [],
-    [FACETS_OPTIONS.HOLDINGS_DISCOVERY_SUPPRESS_OPTIONS]: [],
-    [FACETS_OPTIONS.HOLDINGS_TAGS_OPTIONS]: [],
-    [FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]: [],
-    [FACETS_OPTIONS.HOLDINGS_SOURCE_OPTIONS]: [],
-    [FACETS_OPTIONS.HOLDINGS_TYPE_OPTIONS]: [],
-  };
+  const activeFilters = useMemo(() => getCurrentFilters(get(query, 'filters', '')) || {}, [query]);
 
-  const selectedFacetFilters = {
-    [FACETS.SHARED]: activeFilters[FACETS.SHARED],
-    [FACETS.HELD_BY]: activeFilters[FACETS.HELD_BY],
-    [FACETS.EFFECTIVE_LOCATION]: activeFilters[FACETS.EFFECTIVE_LOCATION],
-    [FACETS.HOLDINGS_PERMANENT_LOCATION]: activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION],
-    [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: activeFilters[FACETS.HOLDINGS_DISCOVERY_SUPPRESS],
-    [FACETS.HOLDINGS_TAGS]: activeFilters[FACETS.HOLDINGS_TAGS],
-    [FACETS.HOLDINGS_STATISTICAL_CODE_IDS]: activeFilters[FACETS.HOLDINGS_STATISTICAL_CODE_IDS],
-    [FACETS.HOLDINGS_SOURCE]: activeFilters[FACETS.HOLDINGS_SOURCE],
-    [FACETS.HOLDINGS_TYPE]: activeFilters[FACETS.HOLDINGS_TYPE],
-  };
-
-  const getNewRecords = (records) => {
-    return reduce(FACETS_SETTINGS, (accum, name, recordName) => {
-      if (records[recordName]) {
-        const recordValues = records[recordName].values;
-        const commonProps = [recordValues, accum, name];
-
-        switch (recordName) {
-          case FACETS_CQL.SHARED:
-            accum[name] = getSharedOptions(activeFilters[FACETS.SHARED], recordValues);
-            break;
-          case FACETS_CQL.HELD_BY:
-            processFacetOptions(activeFilters[FACETS.HELD_BY], consortiaTenants, ...commonProps);
-            break;
-          case FACETS_CQL.EFFECTIVE_LOCATION:
-            processFacetOptions(activeFilters[FACETS.EFFECTIVE_LOCATION], locations, ...commonProps);
-            break;
-          case FACETS_CQL.HOLDINGS_PERMANENT_LOCATION:
-            processFacetOptions(activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION], locations, ...commonProps);
-            break;
-          case FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS:
-            accum[name] = getSuppressedOptions(activeFilters[FACETS.HOLDINGS_DISCOVERY_SUPPRESS], recordValues);
-            break;
-          case FACETS_CQL.HOLDINGS_STATISTICAL_CODE_IDS:
-            processStatisticalCodes(activeFilters[FACETS.HOLDINGS_STATISTICAL_CODE_IDS], statisticalCodes, ...commonProps);
-            break;
-          case FACETS_CQL.HOLDINGS_SOURCE:
-            processFacetOptions(activeFilters[FACETS.HOLDINGS_SOURCE], holdingsSources, ...commonProps);
-            break;
-          case FACETS_CQL.HOLDINGS_TAGS:
-            accum[name] = getSourceOptions(activeFilters[FACETS.HOLDINGS_TAGS], recordValues);
-            break;
-          case FACETS_CQL.HOLDINGS_TYPE:
-            processFacetOptions(activeFilters[FACETS.HOLDINGS_TYPE], holdingsTypes, ...commonProps);
-            break;
-          default:
-        }
-      }
-      return accum;
-    }, {});
-  };
-
-  const [
-    accordions,
-    onToggleSection,
-    handleFetchFacets,
-    handleFilterSearch,
-    facetsOptions,
-    getIsPending,
-  ] = useFacets(
-    segmentAccordions,
-    segmentOptions,
-    selectedFacetFilters,
-    getNewRecords,
-    props.data
-  );
+  const {
+    accordionStatus,
+    facetOptions,
+    onToggleAccordion,
+    onInputFocusAndMoreClick,
+    onFacetOptionSearch,
+    onIsLoading,
+  } = useFacets({
+    initialAccordionStates,
+    query,
+    filterConfig,
+    activeFilters,
+    data: props.data,
+  });
 
   const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   return (
-    <AccordionSet accordionStatus={accordions} onToggle={onToggleSection}>
+    <AccordionSet accordionStatus={accordionStatus} onToggle={onToggleAccordion}>
       {isUserInMemberTenant && (
         <Accordion
           label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
@@ -166,22 +93,22 @@ const HoldingsRecordFilters = (props) => {
           <CheckboxFacet
             data-test-filter-holdings-shared
             name={FACETS.SHARED}
-            dataOptions={facetsOptions[FACETS_OPTIONS.SHARED_OPTIONS]}
+            dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SHARED]]}
             selectedValues={activeFilters[FACETS.SHARED]}
-            isPending={getIsPending(FACETS.SHARED)}
+            isPending={onIsLoading(FACETS.SHARED)}
             onChange={onChange}
           />
         </Accordion>
       )}
       <HeldByFacet
         name={FACETS.HELD_BY}
-        facetsOptions={facetsOptions}
+        facetOptions={facetOptions}
         selectedValues={activeFilters[FACETS.HELD_BY]}
+        onIsLoading={onIsLoading}
         onChange={onChange}
         onClear={onClear}
-        onFetchFacets={handleFetchFacets}
-        onFilterSearch={handleFilterSearch}
-        onGetIsPending={getIsPending}
+        onFetchFacets={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
       />
       <Accordion
         label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
@@ -194,12 +121,12 @@ const HoldingsRecordFilters = (props) => {
       >
         <CheckboxFacet
           name={FACETS.EFFECTIVE_LOCATION}
-          dataOptions={facetsOptions[FACETS_OPTIONS.EFFECTIVE_LOCATION_OPTIONS]}
+          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.EFFECTIVE_LOCATION]]}
           selectedValues={activeFilters[FACETS.EFFECTIVE_LOCATION]}
           onChange={onChange}
-          onFetch={handleFetchFacets}
-          onSearch={handleFilterSearch}
-          isPending={getIsPending(FACETS.EFFECTIVE_LOCATION)}
+          onFetch={onInputFocusAndMoreClick}
+          onSearch={onFacetOptionSearch}
+          isPending={onIsLoading(FACETS.EFFECTIVE_LOCATION)}
           isFilterable
         />
       </Accordion>
@@ -214,12 +141,12 @@ const HoldingsRecordFilters = (props) => {
       >
         <CheckboxFacet
           name={FACETS.HOLDINGS_PERMANENT_LOCATION}
-          dataOptions={facetsOptions[FACETS_OPTIONS.HOLDINGS_PERMANENT_LOCATION_OPTIONS]}
+          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_PERMANENT_LOCATION]]}
           selectedValues={activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION]}
           onChange={onChange}
-          onFetch={handleFetchFacets}
-          onSearch={handleFilterSearch}
-          isPending={getIsPending(FACETS.HOLDINGS_PERMANENT_LOCATION)}
+          onFetch={onInputFocusAndMoreClick}
+          onSearch={onFacetOptionSearch}
+          isPending={onIsLoading(FACETS.HOLDINGS_PERMANENT_LOCATION)}
           isFilterable
         />
       </Accordion>
@@ -234,12 +161,12 @@ const HoldingsRecordFilters = (props) => {
       >
         <CheckboxFacet
           name={FACETS.HOLDINGS_TYPE}
-          dataOptions={facetsOptions[FACETS_OPTIONS.HOLDINGS_TYPE_OPTIONS]}
+          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_TYPE]]}
           selectedValues={activeFilters[FACETS.HOLDINGS_TYPE]}
           onChange={onChange}
-          onFetch={handleFetchFacets}
-          onSearch={handleFilterSearch}
-          isPending={getIsPending(FACETS.HOLDINGS_TYPE)}
+          onFetch={onInputFocusAndMoreClick}
+          onSearch={onFacetOptionSearch}
+          isPending={onIsLoading(FACETS.HOLDINGS_TYPE)}
           isFilterable
         />
       </Accordion>
@@ -256,8 +183,8 @@ const HoldingsRecordFilters = (props) => {
         <CheckboxFacet
           data-test-filter-holdings-discovery-suppress
           name={FACETS.HOLDINGS_DISCOVERY_SUPPRESS}
-          dataOptions={facetsOptions[FACETS_OPTIONS.HOLDINGS_DISCOVERY_SUPPRESS_OPTIONS]}
-          isPending={getIsPending(FACETS.HOLDINGS_DISCOVERY_SUPPRESS)}
+          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_DISCOVERY_SUPPRESS]]}
+          isPending={onIsLoading(FACETS.HOLDINGS_DISCOVERY_SUPPRESS)}
           selectedValues={activeFilters[FACETS.HOLDINGS_DISCOVERY_SUPPRESS]}
           onChange={onChange}
         />
@@ -273,13 +200,13 @@ const HoldingsRecordFilters = (props) => {
       >
         <CheckboxFacet
           name={FACETS.HOLDINGS_STATISTICAL_CODE_IDS}
-          dataOptions={facetsOptions[FACETS_OPTIONS.STATISTICAL_CODES_OPTIONS]}
+          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_STATISTICAL_CODE_IDS]]}
           selectedValues={activeFilters[FACETS.HOLDINGS_STATISTICAL_CODE_IDS]}
           onChange={onChange}
-          onSearch={handleFilterSearch}
+          onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={getIsPending(FACETS.HOLDINGS_STATISTICAL_CODE_IDS)}
-          onFetch={handleFetchFacets}
+          isPending={onIsLoading(FACETS.HOLDINGS_STATISTICAL_CODE_IDS)}
+          onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
       <Accordion
@@ -300,7 +227,7 @@ const HoldingsRecordFilters = (props) => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.UPDATED_DATE}`} />}
+        label={intl.formatMessage({ id: 'ui-inventory.updatedDate' })}
         id={FACETS.HOLDINGS_UPDATED_DATE}
         name={FACETS.HOLDINGS_UPDATED_DATE}
         closedByDefault
@@ -317,7 +244,7 @@ const HoldingsRecordFilters = (props) => {
         />
       </Accordion>
       <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.SOURCE}`} />}
+        label={intl.formatMessage({ id: 'ui-inventory.source' })}
         id={FACETS.HOLDINGS_SOURCE}
         name={FACETS.HOLDINGS_SOURCE}
         closedByDefault
@@ -328,9 +255,9 @@ const HoldingsRecordFilters = (props) => {
         <CheckboxFacet
           data-test-filter-instance-source
           name={FACETS.HOLDINGS_SOURCE}
-          dataOptions={facetsOptions[FACETS_OPTIONS.HOLDINGS_SOURCE_OPTIONS]}
+          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_SOURCE]]}
           selectedValues={activeFilters[FACETS.HOLDINGS_SOURCE]}
-          isPending={getIsPending(FACETS.HOLDINGS_SOURCE)}
+          isPending={onIsLoading(FACETS.HOLDINGS_SOURCE)}
           onChange={onChange}
         />
       </Accordion>
@@ -338,26 +265,22 @@ const HoldingsRecordFilters = (props) => {
         id={FACETS.HOLDINGS_TAGS}
         name={FACETS.HOLDINGS_TAGS}
         onChange={onChange}
-        onFetch={handleFetchFacets}
-        onSearch={handleFilterSearch}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
         onClear={onClear}
         selectedValues={activeFilters[FACETS.HOLDINGS_TAGS]}
-        tagsRecords={facetsOptions[FACETS_OPTIONS.HOLDINGS_TAGS_OPTIONS]}
-        isPending={getIsPending(FACETS.HOLDINGS_TAGS)}
+        tagsRecords={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_TAGS]]}
+        isPending={onIsLoading(FACETS.HOLDINGS_TAGS)}
       />
     </AccordionSet>
   );
 };
 
 HoldingsRecordFilters.propTypes = {
-  activeFilters: PropTypes.object,
+  filterConfig: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
   data: PropTypes.object,
-};
-
-HoldingsRecordFilters.defaultProps = {
-  activeFilters: {},
 };
 
 export default HoldingsRecordFilters;
