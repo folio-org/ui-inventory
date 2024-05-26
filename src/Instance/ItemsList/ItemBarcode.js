@@ -21,7 +21,10 @@ import {
 } from '@folio/stripes/components';
 import css from '../../View.css';
 import { QUERY_INDEXES } from '../../constants';
-import { switchAffiliation } from '../../utils';
+import {
+  switchAffiliation,
+  sendCalloutOnAffiliationChange,
+} from '../../utils';
 
 const ItemBarcode = ({
   location,
@@ -33,6 +36,7 @@ const ItemBarcode = ({
 }) => {
   const history = useHistory();
   const stripes = useStripes();
+  const callout = useContext(CalloutContext);
   const { search } = location;
   const queryBarcode = queryString.parse(search)?.query;
   const isQueryByBarcode = queryString.parse(search)?.qindex === QUERY_INDEXES.BARCODE;
@@ -46,9 +50,10 @@ const ItemBarcode = ({
         tenantFrom: stripes.okapi.tenant,
       },
     });
+
+    sendCalloutOnAffiliationChange(stripes, tenantId, callout);
   }, [instanceId, holdingId, item.id, search]);
 
-  const callout = useContext(CalloutContext);
   const onCopyToClipbaord = useCallback(() => {
     callout.sendCallout({
       type: 'success',

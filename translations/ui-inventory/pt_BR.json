@@ -465,8 +465,8 @@
     "reports.inTransitItem.copyNumber": "Número do exemplar",
     "settings.goBack": "Volte para as configurações do App inventário",
     "item.status.awaitingDelivery": "Aguardando entrega",
-    "callNumberEyeReadable": "Número de chamada, legível",
-    "itemEffectiveCallNumberEyeReadable": "Número de chamada efetivo (item), legível",
+    "callNumberEyeReadable": "Número de chamada, não normalizado",
+    "itemEffectiveCallNumberEyeReadable": "Número de chamada efetivo (item), não normalizado",
     "notAvailable": "N/D",
     "findInstancePluginNotFound": "plug-in find-instance não encontrado",
     "precedingField.title": "Título",
@@ -837,7 +837,7 @@
     "warning.instance.accessSharedInstance": "No momento, você não tem permissão para acessar detalhes de instâncias compartilhadas. Entre em contato com o administrador do FOLIO para obter mais informações.",
     "documentTitle.search": "Inventário - {query} - Buscar",
     "documentTitle.browse": "Inventário - {query} - Navegar",
-    "permission.instance.set-deletion-and-staff-suppress": "Inventário: Definir registros para exclusão e ocultação para equipe",
+    "permission.instance.set-deletion-and-staff-suppress": "Inventário: definir registros para exclusão",
     "setForDeletion.modal.header": "Tem certeza de que deseja excluir este registro?",
     "setForDeletion.modal.message": "Você optou por <b>excluir</b> o <b>{instanceTitle}</b>. Quando um registro é excluído, a instância será oculta da descoberta e da equipe. Se a origem da instância for MARC, o MARC LDR 05 será definido como \"d\"",
     "setRecordForDeletion": "Excluir registro",
@@ -862,5 +862,7 @@
     "browse.classification.all": "Classificação (todas)",
     "browse.classification.dewey": "Classificação decimal de Dewey",
     "browse.classification.lc": "Classificação da Biblioteca do Congresso (LC)",
-    "normalizedClassificationNumber": "Classificação, normalizada"
+    "normalizedClassificationNumber": "Classificação, normalizada",
+    "affiliationChanging.notification": "A afiliação ativa foi alterada",
+    "affiliationChanging.namedNotification": "A afiliação ativa foi alterada para {name}"
 }

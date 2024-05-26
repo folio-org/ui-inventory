@@ -788,7 +788,7 @@
     "item.status.available.lowercase": "disponible",
     "item.status.awaitingPickup.lowercase": "en espera de recogida",
     "item.status.awaitingDelivery.lowercase": "a la espera de la entrega",
-    "item.status.checkedOut.lowercase": "comprobado",
+    "item.status.checkedOut.lowercase": "Prestado",
     "item.status.claimedReturned.lowercase": "reclamado devuelto",
     "item.status.declaredLost.lowercase": "declarado perdido",
     "item.status.inProcess.lowercase": "en curso",
@@ -862,5 +862,7 @@
     "browse.classification.all": "Classification (all)",
     "browse.classification.dewey": "Dewey Decimal classification",
     "browse.classification.lc": "Library of Congress classification",
-    "normalizedClassificationNumber": "Classification, normalized"
+    "normalizedClassificationNumber": "Clasificación, normalizada",
+    "affiliationChanging.notification": "Active affiliation has changed",
+    "affiliationChanging.namedNotification": "Active affiliation has changed to {name}"
 }

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ADVANCED_SEARCH_INDEX } from '@folio/stripes-inventory-components';
+
 const AWAITING_DELIVERY = 'Awaiting delivery';
 const AWAITING_PICKUP = 'Awaiting pickup';
 const IN_TRANSIT = 'In transit';
@@ -212,7 +214,7 @@ export const queryIndexes = {
   DEWEY_CLASSIFICATION: browseClassificationOptions.DEWEY_CLASSIFICATION,
   LC_CLASSIFICATION: browseClassificationOptions.LC_CLASSIFICATION,
   CONTRIBUTOR: 'contributor',
-  ADVANCED_SEARCH: 'advancedSearch',
+  ADVANCED_SEARCH: ADVANCED_SEARCH_INDEX,
 };
 
 export const indentifierTypeNames = {
@@ -724,3 +726,12 @@ export const LEADER_RECORD_STATUSES = {
 };
 
 export const USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY = 'folio_user_touched_staff_suppress';
+
+export const ACQUISITION_COLUMN_NAMES = {
+  poLineNumber: 'poLineNumber',
+  orderStatus: 'orderStatus',
+  polReceiptStatus: 'polReceiptStatus',
+  dateOrdered: 'dateOrdered',
+  acqUnit: 'acqUnit',
+  orderType: 'orderType',
+};

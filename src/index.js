@@ -62,20 +62,22 @@ const InventoryRouting = (props) => {
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
   const { showSettings, match: { path } } = props;
 
-  const keyboardShortcuts = [
-    ...defaultKeyboardShortcuts.slice(0, 9),
-    {
-      label: <FormattedMessage id="ui-inventory.shortcut.nextSubfield" />,
-      name: 'NEXT_SUBFIELD',
-      shortcut: 'Ctrl + ]',
-    },
-    {
-      label: <FormattedMessage id="ui-inventory.shortcut.prevSubfield" />,
-      name: 'PREV_SUBFIELD',
-      shortcut: 'Ctrl + [',
-    },
-    ...defaultKeyboardShortcuts.slice(9),
-  ];
+  const keyboardShortcuts = [...defaultKeyboardShortcuts];
+
+  keyboardShortcuts.splice(10, 0, {
+    label: (<FormattedMessage id="ui-inventory.shortcut.editMARC" />),
+    name: 'editMARC',
+    shortcut: 'ctrl+shift+e',
+  }, {
+    label: <FormattedMessage id="ui-inventory.shortcut.nextSubfield" />,
+    name: 'NEXT_SUBFIELD',
+    shortcut: 'Ctrl + ]',
+  },
+  {
+    label: <FormattedMessage id="ui-inventory.shortcut.prevSubfield" />,
+    name: 'PREV_SUBFIELD',
+    shortcut: 'Ctrl + [',
+  });
 
   useEffect(() => {
     return () => {
@@ -112,7 +114,7 @@ const InventoryRouting = (props) => {
     <DataProvider>
       <HoldingsProvider>
         <LastSearchTermsProvider>
-          <CommandList commands={defaultKeyboardShortcuts}>
+          <CommandList commands={keyboardShortcuts}>
             <HasCommand
               commands={shortcuts}
               isWithinScope={checkScope}

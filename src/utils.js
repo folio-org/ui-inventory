@@ -915,3 +915,41 @@ export const getTemplateForSelectedFromBrowseRecord = (queryParams, queryIndex, 
 
   return null;
 };
+
+export const redirectToMarcEditPage = (pathname, instance, location, history) => {
+  const searchParams = new URLSearchParams(location.search);
+
+  searchParams.delete('relatedRecordVersion');
+
+  if (instance.shared) {
+    searchParams.append('shared', instance.shared.toString());
+  }
+
+  history.push({
+    pathname,
+    search: searchParams.toString(),
+  });
+};
+
+export const sendCalloutOnAffiliationChange = (stripes, tenantId, callout) => {
+  if (tenantId && stripes.okapi.tenant !== tenantId) {
+    const name = stripes.user.user.tenants.find(tenant => tenant.id === tenantId)?.name;
+
+    if (name) {
+      callout.sendCallout({
+        type: 'info',
+        message: (
+          <FormattedMessage
+            id="ui-inventory.affiliationChanging.namedNotification"
+            values={{ name }}
+          />
+        ),
+      });
+    } else {
+      callout.sendCallout({
+        type: 'info',
+        message: <FormattedMessage id="ui-inventory.affiliationChanging.notification" />,
+      });
+    }
+  }
+};

@@ -15,6 +15,8 @@ import {
   switchAffiliation,
   setRecordForDeletion,
   parseEmptyFormValue,
+  redirectToMarcEditPage,
+  sendCalloutOnAffiliationChange,
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
@@ -276,5 +278,111 @@ describe('parseEmptyFormValue', () => {
     const value = undefined;
 
     expect(parseEmptyFormValue(value)).toEqual(undefined);
+  });
+});
+
+describe('redirectToMarcEditPage', () => {
+  it('should call history.push with correct arguments', () => {
+    const pathname = 'some-pathname';
+    const instance = {
+      shared: true,
+    };
+    const location = {
+      search: '?someValue=test&relatedRecordVersion=1',
+    };
+    const history = {
+      push: jest.fn(),
+    };
+
+    redirectToMarcEditPage(pathname, instance, location, history);
+
+    expect(history.push).toHaveBeenCalledWith({
+      pathname,
+      search: 'someValue=test&shared=true',
+    });
+  });
+});
+
+describe('sendCalloutOnAffiliationChange', () => {
+  const callout = {
+    sendCallout: jest.fn(),
+  };
+  const tenantId = 'tenantId';
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  describe('When tenant changed', () => {
+    const okapi = {
+      tenant: 'okapiTenantId',
+    };
+
+    it('should send named informational notification callout', () => {
+      const stripes = {
+        user: {
+          user: {
+            tenants: [
+              {
+                id: tenantId,
+                name: 'name',
+              }
+            ],
+          },
+        },
+        okapi,
+      };
+      const expectedArgs = {
+        type: 'info',
+        message: (
+          <FormattedMessage
+            id="ui-inventory.affiliationChanging.namedNotification"
+            values={{ name: stripes.user.user.tenants[0].name }}
+          />
+        ),
+      };
+
+      sendCalloutOnAffiliationChange(stripes, tenantId, callout);
+
+      expect(callout.sendCallout).toHaveBeenCalledWith(expect.objectContaining(expectedArgs));
+    });
+
+    it('should send general informational notification callout', () => {
+      const stripes = {
+        user: {
+          user: {
+            tenants: [],
+          },
+        },
+        okapi,
+      };
+      const expectedArgs = {
+        type: 'info',
+        message: <FormattedMessage id="ui-inventory.affiliationChanging.notification" />,
+      };
+
+      sendCalloutOnAffiliationChange(stripes, tenantId, callout);
+
+      expect(callout.sendCallout).toHaveBeenCalledWith(expect.objectContaining(expectedArgs));
+    });
+  });
+
+  describe('When tenant is not changed', () => {
+    it('should not trigger callout', () => {
+      const stripes = {
+        user: {
+          user: {
+            tenants: [],
+          },
+        },
+        okapi: {
+          tenant: tenantId,
+        },
+      };
+
+      sendCalloutOnAffiliationChange(stripes, tenantId, callout);
+
+      expect(callout.sendCallout).not.toHaveBeenCalled();
+    });
   });
 });
