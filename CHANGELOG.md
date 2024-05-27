@@ -24,6 +24,7 @@
 * Inventory app: Define and implement shortcut key for editing a quickMARC bib record. Refs UIIN-2896.
 * *BREAKING* Added a new `stripes-inventory-components` dependency. Move some utils to that module. Refs UIIN-2910.
 * Import `CheckboxFacet`, `CheckboxFacetList`, `HeldByFacet`, `withFacets`, facets constants, `fieldSearchConfigurations` constant, `queryIndexes` constants, `facetsStore`, and some of the utils from `stripes-inventory-components`. Refs UIIN-2781.
+* Import the new `useFacets` functionality from `stripes-inventory-components`. Refs UIIN-2910.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
