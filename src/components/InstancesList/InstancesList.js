@@ -46,6 +46,7 @@ import {
   resetFacetStates,
   FACETS,
   queryIndexes,
+  advancedSearchIndexes,
 } from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
@@ -92,7 +93,6 @@ import {
   getItem,
   setItem,
 } from '../../storage';
-import { advancedSearchIndexes } from '../../filterConfig';
 
 import css from './instances.css';
 
