@@ -11,7 +11,10 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { useLocationsForTenants } from '../hooks';
+import {
+  useLocationsForTenants,
+  useClassificationBrowseConfig,
+} from '../hooks';
 import { DataContext } from '../contexts';
 import { OKAPI_TENANT_HEADER } from '../constants';
 import { isUserInConsortiumMode } from '../utils';
@@ -45,6 +48,7 @@ const DataProvider = ({
   const tenantIds = resources.consortiaTenants.records.map(tenant => tenant.id);
 
   const { data: locationsOfAllTenants } = useLocationsForTenants({ tenantIds });
+  const { classificationBrowseConfig, isLoading: isBrowseConfigLoading } = useClassificationBrowseConfig();
 
   useEffect(() => {
     if (isUserInConsortiumMode(stripes)) {
@@ -68,7 +72,7 @@ const DataProvider = ({
   }, [resources, manifest]);
 
   useEffect(() => {
-    if (isLoading || !dataRef.current) {
+    if (isLoading || !dataRef.current || isBrowseConfigLoading) {
       return;
     }
 
@@ -105,6 +109,7 @@ const DataProvider = ({
       sc.statisticalCodeType = statisticalCodeTypesById[sc.statisticalCodeTypeId];
       return sc;
     });
+    loadedData.classificationBrowseConfig = classificationBrowseConfig;
 
     dataRef.current = loadedData;
   }, [resources, manifest, isLoading, dataRef]);

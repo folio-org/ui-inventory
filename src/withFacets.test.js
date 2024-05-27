@@ -12,11 +12,17 @@ import {
   FACETS_CQL,
   browseCallNumberOptions,
   browseModeOptions,
+  browseClassificationOptions,
 } from './constants';
 
 const WrappedComponent = ({
   fetchFacets,
-  data = {},
+  data = {
+    classificationBrowseConfig: [{
+      id: 'lc',
+      typeIds: ['type-1', 'type-2'],
+    }],
+  },
   properties = {},
   isBrowseLookup,
 }) => {
@@ -856,6 +862,36 @@ describe('withFacets', () => {
           path: 'search/instances/facets',
         }));
       });
+    });
+  });
+
+  describe('when opening classification browse shared facet', () => {
+    it('should make a request with correct request options', () => {
+      const resources = {
+        query: {
+          qindex: browseClassificationOptions.LC_CLASSIFICATION,
+          query: 'test',
+        },
+      };
+
+      const { getByText } = render(
+        <FacetsHoc
+          mutator={mutator}
+          resources={resources}
+          properties={{ facetToOpen: FACETS.SHARED }}
+          isBrowseLookup
+        />
+      );
+
+      fireEvent.click(getByText('fetchFacetsButton'));
+
+      expect(mutator.facets.GET).toHaveBeenCalledWith(expect.objectContaining({
+        params: {
+          facet: `${FACETS_CQL.SHARED}:6`,
+          query: '(cql.allRecords=1) and typeId==("type-1" or "type-2")',
+        },
+        path: 'search/classifications/facets',
+      }));
     });
   });
 });

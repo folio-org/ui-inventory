@@ -26,6 +26,7 @@ import {
   browseCallNumberOptions,
   queryIndexes,
   browseClassificationOptions,
+  browseClassificationIndexToId,
 } from './constants';
 import { getAdvancedSearchTemplate } from './routes/buildManifestObject';
 
@@ -171,11 +172,19 @@ function withFacets(WrappedComponent) {
           queryForBrowseFacets = 'cql.allRecords=1';
         }
 
+        const isClassificationBrowse = Object.values(browseClassificationOptions).includes(queryIndex);
+        const classificationBrowseConfigId = browseClassificationIndexToId[queryIndex];
+        const classificationBrowseTypes = data.classificationBrowseConfig
+          .find(config => config.id === classificationBrowseConfigId)?.typeIds;
+
         return buildFilterQuery(
           {
             query: queryForBrowseFacets,
             qindex: normalizedFilters.qindex,
             ...otherFilters,
+            ...(isClassificationBrowse && {
+              typeId: classificationBrowseTypes,
+            }),
           },
           _query => _query,
           undefined,
