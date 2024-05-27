@@ -1,129 +1,14 @@
 import {
   ADVANCED_SEARCH_INDEX,
-  FACETS,
-  FACETS_CQL,
   browseModeOptions,
+  filterConfigMap,
 } from '@folio/stripes-inventory-components';
 
 import itemFilterRenderer from './components/ItemFilters/itemFilterRenderer';
 import holdingsRecordFilterRenderer from './components/HoldingsRecordFilters/holdingsRecordFilterRenderer';
 import instanceFilterRenderer from './components/InstanceFilters/instanceFilterRenderer';
 
-import {
-  buildDateRangeQuery,
-} from './utils';
-
-export const instanceFilterConfig = [
-  {
-    name: FACETS.SHARED,
-    cql: FACETS_CQL.SHARED,
-    values: [],
-  },
-  {
-    name: FACETS.HELD_BY,
-    cql: FACETS_CQL.HELD_BY,
-    values: [],
-  },
-  {
-    name: FACETS.EFFECTIVE_LOCATION,
-    cql: FACETS_CQL.EFFECTIVE_LOCATION,
-    values: [],
-  },
-  {
-    name: FACETS.LANGUAGE,
-    cql: FACETS_CQL.LANGUAGES,
-    values: [],
-  },
-  {
-    name: FACETS.FORMAT,
-    cql: FACETS_CQL.INSTANCE_FORMAT,
-    values: [],
-  },
-  {
-    name: FACETS.RESOURCE,
-    cql: FACETS_CQL.INSTANCE_TYPE,
-    values: [],
-  },
-  {
-    name: FACETS.MODE,
-    cql: FACETS_CQL.MODE_OF_ISSUANCE,
-    values: [],
-  },
-  {
-    name: FACETS.NATURE_OF_CONTENT,
-    cql: FACETS_CQL.NATURE_OF_CONTENT,
-    values: [],
-  },
-  {
-    name: 'location',
-    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
-    values: [],
-  },
-  {
-    name: FACETS_CQL.STAFF_SUPPRESS,
-    cql: FACETS_CQL.STAFF_SUPPRESS,
-    values: [],
-  },
-  {
-    name: FACETS.INSTANCES_DISCOVERY_SUPPRESS,
-    cql: FACETS_CQL.INSTANCES_DISCOVERY_SUPPRESS,
-    values: [],
-  },
-  {
-    name: FACETS.CREATED_DATE,
-    cql: FACETS_CQL.CREATED_DATE,
-    values: [],
-    parse: buildDateRangeQuery(FACETS_CQL.CREATED_DATE),
-  },
-  {
-    name: FACETS.UPDATED_DATE,
-    cql: FACETS_CQL.UPDATED_DATE,
-    values: [],
-    parse: buildDateRangeQuery(FACETS_CQL.UPDATED_DATE),
-  },
-  {
-    name: FACETS.STATUS,
-    cql: FACETS_CQL.STATUS,
-    operator: '==',
-    values: [],
-  },
-  {
-    name: FACETS.SOURCE,
-    cql: FACETS_CQL.SOURCE,
-    operator: '==',
-    values: [],
-  },
-  {
-    name: FACETS.STATISTICAL_CODE_IDS,
-    cql: FACETS_CQL.STATISTICAL_CODE_IDS,
-    values: [],
-  },
-  {
-    name: FACETS.INSTANCES_TAGS,
-    cql: FACETS_CQL.INSTANCES_TAGS,
-    values: [],
-  },
-  {
-    name: FACETS.EFFECTIVE_LOCATION,
-    cql: FACETS_CQL.EFFECTIVE_LOCATION,
-    values: [],
-  },
-  {
-    name: FACETS.NAME_TYPE,
-    cql: FACETS_CQL.NAME_TYPE,
-    values: [],
-  },
-  {
-    name: FACETS.SEARCH_CONTRIBUTORS,
-    cql: FACETS_CQL.SEARCH_CONTRIBUTORS,
-    values: [],
-  },
-  {
-    name: FACETS.AUTHORITY_ID,
-    cql: FACETS_CQL.AUTHORITY_ID,
-    values: [],
-  },
-];
+export const instanceFilterConfig = Object.values(filterConfigMap);
 
 export const advancedSearchIndexes = {
   instances: [
@@ -199,53 +84,7 @@ export const instanceIndexes = [
   { label: 'ui-inventory.advancedSearch', value: ADVANCED_SEARCH_INDEX, queryTemplate: '%{query.query}' },
 ];
 
-export const browseFiltersConfig = [
-  {
-    name: FACETS.SHARED,
-    cql: FACETS_CQL.SHARED,
-    values: [],
-  },
-  {
-    name: FACETS.EFFECTIVE_LOCATION,
-    cql: FACETS_CQL.EFFECTIVE_LOCATION,
-    values: [],
-  },
-  {
-    name: FACETS.CONTRIBUTORS_SHARED,
-    cql: FACETS_CQL.INSTANCES_SHARED,
-    values: [],
-  },
-  {
-    name: FACETS.CONTRIBUTORS_HELD_BY,
-    cql: FACETS_CQL.INSTANCES_HELD_BY,
-    values: [],
-  },
-  {
-    name: FACETS.NAME_TYPE,
-    cql: FACETS_CQL.NAME_TYPE,
-    values: [],
-  },
-  {
-    name: FACETS.SUBJECTS_SHARED,
-    cql: FACETS_CQL.INSTANCES_SHARED,
-    values: [],
-  },
-  {
-    name: FACETS.SUBJECTS_HELD_BY,
-    cql: FACETS_CQL.INSTANCES_HELD_BY,
-    values: [],
-  },
-  {
-    name: FACETS.CALL_NUMBERS_HELD_BY,
-    cql: FACETS_CQL.HELD_BY,
-    values: [],
-  },
-  {
-    name: FACETS.CLASSIFICATION_SHARED,
-    cql: FACETS_CQL.INSTANCES_SHARED,
-    values: [],
-  },
-];
+export const browseFiltersConfig = Object.values(filterConfigMap);
 
 export const browseInstanceIndexes = [
   {
@@ -308,70 +147,7 @@ export const holdingIndexes = [
 
 export const holdingSortMap = {};
 
-export const holdingFilterConfig = [
-  {
-    name: FACETS.SHARED,
-    cql: FACETS_CQL.SHARED,
-    values: [],
-  },
-  {
-    name: FACETS.HELD_BY,
-    cql: FACETS_CQL.HELD_BY,
-    values: [],
-  },
-  {
-    name: FACETS.EFFECTIVE_LOCATION,
-    cql: FACETS_CQL.EFFECTIVE_LOCATION,
-    values: [],
-  },
-  {
-    name: FACETS.HOLDINGS_PERMANENT_LOCATION,
-    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
-    values: [],
-  },
-  {
-    name: FACETS.HOLDINGS_TYPE,
-    cql: FACETS_CQL.HOLDINGS_TYPE,
-    values: [],
-  },
-  {
-    name: FACETS.HOLDINGS_DISCOVERY_SUPPRESS,
-    cql: FACETS_CQL.HOLDINGS_DISCOVERY_SUPPRESS,
-    values: [],
-  },
-  {
-    name: FACETS.HOLDINGS_TAGS,
-    cql: FACETS_CQL.HOLDINGS_TAGS,
-    values: [],
-  },
-  {
-    name: FACETS.HOLDINGS_STATISTICAL_CODE_IDS,
-    cql: FACETS_CQL.HOLDINGS_STATISTICAL_CODE_IDS,
-    values: [],
-  },
-  {
-    name: FACETS.HOLDINGS_CREATED_DATE,
-    cql: FACETS_CQL.HOLDINGS_CREATED_DATE,
-    values: [],
-    parse: buildDateRangeQuery(FACETS_CQL.HOLDINGS_CREATED_DATE),
-  },
-  {
-    name: FACETS.HOLDINGS_UPDATED_DATE,
-    cql: FACETS_CQL.HOLDINGS_UPDATED_DATE,
-    values: [],
-    parse: buildDateRangeQuery(FACETS_CQL.HOLDINGS_UPDATED_DATE),
-  },
-  {
-    name: FACETS.HOLDINGS_SOURCE,
-    cql: FACETS_CQL.HOLDINGS_SOURCE,
-    values: [],
-  },
-  {
-    name: FACETS_CQL.STAFF_SUPPRESS, // this facet is not shown, but we need the config to apply default filter value
-    cql: FACETS_CQL.STAFF_SUPPRESS,
-    values: [],
-  },
-];
+export const holdingFilterConfig = Object.values(filterConfigMap);
 
 export const itemIndexes = [
   // See note for instanceIndexes about 'all' vs. 'allFields'
@@ -395,71 +171,7 @@ export const itemIndexes = [
   { label: 'ui-inventory.advancedSearch', value: ADVANCED_SEARCH_INDEX, queryTemplate: '%{query.query}' },
 ];
 
-export const itemFilterConfig = [
-  {
-    name: FACETS.SHARED,
-    cql: FACETS_CQL.SHARED,
-    values: [],
-  },
-  {
-    name: FACETS.HELD_BY,
-    cql: FACETS_CQL.HELD_BY,
-    values: [],
-  },
-  {
-    name: FACETS.MATERIAL_TYPE,
-    cql: FACETS_CQL.MATERIAL_TYPES,
-    values: [],
-  },
-  {
-    name: FACETS.ITEM_STATUS,
-    cql: FACETS_CQL.ITEMS_STATUSES,
-    operator: '==',
-    values: [],
-  },
-  {
-    name: FACETS.EFFECTIVE_LOCATION,
-    cql: FACETS_CQL.EFFECTIVE_LOCATION,
-    values: [],
-  },
-  {
-    name: FACETS.HOLDINGS_PERMANENT_LOCATION,
-    cql: FACETS_CQL.HOLDINGS_PERMANENT_LOCATION,
-    values: [],
-  },
-  {
-    name: FACETS.ITEMS_DISCOVERY_SUPPRESS,
-    cql: FACETS_CQL.ITEMS_DISCOVERY_SUPPRESS,
-    values: [],
-  },
-  {
-    name: FACETS.ITEMS_STATISTICAL_CODE_IDS,
-    cql: FACETS_CQL.ITEMS_STATISTICAL_CODE_IDS,
-    values: [],
-  },
-  {
-    name: FACETS.ITEMS_CREATED_DATE,
-    cql: FACETS_CQL.ITEMS_CREATED_DATE,
-    values: [],
-    parse: buildDateRangeQuery(FACETS_CQL.ITEMS_CREATED_DATE),
-  },
-  {
-    name: FACETS.ITEMS_UPDATED_DATE,
-    cql: FACETS_CQL.ITEMS_UPDATED_DATE,
-    values: [],
-    parse: buildDateRangeQuery(FACETS_CQL.ITEMS_UPDATED_DATE),
-  },
-  {
-    name: FACETS.ITEMS_TAGS,
-    cql: FACETS_CQL.ITEMS_TAGS,
-    values: [],
-  },
-  {
-    name: FACETS_CQL.STAFF_SUPPRESS, // this facet is not shown, but we need the config to apply default filter value
-    cql: FACETS_CQL.STAFF_SUPPRESS,
-    values: [],
-  },
-];
+export const itemFilterConfig = Object.values(filterConfigMap);
 
 export const itemSortMap = {
   Title: 'title',

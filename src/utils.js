@@ -34,7 +34,6 @@ import {
   emptyList,
   indentifierTypeNames,
   DATE_FORMAT,
-  DATE_TIME_RANGE_FILTER_FORMAT,
   LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
@@ -201,17 +200,6 @@ export const retrieveDatesFromDateRangeFilterString = filterValue => {
 
 export const makeDateRangeFilterString = (startDate, endDate) => {
   return `${startDate}:${endDate}`;
-};
-
-export const buildDateRangeQuery = name => values => {
-  const [startDateString, endDateString] = values[0]?.split(':') || [];
-
-  if (!startDateString || !endDateString) return '';
-
-  const start = moment(startDateString).startOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
-  const end = moment(endDateString).endOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
-
-  return `${name}>="${start}" and ${name}<="${end}"`;
 };
 
 // Function which takes a filter name and returns
