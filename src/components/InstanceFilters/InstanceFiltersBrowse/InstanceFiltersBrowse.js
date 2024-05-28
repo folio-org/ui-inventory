@@ -58,7 +58,7 @@ const InstanceFiltersBrowse = props => {
   const {
     accordionStatus,
     facetOptions,
-    onIsLoading,
+    getIsLoading,
     onToggleAccordion,
     onInputFocusAndMoreClick,
     onFacetOptionSearch,
@@ -92,7 +92,7 @@ const InstanceFiltersBrowse = props => {
               name={FACETS.CLASSIFICATION_SHARED}
               dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.CLASSIFICATION_SHARED]]}
               selectedValues={activeFilters[FACETS.CLASSIFICATION_SHARED]}
-              isPending={onIsLoading(FACETS.CLASSIFICATION_SHARED)}
+              isPending={getIsLoading(FACETS.CLASSIFICATION_SHARED)}
               onChange={onChange}
             />
           </Accordion>
@@ -115,7 +115,7 @@ const InstanceFiltersBrowse = props => {
                 name={FACETS.SHARED}
                 dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SHARED]]}
                 selectedValues={activeFilters[FACETS.SHARED]}
-                isPending={onIsLoading(FACETS.SHARED)}
+                isPending={getIsLoading(FACETS.SHARED)}
                 onChange={onChange}
               />
             </Accordion>
@@ -124,7 +124,7 @@ const InstanceFiltersBrowse = props => {
             name={FACETS.CALL_NUMBERS_HELD_BY}
             facetOptions={facetOptions}
             selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
-            onIsLoading={onIsLoading}
+            getIsLoading={getIsLoading}
             onChange={onChange}
             onClear={onClear}
             onFetchFacets={onInputFocusAndMoreClick}
@@ -147,7 +147,7 @@ const InstanceFiltersBrowse = props => {
               onChange={onChange}
               onSearch={onFacetOptionSearch}
               isFilterable
-              isPending={onIsLoading(FACETS.EFFECTIVE_LOCATION)}
+              isPending={getIsLoading(FACETS.EFFECTIVE_LOCATION)}
               onFetch={onInputFocusAndMoreClick}
             />
           </Accordion>
@@ -169,7 +169,7 @@ const InstanceFiltersBrowse = props => {
                 name={FACETS.CONTRIBUTORS_SHARED}
                 dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.CONTRIBUTORS_SHARED]]}
                 selectedValues={activeFilters[FACETS.CONTRIBUTORS_SHARED]}
-                isPending={onIsLoading(FACETS.CONTRIBUTORS_SHARED)}
+                isPending={getIsLoading(FACETS.CONTRIBUTORS_SHARED)}
                 onChange={onChange}
               />
             </Accordion>
@@ -179,7 +179,7 @@ const InstanceFiltersBrowse = props => {
             name={FACETS.CONTRIBUTORS_HELD_BY}
             facetOptions={facetOptions}
             selectedValues={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]}
-            onIsLoading={onIsLoading}
+            getIsLoading={getIsLoading}
             onChange={onChange}
             onClear={onClear}
             onFetchFacets={onInputFocusAndMoreClick}
@@ -195,7 +195,7 @@ const InstanceFiltersBrowse = props => {
             onFilterChange={onChange}
             onClearFilter={() => onClear(FACETS.NAME_TYPE)}
             displayClearButton={!!activeFilters[FACETS.NAME_TYPE]?.length}
-            isPending={onIsLoading(FACETS.NAME_TYPE)}
+            isPending={getIsLoading(FACETS.NAME_TYPE)}
           />
         </>
       )}
@@ -215,7 +215,7 @@ const InstanceFiltersBrowse = props => {
                 name={FACETS.SUBJECTS_SHARED}
                 dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SUBJECTS_SHARED]] || []}
                 selectedValues={activeFilters[FACETS.SUBJECTS_SHARED]}
-                isPending={onIsLoading(FACETS.SUBJECTS_SHARED)}
+                isPending={getIsLoading(FACETS.SUBJECTS_SHARED)}
                 onChange={onChange}
               />
             </Accordion>
@@ -225,7 +225,7 @@ const InstanceFiltersBrowse = props => {
             name={FACETS.SUBJECTS_HELD_BY}
             facetOptions={facetOptions}
             selectedValues={activeFilters[FACETS.SUBJECTS_HELD_BY]}
-            onIsLoading={onIsLoading}
+            getIsLoading={getIsLoading}
             onChange={onChange}
             onClear={onClear}
             onFetchFacets={onInputFocusAndMoreClick}

@@ -63,7 +63,7 @@ const ItemFilters = (props) => {
     onToggleAccordion,
     onInputFocusAndMoreClick,
     onFacetOptionSearch,
-    onIsLoading,
+    getIsLoading,
   } = useFacets({
     initialAccordionStates,
     query,
@@ -90,7 +90,7 @@ const ItemFilters = (props) => {
             name={FACETS.SHARED}
             dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SHARED]]}
             selectedValues={activeFilters[FACETS.SHARED]}
-            isPending={onIsLoading(FACETS.SHARED)}
+            isPending={getIsLoading(FACETS.SHARED)}
             onChange={onChange}
           />
         </Accordion>
@@ -99,7 +99,7 @@ const ItemFilters = (props) => {
         name={FACETS.HELD_BY}
         facetOptions={facetOptions}
         selectedValues={activeFilters[FACETS.HELD_BY]}
-        onIsLoading={onIsLoading}
+        getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
         onFetchFacets={onInputFocusAndMoreClick}
@@ -121,7 +121,7 @@ const ItemFilters = (props) => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           onFetch={onInputFocusAndMoreClick}
-          isPending={onIsLoading(FACETS.ITEM_STATUS)}
+          isPending={getIsLoading(FACETS.ITEM_STATUS)}
           isFilterable
         />
       </Accordion>
@@ -140,7 +140,7 @@ const ItemFilters = (props) => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           onFetch={onInputFocusAndMoreClick}
-          isPending={onIsLoading(FACETS.EFFECTIVE_LOCATION)}
+          isPending={getIsLoading(FACETS.EFFECTIVE_LOCATION)}
           isFilterable
         />
       </Accordion>
@@ -160,7 +160,7 @@ const ItemFilters = (props) => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           onFetch={onInputFocusAndMoreClick}
-          isPending={onIsLoading(FACETS.HOLDINGS_PERMANENT_LOCATION)}
+          isPending={getIsLoading(FACETS.HOLDINGS_PERMANENT_LOCATION)}
           isFilterable
         />
       </Accordion>
@@ -181,7 +181,7 @@ const ItemFilters = (props) => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           onFetch={onInputFocusAndMoreClick}
-          isPending={onIsLoading(FACETS.MATERIAL_TYPE)}
+          isPending={getIsLoading(FACETS.MATERIAL_TYPE)}
           isFilterable
         />
       </Accordion>
@@ -200,7 +200,7 @@ const ItemFilters = (props) => {
           dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.ITEMS_DISCOVERY_SUPPRESS]]}
           selectedValues={activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS]}
           onChange={onChange}
-          isPending={onIsLoading(FACETS.ITEMS_DISCOVERY_SUPPRESS)}
+          isPending={getIsLoading(FACETS.ITEMS_DISCOVERY_SUPPRESS)}
         />
       </Accordion>
       <Accordion
@@ -219,7 +219,7 @@ const ItemFilters = (props) => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={onIsLoading(FACETS.ITEMS_STATISTICAL_CODE_IDS)}
+          isPending={getIsLoading(FACETS.ITEMS_STATISTICAL_CODE_IDS)}
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
@@ -266,7 +266,7 @@ const ItemFilters = (props) => {
         onFetch={onInputFocusAndMoreClick}
         selectedValues={activeFilters[FACETS.ITEMS_TAGS]}
         tagsRecords={facetOptions[FACETS_TO_REQUEST[FACETS.ITEMS_TAGS]]}
-        isPending={onIsLoading(FACETS.ITEMS_TAGS)}
+        isPending={getIsLoading(FACETS.ITEMS_TAGS)}
       />
     </AccordionSet>
   );

@@ -72,7 +72,7 @@ const InstanceFilters = props => {
     onToggleAccordion,
     onInputFocusAndMoreClick,
     onFacetOptionSearch,
-    onIsLoading,
+    getIsLoading,
   } = useFacets({
     initialAccordionStates,
     query,
@@ -115,7 +115,7 @@ const InstanceFilters = props => {
             name={FACETS.SHARED}
             dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SHARED]]}
             selectedValues={activeFilters[FACETS.SHARED]}
-            isPending={onIsLoading(FACETS.SHARED)}
+            isPending={getIsLoading(FACETS.SHARED)}
             onChange={onChange}
           />
         </Accordion>
@@ -124,7 +124,7 @@ const InstanceFilters = props => {
         name={FACETS.HELD_BY}
         facetOptions={facetOptions}
         selectedValues={activeFilters[FACETS.HELD_BY]}
-        onIsLoading={onIsLoading}
+        getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
         onFetchFacets={onInputFocusAndMoreClick}
@@ -146,7 +146,7 @@ const InstanceFilters = props => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={onIsLoading(FACETS.EFFECTIVE_LOCATION)}
+          isPending={getIsLoading(FACETS.EFFECTIVE_LOCATION)}
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
@@ -166,7 +166,7 @@ const InstanceFilters = props => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={onIsLoading(FACETS.LANGUAGE)}
+          isPending={getIsLoading(FACETS.LANGUAGE)}
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
@@ -186,7 +186,7 @@ const InstanceFilters = props => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={onIsLoading(FACETS.RESOURCE)}
+          isPending={getIsLoading(FACETS.RESOURCE)}
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
@@ -206,7 +206,7 @@ const InstanceFilters = props => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={onIsLoading(FACETS.FORMAT)}
+          isPending={getIsLoading(FACETS.FORMAT)}
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
@@ -226,7 +226,7 @@ const InstanceFilters = props => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={onIsLoading(FACETS.MODE)}
+          isPending={getIsLoading(FACETS.MODE)}
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
@@ -246,7 +246,7 @@ const InstanceFilters = props => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={onIsLoading(FACETS.NATURE_OF_CONTENT)}
+          isPending={getIsLoading(FACETS.NATURE_OF_CONTENT)}
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
@@ -264,7 +264,7 @@ const InstanceFilters = props => {
             name={FACETS.STAFF_SUPPRESS}
             dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.STAFF_SUPPRESS]]}
             selectedValues={activeFilters[FACETS.STAFF_SUPPRESS]}
-            isPending={onIsLoading(FACETS.STAFF_SUPPRESS)}
+            isPending={getIsLoading(FACETS.STAFF_SUPPRESS)}
             onChange={handleStaffSuppressChange}
           />
         </Accordion>
@@ -283,7 +283,7 @@ const InstanceFilters = props => {
           name={FACETS.INSTANCES_DISCOVERY_SUPPRESS}
           dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.INSTANCES_DISCOVERY_SUPPRESS]]}
           selectedValues={activeFilters[FACETS.INSTANCES_DISCOVERY_SUPPRESS]}
-          isPending={onIsLoading(FACETS.INSTANCES_DISCOVERY_SUPPRESS)}
+          isPending={getIsLoading(FACETS.INSTANCES_DISCOVERY_SUPPRESS)}
           onChange={onChange}
         />
       </Accordion>
@@ -303,7 +303,7 @@ const InstanceFilters = props => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={onIsLoading(FACETS.STATISTICAL_CODE_IDS)}
+          isPending={getIsLoading(FACETS.STATISTICAL_CODE_IDS)}
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
@@ -355,7 +355,7 @@ const InstanceFilters = props => {
           name={FACETS.STATUS}
           dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.STATUS]]}
           selectedValues={activeFilters[FACETS.STATUS]}
-          isPending={onIsLoading(FACETS.STATUS)}
+          isPending={getIsLoading(FACETS.STATUS)}
           onChange={onChange}
           isFilterable
           onSearch={onFacetOptionSearch}
@@ -376,7 +376,7 @@ const InstanceFilters = props => {
           name={FACETS.SOURCE}
           dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SOURCE]]}
           selectedValues={activeFilters[FACETS.SOURCE]}
-          isPending={onIsLoading(FACETS.SOURCE)}
+          isPending={getIsLoading(FACETS.SOURCE)}
           onChange={onChange}
         />
       </Accordion>
@@ -386,7 +386,7 @@ const InstanceFilters = props => {
         onChange={onChange}
         onClear={onClear}
         selectedValues={activeFilters[FACETS.INSTANCES_TAGS]}
-        isPending={onIsLoading(FACETS.INSTANCES_TAGS)}
+        isPending={getIsLoading(FACETS.INSTANCES_TAGS)}
         tagsRecords={facetOptions[FACETS_TO_REQUEST[FACETS.INSTANCES_TAGS]]}
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
