@@ -63,7 +63,7 @@ const HoldingsRecordFilters = (props) => {
     onToggleAccordion,
     onInputFocusAndMoreClick,
     onFacetOptionSearch,
-    onIsLoading,
+    getIsLoading,
   } = useFacets({
     initialAccordionStates,
     query,
@@ -80,13 +80,13 @@ const HoldingsRecordFilters = (props) => {
         facetOptions={facetOptions}
         onChange={onChange}
         onClear={onClear}
-        onIsLoading={onIsLoading}
+        getIsLoading={getIsLoading}
       />
       <HeldByFacet
         name={FACETS.HELD_BY}
         activeFilters={activeFilters}
         facetOptions={facetOptions}
-        onIsLoading={onIsLoading}
+        getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
         onFetchFacets={onInputFocusAndMoreClick}
@@ -108,7 +108,7 @@ const HoldingsRecordFilters = (props) => {
           onChange={onChange}
           onFetch={onInputFocusAndMoreClick}
           onSearch={onFacetOptionSearch}
-          isPending={onIsLoading(FACETS.EFFECTIVE_LOCATION)}
+          isPending={getIsLoading(FACETS.EFFECTIVE_LOCATION)}
           isFilterable
         />
       </Accordion>
@@ -128,7 +128,7 @@ const HoldingsRecordFilters = (props) => {
           onChange={onChange}
           onFetch={onInputFocusAndMoreClick}
           onSearch={onFacetOptionSearch}
-          isPending={onIsLoading(FACETS.HOLDINGS_PERMANENT_LOCATION)}
+          isPending={getIsLoading(FACETS.HOLDINGS_PERMANENT_LOCATION)}
           isFilterable
         />
       </Accordion>
@@ -148,7 +148,7 @@ const HoldingsRecordFilters = (props) => {
           onChange={onChange}
           onFetch={onInputFocusAndMoreClick}
           onSearch={onFacetOptionSearch}
-          isPending={onIsLoading(FACETS.HOLDINGS_TYPE)}
+          isPending={getIsLoading(FACETS.HOLDINGS_TYPE)}
           isFilterable
         />
       </Accordion>
@@ -166,7 +166,7 @@ const HoldingsRecordFilters = (props) => {
           data-test-filter-holdings-discovery-suppress
           name={FACETS.HOLDINGS_DISCOVERY_SUPPRESS}
           dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_DISCOVERY_SUPPRESS]]}
-          isPending={onIsLoading(FACETS.HOLDINGS_DISCOVERY_SUPPRESS)}
+          isPending={getIsLoading(FACETS.HOLDINGS_DISCOVERY_SUPPRESS)}
           selectedValues={activeFilters[FACETS.HOLDINGS_DISCOVERY_SUPPRESS]}
           onChange={onChange}
         />
@@ -187,7 +187,7 @@ const HoldingsRecordFilters = (props) => {
           onChange={onChange}
           onSearch={onFacetOptionSearch}
           isFilterable
-          isPending={onIsLoading(FACETS.HOLDINGS_STATISTICAL_CODE_IDS)}
+          isPending={getIsLoading(FACETS.HOLDINGS_STATISTICAL_CODE_IDS)}
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
@@ -239,7 +239,7 @@ const HoldingsRecordFilters = (props) => {
           name={FACETS.HOLDINGS_SOURCE}
           dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_SOURCE]]}
           selectedValues={activeFilters[FACETS.HOLDINGS_SOURCE]}
-          isPending={onIsLoading(FACETS.HOLDINGS_SOURCE)}
+          isPending={getIsLoading(FACETS.HOLDINGS_SOURCE)}
           onChange={onChange}
         />
       </Accordion>
@@ -252,7 +252,7 @@ const HoldingsRecordFilters = (props) => {
         onClear={onClear}
         selectedValues={activeFilters[FACETS.HOLDINGS_TAGS]}
         tagsRecords={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_TAGS]]}
-        isPending={onIsLoading(FACETS.HOLDINGS_TAGS)}
+        isPending={getIsLoading(FACETS.HOLDINGS_TAGS)}
       />
     </AccordionSet>
   );

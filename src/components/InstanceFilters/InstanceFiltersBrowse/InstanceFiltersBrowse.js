@@ -52,7 +52,7 @@ const InstanceFiltersBrowse = props => {
   const {
     accordionStatus,
     facetOptions,
-    onIsLoading,
+    getIsLoading,
     onToggleAccordion,
     onInputFocusAndMoreClick,
     onFacetOptionSearch,
@@ -72,7 +72,7 @@ const InstanceFiltersBrowse = props => {
       facetOptions={facetOptions}
       onChange={onChange}
       onClear={onClear}
-      onIsLoading={onIsLoading}
+      getIsLoading={getIsLoading}
     />
   );
 
@@ -81,7 +81,7 @@ const InstanceFiltersBrowse = props => {
       name={name}
       activeFilters={activeFilters}
       facetOptions={facetOptions}
-      onIsLoading={onIsLoading}
+      getIsLoading={getIsLoading}
       onChange={onChange}
       onClear={onClear}
       onFetchFacets={onInputFocusAndMoreClick}
@@ -118,7 +118,7 @@ const InstanceFiltersBrowse = props => {
               onChange={onChange}
               onSearch={onFacetOptionSearch}
               isFilterable
-              isPending={onIsLoading(FACETS.EFFECTIVE_LOCATION)}
+              isPending={getIsLoading(FACETS.EFFECTIVE_LOCATION)}
               onFetch={onInputFocusAndMoreClick}
             />
           </Accordion>
@@ -139,7 +139,7 @@ const InstanceFiltersBrowse = props => {
             onFilterChange={onChange}
             onClearFilter={() => onClear(FACETS.NAME_TYPE)}
             displayClearButton={!!activeFilters[FACETS.NAME_TYPE]?.length}
-            isPending={onIsLoading(FACETS.NAME_TYPE)}
+            isPending={getIsLoading(FACETS.NAME_TYPE)}
           />
         </>
       )}
