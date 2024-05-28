@@ -76,6 +76,19 @@ const InstanceFiltersBrowse = props => {
     />
   );
 
+  const renderHeldByFacet = (name) => (
+    <HeldByFacet
+      name={name}
+      activeFilters={activeFilters}
+      facetOptions={facetOptions}
+      onIsLoading={onIsLoading}
+      onChange={onChange}
+      onClear={onClear}
+      onFetchFacets={onInputFocusAndMoreClick}
+      onSearch={onFacetOptionSearch}
+    />
+  );
+
   return (
     <AccordionSet
       accordionStatus={accordionStatus}
@@ -87,16 +100,7 @@ const InstanceFiltersBrowse = props => {
       {Object.values(browseCallNumberOptions).includes(qindex) && (
         <>
           {renderSharedFacet(FACETS.SHARED)}
-          <HeldByFacet
-            name={FACETS.CALL_NUMBERS_HELD_BY}
-            facetOptions={facetOptions}
-            selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
-            onIsLoading={onIsLoading}
-            onChange={onChange}
-            onClear={onClear}
-            onFetchFacets={onInputFocusAndMoreClick}
-            onSearch={onFacetOptionSearch}
-          />
+          {renderHeldByFacet(FACETS.CALL_NUMBERS_HELD_BY)}
           <Accordion
             closedByDefault
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
@@ -124,16 +128,7 @@ const InstanceFiltersBrowse = props => {
         <>
           {renderSharedFacet(FACETS.CONTRIBUTORS_SHARED)}
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
-          {/* <HeldByFacet
-            name={FACETS.CONTRIBUTORS_HELD_BY}
-            facetOptions={facetOptions}
-            selectedValues={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]}
-            onIsLoading={onIsLoading}
-            onChange={onChange}
-            onClear={onClear}
-            onFetchFacets={onInputFocusAndMoreClick}
-            onSearch={onFacetOptionSearch}
-          /> */}
+          {/* {renderHeldByFacet(FACETS.CONTRIBUTORS_HELD_BY)} */}
           <MultiSelectionFacet
             id={FACETS.NAME_TYPE}
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
@@ -152,16 +147,7 @@ const InstanceFiltersBrowse = props => {
         <>
           {renderSharedFacet(FACETS.SUBJECTS_SHARED)}
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
-          {/* <HeldByFacet
-            name={FACETS.SUBJECTS_HELD_BY}
-            facetOptions={facetOptions}
-            selectedValues={activeFilters[FACETS.SUBJECTS_HELD_BY]}
-            onIsLoading={onIsLoading}
-            onChange={onChange}
-            onClear={onClear}
-            onFetchFacets={onInputFocusAndMoreClick}
-            onSearch={onFacetOptionSearch}
-          /> */}
+          {/* {renderHeldByFacet(FACETS.SUBJECTS_HELD_BY)} */}
         </>
       )}
     </AccordionSet>

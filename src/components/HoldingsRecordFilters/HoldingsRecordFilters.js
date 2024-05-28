@@ -84,8 +84,8 @@ const HoldingsRecordFilters = (props) => {
       />
       <HeldByFacet
         name={FACETS.HELD_BY}
+        activeFilters={activeFilters}
         facetOptions={facetOptions}
-        selectedValues={activeFilters[FACETS.HELD_BY]}
         onIsLoading={onIsLoading}
         onChange={onChange}
         onClear={onClear}
