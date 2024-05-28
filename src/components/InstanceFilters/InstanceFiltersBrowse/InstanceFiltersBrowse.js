@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
+import omit from 'lodash/omit';
 
 import { AccordionSet } from '@folio/stripes/components';
 import {
@@ -15,7 +16,6 @@ import {
   EffectiveLocationFacet,
 } from '@folio/stripes-inventory-components';
 
-import { omit } from 'lodash';
 import { MultiSelectionFacet } from '../../MultiSelectionFacet';
 
 const InstanceFiltersBrowse = props => {
