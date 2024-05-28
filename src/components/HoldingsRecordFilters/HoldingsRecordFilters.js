@@ -14,19 +14,15 @@ import {
   CheckboxFacet,
   useFacets,
   FACETS_TO_REQUEST,
-  SharedFacet, EffectiveLocationFacet,
+  SharedFacet,
+  EffectiveLocationFacet,
+  DateRange,
 } from '@folio/stripes-inventory-components';
 
-import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
 
 import {
-  DATE_FORMAT,
-} from '../../constants';
-import {
   getCurrentFilters,
-  makeDateRangeFilterString,
-  retrieveDatesFromDateRangeFilterString,
 } from '../../utils';
 
 const HoldingsRecordFilters = (props) => {
@@ -181,40 +177,18 @@ const HoldingsRecordFilters = (props) => {
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.CREATED_DATE}`} />}
-        id={FACETS.HOLDINGS_CREATED_DATE}
+      <DateRange
         name={FACETS.HOLDINGS_CREATED_DATE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.HOLDINGS_CREATED_DATE]?.length > 0}
-        onClearFilter={() => onClear(FACETS.HOLDINGS_CREATED_DATE)}
-      >
-        <DateRangeFilter
-          name={FACETS.HOLDINGS_CREATED_DATE}
-          dateFormat={DATE_FORMAT}
-          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.HOLDINGS_CREATED_DATE]?.[0])}
-          onChange={onChange}
-          makeFilterString={makeDateRangeFilterString}
-        />
-      </Accordion>
-      <Accordion
-        label={intl.formatMessage({ id: 'ui-inventory.updatedDate' })}
-        id={FACETS.HOLDINGS_UPDATED_DATE}
+        activeFilters={activeFilters}
+        onChange={onChange}
+        onClear={onClear}
+      />
+      <DateRange
         name={FACETS.HOLDINGS_UPDATED_DATE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.HOLDINGS_UPDATED_DATE]?.length > 0}
-        onClearFilter={() => onClear(FACETS.HOLDINGS_UPDATED_DATE)}
-      >
-        <DateRangeFilter
-          name={FACETS.HOLDINGS_UPDATED_DATE}
-          dateFormat={DATE_FORMAT}
-          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.HOLDINGS_UPDATED_DATE]?.[0])}
-          onChange={onChange}
-          makeFilterString={makeDateRangeFilterString}
-        />
-      </Accordion>
+        activeFilters={activeFilters}
+        onChange={onChange}
+        onClear={onClear}
+      />
       <Accordion
         label={intl.formatMessage({ id: 'ui-inventory.source' })}
         id={FACETS.HOLDINGS_SOURCE}

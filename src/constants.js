@@ -179,8 +179,6 @@ export const actionMenuDisplayPerms = [
   'ui-inventory.items.mark-in-process-non-requestable',
 ];
 
-export const DATE_FORMAT = 'YYYY-MM-DD';
-
 export const layers = {
   CREATE: 'create',
 };

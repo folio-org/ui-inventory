@@ -20,7 +20,6 @@ import {
   flatten,
   pick,
 } from 'lodash';
-import moment from 'moment';
 
 import {
   updateTenant,
@@ -34,7 +33,6 @@ import {
   noValue,
   emptyList,
   indentifierTypeNames,
-  DATE_FORMAT,
   LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
@@ -172,35 +170,6 @@ export function parseFiltersToStr(filters) {
 
   return newFilters.join(',');
 }
-
-export const retrieveDatesFromDateRangeFilterString = filterValue => {
-  let dateRange = {
-    startDate: '',
-    endDate: '',
-  };
-
-  if (filterValue) {
-    const [startDateString, endDateString] = filterValue.split(':');
-    const endDate = moment.utc(endDateString);
-    const startDate = moment.utc(startDateString);
-
-    dateRange = {
-      startDate: startDate.isValid()
-        ? startDate.format(DATE_FORMAT)
-        : '',
-      endDate: endDate.isValid()
-        ? endDate.format(DATE_FORMAT)
-        : '',
-    };
-  }
-
-  return dateRange;
-};
-
-
-export const makeDateRangeFilterString = (startDate, endDate) => {
-  return `${startDate}:${endDate}`;
-};
 
 // Function which takes a filter name and returns
 // another function which can be used in filter config

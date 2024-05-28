@@ -14,18 +14,14 @@ import {
   CheckboxFacet,
   useFacets,
   FACETS_TO_REQUEST,
-  SharedFacet, EffectiveLocationFacet,
+  SharedFacet,
+  EffectiveLocationFacet,
+  DateRange,
 } from '@folio/stripes-inventory-components';
 
-import DateRangeFilter from '../DateRangeFilter';
 import TagsFilter from '../TagsFilter';
 import {
-  DATE_FORMAT,
-} from '../../constants';
-import {
   getCurrentFilters,
-  makeDateRangeFilterString,
-  retrieveDatesFromDateRangeFilterString,
 } from '../../utils';
 
 const ItemFilters = (props) => {
@@ -196,40 +192,18 @@ const ItemFilters = (props) => {
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.CREATED_DATE}`} />}
-        id={FACETS.ITEMS_CREATED_DATE}
+      <DateRange
         name={FACETS.ITEMS_CREATED_DATE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.ITEMS_CREATED_DATE]?.length > 0}
-        onClearFilter={() => onClear(FACETS.ITEMS_CREATED_DATE)}
-      >
-        <DateRangeFilter
-          name={FACETS.ITEMS_CREATED_DATE}
-          dateFormat={DATE_FORMAT}
-          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.ITEMS_CREATED_DATE]?.[0])}
-          onChange={onChange}
-          makeFilterString={makeDateRangeFilterString}
-        />
-      </Accordion>
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.UPDATED_DATE}`} />}
-        id={FACETS.ITEMS_UPDATED_DATE}
+        activeFilters={activeFilters}
+        onChange={onChange}
+        onClear={onClear}
+      />
+      <DateRange
         name={FACETS.ITEMS_UPDATED_DATE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.ITEMS_UPDATED_DATE]?.length > 0}
-        onClearFilter={() => onClear(FACETS.ITEMS_UPDATED_DATE)}
-      >
-        <DateRangeFilter
-          name={FACETS.ITEMS_UPDATED_DATE}
-          dateFormat={DATE_FORMAT}
-          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.ITEMS_UPDATED_DATE]?.[0])}
-          onChange={onChange}
-          makeFilterString={makeDateRangeFilterString}
-        />
-      </Accordion>
+        activeFilters={activeFilters}
+        onChange={onChange}
+        onClear={onClear}
+      />
       <TagsFilter
         id={FACETS.ITEMS_TAGS}
         name={FACETS.ITEMS_TAGS}
