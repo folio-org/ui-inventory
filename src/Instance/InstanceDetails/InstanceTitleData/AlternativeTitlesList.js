@@ -8,10 +8,10 @@ import {
   MultiColumnList,
   NoValue,
 } from '@folio/stripes/components';
+import { segments } from '@folio/stripes-inventory-components';
 
 import { ControllableDetail } from '../ControllableDetail';
 import { checkIfArrayIsEmpty } from '../../../utils';
-import { segments } from '../../../constants';
 
 const noValue = <NoValue />;
 

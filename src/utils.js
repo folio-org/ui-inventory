@@ -27,6 +27,7 @@ import {
   validateUser,
 } from '@folio/stripes/core';
 import { FormattedUTCDate } from '@folio/stripes/components';
+import { segments } from '@folio/stripes-inventory-components';
 
 import {
   itemStatusesMap,
@@ -42,7 +43,6 @@ import {
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
-  segments,
 } from './constants';
 import { removeItem } from './storage';
 

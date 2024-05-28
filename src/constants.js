@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   browseModeOptions,
+  queryIndexes,
 } from '@folio/stripes-inventory-components';
 
 const AWAITING_DELIVERY = 'Awaiting delivery';
@@ -102,12 +103,6 @@ export const itemStatuses = [
   { label: 'ui-inventory.item.status.unknown', value: 'Unknown' },
   { label: 'ui-inventory.item.status.withdrawn', value: 'Withdrawn' },
 ];
-
-export const segments = {
-  instances: 'instances',
-  holdings: 'holdings',
-  items: 'items',
-};
 
 export const INDEXES_WITH_CALL_NUMBER_TYPE_PARAM = [
   browseModeOptions.DEWEY,
@@ -212,8 +207,8 @@ export const ERROR_TYPES = {
 };
 
 export const QUERY_INDEXES = {
-  INSTANCE_HRID: 'hrid',
-  BARCODE: 'items.barcode',
+  INSTANCE_HRID: queryIndexes.INSTANCE_HRID,
+  BARCODE: queryIndexes.ITEMS_BARCODE,
 };
 
 export const PAGE_DIRECTIONS = {
@@ -230,11 +225,11 @@ export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
 export const SINGLE_ITEM_QUERY_TEMPLATES = {
-  'items.barcode': 'barcode=="%{query}"',
-  isbn: 'isbn=="%{query}"',
-  issn: 'issn=="%{query}"',
-  itemHrid: 'hrid=="%{query}"',
-  iid: 'id=="%{query}"',
+  [queryIndexes.ITEMS_BARCODE]: 'barcode=="%{query}"',
+  [queryIndexes.ISBN]: 'isbn=="%{query}"',
+  [queryIndexes.ISSN]: 'issn=="%{query}"',
+  [queryIndexes.ITEM_HRID]: 'hrid=="%{query}"',
+  [queryIndexes.ITEM_ID]: 'id=="%{query}"',
 };
 
 export const RECORD_SOURCE = {

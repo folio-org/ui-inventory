@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 
 import { MultiColumnList } from '@folio/stripes/components';
+import { segments } from '@folio/stripes-inventory-components';
 
 import { ControllableDetail } from '../ControllableDetail';
-import { segments } from '../../../constants';
 
 
 const visibleColumns = ['statement'];

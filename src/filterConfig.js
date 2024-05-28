@@ -1,7 +1,14 @@
 import {
-  ADVANCED_SEARCH_INDEX,
   browseModeOptions,
   filterConfigMap,
+  queryIndexesMap,
+  queryIndexes,
+  FACETS,
+  FACETS_CQL,
+  instanceSortMap,
+  itemSortMap,
+  holdingSortMap,
+  segments,
 } from '@folio/stripes-inventory-components';
 
 import itemFilterRenderer from './components/ItemFilters/itemFilterRenderer';
@@ -11,32 +18,62 @@ import instanceFilterRenderer from './components/InstanceFilters/instanceFilterR
 export const instanceFilterConfig = Object.values(filterConfigMap);
 
 export const instanceIndexes = [
-  // NOTE: the 'all' value was first used for a 'keyword all' query, but then
-  // a *real* 'all' query option was added ('allInstances any'). That was given the value `allFields`
-  // instead. It might make sense to rename the keyword option to something like `keywordAll`
-  // but, without tracing the use of the value, I don't know what effects that would have in the code.
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}" or hrid=="%{query.query}" or id=="%{query.query}"' },
-  { label: 'ui-inventory.contributor', value: 'contributor', queryTemplate: 'contributors.name="%{query.query}"' },
-  { label: 'ui-inventory.title', value: 'title', queryTemplate: 'title all "%{query.query}"' },
-  { label: 'ui-inventory.identifierAll', value: 'identifier', queryTemplate: 'identifiers.value="%{query.query}" or isbn="%{query.query}"' },
-  { label: 'ui-inventory.normalizedClassificationNumber', value: 'normalizedClassificationNumber', queryTemplate: 'normalizedClassificationNumber=="%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
-  { label: 'ui-inventory.lccn', value: 'lccn', queryTemplate: 'lccn="%{query.query}"' },
-  { label: 'ui-inventory.search.oclc', value: 'oclc', queryTemplate: 'oclc="%{query.query}"' },
-  { label: 'ui-inventory.search.instanceNotes', value: 'instanceNotes', queryTemplate: 'notes.note all "%{query.query}" or administrativeNotes all "%{query.query}"' },
-  { label: 'ui-inventory.search.instanceAdministrativeNotes', value: 'instanceAdministrativeNotes', queryTemplate: 'administrativeNotes all "%{query.query}"' },
-  { label: 'ui-inventory.subject', value: 'subject', queryTemplate: 'subjects.value==/string "%{query.query}"' },
-  { label: 'ui-inventory.effectiveCallNumberShelving', value: 'callNumber', queryTemplate: 'itemEffectiveShelvingOrder==/string "%{query.query}"' },
-  { label: 'ui-inventory.instanceHrid', value: 'hrid', queryTemplate: 'hrid=="%{query.query}"' },
-  { label: 'ui-inventory.instanceId', value: 'id', queryTemplate: 'id="%{query.query}"' },
-  { label: 'ui-inventory.authorityId', value: 'authorityId', queryTemplate: 'authorityId == %{query.query}' },
-  { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.advancedSearch', value: ADVANCED_SEARCH_INDEX, queryTemplate: '%{query.query}' },
+  queryIndexesMap[queryIndexes.INSTANCE_KEYWORD],
+  queryIndexesMap[queryIndexes.CONTRIBUTOR],
+  queryIndexesMap[queryIndexes.TITLE],
+  queryIndexesMap[queryIndexes.IDENTIFIER],
+  queryIndexesMap[queryIndexes.NORMALIZED_CLASSIFICATION_NUMBER],
+  queryIndexesMap[queryIndexes.ISBN],
+  queryIndexesMap[queryIndexes.ISSN],
+  queryIndexesMap[queryIndexes.LCCN],
+  queryIndexesMap[queryIndexes.OCLC],
+  queryIndexesMap[queryIndexes.INSTANCE_NOTES],
+  queryIndexesMap[queryIndexes.INSTANCE_ADMINISTRATIVE_NOTES],
+  queryIndexesMap[queryIndexes.SUBJECT],
+  queryIndexesMap[queryIndexes.CALL_NUMBER],
+  queryIndexesMap[queryIndexes.INSTANCE_HRID],
+  queryIndexesMap[queryIndexes.INSTANCE_ID],
+  queryIndexesMap[queryIndexes.AUTHORITY_ID],
+  queryIndexesMap[queryIndexes.ALL_FIELDS],
+  queryIndexesMap[queryIndexes.QUERY_SEARCH],
+  queryIndexesMap[queryIndexes.ADVANCED_SEARCH],
 ];
 
-export const browseFiltersConfig = Object.values(filterConfigMap);
+export const browseFiltersConfig = [
+  filterConfigMap[FACETS.SHARED],
+  filterConfigMap[FACETS.EFFECTIVE_LOCATION],
+  filterConfigMap[FACETS.NAME_TYPE],
+  {
+    name: FACETS.CONTRIBUTORS_SHARED,
+    cql: FACETS_CQL.INSTANCES_SHARED,
+    values: [],
+  },
+  {
+    name: FACETS.CONTRIBUTORS_HELD_BY,
+    cql: FACETS_CQL.INSTANCES_HELD_BY,
+    values: [],
+  },
+  {
+    name: FACETS.SUBJECTS_SHARED,
+    cql: FACETS_CQL.INSTANCES_SHARED,
+    values: [],
+  },
+  {
+    name: FACETS.SUBJECTS_HELD_BY,
+    cql: FACETS_CQL.INSTANCES_HELD_BY,
+    values: [],
+  },
+  {
+    name: FACETS.CALL_NUMBERS_HELD_BY,
+    cql: FACETS_CQL.HELD_BY,
+    values: [],
+  },
+  {
+    name: FACETS.CLASSIFICATION_SHARED,
+    cql: FACETS_CQL.INSTANCES_SHARED,
+    values: [],
+  },
+];
 
 export const browseInstanceIndexes = [
   {
@@ -71,80 +108,55 @@ export const instanceBrowseSortMap = {
   numberOfTitles: 'numberOfTitles',
 };
 
-export const instanceSortMap = {
-  Title: 'title',
-  publishers: 'publication',
-  Contributors: 'contributors',
-};
-
 export const holdingIndexes = [
-  // See note for instanceIndexes about 'all' vs. 'allFields'
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}" or holdings.hrid=="%{query.query}" or holdings.id=="%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
-  { label: 'ui-inventory.callNumberEyeReadable',
-    value: 'holdingsFullCallNumbers',
-    queryTemplate: 'holdingsFullCallNumbers="%{query.query}"' },
-  { label: 'ui-inventory.callNumberNormalized',
-    value: 'callNumberNormalized',
-    queryTemplate: 'holdingsNormalizedCallNumbers="%{query.query}"' },
-  { label: 'ui-inventory.search.holdingsNotes', value: 'holdingsNotes', queryTemplate: 'holdings.notes.note all "%{query.query}" or holdings.administrativeNotes all "%{query.query}"' },
-  { label: 'ui-inventory.search.holdingsAdministrativeNotes', value: 'holdingsAdministrativeNotes', queryTemplate: 'holdings.administrativeNotes all "%{query.query}"' },
-  { label: 'ui-inventory.holdingsHrid', value: 'hrid', queryTemplate: 'holdings.hrid=="%{query.query}"' },
-  { label: 'ui-inventory.search.holdings.uuid', value: 'hid', queryTemplate: 'holdings.id=="%{query.query}"' },
-  { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.advancedSearch', value: ADVANCED_SEARCH_INDEX, queryTemplate: '%{query.query}' },
+  queryIndexesMap[queryIndexes.HOLDINGS_KEYWORD],
+  queryIndexesMap[queryIndexes.ISBN],
+  queryIndexesMap[queryIndexes.ISSN],
+  queryIndexesMap[queryIndexes.HOLDINGS_FULL_CALL_NUMBERS],
+  queryIndexesMap[queryIndexes.CALL_NUMBER_NORMALIZED],
+  queryIndexesMap[queryIndexes.HOLDINGS_NOTES],
+  queryIndexesMap[queryIndexes.HOLDINGS_ADMINISTRATIVE_NOTES],
+  queryIndexesMap[queryIndexes.HOLDINGS_HRID],
+  queryIndexesMap[queryIndexes.ALL_FIELDS],
+  queryIndexesMap[queryIndexes.QUERY_SEARCH],
+  queryIndexesMap[queryIndexes.ADVANCED_SEARCH],
 ];
-
-export const holdingSortMap = {};
 
 export const holdingFilterConfig = Object.values(filterConfigMap);
 
 export const itemIndexes = [
-  // See note for instanceIndexes about 'all' vs. 'allFields'
-  { label: 'ui-inventory.search.all', value: 'all', queryTemplate: 'keyword all "%{query.query}" or isbn="%{query.query}" or item.hrid=="%{query.query}" or item.id=="%{query.query}"' },
-  { label: 'ui-inventory.barcode', value: 'items.barcode', queryTemplate: 'items.barcode=="%{query.query}"' },
-  { label: 'ui-inventory.isbn', value: 'isbn', queryTemplate: 'isbn="%{query.query}"' },
-  { label: 'ui-inventory.issn', value: 'issn', queryTemplate: 'issn="%{query.query}"' },
-  { label: 'ui-inventory.itemEffectiveCallNumberEyeReadable',
-    value: 'itemFullCallNumbers',
-    queryTemplate: 'itemFullCallNumbers="%{query.query}"' },
-  { label: 'ui-inventory.itemEffectiveCallNumberNormalized',
-    value: 'itemNormalizedCallNumbers',
-    queryTemplate: 'itemNormalizedCallNumbers="%{query.query}"' },
-  { label: 'ui-inventory.search.itemNotes', value: 'holdingsNotes', queryTemplate: 'item.notes.note all "%{query.query}" or item.administrativeNotes all "%{query.query}"' },
-  { label: 'ui-inventory.search.itemAdministrativeNotes', value: 'itemAdministrativeNotes', queryTemplate: 'item.administrativeNotes all "%{query.query}"' },
-  { label: 'ui-inventory.search.itemCirculationNotes', value: 'itemCirculationNotes', queryTemplate: 'item.circulationNotes.note all "%{query.query}"' },
-  { label: 'ui-inventory.itemHrid', value: 'itemHrid', queryTemplate: 'items.hrid=="%{query.query}"' },
-  { label: 'ui-inventory.search.item.uuid', value: 'iid', queryTemplate: 'item.id=="%{query.query}"' },
-  { label: 'ui-inventory.search.allFields', value: 'allFields', queryTemplate: 'cql.all="%{query.query}"' },
-  { label: 'ui-inventory.querySearch', value: 'querySearch', queryTemplate: '%{query.query}' },
-  { label: 'ui-inventory.advancedSearch', value: ADVANCED_SEARCH_INDEX, queryTemplate: '%{query.query}' },
+  queryIndexesMap[queryIndexes.ITEMS_KEYWORD],
+  queryIndexesMap[queryIndexes.ITEMS_BARCODE],
+  queryIndexesMap[queryIndexes.ISBN],
+  queryIndexesMap[queryIndexes.ISSN],
+  queryIndexesMap[queryIndexes.ITEM_FULL_CALL_NUMBERS],
+  queryIndexesMap[queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS],
+  queryIndexesMap[queryIndexes.ITEM_NOTES],
+  queryIndexesMap[queryIndexes.ITEM_ADMINISTRATIVE_NOTES],
+  queryIndexesMap[queryIndexes.ITEM_CIRCULATION_NOTES],
+  queryIndexesMap[queryIndexes.ITEM_HRID],
+  queryIndexesMap[queryIndexes.ITEM_ID],
+  queryIndexesMap[queryIndexes.ALL_FIELDS],
+  queryIndexesMap[queryIndexes.QUERY_SEARCH],
+  queryIndexesMap[queryIndexes.ADVANCED_SEARCH],
 ];
 
 export const itemFilterConfig = Object.values(filterConfigMap);
 
-export const itemSortMap = {
-  Title: 'title',
-  publishers: 'publication',
-  Contributors: 'contributors',
-};
-
 const config = {
-  instances: {
+  [segments.instances]: {
     filters: instanceFilterConfig,
     indexes: [...instanceIndexes],
     sortMap: instanceSortMap,
     renderer: instanceFilterRenderer,
   },
-  holdings: {
+  [segments.holdings]: {
     filters: holdingFilterConfig,
     indexes: holdingIndexes,
     sortMap: holdingSortMap,
     renderer: holdingsRecordFilterRenderer,
   },
-  items: {
+  [segments.items]: {
     filters: itemFilterConfig,
     indexes: itemIndexes,
     sortMap: itemSortMap,
@@ -158,4 +170,4 @@ export const browseConfig = {
   sortMap: instanceBrowseSortMap,
 };
 
-export const getFilterConfig = (segment = 'instances') => config[segment];
+export const getFilterConfig = (segment = segments.instances) => config[segment];
