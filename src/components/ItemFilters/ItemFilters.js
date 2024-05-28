@@ -18,9 +18,9 @@ import {
   EffectiveLocationFacet,
   DateRange,
   StatusFacet,
+  TagsFacet,
 } from '@folio/stripes-inventory-components';
 
-import TagsFilter from '../TagsFilter';
 import {
   getCurrentFilters,
 } from '../../utils';
@@ -195,16 +195,15 @@ const ItemFilters = (props) => {
         onChange={onChange}
         onClear={onClear}
       />
-      <TagsFilter
-        id={FACETS.ITEMS_TAGS}
+      <TagsFacet
         name={FACETS.ITEMS_TAGS}
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
-        onSearch={onFacetOptionSearch}
         onFetch={onInputFocusAndMoreClick}
-        selectedValues={activeFilters[FACETS.ITEMS_TAGS]}
-        tagsRecords={facetOptions[FACETS_TO_REQUEST[FACETS.ITEMS_TAGS]]}
-        isPending={getIsLoading(FACETS.ITEMS_TAGS)}
+        onSearch={onFacetOptionSearch}
       />
     </AccordionSet>
   );

@@ -23,9 +23,9 @@ import {
   ResourceTypeFacet,
   DateRange,
   StatusFacet,
+  TagsFacet,
 } from '@folio/stripes-inventory-components';
 
-import TagsFilter from '../TagsFilter';
 import {
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../../constants';
@@ -305,14 +305,13 @@ const InstanceFilters = props => {
           onChange={onChange}
         />
       </Accordion>
-      <TagsFilter
-        id={FACETS.INSTANCES_TAGS}
+      <TagsFacet
         name={FACETS.INSTANCES_TAGS}
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
-        selectedValues={activeFilters[FACETS.INSTANCES_TAGS]}
-        isPending={getIsLoading(FACETS.INSTANCES_TAGS)}
-        tagsRecords={facetOptions[FACETS_TO_REQUEST[FACETS.INSTANCES_TAGS]]}
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
