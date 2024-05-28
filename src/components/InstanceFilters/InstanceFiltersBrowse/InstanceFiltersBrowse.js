@@ -2,21 +2,17 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 
-import {
-  Accordion,
-  AccordionSet,
-  FilterAccordionHeader,
-} from '@folio/stripes/components';
+import { AccordionSet } from '@folio/stripes/components';
 import {
   FACETS,
   HeldByFacet,
-  CheckboxFacet,
   browseModeOptions,
   browseCallNumberOptions,
   browseClassificationOptions,
   useFacets,
   FACETS_TO_REQUEST,
   SharedFacet,
+  EffectiveLocationFacet,
 } from '@folio/stripes-inventory-components';
 
 import { omit } from 'lodash';
@@ -101,27 +97,16 @@ const InstanceFiltersBrowse = props => {
         <>
           {renderSharedFacet(FACETS.SHARED)}
           {renderHeldByFacet(FACETS.CALL_NUMBERS_HELD_BY)}
-          <Accordion
-            closedByDefault
-            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
-            id={FACETS.EFFECTIVE_LOCATION}
+          <EffectiveLocationFacet
             name={FACETS.EFFECTIVE_LOCATION}
-            separator={false}
-            header={FilterAccordionHeader}
-            displayClearButton={activeFilters[FACETS.EFFECTIVE_LOCATION]?.length > 0}
-            onClearFilter={() => onClear(FACETS.EFFECTIVE_LOCATION)}
-          >
-            <CheckboxFacet
-              name={FACETS.EFFECTIVE_LOCATION}
-              dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.EFFECTIVE_LOCATION]]}
-              selectedValues={activeFilters[FACETS.EFFECTIVE_LOCATION]}
-              onChange={onChange}
-              onSearch={onFacetOptionSearch}
-              isFilterable
-              isPending={getIsLoading(FACETS.EFFECTIVE_LOCATION)}
-              onFetch={onInputFocusAndMoreClick}
-            />
-          </Accordion>
+            facetOptions={facetOptions}
+            activeFilters={activeFilters}
+            getIsLoading={getIsLoading}
+            onChange={onChange}
+            onClear={onClear}
+            onFetch={onInputFocusAndMoreClick}
+            onSearch={onFacetOptionSearch}
+          />
         </>
       )}
       {qindex === browseModeOptions.CONTRIBUTORS && (

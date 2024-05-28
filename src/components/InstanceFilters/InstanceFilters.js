@@ -17,7 +17,7 @@ import {
   FACETS_TO_REQUEST,
   FACETS,
   CheckboxFacet,
-  SharedFacet,
+  SharedFacet, EffectiveLocationFacet,
 } from '@folio/stripes-inventory-components';
 
 import TagsFilter from '../TagsFilter';
@@ -117,26 +117,16 @@ const InstanceFilters = props => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}` })}
-        id={FACETS.EFFECTIVE_LOCATION}
+      <EffectiveLocationFacet
         name={FACETS.EFFECTIVE_LOCATION}
-        separator={false}
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.EFFECTIVE_LOCATION]?.length > 0}
-        onClearFilter={() => onClear(FACETS.EFFECTIVE_LOCATION)}
-      >
-        <CheckboxFacet
-          name={FACETS.EFFECTIVE_LOCATION}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.EFFECTIVE_LOCATION]]}
-          selectedValues={activeFilters[FACETS.EFFECTIVE_LOCATION]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          isFilterable
-          isPending={getIsLoading(FACETS.EFFECTIVE_LOCATION)}
-          onFetch={onInputFocusAndMoreClick}
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <Accordion
         label={intl.formatMessage({ id: `ui-inventory.instances.${FACETS.LANGUAGE}` })}
         id={FACETS.LANGUAGE}

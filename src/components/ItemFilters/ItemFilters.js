@@ -14,7 +14,7 @@ import {
   CheckboxFacet,
   useFacets,
   FACETS_TO_REQUEST,
-  SharedFacet,
+  SharedFacet, EffectiveLocationFacet,
 } from '@folio/stripes-inventory-components';
 
 import DateRangeFilter from '../DateRangeFilter';
@@ -107,25 +107,16 @@ const ItemFilters = (props) => {
           isFilterable
         />
       </Accordion>
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
-        id={FACETS.EFFECTIVE_LOCATION}
+      <EffectiveLocationFacet
         name={FACETS.EFFECTIVE_LOCATION}
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.EFFECTIVE_LOCATION]?.length > 0}
-        onClearFilter={() => onClear(FACETS.EFFECTIVE_LOCATION)}
-      >
-        <CheckboxFacet
-          name={FACETS.EFFECTIVE_LOCATION}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.EFFECTIVE_LOCATION]]}
-          selectedValues={activeFilters[FACETS.EFFECTIVE_LOCATION]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          onFetch={onInputFocusAndMoreClick}
-          isPending={getIsLoading(FACETS.EFFECTIVE_LOCATION)}
-          isFilterable
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <Accordion
         label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
         id={FACETS.HOLDINGS_PERMANENT_LOCATION}
