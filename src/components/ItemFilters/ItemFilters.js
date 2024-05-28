@@ -17,6 +17,7 @@ import {
   SharedFacet,
   EffectiveLocationFacet,
   DateRange,
+  StatusFacet,
 } from '@folio/stripes-inventory-components';
 
 import TagsFilter from '../TagsFilter';
@@ -83,26 +84,16 @@ const ItemFilters = (props) => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={<FormattedMessage id="ui-inventory.item.status" />}
-        id={FACETS.ITEM_STATUS}
+      <StatusFacet
         name={FACETS.ITEM_STATUS}
-        header={FilterAccordionHeader}
-        displayClearButton={!_.isEmpty(activeFilters[FACETS.ITEM_STATUS])}
-        onClearFilter={() => onClear(FACETS.ITEM_STATUS)}
-        separator={false}
-      >
-        <CheckboxFacet
-          name={FACETS.ITEM_STATUS}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.ITEM_STATUS]]}
-          selectedValues={activeFilters[FACETS.ITEM_STATUS]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          onFetch={onInputFocusAndMoreClick}
-          isPending={getIsLoading(FACETS.ITEM_STATUS)}
-          isFilterable
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <EffectiveLocationFacet
         name={FACETS.EFFECTIVE_LOCATION}
         facetOptions={facetOptions}

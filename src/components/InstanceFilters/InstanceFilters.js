@@ -22,6 +22,7 @@ import {
   LanguageFacet,
   ResourceTypeFacet,
   DateRange,
+  StatusFacet,
 } from '@folio/stripes-inventory-components';
 
 import TagsFilter from '../TagsFilter';
@@ -276,27 +277,16 @@ const InstanceFilters = props => {
         onChange={onChange}
         onClear={onClear}
       />
-      <Accordion
-        label={intl.formatMessage({ id: 'ui-inventory.instanceStatusShort' })}
-        id={FACETS.STATUS}
+      <StatusFacet
         name={FACETS.STATUS}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.STATUS]?.length > 0}
-        onClearFilter={() => onClear(FACETS.STATUS)}
-      >
-        <CheckboxFacet
-          data-test-filter-instance-source
-          name={FACETS.STATUS}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.STATUS]]}
-          selectedValues={activeFilters[FACETS.STATUS]}
-          isPending={getIsLoading(FACETS.STATUS)}
-          onChange={onChange}
-          isFilterable
-          onSearch={onFacetOptionSearch}
-          onFetch={onInputFocusAndMoreClick}
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <Accordion
         label={intl.formatMessage({ id: `ui-inventory.${FACETS.SOURCE}` })}
         id={FACETS.SOURCE}
