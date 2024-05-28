@@ -89,7 +89,7 @@ const HoldingsRecordFilters = (props) => {
         getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
-        onFetchFacets={onInputFocusAndMoreClick}
+        onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
       <Accordion
