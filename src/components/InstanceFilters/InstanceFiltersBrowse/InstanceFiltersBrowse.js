@@ -8,10 +8,6 @@ import {
   FilterAccordionHeader,
 } from '@folio/stripes/components';
 import {
-  checkIfUserInMemberTenant,
-  useStripes,
-} from '@folio/stripes/core';
-import {
   FACETS,
   HeldByFacet,
   CheckboxFacet,
@@ -20,6 +16,7 @@ import {
   browseClassificationOptions,
   useFacets,
   FACETS_TO_REQUEST,
+  SharedFacet,
 } from '@folio/stripes-inventory-components';
 
 import { omit } from 'lodash';
@@ -35,11 +32,8 @@ const InstanceFiltersBrowse = props => {
     onClear,
   } = props;
 
-  const stripes = useStripes();
   const intl = useIntl();
   const qindex = query.qindex;
-
-  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
 
   const initialAccordionStates = {
     [FACETS.SHARED]: false,
@@ -71,55 +65,28 @@ const InstanceFiltersBrowse = props => {
     data: props.data,
   });
 
+  const renderSharedFacet = (name) => (
+    <SharedFacet
+      name={name}
+      activeFilters={activeFilters}
+      facetOptions={facetOptions}
+      onChange={onChange}
+      onClear={onClear}
+      onIsLoading={onIsLoading}
+    />
+  );
+
   return (
     <AccordionSet
       accordionStatus={accordionStatus}
       onToggle={onToggleAccordion}
     >
       {Object.values(browseClassificationOptions).includes(qindex) && (
-        isUserInMemberTenant && (
-          <Accordion
-            closedByDefault
-            label={intl.formatMessage({ id: 'ui-inventory.filters.shared' })}
-            id={FACETS.CLASSIFICATION_SHARED}
-            name={FACETS.CLASSIFICATION_SHARED}
-            separator={false}
-            header={FilterAccordionHeader}
-            displayClearButton={activeFilters[FACETS.CLASSIFICATION_SHARED]?.length > 0}
-            onClearFilter={() => onClear(FACETS.CLASSIFICATION_SHARED)}
-          >
-            <CheckboxFacet
-              name={FACETS.CLASSIFICATION_SHARED}
-              dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.CLASSIFICATION_SHARED]]}
-              selectedValues={activeFilters[FACETS.CLASSIFICATION_SHARED]}
-              isPending={onIsLoading(FACETS.CLASSIFICATION_SHARED)}
-              onChange={onChange}
-            />
-          </Accordion>
-        )
+        renderSharedFacet(FACETS.CLASSIFICATION_SHARED)
       )}
       {Object.values(browseCallNumberOptions).includes(qindex) && (
         <>
-          {isUserInMemberTenant && (
-            <Accordion
-              closedByDefault
-              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
-              id={FACETS.SHARED}
-              name={FACETS.SHARED}
-              separator={false}
-              header={FilterAccordionHeader}
-              displayClearButton={activeFilters[FACETS.SHARED]?.length > 0}
-              onClearFilter={() => onClear(FACETS.SHARED)}
-            >
-              <CheckboxFacet
-                name={FACETS.SHARED}
-                dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SHARED]]}
-                selectedValues={activeFilters[FACETS.SHARED]}
-                isPending={onIsLoading(FACETS.SHARED)}
-                onChange={onChange}
-              />
-            </Accordion>
-          )}
+          {renderSharedFacet(FACETS.SHARED)}
           <HeldByFacet
             name={FACETS.CALL_NUMBERS_HELD_BY}
             facetOptions={facetOptions}
@@ -155,25 +122,7 @@ const InstanceFiltersBrowse = props => {
       )}
       {qindex === browseModeOptions.CONTRIBUTORS && (
         <>
-          {isUserInMemberTenant && (
-            <Accordion
-              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
-              id={FACETS.CONTRIBUTORS_SHARED}
-              name={FACETS.CONTRIBUTORS_SHARED}
-              separator={false}
-              header={FilterAccordionHeader}
-              displayClearButton={activeFilters[FACETS.CONTRIBUTORS_SHARED]?.length > 0}
-              onClearFilter={() => onClear(FACETS.CONTRIBUTORS_SHARED)}
-            >
-              <CheckboxFacet
-                name={FACETS.CONTRIBUTORS_SHARED}
-                dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.CONTRIBUTORS_SHARED]]}
-                selectedValues={activeFilters[FACETS.CONTRIBUTORS_SHARED]}
-                isPending={onIsLoading(FACETS.CONTRIBUTORS_SHARED)}
-                onChange={onChange}
-              />
-            </Accordion>
-          )}
+          {renderSharedFacet(FACETS.CONTRIBUTORS_SHARED)}
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* <HeldByFacet
             name={FACETS.CONTRIBUTORS_HELD_BY}
@@ -201,25 +150,7 @@ const InstanceFiltersBrowse = props => {
       )}
       {qindex === browseModeOptions.SUBJECTS && (
         <>
-          {isUserInMemberTenant && (
-            <Accordion
-              label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.SHARED}` })}
-              id={FACETS.SUBJECTS_SHARED}
-              name={FACETS.SUBJECTS_SHARED}
-              separator={false}
-              header={FilterAccordionHeader}
-              displayClearButton={activeFilters[FACETS.SUBJECTS_SHARED]?.length > 0}
-              onClearFilter={() => onClear(FACETS.SUBJECTS_SHARED)}
-            >
-              <CheckboxFacet
-                name={FACETS.SUBJECTS_SHARED}
-                dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SUBJECTS_SHARED]] || []}
-                selectedValues={activeFilters[FACETS.SUBJECTS_SHARED]}
-                isPending={onIsLoading(FACETS.SUBJECTS_SHARED)}
-                onChange={onChange}
-              />
-            </Accordion>
-          )}
+          {renderSharedFacet(FACETS.SUBJECTS_SHARED)}
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* <HeldByFacet
             name={FACETS.SUBJECTS_HELD_BY}

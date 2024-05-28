@@ -9,15 +9,12 @@ import {
   AccordionSet,
 } from '@folio/stripes/components';
 import {
-  checkIfUserInMemberTenant,
-  useStripes,
-} from '@folio/stripes/core';
-import {
   FACETS,
   HeldByFacet,
   CheckboxFacet,
   useFacets,
   FACETS_TO_REQUEST,
+  SharedFacet,
 } from '@folio/stripes-inventory-components';
 
 import DateRangeFilter from '../DateRangeFilter';
@@ -42,7 +39,6 @@ const HoldingsRecordFilters = (props) => {
     onClear,
   } = props;
 
-  const stripes = useStripes();
   const intl = useIntl();
 
   const initialAccordionStates = {
@@ -76,30 +72,16 @@ const HoldingsRecordFilters = (props) => {
     data: props.data,
   });
 
-  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
-
   return (
     <AccordionSet accordionStatus={accordionStatus} onToggle={onToggleAccordion}>
-      {isUserInMemberTenant && (
-        <Accordion
-          label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
-          id={FACETS.SHARED}
-          name={FACETS.SHARED}
-          separator={false}
-          header={FilterAccordionHeader}
-          displayClearButton={activeFilters[FACETS.SHARED]?.length > 0}
-          onClearFilter={() => onClear(FACETS.SHARED)}
-        >
-          <CheckboxFacet
-            data-test-filter-holdings-shared
-            name={FACETS.SHARED}
-            dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SHARED]]}
-            selectedValues={activeFilters[FACETS.SHARED]}
-            isPending={onIsLoading(FACETS.SHARED)}
-            onChange={onChange}
-          />
-        </Accordion>
-      )}
+      <SharedFacet
+        name={FACETS.SHARED}
+        activeFilters={activeFilters}
+        facetOptions={facetOptions}
+        onChange={onChange}
+        onClear={onClear}
+        onIsLoading={onIsLoading}
+      />
       <HeldByFacet
         name={FACETS.HELD_BY}
         facetOptions={facetOptions}
