@@ -44,7 +44,6 @@ import {
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
   segments,
-  queryIndexes,
 } from './constants';
 import { removeItem } from './storage';
 
@@ -265,18 +264,6 @@ export function filterItemsBy(name) {
 
     return { renderedItems };
   };
-}
-
-export function getQueryTemplate(queryIndex, indexes) {
-  const searchableIndex = indexes.find(({ value, subIndexes }) => {
-    if (subIndexes) {
-      return subIndexes.some(subIndex => subIndex.value === queryIndex);
-    }
-
-    return value === queryIndex;
-  });
-
-  return get(searchableIndex, 'queryTemplate');
 }
 
 export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) {
@@ -733,17 +720,6 @@ export const batchRequest = (requestFn, items, buildQuery = buildQueryByIds, _pa
 };
 
 /**
- * Accent Fold
- *
- * For example:
- * LÒpez => Lopez
- *
- * Link:
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-*/
-export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-/**
  * Parses http error to json and attaches an error type.
  *
  * @param httpError object
@@ -901,20 +877,6 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
 };
 
 export const parseEmptyFormValue = value => value;
-
-export const getTemplateForSelectedFromBrowseRecord = (queryParams, queryIndex, queryValue) => {
-  if (!queryParams?.selectedBrowseResult) {
-    return null;
-  }
-
-  if (queryIndex === queryIndexes.CONTRIBUTOR) {
-    const escapedQueryValue = queryValue.replaceAll('"', '\\"');
-
-    return `contributors.name==/string "${escapedQueryValue}"`;
-  }
-
-  return null;
-};
 
 export const redirectToMarcEditPage = (pathname, instance, location, history) => {
   const searchParams = new URLSearchParams(location.search);

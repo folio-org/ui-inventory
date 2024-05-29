@@ -4,48 +4,27 @@ import {
 
 import {
   makeQueryFunction,
-  advancedSearchQueryToRows,
 } from '@folio/stripes/smart-components';
 import {
-  CQL_FIND_ALL,
-  fieldSearchConfigurations,
-  queryIndexes,
   FACETS,
+  CQL_FIND_ALL,
+  queryIndexes,
+  getQueryTemplate,
+  getTemplateForSelectedFromBrowseRecord,
+  getAdvancedSearchTemplate,
+} from '@folio/stripes-inventory-components';
+
+import {
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../constants';
 import {
-  getQueryTemplate,
   getIsbnIssnTemplate,
   replaceFilter,
-  getTemplateForSelectedFromBrowseRecord,
 } from '../utils';
 import { getFilterConfig } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
-
-const getAdvancedSearchQueryTemplate = (queryIndex, matchOption, query) => {
-  const template = fieldSearchConfigurations[queryIndex]?.[matchOption];
-
-  return typeof template === 'function'
-    ? template({ query })
-    : template;
-};
-
-export const getAdvancedSearchTemplate = (queryValue) => {
-  return advancedSearchQueryToRows(queryValue).reduce((acc, row) => {
-    const rowTemplate = getAdvancedSearchQueryTemplate(row.searchOption, row.match, row.query);
-
-    if (!rowTemplate) {
-      return acc;
-    }
-
-    const rowQuery = rowTemplate.replaceAll('%{query.query}', row.query);
-
-    const formattedRow = `${row.bool} ${rowQuery}`.trim();
-    return `${acc} ${formattedRow}`;
-  }, '').trim();
-};
 
 const applyDefaultStaffSuppressFilter = (stripes, query) => {
   const isUserTouchedStaffSuppress = JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY));

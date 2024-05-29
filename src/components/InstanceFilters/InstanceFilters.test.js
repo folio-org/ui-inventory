@@ -6,16 +6,21 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import {
+  FACETS,
+} from '@folio/stripes-inventory-components';
 
 import InstanceFilters from './InstanceFilters';
-import { FACETS, USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '../../constants';
+import { USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '../../constants';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
-
-jest.mock('../CheckboxFacet/CheckboxFacet', () => ({ name, onChange }) => ((
-  <button type="button" onClick={() => onChange()}>change facet {name}</button>
-)));
+jest.mock('@folio/stripes-inventory-components', () => ({
+  ...jest.requireActual('@folio/stripes-inventory-components'),
+  CheckboxFacet: jest.fn(({ name, onChange }) => ((
+    <button type="button" onClick={() => onChange()}>change facet {name}</button>
+  ))),
+}));
 
 jest.mock('../../facetUtils', () => ({
   ...jest.requireActual('../../facetUtils'),

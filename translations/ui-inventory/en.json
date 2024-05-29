@@ -559,7 +559,6 @@
   "filters.holdings": "Holdings",
   "filters.items": "Item",
   "filters.shared": "Shared",
-  "filters.tenantId": "Held by",
   "filters.effectiveLocation": "Effective location (item)",
   "filters.nameType": "Name type",
   "yes": "Yes",
@@ -865,9 +864,6 @@
   "receivingHistory.source.receiving": "Receiving",
   "receivingHistory.source.user": "User",
 
-  "showMoreOptions": "Show more options",
-  "more": "More",
-  "noMatchingOptions": "No matching options",
   "addAdministrativeNote": "Add administrative note",
   "administrativeNote": "Administrative note",
   "administrativeNotes": "Administrative notes",

@@ -5,11 +5,9 @@ import {
   useOkapiKy,
   useStripes,
 } from '@folio/stripes/core';
+import { CQL_FIND_ALL } from '@folio/stripes-inventory-components';
 
-import {
-  CQL_FIND_ALL,
-  LIMIT_MAX,
-} from '../../constants';
+import { LIMIT_MAX } from '../../constants';
 
 const useClassificationBrowseConfig = () => {
   const stripes = useStripes();

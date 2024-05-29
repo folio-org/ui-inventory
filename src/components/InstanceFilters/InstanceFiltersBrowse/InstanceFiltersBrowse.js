@@ -12,23 +12,23 @@ import {
   checkIfUserInMemberTenant,
   useStripes,
 } from '@folio/stripes/core';
+import {
+  FACETS,
+  FACETS_CQL,
+  FACETS_OPTIONS,
+  FACETS_SETTINGS,
+  HeldByFacet,
+  CheckboxFacet,
+  browseModeOptions,
+  browseCallNumberOptions,
+  browseClassificationOptions,
+} from '@folio/stripes-inventory-components';
 
-import CheckboxFacet from '../../CheckboxFacet';
-import HeldByFacet from '../../HeldByFacet';
 import { MultiSelectionFacet } from '../../MultiSelectionFacet';
 import {
   getSharedOptions,
   processFacetOptions,
 } from '../../../facetUtils';
-import {
-  FACETS,
-  FACETS_OPTIONS,
-  FACETS_SETTINGS,
-  FACETS_CQL,
-  browseModeOptions,
-  browseCallNumberOptions,
-  browseClassificationOptions,
-} from '../../../constants';
 import { useFacets } from '../../../common/hooks';
 
 const InstanceFiltersBrowse = props => {
@@ -197,14 +197,14 @@ const InstanceFiltersBrowse = props => {
             </Accordion>
           )}
           <HeldByFacet
-            activeFilters={activeFilters}
-            facetsOptions={facetsOptions}
-            getIsPending={getIsPending}
             name={FACETS.CALL_NUMBERS_HELD_BY}
+            facetsOptions={facetsOptions}
+            selectedValues={activeFilters[FACETS.CALL_NUMBERS_HELD_BY]}
             onChange={onChange}
             onClear={onClear}
             onFetchFacets={handleFetchFacets}
             onFilterSearch={handleFilterSearch}
+            onGetIsPending={getIsPending}
           />
           <Accordion
             closedByDefault
@@ -252,14 +252,14 @@ const InstanceFiltersBrowse = props => {
           )}
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* <HeldByFacet
-            activeFilters={activeFilters}
-            facetsOptions={facetsOptions}
-            getIsPending={getIsPending}
             name={FACETS.CONTRIBUTORS_HELD_BY}
+            facetsOptions={facetsOptions}
+            selectedValues={activeFilters[FACETS.CONTRIBUTORS_HELD_BY]}
             onChange={onChange}
             onClear={onClear}
             onFetchFacets={handleFetchFacets}
             onFilterSearch={handleFilterSearch}
+            onGetIsPending={getIsPending}
           /> */}
           <MultiSelectionFacet
             id={FACETS.NAME_TYPE}
@@ -298,14 +298,14 @@ const InstanceFiltersBrowse = props => {
           )}
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* <HeldByFacet
-            activeFilters={activeFilters}
-            facetsOptions={facetsOptions}
-            getIsPending={getIsPending}
             name={FACETS.SUBJECTS_HELD_BY}
+            facetsOptions={facetsOptions}
+            selectedValues={activeFilters[FACETS.SUBJECTS_HELD_BY]}
             onChange={onChange}
             onClear={onClear}
             onFetchFacets={handleFetchFacets}
             onFilterSearch={handleFilterSearch}
+            onGetIsPending={getIsPending}
           /> */}
         </>
       )}

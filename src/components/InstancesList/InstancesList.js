@@ -40,7 +40,12 @@ import {
   TextLink,
   DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
-import { advancedSearchQueryBuilder } from '@folio/stripes-inventory-components';
+import {
+  advancedSearchQueryBuilder,
+  FACETS,
+  facetsStore,
+  queryIndexes,
+} from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
 import FilterNavigation from '../FilterNavigation';
@@ -67,12 +72,10 @@ import {
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
-  queryIndexes,
   segments,
   OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
-  FACETS,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../../constants';
 import {
@@ -88,7 +91,6 @@ import {
   getItem,
   setItem,
 } from '../../storage';
-import facetsStore from '../../stores/facetsStore';
 import { advancedSearchIndexes } from '../../filterConfig';
 
 import css from './instances.css';

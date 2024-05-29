@@ -4,13 +4,19 @@ import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/reac
 import '../../../test/jest/__mock__';
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import {
+  FACETS,
+} from '@folio/stripes-inventory-components';
+
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 
 import ItemFilters from './ItemFilters';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
-import { FACETS } from '../../constants';
 
-jest.mock('../CheckboxFacet/CheckboxFacet', () => jest.fn().mockReturnValue('CheckboxFacet'));
+jest.mock('@folio/stripes-inventory-components', () => ({
+  ...jest.requireActual('@folio/stripes-inventory-components'),
+  CheckboxFacet: jest.fn().mockReturnValue('CheckboxFacet'),
+}));
 
 jest.mock('../../facetUtils', () => ({
   ...jest.requireActual('../../facetUtils'),

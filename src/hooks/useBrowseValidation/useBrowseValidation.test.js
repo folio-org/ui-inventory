@@ -1,8 +1,8 @@
 import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
+import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 import '../../../test/jest/__mock__';
 
-import { browseModeOptions } from '../../constants';
 import useBrowseValidation from './useBrowseValidation';
 
 const VALID_CONTRIBUTORS_QUERY = 'James';
