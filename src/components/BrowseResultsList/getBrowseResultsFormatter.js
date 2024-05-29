@@ -6,7 +6,10 @@ import {
   TextLink,
   Tooltip,
 } from '@folio/stripes/components';
-import { browseModeOptions } from '@folio/stripes-inventory-components';
+import {
+  browseModeOptions,
+  deleteFacetStates,
+} from '@folio/stripes-inventory-components';
 
 import {
   INVENTORY_ROUTE,
@@ -47,8 +50,15 @@ const getTargetRecord = (
     }),
   };
 
+  const handleClick = () => {
+    deleteFacetStates();
+  };
+
   return (
-    <TextLink to={toParams}>
+    <TextLink
+      to={toParams}
+      onClick={handleClick}
+    >
       {record}
     </TextLink>
   );

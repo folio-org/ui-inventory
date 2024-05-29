@@ -42,8 +42,9 @@ import {
 } from '@folio/stripes/components';
 import {
   advancedSearchQueryBuilder,
+  deleteFacetStates,
+  resetFacetStates,
   FACETS,
-  facetsStore,
   queryIndexes,
 } from '@folio/stripes-inventory-components';
 
@@ -468,11 +469,11 @@ class InstancesList extends React.Component {
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
     storeLastSegment(segment);
-    facetsStore.getState().resetFacetSettings();
     this.inputRef.current.focus();
   }
 
   handleSearchSegmentChange = (segment) => {
+    deleteFacetStates();
     this.refocusOnInputSearch(segment);
     this.setState({ selectedRows: {} });
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
@@ -999,7 +1000,7 @@ class InstancesList extends React.Component {
       selectedRows: {},
     });
 
-    facetsStore.getState().resetFacetSettings();
+    resetFacetStates();
     this.inputRef.current.focus();
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }

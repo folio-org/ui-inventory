@@ -1,10 +1,8 @@
 import React from 'react';
-import { get } from 'lodash';
 
-import { facetsStore } from '@folio/stripes-inventory-components';
+import { resetFacetSearchValue } from '@folio/stripes-inventory-components';
 
 import ItemFilters from './ItemFilters';
-import { getCurrentFilters } from '../../utils';
 import { itemStatuses } from '../../constants';
 
 // itemFilterRenderer is a function that takes a single argument `data`
@@ -16,15 +14,13 @@ const itemFilterRenderer = data => onChange => {
     statisticalCodes,
     locations,
     tags,
-    onFetchFacets,
-    parentResources,
     consortiaTenants,
+    filterConfig,
   } = data;
-  const activeFilters = getCurrentFilters(get(query, 'filters', ''));
 
   return (
     <ItemFilters
-      activeFilters={activeFilters}
+      filterConfig={filterConfig}
       data={{
         materialTypes,
         itemStatuses,
@@ -32,13 +28,11 @@ const itemFilterRenderer = data => onChange => {
         locations,
         tagsRecords: tags,
         query,
-        onFetchFacets,
-        parentResources,
         consortiaTenants,
       }}
       onChange={onChange}
       onClear={(name) => {
-        facetsStore.getState().resetFacetByName(name);
+        resetFacetSearchValue(name);
         onChange({ name, values: [] });
       }}
     />

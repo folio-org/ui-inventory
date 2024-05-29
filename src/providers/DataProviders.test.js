@@ -8,6 +8,18 @@ import '../../test/jest/__mock__';
 
 import DataProvider from './DataProvider';
 
+jest.mock('../hooks', () => ({
+  ...jest.requireActual('../hooks'),
+  useLocationsForTenants: jest.fn(() => ({
+    isLoading: false,
+    data: [],
+  })),
+  useClassificationBrowseConfig: jest.fn(() => ({
+    isLoading: false,
+    data: [],
+  }))
+}));
+
 const Children = () => (
   <h1>DataProvider</h1>
 );

@@ -15,41 +15,9 @@ jest.mock('@folio/stripes-inventory-components', () => ({
   CheckboxFacet: jest.fn().mockReturnValue('CheckboxFacet'),
 }));
 
-jest.mock('../../facetUtils', () => ({
-  ...jest.requireActual('../../facetUtils'),
-  getSourceOptions: jest.fn(),
-  getSuppressedOptions: jest.fn(),
-}));
-
-const activeFilters = {
-  [FACETS.SHARED]: ['shared1'],
-  [FACETS.HELD_BY]: ['HELD_BY1'],
-  [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
-  [FACETS.HOLDINGS_PERMANENT_LOCATION]: ['loc2'],
-  [FACETS.HOLDINGS_TYPE]: ['loc3'],
-  [FACETS.HOLDINGS_DISCOVERY_SUPPRESS]: ['loc4'],
-  [FACETS.HOLDINGS_STATISTICAL_CODE_IDS]: ['loc5'],
-  [FACETS.HOLDINGS_CREATED_DATE]: ['2022-01-01'],
-  [FACETS.HOLDINGS_UPDATED_DATE]: ['2022-01-01'],
-  [FACETS.HOLDINGS_SOURCE]: ['loc8']
-};
-const resources = {
-  facets: {
-    hasLoaded: true,
-    resource: 'facets',
-    records: [{
-      'shared': { values: ['shared1'] },
-      'holdings.tenantId': { values: ['heldby1'] },
-      'items.effectiveLocationId': { values: ['effectiveLocationId1'] },
-      'holdings.permanentLocationId': { values: ['permanentLocationId1'] },
-      'holdings.statisticalCodeIds': { values: ['statisticalCodeIds1'] },
-      'holdings.discoverySuppress': { values: ['discoverySuppress1'] },
-      'holdings.sourceId': { values: ['sourceId1'] },
-      'holdingsTags': { values: ['holdingsTags1'] },
-      'holdings.holdingsTypeId': { values: ['holdingsTypeId1'] },
-    }],
-    other: { totalRecords: 0 }
-  },
+const filterConfig = {
+  filters: [],
+  indexes: [],
 };
 
 const data = {
@@ -64,10 +32,10 @@ const data = {
   natureOfContentTerms: [],
   consortiaTenants: [],
   query: {
-    filters: 'language.eng',
+    filters: 'language.eng,shared.true,tenantId.fake-tenant,effectiveLocation.fake-id,holdingsPermanentLocation.fake-loc,' +
+      'holdingsType.fake-h,holdingsDiscoverySuppress.fake-hds,holdingsStatisticalCodeIds.fake-hsc,' +
+      'holdingsCreatedDate.2024-05-01:A2024-05-24,holdingsUpdatedDate.2024-05-01:A2024-05-24,holdingsSource.fake-source',
   },
-  onFetchFacets: jest.fn(),
-  parentResources: resources,
 };
 
 const onChange = jest.fn();
@@ -78,9 +46,8 @@ const renderHoldingsRecordFilters = () => {
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
         <HoldingsRecordFilters
-          activeFilters={activeFilters}
+          filterConfig={filterConfig}
           data={data}
-          parentResources={resources}
           onChange={onChange}
           onClear={onClear}
         />
@@ -187,8 +154,7 @@ describe('HoldingsRecordFilters', () => {
     renderHoldingsRecordFilters();
     const holdingsUpdatedDate = screen.getByRole('button', { name: 'Date updated filter list' });
     userEvent.click(holdingsUpdatedDate);
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[22]);
+    userEvent.click(screen.getByRole('button', { name: 'Clear selected filters for "Date updated"' }));
     await waitFor(() => {
       expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_UPDATED_DATE);
     });
@@ -198,8 +164,7 @@ describe('HoldingsRecordFilters', () => {
     renderHoldingsRecordFilters();
     const holdingsSource = screen.getByRole('button', { name: 'Source filter list' });
     userEvent.click(holdingsSource);
-    const Clearselectedfilters = screen.getAllByRole('button');
-    userEvent.click(Clearselectedfilters[29]);
+    userEvent.click(screen.getByRole('button', { name: 'Clear selected filters for "Source"' }));
     await waitFor(() => {
       expect(onClear).toHaveBeenCalledWith(FACETS.HOLDINGS_SOURCE);
     });

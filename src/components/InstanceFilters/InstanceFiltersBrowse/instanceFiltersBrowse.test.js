@@ -1,15 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import {
-  noop,
-  cloneDeep,
-} from 'lodash';
+
 import {
   screen,
   fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
-
-import '../../../../test/jest/__mock__';
 
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import { browseModeOptions } from '@folio/stripes-inventory-components';
@@ -21,24 +16,6 @@ import InstanceFiltersBrowse from './InstanceFiltersBrowse';
 
 const mockOnChange = jest.fn();
 const mockOnClear = jest.fn();
-
-const resources = {
-  facets: {
-    hasLoaded: true,
-    resource: 'facets',
-    records: [{
-      'id': 'd3c8b511-41e7-422e-a483-18778d0596e5',
-      'label': 'important',
-      'description': 'important',
-    },
-    {
-      'id': 'b822d5a8-1750-4b5f-92bd-9fc73a05ddda',
-      'label': 'new',
-      'description': 'new',
-    }],
-    other: { totalRecords: 0 }
-  },
-};
 
 const consortiaTenants = [
   {
@@ -63,25 +40,26 @@ const consortiaTenants = [
 
 const data = {
   locations: [],
-  query: [],
-  onFetchFacets: noop,
-  parentResources: resources,
-  browseType: browseModeOptions.CALL_NUMBERS,
+  query: {
+    qindex: browseModeOptions.CALL_NUMBERS,
+    language: ['eng'],
+    shared: ['true'],
+    effectiveLocation: ['effectiveLocation1'],
+    callNumbersTenantId: ['college'],
+    contributorsShared: ['true'],
+    contributorsTenantId: ['consortium'],
+    classificationShared: ['true'],
+    classificationTenantId: ['college'],
+    subjectsShared: ['true'],
+    subjectsTenantId: ['consortium'],
+    nameType: ['nameType1'],
+  },
   consortiaTenants,
 };
 
-const activeFilters = {
-  language: ['eng'],
-  shared: ['true'],
-  effectiveLocation: ['effectiveLocation1'],
-  callNumbersTenantId: ['college'],
-  contributorsShared: ['true'],
-  contributorsTenantId: ['consortium'],
-  classificationShared: ['true'],
-  classificationTenantId: ['college'],
-  subjectsShared: ['true'],
-  subjectsTenantId: ['consortium'],
-  nameType: ['nameType1'],
+const filterConfig = {
+  filters: [],
+  indexes: [],
 };
 
 const renderInstanceFilters = (props = {}) => {
@@ -89,7 +67,7 @@ const renderInstanceFilters = (props = {}) => {
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
         <InstanceFiltersBrowse
-          activeFilters={activeFilters}
+          filterConfig={filterConfig}
           data={data}
           onChange={mockOnChange}
           onClear={mockOnClear}
@@ -113,7 +91,10 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.CALL_NUMBERS,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.CALL_NUMBERS,
+          },
         },
       });
 
@@ -124,7 +105,10 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.CALL_NUMBERS,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.CALL_NUMBERS,
+          },
         },
       });
 
@@ -140,7 +124,10 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.DEWEY,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.DEWEY,
+          },
         },
       });
 
@@ -151,7 +138,10 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.DEWEY,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.DEWEY,
+          },
         },
       });
 
@@ -174,7 +164,10 @@ describe('InstanceFilters', () => {
       const { getByRole } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.CALL_NUMBERS,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.CALL_NUMBERS,
+          },
         },
       });
 
@@ -183,32 +176,6 @@ describe('InstanceFilters', () => {
       expect(getByRole('heading', { name: 'Held by' })).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
     });
-
-    it('should display "Held By" facet options', () => {
-      const newData = cloneDeep(data);
-      newData.parentResources.facets.records = [{
-        'holdings.tenantId': {
-          'values': [
-            {
-              'id': 'university',
-              'totalRecords': 3,
-            },
-            {
-              'id': 'college',
-              'totalRecords': 1,
-            }
-          ],
-          'totalRecords': 2,
-        },
-      }];
-
-      const { getByText } = renderInstanceFilters({
-        data: newData,
-      });
-
-      expect(getByText('University')).toBeVisible();
-      expect(getByText('College')).toBeVisible();
-    });
   });
 
   describe('when "Classification (all)" browse sub-type was selected', () => {
@@ -216,48 +183,14 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.CLASSIFICATION_ALL,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.CLASSIFICATION_ALL,
+          },
         },
       });
 
       expect(getByText('Shared')).toBeInTheDocument();
-    });
-
-    describe('when the "Shared" facet option with 0 count', () => {
-      it('should be visible', () => {
-        const parentResources = {
-          facets: {
-            records: [
-              {
-                'instances.shared': {
-                  'values': [{
-                    'id': 'false',
-                    'totalRecords': 1,
-                  }],
-                  'totalRecords': 1
-                },
-              }
-            ]
-          }
-        };
-
-        const { getByText, getByRole } = renderInstanceFilters({
-          activeFilters: {
-            classificationShared: ['false', 'true'],
-          },
-          browseType: 'deweyClassification',
-          data: {
-            ...data,
-            browseType: browseModeOptions.DEWEY_CLASSIFICATION,
-            parentResources,
-          },
-        });
-
-        fireEvent.click(getByText('Shared'));
-
-        expect(getByRole('checkbox', { name: 'No 1' })).toBeVisible();
-        expect(getByRole('checkbox', { name: 'Yes 0' })).toBeVisible();
-      });
     });
   });
 
@@ -266,7 +199,10 @@ describe('InstanceFilters', () => {
       const { getByRole } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.CONTRIBUTORS,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.CONTRIBUTORS,
+          },
         },
       });
 
@@ -280,7 +216,10 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.CONTRIBUTORS,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.CONTRIBUTORS,
+          },
         },
       });
 
@@ -294,7 +233,10 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.CONTRIBUTORS,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.CONTRIBUTORS,
+          },
         },
       });
 
@@ -310,7 +252,10 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.SUBJECTS,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.SUBJECTS,
+          },
         },
       });
 
@@ -324,7 +269,10 @@ describe('InstanceFilters', () => {
       const { getByText } = renderInstanceFilters({
         data: {
           ...data,
-          browseType: browseModeOptions.SUBJECTS,
+          query: {
+            ...data.query,
+            qindex: browseModeOptions.SUBJECTS,
+          },
         },
       });
 

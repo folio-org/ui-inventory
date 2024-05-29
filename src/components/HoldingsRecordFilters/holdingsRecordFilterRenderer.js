@@ -1,10 +1,8 @@
 import React from 'react';
-import { get } from 'lodash';
 
-import { facetsStore } from '@folio/stripes-inventory-components';
+import { resetFacetSearchValue } from '@folio/stripes-inventory-components';
 
 import HoldingsRecordFilters from './HoldingsRecordFilters';
-import { getCurrentFilters } from '../../utils';
 
 // holdingsRecordFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
@@ -16,14 +14,13 @@ const holdingsRecordFilterRenderer = data => onChange => {
     holdingsTypes,
     query,
     tags,
-    onFetchFacets,
-    parentResources,
     consortiaTenants,
+    filterConfig,
   } = data;
 
   return (
     <HoldingsRecordFilters
-      activeFilters={getCurrentFilters(get(query, 'filters', ''))}
+      filterConfig={filterConfig}
       data={{
         locations,
         statisticalCodes,
@@ -31,13 +28,11 @@ const holdingsRecordFilterRenderer = data => onChange => {
         holdingsTypes,
         tagsRecords: tags,
         query,
-        onFetchFacets,
-        parentResources,
         consortiaTenants,
       }}
       onChange={onChange}
       onClear={(name) => {
-        facetsStore.getState().resetFacetByName(name);
+        resetFacetSearchValue(name);
         onChange({ name, values: [] });
       }}
     />
