@@ -2,6 +2,8 @@ import React from 'react';
 
 import { resetFacetSearchValue } from '@folio/stripes-inventory-components';
 
+import { facetsStore } from '@folio/stripes-inventory-components';
+
 import ItemFilters from './ItemFilters';
 import { itemStatuses } from '../../constants';
 

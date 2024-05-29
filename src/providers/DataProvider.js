@@ -10,7 +10,10 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { useLocationsForTenants } from '../hooks';
+import {
+  useLocationsForTenants,
+  useClassificationBrowseConfig,
+} from '../hooks';
 import { DataContext } from '../contexts';
 import { OKAPI_TENANT_HEADER } from '../constants';
 import { isUserInConsortiumMode } from '../utils';
@@ -43,6 +46,7 @@ const DataProvider = ({
   const tenantIds = resources.consortiaTenants.records.map(tenant => tenant.id);
 
   const { isLoading: isLoadingAllLocations, data: locationsOfAllTenants } = useLocationsForTenants({ tenantIds });
+  const { classificationBrowseConfig, isLoading: isBrowseConfigLoading } = useClassificationBrowseConfig();
 
   useEffect(() => {
     if (isUserInConsortiumMode(stripes)) {
@@ -55,7 +59,7 @@ const DataProvider = ({
   const isLoading = useMemo(() => {
     // eslint-disable-next-line guard-for-in
     for (const key in manifest) {
-      if (isLoadingAllLocations) {
+      if (isLoadingAllLocations || isBrowseConfigLoading) {
         return true;
       }
 
@@ -67,7 +71,7 @@ const DataProvider = ({
     }
 
     return false;
-  }, [resources, manifest, isLoadingAllLocations]);
+  }, [resources, manifest, isLoadingAllLocations, isBrowseConfigLoading]);
 
   const data = useMemo(() => {
     const loadedData = {};
@@ -103,9 +107,10 @@ const DataProvider = ({
       sc.statisticalCodeType = statisticalCodeTypesById[sc.statisticalCodeTypeId];
       return sc;
     });
+    loadedData.classificationBrowseConfig = classificationBrowseConfig;
 
     return loadedData;
-  }, [resources, manifest, locationsOfAllTenants]);
+  }, [resources, manifest, locationsOfAllTenants, classificationBrowseConfig]);
 
   if (isLoading) {
     return null;
