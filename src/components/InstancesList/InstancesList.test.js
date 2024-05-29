@@ -115,7 +115,6 @@ const openActionMenu = () => {
 const getInstancesListTree = ({ segment, ...rest }) => {
   const {
     indexes,
-    indexesES,
     renderer,
   } = getFilterConfig(segment);
 
@@ -140,11 +139,10 @@ const getInstancesListTree = ({ segment, ...rest }) => {
             renderFilters={renderer({
               ...data,
               query,
-              parentResources: resources,
+              filterConfig: {},
             })}
             segment={segment}
             searchableIndexes={indexes}
-            searchableIndexesES={indexesES}
             getLastBrowse={jest.fn()}
             getLastSearchOffset={mockGetLastSearchOffset}
             storeLastSearch={mockStoreLastSearch}

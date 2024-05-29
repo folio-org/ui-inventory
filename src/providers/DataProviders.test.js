@@ -14,6 +14,10 @@ jest.mock('../hooks', () => ({
     isLoading: false,
     data: [],
   })),
+  useClassificationBrowseConfig: jest.fn(() => ({
+    isLoading: false,
+    data: [],
+  }))
 }));
 
 const Children = () => (
