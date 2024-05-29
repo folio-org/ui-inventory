@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
 import {
@@ -18,6 +18,7 @@ import {
   EffectiveLocationFacet,
   DateRange,
   TagsFacet,
+  SourceFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -33,8 +34,6 @@ const HoldingsRecordFilters = (props) => {
     onChange,
     onClear,
   } = props;
-
-  const intl = useIntl();
 
   const initialAccordionStates = {
     [FACETS.SHARED]: false,
@@ -188,24 +187,16 @@ const HoldingsRecordFilters = (props) => {
         onChange={onChange}
         onClear={onClear}
       />
-      <Accordion
-        label={intl.formatMessage({ id: 'ui-inventory.source' })}
-        id={FACETS.HOLDINGS_SOURCE}
+      <SourceFacet
         name={FACETS.HOLDINGS_SOURCE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.HOLDINGS_SOURCE]?.length > 0}
-        onClearFilter={() => onClear(FACETS.HOLDINGS_SOURCE)}
-      >
-        <CheckboxFacet
-          data-test-filter-instance-source
-          name={FACETS.HOLDINGS_SOURCE}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_SOURCE]]}
-          selectedValues={activeFilters[FACETS.HOLDINGS_SOURCE]}
-          isPending={getIsLoading(FACETS.HOLDINGS_SOURCE)}
-          onChange={onChange}
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <TagsFacet
         name={FACETS.HOLDINGS_TAGS}
         facetOptions={facetOptions}
