@@ -123,6 +123,12 @@ export const browseClassificationOptions = {
   LC_CLASSIFICATION: 'lcClassification',
 };
 
+export const browseClassificationIndexToId = {
+  [browseClassificationOptions.CLASSIFICATION_ALL]: 'all',
+  [browseClassificationOptions.DEWEY_CLASSIFICATION]: 'dewey',
+  [browseClassificationOptions.LC_CLASSIFICATION]: 'lc',
+};
+
 export const browseModeOptions = {
   ...browseCallNumberOptions,
   ...browseClassificationOptions,
