@@ -14,11 +14,6 @@ import '../../../test/jest/__mock__';
 
 import useClassificationBrowseConfig from './useClassificationBrowseConfig';
 
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useOkapiKy: jest.fn(),
-}));
-
 const queryClient = new QueryClient();
 const wrapper = ({ children }) => (
   <QueryClientProvider client={queryClient}>
