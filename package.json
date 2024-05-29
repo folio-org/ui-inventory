@@ -570,7 +570,8 @@
           "browse.classification-numbers.instances.collection.get",
           "perms.users.get",
           "inventory-storage.bound-with-parts.collection.get",
-          "consortium-search.locations.collection.get"
+          "consortium-search.locations.collection.get",
+          "browse.config.collection.get"
         ],
         "visible": true
       },
