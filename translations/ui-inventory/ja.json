@@ -864,5 +864,7 @@
     "browse.classification.lc": "米国議会図書館十進分類（LCC）",
     "normalizedClassificationNumber": "Classification, normalized",
     "affiliationChanging.notification": "Active affiliation has changed",
-    "affiliationChanging.namedNotification": "Active affiliation has changed to {name}"
+    "affiliationChanging.namedNotification": "Active affiliation has changed to {name}",
+    "shortcut.editMARC": "Edit MARC record",
+    "shortcut.editMARC.noPermission": "You do not have permission to edit the record."
 }
