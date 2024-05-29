@@ -25,6 +25,7 @@ import {
   StatusFacet,
   TagsFacet,
   SourceFacet,
+  FormatFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -149,26 +150,16 @@ const InstanceFilters = props => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={intl.formatMessage({ id: 'ui-inventory.instanceFormat' })}
-        id={FACETS.FORMAT}
+      <FormatFacet
         name={FACETS.FORMAT}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.FORMAT]?.length > 0}
-        onClearFilter={() => onClear(FACETS.FORMAT)}
-      >
-        <CheckboxFacet
-          name={FACETS.FORMAT}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.FORMAT]]}
-          selectedValues={activeFilters[FACETS.FORMAT]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          isFilterable
-          isPending={getIsLoading(FACETS.FORMAT)}
-          onFetch={onInputFocusAndMoreClick}
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <Accordion
         label={intl.formatMessage({ id: 'ui-inventory.modeOfIssuance' })}
         id={FACETS.MODE}
