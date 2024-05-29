@@ -23,6 +23,7 @@
 * Populate Acquisitions accordion on instance when central ordering is active. Refs UIIN-2793.
 * Inventory app: Define and implement shortcut key for editing a quickMARC bib record. Refs UIIN-2896.
 * *BREAKING* Added a new `stripes-inventory-components` dependency. Move some utils to that module. Refs UIIN-2910.
+* Jest/RTL: Cover HRIDHandlingSettings components with unit tests. Refs UIIN-2671.
 * Import `CheckboxFacet`, `CheckboxFacetList`, `HeldByFacet`, `withFacets`, facets constants, `fieldSearchConfigurations` constant, `queryIndexes` constants, `facetsStore`, and some of the utils from `stripes-inventory-components`. Refs UIIN-2781.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)

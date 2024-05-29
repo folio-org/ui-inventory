@@ -30,6 +30,7 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
+  Callout,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -136,6 +137,7 @@ class ViewHoldingsRecord extends React.Component {
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
+    this.calloutRef = createRef();
   }
 
   componentDidMount() {
@@ -725,6 +727,7 @@ class ViewHoldingsRecord extends React.Component {
       <IntlConsumer>
         {intl => (
           <div>
+            <Callout ref={this.calloutRef} />
             <ConfirmationModal
               id="delete-confirmation-modal"
               open={this.state.confirmHoldingsRecordDeleteModal}

@@ -864,5 +864,7 @@
     "browse.classification.lc": "Library of Congress classification",
     "normalizedClassificationNumber": "Classification, normalized",
     "affiliationChanging.notification": "Active affiliation has changed",
-    "affiliationChanging.namedNotification": "Active affiliation has changed to {name}"
+    "affiliationChanging.namedNotification": "Active affiliation has changed to {name}",
+    "shortcut.editMARC": "Edit MARC record",
+    "shortcut.editMARC.noPermission": "You do not have permission to edit the record."
 }
