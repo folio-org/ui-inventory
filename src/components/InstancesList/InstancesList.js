@@ -48,6 +48,7 @@ import {
   queryIndexes,
   advancedSearchIndexes,
   segments,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
@@ -78,7 +79,6 @@ import {
   OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../../constants';
 import {
   IdReportGenerator,

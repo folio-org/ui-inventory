@@ -3,10 +3,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
-import { FACETS } from '@folio/stripes-inventory-components';
+import { FACETS, USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '@folio/stripes-inventory-components';
 
 import InstanceFilters from './InstanceFilters';
-import { USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '../../constants';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 

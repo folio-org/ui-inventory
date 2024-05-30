@@ -25,6 +25,7 @@ import {
   NavListItem,
   NavListSection,
 } from '@folio/stripes/components';
+import { USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '@folio/stripes-inventory-components';
 
 import {
   DuplicateHoldingRoute,
@@ -51,10 +52,7 @@ import {
   HoldingsProvider,
   LastSearchTermsProvider,
 } from './providers';
-import {
-  EVENTS,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
-} from './constants';
+import { EVENTS } from './constants';
 import { clearStorage } from './utils';
 
 const InventoryRouting = (props) => {

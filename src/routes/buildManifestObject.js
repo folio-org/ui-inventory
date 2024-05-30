@@ -13,11 +13,9 @@ import {
   getTemplateForSelectedFromBrowseRecord,
   getAdvancedSearchTemplate,
   getDefaultQindex,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '@folio/stripes-inventory-components';
 
-import {
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
-} from '../constants';
 import {
   getIsbnIssnTemplate,
   replaceFilter,

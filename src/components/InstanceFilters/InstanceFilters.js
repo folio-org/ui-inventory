@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import get from 'lodash/get';
@@ -8,9 +8,6 @@ import {
   AccordionSet,
   FilterAccordionHeader,
 } from '@folio/stripes/components';
-import {
-  useStripes,
-} from '@folio/stripes/core';
 import {
   HeldByFacet,
   useFacets,
@@ -28,11 +25,9 @@ import {
   FormatFacet,
   ModeIssuanceFacet,
   NatureOfContentFacet,
+  StaffSuppressFacet,
 } from '@folio/stripes-inventory-components';
 
-import {
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
-} from '../../constants';
 import {
   getCurrentFilters,
 } from '../../utils';
@@ -47,7 +42,6 @@ const InstanceFilters = props => {
     onClear,
   } = props;
 
-  const stripes = useStripes();
   const intl = useIntl();
 
   const initialAccordionStates = {
@@ -85,22 +79,6 @@ const InstanceFilters = props => {
     activeFilters,
     data: props.data,
   });
-
-  const clearStaffSuppressStorageFlag = useCallback(() => {
-    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
-  }, []);
-
-  const handleStaffSuppressChange = useCallback((...args) => {
-    clearStaffSuppressStorageFlag();
-    onChange(...args);
-  }, [onChange]);
-
-  const handleClearFilter = useCallback((name) => {
-    clearStaffSuppressStorageFlag();
-    onClear(name);
-  }, [onClear]);
-
-  const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
 
   return (
     <AccordionSet accordionStatus={accordionStatus} onToggle={onToggleAccordion}>
@@ -182,25 +160,16 @@ const InstanceFilters = props => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      {isStaffSuppressFilterAvailable && (
-        <Accordion
-          label={intl.formatMessage({ id: `ui-inventory.${FACETS.STAFF_SUPPRESS}` })}
-          id={FACETS.STAFF_SUPPRESS}
-          name={FACETS.STAFF_SUPPRESS}
-          closedByDefault
-          header={FilterAccordionHeader}
-          displayClearButton={activeFilters[FACETS.STAFF_SUPPRESS]?.length > 0}
-          onClearFilter={() => handleClearFilter(FACETS.STAFF_SUPPRESS)}
-        >
-          <CheckboxFacet
-            name={FACETS.STAFF_SUPPRESS}
-            dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.STAFF_SUPPRESS]]}
-            selectedValues={activeFilters[FACETS.STAFF_SUPPRESS]}
-            isPending={getIsLoading(FACETS.STAFF_SUPPRESS)}
-            onChange={handleStaffSuppressChange}
-          />
-        </Accordion>
-      )}
+      <StaffSuppressFacet
+        name={FACETS.STAFF_SUPPRESS}
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <Accordion
         label={intl.formatMessage({ id: 'ui-inventory.discoverySuppress' })}
         id={FACETS.INSTANCES_DISCOVERY_SUPPRESS}

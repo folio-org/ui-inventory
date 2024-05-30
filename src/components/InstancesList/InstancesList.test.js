@@ -17,6 +17,7 @@ import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import {
   deleteFacetStates,
   queryIndexes,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
@@ -24,10 +25,7 @@ import { instances as instancesFixture } from '../../../test/fixtures/instances'
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
-import {
-  SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
-} from '../../constants';
+import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 import * as utils from '../../utils';
 import Harness from '../../../test/jest/helpers/Harness';
 
