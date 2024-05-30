@@ -21,6 +21,7 @@ import {
   SourceFacet,
   DiscoverySuppressFacet,
   StatisticalCodeFacet,
+  PermanentLocationFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -98,26 +99,16 @@ const HoldingsRecordFilters = (props) => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
-        id={FACETS.HOLDINGS_PERMANENT_LOCATION}
+      <PermanentLocationFacet
         name={FACETS.HOLDINGS_PERMANENT_LOCATION}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION]?.length > 0}
-        onClearFilter={() => onClear(FACETS.HOLDINGS_PERMANENT_LOCATION)}
-      >
-        <CheckboxFacet
-          name={FACETS.HOLDINGS_PERMANENT_LOCATION}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_PERMANENT_LOCATION]]}
-          selectedValues={activeFilters[FACETS.HOLDINGS_PERMANENT_LOCATION]}
-          onChange={onChange}
-          onFetch={onInputFocusAndMoreClick}
-          onSearch={onFacetOptionSearch}
-          isPending={getIsLoading(FACETS.HOLDINGS_PERMANENT_LOCATION)}
-          isFilterable
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <Accordion
         label={<FormattedMessage id="ui-inventory.holdingsType" />}
         id={FACETS.HOLDINGS_TYPE}

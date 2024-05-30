@@ -23,7 +23,6 @@
   "instances.rows.recordsSelected": "{count, number} {count, plural, one {record} other {records}} selected",
   "instances.typeOfRelation": "Type of relation: {name}",
   "holdingsRecord.awaitingResources": "Awaiting resources",
-  "holdings.permanentLocation": "Holdings permanent location",
   "resultCount": "{count, number} {count, plural, one {record found} other {records found}}",
   "item.loanAndAvailability": "Loan and availability",
   "item.availability.itemStatus": "Item status",
