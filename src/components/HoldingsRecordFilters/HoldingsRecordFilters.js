@@ -20,6 +20,7 @@ import {
   TagsFacet,
   SourceFacet,
   DiscoverySuppressFacet,
+  StatisticalCodeFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -147,26 +148,16 @@ const HoldingsRecordFilters = (props) => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={<FormattedMessage id="ui-inventory.statisticalCode" />}
-        id={FACETS.HOLDINGS_STATISTICAL_CODE_IDS}
+      <StatisticalCodeFacet
         name={FACETS.HOLDINGS_STATISTICAL_CODE_IDS}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.HOLDINGS_STATISTICAL_CODE_IDS]?.length > 0}
-        onClearFilter={() => onClear(FACETS.HOLDINGS_STATISTICAL_CODE_IDS)}
-      >
-        <CheckboxFacet
-          name={FACETS.HOLDINGS_STATISTICAL_CODE_IDS}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_STATISTICAL_CODE_IDS]]}
-          selectedValues={activeFilters[FACETS.HOLDINGS_STATISTICAL_CODE_IDS]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          isFilterable
-          isPending={getIsLoading(FACETS.HOLDINGS_STATISTICAL_CODE_IDS)}
-          onFetch={onInputFocusAndMoreClick}
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <DateRange
         name={FACETS.HOLDINGS_CREATED_DATE}
         activeFilters={activeFilters}

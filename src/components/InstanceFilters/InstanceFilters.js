@@ -1,19 +1,12 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
 import get from 'lodash/get';
 
-import {
-  Accordion,
-  AccordionSet,
-  FilterAccordionHeader,
-} from '@folio/stripes/components';
+import { AccordionSet } from '@folio/stripes/components';
 import {
   HeldByFacet,
   useFacets,
-  FACETS_TO_REQUEST,
   FACETS,
-  CheckboxFacet,
   SharedFacet,
   EffectiveLocationFacet,
   LanguageFacet,
@@ -27,6 +20,7 @@ import {
   NatureOfContentFacet,
   StaffSuppressFacet,
   DiscoverySuppressFacet,
+  StatisticalCodeFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -42,8 +36,6 @@ const InstanceFilters = props => {
     onChange,
     onClear,
   } = props;
-
-  const intl = useIntl();
 
   const initialAccordionStates = {
     [FACETS.SHARED]: false,
@@ -181,26 +173,16 @@ const InstanceFilters = props => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={intl.formatMessage({ id: 'ui-inventory.statisticalCode' })}
-        id={FACETS.STATISTICAL_CODE_IDS}
+      <StatisticalCodeFacet
         name={FACETS.STATISTICAL_CODE_IDS}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.STATISTICAL_CODE_IDS]?.length > 0}
-        onClearFilter={() => onClear(FACETS.STATISTICAL_CODE_IDS)}
-      >
-        <CheckboxFacet
-          name={FACETS.STATISTICAL_CODE_IDS}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.STATISTICAL_CODE_IDS]]}
-          selectedValues={activeFilters[FACETS.STATISTICAL_CODE_IDS]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          isFilterable
-          isPending={getIsLoading(FACETS.STATISTICAL_CODE_IDS)}
-          onFetch={onInputFocusAndMoreClick}
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <DateRange
         name={FACETS.CREATED_DATE}
         activeFilters={activeFilters}
