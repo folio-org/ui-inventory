@@ -26,6 +26,8 @@ import {
   TagsFacet,
   SourceFacet,
   FormatFacet,
+  ModeIssuanceFacet,
+  NatureOfContentFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -160,46 +162,26 @@ const InstanceFilters = props => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={intl.formatMessage({ id: 'ui-inventory.modeOfIssuance' })}
-        id={FACETS.MODE}
+      <ModeIssuanceFacet
         name={FACETS.MODE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.MODE]?.length > 0}
-        onClearFilter={() => onClear(FACETS.MODE)}
-      >
-        <CheckboxFacet
-          name={FACETS.MODE}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.MODE]]}
-          selectedValues={activeFilters[FACETS.MODE]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          isFilterable
-          isPending={getIsLoading(FACETS.MODE)}
-          onFetch={onInputFocusAndMoreClick}
-        />
-      </Accordion>
-      <Accordion
-        label={intl.formatMessage({ id: 'ui-inventory.natureOfContentTerms' })}
-        id={FACETS.NATURE_OF_CONTENT}
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
+      <NatureOfContentFacet
         name={FACETS.NATURE_OF_CONTENT}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.NATURE_OF_CONTENT]?.length > 0}
-        onClearFilter={() => onClear(FACETS.NATURE_OF_CONTENT)}
-      >
-        <CheckboxFacet
-          name={FACETS.NATURE_OF_CONTENT}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.NATURE_OF_CONTENT]]}
-          selectedValues={activeFilters[FACETS.NATURE_OF_CONTENT]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          isFilterable
-          isPending={getIsLoading(FACETS.NATURE_OF_CONTENT)}
-          onFetch={onInputFocusAndMoreClick}
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       {isStaffSuppressFilterAvailable && (
         <Accordion
           label={intl.formatMessage({ id: `ui-inventory.${FACETS.STAFF_SUPPRESS}` })}
