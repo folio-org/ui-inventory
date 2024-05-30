@@ -12,11 +12,9 @@ import {
   Label,
   Loading,
 } from '@folio/stripes/components';
+import { itemStatuses } from '@folio/stripes-inventory-components';
 
-import {
-  itemStatuses,
-  itemStatusesMap,
-} from '../../constants';
+import { itemStatusesMap } from '../../constants';
 import { getDateWithTime } from '../../utils';
 
 const label = <FormattedMessage id="ui-inventory.item.availability.itemStatus" />;
