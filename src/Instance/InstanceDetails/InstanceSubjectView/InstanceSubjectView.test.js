@@ -5,13 +5,13 @@ import '../../../../test/jest/__mock__';
 import { Router } from 'react-router';
 import { createMemoryHistory } from 'history';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { segments } from '@folio/stripes-inventory-components';
 
 import { DataContext } from '../../../contexts';
 
 import { renderWithIntl, translationsProperties } from '../../../../test/jest/helpers';
 
 import InstanceSubjectView from './InstanceSubjectView';
-import { segments } from '../../../constants';
 
 const history = createMemoryHistory();
 

@@ -12,6 +12,7 @@ import {
   getQueryTemplate,
   getTemplateForSelectedFromBrowseRecord,
   getAdvancedSearchTemplate,
+  getDefaultQindex,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -49,7 +50,7 @@ const applyDefaultStaffSuppressFilter = (stripes, query) => {
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
   const query = { ...resourceData.query };
-  const queryIndex = queryParams?.qindex ?? 'all';
+  const queryIndex = queryParams?.qindex || getDefaultQindex(queryParams.segment);
   const queryValue = get(queryParams, 'query', '');
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
@@ -63,7 +64,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getAdvancedSearchTemplate(queryValue);
   }
 
-  if (queryIndex.match(/isbn|issn/)) {
+  if ([queryIndexes.ISBN, queryIndexes.ISSN].includes(queryIndex)) {
     // eslint-disable-next-line camelcase
     const identifierTypes = resourceData?.identifier_types?.records ?? [];
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
@@ -95,7 +96,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     filters,
     2,
     null,
-    queryIndex !== 'querySearch',
+    queryIndex !== queryIndexes.QUERY_SEARCH,
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 

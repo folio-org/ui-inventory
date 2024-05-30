@@ -20,21 +20,19 @@ import {
   flatten,
   pick,
 } from 'lodash';
-import moment from 'moment';
 
 import {
   updateTenant,
   validateUser,
 } from '@folio/stripes/core';
 import { FormattedUTCDate } from '@folio/stripes/components';
+import { segments } from '@folio/stripes-inventory-components';
 
 import {
   itemStatusesMap,
   noValue,
   emptyList,
   indentifierTypeNames,
-  DATE_FORMAT,
-  DATE_TIME_RANGE_FILTER_FORMAT,
   LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
@@ -43,7 +41,6 @@ import {
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
-  segments,
 } from './constants';
 import { removeItem } from './storage';
 
@@ -173,46 +170,6 @@ export function parseFiltersToStr(filters) {
 
   return newFilters.join(',');
 }
-
-export const retrieveDatesFromDateRangeFilterString = filterValue => {
-  let dateRange = {
-    startDate: '',
-    endDate: '',
-  };
-
-  if (filterValue) {
-    const [startDateString, endDateString] = filterValue.split(':');
-    const endDate = moment.utc(endDateString);
-    const startDate = moment.utc(startDateString);
-
-    dateRange = {
-      startDate: startDate.isValid()
-        ? startDate.format(DATE_FORMAT)
-        : '',
-      endDate: endDate.isValid()
-        ? endDate.format(DATE_FORMAT)
-        : '',
-    };
-  }
-
-  return dateRange;
-};
-
-
-export const makeDateRangeFilterString = (startDate, endDate) => {
-  return `${startDate}:${endDate}`;
-};
-
-export const buildDateRangeQuery = name => values => {
-  const [startDateString, endDateString] = values[0]?.split(':') || [];
-
-  if (!startDateString || !endDateString) return '';
-
-  const start = moment(startDateString).startOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
-  const end = moment(endDateString).endOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
-
-  return `${name}>="${start}" and ${name}<="${end}"`;
-};
 
 // Function which takes a filter name and returns
 // another function which can be used in filter config

@@ -8,9 +8,9 @@ import {
   Accordion,
   MultiColumnList,
 } from '@folio/stripes/components';
+import { segments } from '@folio/stripes-inventory-components';
 
 import { ControllableDetail } from '../ControllableDetail';
-import { segments } from '../../../constants';
 
 const visibleColumns = ['subject'];
 const getColumnMapping = intl => ({

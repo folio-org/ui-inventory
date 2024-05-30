@@ -7,8 +7,9 @@ import {
   ButtonGroup,
   Button,
 } from '@folio/stripes/components';
+import { segments } from '@folio/stripes-inventory-components';
 
-import { segments, SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
+import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 import { useLastSearchTerms } from '../../hooks';
 
 const FilterNavigation = ({ segment, onChange }) => {

@@ -9,26 +9,20 @@ import {
   FilterAccordionHeader,
 } from '@folio/stripes/components';
 import {
-  checkIfUserInMemberTenant,
-  useStripes,
-} from '@folio/stripes/core';
-import {
   HeldByFacet,
   FACETS,
   CheckboxFacet,
   useFacets,
   FACETS_TO_REQUEST,
+  SharedFacet,
+  EffectiveLocationFacet,
+  DateRange,
+  StatusFacet,
+  TagsFacet,
 } from '@folio/stripes-inventory-components';
 
-import DateRangeFilter from '../DateRangeFilter';
-import TagsFilter from '../TagsFilter';
-import {
-  DATE_FORMAT,
-} from '../../constants';
 import {
   getCurrentFilters,
-  makeDateRangeFilterString,
-  retrieveDatesFromDateRangeFilterString,
 } from '../../utils';
 
 const ItemFilters = (props) => {
@@ -40,8 +34,6 @@ const ItemFilters = (props) => {
     onChange,
     onClear,
   } = props;
-
-  const stripes = useStripes();
 
   const initialAccordionStates = {
     [FACETS.SHARED]: false,
@@ -72,78 +64,46 @@ const ItemFilters = (props) => {
     data: props.data,
   });
 
-  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
-
   return (
     <AccordionSet accordionStatus={accordionStatus} onToggle={onToggleAccordion}>
-      {isUserInMemberTenant && (
-        <Accordion
-          label={<FormattedMessage id={`ui-inventory.filters.${FACETS.SHARED}`} />}
-          id={FACETS.SHARED}
-          name={FACETS.SHARED}
-          separator={false}
-          header={FilterAccordionHeader}
-          displayClearButton={activeFilters[FACETS.SHARED]?.length > 0}
-          onClearFilter={() => onClear(FACETS.SHARED)}
-        >
-          <CheckboxFacet
-            name={FACETS.SHARED}
-            dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.SHARED]]}
-            selectedValues={activeFilters[FACETS.SHARED]}
-            isPending={getIsLoading(FACETS.SHARED)}
-            onChange={onChange}
-          />
-        </Accordion>
-      )}
+      <SharedFacet
+        name={FACETS.SHARED}
+        activeFilters={activeFilters}
+        facetOptions={facetOptions}
+        onChange={onChange}
+        onClear={onClear}
+        getIsLoading={getIsLoading}
+      />
       <HeldByFacet
         name={FACETS.HELD_BY}
+        activeFilters={activeFilters}
         facetOptions={facetOptions}
-        selectedValues={activeFilters[FACETS.HELD_BY]}
         getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
-        onFetchFacets={onInputFocusAndMoreClick}
+        onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={<FormattedMessage id="ui-inventory.item.status" />}
-        id={FACETS.ITEM_STATUS}
+      <StatusFacet
         name={FACETS.ITEM_STATUS}
-        header={FilterAccordionHeader}
-        displayClearButton={!_.isEmpty(activeFilters[FACETS.ITEM_STATUS])}
-        onClearFilter={() => onClear(FACETS.ITEM_STATUS)}
-        separator={false}
-      >
-        <CheckboxFacet
-          name={FACETS.ITEM_STATUS}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.ITEM_STATUS]]}
-          selectedValues={activeFilters[FACETS.ITEM_STATUS]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          onFetch={onInputFocusAndMoreClick}
-          isPending={getIsLoading(FACETS.ITEM_STATUS)}
-          isFilterable
-        />
-      </Accordion>
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.filters.${FACETS.EFFECTIVE_LOCATION}`} />}
-        id={FACETS.EFFECTIVE_LOCATION}
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
+      <EffectiveLocationFacet
         name={FACETS.EFFECTIVE_LOCATION}
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.EFFECTIVE_LOCATION]?.length > 0}
-        onClearFilter={() => onClear(FACETS.EFFECTIVE_LOCATION)}
-      >
-        <CheckboxFacet
-          name={FACETS.EFFECTIVE_LOCATION}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.EFFECTIVE_LOCATION]]}
-          selectedValues={activeFilters[FACETS.EFFECTIVE_LOCATION]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          onFetch={onInputFocusAndMoreClick}
-          isPending={getIsLoading(FACETS.EFFECTIVE_LOCATION)}
-          isFilterable
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <Accordion
         label={<FormattedMessage id="ui-inventory.holdings.permanentLocation" />}
         id={FACETS.HOLDINGS_PERMANENT_LOCATION}
@@ -223,50 +183,27 @@ const ItemFilters = (props) => {
           onFetch={onInputFocusAndMoreClick}
         />
       </Accordion>
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.CREATED_DATE}`} />}
-        id={FACETS.ITEMS_CREATED_DATE}
+      <DateRange
         name={FACETS.ITEMS_CREATED_DATE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.ITEMS_CREATED_DATE]?.length > 0}
-        onClearFilter={() => onClear(FACETS.ITEMS_CREATED_DATE)}
-      >
-        <DateRangeFilter
-          name={FACETS.ITEMS_CREATED_DATE}
-          dateFormat={DATE_FORMAT}
-          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.ITEMS_CREATED_DATE]?.[0])}
-          onChange={onChange}
-          makeFilterString={makeDateRangeFilterString}
-        />
-      </Accordion>
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.UPDATED_DATE}`} />}
-        id={FACETS.ITEMS_UPDATED_DATE}
-        name={FACETS.ITEMS_UPDATED_DATE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.ITEMS_UPDATED_DATE]?.length > 0}
-        onClearFilter={() => onClear(FACETS.ITEMS_UPDATED_DATE)}
-      >
-        <DateRangeFilter
-          name={FACETS.ITEMS_UPDATED_DATE}
-          dateFormat={DATE_FORMAT}
-          selectedValues={retrieveDatesFromDateRangeFilterString(activeFilters[FACETS.ITEMS_UPDATED_DATE]?.[0])}
-          onChange={onChange}
-          makeFilterString={makeDateRangeFilterString}
-        />
-      </Accordion>
-      <TagsFilter
-        id={FACETS.ITEMS_TAGS}
-        name={FACETS.ITEMS_TAGS}
+        activeFilters={activeFilters}
         onChange={onChange}
         onClear={onClear}
-        onSearch={onFacetOptionSearch}
+      />
+      <DateRange
+        name={FACETS.ITEMS_UPDATED_DATE}
+        activeFilters={activeFilters}
+        onChange={onChange}
+        onClear={onClear}
+      />
+      <TagsFacet
+        name={FACETS.ITEMS_TAGS}
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
         onFetch={onInputFocusAndMoreClick}
-        selectedValues={activeFilters[FACETS.ITEMS_TAGS]}
-        tagsRecords={facetOptions[FACETS_TO_REQUEST[FACETS.ITEMS_TAGS]]}
-        isPending={getIsLoading(FACETS.ITEMS_TAGS)}
+        onSearch={onFacetOptionSearch}
       />
     </AccordionSet>
   );

@@ -14,7 +14,10 @@ import {
 import '../../../test/jest/__mock__';
 
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
-import { deleteFacetStates } from '@folio/stripes-inventory-components';
+import {
+  deleteFacetStates,
+  queryIndexes,
+} from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
@@ -107,7 +110,7 @@ let history = createMemoryHistory();
 
 const openActionMenu = () => {
   fireEvent.change(screen.getByRole('combobox', { name: /search field index/i }), {
-    target: { value: 'all' }
+    target: { value: queryIndexes.INSTANCE_KEYWORD }
   });
   fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 };
@@ -719,7 +722,7 @@ describe('InstancesList', () => {
       renderInstancesList({ segment: 'holdings' });
 
       fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'all' }
+        target: { value: queryIndexes.INSTANCE_KEYWORD }
       });
 
       fireEvent.click(screen.getByRole('button', { name: 'Actions' }));

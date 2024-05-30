@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
 import { useNamespace } from '@folio/stripes/core';
+import { segments } from '@folio/stripes-inventory-components';
 
 import { LastSearchTermsContext } from '../contexts';
 import { getItem, setItem } from '../storage';
 import { INIT_PAGE_CONFIG } from '../hooks/useInventoryBrowse';
-import { segments } from '../constants';
 
 const LastSearchTermsProvider = ({ children }) => {
   const [namespace] = useNamespace();
