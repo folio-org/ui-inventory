@@ -19,6 +19,7 @@ import {
   DateRange,
   StatusFacet,
   TagsFacet,
+  DiscoverySuppressFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -145,24 +146,16 @@ const ItemFilters = (props) => {
           isFilterable
         />
       </Accordion>
-      <Accordion
-        label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
-        id={FACETS.ITEMS_DISCOVERY_SUPPRESS}
+      <DiscoverySuppressFacet
         name={FACETS.ITEMS_DISCOVERY_SUPPRESS}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS]?.length > 0}
-        onClearFilter={() => onClear(FACETS.ITEMS_DISCOVERY_SUPPRESS)}
-      >
-        <CheckboxFacet
-          data-test-filter-item-discovery-suppress
-          name={FACETS.ITEMS_DISCOVERY_SUPPRESS}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.ITEMS_DISCOVERY_SUPPRESS]]}
-          selectedValues={activeFilters[FACETS.ITEMS_DISCOVERY_SUPPRESS]}
-          onChange={onChange}
-          isPending={getIsLoading(FACETS.ITEMS_DISCOVERY_SUPPRESS)}
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <Accordion
         label={<FormattedMessage id="ui-inventory.statisticalCode" />}
         id={FACETS.ITEMS_STATISTICAL_CODE_IDS}

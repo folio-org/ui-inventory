@@ -26,6 +26,7 @@ import {
   ModeIssuanceFacet,
   NatureOfContentFacet,
   StaffSuppressFacet,
+  DiscoverySuppressFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -170,24 +171,16 @@ const InstanceFilters = props => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={intl.formatMessage({ id: 'ui-inventory.discoverySuppress' })}
-        id={FACETS.INSTANCES_DISCOVERY_SUPPRESS}
+      <DiscoverySuppressFacet
         name={FACETS.INSTANCES_DISCOVERY_SUPPRESS}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.INSTANCES_DISCOVERY_SUPPRESS]?.length > 0}
-        onClearFilter={() => onClear(FACETS.INSTANCES_DISCOVERY_SUPPRESS)}
-      >
-        <CheckboxFacet
-          data-test-filter-instance-discovery-suppress
-          name={FACETS.INSTANCES_DISCOVERY_SUPPRESS}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.INSTANCES_DISCOVERY_SUPPRESS]]}
-          selectedValues={activeFilters[FACETS.INSTANCES_DISCOVERY_SUPPRESS]}
-          isPending={getIsLoading(FACETS.INSTANCES_DISCOVERY_SUPPRESS)}
-          onChange={onChange}
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <Accordion
         label={intl.formatMessage({ id: 'ui-inventory.statisticalCode' })}
         id={FACETS.STATISTICAL_CODE_IDS}
