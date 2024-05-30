@@ -1,19 +1,12 @@
-import _, { get } from 'lodash';
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import get from 'lodash/get';
 
-import {
-  Accordion,
-  AccordionSet,
-  FilterAccordionHeader,
-} from '@folio/stripes/components';
+import { AccordionSet } from '@folio/stripes/components';
 import {
   HeldByFacet,
   FACETS,
-  CheckboxFacet,
   useFacets,
-  FACETS_TO_REQUEST,
   SharedFacet,
   EffectiveLocationFacet,
   DateRange,
@@ -22,6 +15,7 @@ import {
   DiscoverySuppressFacet,
   StatisticalCodeFacet,
   PermanentLocationFacet,
+  MaterialTypeFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -117,27 +111,16 @@ const ItemFilters = (props) => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={<FormattedMessage id={`ui-inventory.${FACETS.MATERIAL_TYPE}`} />}
-        id={FACETS.MATERIAL_TYPE}
+      <MaterialTypeFacet
         name={FACETS.MATERIAL_TYPE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={!_.isEmpty(activeFilters[FACETS.MATERIAL_TYPE])}
-        onClearFilter={() => onClear(FACETS.MATERIAL_TYPE)}
-      >
-        <CheckboxFacet
-          name={FACETS.MATERIAL_TYPE}
-          id="materialTypeFilter"
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.MATERIAL_TYPE]]}
-          selectedValues={activeFilters[FACETS.MATERIAL_TYPE]}
-          onChange={onChange}
-          onSearch={onFacetOptionSearch}
-          onFetch={onInputFocusAndMoreClick}
-          isPending={getIsLoading(FACETS.MATERIAL_TYPE)}
-          isFilterable
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <DiscoverySuppressFacet
         name={FACETS.ITEMS_DISCOVERY_SUPPRESS}
         facetOptions={facetOptions}

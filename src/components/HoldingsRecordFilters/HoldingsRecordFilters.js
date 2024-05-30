@@ -1,19 +1,12 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { get } from 'lodash';
 
-import {
-  Accordion,
-  FilterAccordionHeader,
-  AccordionSet,
-} from '@folio/stripes/components';
+import { AccordionSet } from '@folio/stripes/components';
 import {
   FACETS,
   HeldByFacet,
-  CheckboxFacet,
   useFacets,
-  FACETS_TO_REQUEST,
   SharedFacet,
   EffectiveLocationFacet,
   DateRange,
@@ -22,6 +15,7 @@ import {
   DiscoverySuppressFacet,
   StatisticalCodeFacet,
   PermanentLocationFacet,
+  HoldingsTypeFacet,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -109,26 +103,16 @@ const HoldingsRecordFilters = (props) => {
         onFetch={onInputFocusAndMoreClick}
         onSearch={onFacetOptionSearch}
       />
-      <Accordion
-        label={<FormattedMessage id="ui-inventory.holdingsType" />}
-        id={FACETS.HOLDINGS_TYPE}
+      <HoldingsTypeFacet
         name={FACETS.HOLDINGS_TYPE}
-        closedByDefault
-        header={FilterAccordionHeader}
-        displayClearButton={activeFilters[FACETS.HOLDINGS_TYPE]?.length > 0}
-        onClearFilter={() => onClear(FACETS.HOLDINGS_TYPE)}
-      >
-        <CheckboxFacet
-          name={FACETS.HOLDINGS_TYPE}
-          dataOptions={facetOptions[FACETS_TO_REQUEST[FACETS.HOLDINGS_TYPE]]}
-          selectedValues={activeFilters[FACETS.HOLDINGS_TYPE]}
-          onChange={onChange}
-          onFetch={onInputFocusAndMoreClick}
-          onSearch={onFacetOptionSearch}
-          isPending={getIsLoading(FACETS.HOLDINGS_TYPE)}
-          isFilterable
-        />
-      </Accordion>
+        facetOptions={facetOptions}
+        activeFilters={activeFilters}
+        getIsLoading={getIsLoading}
+        onChange={onChange}
+        onClear={onClear}
+        onFetch={onInputFocusAndMoreClick}
+        onSearch={onFacetOptionSearch}
+      />
       <DiscoverySuppressFacet
         name={FACETS.HOLDINGS_DISCOVERY_SUPPRESS}
         facetOptions={facetOptions}
