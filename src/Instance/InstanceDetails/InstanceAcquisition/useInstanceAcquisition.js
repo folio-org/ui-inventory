@@ -2,8 +2,8 @@ import { useQuery } from 'react-query';
 import { flatten, orderBy } from 'lodash';
 
 import { useOkapiKy, useNamespace, useStripes } from '@folio/stripes/core';
+import { LIMIT_MAX } from '@folio/stripes-inventory-components';
 
-import { LIMIT_MAX } from '../../../constants';
 import { batchRequest } from '../../../utils';
 
 const useInstanceAcquisition = (id, tenant) => {

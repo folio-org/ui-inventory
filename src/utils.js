@@ -26,18 +26,20 @@ import {
   validateUser,
 } from '@folio/stripes/core';
 import { FormattedUTCDate } from '@folio/stripes/components';
-import { segments } from '@folio/stripes-inventory-components';
+import {
+  segments,
+  LIMIT_MAX,
+  OKAPI_TENANT_HEADER,
+} from '@folio/stripes-inventory-components';
 
 import {
   itemStatusesMap,
   noValue,
   emptyList,
   indentifierTypeNames,
-  LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
   CONSORTIUM_PREFIX,
-  OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,

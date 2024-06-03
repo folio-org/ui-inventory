@@ -163,8 +163,6 @@ export const INSTANCES_ID_REPORT_TIMEOUT = 2000;
 
 export const QUICK_EXPORT_LIMIT = process.env.NODE_ENV !== 'test' ? 100 : 2;
 
-export const LIMIT_MAX = 5000;
-
 export const SORT_DIRECTION = {
   ASCENDING: 'ascending',
   DESCENDING: 'descending',
@@ -227,7 +225,6 @@ export const SOURCE_VALUES = {
 };
 
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';
-export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
 export const OKAPI_TOKEN_HEADER = 'X-Okapi-Token';
 export const CONTENT_TYPE_HEADER = 'Content-Type';
 

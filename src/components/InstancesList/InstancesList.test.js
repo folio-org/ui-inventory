@@ -78,7 +78,6 @@ const data = {
   modesOfIssuance: [],
   natureOfContentTerms: [],
   tagsRecords: [],
-  facets: [],
 };
 const query = {
   query: '',
@@ -93,12 +92,6 @@ const resources = {
     records: instancesFixture,
     other: { totalRecords: instancesFixture.length },
     isPending: false,
-  },
-  facets: {
-    hasLoaded: true,
-    resource: 'facets',
-    records: [],
-    other: { totalRecords: 0 }
   },
   resultCount: instancesFixture.length,
   resultOffset: 0,
@@ -656,7 +649,7 @@ describe('InstancesList', () => {
 
         await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'callNumber' } }));
 
-        expect((screen.getByRole('option', { name: 'Effective call number (item), shelving order' })).selected).toBeTruthy();
+        expect((screen.getByRole('option', { name: 'stripes-inventory-components.search.effectiveCallNumberShelving' })).selected).toBeTruthy();
       });
 
       it('should have query in search input', () => {

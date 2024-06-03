@@ -3,6 +3,7 @@ import '../test/jest/__mock__';
 import { FormattedMessage } from 'react-intl';
 
 import { updateTenant } from '@folio/stripes/core';
+import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
 
 import buildStripes from '../test/jest/__mock__/stripesCore.mock';
 
@@ -19,7 +20,6 @@ import {
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
-  OKAPI_TENANT_HEADER,
   OKAPI_TOKEN_HEADER,
 } from './constants';
 

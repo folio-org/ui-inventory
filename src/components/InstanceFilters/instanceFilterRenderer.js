@@ -23,7 +23,7 @@ const instanceFilterRenderer = data => onChange => {
 
   const dataProp = {
     locations,
-    resourceTypes: instanceTypes,
+    instanceTypes,
     instanceFormats,
     modesOfIssuance,
     tagsRecords: tags,

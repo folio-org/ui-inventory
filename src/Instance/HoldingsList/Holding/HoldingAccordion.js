@@ -8,11 +8,11 @@ import {
   Row,
   Col,
 } from '@folio/stripes/components';
+import { useLocationsQuery } from '@folio/stripes-inventory-components';
 
 import { HoldingButtonsGroup } from './HoldingButtonsGroup';
 import HoldingAccordionLabel from './HoldingAccordionLabel';
 import {
-  useLocationsQuery,
   useHoldingItemsQuery,
 } from '../../../hooks';
 
@@ -35,7 +35,7 @@ const HoldingAccordion = ({
 
   const pathToAccordion = [...pathToAccordionsState, holding?.id];
   const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'itemCount', tenantId });
-  const { data: locations } = useLocationsQuery({ tenantId });
+  const { locations } = useLocationsQuery({ tenantId });
 
   if (!locations) return null;
 

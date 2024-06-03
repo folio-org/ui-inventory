@@ -49,6 +49,7 @@ import {
   advancedSearchIndexes,
   segments,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+  OKAPI_TENANT_HEADER,
 } from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
@@ -76,7 +77,6 @@ import {
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
-  OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
 } from '../../constants';
