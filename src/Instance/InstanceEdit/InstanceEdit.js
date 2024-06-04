@@ -1,6 +1,7 @@
 import React, {
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -46,9 +47,14 @@ const InstanceEdit = ({
   const [httpError, setHttpError] = useState();
   const [initialValues, setInitialValues] = useState();
   const callout = useCallout();
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
+  const keepEditing = useRef(false);
+  const { instance, isLoading: isInstanceLoading, refetch: refetchInstance } = useInstance(instanceId);
   const parentInstances = useLoadSubInstances(instance?.parentInstances, 'superInstanceId');
   const childInstances = useLoadSubInstances(instance?.childInstances, 'subInstanceId');
+
+  const setKeepEditing = useCallback((value) => {
+    keepEditing.current = value;
+  }, []);
 
   useEffect(() => {
     setInitialValues({
@@ -74,7 +80,12 @@ const InstanceEdit = ({
       type: 'success',
       message,
     });
-    goBack();
+
+    if (!keepEditing.current) {
+      goBack();
+    } else {
+      refetchInstance();
+    }
   }, [callout, goBack]);
 
   const onError = async error => {
@@ -122,6 +133,8 @@ const InstanceEdit = ({
         referenceTables={referenceData}
         stripes={stripes}
         onCancel={goBack}
+        setKeepEditing={setKeepEditing}
+        showKeepEditingButton
       />
       {httpError && !httpError?.errorType &&
         <ErrorModal
