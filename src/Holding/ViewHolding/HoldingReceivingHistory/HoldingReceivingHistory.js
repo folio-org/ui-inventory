@@ -1,81 +1,95 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { orderBy } from 'lodash';
 
-import {
-  Accordion,
-  Checkbox,
-  FormattedDate,
-  MultiColumnList,
-  NoValue,
-} from '@folio/stripes/components';
+import { Accordion } from '@folio/stripes/components';
+
+import { useStripes } from '@folio/stripes/core';
 
 import { useControlledAccordion } from '../../../common/hooks';
+import { isUserInConsortiumMode } from '../../../utils';
+
 import useReceivingHistory from './useReceivingHistory';
-import { SORT_DIRECTION } from '../../../constants';
+import HoldingReceivingHistoryList from './HoldingReceivingHistoryList';
 
-const { ASCENDING, DESCENDING } = SORT_DIRECTION;
+import css from './HoldingReceivingHistory.css';
 
-const columnMapping = {
-  'displaySummary': <FormattedMessage id="ui-inventory.displaySummary" />,
-  'copyNumber': <FormattedMessage id="ui-inventory.copyNumber" />,
-  'enumeration': <FormattedMessage id="ui-inventory.enumeration" />,
-  'chronology': <FormattedMessage id="ui-inventory.chronology" />,
-  'receivedDate': <FormattedMessage id="ui-inventory.receivingHistory.receivedDate" />,
-  'comment': <FormattedMessage id="ui-inventory.receivingHistory.comment" />,
-  'displayToPublic': <FormattedMessage id="ui-inventory.receivingHistory.displayToPublic" />,
-  'source': <FormattedMessage id="ui-inventory.receivingHistory.source" />,
-};
-const visibleColumns = ['displaySummary', 'copyNumber', 'enumeration', 'chronology', 'receivedDate', 'comment', 'displayToPublic', 'source'];
-const columnFormatter = {
-  'displaySummary': i => i.displaySummary || <NoValue />,
-  'copyNumber': i => i.copyNumber || <NoValue />,
-  'enumeration': i => i.enumeration || <NoValue />,
-  'chronology': i => i.chronology || <NoValue />,
-  'receivedDate': i => (i.receivedDate ? <FormattedDate value={i.receivedDate} /> : <NoValue />),
-  'comment': i => i.comment || <NoValue />,
-  'displayToPublic': i => <Checkbox checked={i.displayToPublic || i.publicDisplay} disabled />,
-  'source': i => <FormattedMessage id={`ui-inventory.receivingHistory.source.${i.source || 'user'}`} />,
-};
-const sorters = {
-  'displaySummary': ({ displaySummary }) => displaySummary,
-  'copyNumber': ({ copyNumber }) => copyNumber,
-  'chronology': ({ chronology }) => chronology,
-  'enumeration': ({ enumeration }) => enumeration,
-  'receivedDate': ({ receivedDate }) => receivedDate,
-  'source': ({ source }) => source,
-};
+const activeTenantReceivings = [{
+  displaySummary: 'test',
+  copyNumber: '111111',
+  enumeration: 'en.1',
+  chronology: '123',
+  receivedDate: '03.01.2001',
+  comment: 'tst comment',
+  displayToPublic: true,
+  source: 'user',
+}, {
+  displaySummary: 'best',
+  copyNumber: '2222',
+  enumeration: 'en.2',
+  chronology: '210',
+  receivedDate: '03.01.2003',
+  comment: 'best comment',
+  displayToPublic: false,
+  source: 'receiving',
+}];
+
+const centralTenantReceivings = [{
+  displaySummary: 'test222',
+  copyNumber: '111111',
+  enumeration: 'en.1',
+  chronology: '123',
+  receivedDate: '03.01.2001',
+  comment: 'tst comment',
+  displayToPublic: true,
+  source: 'user',
+}, {
+  displaySummary: 'best2222',
+  copyNumber: '2222',
+  enumeration: 'en.2',
+  chronology: '210',
+  receivedDate: '03.01.2003',
+  comment: 'best comment',
+  displayToPublic: false,
+  source: 'receiving',
+}];
 
 const HoldingReceivingHistory = ({ holding }) => {
-  const [sortedColumn, setSortedColumn] = useState('');
-  const [sortDirection, setSortDirection] = useState(ASCENDING);
-  const { receivingHistory, isLoading } = useReceivingHistory(holding);
-  const controlledAccorion = useControlledAccordion(Boolean(receivingHistory.length));
+  const stripes = useStripes();
+  const activeTenant = stripes.okapi.tenant;
+  const centralTenant = stripes.user.user?.consortium?.centralTenantId;
 
-  const data = useMemo(() => (
-    orderBy(receivingHistory, sorters[sortedColumn], sortDirection === ASCENDING ? 'asc' : 'desc')
-  ), [receivingHistory, sortedColumn, sortDirection]);
+  const {
+    // receivingHistory: activeTenantReceivings,
+    isLoading: isLoadingActiveTenantReceivings,
+  } = useReceivingHistory(holding, activeTenant);
+  const {
+    // receivingHistory: centralTenantReceivings,
+    isLoading: isLoadingCentralTenantReceivings,
+  } = useReceivingHistory(holding, centralTenant);
 
-  const onHeaderClick = useCallback((_e, { name: column }) => {
-    if (!sorters[column]) return;
+  const controlledAccorion = useControlledAccordion(Boolean(activeTenantReceivings.length || centralTenantReceivings.length));
+  const controlledActiveTenantAccorion = useControlledAccordion(Boolean(activeTenantReceivings.length));
+  const controlledCentralTenantAccorion = useControlledAccordion(Boolean(centralTenantReceivings.length));
 
-    const isChangeDirection = sortedColumn === column;
+  const renderTenantReceivingsAccordion = (accId, tenantId, tenantReceivings, isLoading, controlledAccorionProps) => {
+    const getTenantAccordionLabel = (tenants, id) => tenants?.find(tenant => tenant.id === id).name;
 
-    setSortedColumn(isChangeDirection ? sortedColumn : column);
-    setSortDirection(
-      isChangeDirection && sortDirection === ASCENDING ? DESCENDING : ASCENDING
-    );
-  }, [sortedColumn, sortDirection]);
-
-  if (isLoading) {
     return (
       <Accordion
-        id="acc07"
-        label={<FormattedMessage id="ui-inventory.receivingHistory" />}
-      />
+        id={accId}
+        label={getTenantAccordionLabel(stripes.user.user.tenants, tenantId)}
+        className={css.tenantReceivingsAccordion}
+        {...controlledAccorionProps}
+      >
+        <HoldingReceivingHistoryList
+          data={tenantReceivings}
+          isLoading={isLoading}
+          tenantId={tenantId}
+        />
+      </Accordion>
     );
-  }
+  };
 
   return (
     <Accordion
@@ -83,16 +97,31 @@ const HoldingReceivingHistory = ({ holding }) => {
       label={<FormattedMessage id="ui-inventory.receivingHistory" />}
       {...controlledAccorion}
     >
-      <MultiColumnList
-        id="receiving-history-list"
-        contentData={data}
-        visibleColumns={visibleColumns}
-        columnMapping={columnMapping}
-        formatter={columnFormatter}
-        sortDirection={sortDirection}
-        sortedColumn={sortedColumn}
-        onHeaderClick={onHeaderClick}
-      />
+      {(isUserInConsortiumMode(stripes) && activeTenant !== centralTenant) ? (
+        <>
+          {renderTenantReceivingsAccordion(
+            'active-receivings-accordion',
+            activeTenant,
+            activeTenantReceivings,
+            isLoadingActiveTenantReceivings,
+            controlledActiveTenantAccorion,
+          )}
+          {renderTenantReceivingsAccordion(
+            'central-receivings-accordion',
+            centralTenant,
+            centralTenantReceivings,
+            isLoadingCentralTenantReceivings,
+            controlledCentralTenantAccorion,
+          )}
+        </>
+      ) : (
+        <HoldingReceivingHistoryList
+          data={activeTenantReceivings}
+          isLoading={isLoadingActiveTenantReceivings}
+          tenantId={activeTenant}
+        />
+      )
+      }
     </Accordion>
   );
 };
