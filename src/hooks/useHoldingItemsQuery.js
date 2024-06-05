@@ -7,10 +7,10 @@ import { useQuery } from 'react-query';
 import { omit } from 'lodash';
 
 import { useNamespace } from '@folio/stripes/core';
+import { LIMIT_MAX } from '@folio/stripes-inventory-components';
 
 import {
   DEFAULT_ITEM_TABLE_SORTBY_FIELD,
-  LIMIT_MAX,
 } from '../constants';
 import { useTenantKy } from '../common';
 

@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   browseModeOptions,
+  queryIndexes,
 } from '@folio/stripes-inventory-components';
 
 const AWAITING_DELIVERY = 'Awaiting delivery';
@@ -79,36 +80,6 @@ export const NOT_REMOVABLE_ITEM_STATUSES = [
   DECLARED_LOST,
 ];
 
-export const itemStatuses = [
-  { label: 'ui-inventory.item.status.agedToLost', value: 'Aged to lost' },
-  { label: 'ui-inventory.item.status.available', value: 'Available' },
-  { label: 'ui-inventory.item.status.awaitingPickup', value: 'Awaiting pickup' },
-  { label: 'ui-inventory.item.status.awaitingDelivery', value: 'Awaiting delivery' },
-  { label: 'ui-inventory.item.status.checkedOut', value: 'Checked out' },
-  { label: 'ui-inventory.item.status.claimedReturned', value: 'Claimed returned' },
-  { label: 'ui-inventory.item.status.declaredLost', value: 'Declared lost' },
-  { label: 'ui-inventory.item.status.inProcess', value: 'In process' },
-  { label: 'ui-inventory.item.status.inProcessNonRequestable', value: 'In process (non-requestable)' },
-  { label: 'ui-inventory.item.status.inTransit', value: 'In transit' },
-  { label: 'ui-inventory.item.status.intellectualItem', value: 'Intellectual item' },
-  { label: 'ui-inventory.item.status.longMissing', value: 'Long missing' },
-  { label: 'ui-inventory.item.status.lostAndPaid', value: 'Lost and paid' },
-  { label: 'ui-inventory.item.status.missing', value: 'Missing' },
-  { label: 'ui-inventory.item.status.onOrder', value: 'On order' },
-  { label: 'ui-inventory.item.status.orderClosed', value: 'Order closed' },
-  { label: 'ui-inventory.item.status.paged', value: 'Paged' },
-  { label: 'ui-inventory.item.status.restricted', value: 'Restricted' },
-  { label: 'ui-inventory.item.status.unavailable', value: 'Unavailable' },
-  { label: 'ui-inventory.item.status.unknown', value: 'Unknown' },
-  { label: 'ui-inventory.item.status.withdrawn', value: 'Withdrawn' },
-];
-
-export const segments = {
-  instances: 'instances',
-  holdings: 'holdings',
-  items: 'items',
-};
-
 export const INDEXES_WITH_CALL_NUMBER_TYPE_PARAM = [
   browseModeOptions.DEWEY,
   browseModeOptions.LIBRARY_OF_CONGRESS,
@@ -184,9 +155,6 @@ export const actionMenuDisplayPerms = [
   'ui-inventory.items.mark-in-process-non-requestable',
 ];
 
-export const DATE_FORMAT = 'YYYY-MM-DD';
-export const DATE_TIME_RANGE_FILTER_FORMAT = 'YYYY-MM-DDTHH:mm:ss.SSS';
-
 export const layers = {
   CREATE: 'create',
 };
@@ -194,8 +162,6 @@ export const layers = {
 export const INSTANCES_ID_REPORT_TIMEOUT = 2000;
 
 export const QUICK_EXPORT_LIMIT = process.env.NODE_ENV !== 'test' ? 100 : 2;
-
-export const LIMIT_MAX = 5000;
 
 export const SORT_DIRECTION = {
   ASCENDING: 'ascending',
@@ -213,8 +179,8 @@ export const ERROR_TYPES = {
 };
 
 export const QUERY_INDEXES = {
-  INSTANCE_HRID: 'hrid',
-  BARCODE: 'items.barcode',
+  INSTANCE_HRID: queryIndexes.INSTANCE_HRID,
+  BARCODE: queryIndexes.ITEMS_BARCODE,
 };
 
 export const PAGE_DIRECTIONS = {
@@ -231,11 +197,11 @@ export const SYSTEM_USER_ID = '00000000-0000-0000-0000-000000000000';
 export const SYSTEM_USER_NAME = 'System';
 
 export const SINGLE_ITEM_QUERY_TEMPLATES = {
-  'items.barcode': 'barcode=="%{query}"',
-  isbn: 'isbn=="%{query}"',
-  issn: 'issn=="%{query}"',
-  itemHrid: 'hrid=="%{query}"',
-  iid: 'id=="%{query}"',
+  [queryIndexes.ITEMS_BARCODE]: 'barcode=="%{query}"',
+  [queryIndexes.ISBN]: 'isbn=="%{query}"',
+  [queryIndexes.ISSN]: 'issn=="%{query}"',
+  [queryIndexes.ITEM_HRID]: 'hrid=="%{query}"',
+  [queryIndexes.ITEM_ID]: 'id=="%{query}"',
 };
 
 export const RECORD_SOURCE = {
@@ -259,7 +225,6 @@ export const SOURCE_VALUES = {
 };
 
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';
-export const OKAPI_TENANT_HEADER = 'X-Okapi-Tenant';
 export const OKAPI_TOKEN_HEADER = 'X-Okapi-Token';
 export const CONTENT_TYPE_HEADER = 'Content-Type';
 
@@ -290,8 +255,6 @@ export const EVENTS = {
 export const LEADER_RECORD_STATUSES = {
   DELETED: 'd',
 };
-
-export const USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY = 'folio_user_touched_staff_suppress';
 
 export const ACQUISITION_COLUMN_NAMES = {
   poLineNumber: 'poLineNumber',

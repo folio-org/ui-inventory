@@ -4,7 +4,6 @@ import itemFilterRenderer from './itemFilterRenderer';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import ItemFilters from './ItemFilters';
-import { itemStatuses } from '../../constants';
 
 jest.mock('./ItemFilters', () => jest.fn(() => <div>ItemFilters</div>));
 
@@ -35,7 +34,6 @@ describe('itemFilterRenderer', () => {
 
     const expectedData = {
       materialTypes: DATA.materialTypes,
-      itemStatuses,
       statisticalCodes: DATA.statisticalCodes,
       locations: DATA.locations,
       tagsRecords: DATA.tags,

@@ -1,47 +1,113 @@
-import React from 'react';
+import { render } from '@folio/jest-config-stripes/testing-library/react';
+import { useCommonData } from '@folio/stripes-inventory-components';
 
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
-
-import { resources, resources2 } from '../../test/fixtures/DataProviders';
-import Harness from '../../test/jest/helpers/Harness';
-import '../../test/jest/__mock__';
+import { resources } from '../../test/fixtures/DataProviders';
 
 import DataProvider from './DataProvider';
+import { DataContext } from '../contexts';
+import { useClassificationBrowseConfig } from '../hooks';
 
 jest.mock('../hooks', () => ({
   ...jest.requireActual('../hooks'),
-  useLocationsForTenants: jest.fn(() => ({
-    isLoading: false,
-    data: [],
-  })),
-  useClassificationBrowseConfig: jest.fn(() => ({
-    isLoading: false,
-    data: [],
-  }))
+  useClassificationBrowseConfig: jest.fn(),
 }));
 
+const commonData = {
+  locations: [{ id: 'id-1', tenantId: 'cs00000int_0001' }],
+  consortiaTenants: [{ id: 'cs00000int_0001', name: 'College' }],
+  locationsById: {
+    'id-1': { id: 'id-1', tenantId: 'cs00000int_0001' },
+  },
+  consortiaTenantsById: {
+    cs00000int_0001: { id: 'cs00000int_0001', name: 'College' },
+  },
+  statisticalCodes: [{
+    id: 'id-1',
+    statisticalCodeType: { id: '3abd6fc2-b3e4-4879-b1e1-78be41769fe3', name: 'ARL (Collection stats)' },
+    statisticalCodeTypeId: '3abd6fc2-b3e4-4879-b1e1-78be41769fe3',
+  }],
+  statisticalCodeTypes: [{ id: '3abd6fc2-b3e4-4879-b1e1-78be41769fe3', name: 'ARL (Collection stats)' }],
+  materialTypes: [{ id: 'id-1', name: 'book' }],
+  natureOfContentTerms: [{ id: 'id-1', name: 'audiobook' }],
+  holdingsTypes: [{ id: 'id-1', name: 'Electronic' }],
+  modesOfIssuance: [{ id: 'id-1', name: 'serial' }],
+  instanceStatuses: [{ id: 'id-1', code: 'batch' }],
+  instanceFormats: [{ id: 'id-1', code: 'sb' }],
+  holdingsSources: [{ id: 'id-1', name: 'FOLIO' }],
+  instanceTypes: [{ id: 'id-1', code: 'crd' }]
+};
+
+useCommonData.mockReturnValue({
+  commonData,
+  isCommonDataLoading: false,
+});
+
+const classificationBrowseConfig = [
+  {
+    'id': 'all',
+    'shelvingAlgorithm': 'default',
+    'typeIds': []
+  },
+  {
+    'id': 'dewey',
+    'shelvingAlgorithm': 'dewey',
+    'typeIds': []
+  },
+  {
+    'id': 'lc',
+    'shelvingAlgorithm': 'lc',
+    'typeIds': []
+  }
+];
+
+useClassificationBrowseConfig.mockReturnValue({
+  classificationBrowseConfig,
+  isLoading: false,
+});
+
+const mockPassedData = jest.fn();
+
 const Children = () => (
-  <h1>DataProvider</h1>
+  <DataContext.Consumer>
+    {data => {
+      mockPassedData(data);
+    }}
+  </DataContext.Consumer>
 );
-const data = resources;
-const data2 = resources2;
 
 const renderDataProvider = (props) => render(
-  <Harness translations={[]}>
-    <DataProvider {...props}><Children /></DataProvider>
-  </Harness>
+  <DataProvider {...props}><Children /></DataProvider>
 );
 
 describe('DataProvider', () => {
-  it('Component should render properly', () => {
-    renderDataProvider({ resources: data });
+  it('should pass correct data', () => {
+    renderDataProvider({ resources });
 
-    expect(screen.getByText('DataProvider')).toBeInTheDocument();
-  });
-
-  it('Component should be empty', () => {
-    const { container } = renderDataProvider({ resources: data2 });
-
-    expect(container).toBeEmptyDOMElement();
+    expect(mockPassedData).toHaveBeenCalledWith({
+      ...commonData,
+      classificationBrowseConfig,
+      ...Object.keys(resources).reduce((acc, name) => ({ ...acc, [name]: resources[name].records }), {}),
+      identifierTypesById: {
+        'identifierTypes-1': {
+          id: 'identifierTypes-1',
+          name: 'IdentifierType 1',
+        },
+      },
+      identifierTypesByName: {
+        'IdentifierType 1': {
+          id: 'identifierTypes-1',
+          name: 'IdentifierType 1',
+        },
+      },
+      instanceRelationshipTypesById: {
+        'instanceRelationshipTypes-1': {
+          id: 'instanceRelationshipTypes-1',
+          name: 'InstanceRelationshipType 1',
+        },
+      },
+      holdingsSourcesByName: {
+        FOLIO: { id: 'id-1', name: 'FOLIO' },
+      },
+    });
   });
 });

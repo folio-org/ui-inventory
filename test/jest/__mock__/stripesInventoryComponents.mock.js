@@ -7,4 +7,12 @@ jest.mock('@folio/stripes-inventory-components', () => ({
   useFacetStates: jest.fn(() => () => {}),
   useResetFacetStates: jest.fn(() => () => {}),
   useSearchValue: jest.fn(() => () => {}),
+  useLocationsQuery: jest.fn().mockReturnValue({
+    locations: [],
+    isLoading: false,
+  }),
+  useCommonData: jest.fn().mockReturnValue({
+    commonData: [],
+    isCommonDataLoading: false,
+  }),
 }));

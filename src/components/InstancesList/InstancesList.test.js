@@ -14,17 +14,18 @@ import {
 import '../../../test/jest/__mock__';
 
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
-import { deleteFacetStates } from '@folio/stripes-inventory-components';
+import {
+  deleteFacetStates,
+  queryIndexes,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+} from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
-import {
-  SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
-} from '../../constants';
+import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 import * as utils from '../../utils';
 import Harness from '../../../test/jest/helpers/Harness';
 
@@ -77,7 +78,6 @@ const data = {
   modesOfIssuance: [],
   natureOfContentTerms: [],
   tagsRecords: [],
-  facets: [],
 };
 const query = {
   query: '',
@@ -93,12 +93,6 @@ const resources = {
     other: { totalRecords: instancesFixture.length },
     isPending: false,
   },
-  facets: {
-    hasLoaded: true,
-    resource: 'facets',
-    records: [],
-    other: { totalRecords: 0 }
-  },
   resultCount: instancesFixture.length,
   resultOffset: 0,
 };
@@ -107,7 +101,7 @@ let history = createMemoryHistory();
 
 const openActionMenu = () => {
   fireEvent.change(screen.getByRole('combobox', { name: /search field index/i }), {
-    target: { value: 'all' }
+    target: { value: queryIndexes.INSTANCE_KEYWORD }
   });
   fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 };
@@ -655,7 +649,7 @@ describe('InstancesList', () => {
 
         await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'callNumber' } }));
 
-        expect((screen.getByRole('option', { name: 'Effective call number (item), shelving order' })).selected).toBeTruthy();
+        expect((screen.getByRole('option', { name: 'stripes-inventory-components.search.effectiveCallNumberShelving' })).selected).toBeTruthy();
       });
 
       it('should have query in search input', () => {
@@ -719,7 +713,7 @@ describe('InstancesList', () => {
       renderInstancesList({ segment: 'holdings' });
 
       fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'all' }
+        target: { value: queryIndexes.INSTANCE_KEYWORD }
       });
 
       fireEvent.click(screen.getByRole('button', { name: 'Actions' }));

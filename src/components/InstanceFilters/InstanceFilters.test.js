@@ -6,16 +6,8 @@ import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import { FACETS } from '@folio/stripes-inventory-components';
 
 import InstanceFilters from './InstanceFilters';
-import { USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '../../constants';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
-
-jest.mock('@folio/stripes-inventory-components', () => ({
-  ...jest.requireActual('@folio/stripes-inventory-components'),
-  CheckboxFacet: jest.fn(({ name, onChange }) => ((
-    <button type="button" onClick={() => onChange()}>change facet {name}</button>
-  ))),
-}));
 
 const filterConfig = {
   filters: [],
@@ -193,26 +185,6 @@ describe('InstanceFilters', () => {
     userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.SOURCE);
-    });
-  });
-
-  describe('when user selects staff suppress options', () => {
-    const mockSetItem = jest.fn();
-    beforeEach(() => {
-      global.Storage.prototype.setItem = mockSetItem;
-    });
-
-    afterEach(() => {
-      global.Storage.prototype.setItem.mockReset();
-    });
-
-    it('should set a flag that user selected some option', async () => {
-      renderInstanceFilters();
-      const staffSuppressFacet = screen.queryByRole('button', { name: 'Staff suppress filter list' });
-      await userEvent.click(staffSuppressFacet);
-      await userEvent.click(screen.getByText('change facet staffSuppress'));
-
-      expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
     });
   });
 });
