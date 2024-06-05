@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
 
 import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import { LIMIT_MAX } from '@folio/stripes-inventory-components';
 
-import { LIMIT_MAX } from '../../../constants';
 
 const useReceivingHistory = (holding, options = {}) => {
   const stripes = useStripes();

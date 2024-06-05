@@ -1,6 +1,9 @@
 import React from 'react';
+
+import { useLocationsQuery } from '@folio/stripes-inventory-components';
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+
 import '../../../../test/jest/__mock__';
 import { MemoryRouter } from 'react-router-dom';
 import HoldingContainer from './HoldingContainer';
@@ -12,22 +15,21 @@ import { DataContext } from '../../../contexts';
 import DnDContext from '../../DnDContext';
 
 jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn().mockReturnValue({ totalRecords: 10, isFetching: false }));
-jest.mock('../../../hooks', () => ({
-  ...jest.requireActual('../../../hooks'),
-  useLocationsQuery: () => ({
-    data: [
-      {
-        id: 'inactiveLocation',
-        name: 'Location 1',
-        isActive: false,
-      },
-    ],
-  })
-}));
+
 jest.mock('react-dom', () => ({
   ...jest.requireActual('react-dom'),
   createPortal: jest.fn().mockReturnValue('HoldingAccordion'),
 }));
+
+useLocationsQuery.mockReturnValue({
+  locations: [
+    {
+      id: 'inactiveLocation',
+      name: 'Location 1',
+      isActive: false,
+    },
+  ],
+});
 
 const dataContextValue = {
   locationsById: { inactiveLocation: { id: 'inactiveLocation', name: 'Location 1', isActive: false } },

@@ -47,7 +47,7 @@ describe('instanceFilterRenderer', () => {
       modesOfIssuance: DATA.modesOfIssuance,
       natureOfContentTerms: DATA.natureOfContentTerms,
       query: DATA.query,
-      resourceTypes: DATA.instanceTypes,
+      instanceTypes: DATA.instanceTypes,
       statisticalCodes: DATA.statisticalCodes,
       tagsRecords: DATA.tags,
     };

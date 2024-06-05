@@ -3,7 +3,6 @@ import React from 'react';
 import { resetFacetSearchValue } from '@folio/stripes-inventory-components';
 
 import ItemFilters from './ItemFilters';
-import { itemStatuses } from '../../constants';
 
 // itemFilterRenderer is a function that takes a single argument `data`
 // and returns a function that takes a single argument `onChange`.
@@ -23,7 +22,6 @@ const itemFilterRenderer = data => onChange => {
       filterConfig={filterConfig}
       data={{
         materialTypes,
-        itemStatuses,
         statisticalCodes,
         locations,
         tagsRecords: tags,
