@@ -4,6 +4,7 @@ import { Field } from 'react-final-form';
 import {
   filter,
   isEmpty,
+  noop,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
@@ -267,7 +268,7 @@ class InstanceForm extends React.Component {
     const saveAndKeepEditingButton = (
       <Button
         id="clickable-save-and-keep-editing-instance"
-        buttonStyle="primary mega"
+        buttonStyle="default mega"
         type="submit"
         disabled={(pristine || submitting) && !copy}
         onClick={(e) => this.handleSaveClick(e, true)}
@@ -839,7 +840,7 @@ InstanceForm.propTypes = {
   initialValues: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
-  setKeepEditing: PropTypes.func.isRequired,
+  setKeepEditing: PropTypes.func,
   showKeepEditingButton: PropTypes.bool,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
@@ -861,6 +862,7 @@ InstanceForm.defaultProps = {
   initialValues: {},
   id: 'instance-form',
   showKeepEditingButton: false,
+  setKeepEditing: noop,
 };
 
 export default withRouter(stripesFinalForm({
