@@ -649,7 +649,7 @@ describe('InstancesList', () => {
 
         await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'callNumber' } }));
 
-        expect((screen.getByRole('option', { name: 'stripes-inventory-components.search.effectiveCallNumberShelving' })).selected).toBeTruthy();
+        expect((screen.getByRole('option', { name: 'Effective call number (item), shelving order' })).selected).toBeTruthy();
       });
 
       it('should have query in search input', () => {
