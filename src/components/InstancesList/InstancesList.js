@@ -1047,16 +1047,13 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
-  formatSearchableIndex = (index) => {
+  formatSearchableIndex = ({ label, value }) => {
     const { intl } = this.props;
 
-    const { prefix = '' } = index;
-    let label = index.label;
-    if (index.label.includes('ui-inventory')) {
-      label = prefix + intl.formatMessage({ id: index.label });
-    }
-
-    return { ...index, label };
+    return {
+      label: intl.formatMessage({ id: label }),
+      value,
+    };
   }
 
   findAndOpenItem = async (instance) => {
