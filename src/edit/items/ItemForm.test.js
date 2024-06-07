@@ -7,6 +7,7 @@ import {
 
 import '../../../test/jest/__mock__';
 
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { StripesContext } from '@folio/stripes/core';
 
 import {
@@ -47,6 +48,7 @@ const mockReferenceTables = {
 const mockStripes = {
   connect: jest.fn(),
 };
+const mockSetKeepEditing = jest.fn();
 
 const queryClient = new QueryClient();
 
@@ -70,6 +72,7 @@ const ItemFormSetup = (props = {}) => (
             referenceTables={mockReferenceTables}
             stripes={mockStripes}
             holdingsRecord={mockHolding}
+            setKeepEditing={mockSetKeepEditing}
             {...props}
           />
         </DataContext.Provider>
@@ -113,5 +116,38 @@ describe('ItemForm', () => {
     expect(getByText('Location')).toBeInTheDocument();
     expect(getAllByText('Electronic access')[0]).toBeInTheDocument();
     expect(getAllByText('Bound-with and analytics')[0]).toBeInTheDocument();
+  });
+
+  it('should render Save & keep editing and Save & close buttons', () => {
+    const { getByRole } = renderItemForm({
+      showKeepEditingButton: true,
+    });
+
+    expect(getByRole('button', { name: 'Save & keep editing' })).toBeInTheDocument();
+    expect(getByRole('button', { name: 'Save & close' })).toBeInTheDocument();
+  });
+
+  describe('when clicking Save & close', () => {
+    it('should call setKeepEditing with false', () => {
+      const { getByRole } = renderItemForm();
+
+      fireEvent.change(getByRole('textbox', { name: 'Barcode' }), { target: { value: 'new barcode' } });
+      fireEvent.click(getByRole('button', { name: 'Save & close' }));
+
+      expect(mockSetKeepEditing).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe('when clicking Save & keep editing', () => {
+    it('should call setKeepEditing with true', () => {
+      const { getByRole } = renderItemForm({
+        showKeepEditingButton: true,
+      });
+
+      fireEvent.change(getByRole('textbox', { name: 'Barcode' }), { target: { value: 'new barcode' } });
+      fireEvent.click(getByRole('button', { name: 'Save & keep editing' }));
+
+      expect(mockSetKeepEditing).toHaveBeenCalledWith(true);
+    });
   });
 });
