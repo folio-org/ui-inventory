@@ -28,6 +28,7 @@
 * Import `CheckboxFacet`, `CheckboxFacetList`, `HeldByFacet`, `withFacets`, facets constants, `fieldSearchConfigurations` constant, `queryIndexes` constants, `facetsStore`, and some of the utils from `stripes-inventory-components`. Refs UIIN-2781.
 * Import the new `useFacets` functionality from `stripes-inventory-components`. Refs UIIN-2910.
 * Edit Inventory Instances: Display a Save & keep editing button. Refs UIIN-2457.
+* Edit Inventory Holdings: Display a Save & keep editing button. Refs UIIN-2404.
 * "holdings-storage" API version upgrade. Refs UIIN-2926.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)

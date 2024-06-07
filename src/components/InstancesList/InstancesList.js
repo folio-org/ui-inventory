@@ -1047,16 +1047,13 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
-  formatSearchableIndex = (index) => {
+  translateSearchOptionLabel = ({ label, value }) => {
     const { intl } = this.props;
 
-    const { prefix = '' } = index;
-    let label = index.label;
-    if (index.label.includes('ui-inventory')) {
-      label = prefix + intl.formatMessage({ id: index.label });
-    }
-
-    return { ...index, label };
+    return {
+      label: intl.formatMessage({ id: label }),
+      value,
+    };
   }
 
   findAndOpenItem = async (instance) => {
@@ -1235,9 +1232,9 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
-    const formattedSearchableIndexes = searchableIndexes.map(this.formatSearchableIndex);
+    const searchOptions = searchableIndexes.map(this.translateSearchOptionLabel);
 
-    const advancedSearchOptions = advancedSearchIndexes[segment].map(this.formatSearchableIndex);
+    const advancedSearchOptions = advancedSearchIndexes[segment].map(this.translateSearchOptionLabel);
 
     const shortcuts = [
       {
@@ -1271,7 +1268,7 @@ class InstancesList extends React.Component {
             objectName="inventory"
             maxSortKeys={1}
             renderNavigation={this.renderNavigation}
-            searchableIndexes={formattedSearchableIndexes}
+            searchableIndexes={searchOptions}
             advancedSearchIndex={queryIndexes.ADVANCED_SEARCH}
             advancedSearchOptions={advancedSearchOptions}
             advancedSearchQueryBuilder={advancedSearchQueryBuilder}

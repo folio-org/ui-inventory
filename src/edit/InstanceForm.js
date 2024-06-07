@@ -267,8 +267,8 @@ class InstanceForm extends React.Component {
     );
     const saveAndKeepEditingButton = (
       <Button
-        id="clickable-save-and-keep-editing-instance"
         buttonStyle="default mega"
+        buttonClass={styles.saveAndKeepEditingButton}
         type="submit"
         disabled={(pristine || submitting) && !copy}
         onClick={(e) => this.handleSaveClick(e, true)}
