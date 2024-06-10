@@ -165,7 +165,6 @@ const InstanceFilters = props => {
         getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
-        onFetch={onInputFocusAndMoreClick}
       />
       <DiscoverySuppressFacet
         name={FACETS.INSTANCES_DISCOVERY_SUPPRESS}
@@ -174,7 +173,6 @@ const InstanceFilters = props => {
         getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
-        onFetch={onInputFocusAndMoreClick}
       />
       <StatisticalCodeFacet
         name={FACETS.STATISTICAL_CODE_IDS}
@@ -216,7 +214,6 @@ const InstanceFilters = props => {
         onChange={onChange}
         onClear={onClear}
         onFetch={onInputFocusAndMoreClick}
-        onSearch={onFacetOptionSearch}
       />
       <TagsFacet
         name={FACETS.INSTANCES_TAGS}
