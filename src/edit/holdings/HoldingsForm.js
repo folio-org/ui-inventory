@@ -2,6 +2,7 @@ import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
+import noop from 'lodash/noop';
 
 import {
   Paneset,
@@ -37,7 +38,6 @@ import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
-import styles from './HoldingsForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
 import AdministrativeNoteFields from '../administrativeNoteFields';
 import {
@@ -49,6 +49,8 @@ import {
   ReceivingHistoryFields,
 } from './repeatableFields';
 import StatisticalCodeFields from '../statisticalCodeFields';
+
+import styles from './HoldingsForm.css';
 
 // eslint-disable-next-line no-unused-vars
 function validate(values) {
@@ -107,6 +109,8 @@ class HoldingsForm extends React.Component {
         })).isRequired,
       }).isRequired,
     }).isRequired,
+    setKeepEditing: PropTypes.func,
+    showKeepEditingButton: PropTypes.bool,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
     }).isRequired,
@@ -120,6 +124,8 @@ class HoldingsForm extends React.Component {
   static defaultProps = {
     initialValues: {},
     isMARCRecord: false,
+    setKeepEditing: noop,
+    showKeepEditingButton: false,
   };
 
   constructor(props) {
@@ -129,13 +135,23 @@ class HoldingsForm extends React.Component {
     this.accordionStatusRef = createRef();
   }
 
+  handleSaveClick = (e, keepEditing = false) => {
+    const {
+      handleSubmit,
+      setKeepEditing,
+    } = this.props;
+
+    setKeepEditing(keepEditing);
+    handleSubmit(e);
+  }
+
   getFooter = () => {
     const {
       onCancel,
       pristine,
       submitting,
       copy,
-      handleSubmit,
+      showKeepEditingButton,
     } = this.props;
 
     const cancelButton = (
@@ -147,13 +163,24 @@ class HoldingsForm extends React.Component {
         <FormattedMessage id="ui-inventory.cancel" />
       </Button>
     );
+    const saveAndKeepEditingButton = (
+      <Button
+        buttonStyle="default mega"
+        type="submit"
+        buttonClass={styles.saveAndKeepEditingButton}
+        disabled={(pristine || submitting) && !copy}
+        onClick={(e) => this.handleSaveClick(e, true)}
+      >
+        <FormattedMessage id="stripes-components.saveAndKeepEditing" />
+      </Button>
+    );
     const saveButton = (
       <Button
         buttonStyle="primary mega"
         id="clickable-create-holdings-record"
         type="submit"
         disabled={(pristine || submitting) && !copy}
-        onClick={handleSubmit}
+        onClick={(e) => this.handleSaveClick(e, false)}
         marginBottom0
       >
         <FormattedMessage id="stripes-components.saveAndClose" />
@@ -163,7 +190,12 @@ class HoldingsForm extends React.Component {
     return (
       <PaneFooter
         renderStart={cancelButton}
-        renderEnd={saveButton}
+        renderEnd={(
+          <>
+            {showKeepEditingButton && saveAndKeepEditingButton}
+            {saveButton}
+          </>
+        )}
       />
     );
   };
