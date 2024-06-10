@@ -3,6 +3,7 @@ import {
   get,
   cloneDeep,
   uniqBy,
+  noop
 } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -49,7 +50,6 @@ import { memoize, mutators } from '../formUtils';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
-import styles from './ItemForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
 import {
   BoundWithTitlesFields,
@@ -59,6 +59,8 @@ import {
 } from './repeatableFields';
 import StatisticalCodeFields from '../statisticalCodeFields';
 import NoteFields from '../noteFields';
+
+import styles from './ItemForm.css';
 
 function validate(values) {
   const errors = {};
@@ -156,6 +158,16 @@ class ItemForm extends React.Component {
     this.props.form.change('boundWithTitles', boundWithTitles);
   }
 
+  handleSaveClick = (e, keepEditing = false) => {
+    const {
+      handleSubmit,
+      setKeepEditing,
+    } = this.props;
+
+    setKeepEditing(keepEditing);
+    handleSubmit(e);
+  }
+
   getFooter = () => {
     const {
       onCancel,
@@ -163,6 +175,7 @@ class ItemForm extends React.Component {
       pristine,
       submitting,
       copy,
+      showKeepEditingButton,
     } = this.props;
 
     const cancelButton = (
@@ -175,13 +188,24 @@ class ItemForm extends React.Component {
         <FormattedMessage id="ui-inventory.cancel" />
       </Button>
     );
+    const saveAndKeepEditingButton = (
+      <Button
+        buttonStyle="default mega"
+        type="submit"
+        buttonClass={styles.saveAndKeepEditingButton}
+        disabled={(pristine || submitting) && !copy}
+        onClick={(e) => this.handleSaveClick(e, true)}
+      >
+        <FormattedMessage id="stripes-components.saveAndKeepEditing" />
+      </Button>
+    );
     const saveButton = (
       <Button
         id="clickable-save-item"
         buttonStyle="primary mega"
         type="submit"
         disabled={(pristine || submitting) && !copy}
-        onClick={handleSubmit}
+        onClick={(e) => this.handleSaveClick(e, false)}
       >
         <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
@@ -190,7 +214,12 @@ class ItemForm extends React.Component {
     return (
       <PaneFooter
         renderStart={cancelButton}
-        renderEnd={saveButton}
+        renderEnd={(
+          <>
+            {showKeepEditingButton && saveAndKeepEditingButton}
+            {saveButton}
+          </>
+        )}
       />
     );
   };
@@ -863,6 +892,8 @@ ItemForm.propTypes = {
   holdingsRecord: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
+  setKeepEditing: PropTypes.func,
+  showKeepEditingButton: PropTypes.bool,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
   }).isRequired,
@@ -876,6 +907,8 @@ ItemForm.propTypes = {
 
 ItemForm.defaultProps = {
   initialValues: {},
+  setKeepEditing: noop,
+  showKeepEditingButton: false,
 };
 
 export default withRouter(stripesFinalForm({
