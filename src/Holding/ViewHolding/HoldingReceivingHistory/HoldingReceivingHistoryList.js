@@ -68,7 +68,7 @@ const HoldingReceivingHistoryList = ({
 
   const receivingHistory = useMemo(() => (
     orderBy(data, sorters[sortedColumn], sortDirection === ASCENDING ? 'asc' : 'desc')
-  ), [sortedColumn, sortDirection]);
+  ), [data, sortedColumn, sortDirection]);
 
   const onHeaderClick = useCallback((_e, { name: column }) => {
     if (!sorters[column]) return;

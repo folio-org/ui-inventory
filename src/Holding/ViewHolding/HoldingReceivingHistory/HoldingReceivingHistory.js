@@ -14,7 +14,7 @@ import HoldingReceivingHistoryList from './HoldingReceivingHistoryList';
 
 import css from './HoldingReceivingHistory.css';
 
-const activeTenantReceivings = [{
+/* const activeTenantReceivings = [{
   displaySummary: 'test',
   copyNumber: '111111',
   enumeration: 'en.1',
@@ -23,15 +23,6 @@ const activeTenantReceivings = [{
   comment: 'tst comment',
   displayToPublic: true,
   source: 'user',
-}, {
-  displaySummary: 'best',
-  copyNumber: '2222',
-  enumeration: 'en.2',
-  chronology: '210',
-  receivedDate: '03.01.2003',
-  comment: 'best comment',
-  displayToPublic: false,
-  source: 'receiving',
 }];
 
 const centralTenantReceivings = [{
@@ -43,16 +34,7 @@ const centralTenantReceivings = [{
   comment: 'tst comment',
   displayToPublic: true,
   source: 'user',
-}, {
-  displaySummary: 'best2222',
-  copyNumber: '2222',
-  enumeration: 'en.2',
-  chronology: '210',
-  receivedDate: '03.01.2003',
-  comment: 'best comment',
-  displayToPublic: false,
-  source: 'receiving',
-}];
+}]; */
 
 const HoldingReceivingHistory = ({ holding }) => {
   const stripes = useStripes();
@@ -60,11 +42,11 @@ const HoldingReceivingHistory = ({ holding }) => {
   const centralTenant = stripes.user.user?.consortium?.centralTenantId;
 
   const {
-    // receivingHistory: activeTenantReceivings,
+    receivingHistory: activeTenantReceivings,
     isLoading: isLoadingActiveTenantReceivings,
   } = useReceivingHistory(holding, activeTenant);
   const {
-    // receivingHistory: centralTenantReceivings,
+    receivingHistory: centralTenantReceivings,
     isLoading: isLoadingCentralTenantReceivings,
   } = useReceivingHistory(holding, centralTenant);
 

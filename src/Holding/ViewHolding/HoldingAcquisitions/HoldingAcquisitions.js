@@ -19,24 +19,6 @@ import HoldingAcquisitionList from './HoldingAcquisitionList';
 
 import css from './HoldingAcquisitions.css';
 
-const centralTenantOrderLines = [{
-  poLineNumber: '10000-1',
-  orderStatus: 'Open',
-  orderCloseReason: { reason: 'hz' },
-  polReceiptStatus: 'Ongoing',
-  orderSentDate: '01-01-2024',
-  orderType: 'One-Time',
-}];
-
-const activeTenantOrderLines = [{
-  poLineNumber: '10000-2',
-  orderStatus: 'Closed',
-  orderCloseReason: { reason: 'hz2' },
-  polReceiptStatus: 'Pending',
-  orderSentDate: '01-02-2024',
-  orderType: 'Ongoing',
-}];
-
 const HoldingAcquisitions = ({ holding, withSummary }) => {
   const stripes = useStripes();
   const activeTenant = stripes.okapi.tenant;
@@ -44,11 +26,11 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
 
   const {
     isLoading: isLoadingActiveTenantOrderLines,
-    // holdingOrderLines: activeTenantOrderLines,
+    holdingOrderLines: activeTenantOrderLines,
   } = useHoldingOrderLines(activeTenant, holding.id, { enabled: withSummary });
   const {
     isLoading: isLoadingCentralTenantOrderLines,
-    // holdingOrderLines: centralTenantOrderLines,
+    holdingOrderLines: centralTenantOrderLines,
   } = useHoldingOrderLines(centralTenant, holding.id, { enabled: withSummary });
 
   const controlledAccorion = useControlledAccordion(
