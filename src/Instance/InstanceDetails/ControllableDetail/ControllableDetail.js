@@ -7,8 +7,7 @@ import {
   Tooltip,
   NoValue,
 } from '@folio/stripes/components';
-
-import { segments } from '../../../constants';
+import { segments } from '@folio/stripes-inventory-components';
 
 import css from './ControllableDetail.css';
 

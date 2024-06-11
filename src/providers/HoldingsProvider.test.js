@@ -1,13 +1,12 @@
 import React from 'react';
 import { render, act } from '@folio/jest-config-stripes/testing-library/react';
+import { useOkapiKy } from '@folio/stripes/core';
 
 import { useQuery } from 'react-query';
-import '../../test/jest/__mock__';
+
 import { useHoldings, HoldingsProvider, useInstanceHoldingsQuery } from './HoldingsProvider';
 
-jest.mock('@folio/stripes/core', () => ({
-  useOkapiKy: jest.fn().mockReturnValue(() => Promise.resolve({ holdingsRecords: [] })),
-}));
+useOkapiKy.mockReturnValue(() => Promise.resolve({ holdingsRecords: [] }));
 
 jest.mock('react-query', () => ({
   useQuery: jest.fn(),

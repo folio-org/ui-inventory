@@ -5,10 +5,10 @@ import {
   useOkapiKy,
   useNamespace,
 } from '@folio/stripes/core';
+import { LIMIT_MAX } from '@folio/stripes-inventory-components';
 
 import {
   DATA_IMPORT_JOB_PROFILES_ROUTE,
-  LIMIT_MAX,
 } from '../../constants';
 
 const useAllowedJobProfiles = (allowedJobProfileIds) => {

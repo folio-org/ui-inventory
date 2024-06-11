@@ -40,6 +40,17 @@ import {
   TextLink,
   DefaultMCLRowFormatter,
 } from '@folio/stripes/components';
+import {
+  advancedSearchQueryBuilder,
+  deleteFacetStates,
+  resetFacetStates,
+  FACETS,
+  queryIndexes,
+  advancedSearchIndexes,
+  segments,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+  OKAPI_TENANT_HEADER,
+} from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
 import FilterNavigation from '../FilterNavigation';
@@ -66,13 +77,8 @@ import {
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
-  queryIndexes,
-  segments,
-  OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
-  FACETS,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -87,8 +93,6 @@ import {
   getItem,
   setItem,
 } from '../../storage';
-import facetsStore from '../../stores/facetsStore';
-import { advancedSearchIndexes } from '../../filterConfig';
 
 import css from './instances.css';
 
@@ -274,6 +278,7 @@ class InstancesList extends React.Component {
     }
 
     const searchParams = new URLSearchParams(location.search);
+
     const filters = searchParams.get('filters');
 
     const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
@@ -464,11 +469,11 @@ class InstancesList extends React.Component {
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
     storeLastSegment(segment);
-    facetsStore.getState().resetFacetSettings();
     this.inputRef.current.focus();
   }
 
   handleSearchSegmentChange = (segment) => {
+    deleteFacetStates();
     this.refocusOnInputSearch(segment);
     this.setState({ selectedRows: {} });
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
@@ -995,7 +1000,7 @@ class InstancesList extends React.Component {
       selectedRows: {},
     });
 
-    facetsStore.getState().resetFacetSettings();
+    resetFacetStates();
     this.inputRef.current.focus();
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
@@ -1042,16 +1047,13 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
-  formatSearchableIndex = (index) => {
+  translateSearchOptionLabel = ({ label, value }) => {
     const { intl } = this.props;
 
-    const { prefix = '' } = index;
-    let label = index.label;
-    if (index.label.includes('ui-inventory')) {
-      label = prefix + intl.formatMessage({ id: index.label });
-    }
-
-    return { ...index, label };
+    return {
+      label: intl.formatMessage({ id: label }),
+      value,
+    };
   }
 
   findAndOpenItem = async (instance) => {
@@ -1230,28 +1232,9 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
-    const formattedSearchableIndexes = searchableIndexes.map(this.formatSearchableIndex);
+    const searchOptions = searchableIndexes.map(this.translateSearchOptionLabel);
 
-    const advancedSearchOptions = advancedSearchIndexes[segment].map(this.formatSearchableIndex);
-
-    const advancedSearchQueryBuilder = (rows) => {
-      const formatRowCondition = (row) => {
-        // use default row formatter, but wrap each search term with parentheses
-
-        const query = `${row.searchOption} ${row.match} ${row.query}`;
-        return query;
-      };
-
-      return rows.reduce((formattedQuery, row, index) => {
-        const rowCondition = formatRowCondition(row);
-
-        if (index === 0) {
-          return rowCondition;
-        }
-
-        return `${formattedQuery} ${row.bool} ${rowCondition}`;
-      }, '');
-    };
+    const advancedSearchOptions = advancedSearchIndexes[segment].map(this.translateSearchOptionLabel);
 
     const shortcuts = [
       {
@@ -1285,7 +1268,7 @@ class InstancesList extends React.Component {
             objectName="inventory"
             maxSortKeys={1}
             renderNavigation={this.renderNavigation}
-            searchableIndexes={formattedSearchableIndexes}
+            searchableIndexes={searchOptions}
             advancedSearchIndex={queryIndexes.ADVANCED_SEARCH}
             advancedSearchOptions={advancedSearchOptions}
             advancedSearchQueryBuilder={advancedSearchQueryBuilder}

@@ -574,7 +574,7 @@
     "item.status.inTransitTo": "In Transport nach {servicePoint}",
     "instanceMatchKey": "Instanz Match Key",
     "confirm": "Bestätigen",
-    "confirmModal.message": "<strong>{Titel} ({materialType})</strong> (Barcode: {barcode}) der Exemplarstatus wird als <strong>{status}</strong> markiert.",
+    "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barcode: {barcode}) der Exemplarstatus wird als <strong>{status}</strong> markiert.",
     "confirmModal.requestMessage": "{countIndex, plural, =-1 {Es können offene Bestandsanfragen für dieses Exemplar vorliegen.} =0 {} one {Es gibt {openRequestValue} für dieses Exemplar.} other {Es gibt {openRequestValue} für dieses Exemplar.}}",
     "saveInstancesUIIDS.info": "Anforderung zum Speichern von Instanzen-UUIDs wurde empfangen. Das Herunterladen der Datei kann einige Minuten dauern.",
     "instances.rows.select": "Instanz auswählen",
@@ -862,5 +862,9 @@
     "browse.classification.all": "Klassifikation (alle)",
     "browse.classification.dewey": "Dewey Decimal classification",
     "browse.classification.lc": "Library of Congress classification",
-    "normalizedClassificationNumber": "Klassifikation, normalisiert"
+    "normalizedClassificationNumber": "Klassifikation, normalisiert",
+    "affiliationChanging.notification": "Active affiliation has changed",
+    "affiliationChanging.namedNotification": "Active affiliation has changed to {name}",
+    "shortcut.editMARC": "Edit MARC record",
+    "shortcut.editMARC.noPermission": "You do not have permission to edit the record."
 }

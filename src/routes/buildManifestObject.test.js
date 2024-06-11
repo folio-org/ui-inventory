@@ -1,6 +1,7 @@
 import '../../test/jest/__mock__';
 
-import { queryIndexes } from '../constants';
+import { queryIndexes } from '@folio/stripes-inventory-components';
+
 import { instanceIndexes } from '../filterConfig';
 import { buildQuery } from './buildManifestObject';
 import buildStripes from '../../test/jest/__mock__/stripesCore.mock';

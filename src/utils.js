@@ -20,31 +20,29 @@ import {
   flatten,
   pick,
 } from 'lodash';
-import moment from 'moment';
 
 import {
   updateTenant,
   validateUser,
 } from '@folio/stripes/core';
 import { FormattedUTCDate } from '@folio/stripes/components';
+import {
+  segments,
+  LIMIT_MAX,
+  OKAPI_TENANT_HEADER,
+} from '@folio/stripes-inventory-components';
 
 import {
   itemStatusesMap,
   noValue,
   emptyList,
   indentifierTypeNames,
-  DATE_FORMAT,
-  DATE_TIME_RANGE_FILTER_FORMAT,
-  LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
   CONSORTIUM_PREFIX,
-  OKAPI_TENANT_HEADER,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
-  segments,
-  queryIndexes,
 } from './constants';
 import { removeItem } from './storage';
 
@@ -175,46 +173,6 @@ export function parseFiltersToStr(filters) {
   return newFilters.join(',');
 }
 
-export const retrieveDatesFromDateRangeFilterString = filterValue => {
-  let dateRange = {
-    startDate: '',
-    endDate: '',
-  };
-
-  if (filterValue) {
-    const [startDateString, endDateString] = filterValue.split(':');
-    const endDate = moment.utc(endDateString);
-    const startDate = moment.utc(startDateString);
-
-    dateRange = {
-      startDate: startDate.isValid()
-        ? startDate.format(DATE_FORMAT)
-        : '',
-      endDate: endDate.isValid()
-        ? endDate.format(DATE_FORMAT)
-        : '',
-    };
-  }
-
-  return dateRange;
-};
-
-
-export const makeDateRangeFilterString = (startDate, endDate) => {
-  return `${startDate}:${endDate}`;
-};
-
-export const buildDateRangeQuery = name => values => {
-  const [startDateString, endDateString] = values[0]?.split(':') || [];
-
-  if (!startDateString || !endDateString) return '';
-
-  const start = moment(startDateString).startOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
-  const end = moment(endDateString).endOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
-
-  return `${name}>="${start}" and ${name}<="${end}"`;
-};
-
 // Function which takes a filter name and returns
 // another function which can be used in filter config
 // to parse a given filter into a CQL manually.
@@ -265,18 +223,6 @@ export function filterItemsBy(name) {
 
     return { renderedItems };
   };
-}
-
-export function getQueryTemplate(queryIndex, indexes) {
-  const searchableIndex = indexes.find(({ value, subIndexes }) => {
-    if (subIndexes) {
-      return subIndexes.some(subIndex => subIndex.value === queryIndex);
-    }
-
-    return value === queryIndex;
-  });
-
-  return get(searchableIndex, 'queryTemplate');
 }
 
 export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) {
@@ -733,17 +679,6 @@ export const batchRequest = (requestFn, items, buildQuery = buildQueryByIds, _pa
 };
 
 /**
- * Accent Fold
- *
- * For example:
- * LÒpez => Lopez
- *
- * Link:
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-*/
-export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-/**
  * Parses http error to json and attaches an error type.
  *
  * @param httpError object
@@ -902,18 +837,19 @@ export const setRecordForDeletion = async (okapi, id, tenantId) => {
 
 export const parseEmptyFormValue = value => value;
 
-export const getTemplateForSelectedFromBrowseRecord = (queryParams, queryIndex, queryValue) => {
-  if (!queryParams?.selectedBrowseResult) {
-    return null;
+export const redirectToMarcEditPage = (pathname, instance, location, history) => {
+  const searchParams = new URLSearchParams(location.search);
+
+  searchParams.delete('relatedRecordVersion');
+
+  if (instance.shared) {
+    searchParams.append('shared', instance.shared.toString());
   }
 
-  if (queryIndex === queryIndexes.CONTRIBUTOR) {
-    const escapedQueryValue = queryValue.replaceAll('"', '\\"');
-
-    return `contributors.name==/string "${escapedQueryValue}"`;
-  }
-
-  return null;
+  history.push({
+    pathname,
+    search: searchParams.toString(),
+  });
 };
 
 export const sendCalloutOnAffiliationChange = (stripes, tenantId, callout) => {

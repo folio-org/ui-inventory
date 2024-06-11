@@ -59,6 +59,7 @@ const mockResources = {
 };
 const mockItemCount = 0;
 const mockGoTo = jest.fn();
+const mockSetKeepEditing = jest.fn();
 
 const queryClient = new QueryClient();
 
@@ -84,6 +85,7 @@ const HoldingsFormSetup = (props = {}) => (
             goTo={mockGoTo}
             isMARCRecord
             resources={mockResources}
+            setKeepEditing={mockSetKeepEditing}
             {...props}
           />
         </DataContext.Provider>
@@ -151,6 +153,39 @@ describe('HoldingsForm', () => {
       });
 
       expect(getByRole('button', { name: /Save & close/i })).toBeEnabled();
+    });
+  });
+
+  it('should render Save & keep editing and Save & close buttons', () => {
+    const { getByRole } = renderHoldingsForm({
+      showKeepEditingButton: true,
+    });
+
+    expect(getByRole('button', { name: 'Save & keep editing' })).toBeInTheDocument();
+    expect(getByRole('button', { name: 'Save & close' })).toBeInTheDocument();
+  });
+
+  describe('when clicking Save & close', () => {
+    it('should call setKeepEditing with false', () => {
+      const { getByRole } = renderHoldingsForm();
+
+      fireEvent.change(getByRole('textbox', { name: 'Call number' }), { target: { value: 'new call number' } });
+      fireEvent.click(getByRole('button', { name: 'Save & close' }));
+
+      expect(mockSetKeepEditing).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe('when clicking Save & keep editing', () => {
+    it('should call setKeepEditing with true', () => {
+      const { getByRole } = renderHoldingsForm({
+        showKeepEditingButton: true,
+      });
+
+      fireEvent.change(getByRole('textbox', { name: 'Call number' }), { target: { value: 'new call number' } });
+      fireEvent.click(getByRole('button', { name: 'Save & keep editing' }));
+
+      expect(mockSetKeepEditing).toHaveBeenCalledWith(true);
     });
   });
 });

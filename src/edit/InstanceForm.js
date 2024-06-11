@@ -4,6 +4,7 @@ import { Field } from 'react-final-form';
 import {
   filter,
   isEmpty,
+  noop,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { withRouter } from 'react-router';
@@ -236,13 +237,23 @@ class InstanceForm extends React.Component {
     );
   }
 
+  handleSaveClick = (e, keepEditing = false) => {
+    const {
+      handleSubmit,
+      setKeepEditing,
+    } = this.props;
+
+    setKeepEditing(keepEditing);
+    handleSubmit(e);
+  }
+
   getFooter = () => {
     const {
       onCancel,
-      handleSubmit,
       pristine,
       submitting,
       copy,
+      showKeepEditingButton,
     } = this.props;
 
     const cancelButton = (
@@ -254,13 +265,24 @@ class InstanceForm extends React.Component {
         <FormattedMessage id="ui-inventory.cancel" />
       </Button>
     );
+    const saveAndKeepEditingButton = (
+      <Button
+        buttonStyle="default mega"
+        buttonClass={styles.saveAndKeepEditingButton}
+        type="submit"
+        disabled={(pristine || submitting) && !copy}
+        onClick={(e) => this.handleSaveClick(e, true)}
+      >
+        <FormattedMessage id="stripes-components.saveAndKeepEditing" />
+      </Button>
+    );
     const saveButton = (
       <Button
         id="clickable-save-instance"
         buttonStyle="primary mega"
         type="submit"
         disabled={(pristine || submitting) && !copy}
-        onClick={handleSubmit}
+        onClick={(e) => this.handleSaveClick(e, false)}
       >
         <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
@@ -269,7 +291,12 @@ class InstanceForm extends React.Component {
     return (
       <PaneFooter
         renderStart={cancelButton}
-        renderEnd={saveButton}
+        renderEnd={(
+          <>
+            {showKeepEditingButton && saveAndKeepEditingButton}
+            {saveButton}
+          </>
+        )}
       />
     );
   };
@@ -813,6 +840,8 @@ InstanceForm.propTypes = {
   initialValues: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
+  setKeepEditing: PropTypes.func,
+  showKeepEditingButton: PropTypes.bool,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
     locale: PropTypes.string.isRequired,
@@ -832,6 +861,8 @@ InstanceForm.defaultProps = {
   instanceSource: 'FOLIO',
   initialValues: {},
   id: 'instance-form',
+  showKeepEditingButton: false,
+  setKeepEditing: noop,
 };
 
 export default withRouter(stripesFinalForm({

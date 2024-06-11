@@ -1,8 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 
 import { useShowCallout } from '@folio/stripes-acq-components';
-
-import { browseModeOptions } from '../../constants';
+import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 const useBrowseValidation = (browseMode) => {
   const showCallout = useShowCallout();
