@@ -103,7 +103,7 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
       </Row>
 
       {
-        withSummary && isUserInConsortiumMode(stripes) && activeTenant !== centralTenant ? (
+        withSummary && (isUserInConsortiumMode(stripes) && activeTenant !== centralTenant ? (
           <>
             {renderTenantOrderLinesAccordion(
               'active-tenant-order-lines-accordion',
@@ -126,7 +126,7 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
             isLoading={isLoadingActiveTenantOrderLines}
             tenantId={activeTenant}
           />
-        )
+        ))
       }
     </Accordion>
   );
