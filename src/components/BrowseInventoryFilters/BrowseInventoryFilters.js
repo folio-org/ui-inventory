@@ -1,40 +1,24 @@
 import PropTypes from 'prop-types';
 import { useContext } from 'react';
-import { flowRight, omit } from 'lodash';
 
-import { stripesConnect } from '@folio/stripes/core';
-
-import withFacets from '../../withFacets';
 import { DataContext } from '../../contexts';
-import { parseFiltersToStr } from '../../utils';
 import { InstanceFiltersBrowse } from '../InstanceFilters';
+import { browseConfig } from '../../filterConfig';
 
 const BrowseInventoryFilters = ({
-  activeFilters,
+  query,
   applyFilters,
-  fetchFacets,
-  resources,
-  searchIndex,
 }) => {
   const data = useContext(DataContext);
 
-  const filters = omit(activeFilters || {}, ['qindex', 'query']);
-  const isBrowseLookup = true;
   const filtersData = {
     ...data,
-    browseType: searchIndex,
-    onFetchFacets: fetchFacets(data, isBrowseLookup),
-    parentResources: resources,
-    query: {
-      query: activeFilters.query,
-      filters: parseFiltersToStr(filters),
-      qindex: searchIndex,
-    }
+    query,
   };
 
   return (
     <InstanceFiltersBrowse
-      activeFilters={filters}
+      filterConfig={browseConfig}
       data={filtersData}
       onChange={({ name, values }) => applyFilters(name, values)}
       onClear={(name) => applyFilters(name, [])}
@@ -43,14 +27,8 @@ const BrowseInventoryFilters = ({
 };
 
 BrowseInventoryFilters.propTypes = {
-  activeFilters: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired,
   applyFilters: PropTypes.func.isRequired,
-  fetchFacets: PropTypes.func.isRequired,
-  resources: PropTypes.object.isRequired,
-  searchIndex: PropTypes.string.isRequired,
 };
 
-export default flowRight(
-  stripesConnect,
-  withFacets
-)(BrowseInventoryFilters);
+export default BrowseInventoryFilters;

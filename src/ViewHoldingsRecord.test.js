@@ -43,10 +43,11 @@ const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components')
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
 
 const mockData = jest.fn().mockResolvedValue({ id: 'testId' });
+const mockGoTo = jest.fn();
 
 const defaultProps = {
   id: 'id',
-  goTo: jest.fn(),
+  goTo: mockGoTo,
   holdingsrecordid: 'holdingId',
   referenceTables: {
     holdingsSources: [{ id: 'sourceId', name: 'MARC' }],
@@ -57,7 +58,12 @@ const defaultProps = {
   resources: {
     holdingsRecords: {
       records: [
-        { sourceId: 'sourceId', temporaryLocationId: 'inactiveLocation' }
+        {
+          sourceId: 'sourceId',
+          temporaryLocationId: 'inactiveLocation',
+          id: 'holdingId',
+          _version: 1,
+        }
       ],
     },
     instances1: { records: [{ id: 'instanceId' }], hasLoaded: true },
@@ -268,6 +274,16 @@ describe('ViewHoldingsRecord actions', () => {
       fireEvent.click(await screen.findByRole('button', { name: 'expandAllSections' }));
 
       expect(spyOnexpandAllSections).toHaveBeenCalled();
+    });
+  });
+
+  describe('when using an editMARC shortcut', () => {
+    it('should redirect to marc edit page', async () => {
+      await act(async () => { renderViewHoldingsRecord(); });
+
+      fireEvent.click(screen.getByRole('button', { name: 'editMARC' }));
+
+      expect(mockGoTo).toHaveBeenLastCalledWith(`/inventory/quick-marc/edit-holdings/instanceId/${defaultProps.holdingsrecordid}?%2F=&relatedRecordVersion=1`);
     });
   });
 });

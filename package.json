@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "11.0.4",
+  "version": "12.0.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -63,7 +63,7 @@
       "electronic-access-relationships": "1.0",
       "holdings-note-types": "1.0",
       "holdings-sources": "1.0",
-      "holdings-storage": "3.0 4.4 5.0 6.0",
+      "holdings-storage": "3.0 4.4 5.0 6.0 7.0",
       "holdings-types": "1.0",
       "identifier-types": "1.1",
       "ill-policies": "1.0",
@@ -570,7 +570,8 @@
           "browse.classification-numbers.instances.collection.get",
           "perms.users.get",
           "inventory-storage.bound-with-parts.collection.get",
-          "consortium-search.locations.collection.get"
+          "consortium-search.locations.collection.get",
+          "browse.config.collection.get"
         ],
         "visible": true
       },
@@ -895,6 +896,7 @@
     "@folio/stripes-components": "^12.1.2",
     "@folio/stripes-connect": "^9.1.0",
     "@folio/stripes-core": "^10.1.1",
+    "@folio/stripes-inventory-components": "^1.0.0",
     "@folio/stripes-marc-components": "^1.0.1",
     "@folio/stripes-smart-components": "^9.1.1",
     "@folio/stripes-testing": "^4.6.0",
@@ -938,6 +940,7 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^9.1.2",
+    "@folio/stripes-inventory-components": "^1.0.0",
     "@folio/stripes-marc-components": "^1.0.1",
     "react": "^18.2.0",
     "react-intl": "^6.4.4",

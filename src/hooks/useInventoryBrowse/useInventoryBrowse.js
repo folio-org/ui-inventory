@@ -13,10 +13,10 @@ import {
   buildFilterQuery,
   getFiltersCount,
 } from '@folio/stripes-acq-components';
+import { FACETS_TO_REQUEST } from '@folio/stripes-inventory-components';
 
 import {
   BROWSE_RESULTS_COUNT,
-  FACETS_TO_REQUEST,
   INDEXES_WITH_CALL_NUMBER_TYPE_PARAM,
   PAGE_DIRECTIONS,
   undefinedAsString,

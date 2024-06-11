@@ -1,69 +1,17 @@
-import '../../../test/jest/__mock__';
-
-import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import { FACETS } from '@folio/stripes-inventory-components';
 
 import InstanceFilters from './InstanceFilters';
-import { FACETS, USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '../../constants';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 
-
-jest.mock('../CheckboxFacet/CheckboxFacet', () => ({ name, onChange }) => ((
-  <button type="button" onClick={() => onChange()}>change facet {name}</button>
-)));
-
-jest.mock('../../facetUtils', () => ({
-  ...jest.requireActual('../../facetUtils'),
-  getSourceOptions: jest.fn(),
-  getSuppressedOptions: jest.fn(),
-}));
-
-const activeFilters = {
-  [FACETS.SHARED]: ['SHARED1'],
-  [FACETS.HELD_BY]: ['HELD_BY1'],
-  [FACETS.EFFECTIVE_LOCATION]: ['loc1'],
-  [FACETS.ITEM_STATUS]: ['ITEM_STATUS1'],
-  [FACETS.RESOURCE]: ['RESOURCE1'],
-  [FACETS.FORMAT]: ['Format1'],
-  [FACETS.LANGUAGE]: ['languages'],
-  [FACETS.MODE]: ['Mode1'],
-  [FACETS.NATURE_OF_CONTENT]: ['NATUREOFCONTENT1'],
-  [FACETS.STAFF_SUPPRESS]: ['STAFFSUPPRESS1'],
-  [FACETS.INSTANCES_DISCOVERY_SUPPRESS]: ['DISCOVERYSUPPRESS1'],
-  [FACETS.STATISTICAL_CODE_IDS]: ['STATISTICALCODEIDS1'],
-  [FACETS.CREATED_DATE]: ['2022-01-01'],
-  [FACETS.UPDATED_DATE]: ['2022-01-01'],
-  [FACETS.STATUS]: ['STATUS1'],
-  [FACETS.SOURCE]: ['SOURCE1']
-};
-
-const resources = {
-  facets: {
-    hasLoaded: true,
-    resource: 'facets',
-    records: [{
-      'shared': { values: ['shared1'] },
-      'holdings.tenantId': { values: ['heldby1'] },
-      'items.effectiveLocationId': { values: ['effectiveLocationId1'] },
-      'languages': { values: ['languages'] },
-      'statisticalCodeIds': { values: ['statisticalCodeIds1'] },
-      'discoverySuppress': { values: ['discoverySuppress1'] },
-      'source': { values: ['source1'] },
-      'instanceTags': { values: ['instanceTags1'] },
-      'statusId': { values: ['statusId1'] },
-      'staffSuppress': { values: ['staffSuppress1'] },
-      'natureOfContentTermIds': { values: ['natureOfContentTermIds1'] },
-      'modeOfIssuanceId': { values: ['modeOfIssuanceId1'] },
-      'instanceFormatIds': { values: ['instanceFormatIds1'] },
-      'instanceTypeId': { values: ['instanceTypeId1'] },
-    }],
-    other: { totalRecords: 0 }
-  },
+const filterConfig = {
+  filters: [],
+  indexes: [],
 };
 
 const data = {
@@ -76,10 +24,10 @@ const data = {
   tagsRecords: [],
   natureOfContentTerms: [],
   query: {
-    filters: 'language.eng',
+    filters: 'language.eng,shared.true,tenantId.id,effectiveLocation.l,language.eng,resource.r,format.f,mode.m,' +
+      'natureOfContent.fake-n,staffSuppress.true,statisticalCodeIds.sc,createdDate.123,updatedDate.234,' +
+      'instanceStatus.st,source.marc,instancesDiscoverySuppress.fake-sd',
   },
-  onFetchFacets: jest.fn(),
-  parentResources: resources,
 };
 const onChange = jest.fn();
 const onClear = jest.fn();
@@ -88,11 +36,10 @@ const renderInstanceFilters = () => {
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
         <InstanceFilters
-          activeFilters={activeFilters}
+          filterConfig={filterConfig}
           data={data}
           onChange={onChange}
           onClear={onClear}
-          parentResources={resources}
         />
       </ModuleHierarchyProvider>
     </Router>,
@@ -238,26 +185,6 @@ describe('InstanceFilters', () => {
     userEvent.click(Clearselectedfilters);
     await waitFor(() => {
       expect(onClear).toBeCalledWith(FACETS.SOURCE);
-    });
-  });
-
-  describe('when user selects staff suppress options', () => {
-    const mockSetItem = jest.fn();
-    beforeEach(() => {
-      global.Storage.prototype.setItem = mockSetItem;
-    });
-
-    afterEach(() => {
-      global.Storage.prototype.setItem.mockReset();
-    });
-
-    it('should set a flag that user selected some option', async () => {
-      renderInstanceFilters();
-      const staffSuppressFacet = screen.queryByRole('button', { name: 'Staff suppress filter list' });
-      await userEvent.click(staffSuppressFacet);
-      await userEvent.click(screen.getByText('change facet staffSuppress'));
-
-      expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, true);
     });
   });
 });

@@ -4,10 +4,10 @@ import { keyBy } from 'lodash';
 
 import { screen, waitFor, configure, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { within } from '@folio/jest-config-stripes/testing-library/dom';
+import { useLocationsQuery } from '@folio/stripes-inventory-components';
 
 import { DataContext } from '../../contexts';
 import { useHoldings, useInstanceHoldingsQuery } from '../../providers';
-import { useLocationsQuery } from '../../hooks';
 import { holdingsById, identifierTypes, instanceRelationshipTypes } from '../../../test/fixtures';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
@@ -31,7 +31,6 @@ jest.mock('../../hooks', () => ({
     isLoading: false,
     isFetching: false,
   })),
-  useLocationsQuery: jest.fn()
 }));
 
 useHoldings.mockImplementation(() => ({
@@ -44,7 +43,7 @@ useInstanceHoldingsQuery.mockImplementation((id) => ({
 }));
 
 useLocationsQuery.mockImplementation(() => ({
-  data: Object.values(locationsById)
+  locations: Object.values(locationsById)
 }));
 
 const onClose = jest.fn();

@@ -25,4 +25,3 @@ export { default as BrowseResultsList } from './BrowseResultsList';
 export { default as BrowseInventoryFilters } from './BrowseInventoryFilters';
 export { default as MissedMatchItem } from './MissedMatchItem';
 export { default as withSingleRecordImport } from './withSingleRecordImport';
-export { default as HeldByFacet } from './HeldByFacet';

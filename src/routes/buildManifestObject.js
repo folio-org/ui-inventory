@@ -4,48 +4,26 @@ import {
 
 import {
   makeQueryFunction,
-  advancedSearchQueryToRows,
 } from '@folio/stripes/smart-components';
 import {
-  CQL_FIND_ALL,
-  fieldSearchConfigurations,
-  queryIndexes,
   FACETS,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
-} from '../constants';
-import {
+  CQL_FIND_ALL,
+  queryIndexes,
   getQueryTemplate,
+  getTemplateForSelectedFromBrowseRecord,
+  getAdvancedSearchTemplate,
+  getDefaultQindex,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+} from '@folio/stripes-inventory-components';
+
+import {
   getIsbnIssnTemplate,
   replaceFilter,
-  getTemplateForSelectedFromBrowseRecord,
 } from '../utils';
 import { getFilterConfig } from '../filterConfig';
 
 const INITIAL_RESULT_COUNT = 100;
 const DEFAULT_SORT = 'title';
-
-const getAdvancedSearchQueryTemplate = (queryIndex, matchOption, query) => {
-  const template = fieldSearchConfigurations[queryIndex]?.[matchOption];
-
-  return typeof template === 'function'
-    ? template({ query })
-    : template;
-};
-
-export const getAdvancedSearchTemplate = (queryValue) => {
-  return advancedSearchQueryToRows(queryValue).reduce((acc, row) => {
-    const rowTemplate = getAdvancedSearchQueryTemplate(row.searchOption, row.match, row.query);
-
-    if (!rowTemplate) {
-      return acc;
-    }
-
-    const rowQuery = rowTemplate.replaceAll('%{query.query}', row.query);
-
-    const formattedRow = `${row.bool} ${rowQuery}`.trim();
-    return `${acc} ${formattedRow}`;
-  }, '').trim();
-};
 
 const applyDefaultStaffSuppressFilter = (stripes, query) => {
   const isUserTouchedStaffSuppress = JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY));
@@ -70,7 +48,7 @@ const applyDefaultStaffSuppressFilter = (stripes, query) => {
 export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
   const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
   const query = { ...resourceData.query };
-  const queryIndex = queryParams?.qindex ?? 'all';
+  const queryIndex = queryParams?.qindex || getDefaultQindex(queryParams.segment);
   const queryValue = get(queryParams, 'query', '');
   let queryTemplate = getQueryTemplate(queryIndex, indexes);
 
@@ -84,7 +62,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     queryTemplate = getAdvancedSearchTemplate(queryValue);
   }
 
-  if (queryIndex.match(/isbn|issn/)) {
+  if ([queryIndexes.ISBN, queryIndexes.ISSN].includes(queryIndex)) {
     // eslint-disable-next-line camelcase
     const identifierTypes = resourceData?.identifier_types?.records ?? [];
     queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
@@ -116,7 +94,7 @@ export function buildQuery(queryParams, pathComponents, resourceData, logger, pr
     filters,
     2,
     null,
-    queryIndex !== 'querySearch',
+    queryIndex !== queryIndexes.QUERY_SEARCH,
   )(queryParams, pathComponents, resourceData, logger, props);
 }
 

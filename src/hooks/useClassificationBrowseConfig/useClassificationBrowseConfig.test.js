@@ -3,20 +3,16 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
+
 import {
   renderHook,
   act,
 } from '@folio/jest-config-stripes/testing-library/react';
+import { useOkapiKy } from '@folio/stripes/core';
 
 import '../../../test/jest/__mock__';
 
-import { useTenantKy } from '../../common';
-import useLocationsQuery from './useLocationsQuery';
-
-jest.mock('../../common', () => ({
-  ...jest.requireActual('../../common'),
-  useTenantKy: jest.fn(),
-}));
+import useClassificationBrowseConfig from './useClassificationBrowseConfig';
 
 const queryClient = new QueryClient();
 const wrapper = ({ children }) => (
@@ -25,11 +21,11 @@ const wrapper = ({ children }) => (
   </QueryClientProvider>
 );
 
-describe('useLocationsQuery', () => {
+describe('useClassificationBrowseConfig', () => {
   beforeEach(() => {
-    useTenantKy.mockClear().mockReturnValue({
+    useOkapiKy.mockClear().mockReturnValue({
       get: () => ({
-        json: () => Promise.resolve({ locations: [{ id: 'location-id' }] }),
+        json: () => Promise.resolve({ configs: [{ id: 'all', typeIds: [] }] }),
       }),
     });
   });
@@ -38,11 +34,11 @@ describe('useLocationsQuery', () => {
     jest.clearAllMocks();
   });
 
-  it('should fetch locations', async () => {
-    const { result } = renderHook(() => useLocationsQuery(), { wrapper });
+  it('should fetch classification browse config', async () => {
+    const { result } = renderHook(() => useClassificationBrowseConfig(), { wrapper });
 
     await act(() => !result.current.isLoading);
 
-    expect(result.current.data).toEqual([{ id: 'location-id' }]);
+    expect(result.current.classificationBrowseConfig).toEqual([{ id: 'all', typeIds: [] }]);
   });
 });

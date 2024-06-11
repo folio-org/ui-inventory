@@ -1,60 +1,28 @@
-import React, {
-  useMemo,
-  useRef,
-  useEffect,
-} from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import keyBy from 'lodash/keyBy';
 
-import {
-  stripesConnect,
-  useStripes,
-} from '@folio/stripes/core';
+import { stripesConnect } from '@folio/stripes/core';
+import { useCommonData } from '@folio/stripes-inventory-components';
 
-import { useLocationsForTenants } from '../hooks';
+import { useClassificationBrowseConfig } from '../hooks';
 import { DataContext } from '../contexts';
-import { OKAPI_TENANT_HEADER } from '../constants';
-import { isUserInConsortiumMode } from '../utils';
 
 // Provider which loads dictionary data used in various places in ui-inventory.
 // The data is fetched once when the ui-inventory module is loaded.
 const DataProvider = ({
   children,
   resources,
-  mutator,
 }) => {
   const { manifest } = DataProvider;
-  const dataRef = useRef({});
-  const stripes = useStripes();
 
-  const { consortium } = stripes.user.user;
-
-  useEffect(() => {
-    if (!consortium) {
-      return;
-    }
-
-    mutator.consortiaTenants.GET({
-      path: `consortia/${consortium?.id}/tenants?limit=1000`,
-      headers: {
-        [OKAPI_TENANT_HEADER]: consortium?.centralTenantId,
-      },
-    });
-  }, [consortium?.id]);
-
-  const tenantIds = resources.consortiaTenants.records.map(tenant => tenant.id);
-
-  const { data: locationsOfAllTenants } = useLocationsForTenants({ tenantIds });
-
-  useEffect(() => {
-    if (isUserInConsortiumMode(stripes)) {
-      return;
-    }
-
-    mutator.locations.GET({ tenant: stripes.okapi.tenant });
-  }, [stripes.okapi.tenant]);
+  const { commonData, isCommonDataLoading } = useCommonData();
+  const { classificationBrowseConfig, isLoading: isBrowseConfigLoading } = useClassificationBrowseConfig();
 
   const isLoading = useMemo(() => {
+    if (isCommonDataLoading || isBrowseConfigLoading) {
+      return true;
+    }
     // eslint-disable-next-line guard-for-in
     for (const key in manifest) {
       const isResourceLoading = !resources?.[key]?.hasLoaded && !resources?.[key]?.failed && resources?.[key]?.isPending;
@@ -65,74 +33,53 @@ const DataProvider = ({
     }
 
     return false;
-  }, [resources, manifest]);
+  }, [resources, manifest, isCommonDataLoading, isBrowseConfigLoading]);
 
-  useEffect(() => {
-    if (isLoading || !dataRef.current) {
-      return;
-    }
-
-    const loadedData = {};
+  const data = useMemo(() => {
+    const loadedData = {
+      ...commonData,
+    };
 
     Object.keys(manifest).forEach(key => {
       loadedData[key] = resources?.[key]?.records ?? [];
     });
 
-    if (isUserInConsortiumMode(stripes)) {
-      loadedData.locations = locationsOfAllTenants;
-    }
-
     const {
-      locations,
       identifierTypes,
-      holdingsSources,
       instanceRelationshipTypes,
-      statisticalCodeTypes,
-      statisticalCodes,
-      consortiaTenants,
     } = loadedData;
 
-    loadedData.locationsById = keyBy(locations, 'id');
     loadedData.identifierTypesById = keyBy(identifierTypes, 'id');
     loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
-    loadedData.holdingsSourcesByName = keyBy(holdingsSources, 'name');
+    loadedData.holdingsSourcesByName = keyBy(commonData.holdingsSources, 'name');
     loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
-    loadedData.consortiaTenantsById = keyBy(consortiaTenants, 'id');
-    const statisticalCodeTypesById = keyBy(statisticalCodeTypes, 'id');
+    loadedData.classificationBrowseConfig = classificationBrowseConfig;
 
-    // attach full statisticalCodeType object to each statisticalCode
-    loadedData.statisticalCodes = statisticalCodes.map(sc => {
-      sc.statisticalCodeType = statisticalCodeTypesById[sc.statisticalCodeTypeId];
-      return sc;
-    });
-
-    dataRef.current = loadedData;
-  }, [resources, manifest, isLoading, dataRef]);
+    return loadedData;
+  }, [
+    resources,
+    manifest,
+    commonData,
+    classificationBrowseConfig,
+  ]);
 
   if (isLoading) {
     return null;
   }
 
   return (
-    <DataContext.Provider value={dataRef.current}>
+    <DataContext.Provider value={data}>
       {children}
     </DataContext.Provider>
   );
 };
 
 DataProvider.propTypes = {
-  mutator: PropTypes.object.isRequired,
   resources: PropTypes.object.isRequired,
   children: PropTypes.object,
 };
 
 DataProvider.manifest = {
-  consortiaTenants: {
-    type: 'okapi',
-    records: 'tenants',
-    accumulate: true,
-    throwErrors: false,
-  },
   identifierTypes: {
     type: 'okapi',
     records: 'identifierTypes',
@@ -154,20 +101,6 @@ DataProvider.manifest = {
     resourceShouldRefresh: true,
     throwErrors: false,
   },
-  instanceFormats: {
-    type: 'okapi',
-    records: 'instanceFormats',
-    path: 'instance-formats?limit=1000&query=cql.allRecords=1 sortby name',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
-  instanceTypes: {
-    type: 'okapi',
-    records: 'instanceTypes',
-    path: 'instance-types?limit=1000&query=cql.allRecords=1 sortby name',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
   classificationTypes: {
     type: 'okapi',
     records: 'classificationTypes',
@@ -182,36 +115,10 @@ DataProvider.manifest = {
     resourceShouldRefresh: true,
     throwErrors: false,
   },
-  locations: {
-    type: 'okapi',
-    records: 'locations',
-    path: 'locations',
-    params: {
-      limit: (q, p, r, l, props) => props?.stripes?.config?.maxUnpagedResourceCount || 1000,
-      query: 'cql.allRecords=1 sortby name',
-    },
-    accumulate: true,
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
   instanceRelationshipTypes: {
     type: 'okapi',
     records: 'instanceRelationshipTypes',
     path: 'instance-relationship-types?limit=1000&query=cql.allRecords=1 sortby name',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
-  instanceStatuses: {
-    type: 'okapi',
-    records: 'instanceStatuses',
-    path: 'instance-statuses?limit=1000&query=cql.allRecords=1 sortby name',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
-  modesOfIssuance: {
-    type: 'okapi',
-    records: 'issuanceModes',
-    path: 'modes-of-issuance?limit=1000&query=cql.allRecords=1 sortby name',
     resourceShouldRefresh: true,
     throwErrors: false,
   },
@@ -233,31 +140,10 @@ DataProvider.manifest = {
     resourceShouldRefresh: true,
     throwErrors: false,
   },
-  statisticalCodeTypes: {
-    type: 'okapi',
-    records: 'statisticalCodeTypes',
-    path: 'statistical-code-types?limit=1000&query=cql.allRecords=1 sortby name',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
-  statisticalCodes: {
-    type: 'okapi',
-    records: 'statisticalCodes',
-    path: 'statistical-codes?limit=2000&query=cql.allRecords=1 sortby name',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
   illPolicies: {
     type: 'okapi',
     path: 'ill-policies?limit=1000&query=cql.allRecords=1 sortby name',
     records: 'illPolicies',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
-  holdingsTypes: {
-    type: 'okapi',
-    path: 'holdings-types?limit=1000&query=cql.allRecords=1 sortby name',
-    records: 'holdingsTypes',
     resourceShouldRefresh: true,
     throwErrors: false,
   },
@@ -293,24 +179,6 @@ DataProvider.manifest = {
     resourceShouldRefresh: true,
     throwErrors: false,
   },
-  natureOfContentTerms: {
-    type: 'okapi',
-    path: 'nature-of-content-terms?limit=1000&query=cql.allRecords=1 sortby name',
-    records: 'natureOfContentTerms',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
-  materialTypes: {
-    type: 'okapi',
-    path: 'material-types',
-    params: {
-      query: 'cql.allRecords=1 sortby name',
-      limit: '1000',
-    },
-    records: 'mtypes',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  },
   loanTypes: {
     type: 'okapi',
     path: 'loan-types',
@@ -329,17 +197,6 @@ DataProvider.manifest = {
     type: 'okapi',
     resourceShouldRefresh: true,
   },
-  holdingsSources: {
-    type: 'okapi',
-    path: 'holdings-sources',
-    params: {
-      query: 'cql.allRecords=1 sortby name',
-      limit: '1000',
-    },
-    records: 'holdingsRecordsSources',
-    resourceShouldRefresh: true,
-    throwErrors: false,
-  }
 };
 
 export default stripesConnect(DataProvider);

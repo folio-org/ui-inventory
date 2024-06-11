@@ -1,8 +1,8 @@
 import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
+import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
 
-import { OKAPI_TENANT_HEADER } from '../../../constants';
 import useTenantKy from './useTenantKy';
 
 const reqMock = {

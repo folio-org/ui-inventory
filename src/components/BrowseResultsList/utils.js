@@ -6,7 +6,7 @@ import {
   browseModeOptions,
   FACETS,
   queryIndexes,
-} from '../../constants';
+} from '@folio/stripes-inventory-components';
 
 export const isRowPreventsClick = (row, browseOption) => {
   /**
