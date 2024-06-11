@@ -1,6 +1,10 @@
 import { useQuery } from 'react-query';
 
-import { useOkapiKy, useStripes } from '@folio/stripes/core';
+import {
+  useNamespace,
+  useOkapiKy,
+  useStripes,
+} from '@folio/stripes/core';
 import { LIMIT_MAX } from '@folio/stripes-inventory-components';
 
 
@@ -10,8 +14,9 @@ const useReceivingHistory = (holding, tenant, options = {}) => {
   const holdingReceivingHistory = holding.receivingHistory?.entries || [];
 
   const ky = useOkapiKy({ tenant });
+  const [namespace] = useNamespace({ key: 'holding-receiving-history' });
 
-  const queryKey = ['ui-inventory', 'holding-pieces', holding.id, tenant];
+  const queryKey = [namespace, holding.id, tenant];
   const queryFn = () => ky
     .get('orders/pieces', {
       searchParams: {

@@ -14,28 +14,6 @@ import HoldingReceivingHistoryList from './HoldingReceivingHistoryList';
 
 import css from './HoldingReceivingHistory.css';
 
-/* const activeTenantReceivings = [{
-  displaySummary: 'test',
-  copyNumber: '111111',
-  enumeration: 'en.1',
-  chronology: '123',
-  receivedDate: '03.01.2001',
-  comment: 'tst comment',
-  displayToPublic: true,
-  source: 'user',
-}];
-
-const centralTenantReceivings = [{
-  displaySummary: 'test222',
-  copyNumber: '111111',
-  enumeration: 'en.1',
-  chronology: '123',
-  receivedDate: '03.01.2001',
-  comment: 'tst comment',
-  displayToPublic: true,
-  source: 'user',
-}]; */
-
 const HoldingReceivingHistory = ({ holding }) => {
   const stripes = useStripes();
   const activeTenant = stripes.okapi.tenant;

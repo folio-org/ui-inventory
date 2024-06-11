@@ -25,16 +25,16 @@ const columnMapping = {
 };
 
 const formatter = {
-  [ACQUISITION_COLUMN_NAMES.poLineNumber]: i => <Link to={`/orders/lines/view/${i.poLineId}`}>{i.poLineNumber}</Link>,
-  [ACQUISITION_COLUMN_NAMES.orderStatus]: i => (
+  [ACQUISITION_COLUMN_NAMES.poLineNumber]: acq => <Link to={`/orders/lines/view/${acq.poLineId}`}>{acq.poLineNumber}</Link>,
+  [ACQUISITION_COLUMN_NAMES.orderStatus]: acq => (
     <>
-      <FormattedMessage id={`ui-inventory.acq.orderStatus.${i.orderStatus}`} />
-      {i.orderCloseReason?.reason && ` - ${i.orderCloseReason.reason}`}
+      <FormattedMessage id={`ui-inventory.acq.orderStatus.${acq.orderStatus}`} />
+      {acq.orderCloseReason?.reason && ` - ${acq.orderCloseReason.reason}`}
     </>
   ),
-  [ACQUISITION_COLUMN_NAMES.polReceiptStatus]: i => <FormattedMessage id={`ui-inventory.acq.receiptStatus.${i.polReceiptStatus}`} />,
-  [ACQUISITION_COLUMN_NAMES.orderSentDate]: i => getDateWithTime(i.orderSentDate),
-  [ACQUISITION_COLUMN_NAMES.orderType]: i => <FormattedMessage id={`ui-inventory.acq.orderType.${i.orderType}`} />,
+  [ACQUISITION_COLUMN_NAMES.polReceiptStatus]: acq => <FormattedMessage id={`ui-inventory.acq.receiptStatus.${acq.polReceiptStatus}`} />,
+  [ACQUISITION_COLUMN_NAMES.orderSentDate]: acq => getDateWithTime(acq.orderSentDate),
+  [ACQUISITION_COLUMN_NAMES.orderType]: acq => <FormattedMessage id={`ui-inventory.acq.orderType.${acq.orderType}`} />,
 };
 
 const HoldingAcquisitionList = ({
