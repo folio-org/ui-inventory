@@ -22,6 +22,7 @@ function HelperApp({
       link={`inventory/instances/${params.id}`}
       onToggle={onClose}
       getEntity={getEntity}
+      hasOptimisticLocking
     />
   );
 }

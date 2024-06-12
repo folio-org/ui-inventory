@@ -31,6 +31,7 @@
 * Edit Inventory Holdings: Display a Save & keep editing button. Refs UIIN-2404.
 * "holdings-storage" API version upgrade. Refs UIIN-2926.
 * Edit Inventory Items: Display a Save & keep editing button. Refs UIIN-2456.
+* Prevent users from editing tags when Instance/Holdings/Item is updated. Fixes UIIN-2941.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
