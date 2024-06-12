@@ -1443,6 +1443,7 @@ class ItemView extends React.Component {
                         getEntity={this.getEntity}
                         getEntityTags={this.getEntityTags}
                         entityTagsPath="tags"
+                        hasOptimisticLocking
                       />
                     )}
 

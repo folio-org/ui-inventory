@@ -53,8 +53,8 @@ const ViewInstanceWrapper = (props) => {
     }, []));
   }, [centralTenantPermissions]);
 
-  const mutateInstance = (entity, { onError }) => {
-    mutateEntity(entity, { onSuccess: refetch, onError });
+  const mutateInstance = (entity, { onError, onSettled }) => {
+    mutateEntity(entity, { onSuccess: refetch, onError, onSettled });
   };
 
   return (
