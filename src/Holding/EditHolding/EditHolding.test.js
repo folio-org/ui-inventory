@@ -26,7 +26,7 @@ jest.mock('../../hooks', () => ({
 jest.mock('../../common/hooks', () => ({
   ...jest.requireActual('../../common/hooks'),
   useInstanceQuery: jest.fn().mockReturnValue({ instance: {}, isLoading: false }),
-  useHolding: jest.fn().mockReturnValue({ holding: {}, isLoading: false }),
+  useHolding: jest.fn().mockReturnValue({ holding: {}, isFetching: false }),
 }));
 
 const defaultProps = {

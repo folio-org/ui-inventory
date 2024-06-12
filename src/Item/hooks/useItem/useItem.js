@@ -8,7 +8,7 @@ const useItem = (itemId) => {
   const ky = useOkapiKy();
   const [namespace] = useNamespace({ key: 'item' });
 
-  const { isLoading, data: item = {}, refetch } = useQuery(
+  const { isLoading, isFetching, data: item = {}, refetch } = useQuery(
     [namespace, itemId],
     () => ky.get(`inventory/items/${itemId}`).json(),
     { enabled: Boolean(itemId) },
@@ -23,6 +23,7 @@ const useItem = (itemId) => {
 
   return ({
     isLoading,
+    isFetching,
     item,
     refetch,
   });
