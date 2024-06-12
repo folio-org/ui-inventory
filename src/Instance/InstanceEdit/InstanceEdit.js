@@ -48,7 +48,7 @@ const InstanceEdit = ({
   const [initialValues, setInitialValues] = useState();
   const callout = useCallout();
   const keepEditing = useRef(false);
-  const { instance, isLoading: isInstanceLoading, refetch: refetchInstance } = useInstance(instanceId);
+  const { instance, isFetching: isInstanceLoading, refetch: refetchInstance } = useInstance(instanceId);
   const parentInstances = useLoadSubInstances(instance?.parentInstances, 'superInstanceId');
   const childInstances = useLoadSubInstances(instance?.childInstances, 'subInstanceId');
 

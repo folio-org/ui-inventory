@@ -82,7 +82,7 @@ describe('InstanceEdit', () => {
 
   describe('when instance is loading', () => {
     beforeEach(() => {
-      useInstance.mockReturnValue({ isLoading: true });
+      useInstance.mockReturnValue({ isFetching: true });
     });
 
     it('should render loading icon', () => {
@@ -95,7 +95,7 @@ describe('InstanceEdit', () => {
   describe('when instance is not found', () => {
     beforeEach(() => {
       useInstance.mockReturnValue({
-        isLoading: false,
+        isFetching: false,
         instance: null,
       });
     });
@@ -110,7 +110,7 @@ describe('InstanceEdit', () => {
   describe('when edit instance and save changes', () => {
     beforeEach(() => {
       useInstance.mockReturnValue({
-        isLoading: false,
+        isFetching: false,
         instance: mockInstance,
       });
     });

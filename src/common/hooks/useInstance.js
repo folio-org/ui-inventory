@@ -14,6 +14,7 @@ const useInstance = (id) => {
 
   const {
     isLoading: isInstanceLoading,
+    isFetching,
     instance: data,
     refetch,
     ...rest
@@ -39,6 +40,7 @@ const useInstance = (id) => {
   return {
     instance,
     isLoading,
+    isFetching,
     refetch,
     ...rest,
   };

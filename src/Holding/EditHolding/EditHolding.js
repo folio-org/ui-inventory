@@ -42,7 +42,7 @@ const EditHolding = ({
   const [httpError, setHttpError] = useState();
   const keepEditing = useRef(false);
   const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
-  const { holding, isLoading: isHoldingLoading, refetch: refetchHolding } = useHolding(holdingId);
+  const { holding, isFetching: isHoldingLoading, refetch: refetchHolding } = useHolding(holdingId);
   const { totalRecords: itemCount, isLoading: isItemsLoading } = useHoldingItemsQuery(holdingId, {
     searchParams: { limit: 1 },
   });
