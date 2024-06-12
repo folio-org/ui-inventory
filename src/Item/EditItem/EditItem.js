@@ -37,7 +37,7 @@ const EditItem = ({
   const keepEditing = useRef(false);
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
-  const { isLoading: isItemLoading, item, refetch: refetchItem } = useItem(itemId);
+  const { isFetching: isItemLoading, item, refetch: refetchItem } = useItem(itemId);
   const callout = useCallout();
   const stripes = useStripes();
 
