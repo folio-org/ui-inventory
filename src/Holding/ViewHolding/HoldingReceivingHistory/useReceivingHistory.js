@@ -28,9 +28,9 @@ const useReceivingHistory = (holding, tenant, options = {}) => {
     .json()
     .then(({ pieces }) => pieces.map(piece => ({ ...piece, source: 'receiving' })));
 
-  const { data: pieces = [], isFetching: isLoading } = useQuery({ queryKey, queryFn, ...options });
+  const { data: pieces = [], isFetching } = useQuery({ queryKey, queryFn, ...options });
 
-  return { isLoading, receivingHistory: [...holdingReceivingHistory, ...pieces] };
+  return { isFetching, receivingHistory: [...holdingReceivingHistory, ...pieces] };
 };
 
 export default useReceivingHistory;

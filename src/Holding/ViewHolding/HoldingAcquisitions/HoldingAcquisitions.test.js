@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import { useStripes } from '@folio/stripes/core';
+import {
+  useStripes,
+  checkIfUserInMemberTenant,
+} from '@folio/stripes/core';
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
 
-import '../../../../test/jest/__mock__';
 import {
   renderWithIntl,
   translationsProperties,
@@ -17,11 +19,7 @@ import {
 import HoldingAcquisitions from './HoldingAcquisitions';
 import useHoldingOrderLines from './useHoldingOrderLines';
 
-import * as utils from '../../../utils';
-
 jest.mock('./useHoldingOrderLines', () => jest.fn());
-
-const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 
 const renderHoldingAcquisitions = ({
   holding = {},
@@ -56,7 +54,7 @@ describe('HoldingAcquisitions component', () => {
 
   describe('when user is non-consortial tenant', () => {
     it('should display acquisition accordion and fetched holding acquisition data', () => {
-      spyOnIsUserInConsortiumMode.mockReturnValue(false);
+      checkIfUserInMemberTenant.mockClear().mockReturnValue(false);
       useStripes.mockClear().mockReturnValue({
         hasInterface: () => true,
         okapi: { tenant: 'diku' },
@@ -65,14 +63,14 @@ describe('HoldingAcquisitions component', () => {
 
       const { container } = renderHoldingAcquisitions({ holding: { id: 'holdingUid' } });
 
-      expect(container.querySelector('#acc06')).toBeInTheDocument();
+      expect(container.querySelector('#acquisition-accordion')).toBeInTheDocument();
       expect(screen.getByText(holdingOrderLine.poLineNumber)).toBeInTheDocument();
     });
   });
 
   describe('when user is in central tenant', () => {
     it('should display acquisition accordion and fetched holding acquisition data', () => {
-      spyOnIsUserInConsortiumMode.mockReturnValue(true);
+      checkIfUserInMemberTenant.mockClear().mockReturnValue(false);
       useStripes.mockClear().mockReturnValue({
         hasInterface: () => true,
         okapi: { tenant: 'consortium' },
@@ -87,14 +85,14 @@ describe('HoldingAcquisitions component', () => {
 
       const { container } = renderHoldingAcquisitions({ holding: { id: 'holdingUid' } });
 
-      expect(container.querySelector('#acc06')).toBeInTheDocument();
+      expect(container.querySelector('#acquisition-accordion')).toBeInTheDocument();
       expect(screen.getByText(holdingOrderLine.poLineNumber)).toBeInTheDocument();
     });
   });
 
   describe('when user is in member tenant', () => {
     it('should display central and member tenant subaccordions with fetched instance acquisition data', () => {
-      spyOnIsUserInConsortiumMode.mockReturnValue(true);
+      checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
       useStripes.mockClear().mockReturnValue({
         hasInterface: () => true,
         okapi: { tenant: 'college' },
@@ -112,7 +110,7 @@ describe('HoldingAcquisitions component', () => {
 
       const { container } = renderHoldingAcquisitions({ holding: { id: 'holdingUid' } });
 
-      expect(container.querySelector('#acc06')).toBeInTheDocument();
+      expect(container.querySelector('#acquisition-accordion')).toBeInTheDocument();
       expect(container.querySelector('#active-tenant-order-lines-accordion')).toBeInTheDocument();
       expect(screen.getAllByText(holdingOrderLine.poLineNumber)[0]).toBeInTheDocument();
 

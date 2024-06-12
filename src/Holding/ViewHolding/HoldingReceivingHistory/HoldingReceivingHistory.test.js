@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { useStripes } from '@folio/stripes/core';
+import {
+  useStripes,
+  checkIfUserInMemberTenant,
+} from '@folio/stripes/core';
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
@@ -13,11 +16,7 @@ import { receivingHistory } from './fixtures';
 import HoldingReceivingHistory from './HoldingReceivingHistory';
 import useReceivingHistory from './useReceivingHistory';
 
-import * as utils from '../../../utils';
-
 jest.mock('./useReceivingHistory', () => jest.fn());
-
-const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 
 const renderHoldingReceivingHistory = () => (
   renderWithIntl(
@@ -33,7 +32,7 @@ describe('HoldingReceivingHistory', () => {
 
   describe('when user is non-consortial tenant', () => {
     it('should render the accordion and fetched receiving history data', () => {
-      spyOnIsUserInConsortiumMode.mockReturnValue(false);
+      checkIfUserInMemberTenant.mockClear().mockReturnValue(false);
       useStripes.mockClear().mockReturnValue({
         hasInterface: () => true,
         okapi: { tenant: 'diku' },
@@ -42,7 +41,7 @@ describe('HoldingReceivingHistory', () => {
 
       const { container } = renderHoldingReceivingHistory();
 
-      expect(container.querySelector('#acc07')).toBeInTheDocument();
+      expect(container.querySelector('#receiving-history-accordion')).toBeInTheDocument();
       expect(screen.getByText(receivingHistory[0].displaySummary)).toBeInTheDocument();
       expect(screen.getByText(receivingHistory[0].enumeration)).toBeInTheDocument();
       expect(screen.getByText(receivingHistory[0].chronology)).toBeInTheDocument();
@@ -51,7 +50,7 @@ describe('HoldingReceivingHistory', () => {
 
   describe('when user is in central tenant', () => {
     it('should display the accordion and fetched receiving history data', () => {
-      spyOnIsUserInConsortiumMode.mockReturnValue(true);
+      checkIfUserInMemberTenant.mockClear().mockReturnValue(false);
       useStripes.mockClear().mockReturnValue({
         hasInterface: () => true,
         okapi: { tenant: 'consortium' },
@@ -66,7 +65,7 @@ describe('HoldingReceivingHistory', () => {
 
       const { container } = renderHoldingReceivingHistory();
 
-      expect(container.querySelector('#acc07')).toBeInTheDocument();
+      expect(container.querySelector('#receiving-history-accordion')).toBeInTheDocument();
       expect(screen.getByText(receivingHistory[0].displaySummary)).toBeInTheDocument();
       expect(screen.getByText(receivingHistory[0].enumeration)).toBeInTheDocument();
       expect(screen.getByText(receivingHistory[0].chronology)).toBeInTheDocument();
@@ -75,7 +74,7 @@ describe('HoldingReceivingHistory', () => {
 
   describe('when user is in member tenant', () => {
     it('should display central and member tenant subaccordions with fetched receiving history data', () => {
-      spyOnIsUserInConsortiumMode.mockReturnValue(true);
+      checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
       useStripes.mockClear().mockReturnValue({
         hasInterface: () => true,
         okapi: { tenant: 'college' },
@@ -93,7 +92,7 @@ describe('HoldingReceivingHistory', () => {
 
       const { container } = renderHoldingReceivingHistory();
 
-      expect(container.querySelector('#acc07')).toBeInTheDocument();
+      expect(container.querySelector('#receiving-history-accordion')).toBeInTheDocument();
       expect(container.querySelector('#active-receivings-accordion')).toBeInTheDocument();
       expect(screen.getAllByText(receivingHistory[0].displaySummary)[0]).toBeInTheDocument();
 

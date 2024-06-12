@@ -4,10 +4,12 @@ import { FormattedMessage } from 'react-intl';
 
 import { Accordion } from '@folio/stripes/components';
 
-import { useStripes } from '@folio/stripes/core';
+import {
+  useStripes,
+  checkIfUserInMemberTenant,
+} from '@folio/stripes/core';
 
 import { useControlledAccordion } from '../../../common/hooks';
-import { isUserInConsortiumMode } from '../../../utils';
 
 import useReceivingHistory from './useReceivingHistory';
 import HoldingReceivingHistoryList from './HoldingReceivingHistoryList';
@@ -21,11 +23,11 @@ const HoldingReceivingHistory = ({ holding }) => {
 
   const {
     receivingHistory: activeTenantReceivings,
-    isLoading: isLoadingActiveTenantReceivings,
+    isFetching: isFetchingActiveTenantReceivings,
   } = useReceivingHistory(holding, activeTenant);
   const {
     receivingHistory: centralTenantReceivings,
-    isLoading: isLoadingCentralTenantReceivings,
+    isFetching: isFetchingCentralTenantReceivings,
   } = useReceivingHistory(holding, centralTenant);
 
   const controlledAccorion = useControlledAccordion(Boolean(activeTenantReceivings.length || centralTenantReceivings.length));
@@ -53,31 +55,31 @@ const HoldingReceivingHistory = ({ holding }) => {
 
   return (
     <Accordion
-      id="acc07"
+      id="receiving-history-accordion"
       label={<FormattedMessage id="ui-inventory.receivingHistory" />}
       {...controlledAccorion}
     >
-      {(isUserInConsortiumMode(stripes) && activeTenant !== centralTenant) ? (
+      {checkIfUserInMemberTenant(stripes) ? (
         <>
           {renderTenantReceivingsAccordion(
             'active-receivings-accordion',
             activeTenant,
             activeTenantReceivings,
-            isLoadingActiveTenantReceivings,
+            isFetchingActiveTenantReceivings,
             controlledActiveTenantAccorion,
           )}
           {renderTenantReceivingsAccordion(
             'central-receivings-accordion',
             centralTenant,
             centralTenantReceivings,
-            isLoadingCentralTenantReceivings,
+            isFetchingCentralTenantReceivings,
             controlledCentralTenantAccorion,
           )}
         </>
       ) : (
         <HoldingReceivingHistoryList
           data={activeTenantReceivings}
-          isLoading={isLoadingActiveTenantReceivings}
+          isLoading={isFetchingActiveTenantReceivings}
           tenantId={activeTenant}
         />
       )

@@ -12,10 +12,10 @@ const useHoldingOrderLines = (tenant, id, options = {}) => {
   const queryKey = [namespace, id, tenant];
   const queryFn = () => ky.get(`orders/holding-summary/${id}`).json();
 
-  const { data, isLoading } = useQuery({ queryKey, queryFn, ...options });
+  const { data, isFetching } = useQuery({ queryKey, queryFn, ...options });
 
   return {
-    isLoading,
+    isFetching,
     holdingOrderLines: data?.holdingSummaries || [],
   };
 };

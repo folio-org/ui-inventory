@@ -2,16 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { useStripes } from '@folio/stripes/core';
+import {
+  useStripes,
+  checkIfUserInMemberTenant,
+} from '@folio/stripes/core';
 import {
   Accordion,
   Col,
   KeyValue,
+  Loading,
   Row,
 } from '@folio/stripes/components';
 
 import { useControlledAccordion } from '../../../common/hooks';
-import { isUserInConsortiumMode } from '../../../utils';
 
 import useHoldingOrderLines from './useHoldingOrderLines';
 
@@ -25,11 +28,11 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
   const centralTenant = stripes.user.user?.consortium?.centralTenantId;
 
   const {
-    isLoading: isLoadingActiveTenantOrderLines,
+    isFetching: isFetchingActiveTenantOrderLines,
     holdingOrderLines: activeTenantOrderLines,
   } = useHoldingOrderLines(activeTenant, holding.id, { enabled: withSummary });
   const {
-    isLoading: isLoadingCentralTenantOrderLines,
+    isFetching: isFetchingCentralTenantOrderLines,
     holdingOrderLines: centralTenantOrderLines,
   } = useHoldingOrderLines(centralTenant, holding.id, { enabled: withSummary });
 
@@ -45,14 +48,7 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
   const controlledActiveTenantOrderLinesAccorion = useControlledAccordion(Boolean(activeTenantOrderLines?.length));
   const controlledCetralTenantOrderLinesAccorion = useControlledAccordion(Boolean(centralTenantOrderLines?.length));
 
-  if (isLoadingActiveTenantOrderLines || isLoadingCentralTenantOrderLines) {
-    return (
-      <Accordion
-        id="acc06"
-        label={<FormattedMessage id="ui-inventory.acquisition" />}
-      />
-    );
-  }
+  if (isFetchingActiveTenantOrderLines || isFetchingCentralTenantOrderLines) return <Loading size="large" />;
 
   const renderTenantOrderLinesAccordion = (accId, tenantId, tenantOrderLines, isLoading, controlledAccorionProps) => {
     const getTenantAccordionLabel = (tenants, id) => tenants?.find(tenant => tenant.id === id).name;
@@ -75,7 +71,7 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
 
   return (
     <Accordion
-      id="acc06"
+      id="acquisition-accordion"
       label={<FormattedMessage id="ui-inventory.acquisition" />}
       {...controlledAccorion}
     >
@@ -103,27 +99,27 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
       </Row>
 
       {
-        withSummary && (isUserInConsortiumMode(stripes) && activeTenant !== centralTenant ? (
+        withSummary && (checkIfUserInMemberTenant(stripes) ? (
           <>
             {renderTenantOrderLinesAccordion(
               'active-tenant-order-lines-accordion',
               activeTenant,
               activeTenantOrderLines,
-              isLoadingActiveTenantOrderLines,
+              isFetchingActiveTenantOrderLines,
               controlledActiveTenantOrderLinesAccorion,
             )}
             {renderTenantOrderLinesAccordion(
               'central-tenant-order-lines-accordion',
               centralTenant,
               centralTenantOrderLines,
-              isLoadingCentralTenantOrderLines,
+              isFetchingCentralTenantOrderLines,
               controlledCetralTenantOrderLinesAccorion,
             )}
           </>
         ) : (
           <HoldingAcquisitionList
             holdingOrderLines={activeTenantOrderLines}
-            isLoading={isLoadingActiveTenantOrderLines}
+            isLoading={isFetchingActiveTenantOrderLines}
             tenantId={activeTenant}
           />
         ))

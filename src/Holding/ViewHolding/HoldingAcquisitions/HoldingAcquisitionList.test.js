@@ -27,9 +27,7 @@ const renderHoldingAcquisitionList = () => (
 
 describe('HoldingAcquisitionList component', () => {
   it('should render correct column headers', () => {
-    const { debug, container } = renderHoldingAcquisitionList();
-
-    debug(container);
+    renderHoldingAcquisitionList();
 
     expect(screen.getByText('POL number')).toBeInTheDocument();
     expect(screen.getByText('Order status')).toBeInTheDocument();
