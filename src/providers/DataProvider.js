@@ -49,6 +49,7 @@ const DataProvider = ({
       instanceRelationshipTypes,
     } = loadedData;
 
+    loadedData.locationsById = keyBy(loadedData.locations, 'id');
     loadedData.identifierTypesById = keyBy(identifierTypes, 'id');
     loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
     loadedData.holdingsSourcesByName = keyBy(commonData.holdingsSources, 'name');
@@ -189,13 +190,6 @@ DataProvider.manifest = {
     records: 'loantypes',
     resourceShouldRefresh: true,
     throwErrors: false,
-  },
-  tags: {
-    path: 'tags?limit=10000',  // the same as Tags component in stripes-smart-components
-    records: 'tags',
-    throwErrors: false,
-    type: 'okapi',
-    resourceShouldRefresh: true,
   },
 };
 

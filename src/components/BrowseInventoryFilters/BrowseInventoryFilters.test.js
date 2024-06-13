@@ -4,12 +4,9 @@ import {
 } from '../../../test/jest/helpers';
 import BrowseInventoryFilters from './BrowseInventoryFilters';
 import { DataContext } from '../../contexts';
-import { browseConfig } from '../../filterConfig';
-import { InstanceFiltersBrowse } from '../InstanceFilters';
+import InstanceFiltersBrowse from '../InstanceFiltersBrowse';
 
-jest.mock('../InstanceFilters', () => ({
-  InstanceFiltersBrowse: jest.fn(() => <div>InstanceFiltersBrowse</div>),
-}));
+jest.mock('../InstanceFiltersBrowse', () => jest.fn(() => <div>InstanceFiltersBrowse</div>));
 
 const data = {
   consortiaTenants: [],
@@ -39,8 +36,8 @@ describe('BrowseInventoryFilters', () => {
     renderBrowseInventoryFilters();
 
     expect(InstanceFiltersBrowse).toHaveBeenCalledWith({
-      filterConfig: browseConfig,
-      data: { ...data, query },
+      data,
+      query,
       onChange: expect.any(Function),
       onClear: expect.any(Function),
     }, {});

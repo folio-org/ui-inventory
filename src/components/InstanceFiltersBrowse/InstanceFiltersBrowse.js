@@ -16,14 +16,12 @@ import {
   EffectiveLocationFacet,
 } from '@folio/stripes-inventory-components';
 
-import { MultiSelectionFacet } from '../../MultiSelectionFacet';
+import { MultiSelectionFacet } from '../MultiSelectionFacet';
 
 const InstanceFiltersBrowse = props => {
   const {
-    filterConfig,
-    data: {
-      query,
-    },
+    data,
+    query,
     onChange,
     onClear,
   } = props;
@@ -31,7 +29,7 @@ const InstanceFiltersBrowse = props => {
   const intl = useIntl();
   const qindex = query.qindex;
 
-  const initialAccordionStates = {
+  const initialAccordionStates = useMemo(() => ({
     [FACETS.SHARED]: false,
     [FACETS.CALL_NUMBERS_HELD_BY]: false,
     [FACETS.CLASSIFICATION_SHARED]: false,
@@ -41,7 +39,7 @@ const InstanceFiltersBrowse = props => {
     [FACETS.SUBJECTS_HELD_BY]: false,
     [FACETS.EFFECTIVE_LOCATION]: false,
     [FACETS.NAME_TYPE]: false,
-  };
+  }), []);
 
   const activeFilters = useMemo(() => omit(query || {}, ['qindex', 'query']), [query]);
 
@@ -56,9 +54,8 @@ const InstanceFiltersBrowse = props => {
     initialAccordionStates,
     query,
     isBrowseLookup: true,
-    filterConfig,
     activeFilters,
-    data: props.data,
+    data,
   });
 
   const renderSharedFacet = (name) => (
@@ -142,8 +139,8 @@ const InstanceFiltersBrowse = props => {
 export default InstanceFiltersBrowse;
 
 InstanceFiltersBrowse.propTypes = {
-  filterConfig: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onClear: PropTypes.func.isRequired,
-  data: PropTypes.object,
+  data: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired,
 };

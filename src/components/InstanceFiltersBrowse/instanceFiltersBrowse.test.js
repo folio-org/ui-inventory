@@ -9,8 +9,8 @@ import {
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import { browseModeOptions } from '@folio/stripes-inventory-components';
 
-import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
-import translations from '../../../../test/jest/helpers/translationsProperties';
+import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
+import translations from '../../../test/jest/helpers/translationsProperties';
 
 import InstanceFiltersBrowse from './InstanceFiltersBrowse';
 
@@ -40,26 +40,22 @@ const consortiaTenants = [
 
 const data = {
   locations: [],
-  query: {
-    qindex: browseModeOptions.CALL_NUMBERS,
-    language: ['eng'],
-    shared: ['true'],
-    effectiveLocation: ['effectiveLocation1'],
-    callNumbersTenantId: ['college'],
-    contributorsShared: ['true'],
-    contributorsTenantId: ['consortium'],
-    classificationShared: ['true'],
-    classificationTenantId: ['college'],
-    subjectsShared: ['true'],
-    subjectsTenantId: ['consortium'],
-    nameType: ['nameType1'],
-  },
   consortiaTenants,
 };
 
-const filterConfig = {
-  filters: [],
-  indexes: [],
+const query = {
+  qindex: browseModeOptions.CALL_NUMBERS,
+  language: ['eng'],
+  shared: ['true'],
+  effectiveLocation: ['effectiveLocation1'],
+  callNumbersTenantId: ['college'],
+  contributorsShared: ['true'],
+  contributorsTenantId: ['consortium'],
+  classificationShared: ['true'],
+  classificationTenantId: ['college'],
+  subjectsShared: ['true'],
+  subjectsTenantId: ['consortium'],
+  nameType: ['nameType1'],
 };
 
 const renderInstanceFilters = (props = {}) => {
@@ -67,8 +63,8 @@ const renderInstanceFilters = (props = {}) => {
     <Router>
       <ModuleHierarchyProvider module="@folio/inventory">
         <InstanceFiltersBrowse
-          filterConfig={filterConfig}
           data={data}
+          query={query}
           onChange={mockOnChange}
           onClear={mockOnClear}
           {...props}
@@ -79,7 +75,11 @@ const renderInstanceFilters = (props = {}) => {
   );
 };
 
-describe('InstanceFilters', () => {
+describe('InstanceFiltersBrowse', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Contains a filter for creation date ', () => {
     renderInstanceFilters();
 
@@ -89,12 +89,9 @@ describe('InstanceFilters', () => {
   describe('when call numbers browseType was selected', () => {
     it('should display filter by effective location accordion', () => {
       const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.CALL_NUMBERS,
-          },
+        data,
+        query: {
+          qindex: browseModeOptions.CALL_NUMBERS,
         },
       });
 
@@ -103,12 +100,10 @@ describe('InstanceFilters', () => {
 
     it('should display shared filter accordion', () => {
       const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.CALL_NUMBERS,
-          },
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.CALL_NUMBERS,
         },
       });
 
@@ -122,12 +117,9 @@ describe('InstanceFilters', () => {
   describe('when call numbers browse sub-type was selected', () => {
     it('should display filter by effective location accordion', () => {
       const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.DEWEY,
-          },
+        data,
+        query: {
+          qindex: browseModeOptions.DEWEY,
         },
       });
 
@@ -136,12 +128,10 @@ describe('InstanceFilters', () => {
 
     it('should display shared filter accordion', () => {
       const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.DEWEY,
-          },
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.DEWEY,
         },
       });
 
@@ -162,12 +152,10 @@ describe('InstanceFilters', () => {
 
     it('should display "Held By" facet accordion', () => {
       const { getByRole } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.CALL_NUMBERS,
-          },
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.CALL_NUMBERS,
         },
       });
 
@@ -181,12 +169,10 @@ describe('InstanceFilters', () => {
   describe('when "Classification (all)" browse sub-type was selected', () => {
     it('should display "Shared" facet', () => {
       const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.CLASSIFICATION_ALL,
-          },
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.CLASSIFICATION_ALL,
         },
       });
 
@@ -197,12 +183,10 @@ describe('InstanceFilters', () => {
   describe('When contributors browseType was selected', () => {
     it('should display filter by nameType accordion', () => {
       const { getByRole } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.CONTRIBUTORS,
-          },
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.CONTRIBUTORS,
         },
       });
 
@@ -214,12 +198,10 @@ describe('InstanceFilters', () => {
 
     it('should display shared filter accordion', () => {
       const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.CONTRIBUTORS,
-          },
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.CONTRIBUTORS,
         },
       });
 
@@ -231,12 +213,10 @@ describe('InstanceFilters', () => {
 
     it.skip('should display Held by filter accordion', () => {
       const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.CONTRIBUTORS,
-          },
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.CONTRIBUTORS,
         },
       });
 
@@ -250,12 +230,10 @@ describe('InstanceFilters', () => {
   describe('When subjects browseType was selected', () => {
     it('should display shared filter accordion', () => {
       const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.SUBJECTS,
-          },
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.SUBJECTS,
         },
       });
 
@@ -267,12 +245,10 @@ describe('InstanceFilters', () => {
 
     it.skip('should display Held by filter accordion', () => {
       const { getByText } = renderInstanceFilters({
-        data: {
-          ...data,
-          query: {
-            ...data.query,
-            qindex: browseModeOptions.SUBJECTS,
-          },
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.SUBJECTS,
         },
       });
 

@@ -3,13 +3,25 @@ import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import {
+  filterConfig,
+  HoldingsRecordFilters,
+  InstanceFilters,
+  ItemFilters,
+  segments,
+} from '@folio/stripes-inventory-components';
 
 import withLocation from '../withLocation';
 import withLastSearchTerms from '../withLastSearchTerms';
 import { InstancesView } from '../views';
-import { getFilterConfig } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
+
+const filterComponents = {
+  [segments.instances]: InstanceFilters,
+  [segments.holdings]: HoldingsRecordFilters,
+  [segments.items]: ItemFilters,
+};
 
 class InstancesRoute extends React.Component {
   static propTypes = {
@@ -31,6 +43,20 @@ class InstancesRoute extends React.Component {
 
   static manifest = Object.freeze(buildManifestObject());
 
+  renderFilters = ({ data, query }) => onChange => {
+    const { getParams } = this.props;
+    const { segment = segments.instances } = getParams(this.props);
+    const FiltersComponent = filterComponents[segment];
+
+    return (
+      <FiltersComponent
+        query={query}
+        data={data}
+        onChange={onChange}
+      />
+    );
+  };
+
   render() {
     const {
       onSelectRow,
@@ -44,9 +70,8 @@ class InstancesRoute extends React.Component {
       storeLastSearchOffset,
       storeLastSegment,
     } = this.props;
-    const { segment } = getParams(this.props);
-    const filterConfig = getFilterConfig(segment);
-    const { indexes, renderer } = filterConfig;
+    const { segment = segments.instances } = getParams(this.props);
+    const { indexes } = filterConfig[segment];
     const { query, records } = resources;
     const parentResources = { ...resources, records };
 
@@ -59,10 +84,9 @@ class InstancesRoute extends React.Component {
             data={{ ...data, query }}
             onSelectRow={onSelectRow}
             disableRecordCreation={disableRecordCreation}
-            renderFilters={renderer({
-              ...data,
+            renderFilters={this.renderFilters({
+              data,
               query,
-              filterConfig,
             })}
             segment={segment}
             searchableIndexes={indexes}

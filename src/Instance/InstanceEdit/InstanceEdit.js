@@ -109,7 +109,7 @@ const InstanceEdit = ({
   };
 
   const isMemberTenant = checkIfUserInMemberTenant(stripes);
-  const tenantId = (isMemberTenant && instance?.shared) ? stripes.user.user.consortium.centralTenantId : stripes.okapi.tenant;
+  const tenantId = (isMemberTenant && instance?.shared) ? stripes.user.user.consortium?.centralTenantId : stripes.okapi.tenant;
 
   const { mutateInstance } = useInstanceMutation({ tenantId });
 

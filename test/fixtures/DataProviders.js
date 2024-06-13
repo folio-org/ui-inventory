@@ -153,15 +153,4 @@ export const resources = {
       }
     ],
   },
-  tags: {
-    hasLoaded: true,
-    isPending: false,
-    failed: false,
-    records: [
-      {
-        id: 'tags-1',
-        name: 'tags 1',
-      }
-    ],
-  },
 };
