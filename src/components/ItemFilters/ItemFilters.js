@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
+import { useStripes } from '@folio/stripes/core';
 import { AccordionSet } from '@folio/stripes/components';
 import {
   HeldByFacet,
@@ -16,6 +17,7 @@ import {
   StatisticalCodeFacet,
   PermanentLocationFacet,
   MaterialTypeFacet,
+  isConsortiaEnv,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -31,6 +33,8 @@ const ItemFilters = (props) => {
     onChange,
     onClear,
   } = props;
+
+  const stripes = useStripes();
 
   const initialAccordionStates = {
     [FACETS.SHARED]: false,
@@ -84,6 +88,7 @@ const ItemFilters = (props) => {
       <StatusFacet
         name={FACETS.ITEM_STATUS}
         facetOptions={facetOptions}
+        separator={isConsortiaEnv(stripes)}
         activeFilters={activeFilters}
         getIsLoading={getIsLoading}
         onChange={onChange}
@@ -129,7 +134,6 @@ const ItemFilters = (props) => {
         onChange={onChange}
         onClear={onClear}
         onFetch={onInputFocusAndMoreClick}
-        onSearch={onFacetOptionSearch}
       />
       <StatisticalCodeFacet
         name={FACETS.ITEMS_STATISTICAL_CODE_IDS}
