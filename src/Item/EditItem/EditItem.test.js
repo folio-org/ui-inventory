@@ -18,11 +18,11 @@ jest.mock('../../hooks/useCallout', () => jest.fn().mockReturnValue({ sendCallou
 jest.mock('../../common/hooks', () => ({
   ...jest.requireActual('../../common/hooks'),
   useInstanceQuery: jest.fn().mockReturnValue({ instance: {}, isLoading: false }),
-  useHolding: jest.fn().mockReturnValue({ holding: {}, isLoading: false }),
+  useHolding: jest.fn().mockReturnValue({ holding: {}, isFetching: false }),
 }));
 jest.mock('../hooks', () => ({
   ...jest.requireActual('../hooks'),
-  useItem: jest.fn().mockReturnValue({ item: {}, isLoading: false }),
+  useItem: jest.fn().mockReturnValue({ item: {}, isFetching: false }),
   useItemMutation: jest.fn().mockReturnValue({
     mutateItem: jest.fn()
   }),

@@ -8,7 +8,7 @@ const useHolding = (holdingId, { tenantId = '' } = {}) => {
   const ky = useTenantKy({ tenantId });
   const [namespace] = useNamespace({ key: 'holding' });
 
-  const { isLoading, data: holding = {}, refetch } = useQuery(
+  const { isLoading, data: holding = {}, refetch, isFetching } = useQuery(
     [namespace, holdingId],
     () => ky.get(`holdings-storage/holdings/${holdingId}`).json(),
     { enabled: Boolean(holdingId) },
@@ -16,6 +16,7 @@ const useHolding = (holdingId, { tenantId = '' } = {}) => {
 
   return ({
     isLoading,
+    isFetching,
     holding,
     refetch,
   });

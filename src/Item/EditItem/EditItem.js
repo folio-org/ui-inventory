@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   useHistory,
@@ -34,11 +34,16 @@ const EditItem = ({
   const history = useHistory();
   const location = useLocation();
   const [httpError, setHttpError] = useState();
+  const keepEditing = useRef(false);
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
-  const { isLoading: isItemLoading, item } = useItem(itemId);
+  const { isFetching: isItemLoading, item, refetch: refetchItem } = useItem(itemId);
   const callout = useCallout();
   const stripes = useStripes();
+
+  const setKeepEditing = useCallback((value) => {
+    keepEditing.current = value;
+  }, []);
 
   const goBack = useCallback(() => {
     history.push({
@@ -54,7 +59,11 @@ const EditItem = ({
 
 
   const onSuccess = useCallback(async () => {
-    await onCancel();
+    if (!keepEditing.current) {
+      await switchAffiliation(stripes, location?.state?.tenantFrom, goBack);
+    } else {
+      refetchItem();
+    }
 
     return callout.sendCallout({
       type: 'success',
@@ -63,7 +72,7 @@ const EditItem = ({
         values={{ hrid: item.hrid }}
       />,
     });
-  }, [callout, instanceId, holdingId]);
+  }, [switchAffiliation, stripes, location, goBack, refetchItem, callout, item]);
 
   const onError = async error => {
     const parsedError = await parseHttpError(error.response);
@@ -127,6 +136,8 @@ const EditItem = ({
         referenceTables={referenceData}
         intl={stripes.intl}
         stripes={stripes}
+        setKeepEditing={setKeepEditing}
+        showKeepEditingButton
       />
       {httpError && !httpError?.errorType &&
         <ErrorModal

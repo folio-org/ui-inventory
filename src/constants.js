@@ -263,4 +263,5 @@ export const ACQUISITION_COLUMN_NAMES = {
   dateOrdered: 'dateOrdered',
   acqUnit: 'acqUnit',
   orderType: 'orderType',
+  orderSentDate: 'orderSentDate',
 };
