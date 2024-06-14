@@ -10,8 +10,13 @@ import InstanceClassificationView from './InstanceClassificationView';
 
 const props = {
   id: 'classificationID',
-  classifications: [],
-  classificationTypes: [],
+  classifications: [{
+    classificationTypeId: 'type-id',
+    classificationNumber: 'classification-number',
+  }],
+  classificationTypes: [{
+    id: 'type-id',
+  }],
 };
 
 const renderInstanceClassificationView = () => (
@@ -32,5 +37,11 @@ describe('InstanceClassificationView', () => {
     expect(queryAllByText('ui-inventory.classification')).toBeDefined();
     expect(queryAllByText('stripes-components.noValue.noValueSet')).toBeDefined();
     expect(queryAllByText('stripes-components.endOfList')).toBeDefined();
+  });
+
+  it('should render copy to clipboard icon', () => {
+    const { getByText } = renderInstanceClassificationView();
+
+    expect(getByText('ClipCopy')).toBeInTheDocument();
   });
 });
