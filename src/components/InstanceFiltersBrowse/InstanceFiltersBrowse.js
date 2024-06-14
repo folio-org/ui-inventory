@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import omit from 'lodash/omit';
 
+import {
+  checkIfUserInMemberTenant,
+  useStripes,
+} from '@folio/stripes/core';
 import { AccordionSet } from '@folio/stripes/components';
 import {
   FACETS,
@@ -14,6 +18,7 @@ import {
   FACETS_TO_REQUEST,
   SharedFacet,
   EffectiveLocationFacet,
+  isConsortiaEnv,
 } from '@folio/stripes-inventory-components';
 
 import { MultiSelectionFacet } from '../MultiSelectionFacet';
@@ -27,6 +32,7 @@ const InstanceFiltersBrowse = props => {
   } = props;
 
   const intl = useIntl();
+  const stripes = useStripes();
   const qindex = query.qindex;
 
   const initialAccordionStates = useMemo(() => ({
@@ -97,6 +103,7 @@ const InstanceFiltersBrowse = props => {
           <EffectiveLocationFacet
             name={FACETS.EFFECTIVE_LOCATION}
             facetOptions={facetOptions}
+            separator={isConsortiaEnv(stripes)}
             activeFilters={activeFilters}
             getIsLoading={getIsLoading}
             onChange={onChange}
@@ -116,6 +123,7 @@ const InstanceFiltersBrowse = props => {
             label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
             name={FACETS.NAME_TYPE}
             closedByDefault
+            separator={checkIfUserInMemberTenant(stripes)}
             options={facetOptions[FACETS_TO_REQUEST[FACETS.NAME_TYPE]]}
             selectedValues={activeFilters[FACETS.NAME_TYPE]}
             onFilterChange={onChange}
