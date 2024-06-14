@@ -594,9 +594,6 @@ class ItemView extends React.Component {
     );
   };
 
-  getEntity = () => this.props.resources.itemsResource.records[0];
-  getEntityTags = () => this.props.resources.itemsResource.records[0]?.tags?.tagList || [];
-
   isLoading = () => {
     const {
       resources: {
@@ -990,6 +987,11 @@ class ItemView extends React.Component {
         }),
       },
     ];
+
+    const itemRecord = this.props.resources.itemsResource.records[0];
+    // getEntity needs to return an object from a closure so that Tags can compare old and new entity versions
+    const getEntity = () => itemRecord;
+    const getEntityTags = () => itemRecord?.tags?.tagList || [];
 
     return (
       <IntlConsumer>
@@ -1440,9 +1442,10 @@ class ItemView extends React.Component {
                     {tagsEnabled && (
                       <TagsAccordion
                         link={`inventory/items/${item.id}`}
-                        getEntity={this.getEntity}
-                        getEntityTags={this.getEntityTags}
+                        getEntity={getEntity}
+                        getEntityTags={getEntityTags}
                         entityTagsPath="tags"
+                        hasOptimisticLocking
                       />
                     )}
 

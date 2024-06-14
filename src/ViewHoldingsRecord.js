@@ -1059,10 +1059,11 @@ class ViewHoldingsRecord extends React.Component {
                       </Accordion>
 
                       {tagsEnabled && (
-                      <TagsAccordion
-                        link={`holdings-storage/holdings/${holdingsRecord.id}`}
-                        entityTagsPath="tags"
-                      />
+                        <TagsAccordion
+                          link={`holdings-storage/holdings/${holdingsRecord.id}`}
+                          entityTagsPath="tags"
+                          hasOptimisticLocking
+                        />
                       )}
 
                       <Accordion
