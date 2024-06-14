@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/get';
 
+import { useStripes } from '@folio/stripes/core';
 import { AccordionSet } from '@folio/stripes/components';
 import {
   HeldByFacet,
@@ -21,6 +22,7 @@ import {
   StaffSuppressFacet,
   DiscoverySuppressFacet,
   StatisticalCodeFacet,
+  isConsortiaEnv,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -36,6 +38,8 @@ const InstanceFilters = props => {
     onChange,
     onClear,
   } = props;
+
+  const stripes = useStripes();
 
   const initialAccordionStates = {
     [FACETS.SHARED]: false,
@@ -96,6 +100,7 @@ const InstanceFilters = props => {
       <EffectiveLocationFacet
         name={FACETS.EFFECTIVE_LOCATION}
         facetOptions={facetOptions}
+        separator={isConsortiaEnv(stripes)}
         activeFilters={activeFilters}
         getIsLoading={getIsLoading}
         onChange={onChange}
@@ -160,8 +165,6 @@ const InstanceFilters = props => {
         getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
-        onFetch={onInputFocusAndMoreClick}
-        onSearch={onFacetOptionSearch}
       />
       <DiscoverySuppressFacet
         name={FACETS.INSTANCES_DISCOVERY_SUPPRESS}
@@ -170,8 +173,6 @@ const InstanceFilters = props => {
         getIsLoading={getIsLoading}
         onChange={onChange}
         onClear={onClear}
-        onFetch={onInputFocusAndMoreClick}
-        onSearch={onFacetOptionSearch}
       />
       <StatisticalCodeFacet
         name={FACETS.STATISTICAL_CODE_IDS}
@@ -213,7 +214,6 @@ const InstanceFilters = props => {
         onChange={onChange}
         onClear={onClear}
         onFetch={onInputFocusAndMoreClick}
-        onSearch={onFacetOptionSearch}
       />
       <TagsFacet
         name={FACETS.INSTANCES_TAGS}
