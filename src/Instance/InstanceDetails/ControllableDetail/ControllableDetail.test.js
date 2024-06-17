@@ -2,13 +2,14 @@ import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
+import { segments } from '@folio/stripes-inventory-components';
+
 import '../../../../test/jest/__mock__';
 
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../../test/jest/helpers/translationsProperties';
 
 import ControllableDetail from './ControllableDetail';
-import { segments } from '../../../constants';
 
 const history = createMemoryHistory();
 

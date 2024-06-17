@@ -5,7 +5,6 @@ import { flowRight } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 
 import withLocation from '../withLocation';
-import withFacets from '../withFacets';
 import withLastSearchTerms from '../withLastSearchTerms';
 import { InstancesView } from '../views';
 import { getFilterConfig } from '../filterConfig';
@@ -19,7 +18,6 @@ class InstancesRoute extends React.Component {
     disableRecordCreation: PropTypes.bool,
     onSelectRow: PropTypes.func,
     getParams: PropTypes.func,
-    fetchFacets: PropTypes.func,
     getLastBrowse: PropTypes.func.isRequired,
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
@@ -40,7 +38,6 @@ class InstancesRoute extends React.Component {
       resources,
       mutator,
       getParams,
-      fetchFacets,
       getLastBrowse,
       getLastSearchOffset,
       storeLastSearch,
@@ -48,7 +45,8 @@ class InstancesRoute extends React.Component {
       storeLastSegment,
     } = this.props;
     const { segment } = getParams(this.props);
-    const { indexes, renderer } = getFilterConfig(segment);
+    const filterConfig = getFilterConfig(segment);
+    const { indexes, renderer } = filterConfig;
     const { query, records } = resources;
     const parentResources = { ...resources, records };
 
@@ -64,12 +62,10 @@ class InstancesRoute extends React.Component {
             renderFilters={renderer({
               ...data,
               query,
-              onFetchFacets: fetchFacets(data),
-              parentResources,
+              filterConfig,
             })}
             segment={segment}
             searchableIndexes={indexes}
-            fetchFacets={fetchFacets}
             getLastBrowse={getLastBrowse}
             getLastSearchOffset={getLastSearchOffset}
             storeLastSearch={storeLastSearch}
@@ -85,6 +81,5 @@ class InstancesRoute extends React.Component {
 export default flowRight(
   stripesConnect,
   withLocation,
-  withFacets,
   withLastSearchTerms,
 )(InstancesRoute);

@@ -14,16 +14,18 @@ import {
 import '../../../test/jest/__mock__';
 
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import {
+  deleteFacetStates,
+  queryIndexes,
+  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+} from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
-import {
-  SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
-} from '../../constants';
+import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 import * as utils from '../../utils';
 import Harness from '../../../test/jest/helpers/Harness';
 
@@ -76,7 +78,6 @@ const data = {
   modesOfIssuance: [],
   natureOfContentTerms: [],
   tagsRecords: [],
-  facets: [],
 };
 const query = {
   query: '',
@@ -92,12 +93,6 @@ const resources = {
     other: { totalRecords: instancesFixture.length },
     isPending: false,
   },
-  facets: {
-    hasLoaded: true,
-    resource: 'facets',
-    records: [],
-    other: { totalRecords: 0 }
-  },
   resultCount: instancesFixture.length,
   resultOffset: 0,
 };
@@ -106,7 +101,7 @@ let history = createMemoryHistory();
 
 const openActionMenu = () => {
   fireEvent.change(screen.getByRole('combobox', { name: /search field index/i }), {
-    target: { value: 'all' }
+    target: { value: queryIndexes.INSTANCE_KEYWORD }
   });
   fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 };
@@ -114,7 +109,6 @@ const openActionMenu = () => {
 const getInstancesListTree = ({ segment, ...rest }) => {
   const {
     indexes,
-    indexesES,
     renderer,
   } = getFilterConfig(segment);
 
@@ -139,12 +133,10 @@ const getInstancesListTree = ({ segment, ...rest }) => {
             renderFilters={renderer({
               ...data,
               query,
-              parentResources: resources,
+              filterConfig: {},
             })}
             segment={segment}
             searchableIndexes={indexes}
-            searchableIndexesES={indexesES}
-            fetchFacets={noop}
             getLastBrowse={jest.fn()}
             getLastSearchOffset={mockGetLastSearchOffset}
             storeLastSearch={mockStoreLastSearch}
@@ -225,6 +217,16 @@ describe('InstancesList', () => {
         await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
 
         expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+      });
+
+      it('should delete facet states', async () => {
+        renderInstancesList({ segment: 'instances' });
+
+        const search = '?segment=instances&sort=title';
+        act(() => { history.push({ search }); });
+        await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
+
+        expect(deleteFacetStates).toHaveBeenCalled();
       });
 
       describe('when staffSuppress filter is not present', () => {
@@ -711,7 +713,7 @@ describe('InstancesList', () => {
       renderInstancesList({ segment: 'holdings' });
 
       fireEvent.change(screen.getByRole('combobox'), {
-        target: { value: 'all' }
+        target: { value: queryIndexes.INSTANCE_KEYWORD }
       });
 
       fireEvent.click(screen.getByRole('button', { name: 'Actions' }));

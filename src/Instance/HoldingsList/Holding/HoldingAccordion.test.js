@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import { act } from 'react-dom/test-utils';
-import { screen, waitFor, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+
+import { useLocationsQuery } from '@folio/stripes-inventory-components';
+import { screen, waitFor, fireEvent, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -16,17 +17,18 @@ import HoldingAccordion from './HoldingAccordion';
 jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn());
 jest.mock('../../../hooks', () => ({
   ...jest.requireActual('../../../hooks'),
-  useLocationsQuery: () => ({
-    data: [
-      {
-        id: 'inactiveLocation',
-        name: 'Location 1',
-        isActive: false,
-      },
-    ],
-  }),
   useHoldingItemsQuery: jest.fn(),
 }));
+
+useLocationsQuery.mockReturnValue({
+  locations: [
+    {
+      id: 'inactiveLocation',
+      name: 'Location 1',
+      isActive: false,
+    },
+  ],
+});
 
 const HoldingAccordionSetup = () => (
   <Router>

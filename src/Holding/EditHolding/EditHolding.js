@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { cloneDeep } from 'lodash';
@@ -40,12 +40,16 @@ const EditHolding = ({
   } = location;
   const stripes = useStripes();
   const [httpError, setHttpError] = useState();
+  const keepEditing = useRef(false);
   const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
-  const { holding, isLoading: isHoldingLoading } = useHolding(holdingId);
+  const { holding, isFetching: isHoldingLoading, refetch: refetchHolding } = useHolding(holdingId);
   const { totalRecords: itemCount, isLoading: isItemsLoading } = useHoldingItemsQuery(holdingId, {
     searchParams: { limit: 1 },
   });
 
+  const setKeepEditing = useCallback((value) => {
+    keepEditing.current = value;
+  }, []);
 
   const isMARCRecord = useMemo(() => (
     referenceTables?.holdingsSources?.find(source => source.id === holding?.sourceId)?.name === 'MARC'
@@ -63,7 +67,11 @@ const EditHolding = ({
   }, [stripes, tenantFrom, goBack]);
 
   const onSuccess = useCallback(async () => {
-    await onCancel();
+    if (!keepEditing.current) {
+      await switchAffiliation(stripes, tenantFrom, goBack);
+    } else {
+      refetchHolding();
+    }
 
     callout.sendCallout({
       type: 'success',
@@ -72,7 +80,7 @@ const EditHolding = ({
         values={{ hrid: holding?.hrid }}
       />,
     });
-  }, [onCancel, callout]);
+  }, [switchAffiliation, stripes, tenantFrom, goBack, refetchHolding, holding, callout]);
 
   const onError = async error => {
     const parsedError = await parseHttpError(error.response);
@@ -107,6 +115,8 @@ const EditHolding = ({
         itemCount={itemCount}
         goTo={goTo}
         isMARCRecord={isMARCRecord}
+        setKeepEditing={setKeepEditing}
+        showKeepEditingButton
       />
       {httpError && !httpError?.errorType &&
         <ErrorModal

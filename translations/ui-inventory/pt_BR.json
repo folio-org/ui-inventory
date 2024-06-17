@@ -862,5 +862,9 @@
     "browse.classification.all": "Classificação (todas)",
     "browse.classification.dewey": "Classificação decimal de Dewey",
     "browse.classification.lc": "Classificação da Biblioteca do Congresso (LC)",
-    "normalizedClassificationNumber": "Classificação, normalizada"
+    "normalizedClassificationNumber": "Classificação, normalizada",
+    "affiliationChanging.notification": "A afiliação ativa foi alterada",
+    "affiliationChanging.namedNotification": "A afiliação ativa foi alterada para {name}",
+    "shortcut.editMARC": "Editar registro MARC",
+    "shortcut.editMARC.noPermission": "Você não tem permissão para editar o registro."
 }

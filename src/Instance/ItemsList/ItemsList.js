@@ -18,11 +18,11 @@ import {
   MultiColumnList,
   MCLPagingTypes,
 } from '@folio/stripes/components';
+import { itemStatuses } from '@folio/stripes-inventory-components';
 
 import {
   DEFAULT_ITEM_TABLE_SORTBY_FIELD,
   ITEM_TABLE_PAGE_AMOUNT,
-  itemStatuses,
   noValue,
 } from '../../constants';
 import { checkIfArrayIsEmpty } from '../../utils';

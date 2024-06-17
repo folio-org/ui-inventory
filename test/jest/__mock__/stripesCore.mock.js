@@ -1,3 +1,4 @@
+
 const buildStripes = (otherProperties = {}) => ({
   actionNames: [],
   clone: buildStripes,

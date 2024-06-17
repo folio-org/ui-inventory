@@ -2,12 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { segments } from '@folio/stripes-inventory-components';
 
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 
 import TitleSeriesStatements from './TitleSeriesStatements';
-import { segments } from '../../../constants';
 
 const seriesStatements = ['Statement 1', 'Statement 2'];
 

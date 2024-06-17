@@ -862,5 +862,9 @@
     "browse.classification.all": "Klasifikace (vše)",
     "browse.classification.dewey": "Deweyho desítková klasifikace",
     "browse.classification.lc": "Klasifikace Kongresové knihovny",
-    "normalizedClassificationNumber": "Klasifikace, normalizovaná"
+    "normalizedClassificationNumber": "Klasifikace, normalizovaná",
+    "affiliationChanging.notification": "Aktivní pobočka se změnila",
+    "affiliationChanging.namedNotification": "Aktivní pobočka se změnila na {name}",
+    "shortcut.editMARC": "Upravit záznam MARC",
+    "shortcut.editMARC.noPermission": "You do not have permission to edit the record."
 }

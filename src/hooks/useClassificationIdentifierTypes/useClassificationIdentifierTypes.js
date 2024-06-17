@@ -4,11 +4,10 @@ import {
   useNamespace,
   useOkapiKy,
 } from '@folio/stripes/core';
-
 import {
   CQL_FIND_ALL,
   LIMIT_MAX,
-} from '../../constants';
+} from '@folio/stripes-inventory-components';
 
 const useClassificationIdentifierTypes = (tenant) => {
   const ky = useOkapiKy({ tenant });

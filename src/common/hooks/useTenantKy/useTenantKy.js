@@ -1,6 +1,5 @@
 import { useOkapiKy } from '@folio/stripes/core';
-
-import { OKAPI_TENANT_HEADER } from '../../../constants';
+import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
 
 const useTenantKy = ({ tenantId } = {}) => {
   const ky = useOkapiKy();

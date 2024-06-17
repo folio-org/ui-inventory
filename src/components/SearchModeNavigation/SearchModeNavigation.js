@@ -11,6 +11,7 @@ import {
   Button,
   ButtonGroup,
 } from '@folio/stripes/components';
+import { deleteFacetStates } from '@folio/stripes-inventory-components';
 
 import {
   searchModeRoutesMap,
@@ -31,6 +32,8 @@ const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
 
   const onClick = useCallback((segment) => {
     const isCurrentSegment = path === searchModeRoutesMap[segment];
+
+    deleteFacetStates();
 
     if (onSearchModeSwitch) {
       onSearchModeSwitch();

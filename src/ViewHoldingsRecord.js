@@ -30,6 +30,7 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
+  Callout,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -65,7 +66,7 @@ import {
   WarningMessage,
   AdministrativeNoteList,
 } from './components';
-import HoldingAquisitions from './Holding/ViewHolding/HoldingAquisitions';
+import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 import HoldingBoundWith from './Holding/ViewHolding/HoldingBoundWith';
 
@@ -136,6 +137,7 @@ class ViewHoldingsRecord extends React.Component {
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
+    this.calloutRef = createRef();
   }
 
   componentDidMount() {
@@ -690,6 +692,24 @@ class ViewHoldingsRecord extends React.Component {
         }),
       },
       {
+        name: 'editMARC',
+        handler: handleKeyCommand(() => {
+          if (!this.isMARCSource()) {
+            return;
+          }
+
+          if (!stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all')) {
+            this.calloutRef.current.sendCallout({
+              type: 'error',
+              message: <FormattedMessage id="ui-inventory.shortcut.editMARC.noPermission" />,
+            });
+            return;
+          }
+
+          this.handleEditInQuickMarc();
+        }),
+      },
+      {
         name: 'expandAllSections',
         handler: (e) => expandAllSections(e, this.accordionStatusRef),
       },
@@ -707,6 +727,7 @@ class ViewHoldingsRecord extends React.Component {
       <IntlConsumer>
         {intl => (
           <div>
+            <Callout ref={this.calloutRef} />
             <ConfirmationModal
               id="delete-confirmation-modal"
               open={this.state.confirmHoldingsRecordDeleteModal}
@@ -1038,10 +1059,11 @@ class ViewHoldingsRecord extends React.Component {
                       </Accordion>
 
                       {tagsEnabled && (
-                      <TagsAccordion
-                        link={`holdings-storage/holdings/${holdingsRecord.id}`}
-                        entityTagsPath="tags"
-                      />
+                        <TagsAccordion
+                          link={`holdings-storage/holdings/${holdingsRecord.id}`}
+                          entityTagsPath="tags"
+                          hasOptimisticLocking
+                        />
                       )}
 
                       <Accordion
@@ -1100,7 +1122,7 @@ class ViewHoldingsRecord extends React.Component {
                         />
                       </Accordion>
 
-                      <HoldingAquisitions
+                      <HoldingAcquisitions
                         holding={holdingsRecord}
                         withSummary={this.props.stripes.hasInterface('orders.holding-summary')}
                       />
