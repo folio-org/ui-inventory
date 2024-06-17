@@ -32,6 +32,8 @@
 * "holdings-storage" API version upgrade. Refs UIIN-2926.
 * Edit Inventory Items: Display a Save & keep editing button. Refs UIIN-2456.
 * Prevent users from editing tags when Instance/Holdings/Item is updated. Fixes UIIN-2941.
+* Instance record > Classification accordion > Display a clipboard icon next to classification number. Refs UIIN-2580.
+* Populate Acquisitions accordion on item when central ordering is active. Refs UIIN-2818.
 * Add Bound items accordion in item record. Refs UIIN-2760.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
