@@ -1,12 +1,20 @@
-import React from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
-import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
+import React, { act } from 'react';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
-import '../../../../test/jest/__mock__';
-
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { order, orderLine, vendor, piece, resultData } from './fixtures';
+import {
+  order,
+  orderLine,
+  vendor,
+  piece,
+  resultData,
+} from './fixtures';
+
 import useItemAcquisition from './useItemAcquisition';
 
 const queryClient = new QueryClient();
@@ -25,7 +33,7 @@ const wrapper = ({ children }) => (
 );
 
 describe('useItemAcquisition', () => {
-  beforeEach(() => {
+  it('should fetch item acquisition data', async () => {
     useOkapiKy
       .mockClear()
       .mockReturnValue({
@@ -33,9 +41,7 @@ describe('useItemAcquisition', () => {
           json: () => kyResponseMap[path],
         }),
       });
-  });
 
-  it('should fetch item acquisition data', async () => {
     const { result } = renderHook(() => useItemAcquisition('itemId'), { wrapper });
 
     await act(() => {
@@ -43,5 +49,27 @@ describe('useItemAcquisition', () => {
     });
 
     expect(result.current.itemAcquisition).toEqual(resultData);
+  });
+
+  describe('when acquisition data is empty', () => {
+    describe('and user is non-central tenant', () => {
+      it('should fetch acquisition data with central tenant id', async () => {
+        useOkapiKy
+          .mockClear()
+          .mockReturnValue({
+            get: () => ({
+              json: () => ({}),
+            }),
+          });
+
+        const { result } = renderHook(() => useItemAcquisition('itemId'), { wrapper });
+
+        await act(() => {
+          return !result.current.isLoading;
+        });
+
+        expect(useOkapiKy).toHaveBeenCalledWith({ tenant: 'consortia' });
+      });
+    });
   });
 });
