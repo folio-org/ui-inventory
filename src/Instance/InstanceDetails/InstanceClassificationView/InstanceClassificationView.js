@@ -10,6 +10,7 @@ import {
   MultiColumnList,
   NoValue,
 } from '@folio/stripes/components';
+import { ClipCopy } from '@folio/stripes/smart-components';
 
 import {
   checkIfArrayIsEmpty,
@@ -29,7 +30,18 @@ const getColumnMapping = intl => ({
 });
 const classificationsRowFormatter = {
   type: item => item?.classificationType || noValue,
-  classification: item => item?.classificationNumber || noValue,
+  classification: item => {
+    if (!item?.classificationNumber) {
+      return noValue;
+    }
+
+    return (
+      <>
+        {item.classificationNumber}
+        <ClipCopy text={item.classificationNumber} />
+      </>
+    );
+  }
 };
 
 
