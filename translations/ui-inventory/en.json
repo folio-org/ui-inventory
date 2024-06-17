@@ -129,6 +129,7 @@
   "boundWithTitles": "Bound-with and analytics",
   "boundWithTitles.add": "Add Bound-with and analytics",
   "boundWithTitles.enterHoldingsHrid": "Enter Holdings HRID",
+  "boundPieces": "Bound pieces data",
   "holdingsLabelShort": "Holdings:",
   "holdingsTitle": " Holdings: {location} > {callNumber}",
   "holdingsPaneTitle": "Holdings • {location} • {callNumber}",
@@ -802,6 +803,11 @@
   "acq.orderSubscription": "Subscription",
   "acq.receiptDate": "Piece receipt date",
   "acq.vendorCode": "Organization code",
+
+  "boundPieces.remove.success": "Bound piece successfully removed",
+  "boundPieces.remove.error": "Bound piece deletion failed",
+  "boundPieces.remove.message": "Remove this piece from the bound item?",
+  "boundPieces.remove.button": "Remove",
 
   "receivingHistory.receivedDate": "Receipt date",
   "receivingHistory.comment": "Comment",

@@ -1,4 +1,5 @@
 export { default as ActionItem } from './ActionItem';
+export { default as BoundPiecesList } from './BoundPiecesList';
 export { default as FilterNavigation } from './FilterNavigation';
 export { default as InstanceFilters, InstanceFiltersBrowse, instanceFilterRenderer } from './InstanceFilters';
 export { default as HoldingsRecordFilters, holdingsRecordFilterRenderer } from './HoldingsRecordFilters';
