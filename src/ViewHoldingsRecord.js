@@ -66,7 +66,7 @@ import {
   WarningMessage,
   AdministrativeNoteList,
 } from './components';
-import HoldingAquisitions from './Holding/ViewHolding/HoldingAquisitions';
+import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 import HoldingBoundWith from './Holding/ViewHolding/HoldingBoundWith';
 
@@ -1059,10 +1059,11 @@ class ViewHoldingsRecord extends React.Component {
                       </Accordion>
 
                       {tagsEnabled && (
-                      <TagsAccordion
-                        link={`holdings-storage/holdings/${holdingsRecord.id}`}
-                        entityTagsPath="tags"
-                      />
+                        <TagsAccordion
+                          link={`holdings-storage/holdings/${holdingsRecord.id}`}
+                          entityTagsPath="tags"
+                          hasOptimisticLocking
+                        />
                       )}
 
                       <Accordion
@@ -1121,7 +1122,7 @@ class ViewHoldingsRecord extends React.Component {
                         />
                       </Accordion>
 
-                      <HoldingAquisitions
+                      <HoldingAcquisitions
                         holding={holdingsRecord}
                         withSummary={this.props.stripes.hasInterface('orders.holding-summary')}
                       />
