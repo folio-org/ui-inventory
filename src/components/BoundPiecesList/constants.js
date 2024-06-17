@@ -54,7 +54,6 @@ export const COLUMN_FORMATTER = ({ hasViewReceivingPermissions, onRemove }) => {
       return barcode;
     },
     [PIECE_COLUMNS.displaySummary]: record => record.displaySummary || <NoValue />,
-    [PIECE_COLUMNS.callNumber]: record => record.callNumber || <NoValue />,
     [PIECE_COLUMNS.chronology]: record => record.chronology || <NoValue />,
     [PIECE_COLUMNS.copyNumber]: record => record.copyNumber || <NoValue />,
     [PIECE_COLUMNS.enumeration]: record => record.enumeration || <NoValue />,
