@@ -234,16 +234,6 @@ const NumberGeneratorOptionsForm = () => {
                                   }}
                                 />
                               </Layout>
-                              <Layout className="display-flex flex-direction-column flex-align-items-center">
-                                <Button
-                                  allowAnchorClick
-                                  buttonStyle="primary"
-                                  href="https://wiki.folio.org/display/FOLIOtips/Number+generator"
-                                  marginBottom0
-                                >
-                                  <FormattedMessage id="ui-inventory.settings.learnMore" />
-                                </Button>
-                              </Layout>
                             </Layout>
                           }
                           iconSize="medium"
