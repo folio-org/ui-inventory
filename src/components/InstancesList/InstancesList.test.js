@@ -16,13 +16,13 @@ import '../../../test/jest/__mock__';
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import {
   deleteFacetStates,
+  filterConfig,
   queryIndexes,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
 } from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
-import { getFilterConfig } from '../../filterConfig';
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
 import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
@@ -77,7 +77,6 @@ const data = {
   instanceFormats: [],
   modesOfIssuance: [],
   natureOfContentTerms: [],
-  tagsRecords: [],
 };
 const query = {
   query: '',
@@ -109,8 +108,7 @@ const openActionMenu = () => {
 const getInstancesListTree = ({ segment, ...rest }) => {
   const {
     indexes,
-    renderer,
-  } = getFilterConfig(segment);
+  } = filterConfig[segment];
 
   return (
     <Harness translations={translationsProperties}>
@@ -130,11 +128,7 @@ const getInstancesListTree = ({ segment, ...rest }) => {
               query
             }}
             onSelectRow={noop}
-            renderFilters={renderer({
-              ...data,
-              query,
-              filterConfig: {},
-            })}
+            renderFilters={noop}
             segment={segment}
             searchableIndexes={indexes}
             getLastBrowse={jest.fn()}

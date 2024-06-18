@@ -15,4 +15,7 @@ jest.mock('@folio/stripes-inventory-components', () => ({
     commonData: [],
     isCommonDataLoading: false,
   }),
+  InstanceFilters: jest.fn(() => <div>InstanceFilters</div>),
+  HoldingsRecordFilters: jest.fn(() => <div>HoldingsRecordFilters</div>),
+  ItemFilters: jest.fn(() => <div>ItemFilters</div>),
 }));

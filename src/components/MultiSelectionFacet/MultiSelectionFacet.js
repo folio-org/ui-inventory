@@ -16,6 +16,7 @@ const propTypes = {
   onClearFilter: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
   closedByDefault: PropTypes.bool,
+  separator: PropTypes.bool,
   options: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     label: PropTypes.string,
@@ -29,6 +30,7 @@ const MultiSelectionFacet = ({
   label,
   name,
   closedByDefault = true,
+  separator = true,
   options,
   selectedValues,
   onFilterChange,
@@ -74,6 +76,7 @@ const MultiSelectionFacet = ({
       label={label}
       id={id}
       closedByDefault={closedByDefault}
+      separator={separator}
       header={FilterAccordionHeader}
       headerProps={{ label }}
       onClearFilter={() => onClearFilter(name)}
