@@ -16,6 +16,7 @@ jest.mock('@folio/stripes/smart-components', () => ({
       </div>;
     return component;
   },
+  ClipCopy: () => <button type="button">ClipCopy</button>,
   useRemoteStorageMappings: () => {
     return ({
       'holdings-id-1': {
