@@ -35,6 +35,7 @@
 * Instance record > Classification accordion > Display a clipboard icon next to classification number. Refs UIIN-2580.
 * Populate Acquisitions accordion on item when central ordering is active. Refs UIIN-2818.
 * Import facets and the function for building a search query from `stripes-inventory-components`.
+* Add Bound items accordion in item record. Refs UIIN-2760.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)

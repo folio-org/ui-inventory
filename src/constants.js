@@ -1,4 +1,4 @@
-import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 import {
   browseModeOptions,
@@ -264,4 +264,12 @@ export const ACQUISITION_COLUMN_NAMES = {
   acqUnit: 'acqUnit',
   orderType: 'orderType',
   orderSentDate: 'orderSentDate',
+};
+
+export const ITEM_ACCORDIONS = {
+  boundItems: 'boundItems',
+};
+
+export const ITEM_ACCORDION_LABELS = {
+  [ITEM_ACCORDIONS.boundItems]: <FormattedMessage id="ui-inventory.boundPieces" />,
 };

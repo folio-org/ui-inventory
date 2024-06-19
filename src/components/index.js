@@ -1,4 +1,5 @@
 export { default as ActionItem } from './ActionItem';
+export { default as BoundPiecesList } from './BoundPiecesList';
 export { default as FilterNavigation } from './FilterNavigation';
 export { default as InstanceFiltersBrowse } from './InstanceFiltersBrowse';
 export { default as ItemViewSubheader } from './ItemViewSubheader';
