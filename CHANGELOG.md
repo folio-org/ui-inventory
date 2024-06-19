@@ -34,6 +34,7 @@
 * Prevent users from editing tags when Instance/Holdings/Item is updated. Fixes UIIN-2941.
 * Instance record > Classification accordion > Display a clipboard icon next to classification number. Refs UIIN-2580.
 * Populate Acquisitions accordion on item when central ordering is active. Refs UIIN-2818.
+* Edit Inventory Instances: Optimistic locking error displays in pop-up modal instead of banner in the header. Fixes UIIN-2940.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
