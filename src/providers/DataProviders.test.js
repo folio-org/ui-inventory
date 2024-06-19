@@ -15,9 +15,6 @@ jest.mock('../hooks', () => ({
 const commonData = {
   locations: [{ id: 'id-1', tenantId: 'cs00000int_0001' }],
   consortiaTenants: [{ id: 'cs00000int_0001', name: 'College' }],
-  locationsById: {
-    'id-1': { id: 'id-1', tenantId: 'cs00000int_0001' },
-  },
   consortiaTenantsById: {
     cs00000int_0001: { id: 'cs00000int_0001', name: 'College' },
   },
@@ -104,6 +101,9 @@ describe('DataProvider', () => {
           id: 'instanceRelationshipTypes-1',
           name: 'InstanceRelationshipType 1',
         },
+      },
+      locationsById: {
+        'id-1': { id: 'id-1', tenantId: 'cs00000int_0001' },
       },
       holdingsSourcesByName: {
         FOLIO: { id: 'id-1', name: 'FOLIO' },

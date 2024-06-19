@@ -57,7 +57,6 @@ const InstancesRouteSetup = ({
             instanceFormats: [],
             modesOfIssuance: [],
             natureOfContentTerms: [],
-            tagsRecords: [],
           }}
           >
             <LastSearchTermsContext.Provider value={{
@@ -96,12 +95,6 @@ const InstancesRouteSetup = ({
                         other: {
                           totalRecords: callNumbers.length
                         },
-                      },
-                      facets: {
-                        hasLoaded: true,
-                        resource: 'facets',
-                        records: [],
-                        other: { totalRecords: 0 },
                       },
                       resultCount: instances.length,
                       resultOffset: 0,
