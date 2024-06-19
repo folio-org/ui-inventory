@@ -44,7 +44,10 @@ const BoundPiecesList = ({ id, itemId }) => {
   const hasViewReceivingPermissions = stripes.hasPerm('ui-receiving.view');
 
   const onRemove = pieceData => {
-    selectedPieceRef.current = { ...omit(pieceData, ['rowIndex']), isBound: false };
+    selectedPieceRef.current = {
+      ...omit(pieceData, ['rowIndex']),
+      isBound: false,
+    };
 
     toggleOpen();
   };
@@ -59,6 +62,7 @@ const BoundPiecesList = ({ id, itemId }) => {
         });
       })
       .catch(() => {
+        toggleOpen();
         showCallout({
           messageId: 'ui-inventory.boundPieces.remove.error',
           type: 'error',
