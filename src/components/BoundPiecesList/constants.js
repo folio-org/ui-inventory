@@ -11,12 +11,12 @@ export const PIECE_COLUMNS = {
 };
 
 export const PIECE_COLUMN_MAPPING = {
-  [PIECE_COLUMNS.barcode]: <FormattedMessage id="ui-receiving.piece.barcode" />,
-  [PIECE_COLUMNS.displaySummary]: <FormattedMessage id="ui-receiving.piece.displaySummary" />,
-  [PIECE_COLUMNS.chronology]: <FormattedMessage id="ui-receiving.piece.chronology" />,
-  [PIECE_COLUMNS.copyNumber]: <FormattedMessage id="ui-receiving.piece.copyNumber" />,
-  [PIECE_COLUMNS.enumeration]: <FormattedMessage id="ui-receiving.piece.enumeration" />,
-  [PIECE_COLUMNS.receiptDate]: <FormattedMessage id="ui-receiving.piece.receiptDate" />,
+  [PIECE_COLUMNS.barcode]: <FormattedMessage id="ui-inventory.barcode" />,
+  [PIECE_COLUMNS.displaySummary]: <FormattedMessage id="ui-inventory.displaySummary" />,
+  [PIECE_COLUMNS.chronology]: <FormattedMessage id="ui-inventory.chronology" />,
+  [PIECE_COLUMNS.copyNumber]: <FormattedMessage id="ui-inventory.copyNumber" />,
+  [PIECE_COLUMNS.enumeration]: <FormattedMessage id="ui-inventory.enumeration" />,
+  [PIECE_COLUMNS.receiptDate]: <FormattedMessage id="ui-inventory.receiptDate" />,
   [PIECE_COLUMNS.remove]: '',
 };
 

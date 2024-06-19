@@ -4,7 +4,10 @@ import { ConfirmationModal } from '@folio/stripes/components';
 
 import '@folio/stripes-acq-components/test/jest/__mock__';
 
-import { renderWithIntl } from '../../../test/jest/helpers';
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../test/jest/helpers';
 import {
   useBoundPieces,
   usePiecesMutation,
@@ -41,7 +44,8 @@ const renderBoundPiecesList = (props = {}) => renderWithIntl(
     id="boundPiecesListId"
     itemId={boundPieces[0].itemId}
     {...props}
-  />
+  />,
+  translationsProperties
 );
 
 describe('BoundPiecesList', () => {
@@ -60,8 +64,8 @@ describe('BoundPiecesList', () => {
   it('should render component', () => {
     renderBoundPiecesList();
 
-    expect(screen.getByText('ui-receiving.piece.displaySummary')).toBeInTheDocument();
-    expect(screen.getByText('ui-receiving.piece.barcode')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.displaySummary')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.barcode')).toBeInTheDocument();
   });
 
   it('should render barcode link', () => {
@@ -77,7 +81,7 @@ describe('BoundPiecesList', () => {
 
     renderBoundPiecesList();
 
-    expect(screen.getByText('ui-receiving.piece.barcode')).toBeInTheDocument();
+    expect(screen.getByText('ui-inventory.barcode')).toBeInTheDocument();
     expect(screen.getByTestId('textLink')).toBeInTheDocument();
   });
 
@@ -108,6 +112,6 @@ describe('BoundPiecesList', () => {
 
     renderBoundPiecesList();
 
-    expect(screen.queryByText('ui-receiving.piece.displaySummary')).not.toBeInTheDocument();
+    expect(screen.queryByText('ui-inventory.displaySummary')).not.toBeInTheDocument();
   });
 });
