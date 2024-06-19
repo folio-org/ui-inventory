@@ -23,15 +23,15 @@ import {
   usePiecesMutation,
 } from '../../common/hooks';
 import {
-  COLUMN_FORMATTER,
   PIECE_COLUMN_MAPPING,
   VISIBLE_COLUMNS,
 } from './constants';
+import { getColumnFormatter } from './utils';
 
 const BoundPiecesList = ({ id, itemId }) => {
   const stripes = useStripes();
   const showCallout = useShowCallout();
-  const { unboundPiece } = usePiecesMutation();
+  const { updatePiece } = usePiecesMutation();
   const {
     boundPieces,
     isFetching,
@@ -50,7 +50,7 @@ const BoundPiecesList = ({ id, itemId }) => {
   };
 
   const handleRemove = () => {
-    return unboundPiece(selectedPieceRef.current)
+    return updatePiece(selectedPieceRef.current)
       .then(() => {
         refetch();
         toggleOpen();
@@ -67,7 +67,7 @@ const BoundPiecesList = ({ id, itemId }) => {
   };
 
   const formatter = useMemo(() => {
-    return COLUMN_FORMATTER({ onRemove, hasViewReceivingPermissions });
+    return getColumnFormatter({ onRemove, hasViewReceivingPermissions });
   }, [hasViewReceivingPermissions]);
 
   if (isFetching) return <Loading />;

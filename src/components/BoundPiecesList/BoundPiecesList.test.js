@@ -1,17 +1,10 @@
-import { IntlProvider } from 'react-intl';
-
-import {
-  render,
-  cleanup,
-  screen,
-} from '@folio/jest-config-stripes/testing-library/react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import {
-  ConfirmationModal,
-} from '@folio/stripes/components';
+import { ConfirmationModal } from '@folio/stripes/components';
 
 import '@folio/stripes-acq-components/test/jest/__mock__';
 
+import { renderWithIntl } from '../../../test/jest/helpers';
 import {
   useBoundPieces,
   usePiecesMutation,
@@ -41,17 +34,15 @@ const boundPieces = [{
   id: 'id',
 }];
 
-const mockUnboundPiece = jest.fn().mockResolvedValue(() => Promise.resolve());
+const mockUpdatePiece = jest.fn().mockResolvedValue(() => Promise.resolve());
 
-const renderBoundPiecesList = (props = {}) => (render(
-  <IntlProvider locale="en">
-    <BoundPiecesList
-      id="boundPiecesListId"
-      itemId={boundPieces[0].itemId}
-      {...props}
-    />
-  </IntlProvider>,
-));
+const renderBoundPiecesList = (props = {}) => renderWithIntl(
+  <BoundPiecesList
+    id="boundPiecesListId"
+    itemId={boundPieces[0].itemId}
+    {...props}
+  />
+);
 
 describe('BoundPiecesList', () => {
   beforeEach(() => {
@@ -61,12 +52,10 @@ describe('BoundPiecesList', () => {
       isFetching: false,
     });
     usePiecesMutation.mockClear().mockReturnValue({
-      unboundPiece: mockUnboundPiece,
+      updatePiece: mockUpdatePiece,
       isLoading: false,
     });
   });
-
-  afterEach(cleanup);
 
   it('should render component', () => {
     renderBoundPiecesList();
@@ -92,7 +81,7 @@ describe('BoundPiecesList', () => {
     expect(screen.getByTestId('textLink')).toBeInTheDocument();
   });
 
-  it('should call `unboundPiece` mutation on click remove button', async () => {
+  it('should call `updatePiece` mutation on click remove button', async () => {
     useBoundPieces.mockClear().mockReturnValue({
       boundPieces: [{
         ...boundPieces[0],
@@ -107,7 +96,7 @@ describe('BoundPiecesList', () => {
     await userEvent.click(screen.getByRole('button'));
 
     ConfirmationModal.mock.calls[0][0].onConfirm();
-    expect(mockUnboundPiece).toHaveBeenCalled();
+    expect(mockUpdatePiece).toHaveBeenCalled();
   });
 
   it('should not render component when pieces are not fetched', () => {

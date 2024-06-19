@@ -13,7 +13,7 @@ const usePiecesMutation = (options = {}) => {
 
   return {
     isLoading,
-    unboundPiece: mutateAsync,
+    updatePiece: mutateAsync,
   };
 };
 
