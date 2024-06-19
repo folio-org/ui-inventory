@@ -147,21 +147,6 @@ export function canMarkRequestAsOpen(request) {
     ], status);
 }
 
-export function getCurrentFilters(filtersStr) {
-  if (!filtersStr) {
-    return undefined;
-  }
-
-  return filtersStr
-    .split(',')
-    .reduce((filters, filter) => {
-      const [name, value] = filter.split('.');
-      filters[name] = filters[name] || [];
-      filters[name].push(value);
-      return filters;
-    }, {});
-}
-
 export function parseFiltersToStr(filters) {
   const newFilters = [];
 
@@ -223,14 +208,6 @@ export function filterItemsBy(name) {
 
     return { renderedItems };
   };
-}
-
-export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) {
-  const identifierType = identifierTypes
-    .find(({ name }) => name.toLowerCase() === queryIndex);
-  const identifierTypeId = get(identifierType, 'id', 'identifier-type-not-found');
-
-  return template(queryTemplate)({ identifierTypeId });
 }
 
 // Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'

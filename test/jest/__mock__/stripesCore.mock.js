@@ -77,7 +77,7 @@ const mockStripesCore = {
   },
 
   useOkapiKy: jest.fn().mockReturnValue({
-    get: jest.fn(),
+    get: jest.fn().mockReturnValue({ json: jest.fn().mockResolvedValue({}) }),
     post: jest.fn(),
     put: jest.fn(),
     delete: jest.fn(),

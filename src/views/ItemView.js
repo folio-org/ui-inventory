@@ -84,6 +84,8 @@ import {
   NOT_REMOVABLE_ITEM_STATUSES,
   wrappingCell,
   actionMenuDisplayPerms,
+  ITEM_ACCORDIONS,
+  ITEM_ACCORDION_LABELS,
 } from '../constants';
 import ItemStatus from './ItemStatus';
 import {
@@ -91,6 +93,7 @@ import {
   AdministrativeNoteList,
   ItemViewSubheader,
   PaneLoading,
+  BoundPiecesList,
 } from '../components';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
@@ -1698,6 +1701,15 @@ class ItemView extends React.Component {
                         }}
                         formatter={boundWithTitleFormatter}
                         ariaLabel={intl.formatMessage({ id: 'ui-inventory.boundWithTitles' })}
+                      />
+                    </Accordion>
+                    <Accordion
+                      id={ITEM_ACCORDIONS.boundItems}
+                      label={ITEM_ACCORDION_LABELS.boundItems}
+                    >
+                      <BoundPiecesList
+                        id="bound-pieces-list"
+                        itemId={item.id}
                       />
                     </Accordion>
                   </AccordionSet>

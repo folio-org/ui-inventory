@@ -50,6 +50,8 @@ import {
   segments,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   OKAPI_TENANT_HEADER,
+  getCurrentFilters,
+  buildSearchQuery,
 } from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
@@ -61,7 +63,6 @@ import ViewInstanceWrapper from '../../ViewInstanceWrapper';
 import formatters from '../../referenceFormatters';
 import withLocation from '../../withLocation';
 import {
-  getCurrentFilters,
   getNextSelectedRowsState,
   parseFiltersToStr,
   marshalInstance,
@@ -88,7 +89,7 @@ import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
 import SelectedRecordsModal from '../SelectedRecordsModal';
 import ImportRecordModal from '../ImportRecordModal';
-import { buildQuery } from '../../routes/buildManifestObject';
+import { applyDefaultStaffSuppressFilter } from '../../routes/buildManifestObject';
 import {
   getItem,
   setItem,
@@ -618,7 +619,7 @@ class InstancesList extends React.Component {
     if (!isTestEnv()) {
       const { data } = this.props;
 
-      const query = buildQuery(data.query, {}, data, { log: noop }, this.props);
+      const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
       const fileName = `SearchInstanceCQLQuery${moment().format()}.cql`;
 
       saveAs(new Blob([query], { type: 'text/plain;charset=utf-8;' }), fileName);

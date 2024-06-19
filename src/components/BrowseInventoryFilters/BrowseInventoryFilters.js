@@ -2,8 +2,7 @@ import PropTypes from 'prop-types';
 import { useContext } from 'react';
 
 import { DataContext } from '../../contexts';
-import { InstanceFiltersBrowse } from '../InstanceFilters';
-import { browseConfig } from '../../filterConfig';
+import InstanceFiltersBrowse from '../InstanceFiltersBrowse';
 
 const BrowseInventoryFilters = ({
   query,
@@ -11,15 +10,10 @@ const BrowseInventoryFilters = ({
 }) => {
   const data = useContext(DataContext);
 
-  const filtersData = {
-    ...data,
-    query,
-  };
-
   return (
     <InstanceFiltersBrowse
-      filterConfig={browseConfig}
-      data={filtersData}
+      data={data}
+      query={query}
       onChange={({ name, values }) => applyFilters(name, values)}
       onClear={(name) => applyFilters(name, [])}
     />

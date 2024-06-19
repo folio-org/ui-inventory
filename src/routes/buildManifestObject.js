@@ -1,31 +1,14 @@
 import {
-  get,
-} from 'lodash';
-
-import {
-  makeQueryFunction,
-} from '@folio/stripes/smart-components';
-import {
   FACETS,
-  CQL_FIND_ALL,
-  queryIndexes,
-  getQueryTemplate,
-  getTemplateForSelectedFromBrowseRecord,
-  getAdvancedSearchTemplate,
-  getDefaultQindex,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+  buildSearchQuery,
 } from '@folio/stripes-inventory-components';
 
-import {
-  getIsbnIssnTemplate,
-  replaceFilter,
-} from '../utils';
-import { getFilterConfig } from '../filterConfig';
+import { replaceFilter } from '../utils';
 
 const INITIAL_RESULT_COUNT = 100;
-const DEFAULT_SORT = 'title';
 
-const applyDefaultStaffSuppressFilter = (stripes, query) => {
+export const applyDefaultStaffSuppressFilter = (query, stripes) => {
   const isUserTouchedStaffSuppress = JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY));
 
   const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
@@ -45,59 +28,6 @@ const applyDefaultStaffSuppressFilter = (stripes, query) => {
   }
 };
 
-export function buildQuery(queryParams, pathComponents, resourceData, logger, props) {
-  const { indexes, sortMap, filters } = getFilterConfig(queryParams.segment);
-  const query = { ...resourceData.query };
-  const queryIndex = queryParams?.qindex || getDefaultQindex(queryParams.segment);
-  const queryValue = get(queryParams, 'query', '');
-  let queryTemplate = getQueryTemplate(queryIndex, indexes);
-
-  const template = getTemplateForSelectedFromBrowseRecord(queryParams, queryIndex, queryValue);
-
-  if (template) {
-    queryTemplate = template;
-  }
-
-  if (queryIndex === queryIndexes.ADVANCED_SEARCH) {
-    queryTemplate = getAdvancedSearchTemplate(queryValue);
-  }
-
-  if ([queryIndexes.ISBN, queryIndexes.ISSN].includes(queryIndex)) {
-    // eslint-disable-next-line camelcase
-    const identifierTypes = resourceData?.identifier_types?.records ?? [];
-    queryTemplate = getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex);
-  }
-
-  if (queryIndex === queryIndexes.QUERY_SEARCH && queryValue.match('sortby')) {
-    query.sort = '';
-  } else if (query.sort && query.sort === 'relevance') {
-    query.sort = '';
-  } else if (!query.sort) {
-    // Default sort for filtering/searching instances/holdings/items should be by title (UIIN-1046)
-    query.sort = DEFAULT_SORT;
-  }
-
-  applyDefaultStaffSuppressFilter(props.stripes, query);
-
-  resourceData.query = {
-    ...query,
-    qindex: '',
-  };
-
-  // makeQueryFunction escapes quote and backslash characters by default,
-  // but when submitting a raw CQL query (i.e. when queryIndex === 'querySearch')
-  // we assume the user knows what they are doing and wants to run the CQL as-is.
-  return makeQueryFunction(
-    CQL_FIND_ALL,
-    queryTemplate,
-    sortMap,
-    filters,
-    2,
-    null,
-    queryIndex !== queryIndexes.QUERY_SEARCH,
-  )(queryParams, pathComponents, resourceData, logger, props);
-}
-
 const buildRecordsManifest = (options = {}) => {
   const { path } = options;
 
@@ -114,7 +44,7 @@ const buildRecordsManifest = (options = {}) => {
       path,
       params: {
         expandAll: true,
-        query: buildQuery,
+        query: buildSearchQuery(applyDefaultStaffSuppressFilter),
       },
     },
   };
@@ -145,7 +75,7 @@ export function buildManifestObject() {
       throwErrors: false,
       GET: {
         params: {
-          query: buildQuery,
+          query: buildSearchQuery(applyDefaultStaffSuppressFilter),
         },
         staticFallback: { params: {} },
       },
@@ -159,7 +89,7 @@ export function buildManifestObject() {
       throwErrors: false,
       GET: {
         params: {
-          query: buildQuery,
+          query: buildSearchQuery(applyDefaultStaffSuppressFilter),
         },
         staticFallback: { params: {} },
       },

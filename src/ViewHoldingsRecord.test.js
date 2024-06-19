@@ -22,6 +22,11 @@ import {
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
+jest.mock('./Holding/ViewHolding/HoldingReceivingHistory/useReceivingHistory', () => jest.fn(() => ({
+  isFetching: false,
+  receivingHistory: [],
+})));
+
 const mockPush = jest.fn();
 
 const history = createMemoryHistory();
