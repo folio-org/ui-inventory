@@ -93,6 +93,7 @@ const InstanceEdit = ({
     const parsedError = await parseHttpError(response);
     const defaultErrorMessage = formatMessage({ id: 'ui-inventory.communicationProblem' });
     const err = {
+      errorType: parsedError.errorType,
       message: parsedError?.message || parsedError?.errors?.[0]?.message || defaultErrorMessage,
       status: response.status,
     };
