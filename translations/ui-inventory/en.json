@@ -807,6 +807,7 @@
 
   "boundPieces.remove.success": "Bound piece successfully removed",
   "boundPieces.remove.error": "Bound piece deletion failed",
+  "boundPieces.remove.heading": "Are you sure?",
   "boundPieces.remove.message": "Remove this piece from the bound item?",
   "boundPieces.remove.button": "Remove",
 
