@@ -240,7 +240,6 @@ const ItemsList = ({
       formatter={formatter}
       visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
       columnMapping={columnMapping}
-      columnWidths={{ barcode: '350px' }}
       ariaLabel={ariaLabel}
       interactive={false}
       onNeedMoreData={onNeedMoreData}
