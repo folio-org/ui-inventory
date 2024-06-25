@@ -5,9 +5,7 @@ import { flowRight } from 'lodash';
 import { stripesConnect } from '@folio/stripes/core';
 import {
   filterConfig,
-  HoldingsRecordFilters,
-  InstanceFilters,
-  ItemFilters,
+  renderFilters,
   segments,
 } from '@folio/stripes-inventory-components';
 
@@ -16,12 +14,6 @@ import withLastSearchTerms from '../withLastSearchTerms';
 import { InstancesView } from '../views';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
-
-const filterComponents = {
-  [segments.instances]: InstanceFilters,
-  [segments.holdings]: HoldingsRecordFilters,
-  [segments.items]: ItemFilters,
-};
 
 class InstancesRoute extends React.Component {
   static propTypes = {
@@ -43,18 +35,8 @@ class InstancesRoute extends React.Component {
 
   static manifest = Object.freeze(buildManifestObject());
 
-  renderFilters = ({ data, query }) => onChange => {
-    const { getParams } = this.props;
-    const { segment = segments.instances } = getParams(this.props);
-    const FiltersComponent = filterComponents[segment];
-
-    return (
-      <FiltersComponent
-        query={query}
-        data={data}
-        onChange={onChange}
-      />
-    );
+  handleFilterChange = (onChange) => ({ name, values }) => {
+    onChange({ name, values });
   };
 
   render() {
@@ -84,9 +66,10 @@ class InstancesRoute extends React.Component {
             data={{ ...data, query }}
             onSelectRow={onSelectRow}
             disableRecordCreation={disableRecordCreation}
-            renderFilters={this.renderFilters({
+            renderFilters={renderFilters({
               data,
               query,
+              onFilterChange: this.handleFilterChange,
             })}
             segment={segment}
             searchableIndexes={indexes}

@@ -35,6 +35,7 @@ const getTargetRecord = (
   row,
   browseOption,
   filters,
+  namespace,
 ) => {
   const record = getFullMatchRecord(item, row.isAnchor);
   const searchParams = getSearchParams(row, browseOption, filters);
@@ -51,7 +52,7 @@ const getTargetRecord = (
   };
 
   const handleClick = () => {
-    deleteFacetStates();
+    deleteFacetStates(namespace);
   };
 
   return (
@@ -110,6 +111,7 @@ const getBrowseResultsFormatter = ({
   data,
   browseOption,
   filters,
+  namespace,
 }) => {
   return {
     title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
@@ -118,7 +120,7 @@ const getBrowseResultsFormatter = ({
         return <MissedMatchItem query={r?.value} />;
       }
 
-      const subject = getTargetRecord(r?.value, r, browseOption, filters);
+      const subject = getTargetRecord(r?.value, r, browseOption, filters, namespace);
       if (browseOption === browseModeOptions.SUBJECTS && r.authorityId) {
         return renderMarcAuthoritiesLink(r.authorityId, subject);
       }
@@ -127,13 +129,13 @@ const getBrowseResultsFormatter = ({
     },
     callNumber: r => {
       if (r?.instance || r?.totalRecords) {
-        return getTargetRecord(r?.fullCallNumber, r, browseOption, filters);
+        return getTargetRecord(r?.fullCallNumber, r, browseOption, filters, namespace);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;
     },
     classificationNumber: r => {
       if (r?.totalRecords) {
-        return getTargetRecord(r?.classificationNumber, r, browseOption, filters);
+        return getTargetRecord(r?.classificationNumber, r, browseOption, filters, namespace);
       }
       return <MissedMatchItem query={r.classificationNumber} />;
     },
@@ -142,7 +144,7 @@ const getBrowseResultsFormatter = ({
         return <MissedMatchItem query={r.name} />;
       }
 
-      const fullMatchRecord = getTargetRecord(r.name, r, browseOption, filters);
+      const fullMatchRecord = getTargetRecord(r.name, r, browseOption, filters, namespace);
 
       if (browseOption === browseModeOptions.CONTRIBUTORS && r.authorityId) {
         return renderMarcAuthoritiesLink(r.authorityId, fullMatchRecord);

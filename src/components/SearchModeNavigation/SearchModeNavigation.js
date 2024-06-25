@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes/components';
 import { deleteFacetStates } from '@folio/stripes-inventory-components';
 
+import { useNamespace } from '@folio/stripes/core';
 import {
   searchModeRoutesMap,
   searchModeSegments,
@@ -25,6 +26,7 @@ const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
     pathname,
   } = useLocation();
   const history = useHistory();
+  const [namespace] = useNamespace();
 
   const checkIsButtonActive = useCallback((segment) => (
     path === searchModeRoutesMap[segment] ? 'primary' : 'default'
@@ -33,10 +35,10 @@ const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
   const onClick = useCallback((segment) => {
     const isCurrentSegment = path === searchModeRoutesMap[segment];
 
-    deleteFacetStates();
+    deleteFacetStates(namespace);
 
     if (onSearchModeSwitch) {
-      onSearchModeSwitch();
+      onSearchModeSwitch(namespace);
     }
 
     history.push({
@@ -44,7 +46,7 @@ const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
       search: isCurrentSegment ? currentSearch : search,
       state,
     });
-  }, [onSearchModeSwitch, history, path, currentSearch, search, state]);
+  }, [onSearchModeSwitch, history, path, currentSearch, search, state, namespace]);
 
   return (
     <ButtonGroup fullWidth>
