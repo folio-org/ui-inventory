@@ -92,9 +92,9 @@ const BoundPiecesList = ({ id, itemId }) => {
       <ConfirmationModal
         id="delete-confirmation-modal"
         open={open}
-        showHeader={false}
         onConfirm={handleRemove}
         onCancel={toggleOpen}
+        heading={<FormattedMessage id="ui-inventory.boundPieces.remove.heading" />}
         message={<FormattedMessage id="ui-inventory.boundPieces.remove.message" />}
         confirmLabel={<FormattedMessage id="ui-inventory.boundPieces.remove.button" />}
       />
