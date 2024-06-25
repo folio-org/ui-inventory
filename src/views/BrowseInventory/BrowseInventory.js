@@ -48,7 +48,7 @@ const BrowseInventory = () => {
   const location = useLocation();
   const intl = useIntl();
   const [namespace] = useNamespace();
-  const resetFacetStates = useResetFacetStates();
+  const resetFacetStates = useResetFacetStates(namespace);
   const {
     getLastSearch,
     getLastBrowseOffset,
