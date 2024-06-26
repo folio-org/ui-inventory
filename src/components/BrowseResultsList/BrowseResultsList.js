@@ -9,6 +9,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 
+import { useNamespace } from '@folio/stripes/core';
 import {
   MCLPagingTypes,
   MultiColumnList,
@@ -51,6 +52,7 @@ const BrowseResultsList = ({
   totalRecords,
   filters,
 }) => {
+  const [namespace] = useNamespace();
   const data = useContext(DataContext);
   const { search } = useLocation();
   const {
@@ -76,7 +78,7 @@ const BrowseResultsList = ({
       id={listId}
       totalCount={totalRecords}
       contentData={browseData}
-      formatter={getBrowseResultsFormatter({ data, browseOption, filters })}
+      formatter={getBrowseResultsFormatter({ data, browseOption, filters, namespace })}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
       isSelected={isSelected}

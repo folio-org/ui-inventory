@@ -474,7 +474,9 @@ class InstancesList extends React.Component {
   }
 
   handleSearchSegmentChange = (segment) => {
-    deleteFacetStates();
+    const { namespace } = this.props;
+
+    deleteFacetStates(namespace);
     this.refocusOnInputSearch(segment);
     this.setState({ selectedRows: {} });
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
@@ -997,11 +999,13 @@ class InstancesList extends React.Component {
   };
 
   handleResetAll = () => {
+    const { namespace } = this.props;
+
     this.setState({
       selectedRows: {},
     });
 
-    resetFacetStates();
+    resetFacetStates({ namespace });
     this.inputRef.current.focus();
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
