@@ -38,6 +38,7 @@
 * Add Bound items accordion in item record. Refs UIIN-2760.
 * Edit Inventory Instances: Optimistic locking error displays in pop-up modal instead of banner in the header. Fixes UIIN-2940.
 * Make item barcode column narrower. Fixes UIIN-2925.
+* i18n item status in item edit view. Refs UIIN-2766.
 * Enable "+ New" and "Edit" buttons when user has "Settings (Inventory): Configure single-record import" permission. Refs UIIN-2771.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)

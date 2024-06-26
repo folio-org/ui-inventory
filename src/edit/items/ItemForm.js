@@ -37,6 +37,7 @@ import {
 } from '@folio/stripes/components';
 import {
   AppIcon,
+  IntlConsumer,
 } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import {
@@ -61,6 +62,7 @@ import StatisticalCodeFields from '../statisticalCodeFields';
 import NoteFields from '../noteFields';
 
 import styles from './ItemForm.css';
+import { itemStatusesMap } from '../../constants';
 
 function validate(values) {
   const errors = {};
@@ -123,6 +125,30 @@ function validateBarcode(props) {
     return '';
   });
 }
+
+const ITEM_STATUSES_TRANSLATIONS_ID_MAP = {
+  [itemStatusesMap.AGED_TO_LOST]: 'stripes-inventory-components.item.status.agedToLost',
+  [itemStatusesMap.AVAILABLE]: 'stripes-inventory-components.item.status.available',
+  [itemStatusesMap.AWAITING_PICKUP]: 'stripes-inventory-components.item.status.awaitingPickup',
+  [itemStatusesMap.AWAITING_DELIVERY]: 'stripes-inventory-components.item.status.awaitingDelivery',
+  [itemStatusesMap.CHECKED_OUT]: 'stripes-inventory-components.item.status.checkedOut',
+  [itemStatusesMap.CLAIMED_RETURNED]: 'stripes-inventory-components.item.status.claimedReturned',
+  [itemStatusesMap.DECLARED_LOST]: 'stripes-inventory-components.item.status.declaredLost',
+  [itemStatusesMap.IN_PROCESS]: 'stripes-inventory-components.item.status.inProcess',
+  [itemStatusesMap.IN_PROCESS_NON_REQUESTABLE]: 'stripes-inventory-components.item.status.inProcessNonRequestable',
+  [itemStatusesMap.IN_TRANSIT]: 'stripes-inventory-components.item.status.inTransit',
+  [itemStatusesMap.INTELLECTUAL_ITEM]: 'stripes-inventory-components.item.status.intellectualItem',
+  [itemStatusesMap.LONG_MISSING]: 'stripes-inventory-components.item.status.longMissing',
+  [itemStatusesMap.LOST_AND_PAID]: 'stripes-inventory-components.item.status.lostAndPaid',
+  [itemStatusesMap.MISSING]: 'stripes-inventory-components.item.status.missing',
+  [itemStatusesMap.ON_ORDER]: 'stripes-inventory-components.item.status.onOrder',
+  [itemStatusesMap.ORDER_CLOSED]: 'stripes-inventory-components.item.status.orderClosed',
+  [itemStatusesMap.PAGED]: 'stripes-inventory-components.item.status.paged',
+  [itemStatusesMap.RESTRICTED]: 'stripes-inventory-components.item.status.restricted',
+  [itemStatusesMap.UNAVAILABLE]: 'stripes-inventory-components.item.status.unavailable',
+  [itemStatusesMap.UNKNOWN]: 'stripes-inventory-components.item.status.unknown',
+  [itemStatusesMap.WITHDRAWN]: 'stripes-inventory-components.item.status.withdrawn',
+};
 
 class ItemForm extends React.Component {
   constructor(props) {
@@ -799,14 +825,20 @@ class ItemForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={2}>
-                        <Field
-                          label={<FormattedMessage id="ui-inventory.status" />}
-                          name="status.name"
-                          id="additem_status"
-                          component={TextField}
-                          disabled
-                          fullWidth
-                        />
+                        <IntlConsumer>
+                          {intl => (
+                            <Field
+                              label={<FormattedMessage id="ui-inventory.status" />}
+                              name="status.name"
+                              id="additem_status"
+                              component={TextField}
+                              format={value => (ITEM_STATUSES_TRANSLATIONS_ID_MAP[value] ? intl.formatMessage({ id: ITEM_STATUSES_TRANSLATIONS_ID_MAP[value] }) : value)}
+                              parse={value => value}
+                              disabled
+                              fullWidth
+                            />
+                          )}
+                        </IntlConsumer>
                       </Col>
                     </Row>
                     <Row>
