@@ -430,7 +430,8 @@
           "copycat.profiles.item.post",
           "copycat.profiles.item.put",
           "copycat.profiles.item.delete",
-          "converter-storage.jobprofile.get"
+          "converter-storage.jobprofile.get",
+          "inventory-storage.identifier-types.collection.get"
         ],
         "visible": true
       },
