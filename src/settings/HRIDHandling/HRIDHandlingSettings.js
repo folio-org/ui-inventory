@@ -65,6 +65,7 @@ class HRIDHandlingSettings extends Component {
   static propTypes = {
     mutator: PropTypes.object.isRequired,
     resources: PropTypes.object.isRequired,
+    stripes: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -154,8 +155,9 @@ class HRIDHandlingSettings extends Component {
   }
 
   render() {
-    const { mutator } = this.props;
+    const { mutator, stripes } = this.props;
     const initialValues = this.getInitialValues();
+    const isEnabled = stripes.hasPerm('ui-inventory.settings.hrid-handling');
 
     return (
       <IntlConsumer>
