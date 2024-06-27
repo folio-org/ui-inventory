@@ -81,45 +81,34 @@ describe('TargetProfileForm', () => {
   describe('when click Save & close button', () => {
     it('onSubmit function should be called', async () => {
       const {
-        debug,
         container,
         getByText,
-        getByRole,
         getAllByText,
         getByLabelText,
-        findByText,
-        findByLabelText,
-        findAllByText,
+        debug,
         findByRole,
       } = renderTargetProfileForm();
       const nameInput = container.querySelector('#input-targetprofile-name');
       fireEvent.change(nameInput, { target: { value: 'test name' } });
 
-
       const addJobCreateButton = await findByRole('button', { name: 'Add job profile for import/create' });
+      // const addJobCreateButton = getByText('Add job profile for import/create');
       fireEvent.click(addJobCreateButton);
 
-      const selectJobProfileButton = container.querySelector('[name="allowedCreateJobProfileIds[0]"]');
-      fireEvent.click(selectJobProfileButton);
       debug(container, 300000);
+      await waitFor(() => {
+        const element = getByLabelText('Select job profile for import/create');
+        expect(element).toBeInTheDocument();
+        fireEvent.click(element);
+      });
+      fireEvent.click(getAllByText('Job profile for create (job profile id for create)')[0]);
+      fireEvent.click(getByLabelText('Set 0 job profile for create as default'));
 
-      const jobProfileOption = await findAllByText('Job profile for create (job profile id for create)');
-      fireEvent.click(jobProfileOption[0]);
-
-      const setDefaultJobProfileButton = await findByRole('radio', { name: 'Set 0 job profile for create as default' });
-      fireEvent.click(setDefaultJobProfileButton);
-
-      const addJobUpdateButton = await findByRole('button', { name: 'Add job profile for overlay/update' });
+      const addJobUpdateButton = getByText('Add job profile for overlay/update');
       fireEvent.click(addJobUpdateButton);
-
-      const selectJobProfileUpdateButton = container.querySelector('[name="allowedUpdateJobProfileIds[0]"]');
-      fireEvent.click(selectJobProfileUpdateButton);
-
-      const jobProfileUpdateOption = await findAllByText('Job profile for update (job profile id for update)');
-      fireEvent.click(jobProfileUpdateOption[1]);
-
-      const setDefaultJobProfileUpdateButton = await findByRole('radio', { name: 'Set 0 job profile for update as default' });
-      fireEvent.click(setDefaultJobProfileUpdateButton);
+      fireEvent.click(getByLabelText('Select job profile for overlay/update'));
+      fireEvent.click(getAllByText('Job profile for update (job profile id for update)')[1]);
+      fireEvent.click(getByLabelText('Set 0 job profile for update as default'));
 
       const submit = getByText('Save & close');
       fireEvent.click(submit);
