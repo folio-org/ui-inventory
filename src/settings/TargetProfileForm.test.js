@@ -18,7 +18,7 @@ const onSubmitMock = jest.fn();
 const defaultInitialValues = { targetOptions: { key: 'testKey' } };
 const defaultProps = {
   onSubmit: onSubmitMock,
-  onCancel: jest.fn(),
+  onCancel: jest.mock(),
   resources: {
     jobProfiles: {
       records: [{
@@ -78,29 +78,20 @@ describe('TargetProfileForm', () => {
     });
   });
 
-  describe('when click Save & close button', () => {
-    it('onSubmit function should be called', async () => {
+  describe('when click "Save & close" button', () => {
+    it('onSubmit function should be called', () => {
       const {
         container,
         getByText,
         getAllByText,
         getByLabelText,
-        debug,
-        findByRole,
       } = renderTargetProfileForm();
       const nameInput = container.querySelector('#input-targetprofile-name');
       fireEvent.change(nameInput, { target: { value: 'test name' } });
 
-      const addJobCreateButton = await findByRole('button', { name: 'Add job profile for import/create' });
-      // const addJobCreateButton = getByText('Add job profile for import/create');
+      const addJobCreateButton = getByText('Add job profile for import/create');
       fireEvent.click(addJobCreateButton);
-
-      debug(container, 300000);
-      await waitFor(() => {
-        const element = getByLabelText('Select job profile for import/create');
-        expect(element).toBeInTheDocument();
-        fireEvent.click(element);
-      });
+      fireEvent.click(getByLabelText('Select job profile for import/create'));
       fireEvent.click(getAllByText('Job profile for create (job profile id for create)')[0]);
       fireEvent.click(getByLabelText('Set 0 job profile for create as default'));
 
