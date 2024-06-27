@@ -312,7 +312,8 @@
           "inventory-storage.statistical-codes.item.get",
           "inventory-storage.statistical-codes.item.post",
           "inventory-storage.statistical-codes.item.put",
-          "settings.inventory.enabled"
+          "settings.inventory.enabled",
+          "inventory-storage.statistical-code-types.collection.get"
         ],
         "visible": true
       },
