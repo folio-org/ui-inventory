@@ -95,13 +95,13 @@ describe('TargetProfileForm', () => {
       const nameInput = container.querySelector('#input-targetprofile-name');
       fireEvent.change(nameInput, { target: { value: 'test name' } });
 
-      debug(container, 300000);
 
       const addJobCreateButton = await findByRole('button', { name: 'Add job profile for import/create' });
       fireEvent.click(addJobCreateButton);
 
-      const selectJobProfileButton = await findByRole('button', { name: 'Select job profile for import/create' });
+      const selectJobProfileButton = container.querySelector('[name="allowedCreateJobProfileIds[0]"]');
       fireEvent.click(selectJobProfileButton);
+      debug(container, 300000);
 
       const jobProfileOption = await findAllByText('Job profile for create (job profile id for create)');
       fireEvent.click(jobProfileOption[0]);
@@ -112,7 +112,7 @@ describe('TargetProfileForm', () => {
       const addJobUpdateButton = await findByRole('button', { name: 'Add job profile for overlay/update' });
       fireEvent.click(addJobUpdateButton);
 
-      const selectJobProfileUpdateButton = await findByRole('button', { name: 'Select job profile for overlay/update' });
+      const selectJobProfileUpdateButton = container.querySelector('[name="allowedUpdateJobProfileIds[0]"]');
       fireEvent.click(selectJobProfileUpdateButton);
 
       const jobProfileUpdateOption = await findAllByText('Job profile for update (job profile id for update)');
