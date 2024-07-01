@@ -28,7 +28,10 @@ import {
   checkIfUserInCentralTenant,
   TitleManager,
 } from '@folio/stripes/core';
-import { SearchAndSort } from '@folio/stripes/smart-components';
+import {
+  SearchAndSort,
+  buildUrl,
+} from '@folio/stripes/smart-components';
 import {
   Button,
   Icon,
@@ -634,6 +637,12 @@ class InstancesList extends React.Component {
     });
   }
 
+  focusSearchField = () => {
+    setTimeout(() => {
+      this.inputRef.current.focus();
+    });
+  }
+
   handleFastAddModalClose = ({ instanceRecord } = {}) => {
     const {
       history,
@@ -645,6 +654,8 @@ class InstancesList extends React.Component {
         pathname: `/inventory/view/${instanceRecord.id}`,
         search: location.search,
       });
+    } else {
+      this.focusSearchField();
     }
 
     this.toggleNewFastAddModal();
@@ -1133,6 +1144,31 @@ class InstancesList extends React.Component {
     return this.findAndOpenItem(instance);
   }
 
+  handleCloseNewRecord = (e) => {
+    const {
+      location,
+      match: {
+        path,
+      },
+      history,
+    } = this.props;
+
+    e?.preventDefault();
+
+    const url = buildUrl(location, { layer: null }, path);
+
+    history.push(url);
+    this.focusSearchField();
+  }
+
+  handleDismissDetail = (resetSelectedItem) => {
+    const { location } = this.props;
+
+    resetSelectedItem();
+    // focus on the title of the closed record in the results list
+    document.querySelector(`#list-row a[href^="${location.pathname}"]`)?.focus();
+  }
+
   render() {
     const {
       canUseSingleRecordImport,
@@ -1284,6 +1320,7 @@ class InstancesList extends React.Component {
             inputType="textarea"
             inputRef={this.inputRef}
             indexRef={this.indexRef}
+            isCursorAtEnd
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
@@ -1316,6 +1353,9 @@ class InstancesList extends React.Component {
             resultsRowClickHandlers={false}
             resultsFormatter={resultsFormatter}
             resultRowFormatter={DefaultMCLRowFormatter}
+            rowProps={{
+              id: 'list-row',
+            }}
             onCreate={this.onCreate}
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"
@@ -1343,6 +1383,8 @@ class InstancesList extends React.Component {
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
+            onCloseNewRecord={this.handleCloseNewRecord}
+            onDismissDetail={this.handleDismissDetail}
           />
         </div>
         <ErrorModal
