@@ -1166,7 +1166,7 @@ class InstancesList extends React.Component {
 
     resetSelectedItem();
     // focus on the title of the closed record in the results list
-    document.querySelector(`#list-row a[href^="${location.pathname}"]`)?.focus();
+    document.querySelector(`[role="gridcell"] a[href^="${location.pathname}"]`)?.focus();
   }
 
   render() {
@@ -1353,9 +1353,6 @@ class InstancesList extends React.Component {
             resultsRowClickHandlers={false}
             resultsFormatter={resultsFormatter}
             resultRowFormatter={DefaultMCLRowFormatter}
-            rowProps={{
-              id: 'list-row',
-            }}
             onCreate={this.onCreate}
             viewRecordPerms="ui-inventory.instance.view"
             newRecordPerms="ui-inventory.instance.create"
