@@ -157,7 +157,7 @@ class HRIDHandlingSettings extends Component {
   render() {
     const { mutator, stripes } = this.props;
     const initialValues = this.getInitialValues();
-    const isEnabled = stripes.hasPerm('ui-inventory.settings.hrid-handling');
+    const canEdit = stripes.hasPerm('ui-inventory.settings.hrid-handling');
 
     return (
       <IntlConsumer>
@@ -192,6 +192,7 @@ class HRIDHandlingSettings extends Component {
                               }}
                               inline
                               labelClass={css.checkboxLabel}
+                              disabled={!canEdit}
                             />
                           )}
                         />
@@ -230,6 +231,7 @@ class HRIDHandlingSettings extends Component {
                               component={TextField}
                               className={`${css.margin0} startWithField startWithField--${record.type}`}
                               validate={composeValidators(validateNumericField, validateRequiredField, validateStartWithMaxLength)}
+                              disabled={!canEdit}
                             />
                           </div>
                         </Col>
@@ -251,6 +253,7 @@ class HRIDHandlingSettings extends Component {
                               component={TextField}
                               className={`${css.margin0} assignPrefixField assignPrefixField--${record.type}`}
                               validate={composeValidators(validateAlphaNumericField, validateAssignPrefixMaxLength)}
+                              disabled={!canEdit}
                             />
                           </div>
                         </Col>
