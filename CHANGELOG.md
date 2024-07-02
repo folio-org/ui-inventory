@@ -42,6 +42,7 @@
 * Enable "+ New" and "Edit" buttons when user has "Settings (Inventory): Configure single-record import" permission. Refs UIIN-2771.
 * Allow user to view `HRID handling` section when "Settings (Inventory): View list of settings pages" permission is assigned
 and disable fields when "Settings (Inventory): Create, edit and delete HRID handling" permission is not assigned. Refs UIIN-2773.
+* Update "Settings (Inventory): Create, edit, delete statistical codes" permission. Refs UIIN-2772.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
