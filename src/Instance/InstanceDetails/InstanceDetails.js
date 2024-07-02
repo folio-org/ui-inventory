@@ -169,7 +169,7 @@ const InstanceDetails = forwardRef(({
           <PaneCloseLink
             autoFocus={location.state?.isClosingFocused}
             onClick={onClose}
-            aria-label={intl.formatMessage({ id: 'ui-inventory.close.record' })}
+            aria-label={intl.formatMessage({ id: 'stripes-components.closeItem' }, { item: renderPaneTitle() })}
           />
         )}
         lastMenu={detailsLastMenu}
