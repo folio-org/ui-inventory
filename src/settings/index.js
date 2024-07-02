@@ -175,7 +175,7 @@ class InventorySettings extends React.Component {
             route: 'hridHandling',
             label: <FormattedMessage id="ui-inventory.hridHandling" />,
             component: HRIDHandlingSettings,
-            perm: 'ui-inventory.settings.hrid-handling',
+            perm: this.addPerm('ui-inventory.settings.hrid-handling'),
           },
           {
             route: 'statisticalCodeTypes',
