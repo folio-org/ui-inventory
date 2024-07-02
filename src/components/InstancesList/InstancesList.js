@@ -639,7 +639,7 @@ class InstancesList extends React.Component {
 
   focusSearchField = () => {
     setTimeout(() => {
-      this.inputRef.current.focus();
+      this.inputRef.current?.focus();
     });
   }
 
@@ -1163,10 +1163,11 @@ class InstancesList extends React.Component {
 
   handleDismissDetail = (resetSelectedItem) => {
     const { location } = this.props;
+    const id = this.getInstanceIdFromLocation(location);
 
     resetSelectedItem();
     // focus on the title of the closed record in the results list
-    document.querySelector(`[role="gridcell"] a[href^="${location.pathname}"]`)?.focus();
+    document.getElementById(`record-title-${id}`)?.focus();
   }
 
   render() {
@@ -1228,6 +1229,7 @@ class InstancesList extends React.Component {
               iconAlignment="baseline"
             >
               <TextLink
+                id={`record-title-${id}`}
                 to={this.getRowURL(id)}
               >
                 {title}
