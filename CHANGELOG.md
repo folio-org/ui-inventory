@@ -40,6 +40,7 @@
 * Make item barcode column narrower. Fixes UIIN-2925.
 * i18n item status in item edit view. Refs UIIN-2766.
 * Enable "+ New" and "Edit" buttons when user has "Settings (Inventory): Configure single-record import" permission. Refs UIIN-2771.
+* Focus on search field after canceling record creation. Focus on record title after closing detail view. Refs UIIN-2962.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)

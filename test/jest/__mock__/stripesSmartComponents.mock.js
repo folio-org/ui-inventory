@@ -30,6 +30,10 @@ jest.mock('@folio/stripes/smart-components', () => ({
         'description': 'Storage B description'
       }
     });
-  }
+  },
+  SearchAndSort: jest.fn(props => {
+    const RealSearchAndSort = jest.requireActual('@folio/stripes/smart-components').SearchAndSort;
+    return <RealSearchAndSort {...props} />;
+  }),
 }), { virtual: true });
 

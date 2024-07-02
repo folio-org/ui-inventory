@@ -26,6 +26,7 @@ import {
   PaneMenu,
   Row,
   MessageBanner,
+  PaneCloseLink,
 } from '@folio/stripes/components';
 
 import { InstanceTitle } from './InstanceTitle';
@@ -164,9 +165,14 @@ const InstanceDetails = forwardRef(({
         paneTitle={renderPaneTitle()}
         paneSub={renderPaneSubtitle()}
         actionMenu={actionMenu}
+        firstMenu={(
+          <PaneCloseLink
+            autoFocus={location.state?.isClosingFocused}
+            onClick={onClose}
+            aria-label={intl.formatMessage({ id: 'ui-inventory.close.record' })}
+          />
+        )}
         lastMenu={detailsLastMenu}
-        dismissible
-        onClose={onClose}
         defaultWidth="fill"
       >
         <TitleManager record={instance.title} />
