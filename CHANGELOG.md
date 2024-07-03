@@ -43,7 +43,7 @@
 * Allow user to view `HRID handling` section when "Settings (Inventory): View list of settings pages" permission is assigned
 and disable fields when "Settings (Inventory): Create, edit and delete HRID handling" permission is not assigned. Refs UIIN-2773.
 * Update "Settings (Inventory): Create, edit, delete statistical codes" permission. Refs UIIN-2772.
-* Focus on search field after canceling record creation. Focus on record title after closing detail view. Refs UIIN-2962.
+* Focus on record title after closing record details view, on search field after canceling record creation, on close record details view icon after closing quick-marc. Refs UIIN-2962.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
