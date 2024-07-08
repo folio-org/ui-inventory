@@ -405,6 +405,31 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
     </div>);
 };
 
+/**
+ * Creates an object with identifier type as a key and its value
+ *
+ * @param {Object[]} identifiers
+ * @param {String[]} types identifier names
+ * @param {Object} identifierTypesById
+ *
+ * @returns {Object} Identifier names and its values
+ */
+export const getIdentifiersValues = (identifiers = [], types, identifierTypesById) => {
+  const result = {};
+
+  if (!identifiers.length) return result;
+
+  identifiers.forEach(({ identifierTypeId, value }) => {
+    const ident = identifierTypesById[identifierTypeId];
+
+    if (types.some(type => type === ident?.name) && value) {
+      result[ident.name] = value;
+    }
+  });
+
+  return result;
+};
+
 export const updateOrAddIdentifier = (identifiers, identifierTypeId, value) => {
   const index = identifiers.findIndex(identifier => identifier.identifierTypeId === identifierTypeId);
   const indentifier = { identifierTypeId, value };
