@@ -38,6 +38,13 @@
 * Add Bound items accordion in item record. Refs UIIN-2760.
 * Edit Inventory Instances: Optimistic locking error displays in pop-up modal instead of banner in the header. Fixes UIIN-2940.
 * Make item barcode column narrower. Fixes UIIN-2925.
+* i18n item status in item edit view. Refs UIIN-2766.
+* Enable "+ New" and "Edit" buttons when user has "Settings (Inventory): Configure single-record import" permission. Refs UIIN-2771.
+* Allow user to view `HRID handling` section when "Settings (Inventory): View list of settings pages" permission is assigned
+and disable fields when "Settings (Inventory): Create, edit and delete HRID handling" permission is not assigned. Refs UIIN-2773.
+* Update "Settings (Inventory): Create, edit, delete statistical codes" permission. Refs UIIN-2772.
+* Focus on record title after closing record details view, on search field after canceling record creation, on close record details view icon after closing quick-marc. Refs UIIN-2962.
+* Include `stripes-inventory-components` and `stripes-marc-components` in `stripesDeps` to include their translations. Refs UIIN-2968.
 * Trigger search from icon in related titles on Instance detail view. Refs UIIN-2943.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)

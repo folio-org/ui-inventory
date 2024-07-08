@@ -47,7 +47,9 @@
       }
     ],
     "stripesDeps": [
-      "@folio/stripes-acq-components"
+      "@folio/stripes-acq-components",
+      "@folio/stripes-inventory-components",
+      "@folio/stripes-marc-components"
     ],
     "okapiInterfaces": {
       "alternative-title-types": "1.0",
@@ -312,7 +314,8 @@
           "inventory-storage.statistical-codes.item.get",
           "inventory-storage.statistical-codes.item.post",
           "inventory-storage.statistical-codes.item.put",
-          "settings.inventory.enabled"
+          "settings.inventory.enabled",
+          "inventory-storage.statistical-code-types.collection.get"
         ],
         "visible": true
       },
@@ -430,7 +433,8 @@
           "copycat.profiles.item.post",
           "copycat.profiles.item.put",
           "copycat.profiles.item.delete",
-          "converter-storage.jobprofile.get"
+          "converter-storage.jobprofile.get",
+          "inventory-storage.identifier-types.collection.get"
         ],
         "visible": true
       },

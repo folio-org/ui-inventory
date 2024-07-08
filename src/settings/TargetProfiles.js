@@ -63,9 +63,9 @@ class TargetProfiles extends React.Component {
               entryFormComponent={TargetProfileForm}
               nameKey="displayName"
               permissions={{
-                put: 'ui-inventory.single-record-import',
-                post: 'ui-inventory.single-record-import',
-                delete: 'ui-inventory.single-record-import',
+                put: 'ui-inventory.settings.single-record-import',
+                post: 'ui-inventory.settings.single-record-import',
+                delete: 'ui-inventory.settings.single-record-import',
               /*
           // Once these are defined
           put: 'ui-inventory.single-record-import.create',

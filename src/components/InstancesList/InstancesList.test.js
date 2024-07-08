@@ -14,6 +14,7 @@ import {
 import '../../../test/jest/__mock__';
 
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   deleteFacetStates,
   filterConfig,
@@ -62,6 +63,7 @@ jest.mock('@folio/stripes/core', () => ({
     <>
       {renderTrigger()}
       <button type="button" onClick={() => onClose({ instanceRecord: { id: 'fast-add-record-id' } })}>Save & close</button>
+      <button type="button" onClick={onClose}>Cancel</button>
     </>
   ),
   TitleManager: ({ page }) => (
@@ -477,6 +479,20 @@ describe('InstancesList', () => {
             expect(screen.getByRole('button', { name: 'New local record' })).toBeInTheDocument();
           });
         });
+
+        describe('when canceling a record', () => {
+          it('should remove the "layer" parameter and focus on the search field', () => {
+            history.push('/inventory?filters=staffSuppress.false&layer=foo');
+
+            jest.spyOn(history, 'push');
+
+            const { getByRole } = renderInstancesList({ segment: 'instances' });
+            SearchAndSort.mock.calls[0][0].onCloseNewRecord();
+
+            expect(history.push).toHaveBeenCalledWith('/?filters=staffSuppress.false');
+            expect(getByRole('textbox', { name: /search/i })).toHaveFocus();
+          });
+        });
       });
 
       describe('"New fast add record" button', () => {
@@ -502,6 +518,23 @@ describe('InstancesList', () => {
               pathname: '/inventory/view/fast-add-record-id',
               search: '?filters=staffSuppress.false',
             });
+          });
+        });
+
+        describe('when canceling the record', () => {
+          it('should focus on search field', async () => {
+            jest.useFakeTimers();
+
+            const { getByRole } = renderInstancesList({ segment: 'instances' });
+
+            openActionMenu();
+
+            fireEvent.click(screen.getByRole('button', { name: 'New fast add record' }));
+            fireEvent.click(screen.getByText('Cancel'));
+
+            jest.runAllTimers();
+
+            expect(getByRole('textbox', { name: /search/i })).toHaveFocus();
           });
         });
       });
@@ -788,6 +821,24 @@ describe('InstancesList', () => {
             tenantTo: 'college',
           },
         })));
+      });
+    });
+
+    describe('when dismissing a record detail view', () => {
+      it('should reset selected row and focus on the search field', () => {
+        SearchAndSort.mockClear();
+        history = createMemoryHistory();
+        history.push('inventory/view/5bf370e0-8cca-4d9c-82e4-5170ab2a0a39');
+
+        const mockResetSelectedItem = jest.fn();
+
+        const { getByText } = renderInstancesList({ segment: 'instances' });
+        const clickedListItem = getByText('A semantic web primer');
+
+        SearchAndSort.mock.calls[0][0].onDismissDetail(mockResetSelectedItem);
+
+        expect(mockResetSelectedItem).toHaveBeenCalled();
+        expect(clickedListItem).toHaveFocus();
       });
     });
   });
