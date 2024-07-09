@@ -815,5 +815,6 @@
     "boundPieces.remove.error": "装订件删除失败",
     "boundPieces.remove.message": "从装订单件中移除此件吗？",
     "boundPieces.remove.button": "移除",
-    "boundPieces.remove.heading": "你确定吗？"
+    "boundPieces.remove.heading": "你确定吗？",
+    "searchForTitle": "Search for {title}"
 }

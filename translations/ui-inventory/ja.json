@@ -807,7 +807,7 @@
     "browse.classification.lc": "米国議会図書館十進分類（LCC）",
     "affiliationChanging.notification": "Active affiliation has changed",
     "affiliationChanging.namedNotification": "Active affiliation has changed to {name}",
-    "shortcut.editMARC": "Edit MARC record",
+    "shortcut.editMARC": "MARCレコードの編集",
     "shortcut.editMARC.noPermission": "You do not have permission to edit the record.",
     "boundPieces": "Bound pieces data",
     "receiptDate": "Expected receipt date",
@@ -815,5 +815,6 @@
     "boundPieces.remove.error": "Bound piece deletion failed",
     "boundPieces.remove.message": "Remove this piece from the bound item?",
     "boundPieces.remove.button": "Remove",
-    "boundPieces.remove.heading": "Are you sure?"
+    "boundPieces.remove.heading": "Are you sure?",
+    "searchForTitle": "Search for {title}"
 }

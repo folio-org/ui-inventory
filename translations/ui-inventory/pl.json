@@ -622,14 +622,14 @@
     "acq.orderStatus": "Order status",
     "acq.orderStatus.Closed": "Closed",
     "acq.orderStatus.Open": "Open",
-    "acq.orderStatus.Pending": "Pending",
+    "acq.orderStatus.Pending": "Oczekujące",
     "acq.receiptStatus": "POL receipt status",
     "acq.receiptStatus.Awaiting Receipt": "Awaiting receipt",
     "acq.receiptStatus.Cancelled": "Cancelled",
     "acq.receiptStatus.Fully Received": "Fully received",
     "acq.receiptStatus.Ongoing": "Ongoing",
     "acq.receiptStatus.Partially Received": "Partially received",
-    "acq.receiptStatus.Pending": "Pending",
+    "acq.receiptStatus.Pending": "Oczekujące",
     "acq.receiptStatus.Receipt Not Required": "Receipt not required",
     "acq.orderSentDate": "Order sent date",
     "acq.orderType": "Typ zamówienia",
@@ -815,5 +815,6 @@
     "boundPieces.remove.error": "Bound piece deletion failed",
     "boundPieces.remove.message": "Remove this piece from the bound item?",
     "boundPieces.remove.button": "Remove",
-    "boundPieces.remove.heading": "Are you sure?"
+    "boundPieces.remove.heading": "Are you sure?",
+    "searchForTitle": "Search for {title}"
 }
