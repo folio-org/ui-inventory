@@ -39,7 +39,7 @@ const defaultProps = {
 
 const renderTitlesViews = (props = {}) => renderWithIntl(
   <Router>
-      <TitlesViews
+    <TitlesViews
       {...defaultProps}
       {...props}
     />

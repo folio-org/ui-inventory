@@ -56,7 +56,7 @@ describe('TitleCell', () => {
     it('should render title as a link', () => {
       renderTitleCell({ titleKey: 'id' });
 
-      const title = screen.getByText('Liebigs Annalen/Recueil (Online)')
+      const title = screen.getByText('Liebigs Annalen/Recueil (Online)');
 
       expect(title.href).toContain('/inventory/view/titleId');
     });
