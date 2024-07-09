@@ -7,6 +7,7 @@
   "appMenu.inventorySearch": "Inventory app search",
   "quickMARC.label": "quickMARC",
   "inventory.label": "Inventory",
+  "searchForTitle": "Search for {title}",
   "instances.columns.title": "Title",
   "instances.columns.contributors": "Contributors",
   "instances.columns.publishers": "Publishers",

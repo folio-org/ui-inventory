@@ -1,12 +1,13 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
 
 import {
   MultiColumnList,
   KeyValue,
+  NoValue,
 } from '@folio/stripes/components';
+
+import TitleCell from './TitleCell';
 
 import { getIdentifiers } from '../../utils';
 import { indentifierTypeNames } from '../../constants';
@@ -22,17 +23,18 @@ const TitlesViews = ({
     ISSN,
     ISBN,
   } = indentifierTypeNames;
+
   const formatter = {
-    title: row => (row[titleKey] ?
-      <Link
-        to={`/inventory/view/${row[titleKey]}`}
-      >
-        {row.title}
-      </Link> :
-      row.title || '-'),
-    hrid: row => row.hrid || '-',
-    issn: row => getIdentifiers(row.identifiers, ISSN, identifierTypesById) || '-',
-    isbn: row => getIdentifiers(row.identifiers, ISBN, identifierTypesById) || '-',
+    title: row => (
+      <TitleCell
+        rowData={row}
+        titleKey={titleKey}
+        identifierTypesById={identifierTypesById}
+      />
+    ),
+    hrid: row => row.hrid || <NoValue />,
+    issn: row => getIdentifiers(row.identifiers, ISSN, identifierTypesById) || <NoValue />,
+    isbn: row => getIdentifiers(row.identifiers, ISBN, identifierTypesById) || <NoValue />,
   };
 
   const visibleColumns = [
