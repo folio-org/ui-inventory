@@ -51,6 +51,7 @@ describe('TitleCell', () => {
       expect(screen.getByText('-')).toBeInTheDocument();
     });
   });
+
   describe('when instance title has id', () => {
     it('should render title as a link', () => {
       renderTitleCell({ titleKey: 'id' });
@@ -62,10 +63,15 @@ describe('TitleCell', () => {
   });
 
   describe('when instance title has no id', () => {
-    it('should render tooltip next to the title', () => {
+    it('should render tooltip and search button next to the title', () => {
       renderTitleCell();
 
-      expect(screen.getByRole('tooltip', { name: 'Search for Liebigs Annalen/Recueil (Online)' })).toBeInTheDocument()
+      const tooltip = screen.getByRole('tooltip', { name: 'Search for Liebigs Annalen/Recueil (Online)' });
+      const searchButton = screen.getByLabelText('Search for Liebigs Annalen/Recueil (Online)');
+
+      expect(tooltip).toBeInTheDocument();
+      expect(searchButton).toBeInTheDocument();
+      expect(searchButton.href).toContain('/inventory?qindex=advancedSearch&query=title+exactPhrase+Liebigs+Annalen%2FRecueil+%28Online%29+and+isbn+containsAll+0947-3440+and+issn+containsAll+0165-0513');
     });
   });
 });

@@ -408,13 +408,13 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
 /**
  * Creates an object with identifier type as a key and its value
  *
- * @param {Object[]} identifiers
  * @param {String[]} types identifier names
  * @param {Object} identifierTypesById
+ * @param {Object[]} identifiers
  *
  * @returns {Object} Identifier names and its values
  */
-export const getIdentifiersValues = (identifiers = [], types, identifierTypesById) => {
+export const getIdentifiersValues = (types, identifierTypesById, identifiers = []) => {
   const result = {};
 
   if (!identifiers.length) return result;

@@ -68,6 +68,7 @@ describe('TitlesViews', () => {
     renderTitlesViews();
 
     expect(screen.getByText('Liebigs Annalen/Recueil (Online)')).toBeInTheDocument();
+    expect(screen.getByText('-')).toBeInTheDocument();
     expect(screen.getByText('0165-0513')).toBeInTheDocument();
     expect(screen.getByText('0947-3440')).toBeInTheDocument();
   });

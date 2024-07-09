@@ -7,9 +7,10 @@ import {
   NoValue,
 } from '@folio/stripes/components';
 
+import TitleCell from './TitleCell';
+
 import { getIdentifiers } from '../../utils';
 import { indentifierTypeNames } from '../../constants';
-import TitleCell from './TitleCell';
 
 const TitlesViews = ({
   titles,

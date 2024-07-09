@@ -6,6 +6,7 @@ import {
   IconButton,
   NoValue,
   Tooltip,
+  ADVANCED_SEARCH_MATCH_OPTIONS,
 } from '@folio/stripes/components';
 import {
   ADVANCED_SEARCH_INDEX,
@@ -27,26 +28,26 @@ const TitleCell = ({
   } = indentifierTypeNames;
 
   const createInstanceLink = (row) => {
-    const identifiersValues = getIdentifiersValues(row.identifiers, [ISBN, ISSN], identifierTypesById);
+    const identifiersValues = getIdentifiersValues([ISBN, ISSN], identifierTypesById, row.identifiers);
     const isbn = identifiersValues?.[ISBN];
     const issn = identifiersValues?.[ISSN];
 
     const advancedSearchRows = [
       {
         bool: '',
-        match: 'exactPhrase',
+        match: ADVANCED_SEARCH_MATCH_OPTIONS.EXACT_PHRASE,
         searchOption: queryIndexes.TITLE,
         query: row.title,
       },
       ...(isbn ? [{
         bool: 'and',
-        match: 'containsAll',
+        match: ADVANCED_SEARCH_MATCH_OPTIONS.CONTAINS_ALL,
         searchOption: queryIndexes.ISBN,
         query: isbn,
       }] : []),
       ...(issn ? [{
         bool: 'and',
-        match: 'containsAll',
+        match: ADVANCED_SEARCH_MATCH_OPTIONS.CONTAINS_ALL,
         searchOption: queryIndexes.ISSN,
         query: issn,
       }] : [])
@@ -64,7 +65,7 @@ const TitleCell = ({
 
   if (!rowData.title) return <NoValue />;
 
-  if (rowData.title && rowData[titleKey]) {
+  if (rowData[titleKey]) {
     return (
       <Link
         to={`/inventory/view/${rowData[titleKey]}`}
