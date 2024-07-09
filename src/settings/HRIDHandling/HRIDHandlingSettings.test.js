@@ -1,12 +1,11 @@
+import React, { act } from 'react';
 import {
   screen,
   fireEvent,
   waitFor,
-  act,
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
-import React from 'react';
 import { renderWithIntl } from '../../../test/jest/helpers';
 import renderWithRouter from '../../../test/jest/helpers/renderWithRouter';
 
@@ -31,12 +30,21 @@ const mockMutator = {
   },
 };
 
+const mockStripes = { hasPerm: () => false };
 
-const renderComponent = ({ resources = initialResources, mutator = mockMutator }) => {
+const renderComponent = ({
+  stripes,
+  resources = initialResources,
+  mutator = mockMutator,
+}) => {
   return (
     renderWithIntl(
       renderWithRouter(
-        <HRIDHandlingSettings resources={resources} mutator={mutator} />
+        <HRIDHandlingSettings
+          resources={resources}
+          mutator={mutator}
+          stripes={stripes}
+        />
       )
     )
   );
@@ -50,6 +58,26 @@ describe('HRIDHandlingSettings', () => {
   it('renders without crashing', () => {
     renderComponent({});
     expect(screen.getByText(/ViewMetaData/)).toBeInTheDocument();
+  });
+
+  describe('when user doesn\'t have permission to edit form', () => {
+    it('all the fields should be disabled', () => {
+      renderComponent({ stripes: mockStripes });
+
+      const prefixInputs = screen.getAllByRole('textbox', { name: /hridHandling.label.startWith/ });
+      const assignPrefix = screen.getAllByRole('textbox', { name: /label.assignPrefix/ });
+      const checkbox = screen.getByRole('checkbox');
+
+      expect(checkbox).toBeDisabled();
+
+      prefixInputs.forEach((input) => {
+        expect(input).toBeDisabled();
+      });
+
+      assignPrefix.forEach((input) => {
+        expect(input).toBeDisabled();
+      });
+    });
   });
 
   it('should call PUT rejected on submit form', async () => {

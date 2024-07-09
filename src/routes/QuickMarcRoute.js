@@ -13,6 +13,9 @@ const QuickMarcRoute = ({ match, history, location }) => {
     history.push({
       pathname: `/inventory/view/${recordRoute ?? ''}`,
       search: newSearchParams.toString(),
+      state: {
+        isClosingFocused: true,
+      },
     });
   }, [location.search]);
 
