@@ -161,7 +161,7 @@
     "addPublicationFrequency": "Añadir frecuencia",
     "addPublicationRange": "Añadir rango",
     "publicationRange": "Rango de publicación",
-    "staffSuppress": "Suprimir en la intranet",
+    "staffSuppress": "Ocultar personal",
     "discoverySuppress": "Suprimir en el discovery",
     "previouslyHeld": "Reservado previamente",
     "addElectronicAccess": "Añadir acceso electrónico",
@@ -815,5 +815,6 @@
     "boundPieces.remove.error": "Bound piece deletion failed",
     "boundPieces.remove.message": "Remove this piece from the bound item?",
     "boundPieces.remove.button": "Remove",
-    "boundPieces.remove.heading": "Are you sure?"
+    "boundPieces.remove.heading": "Are you sure?",
+    "searchForTitle": "Search for {title}"
 }

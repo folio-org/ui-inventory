@@ -815,5 +815,6 @@
     "boundPieces.remove.error": "Falha na exclusão de peças encadernadas",
     "boundPieces.remove.message": "Remover esta peça do item encadernado?",
     "boundPieces.remove.button": "Remover",
-    "boundPieces.remove.heading": "Você tem certeza?"
+    "boundPieces.remove.heading": "Você tem certeza?",
+    "searchForTitle": "Buscar por {title}"
 }
