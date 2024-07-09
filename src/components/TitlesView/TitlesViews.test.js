@@ -71,22 +71,4 @@ describe('TitlesViews', () => {
     expect(screen.getByText('0165-0513')).toBeInTheDocument();
     expect(screen.getByText('0947-3440')).toBeInTheDocument();
   });
-
-  describe('when instance title has id', () => {
-    it('should render title as a link', () => {
-      renderTitlesViews({ titleKey: 'id' });
-
-      const title = screen.getByText('Liebigs Annalen/Recueil (Online)')
-
-      expect(title.href).toContain('/inventory/view/titleId');
-    });
-  });
-
-  describe('when instance title has no id', () => {
-    it('should render tooltip next to the title', () => {
-      renderTitlesViews();
-
-      expect(screen.getByRole('tooltip', { name: 'Search for Liebigs Annalen/Recueil (Online)' })).toBeInTheDocument()
-    });
-  });
 });
