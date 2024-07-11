@@ -36,9 +36,10 @@ const getTargetRecord = (
   browseOption,
   filters,
   namespace,
+  data,
 ) => {
   const record = getFullMatchRecord(item, row.isAnchor);
-  const searchParams = getSearchParams(row, browseOption, filters);
+  const searchParams = getSearchParams(row, browseOption, filters, data);
   const isNotClickable = isRowPreventsClick(row, browseOption);
 
   if (isNotClickable) return record;
@@ -113,6 +114,8 @@ const getBrowseResultsFormatter = ({
   filters,
   namespace,
 }) => {
+  const commonTargetRecordArgs = [browseOption, filters, namespace, data];
+
   return {
     title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
     subject: r => {
@@ -120,7 +123,7 @@ const getBrowseResultsFormatter = ({
         return <MissedMatchItem query={r?.value} />;
       }
 
-      const subject = getTargetRecord(r?.value, r, browseOption, filters, namespace);
+      const subject = getTargetRecord(r?.value, r, ...commonTargetRecordArgs);
       if (browseOption === browseModeOptions.SUBJECTS && r.authorityId) {
         return renderMarcAuthoritiesLink(r.authorityId, subject);
       }
@@ -129,13 +132,13 @@ const getBrowseResultsFormatter = ({
     },
     callNumber: r => {
       if (r?.instance || r?.totalRecords) {
-        return getTargetRecord(r?.fullCallNumber, r, browseOption, filters, namespace);
+        return getTargetRecord(r?.fullCallNumber, r, ...commonTargetRecordArgs);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;
     },
     classificationNumber: r => {
       if (r?.totalRecords) {
-        return getTargetRecord(r?.classificationNumber, r, browseOption, filters, namespace);
+        return getTargetRecord(r?.classificationNumber, r, ...commonTargetRecordArgs);
       }
       return <MissedMatchItem query={r.classificationNumber} />;
     },
@@ -144,7 +147,7 @@ const getBrowseResultsFormatter = ({
         return <MissedMatchItem query={r.name} />;
       }
 
-      const fullMatchRecord = getTargetRecord(r.name, r, browseOption, filters, namespace);
+      const fullMatchRecord = getTargetRecord(r.name, r, ...commonTargetRecordArgs);
 
       if (browseOption === browseModeOptions.CONTRIBUTORS && r.authorityId) {
         return renderMarcAuthoritiesLink(r.authorityId, fullMatchRecord);

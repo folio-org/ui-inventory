@@ -28,6 +28,25 @@ let history;
 const data = {
   contributorNameTypes: [{ id: 'contributorNameTypeId', name: 'nameType' }],
   contributorTypes: [{ id: 'contributorTypeId', name: 'type' }],
+  classificationBrowseConfig: [
+    {
+      id: 'all',
+      typeIds: [],
+    },
+    {
+      id: 'dewey',
+      typeIds: [
+        'id-dewey',
+      ]
+    },
+    {
+      id: 'lc',
+      typeIds: [
+        'id-lc',
+        'id-lc-local',
+      ],
+    },
+  ],
 };
 const missedMatchText = 'would be here';
 
@@ -287,6 +306,7 @@ describe('getBrowseResultsFormatter', () => {
         qindex: 'classificationAll',
         query: classificationNumber,
       },
+      data,
     });
     const missedMatchRecord = {
       classificationNumber: 'foo',

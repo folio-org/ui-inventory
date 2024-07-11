@@ -4,6 +4,7 @@ import {
   browseCallNumberOptions,
   browseClassificationOptions,
   browseModeOptions,
+  browseClassificationIndexToId,
   FACETS,
   queryIndexes,
 } from '@folio/stripes-inventory-components';
@@ -63,12 +64,38 @@ const getExtraFilters = (row, qindex, allFilters) => {
   return extraFacetsString ? { filters: extraFacetsString } : {};
 };
 
-export const getSearchParams = (row, qindex, allFilters) => {
+const getClassificationQuery = (qindex, data, row) => {
+  const isClassificationBrowse = Object.values(browseClassificationOptions).includes(qindex);
+
+  if (!isClassificationBrowse) {
+    return '';
+  }
+
+  let query = `classifications.classificationNumber=="${row.classificationNumber}"`;
+
+  const classificationBrowseConfigId = browseClassificationIndexToId[qindex];
+
+  const classificationBrowseTypes = data.classificationBrowseConfig
+    .find(config => config.id === classificationBrowseConfigId)?.typeIds;
+
+  const classificationBrowseTypesQuery = classificationBrowseTypes
+    .map(typeId => `classifications.classificationTypeId=="${typeId}"`)
+    .join(' or ');
+
+  if (classificationBrowseTypesQuery) {
+    query += ` and (${classificationBrowseTypesQuery})`;
+  }
+
+  return query;
+};
+
+export const getSearchParams = (row, qindex, allFilters, data) => {
   const filters = getExtraFilters(row, qindex, allFilters);
+  const classificationQuery = getClassificationQuery(qindex, data, row);
 
   const classificationOption = {
     qindex: queryIndexes.QUERY_SEARCH,
-    query: `classifications.classificationNumber=="${row.classificationNumber}"`,
+    query: classificationQuery,
     ...filters,
   };
 

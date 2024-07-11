@@ -46,6 +46,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Focus on record title after closing record details view, on search field after canceling record creation, on close record details view icon after closing quick-marc. Refs UIIN-2962.
 * Include `stripes-inventory-components` and `stripes-marc-components` in `stripesDeps` to include their translations. Refs UIIN-2968.
 * Trigger search from icon in related titles on Instance detail view. Refs UIIN-2943.
+* Create a text link for classification numbers based on classification types. Refs UIIN-2907.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
