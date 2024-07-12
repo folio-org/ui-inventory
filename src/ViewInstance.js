@@ -37,6 +37,7 @@ import {
   handleKeyCommand,
   isInstanceShadowCopy,
   isMARCSource,
+  isLinkedDataSource,
   getLinkedAuthorityIds,
   setRecordForDeletion,
   redirectToMarcEditPage,
@@ -216,8 +217,9 @@ class ViewInstance extends React.Component {
       stripes,
     } = this.props;
     const isMARCSourceRecord = isMARCSource(selectedInstance?.source);
+    const isLinkedDataSourceRecord = isLinkedDataSource(selectedInstance?.source);
 
-    if (isMARCSourceRecord) {
+    if (isMARCSourceRecord || isLinkedDataSourceRecord) {
       this.getMARCRecord();
     }
 
@@ -243,10 +245,11 @@ class ViewInstance extends React.Component {
     const prevInstanceRecordsId = prevInstance?.id;
     const prevIsMARCSource = isMARCSource(prevInstance?.source);
     const isMARCSourceRecord = isMARCSource(instance?.source);
+    const isLinkedDataSourceRecord = isLinkedDataSource(instance?.source);
     const isViewingAnotherRecord = instanceRecordsId !== prevInstanceRecordsId;
     const recordSourceWasChanged = isMARCSourceRecord !== prevIsMARCSource;
 
-    if (isMARCSourceRecord && (isViewingAnotherRecord || recordSourceWasChanged)) {
+    if ((isMARCSourceRecord || isLinkedDataSourceRecord) && (isViewingAnotherRecord || recordSourceWasChanged)) {
       this.getMARCRecord();
     }
 
