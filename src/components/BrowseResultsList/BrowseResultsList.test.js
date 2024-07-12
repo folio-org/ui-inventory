@@ -7,7 +7,6 @@ import {
   FACETS,
   browseModeOptions,
   browseCallNumberOptions,
-  browseClassificationOptions,
 } from '@folio/stripes-inventory-components';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
@@ -75,6 +74,25 @@ const mockContext = {
     id: '6e09d47d-95e2-4d8a-831b-f777b8ef6d81',
     name: 'Author',
   }],
+  classificationBrowseConfig: [
+    {
+      id: 'all',
+      typeIds: [],
+    },
+    {
+      id: 'dewey',
+      typeIds: [
+        'id-dewey',
+      ]
+    },
+    {
+      id: 'lc',
+      typeIds: [
+        'id-lc',
+        'id-lc-local',
+      ],
+    },
+  ],
 };
 
 const contributorsData = [
@@ -165,43 +183,124 @@ describe('BrowseResultsList', () => {
     });
   });
 
-  describe.each([
-    { searchOption: browseClassificationOptions.CLASSIFICATION_ALL, shared: FACETS.CLASSIFICATION_SHARED },
-    { searchOption: browseClassificationOptions.DEWEY_CLASSIFICATION, shared: FACETS.CLASSIFICATION_SHARED },
-    { searchOption: browseClassificationOptions.LC_CLASSIFICATION, shared: FACETS.CLASSIFICATION_SHARED },
-  ])('when the search option is $searchOption and the Shared facets is selected', ({ searchOption, shared }) => {
-    describe('and a user hits on a classification number in the list', () => {
-      it('should be navigated to the Search lookup with those filters', async () => {
-        const classificationNumber = 'BD638 .T46 2018';
+  describe('when the search option is classificationAll and the Shared facet is selected', () => {
+    describe('and there are no selected classification types in Settings', () => {
+      describe('and user hits a classification number', () => {
+        it('should be redirected to the Search lookup with the correct query', () => {
+          const classificationNumber = 'BD638 .T46 2018';
+          const qindex = 'classificationAll';
 
-        history = createMemoryHistory({
-          initialEntries: [{
-            pathname: BROWSE_INVENTORY_ROUTE,
-            search: `qindex=${searchOption}&query=${classificationNumber}&${shared}=true&${shared}=false`,
-          }],
-        });
+          history = createMemoryHistory({
+            initialEntries: [{
+              pathname: BROWSE_INVENTORY_ROUTE,
+              search: `qindex=${qindex}&query=${classificationNumber}&classificationShared=true&classificationShared=false`,
+            }],
+          });
 
-        renderBrowseResultsList({
-          filters: {
-            qindex: searchOption,
-            query: classificationNumber,
-            [shared]: ['true', 'false'],
-          },
-          browseData: [
-            {
-              classificationNumber,
-              classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
-              isAnchor: true,
-              totalRecords: 1,
+          renderBrowseResultsList({
+            filters: {
+              qindex,
+              query: classificationNumber,
+              classificationShared: ['true', 'false'],
             },
-          ]
+            browseData: [
+              {
+                classificationNumber,
+                classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+                isAnchor: true,
+                totalRecords: 1,
+              },
+            ]
+          });
+
+          fireEvent.click(screen.getByText(classificationNumber));
+
+          const query = 'classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22&selectedBrowseResult=true';
+
+          expect(history.location.search).toBe(`?filters=shared.true%2Cshared.false&qindex=querySearch&query=${query}`);
         });
+      });
+    });
+  });
 
-        fireEvent.click(screen.getByText(classificationNumber));
+  describe('when the search option is deweyClassification and the Shared facet is selected', () => {
+    describe('and one classification type is selected in Settings', () => {
+      describe('and user hits a classification number', () => {
+        it('should be redirected to the Search lookup with the correct query', () => {
+          const classificationNumber = 'BD638 .T46 2018';
+          const qindex = 'deweyClassification';
 
-        expect(history.location.search).toBe(
-          '?filters=shared.true%2Cshared.false&qindex=querySearch&query=classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22&selectedBrowseResult=true'
-        );
+          history = createMemoryHistory({
+            initialEntries: [{
+              pathname: BROWSE_INVENTORY_ROUTE,
+              search: `qindex=${qindex}&query=${classificationNumber}&classificationShared=true&classificationShared=false`,
+            }],
+          });
+
+          renderBrowseResultsList({
+            filters: {
+              qindex,
+              query: classificationNumber,
+              classificationShared: ['true', 'false'],
+            },
+            browseData: [
+              {
+                classificationNumber,
+                classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+                isAnchor: true,
+                totalRecords: 1,
+              },
+            ]
+          });
+
+          fireEvent.click(screen.getByText(classificationNumber));
+
+          const classificationTypeQuery = '%20and%20%28classifications.classificationTypeId%3D%3D%22id-dewey%22%29';
+          const query = `classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22${classificationTypeQuery}&selectedBrowseResult=true`;
+
+          expect(history.location.search).toBe(`?filters=shared.true%2Cshared.false&qindex=querySearch&query=${query}`);
+        });
+      });
+    });
+  });
+
+  describe('when the search option is lcClassification and the Shared facet is selected', () => {
+    describe('and two classification types are selected in Settings', () => {
+      describe('and user hits a classification number', () => {
+        it('should be redirected to the Search lookup with the correct query', () => {
+          const classificationNumber = 'BD638 .T46 2018';
+          const qindex = 'lcClassification';
+
+          history = createMemoryHistory({
+            initialEntries: [{
+              pathname: BROWSE_INVENTORY_ROUTE,
+              search: `qindex=${qindex}&query=${classificationNumber}&classificationShared=true&classificationShared=false`,
+            }],
+          });
+
+          renderBrowseResultsList({
+            filters: {
+              qindex,
+              query: classificationNumber,
+              classificationShared: ['true', 'false'],
+            },
+            browseData: [
+              {
+                classificationNumber,
+                classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+                isAnchor: true,
+                totalRecords: 1,
+              },
+            ]
+          });
+
+          fireEvent.click(screen.getByText(classificationNumber));
+
+          const classificationTypesQuery = '%20and%20%28classifications.classificationTypeId%3D%3D%22id-lc%22%20or%20classifications.classificationTypeId%3D%3D%22id-lc-local%22%29';
+          const query = `classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22${classificationTypesQuery}&selectedBrowseResult=true`;
+
+          expect(history.location.search).toBe(`?filters=shared.true%2Cshared.false&qindex=querySearch&query=${query}`);
+        });
       });
     });
   });

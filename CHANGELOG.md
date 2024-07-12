@@ -47,6 +47,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Include `stripes-inventory-components` and `stripes-marc-components` in `stripesDeps` to include their translations. Refs UIIN-2968.
 * Trigger search from icon in related titles on Instance detail view. Refs UIIN-2943.
 * Enable "View source" option for "LINKED_DATA" source type in "Actions" dropdown. Refs in UIIN-2966.
+* Create a text link for classification numbers based on classification types. Refs UIIN-2907.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
