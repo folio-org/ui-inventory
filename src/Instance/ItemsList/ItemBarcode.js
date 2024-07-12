@@ -15,9 +15,9 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 import {
-  Button,
   Highlighter,
   IconButton,
+  TextLink,
 } from '@folio/stripes/components';
 import css from '../../View.css';
 import { QUERY_INDEXES } from '../../constants';
@@ -78,15 +78,15 @@ const ItemBarcode = ({
   return (
     <>
       {isBarcodeAsHotlink ? (
-        <Button
-          buttonStyle="link"
-          buttonClass={css.linkWithoutBorder}
-          onClick={async () => {
+        <TextLink
+          to={`/inventory/view/${instanceId}/${holdingId}/${item.id}`}
+          onClick={async (e) => {
+            e.preventDefault();
             await switchAffiliation(stripes, tenantId, onViewItem);
           }}
         >
           {itemBarcode}
-        </Button>
+        </TextLink>
       ) : itemBarcode
       }
       {item.barcode &&
