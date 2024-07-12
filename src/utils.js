@@ -730,6 +730,10 @@ export const isMARCSource = (source) => {
   return ['MARC', `${CONSORTIUM_PREFIX}MARC`].includes(source);
 };
 
+export const isLinkedDataSource = (source) => {
+  return source === 'LINKED_DATA';
+};
+
 export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');
 
 export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
