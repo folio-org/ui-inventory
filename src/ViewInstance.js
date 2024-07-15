@@ -695,6 +695,7 @@ class ViewInstance extends React.Component {
     const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
     const canAccessLinkedDataOptions = stripes.hasPerm('linked-data.resources.bib.post');
     const isSourceLinkedData = isLinkedDataSource(source);
+    const showLinkedDataMenuSection = canAccessLinkedDataOptions && isSourceLinkedData;
 
     const hasSetForDeletionPermission = stripes.hasPerm(setForDeletionAndSuppressPerm);
     const canNonConsortialTenantSetForDeletion = !stripes.hasInterface('consortia') && hasSetForDeletionPermission;
@@ -934,7 +935,7 @@ class ViewInstance extends React.Component {
           </MenuSection>
         )}
 
-        {isSourceLinkedData && (
+        {showLinkedDataMenuSection && (
           <MenuSection
             id="ld-menu-section"
             label={intl.formatMessage({ id: 'ui-inventory.ld.label' })}
@@ -944,7 +945,6 @@ class ViewInstance extends React.Component {
               icon="edit"
               messageId="ui-inventory.editInLinkedDataEditor"
               onClickHandler={onToggle}
-              disabled={!canAccessLinkedDataOptions}
             />
           </MenuSection>
         )}
