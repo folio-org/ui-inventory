@@ -816,5 +816,5 @@
     "boundPieces.remove.message": "Odstranit tento kus ze svázané jednotky?",
     "boundPieces.remove.button": "Odstranit",
     "boundPieces.remove.heading": "Opravdu?",
-    "searchForTitle": "Search for {title}"
+    "searchForTitle": "Vyhledat {title}"
 }
