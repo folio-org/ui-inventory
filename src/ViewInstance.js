@@ -693,6 +693,9 @@ class ViewInstance extends React.Component {
     const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
+    const canAccessLinkedDataOptions = stripes.hasPerm('linked-data.resources.bib.post');
+    const isSourceLinkedData = isLinkedDataSource(source);
+    const showLinkedDataMenuSection = canAccessLinkedDataOptions && isSourceLinkedData;
 
     const hasSetForDeletionPermission = stripes.hasPerm(setForDeletionAndSuppressPerm);
     const canNonConsortialTenantSetForDeletion = !stripes.hasInterface('consortia') && hasSetForDeletionPermission;
@@ -929,6 +932,20 @@ class ViewInstance extends React.Component {
                 disabled={!canCreateMARCHoldings}
               />
             )}
+          </MenuSection>
+        )}
+
+        {showLinkedDataMenuSection && (
+          <MenuSection
+            id="ld-menu-section"
+            label={intl.formatMessage({ id: 'ui-inventory.ld.label' })}
+          >
+            <ActionItem
+              id="edit-resource-in-ld"
+              icon="edit"
+              messageId="ui-inventory.editInLinkedDataEditor"
+              onClickHandler={onToggle}
+            />
           </MenuSection>
         )}
 
