@@ -1134,6 +1134,19 @@ describe('ViewInstance', () => {
         });
       });
     });
+    describe('"Edit resource in Linked Data Editor" action item', () => {
+      it('should be rendered', () => {
+        const selectedInstance = {
+          ...instance,
+          source: 'LINKED_DATA',
+        };
+
+        StripesConnectedInstance.prototype.instance.mockImplementation(() => selectedInstance);
+
+        renderViewInstance({ selectedInstance });
+        checkActionItemExists('Edit resource in Linked Data Editor');
+      });
+    });
   });
   describe('Tests for shortcut of HasCommand', () => {
     it('updateLocation function to be triggered on clicking new button', () => {
