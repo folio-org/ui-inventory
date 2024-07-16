@@ -9,6 +9,11 @@ import translationsProperties from '../../../../test/jest/helpers/translationsPr
 import ItemBarcode from '../ItemBarcode';
 import { QUERY_INDEXES } from '../../../constants';
 
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  TextLink: jest.fn().mockImplementation(({ children, to }) => <a href={to} data-testid="textLink">{children}</a>),
+}));
+
 const getHistory = search => ({
   length: 1,
   action: 'POP',
@@ -26,13 +31,14 @@ const getHistory = search => ({
 });
 
 const itemProp = {
+  id: 'itemId',
   barcode: '11110000'
 };
 
 const itemBarcodeProps = {
   item: itemProp,
-  holdingId: 'testId1',
-  instanceId: 'testId2',
+  holdingId: 'holdingsId',
+  instanceId: 'instanceId',
   isBarcodeAsHotlink: true,
 };
 
@@ -93,9 +99,10 @@ describe('<ItemBarcode>', () => {
 
   it('should render barcode as a hotlink', () => {
     const history = getHistory(searchItem(QUERY_INDEXES.BARCODE));
-    const { getByRole } = setupItemBarcode({ ...itemBarcodeProps, history });
+    const { getByTestId } = setupItemBarcode({ ...itemBarcodeProps, history });
 
-    expect(getByRole('button', { name: itemProp.barcode })).toBeInTheDocument();
+    expect(getByTestId('textLink')).toBeInTheDocument();
+    expect(getByTestId('textLink').href).toContain('/inventory/view/instanceId/holdingsId/itemId');
   });
 
   it('should render barcode as a plain text', () => {
