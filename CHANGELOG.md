@@ -49,6 +49,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Enable "View source" option for "LINKED_DATA" source type in "Actions" dropdown. Refs in UIIN-2966.
 * Create a text link for classification numbers based on classification types. Refs UIIN-2907.
 * Add "Edit in Linked Data editor" action for resources with source "LINKED_DATA". Refs UIIN-2963.
+* Add `skipTrimOnChange` option to `useLocationFilters` hook to prevent unnecessary trims on change. Refs UIIN-2976.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
