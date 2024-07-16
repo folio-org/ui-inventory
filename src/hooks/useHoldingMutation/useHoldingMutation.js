@@ -10,7 +10,7 @@ const useHoldingMutation = (options = {}) => {
   const { mutateAsync } = useMutation({
     mutationFn: (holding) => {
       const kyMethod = holding.id ? 'put' : 'post';
-      const kyPath = holding.id ? `holdings-storage/holdings/${holding.id}` : 'holdings-storage/holdings';
+      const kyPath = holding.id ? `inventory/holdings/${holding.id}` : 'holdings-storage/holdings';
 
       return ky[kyMethod](kyPath, { json: holding });
     },
