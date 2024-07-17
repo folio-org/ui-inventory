@@ -50,6 +50,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Create a text link for classification numbers based on classification types. Refs UIIN-2907.
 * Add "Edit in Linked Data editor" action for resources with source "LINKED_DATA". Refs UIIN-2963.
 * Clicking on item in Inventory no longer opens the item record in a new tab. Fixes UIIN-2924.
+* Add `skipTrimOnChange` option to `useLocationFilters` hook to prevent unnecessary trims on change. Refs UIIN-2976.
 * Wrong statistical code column heading is displayed in instances, holdings, and items. Fixes UIIN-2922.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
