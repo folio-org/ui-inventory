@@ -430,19 +430,6 @@ class ViewInstance extends React.Component {
     }
   };
 
-  navigateToLinkedDataEditor = () => {
-    const { history, selectedInstance: instance } = this.props;
-    const identifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX));
-
-    if (!identifier) return;
-
-    const identifierLiteral = identifier.value?.replace(LINKED_DATA_ID_PREFIX, '');
-
-    history.push({
-      pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
-    });
-  }
-
   handleImportRecordModalSubmit = (args) => {
     this.setState({ isImportRecordModalOpened: false });
     this.props.mutator.query.update({
@@ -672,6 +659,7 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes,
       intl,
+      history,
       resources: {
         instanceRequests,
       },
@@ -737,6 +725,18 @@ class ViewInstance extends React.Component {
 
         onClickHandler(this.context.sendCallout);
       };
+    };
+
+    const navigateToLinkedDataEditor = () => {
+      const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX));
+
+      if (!selectedIdentifier) return;
+
+      const identifierLiteral = selectedIdentifier.value?.replace(LINKED_DATA_ID_PREFIX, '');
+
+      history.push({
+        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
+      });
     };
 
     const suppressEditInstanceForMemberTenant = checkIfUserInMemberTenant(stripes)
@@ -959,7 +959,7 @@ class ViewInstance extends React.Component {
               id="edit-resource-in-ld"
               icon="edit"
               messageId="ui-inventory.editInLinkedDataEditor"
-              onClickHandler={buildOnClickHandler(this.navigateToLinkedDataEditor)}
+              onClickHandler={buildOnClickHandler(navigateToLinkedDataEditor)}
             />
           </MenuSection>
         )}
