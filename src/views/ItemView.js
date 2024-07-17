@@ -900,7 +900,7 @@ class ItemView extends React.Component {
     const statisticalCodeFormatter = {
       'Statistical code type': x => refLookup(referenceTables.statisticalCodeTypes,
         refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
-      'Statistical code': x => refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
+      'Statistical code name': x => refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
     };
 
     const electronicAccessFormatter = {
@@ -1213,10 +1213,10 @@ class ItemView extends React.Component {
                         <MultiColumnList
                           id="item-list-statistical-codes"
                           contentData={statisticalCodeContent}
-                          visibleColumns={['Statistical code type', 'Statistical code']}
+                          visibleColumns={['Statistical code type', 'Statistical code name']}
                           columnMapping={{
                             'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                            'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                            'Statistical code name': intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
                           }}
                           formatter={statisticalCodeFormatter}
                           ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
