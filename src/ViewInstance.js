@@ -49,6 +49,8 @@ import {
   INSTANCE_SHARING_STATUSES,
   layers,
   LEADER_RECORD_STATUSES,
+  LINKED_DATA_ID_PREFIX,
+  LINKED_DATA_RESOURCES_ROUTE,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -427,6 +429,19 @@ class ViewInstance extends React.Component {
       this.setState({ instancesQuickExportInProgress: false });
     }
   };
+
+  navigateToLinkedDataEditor = () => {
+    const { history, selectedInstance: instance } = this.props;
+    const identifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX));
+
+    if (!identifier) return;
+
+    const identifierLiteral = identifier.value?.replace(LINKED_DATA_ID_PREFIX, '');
+
+    history.push({
+      pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
+    });
+  }
 
   handleImportRecordModalSubmit = (args) => {
     this.setState({ isImportRecordModalOpened: false });
@@ -944,7 +959,7 @@ class ViewInstance extends React.Component {
               id="edit-resource-in-ld"
               icon="edit"
               messageId="ui-inventory.editInLinkedDataEditor"
-              onClickHandler={onToggle}
+              onClickHandler={buildOnClickHandler(this.navigateToLinkedDataEditor)}
             />
           </MenuSection>
         )}

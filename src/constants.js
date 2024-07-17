@@ -15,6 +15,7 @@ const DECLARED_LOST = 'Declared lost';
 
 export const BROWSE_INVENTORY_ROUTE = '/inventory/browse';
 export const INVENTORY_ROUTE = '/inventory';
+export const LINKED_DATA_RESOURCES_ROUTE = '/linked-data-editor/resources';
 export const DATA_IMPORT_JOB_PROFILES_ROUTE = 'data-import-profiles/jobProfiles';
 
 export const searchModeSegments = {
@@ -225,6 +226,7 @@ export const SOURCE_VALUES = {
 };
 
 export const CONSORTIUM_PREFIX = 'CONSORTIUM-';
+export const LINKED_DATA_ID_PREFIX = '(ld) ';
 export const OKAPI_TOKEN_HEADER = 'X-Okapi-Token';
 export const CONTENT_TYPE_HEADER = 'Content-Type';
 
