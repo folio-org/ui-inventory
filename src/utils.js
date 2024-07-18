@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  FormattedMessage,
-  FormattedTime,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   includes,
   find,
@@ -25,7 +22,10 @@ import {
   updateTenant,
   validateUser,
 } from '@folio/stripes/core';
-import { FormattedUTCDate } from '@folio/stripes/components';
+import {
+  FormattedTime,
+  FormattedUTCDate,
+} from '@folio/stripes/components';
 import {
   segments,
   LIMIT_MAX,
