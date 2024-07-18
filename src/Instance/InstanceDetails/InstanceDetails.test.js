@@ -91,7 +91,7 @@ describe('InstanceDetails', () => {
     expect(screen.getByText('Instance status source')).toBeInTheDocument();
     expect(screen.getByText('Mode of issuance')).toBeInTheDocument();
     expect(screen.getByText('Statistical code type')).toBeInTheDocument();
-    expect(screen.getByText('Statistical code')).toBeInTheDocument();
+    expect(screen.getByText('Statistical code name')).toBeInTheDocument();
     expect(screen.getByText('Format category')).toBeInTheDocument();
     expect(screen.getByText('Format term')).toBeInTheDocument();
     expect(screen.getByText('Format code')).toBeInTheDocument();
