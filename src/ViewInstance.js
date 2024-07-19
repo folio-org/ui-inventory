@@ -49,6 +49,8 @@ import {
   INSTANCE_SHARING_STATUSES,
   layers,
   LEADER_RECORD_STATUSES,
+  LINKED_DATA_ID_PREFIX,
+  LINKED_DATA_RESOURCES_ROUTE,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -657,6 +659,7 @@ class ViewInstance extends React.Component {
       onCopy,
       stripes,
       intl,
+      history,
       resources: {
         instanceRequests,
       },
@@ -722,6 +725,18 @@ class ViewInstance extends React.Component {
 
         onClickHandler(this.context.sendCallout);
       };
+    };
+
+    const navigateToLinkedDataEditor = () => {
+      const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX));
+
+      if (!selectedIdentifier) return;
+
+      const identifierLiteral = selectedIdentifier.value?.replace(LINKED_DATA_ID_PREFIX, '');
+
+      history.push({
+        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
+      });
     };
 
     const suppressEditInstanceForMemberTenant = checkIfUserInMemberTenant(stripes)
@@ -944,7 +959,7 @@ class ViewInstance extends React.Component {
               id="edit-resource-in-ld"
               icon="edit"
               messageId="ui-inventory.editInLinkedDataEditor"
-              onClickHandler={onToggle}
+              onClickHandler={buildOnClickHandler(navigateToLinkedDataEditor)}
             />
           </MenuSection>
         )}

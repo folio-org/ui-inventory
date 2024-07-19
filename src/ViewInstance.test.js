@@ -1135,16 +1135,47 @@ describe('ViewInstance', () => {
       });
     });
     describe('"Edit resource in Linked Data Editor" action item', () => {
-      it('should be rendered', () => {
+      const renderInstanceWithArgs = ({ ...args } = {}) => {
         const selectedInstance = {
           ...instance,
           source: 'LINKED_DATA',
+          identifiers: [
+            {
+              identifierTypeId: '2e372489-f004-4afb-bc6d-a6d76ca3bace',
+              value: '(ld) 12345'
+            }
+          ],
+          ...args,
         };
 
         StripesConnectedInstance.prototype.instance.mockImplementation(() => selectedInstance);
 
         renderViewInstance({ selectedInstance });
+      };
+
+      const clickEditResourceButton = () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Edit resource in Linked Data Editor' }));
+      };
+
+      it('should be rendered', () => {
+        renderInstanceWithArgs();
+
         checkActionItemExists('Edit resource in Linked Data Editor');
+      });
+
+      it('should navigate to the relevant resource within the linked data editor', () => {
+        renderInstanceWithArgs();
+
+        clickEditResourceButton();
+        expect(mockPush).toHaveBeenCalled();
+      });
+
+      it('should not navigate to the relevant resource within the linked data editor if the ID is not present', () => {
+        renderInstanceWithArgs({ identifiers: instance.identifiers });
+
+        clickEditResourceButton();
+        expect(mockPush).not.toHaveBeenCalled();
       });
     });
   });
