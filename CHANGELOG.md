@@ -55,6 +55,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Wrong statistical code column heading is displayed in instances, holdings, and items. Fixes UIIN-2922.
 * Update "Edit Instance" workform for resources with source "LINKED_DATA". Refs UIIN-2967.
 * Inventory App: Consume {{FormattedTime}} via stripes-component. Refs UIIN-1273.
+* Update request to go to inventory API when Holdings is updated. Refs UIIN-2779.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
