@@ -17,6 +17,7 @@ import {
   parseEmptyFormValue,
   redirectToMarcEditPage,
   sendCalloutOnAffiliationChange,
+  batchQueryIntoSmaller,
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
@@ -348,5 +349,19 @@ describe('sendCalloutOnAffiliationChange', () => {
 
       expect(callout.sendCallout).not.toHaveBeenCalled();
     });
+  });
+});
+
+describe('batchQueryIntoSmaller', () => {
+  it('should split one query into several batches', () => {
+    const originalQuery = 'item.effectiveLocationId==("id-1" or "id-2" or "id-3" or "id-4" or "id-5") or language==("en" or "de" or "sp" or "it" or "ua") sortby title';
+    const queries = batchQueryIntoSmaller(originalQuery, 3);
+
+    expect(queries).toEqual([
+      'item.effectiveLocationId==("id-1" or "id-2" or "id-3") or language==("en" or "de" or "sp") sortby title',
+      'item.effectiveLocationId==("id-1" or "id-2" or "id-3") or language==("it" or "ua") sortby title',
+      'item.effectiveLocationId==("id-4" or "id-5") or language==("en" or "de" or "sp") sortby title',
+      'item.effectiveLocationId==("id-4" or "id-5") or language==("it" or "ua") sortby title',
+    ]);
   });
 });

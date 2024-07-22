@@ -20,6 +20,7 @@ import {
   filterConfig,
   queryIndexes,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
+  buildSearchQuery,
 } from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
@@ -41,6 +42,9 @@ const mockGetLastSearch = jest.fn();
 const mockItemsByQuery = jest.fn().mockResolvedValue([{
   id: 'itemId',
   holdingsRecordId: 'holdingsRecordId',
+}]);
+const mockRecordsToExportIDs = jest.fn().mockResolvedValue([{
+  id: 'UUID',
 }]);
 const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 const spyOnCheckIfUserInCentralTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInCentralTenant');
@@ -124,6 +128,7 @@ const getInstancesListTree = ({ segment, ...rest }) => {
               query: { update: updateMock, replace: mockQueryReplace },
               records: { reset: mockRecordsReset },
               itemsByQuery: { reset: noop, GET: mockItemsByQuery },
+              recordsToExportIDs: { reset: noop, GET: mockRecordsToExportIDs },
             }}
             data={{
               ...data,
@@ -731,6 +736,35 @@ describe('InstancesList', () => {
         fireEvent.click(advancedSearchSubmit);
 
         expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
+      });
+    });
+
+    describe('when too many filters had been selected and user saves Instance UUIDs', () => {
+      const generateUUID = () => new Array(36).fill('a').join('');
+
+      it('should send multiple requests for IDs', () => {
+        const qindex = queryIndexes.QUERY_SEARCH;
+        const _query = `(item.effectiveLocaionId==(${new Array(100).fill(`"${generateUUID()}"`).join(' or ')})`;
+
+        buildSearchQuery.mockReturnValue(() => _query);
+
+        renderInstancesList({
+          segment: 'items',
+          parentResources: {
+            ...resources,
+            query: {
+              ...query,
+              qindex,
+              query: _query,
+            },
+          },
+        });
+
+        openActionMenu();
+
+        fireEvent.click(screen.getByRole('button', { name: 'Save instances UUIDs' }));
+
+        expect(mockRecordsToExportIDs).toHaveBeenCalledTimes(2);
       });
     });
   });
