@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 import { FolioFormattedDate } from '@folio/stripes-acq-components';
 import {
   Button,
@@ -13,13 +15,19 @@ export const getColumnFormatter = ({ hasViewReceivingPermissions, onRemove }) =>
   return ({
     [PIECE_COLUMNS.barcode]: record => {
       const { barcode, titleId } = record;
+      const barcodeText = barcode || <FormattedMessage id="ui-inventory.noBarcode" />;
 
-      if (!barcode) return <NoValue />;
-
-      if (!hasViewReceivingPermissions) return barcode;
+      if (!hasViewReceivingPermissions) return barcodeText;
 
       if (titleId) {
-        return <TextLink target="_blank" to={`/receiving/${titleId}/view`}>{barcode}</TextLink>;
+        return (
+          <TextLink
+            target="_blank"
+            to={`/receiving/${titleId}/view`}
+          >
+            {barcodeText}
+          </TextLink>
+        );
       }
 
       return barcode;
