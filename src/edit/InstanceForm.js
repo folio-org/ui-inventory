@@ -79,6 +79,8 @@ import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
 import styles from './InstanceForm.css';
 import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
 
+const FORMATS_WITH_BLOCKED_FIELDS = ['MARC', 'LINKED_DATA'];
+
 function validate(values) {
   const errors = {};
   const requiredTextMessage = <FormattedMessage id="ui-inventory.fillIn" />;
@@ -307,7 +309,7 @@ class InstanceForm extends React.Component {
       resources: { instanceBlockedFields },
     } = this.props;
 
-    if (!instanceBlockedFields || instanceSource !== 'MARC') return false;
+    if (!instanceBlockedFields || !FORMATS_WITH_BLOCKED_FIELDS.includes(instanceSource)) return false;
 
     const { records } = instanceBlockedFields;
 

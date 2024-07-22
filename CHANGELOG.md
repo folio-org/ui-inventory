@@ -49,6 +49,14 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Enable "View source" option for "LINKED_DATA" source type in "Actions" dropdown. Refs in UIIN-2966.
 * Create a text link for classification numbers based on classification types. Refs UIIN-2907.
 * Add "Edit in Linked Data editor" action for resources with source "LINKED_DATA". Refs UIIN-2963.
+* Clicking on item in Inventory no longer opens the item record in a new tab. Fixes UIIN-2924.
+* Add `skipTrimOnChange` option to `useLocationFilters` hook to prevent unnecessary trims on change. Refs UIIN-2976.
+* Enable 'Edit in Linked Data Editor' option to Action dropdown. Refs UIIN-2965.
+* Wrong statistical code column heading is displayed in instances, holdings, and items. Fixes UIIN-2922.
+* Update "Edit Instance" workform for resources with source "LINKED_DATA". Refs UIIN-2967.
+* Inventory App: Consume {{FormattedTime}} via stripes-component. Refs UIIN-1273.
+* Update request to go to inventory API when Holdings is updated. Refs UIIN-2779.
+* Add barcode values for "Bound pieces data" and update `useBoundPieces` hook query with `bindItemId` to fetch bound pieces correctly. Refs UIIN-2984.
 * Save Instances UUIDs - When request URI exceeds character limit split request. Refs UIIN-2977.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)

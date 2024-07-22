@@ -18,7 +18,7 @@ const noValue = <NoValue />;
 const visibleColumns = ['type', 'name'];
 const getColumnMapping = intl => ({
   type: intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-  name: intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+  name: intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
 });
 const formatter = {
   type: item => item.type || noValue,

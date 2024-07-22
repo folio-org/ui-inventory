@@ -15,7 +15,7 @@ const useBoundPieces = (itemId, options = {}) => {
   const { enabled = true, ...otherOptions } = options;
   const ky = useOkapiKy();
   const [namespace] = useNamespace({ key: 'bound-pieces' });
-  const filterQuery = `itemId==${itemId} and isBound==true`;
+  const filterQuery = `bindItemId==${itemId} and isBound==true`;
 
   const searchParams = {
     limit: LIMIT_MAX,

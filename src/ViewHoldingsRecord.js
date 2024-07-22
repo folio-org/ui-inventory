@@ -886,17 +886,17 @@ class ViewHoldingsRecord extends React.Component {
                             <MultiColumnList
                               id="list-statistical-codes"
                               contentData={statisticalCodeIdsContent}
-                              visibleColumns={['Statistical code type', 'Statistical code']}
+                              visibleColumns={['Statistical code type', 'Statistical code name']}
                               columnMapping={{
                                 'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                                'Statistical code': intl.formatMessage({ id: 'ui-inventory.statisticalCode' }),
+                                'Statistical code name': intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
                               }}
                               columnWidths={{ 'Statistical code type': '16%' }}
                               formatter={{
                                 'Statistical code type':
                                     x => this.refLookup(referenceTables.statisticalCodeTypes,
                                       this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
-                                'Statistical code':
+                                'Statistical code name':
                                     x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
                               }}
                               ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}

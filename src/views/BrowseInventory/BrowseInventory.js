@@ -82,7 +82,8 @@ const BrowseInventory = () => {
     clearFilters,
   ] = useLocationFilters(location, history, () => {
     setPageConfig(INIT_PAGE_CONFIG);
-  });
+  },
+  { skipTrimOnChange: true });
 
   const withExtraFilters = useMemo(() => {
     const { qindex, query } = querystring.parse(search);

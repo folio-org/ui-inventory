@@ -186,6 +186,22 @@ describe('BrowseInventory', () => {
     expect(applySearch).not.toHaveBeenCalled();
   });
 
+  describe('when changing search term', () => {
+    it('should not be trimmed', async () => {
+      useLocationFilters.mockClear().mockReturnValue(getFiltersUtils({
+        searchQuery: '',
+      }));
+
+      const searchTerm = ' test ';
+
+      renderBrowseInventory();
+
+      await act(async () => userEvent.type(screen.getByRole('textbox'), searchTerm));
+
+      expect(screen.getByRole('textbox').value).toBe(searchTerm);
+    });
+  });
+
   describe('when a new search query is submitted', () => {
     it('should focus pane title', async () => {
       const { getByRole } = renderBrowseInventory();
