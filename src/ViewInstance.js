@@ -28,6 +28,8 @@ import {
   ConfirmationModal,
 } from '@folio/stripes/components';
 
+import { CENTRAL_ORDERING_SETTINGS_KEY } from '@folio/stripes-acq-components';
+
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
@@ -41,6 +43,7 @@ import {
   getLinkedAuthorityIds,
   setRecordForDeletion,
   redirectToMarcEditPage,
+  checkIfCentralOrderingIsActive,
 } from './utils';
 import {
   CONSORTIUM_PREFIX,
@@ -129,6 +132,16 @@ class ViewInstance extends React.Component {
       type: 'okapi',
       tenant: '!{tenantId}',
       shouldRefresh: () => false,
+    },
+    centralOrdering: {
+      type: 'okapi',
+      path: 'orders-storage/settings',
+      throwErrors: false,
+      params: {
+        limit: '1',
+        query: `key=${CENTRAL_ORDERING_SETTINGS_KEY}`,
+      },
+      tenant: '!{centralTenantId}',
     },
     movableItems: {
       type: 'okapi',
@@ -662,6 +675,7 @@ class ViewInstance extends React.Component {
       history,
       resources: {
         instanceRequests,
+        centralOrdering,
       },
     } = this.props;
     const {
@@ -693,7 +707,9 @@ class ViewInstance extends React.Component {
       && stripes.hasPerm('consortia.inventory.share.local.instance')
       && !isShared
       && !isInstanceShadowCopy(source);
-    const canCreateOrder = !checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder');
+
+    const canCentralTenantCreateOrder = checkIfUserInCentralTenant(stripes) && checkIfCentralOrderingIsActive(centralOrdering);
+    const canCreateOrder = (!checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder')) || canCentralTenantCreateOrder;
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
     const canAccessLinkedDataOptions = stripes.hasPerm('linked-data.resources.bib.post');
@@ -1259,6 +1275,7 @@ ViewInstance.propTypes = {
   resources: PropTypes.shape({
     allInstanceItems: PropTypes.object.isRequired,
     allInstanceHoldings: PropTypes.object.isRequired,
+    centralOrdering: PropTypes.object.isRequired,
     configs: PropTypes.object.isRequired,
     instanceRequests: PropTypes.shape({
       other: PropTypes.shape({

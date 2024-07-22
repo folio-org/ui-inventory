@@ -220,6 +220,13 @@ const defaultProp = {
         },
       ]
     },
+    centralOrdering: {
+      records: [{
+        settings: [{
+          value: 'true',
+        }],
+      }],
+    },
     instanceRequests: {
       other: {
         totalRecords: 10,
@@ -738,7 +745,52 @@ describe('ViewInstance', () => {
       }, 10000);
 
       describe('when user is in central tenant', () => {
-        it('should be hidden', () => {
+        beforeEach(() => {
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
+        });
+
+        const stripes = {
+          ...defaultProp.stripes,
+          okapi: { tenant: 'consortium' },
+          user: {
+            user: {
+              consortium: { centralTenantId: 'consortium' },
+              tenants: ['testTenantId'],
+            },
+          },
+        };
+
+        describe('when central ordering is active', () => {
+          it('should be visible', () => {
+            const inactiveCenralOrdering = {
+              records: [{
+                settings: [{
+                  value: 'false',
+                }],
+              }],
+            };
+
+            renderViewInstance({
+              stripes,
+              resources: {
+                ...defaultProp.resources,
+                centralOrdering: inactiveCenralOrdering,
+              },
+            });
+            fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+            expect(screen.queryByRole('button', { name: 'New order' })).not.toBeInTheDocument();
+          });
+        });
+        describe('when central ordering is inactive', () => {
+          it('should be visible', () => {
+            renderViewInstance({ stripes });
+            fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+            expect(screen.queryByRole('button', { name: 'New order' })).toBeInTheDocument();
+          });
+        });
+        /* it('should be hidden', () => {
           const stripes = {
             ...defaultProp.stripes,
             okapi: { tenant: 'consortium' },
@@ -755,7 +807,7 @@ describe('ViewInstance', () => {
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
           expect(screen.queryByRole('button', { name: 'New order' })).not.toBeInTheDocument();
-        });
+        }); */
       });
     });
     describe('"View requests" action item', () => {

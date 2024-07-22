@@ -880,3 +880,5 @@ export const sendCalloutOnAffiliationChange = (stripes, tenantId, callout) => {
     }
   }
 };
+
+export const checkIfCentralOrderingIsActive = centralOrdering => centralOrdering.records[0]?.settings[0]?.value === 'true';
