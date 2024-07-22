@@ -790,24 +790,6 @@ describe('ViewInstance', () => {
             expect(screen.queryByRole('button', { name: 'New order' })).toBeInTheDocument();
           });
         });
-        /* it('should be hidden', () => {
-          const stripes = {
-            ...defaultProp.stripes,
-            okapi: { tenant: 'consortium' },
-            user: {
-              user: {
-                consortium: { centralTenantId: 'consortium' },
-                tenants: ['testTenantId'],
-              },
-            },
-          };
-          checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
-
-          renderViewInstance({ stripes });
-          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-
-          expect(screen.queryByRole('button', { name: 'New order' })).not.toBeInTheDocument();
-        }); */
       });
     });
     describe('"View requests" action item', () => {
