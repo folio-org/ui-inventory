@@ -56,6 +56,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Update "Edit Instance" workform for resources with source "LINKED_DATA". Refs UIIN-2967.
 * Inventory App: Consume {{FormattedTime}} via stripes-component. Refs UIIN-1273.
 * Update request to go to inventory API when Holdings is updated. Refs UIIN-2779.
+* Add barcode values for "Bound pieces data" and update `useBoundPieces` hook query with `bindItemId` to fetch bound pieces correctly. Refs UIIN-2984.
 * Display "New order" action in instance action menu when active affiliation set to central tenant. Refs UIIN-2955.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
