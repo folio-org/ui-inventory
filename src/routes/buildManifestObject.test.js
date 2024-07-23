@@ -8,6 +8,8 @@ import {
 import buildStripes from '../../test/jest/__mock__/stripesCore.mock';
 import { applyDefaultStaffSuppressFilter } from './buildManifestObject';
 
+jest.unmock('@folio/stripes-inventory-components');
+
 const getBuildQueryArgs = ({
   queryParams = {},
   pathComponents = {},
