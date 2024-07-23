@@ -126,6 +126,7 @@ class InstancesList extends React.Component {
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
+    isRequestUrlExceededLimit: PropTypes.bool.isRequired,
     segment: PropTypes.string,
     intl: PropTypes.object,
     match: PropTypes.shape({

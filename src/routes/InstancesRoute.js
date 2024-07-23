@@ -25,6 +25,7 @@ class InstancesRoute extends React.Component {
     getParams: PropTypes.func,
     getLastBrowse: PropTypes.func.isRequired,
     getLastSearchOffset: PropTypes.func.isRequired,
+    isRequestUrlExceededLimit: PropTypes.bool.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
     storeLastSegment: PropTypes.func.isRequired,

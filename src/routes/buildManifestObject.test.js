@@ -8,12 +8,19 @@ import {
 import buildStripes from '../../test/jest/__mock__/stripesCore.mock';
 import { applyDefaultStaffSuppressFilter } from './buildManifestObject';
 
+const defaultProps = {
+  stripes: buildStripes(),
+  mutator: {
+    requestUrlQuery: { replace: jest.fn() },
+  },
+};
+
 const getBuildQueryArgs = ({
   queryParams = {},
   pathComponents = {},
   resourceData = {},
   logger = { log: jest.fn() },
-  props = { stripes: buildStripes() }
+  props = defaultProps,
 } = {}) => {
   const resData = { query: { ...queryParams }, ...resourceData };
 
