@@ -615,7 +615,7 @@ class InstancesList extends React.Component {
           });
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
-        const endpointPath = `${stripes.okapi.url}/search/instances/ids?query=`;
+        const endpointPath = `${stripes.okapi.url}/search/instances/ids`;
         const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
 
         let items = [];
