@@ -17,6 +17,7 @@ import {
   parseEmptyFormValue,
   redirectToMarcEditPage,
   sendCalloutOnAffiliationChange,
+  checkIfCentralOrderingIsActive,
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
@@ -348,5 +349,31 @@ describe('sendCalloutOnAffiliationChange', () => {
 
       expect(callout.sendCallout).not.toHaveBeenCalled();
     });
+  });
+});
+
+describe('checkIfCentralOrderingIsActive', () => {
+  const inactiveCenralOrdering = {
+    records: [{
+      settings: [{
+        value: 'false',
+      }],
+    }],
+  };
+
+  const activeCenralOrdering = {
+    records: [{
+      settings: [{
+        value: 'true',
+      }],
+    }],
+  };
+
+  it('should return false, when central ordering is inactive', () => {
+    expect(checkIfCentralOrderingIsActive(inactiveCenralOrdering)).toBeFalsy();
+  });
+
+  it('should return true, when central ordering is active', () => {
+    expect(checkIfCentralOrderingIsActive(activeCenralOrdering)).toBeTruthy();
   });
 });
