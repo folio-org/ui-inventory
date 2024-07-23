@@ -57,6 +57,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Inventory App: Consume {{FormattedTime}} via stripes-component. Refs UIIN-1273.
 * Update request to go to inventory API when Holdings is updated. Refs UIIN-2779.
 * Add barcode values for "Bound pieces data" and update `useBoundPieces` hook query with `bindItemId` to fetch bound pieces correctly. Refs UIIN-2984.
+* Use `withSearchErrors` HOC and `buildRecordsManifest` to display an error when the request URL is exceeded. Refs UIIN-2970.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)

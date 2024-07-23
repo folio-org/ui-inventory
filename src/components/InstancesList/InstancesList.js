@@ -1175,6 +1175,7 @@ class InstancesList extends React.Component {
       canUseSingleRecordImport,
       disableRecordCreation,
       intl,
+      isRequestUrlExceededLimit,
       data,
       parentResources,
       parentMutator,
@@ -1323,6 +1324,7 @@ class InstancesList extends React.Component {
             inputRef={this.inputRef}
             indexRef={this.indexRef}
             isCursorAtEnd
+            isRequestUrlExceededLimit={isRequestUrlExceededLimit}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
