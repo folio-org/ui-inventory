@@ -1043,3 +1043,5 @@ export const batchQueryIntoSmaller = (query, VALUES_PER_BATCH = 50) => {
 
   return resultingQueryStrings;
 };
+
+export const checkIfCentralOrderingIsActive = centralOrdering => centralOrdering.records[0]?.settings[0]?.value === 'true';

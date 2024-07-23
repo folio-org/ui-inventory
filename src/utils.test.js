@@ -18,6 +18,7 @@ import {
   redirectToMarcEditPage,
   sendCalloutOnAffiliationChange,
   batchQueryIntoSmaller,
+  checkIfCentralOrderingIsActive,
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
@@ -363,5 +364,31 @@ describe('batchQueryIntoSmaller', () => {
       'item.effectiveLocationId==("id-4" or "id-5") or language==("en" or "de" or "sp") sortby title',
       'item.effectiveLocationId==("id-4" or "id-5") or language==("it" or "ua") sortby title',
     ]);
+  });
+});
+
+describe('checkIfCentralOrderingIsActive', () => {
+  const inactiveCenralOrdering = {
+    records: [{
+      settings: [{
+        value: 'false',
+      }],
+    }],
+  };
+
+  const activeCenralOrdering = {
+    records: [{
+      settings: [{
+        value: 'true',
+      }],
+    }],
+  };
+
+  it('should return false, when central ordering is inactive', () => {
+    expect(checkIfCentralOrderingIsActive(inactiveCenralOrdering)).toBeFalsy();
+  });
+
+  it('should return true, when central ordering is active', () => {
+    expect(checkIfCentralOrderingIsActive(activeCenralOrdering)).toBeTruthy();
   });
 });
