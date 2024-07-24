@@ -52,6 +52,7 @@ import {
   INSTANCE_SHARING_STATUSES,
   layers,
   LEADER_RECORD_STATUSES,
+  LINKED_DATA_EDITOR_PERM,
   LINKED_DATA_ID_PREFIX,
   LINKED_DATA_RESOURCES_ROUTE,
   REQUEST_OPEN_STATUSES,
@@ -192,6 +193,12 @@ class ViewInstance extends React.Component {
       path: 'authority-storage/authorities',
       accumulate: true,
       throwErrors: false,
+    },
+    linkedDataEditorId: {
+      type: 'okapi',
+      path: 'resource/metadata/:{id}/id',
+      accumulate: true,
+      throwErrors: false,
     }
   });
 
@@ -204,6 +211,7 @@ class ViewInstance extends React.Component {
     this.state = {
       isInstanceSharing: false,
       marcRecord: null,
+      linkedDataEditorId: null,
       findInstancePluginOpened: false,
       isItemsMovement: false,
       isImportRecordModalOpened: false,
@@ -236,6 +244,7 @@ class ViewInstance extends React.Component {
 
     if (isMARCSourceRecord || isLinkedDataSourceRecord) {
       this.getMARCRecord();
+      this.getLinkedDataEditorId();
     }
 
     this.setTlrSettings();
@@ -266,6 +275,7 @@ class ViewInstance extends React.Component {
 
     if ((isMARCSourceRecord || isLinkedDataSourceRecord) && (isViewingAnotherRecord || recordSourceWasChanged)) {
       this.getMARCRecord();
+      this.getLinkedDataEditorId();
     }
 
     // component got updated after a new record was created
@@ -307,6 +317,25 @@ class ViewInstance extends React.Component {
         console.error('MARC record getting ERROR: ', error);
       });
   };
+
+  getLinkedDataEditorId = async () => {
+    const {
+      mutator,
+      stripes,
+      selectedInstance: { id },
+    } = this.props;
+
+    if (!id || !stripes.hasPerm(LINKED_DATA_EDITOR_PERM)) return;
+
+    try {
+      const response = await mutator.linkedDataEditorId.GET(id);
+      const linkedDataEditorId = response?.id;
+
+      this.setState({ linkedDataEditorId });
+    } catch {
+      this.setState({ linkedDataEditorId: null });
+    }
+  }
 
   setTlrSettings = () => {
     const {
@@ -680,6 +709,7 @@ class ViewInstance extends React.Component {
     } = this.props;
     const {
       marcRecord,
+      linkedDataEditorId,
       titleLevelRequestsFeatureEnabled,
     } = this.state;
     const source = instance?.source;
@@ -712,9 +742,9 @@ class ViewInstance extends React.Component {
     const canCreateOrder = (!checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder')) || canCentralTenantCreateOrder;
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
-    const canAccessLinkedDataOptions = stripes.hasPerm('linked-data.resources.bib.post');
+    const canAccessLinkedDataOptions = stripes.hasPerm(LINKED_DATA_EDITOR_PERM);
     const isSourceLinkedData = isLinkedDataSource(source);
-    const showLinkedDataMenuSection = canAccessLinkedDataOptions && isSourceLinkedData;
+    const showLinkedDataMenuSection = canAccessLinkedDataOptions && (isSourceLinkedData || linkedDataEditorId);
 
     const hasSetForDeletionPermission = stripes.hasPerm(setForDeletionAndSuppressPerm);
     const canNonConsortialTenantSetForDeletion = !stripes.hasInterface('consortia') && hasSetForDeletionPermission;
@@ -744,11 +774,11 @@ class ViewInstance extends React.Component {
     };
 
     const navigateToLinkedDataEditor = () => {
-      const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX));
+      const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value || linkedDataEditorId;
 
       if (!selectedIdentifier) return;
 
-      const identifierLiteral = selectedIdentifier.value?.replace(LINKED_DATA_ID_PREFIX, '');
+      const identifierLiteral = selectedIdentifier?.replace(LINKED_DATA_ID_PREFIX, '');
 
       history.push({
         pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
@@ -1264,6 +1294,9 @@ ViewInstance.propTypes = {
     }).isRequired,
     shareInstance: PropTypes.shape({
       POST: PropTypes.func.isRequired,
+      GET: PropTypes.func.isRequired,
+    }).isRequired,
+    linkedDataEditorId: PropTypes.shape({
       GET: PropTypes.func.isRequired,
     }).isRequired,
     authorities: PropTypes.shape({

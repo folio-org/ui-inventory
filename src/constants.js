@@ -275,3 +275,5 @@ export const ITEM_ACCORDIONS = {
 export const ITEM_ACCORDION_LABELS = {
   [ITEM_ACCORDIONS.boundItems]: <FormattedMessage id="ui-inventory.boundPieces" />,
 };
+
+export const LINKED_DATA_EDITOR_PERM = 'linked-data.resources.bib.post';
