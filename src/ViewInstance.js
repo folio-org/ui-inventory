@@ -322,10 +322,10 @@ class ViewInstance extends React.Component {
     const {
       mutator,
       stripes,
-      selectedInstance: { id },
+      selectedInstance: { id, source },
     } = this.props;
 
-    if (!id || !stripes.hasPerm(LINKED_DATA_EDITOR_PERM)) return;
+    if (!id || !isMARCSource(source) || !stripes.hasPerm(LINKED_DATA_EDITOR_PERM)) return;
 
     try {
       const response = await mutator.linkedDataEditorId.GET(id);
