@@ -18,4 +18,5 @@ jest.mock('@folio/stripes-inventory-components', () => ({
   InstanceFilters: jest.fn(() => <div>InstanceFilters</div>),
   HoldingsRecordFilters: jest.fn(() => <div>HoldingsRecordFilters</div>),
   ItemFilters: jest.fn(() => <div>ItemFilters</div>),
+  buildSearchQuery: jest.fn(),
 }));

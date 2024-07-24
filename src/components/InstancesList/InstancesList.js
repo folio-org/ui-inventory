@@ -8,6 +8,7 @@ import {
   size,
   isEmpty,
   noop,
+  uniqBy,
 } from 'lodash';
 import {
   injectIntl,
@@ -77,6 +78,7 @@ import {
   switchAffiliation,
   addFilter,
   replaceFilter,
+  batchQueryIntoSmaller,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -550,8 +552,49 @@ class InstancesList extends React.Component {
     this.setState({ inTransitItemsExportInProgress: true }, this.generateInTransitItemReport);
   };
 
+  isURIExceedsLimit = (endpointPath, query) => {
+    const URI_LIMIT = 4000;
+
+    return `${endpointPath}?query=${stringify({ query })}`.length > URI_LIMIT;
+  }
+
+  splitRequestToInstancesIds = async (endpointPath, query) => {
+    const { GET } = this.props.parentMutator.recordsToExportIDs;
+
+    // URI too long, need to split into several requests
+    let splitQueries = [];
+
+    let valuesPerBatch = 50;
+    const valuesPerBatchDecreasePerTry = 5;
+
+    // 50 values per batch might still exceed limit, so we need to check split queries for limit and keep trying with smaller bathes
+    // until all queries are within URI length limit
+    do {
+      splitQueries = batchQueryIntoSmaller(query, valuesPerBatch);
+
+      if (splitQueries.some(_query => this.isURIExceedsLimit(endpointPath, _query))) {
+        valuesPerBatch -= valuesPerBatchDecreasePerTry;
+      } else {
+        break;
+      }
+      // eslint-disable-next-line no-constant-condition
+    } while (true);
+
+    const requests = splitQueries.map(_query => {
+      return GET({ params: { query: _query } });
+    });
+
+    const itemBatches = await Promise.all(requests);
+
+    return itemBatches.flat();
+  }
+
   generateInstancesIdReport = async (sendCallout) => {
     const { instancesIdExportInProgress } = this.state;
+    const {
+      data,
+      stripes,
+    } = this.props;
 
     if (instancesIdExportInProgress) return;
 
@@ -572,14 +615,24 @@ class InstancesList extends React.Component {
           });
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
-        const items = await GET();
+        const endpointPath = `${stripes.okapi.url}/search/instances/ids`;
+        const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
+
+        let items = [];
+
+        if (this.isURIExceedsLimit(endpointPath, query)) {
+          items = await this.splitRequestToInstancesIds(endpointPath, query);
+        } else {
+          items = await GET();
+        }
+
 
         clearTimeout(infoCalloutTimer);
 
         const report = new IdReportGenerator('SearchInstanceUUIDs');
 
         if (!isEmpty(items)) {
-          report.toCSV(items, record => record.id);
+          report.toCSV(uniqBy(items, 'id'), record => record.id);
         }
       } catch (error) {
         clearTimeout(infoCalloutTimer);
@@ -872,7 +925,7 @@ class InstancesList extends React.Component {
             icon: 'save',
             messageId: 'ui-inventory.saveInstancesUIIDS',
             onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
-            isDisabled: isInstancesListEmpty,
+            isDisabled: false // isInstancesListEmpty,
           })}
           {segment === 'holdings' && this.getActionItem({
             id: 'dropdown-clickable-get-holdings-uiids',

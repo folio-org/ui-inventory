@@ -58,6 +58,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Update request to go to inventory API when Holdings is updated. Refs UIIN-2779.
 * Add barcode values for "Bound pieces data" and update `useBoundPieces` hook query with `bindItemId` to fetch bound pieces correctly. Refs UIIN-2984.
 * Display "New order" action in instance action menu when active affiliation set to central tenant. Refs UIIN-2955.
+* Save Instances UUIDs - When request URI exceeds character limit split request. Refs UIIN-2977.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
