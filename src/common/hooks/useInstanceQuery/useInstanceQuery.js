@@ -11,7 +11,6 @@ const useInstanceQuery = (instanceId, { tenantId = '' } = {}, options = {}) => {
   const {
     isLoading,
     data: instance = {},
-    refetch,
     ...rest
   } = useQuery(
     [namespace, instanceId, tenantId],
@@ -25,7 +24,6 @@ const useInstanceQuery = (instanceId, { tenantId = '' } = {}, options = {}) => {
   return ({
     isLoading,
     instance,
-    refetch,
     ...rest,
   });
 };

@@ -5,6 +5,7 @@ import useInstanceQuery from './useInstanceQuery';
 
 const useInstance = (id) => {
   const {
+    refetch,
     isLoading: isSearchInstanceByIdLoading,
     instance: _instance,
   } = useSearchInstanceByIdQuery(id);
@@ -16,8 +17,8 @@ const useInstance = (id) => {
     isLoading: isInstanceLoading,
     isFetching,
     instance: data,
-    refetch,
-    ...rest
+    isError,
+    error,
   } = useInstanceQuery(
     id,
     { tenantId: instanceTenantId },
@@ -42,7 +43,8 @@ const useInstance = (id) => {
     isLoading,
     isFetching,
     refetch,
-    ...rest,
+    isError,
+    error,
   };
 };
 

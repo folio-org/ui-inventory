@@ -9,7 +9,7 @@ const useSearchInstanceByIdQuery = (instanceId) => {
   const ky = useOkapiKy();
   const [namespace] = useNamespace({ key: 'search-instance' });
 
-  const { isLoading, data = {} } = useQuery(
+  const { refetch, isLoading, data = {} } = useQuery(
     {
       queryKey: [namespace, instanceId],
       queryFn: () => ky.get(`search/instances?query=id==${instanceId}`).json(),
@@ -18,6 +18,7 @@ const useSearchInstanceByIdQuery = (instanceId) => {
   );
 
   return ({
+    refetch,
     isLoading,
     instance: data?.instances?.[0],
   });
