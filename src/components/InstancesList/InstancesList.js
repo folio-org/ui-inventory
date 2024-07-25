@@ -128,6 +128,7 @@ class InstancesList extends React.Component {
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
+    isRequestUrlExceededLimit: PropTypes.bool.isRequired,
     segment: PropTypes.string,
     intl: PropTypes.object,
     match: PropTypes.shape({
@@ -1228,6 +1229,7 @@ class InstancesList extends React.Component {
       canUseSingleRecordImport,
       disableRecordCreation,
       intl,
+      isRequestUrlExceededLimit,
       data,
       parentResources,
       parentMutator,
@@ -1376,6 +1378,7 @@ class InstancesList extends React.Component {
             inputRef={this.inputRef}
             indexRef={this.indexRef}
             isCursorAtEnd
+            isRequestUrlExceededLimit={isRequestUrlExceededLimit}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
             viewRecordComponent={ViewInstanceWrapper}
             editRecordComponent={InstanceForm}
