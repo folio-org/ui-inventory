@@ -52,7 +52,6 @@ import {
   INSTANCE_SHARING_STATUSES,
   layers,
   LEADER_RECORD_STATUSES,
-  LINKED_DATA_EDITOR_ID_GET_PERM,
   LINKED_DATA_EDITOR_PERM,
   LINKED_DATA_ID_PREFIX,
   LINKED_DATA_RESOURCES_ROUTE,
@@ -326,7 +325,7 @@ class ViewInstance extends React.Component {
       selectedInstance: { id, source },
     } = this.props;
 
-    if (!id || !isMARCSource(source) || !stripes.hasPerm(LINKED_DATA_EDITOR_ID_GET_PERM)) return;
+    if (!id || !isMARCSource(source) || !stripes.hasPerm(LINKED_DATA_EDITOR_PERM)) return;
 
     try {
       const response = await mutator.linkedDataEditorId.GET(id);
