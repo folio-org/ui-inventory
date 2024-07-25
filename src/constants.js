@@ -277,3 +277,4 @@ export const ITEM_ACCORDION_LABELS = {
 };
 
 export const LINKED_DATA_EDITOR_PERM = 'linked-data.resources.bib.post';
+export const LINKED_DATA_EDITOR_ID_GET_PERM = 'linked-data.resources.bib.id.get';

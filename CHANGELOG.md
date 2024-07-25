@@ -61,6 +61,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Save Instances UUIDs - When request URI exceeds character limit split request. Refs UIIN-2977.
 * Use `withSearchErrors` HOC and `buildRecordsManifest` to display an error when the request URL is exceeded. Refs UIIN-2970.
 * Edit in LDE when source=MARC. Refs UIIN-2978.
+* Edit in Linked Data Editor when source=MARC. Refs UIIN-2978.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
