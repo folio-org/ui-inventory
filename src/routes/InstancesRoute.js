@@ -7,6 +7,7 @@ import {
   filterConfig,
   renderFilters,
   segments,
+  withSearchErrors,
 } from '@folio/stripes-inventory-components';
 
 import withLocation from '../withLocation';
@@ -24,6 +25,7 @@ class InstancesRoute extends React.Component {
     getParams: PropTypes.func,
     getLastBrowse: PropTypes.func.isRequired,
     getLastSearchOffset: PropTypes.func.isRequired,
+    isRequestUrlExceededLimit: PropTypes.bool.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
     storeLastSegment: PropTypes.func.isRequired,
@@ -51,6 +53,7 @@ class InstancesRoute extends React.Component {
       storeLastSearch,
       storeLastSearchOffset,
       storeLastSegment,
+      isRequestUrlExceededLimit,
     } = this.props;
     const { segment = segments.instances } = getParams(this.props);
     const { indexes } = filterConfig[segment];
@@ -78,6 +81,7 @@ class InstancesRoute extends React.Component {
             storeLastSearch={storeLastSearch}
             storeLastSearchOffset={storeLastSearchOffset}
             storeLastSegment={storeLastSegment}
+            isRequestUrlExceededLimit={isRequestUrlExceededLimit}
           />
         )}
       </DataContext.Consumer>
@@ -89,4 +93,5 @@ export default flowRight(
   stripesConnect,
   withLocation,
   withLastSearchTerms,
+  withSearchErrors,
 )(InstancesRoute);

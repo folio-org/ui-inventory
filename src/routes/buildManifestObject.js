@@ -2,6 +2,7 @@ import {
   FACETS,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   buildSearchQuery,
+  buildRecordsManifest,
 } from '@folio/stripes-inventory-components';
 
 import { replaceFilter } from '../utils';
@@ -28,28 +29,6 @@ export const applyDefaultStaffSuppressFilter = (query, stripes) => {
   }
 };
 
-const buildRecordsManifest = (options = {}) => {
-  const { path } = options;
-
-  return {
-    type: 'okapi',
-    records: 'instances',
-    resultOffset: '%{resultOffset}',
-    perRequest: 100,
-    throwErrors: false,
-    path: 'inventory/instances',
-    resultDensity: 'sparse',
-    accumulate: 'true',
-    GET: {
-      path,
-      params: {
-        expandAll: true,
-        query: buildSearchQuery(applyDefaultStaffSuppressFilter),
-      },
-    },
-  };
-};
-
 export function buildManifestObject() {
   return {
     numFiltersLoaded: { initialValue: 1 }, // will be incremented as each filter loads
@@ -63,9 +42,8 @@ export function buildManifestObject() {
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
-    records: buildRecordsManifest({
-      path: 'search/instances',
-    }),
+    requestUrlQuery: { initialValue: '' },
+    records: buildRecordsManifest(applyDefaultStaffSuppressFilter),
     recordsToExportIDs: {
       type: 'okapi',
       records: 'ids',
