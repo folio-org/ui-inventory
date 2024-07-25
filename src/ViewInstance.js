@@ -324,6 +324,11 @@ class ViewInstance extends React.Component {
       stripes,
       selectedInstance: { id, source },
     } = this.props;
+    const {
+      linkedDataEditorId: prevLinkedDataEditorId,
+    } = this.state;
+
+    if (prevLinkedDataEditorId) this.setState({ linkedDataEditorId: null });
 
     if (!id || !isMARCSource(source) || !stripes.hasPerm(LINKED_DATA_EDITOR_PERM)) return;
 
