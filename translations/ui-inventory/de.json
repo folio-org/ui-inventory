@@ -788,7 +788,7 @@
     "settings.inventory.title": "Katalogeinstellungen",
     "displaySummary": "Anzeigeübersicht",
     "setForDeletion.toast.successful": "<b>{instanceTitle}</b> wurde zum Löschen markiert",
-    "setForDeletion.toast.unsuccessful": "<b> {instanceTitle} </b> wurde nicht zum Löschen markiert",
+    "setForDeletion.toast.unsuccessful": "<b>{instanceTitle}</b> wurde nicht zum Löschen markiert",
     "permission.items.create-in-transit-report": "Katalog: Bericht über Exemplare in Transport erstellen und herunterladen",
     "shortcut.nextSubfield": "Nur quickMARC: Zum nächsten Unterfeld in einem Textfeld wechseln",
     "shortcut.prevSubfield": "Nur quickMARC: Zum vorherigen Unterfeld in einem Textfeld wechseln",
@@ -816,5 +816,7 @@
     "boundPieces.remove.message": "Remove this piece from the bound item?",
     "boundPieces.remove.button": "Remove",
     "boundPieces.remove.heading": "Are you sure?",
-    "searchForTitle": "Search for {title}"
+    "searchForTitle": "Search for {title}",
+    "ld.label": "Linked Data Editor",
+    "editInLinkedDataEditor": "Edit resource in Linked Data Editor"
 }

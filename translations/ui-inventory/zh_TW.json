@@ -353,7 +353,7 @@
     "instanceTitle": "實例： {title} 。",
     "items.damageStatus.damaged": "損壞",
     "items.damageStatus.notdamaged": "未損壞",
-    "instanceNotes": "實例附注",
+    "instanceNotes": "實例附註",
     "addClassification": "新增分類法",
     "instanceRelationshipAnalyticsBoundWith": "實例關係（分析和綁定）",
     "acquisition": "採購",
@@ -816,5 +816,7 @@
     "boundPieces.remove.message": "Remove this piece from the bound item?",
     "boundPieces.remove.button": "Remove",
     "boundPieces.remove.heading": "Are you sure?",
-    "searchForTitle": "Search for {title}"
+    "searchForTitle": "Search for {title}",
+    "ld.label": "Linked Data Editor",
+    "editInLinkedDataEditor": "Edit resource in Linked Data Editor"
 }
