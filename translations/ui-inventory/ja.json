@@ -816,5 +816,7 @@
     "boundPieces.remove.message": "Remove this piece from the bound item?",
     "boundPieces.remove.button": "Remove",
     "boundPieces.remove.heading": "Are you sure?",
-    "searchForTitle": "検索 \"{title}\""
+    "searchForTitle": "検索 \"{title}\"",
+    "ld.label": "リンクデータ・エディター",
+    "editInLinkedDataEditor": "リンクトデータ・エディターでリソースを編集する"
 }

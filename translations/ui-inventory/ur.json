@@ -816,5 +816,7 @@
     "boundPieces.remove.message": "Remove this piece from the bound item?",
     "boundPieces.remove.button": "Remove",
     "boundPieces.remove.heading": "Are you sure?",
-    "searchForTitle": "Search for {title}"
+    "searchForTitle": "Search for {title}",
+    "ld.label": "Linked Data Editor",
+    "editInLinkedDataEditor": "Edit resource in Linked Data Editor"
 }
