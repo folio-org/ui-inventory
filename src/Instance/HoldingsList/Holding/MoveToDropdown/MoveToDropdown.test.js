@@ -13,64 +13,84 @@ import { MoveToDropdown } from './MoveToDropdown';
 const history = createMemoryHistory();
 
 const holding = {
-  id: 0,
-  instanceId: 1
+  id: 'holding_1',
+  instanceId: 'instance_1',
 };
 
 const holdings = [
   {
-    id: 2,
-    instanceId: 2
+    id: 'holding_1',
+    instanceId: 'instance_1',
   },
   {
-    id: 3,
-    instanceId: 3
+    id: 'holding_2',
+    instanceId: 'instance_1',
+    permanentLocationId: 'location_2',
+  },
+  {
+    id: 'holding_3',
+    instanceId: 'instance_1',
+    permanentLocationId: 'location_3',
   }
 ];
 
+const locationsByIdData = {
+  location_1: { name: 'location_holding_1' },
+  location_2: { name: 'location_holding_2' },
+  location_3: { name: 'location_holding_3' },
+};
+
 const allHoldings = [
   {
-    id: 1,
-    instanceId: 1
+    id: 'holding_1',
+    instanceId: 'instance_1',
   },
   {
-    id: 2,
-    instanceId: 2
+    id: 'holding_to_1',
+    instanceId: 'instance_2',
+    permanentLocationId: 'location_1',
   },
   {
-    id: 3,
-    instanceId: 3
+    id: 'holding_to_2',
+    instanceId: 'instance_2',
+    permanentLocationId: 'location_2',
+  },
+  {
+    id: 'holding_to_3',
+    instanceId: 'instance_2',
+    permanentLocationId: 'location_3',
   }
 ];
 
 const instancesData = [
   {
-    id: 2,
+    id: 'instance_1',
     title: 'instance 1'
   },
   {
-    id: 3,
+    id: 'instance_2',
     title: 'instance 2'
   }
 ];
 
-const selectedItemsMap = [
-  {
-    id: 9,
-    instanceId: 109,
-  },
-  {
-    id: 10,
-    instanceId: 109,
-  }
-];
+const selectedItemsMap = {
+  holding_1: [{}],
+  holding_2: [{}],
+  holding_3: [{}],
+};
 
-const renderMoveToDropdown = (holdingData, holdingsData, selectedItemsMapData = [], allHoldingsData = null) => renderWithIntl(
+const renderMoveToDropdown = ({
+  holdingData,
+  holdingsData,
+  instances,
+  selectedItemsMapData = [],
+  allHoldingsData = null,
+}) => renderWithIntl(
   <Router history={history}>
-    <DataContext.Provider value={{ locationsById: {} }}>
+    <DataContext.Provider value={{ locationsById: locationsByIdData }}>
       <DnDContext.Provider
         value={{
-          instances: instancesData,
+          instances,
           selectedItemsMap: selectedItemsMapData,
           allHoldings: allHoldingsData,
           onSelect: jest.fn()
@@ -83,38 +103,94 @@ const renderMoveToDropdown = (holdingData, holdingsData, selectedItemsMapData = 
       </DnDContext.Provider>
     </DataContext.Provider>
   </Router>,
-  translationsProperties
+  translationsProperties,
 );
 
 describe('MoveToDropdown', () => {
-  it('Component should render correctly', () => {
-    renderMoveToDropdown(holding, holdings, selectedItemsMap, allHoldings);
-    expect(screen.getByRole('button', { name: 'Move to' }));
+  it('should render Move to button', () => {
+    renderMoveToDropdown({
+      holdingData: holding,
+      holdingsData: holdings,
+      selectedItemsMapData: selectedItemsMap,
+      allHoldingsData: allHoldings,
+    });
+
+    expect(screen.getByRole('button', { name: 'Move to' })).toBeInTheDocument();
   });
-  it('instance titles should render on button click', () => {
-    renderMoveToDropdown(holding, holdings, selectedItemsMap, allHoldings);
-    userEvent.click(screen.getByRole('button', { name: 'Move to' }));
-    expect(screen.getByText('instance 1')).toBeInTheDocument();
-    expect(screen.getByText('instance 2')).toBeInTheDocument();
+
+  describe('when movement is within the instance', () => {
+    describe('and no items selected', () => {
+      it('should render disabled Move to button', () => {
+        renderMoveToDropdown({
+          holdingData: holding,
+          holdingsData: holdings,
+          selectedItemsMapData: [],
+        });
+
+        expect(screen.getByRole('button', { name: 'Move to' })).toHaveAttribute('disabled');
+      });
+    });
+
+    describe('and there is only one holding', () => {
+      it('should render disabled Move to button', () => {
+        renderMoveToDropdown({
+          holdingData: holding,
+          holdingsData: [holding],
+          selectedItemsMapData: selectedItemsMap,
+        });
+
+        expect(screen.getByRole('button', { name: 'Move to' })).toHaveAttribute('disabled');
+      });
+    });
+
+    describe('and there are selected items', () => {
+      it('should render holdings labels in Move to dropdown', () => {
+        renderMoveToDropdown({
+          holdingData: holding,
+          holdingsData: holdings,
+          selectedItemsMapData: selectedItemsMap,
+        });
+
+        userEvent.click(screen.getByRole('button', { name: 'Move to' }));
+
+        expect(screen.getByText('location_holding_2')).toBeInTheDocument();
+        expect(screen.getByText('location_holding_3')).toBeInTheDocument();
+      });
+    });
   });
-  it('Component should render correctly when allHoldings is empty', () => {
-    renderMoveToDropdown(holding, holdings, selectedItemsMap);
-    userEvent.click(screen.getByRole('button', { name: 'Move to' }));
-    expect(screen.getByText('instance 1')).toBeInTheDocument();
-    expect(screen.getByText('instance 2')).toBeInTheDocument();
-  });
-  it('Component should render correctly when selectedItemsMap is empty', () => {
-    renderMoveToDropdown(holding, holdings);
-    userEvent.click(screen.getByRole('button', { name: 'Move to' }));
-    expect(screen.getByText('instance 1')).toBeInTheDocument();
-  });
-  it('instance 2 title should be render', () => {
-    const holding2 = {
-      id: 2,
-      instanceId: 2
-    };
-    renderMoveToDropdown(holding2, holdings, selectedItemsMap);
-    userEvent.click(screen.getByRole('button', { name: 'Move to' }));
-    expect(screen.getByText('instance 2')).toBeInTheDocument();
+
+  describe('when movement is between instances', () => {
+    describe('and no items are selected', () => {
+      it('should render instance\'s title in Move to dropdown', () => {
+        renderMoveToDropdown({
+          holdingData: holding,
+          holdingsData: holdings,
+          instances: instancesData,
+          allHoldingsData: allHoldings,
+        });
+
+        userEvent.click(screen.getByRole('button', { name: 'Move to' }));
+
+        expect(screen.getByText('instance 2')).toBeInTheDocument();
+      });
+    });
+
+    describe('and there are items selected', () => {
+      it("should render instance's and holdings' titles in Move to dropdown", () => {
+        renderMoveToDropdown({
+          holdingData: holding,
+          holdingsData: holdings,
+          instances: instancesData,
+          selectedItemsMapData: selectedItemsMap,
+          allHoldingsData: allHoldings,
+        });
+
+        userEvent.click(screen.getByRole('button', { name: 'Move to' }));
+
+        expect(screen.getByText('instance 2 location_holding_1')).toBeInTheDocument();
+        expect(screen.getByText('instance 2 location_holding_2')).toBeInTheDocument();
+        expect(screen.getByText('instance 2 location_holding_3')).toBeInTheDocument();
+      });
+    });
   });
 });
