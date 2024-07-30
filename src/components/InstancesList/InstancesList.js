@@ -816,6 +816,7 @@ class InstancesList extends React.Component {
       intl,
       segment,
       stripes,
+      isRequestUrlExceededLimit,
     } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
@@ -926,7 +927,7 @@ class InstancesList extends React.Component {
             icon: 'save',
             messageId: 'ui-inventory.saveInstancesUIIDS',
             onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
-            isDisabled: false // isInstancesListEmpty,
+            isDisabled: isInstancesListEmpty && !isRequestUrlExceededLimit,
           })}
           {segment === 'holdings' && this.getActionItem({
             id: 'dropdown-clickable-get-holdings-uiids',
