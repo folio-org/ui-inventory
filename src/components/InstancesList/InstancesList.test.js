@@ -21,6 +21,7 @@ import {
   queryIndexes,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   buildSearchQuery,
+  resetFacetStates,
 } from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
@@ -121,6 +122,7 @@ const getInstancesListTree = ({ segment, ...rest }) => {
       <Router history={history}>
         <ModuleHierarchyProvider module="@folio/inventory">
           <InstancesList
+            isRequestUrlExceededLimit={false}
             parentResources={resources}
             parentMutator={{
               resultOffset: { replace: mockResultOffsetReplace },
@@ -196,6 +198,28 @@ describe('InstancesList', () => {
             state: undefined,
           }));
         });
+      });
+    });
+
+    describe('when switching lookup mode', () => {
+      it('should delete facet states', () => {
+        renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+        expect(deleteFacetStates).toHaveBeenCalledWith('@folio/inventory');
+      });
+    });
+
+    describe('when switching segment (Instance/Holdings/Item)', () => {
+      it('should delete facet states', async () => {
+        renderInstancesList({ segment: 'instances' });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Holdings' }));
+
+        expect(deleteFacetStates).toHaveBeenCalledWith('@folio/inventory');
       });
     });
 
@@ -373,6 +397,14 @@ describe('InstancesList', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
 
         expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+      });
+
+      it('should reset facet states', () => {
+        renderInstancesList({ segment: 'instances' });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+        expect(resetFacetStates).toHaveBeenCalledWith({ namespace: '@folio/inventory' });
       });
     });
 

@@ -497,6 +497,8 @@ class InstancesList extends React.Component {
 
     const id = pathname.split('/')[3];
 
+    deleteFacetStates(namespace);
+
     if (id) {
       setItem(`${namespace}.${segment}.lastOpenRecord`, id);
     }
