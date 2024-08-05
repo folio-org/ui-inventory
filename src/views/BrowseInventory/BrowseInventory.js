@@ -15,6 +15,7 @@ import querystring from 'query-string';
 import {
   TitleManager,
   useNamespace,
+  useStripes,
 } from '@folio/stripes/core';
 import {
   PersistedPaneset,
@@ -27,7 +28,10 @@ import {
   useItemToView,
   useLocationFilters,
 } from '@folio/stripes-acq-components';
-import { useResetFacetStates } from '@folio/stripes-inventory-components';
+import {
+  browseModeOptions,
+  useResetFacetStates,
+} from '@folio/stripes-inventory-components';
 
 import {
   BrowseInventoryFilters,
@@ -44,6 +48,7 @@ import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
 import css from './BrowseInventory.css';
 
 const BrowseInventory = () => {
+  const stripes = useStripes();
   const history = useHistory();
   const location = useLocation();
   const intl = useIntl();
@@ -119,6 +124,16 @@ const BrowseInventory = () => {
   const searchableIndexesPlaceholder = intl.formatMessage({ id: 'ui-inventory.browse.searchableIndexesPlaceholder' });
   const isResetButtonDisabled = !location.search && !searchQuery;
 
+  const isSearchOptionHidden = (option) => {
+    // Hide some of the call number type options for this temporary environment (UIIN-2923).
+    return stripes.okapi.url === 'https://folio-perf-quesnelia-okapi.ci.folio.org'
+      && [
+        browseModeOptions.LOCAL,
+        browseModeOptions.OTHER,
+        browseModeOptions.SUPERINTENDENT,
+      ].includes(option.value);
+  };
+
   const searchableOptions = browseInstanceIndexes.map((searchableIndex) => {
     if (searchableIndex.subIndexes) {
       return (
@@ -127,14 +142,16 @@ const BrowseInventory = () => {
           label={intl.formatMessage({ id: searchableIndex.label })}
           className={css.optgroup}
         >
-          {searchableIndex.subIndexes.map((subOption) => (
-            <option
-              key={subOption.value}
-              value={subOption.value}
-            >
-              {intl.formatMessage({ id: subOption.label })}
-            </option>
-          ))}
+          {searchableIndex.subIndexes
+            .filter(subOption => !isSearchOptionHidden(subOption))
+            .map((subOption) => (
+              <option
+                key={subOption.value}
+                value={subOption.value}
+              >
+                {intl.formatMessage({ id: subOption.label })}
+              </option>
+            ))}
         </optgroup>
       );
     }
