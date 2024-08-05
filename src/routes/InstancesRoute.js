@@ -18,6 +18,7 @@ import { DataContext } from '../contexts';
 
 class InstancesRoute extends React.Component {
   static propTypes = {
+    tenantId: PropTypes.string.isRequired,
     resources: PropTypes.object.isRequired,
     mutator: PropTypes.object.isRequired,
     disableRecordCreation: PropTypes.bool,

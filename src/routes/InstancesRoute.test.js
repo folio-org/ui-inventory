@@ -77,6 +77,7 @@ const InstancesRouteSetup = ({
                 >
                   <OverlayContainer />
                   <InstancesRoute
+                    tenantId="diku"
                     resources={{
                       query: {
                         query: '',
@@ -358,4 +359,3 @@ describe('InstancesRoute', () => {
     });
   });
 });
-
