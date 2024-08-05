@@ -17,10 +17,11 @@ import {
 } from '../../constants';
 
 const mockPush = jest.fn();
+const mockOnSearchModeSwitch = jest.fn();
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useRouteMatch: jest.fn().mockReturnValue({ path: '/inventory/browse' }),
+  useRouteMatch: jest.fn(),
   useHistory: () => ({
     push: mockPush,
   }),
@@ -39,6 +40,8 @@ const renderSearchModeNavigation = (
     }]}
   >
     <SearchModeNavigation
+      search=""
+      onSearchModeSwitch={mockOnSearchModeSwitch}
       {...props}
     />
   </MemoryRouter>,
@@ -48,6 +51,7 @@ const renderSearchModeNavigation = (
 describe('SearchModeNavigation', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    useRouteMatch.mockReturnValue({ path: '/inventory/browse' });
   });
 
   it('should render search mode navigation buttons', () => {
@@ -124,6 +128,34 @@ describe('SearchModeNavigation', () => {
         pathname: BROWSE_INVENTORY_ROUTE,
         search,
       });
+    });
+  });
+
+  describe('when pressing the current lookup mode', () => {
+    it('should not fire onSearchModeSwitch', () => {
+      useRouteMatch.mockReturnValue({ path: INVENTORY_ROUTE });
+
+      const { getByRole } = renderSearchModeNavigation({}, {
+        initialRoute: INVENTORY_ROUTE,
+      });
+
+      fireEvent.click(getByRole('button', { name: 'Search' }));
+
+      expect(mockOnSearchModeSwitch).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('when clicking another lookup mode', () => {
+    it('should fire onSearchModeSwitch', () => {
+      useRouteMatch.mockReturnValue({ path: INVENTORY_ROUTE });
+
+      const { getByRole } = renderSearchModeNavigation({}, {
+        initialRoute: INVENTORY_ROUTE,
+      });
+
+      fireEvent.click(getByRole('button', { name: 'Browse' }));
+
+      expect(mockOnSearchModeSwitch).toHaveBeenCalled();
     });
   });
 });
