@@ -14,6 +14,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   AppContextMenu,
   coreEvents,
+  useStripes,
 } from '@folio/stripes/core';
 import {
   checkScope,
@@ -56,6 +57,7 @@ import { EVENTS } from './constants';
 import { clearStorage } from './utils';
 
 const InventoryRouting = (props) => {
+  const stripes = useStripes();
   const history = useHistory();
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
   const { showSettings, match: { path } } = props;
@@ -218,7 +220,7 @@ const InventoryRouting = (props) => {
                 />
                 <Route
                   path={path}
-                  component={InstancesRoute}
+                  render={() => <InstancesRoute tenantId={stripes.okapi.tenant} />}
                 />
               </Switch>
             </HasCommand>
