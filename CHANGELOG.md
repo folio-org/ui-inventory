@@ -62,6 +62,8 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Use `withSearchErrors` HOC and `buildRecordsManifest` to display an error when the request URL is exceeded. Refs UIIN-2970.
 * Edit in Linked Data Editor when source=MARC. Refs UIIN-2978.
 * Display shared instance immediately after the instance was shared. Refs UIIN-2969.
+* Disable Move to button if no items selected or no more holdings exists within an instance. Refs UIIN-2995.
+* Prevent callbacks from being triggered when clicking on the current tab, whether it's lookup mode or a segment. Fixes UIIN-2949.
 * Hide call number type options for Local, Other scheme, and SuDoc for perf environment. Refs UIIN-2923.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)

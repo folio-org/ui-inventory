@@ -11,7 +11,6 @@ import {
   Button,
   ButtonGroup,
 } from '@folio/stripes/components';
-import { deleteFacetStates } from '@folio/stripes-inventory-components';
 
 import { useNamespace } from '@folio/stripes/core';
 import {
@@ -35,10 +34,8 @@ const SearchModeNavigation = ({ search, state, onSearchModeSwitch }) => {
   const onClick = useCallback((segment) => {
     const isCurrentSegment = path === searchModeRoutesMap[segment];
 
-    deleteFacetStates(namespace);
-
-    if (onSearchModeSwitch) {
-      onSearchModeSwitch(namespace);
+    if (onSearchModeSwitch && !isCurrentSegment) {
+      onSearchModeSwitch();
     }
 
     history.push({
