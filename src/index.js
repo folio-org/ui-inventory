@@ -220,7 +220,7 @@ const InventoryRouting = (props) => {
                 />
                 <Route
                   path={path}
-                  render={() => <InstancesRoute tenantId={stripes.okapi.tenant} />}
+                  render={props => <InstancesRoute tenantId={stripes.okapi.tenant} {...props} />}
                 />
               </Switch>
             </HasCommand>
