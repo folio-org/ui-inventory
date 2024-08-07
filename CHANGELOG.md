@@ -4,6 +4,7 @@
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
 
 * Replace `all` with the `=` operator to get correct results when using the `All` search option.
+* Hide call number type options for Local, Other scheme, and SuDoc. Refs UIIN-2923.
 
 ## [11.0.3](https://github.com/folio-org/ui-inventory/tree/v11.0.3) (2024-04-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.2...v11.0.3)
