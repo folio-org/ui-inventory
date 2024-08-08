@@ -6,6 +6,7 @@ import {
   orderBy,
   last,
   flowRight,
+  first,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -43,7 +44,9 @@ import {
   CalloutContext,
   stripesConnect,
   checkIfUserInCentralTenant,
+  checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
+import { FindLocation } from '@folio/stripes-acq-components';
 
 import {
   areAllFieldsEmpty,
@@ -54,6 +57,9 @@ import {
   handleKeyCommand,
   getDate,
   switchAffiliation,
+  isInstanceShadowCopy,
+  omitCurrentAndCentralTenants,
+  updateOwnership,
 } from './utils';
 import withLocation from './withLocation';
 import {
@@ -134,6 +140,10 @@ class ViewHoldingsRecord extends React.Component {
       instance: null,
       confirmHoldingsRecordDeleteModal: false,
       noHoldingsRecordDeleteModal: false,
+      isLocationLookupOpen: false,
+      isUpdateOwnershipModalOpen: false,
+      updateOwnershipData: {},
+      tenants: [],
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
@@ -141,10 +151,15 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   componentDidMount() {
-    this.props.mutator.holdingsRecords.reset();
-    const holdingsRecordPromise = this.props.mutator.holdingsRecords.GET();
-    this.props.mutator.instances1.reset();
-    const instances1Promise = this.props.mutator.instances1.GET();
+    const {
+      stripes,
+      mutator,
+    } = this.props;
+
+    mutator.holdingsRecords.reset();
+    const holdingsRecordPromise = mutator.holdingsRecords.GET();
+    mutator.instances1.reset();
+    const instances1Promise = mutator.instances1.GET();
 
     Promise.all([holdingsRecordPromise, instances1Promise])
       .then(([, instances1Response]) => {
@@ -159,6 +174,10 @@ class ViewHoldingsRecord extends React.Component {
 
         this.getMARCRecord();
       });
+
+    if (checkIfUserInMemberTenant(stripes)) {
+      this.setState({ tenants: omitCurrentAndCentralTenants(stripes) });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -302,6 +321,32 @@ class ViewHoldingsRecord extends React.Component {
     this.setState({ noHoldingsRecordDeleteModal: false });
   }
 
+  openLocationLookup = () => {
+    this.setState({ isLocationLookupOpen: true });
+  }
+
+  hideLocationLookup = () => {
+    this.setState({ isLocationLookupOpen: false });
+  }
+
+  hideUpdateOwnershipModal = () => {
+    this.setState({ isUpdateOwnershipModalOpen: false });
+  }
+
+  callUpdateOwnership = () => {
+    const { stripes: { okapi } } = this.props;
+    const holdingsRecord = this.getMostRecentHolding();
+
+    updateOwnership(
+      {
+        toInstanceId: holdingsRecord.instanceId,
+        holdingsRecordIds: [holdingsRecord.id],
+        targetTenantId: this.state.updateOwnershipData.new.id,
+      },
+      okapi,
+    );
+  }
+
   canDeleteHoldingsRecord = () => {
     const itemCount = get(this.props.resources, 'items.records.length', 0);
     return (itemCount === 0);
@@ -362,13 +407,17 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   getPaneHeaderActionMenu = ({ onToggle }) => {
-    const { stripes } = this.props;
+    const {
+      stripes,
+      isInstanceShared,
+    } = this.props;
     const {
       instance,
       marcRecord,
     } = this.state;
 
     const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+    const isSharedInstance = isInstanceShared || isInstanceShadowCopy(instance.source);
 
     if (isUserInCentralTenant) return null;
 
@@ -377,6 +426,7 @@ class ViewHoldingsRecord extends React.Component {
     const canDelete = stripes.hasPerm('ui-inventory.holdings.delete');
     const canViewMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
     const canEditMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
+    const canUpdateOwnership = isSharedInstance && !isEmpty(this.state.tenants);
 
     const isSourceMARC = this.isMARCSource();
 
@@ -411,6 +461,19 @@ class ViewHoldingsRecord extends React.Component {
           >
             <Icon icon="duplicate">
               <FormattedMessage id="ui-inventory.duplicateHoldings" />
+            </Icon>
+          </Button>
+        }
+        {
+          canUpdateOwnership &&
+          <Button
+            id="update-ownership"
+            onClick={this.openLocationLookup}
+            buttonStyle="dropdownItem"
+            data-testid="update-ownership-btn"
+          >
+            <Icon icon="profile">
+              <FormattedMessage id="ui-inventory.updateOwnership" />
             </Icon>
           </Button>
         }
@@ -468,6 +531,31 @@ class ViewHoldingsRecord extends React.Component {
       </>
     );
   };
+
+  onLocationSelect = ([data]) => {
+    const {
+      stripes,
+      referenceTables,
+    } = this.props;
+
+    const currentTenantId = stripes.okapi.tenant;
+    const newTenantId = data.tenantId;
+
+    const currentTenant = stripes.user.user.tenants.find(tenant => tenant.id === currentTenantId);
+    const newTenant = stripes.user.user.tenants.find(tenant => tenant.id === newTenantId);
+
+    const holdingsRecord = this.getMostRecentHolding();
+    const permanentLocationName = get(referenceTables?.locationsById[holdingsRecord?.permanentLocationId], ['name'], '-');
+
+    this.setState({
+      updateOwnershipData: {
+        current: currentTenant,
+        new: newTenant,
+        currentLocation: permanentLocationName,
+      },
+      isUpdateOwnershipModalOpen: true,
+    });
+  }
 
   isAwaitingResource = () => {
     const { referenceTables } = this.props;
@@ -737,6 +825,24 @@ class ViewHoldingsRecord extends React.Component {
               onCancel={this.hideConfirmHoldingsRecordDeleteModal}
               confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
             />
+            <ConfirmationModal
+              id="update-ownership-modal"
+              open={this.state.isUpdateOwnershipModalOpen}
+              heading={<FormattedMessage id="ui-inventory.updateOwnership.holdings.modal.heading" />}
+              message={
+                <FormattedMessage
+                  id="ui-inventory.updateOwnership.holdings.modal.message"
+                  values={{
+                    currentTenant: this.state.updateOwnershipData.current?.name,
+                    newTenant: this.state.updateOwnershipData.new?.name,
+                    holdingsHrid: holdingsRecord.hrid,
+                  }}
+                />
+              }
+              onConfirm={this.callUpdateOwnership}
+              onCancel={this.hideUpdateOwnershipModal}
+              confirmLabel={<FormattedMessage id="ui-inventory.confirm" />}
+            />
             <Modal
               data-test-no-delete-holdingsrecord-modal
               label={<FormattedMessage id="ui-inventory.confirmHoldingsRecordDeleteModal.heading" />}
@@ -745,6 +851,18 @@ class ViewHoldingsRecord extends React.Component {
             >
               {noHoldingsRecordDeleteModalMessage}
             </Modal>
+            {this.state.isLocationLookupOpen && (
+              <FindLocation
+                id="location-lookup"
+                crossTenant
+                triggerless
+                disabled={false}
+                onClose={this.hideLocationLookup}
+                onRecordsSelect={this.onLocationSelect}
+                tenantId={first(this.state.tenants).id}
+                tenantsList={this.state.tenants}
+              />
+            )}
             <div data-test-holdings-view-page>
               <HasCommand
                 commands={shortcuts}
@@ -1149,6 +1267,14 @@ ViewHoldingsRecord.propTypes = {
     hasPerm: PropTypes.func.isRequired,
     hasInterface: PropTypes.func.isRequired,
     okapi: PropTypes.object.isRequired,
+    user: PropTypes.shape({
+      user: PropTypes.shape({
+        tenants: PropTypes.arrayOf(PropTypes.object),
+        consortium: PropTypes.shape({
+          centralTenantId: PropTypes.string,
+        }),
+      }),
+    }),
   }).isRequired,
   resources: PropTypes.shape({
     instances1: PropTypes.object,
@@ -1194,6 +1320,7 @@ ViewHoldingsRecord.propTypes = {
     query: PropTypes.object.isRequired,
   }),
   goTo: PropTypes.func.isRequired,
+  isInstanceShared: PropTypes.bool,
 };
 
 export default flowRight(
