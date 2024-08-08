@@ -1,6 +1,7 @@
 import '../../test/jest/__mock__';
 
 import { MemoryRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import {
   render,
   screen,
@@ -10,10 +11,14 @@ import ViewHoldingRoute from './ViewHoldingRoute';
 
 jest.mock('../ViewHoldingsRecord', () => jest.fn().mockReturnValue('ViewHoldingsRecord'));
 
+const queryClient = new QueryClient();
+
 const wrapper = ({ children }) => (
-  <MemoryRouter>
-    {children}
-  </MemoryRouter>
+  <QueryClientProvider client={queryClient}>
+    <MemoryRouter>
+      {children}
+    </MemoryRouter>
+  </QueryClientProvider>
 );
 
 const renderViewHoldingRoute = (props = {}) => render(
