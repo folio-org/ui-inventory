@@ -151,11 +151,10 @@ describe('ViewHoldingsRecord actions', () => {
   });
 
   it('should close view holding page', async () => {
-    const { debug, container } = renderViewHoldingsRecord();
+    renderViewHoldingsRecord();
 
-    debug(container);
-
-    fireEvent.click(await screen.findByRole('button', { name: 'confirm' }));
+    const confirmButtons = await screen.findAllByRole('button', { name: 'confirm' });
+    fireEvent.click(confirmButtons[0]);
 
     expect(mockPush).toHaveBeenCalled();
   });
