@@ -1168,7 +1168,7 @@ describe('ViewInstance', () => {
         });
       });
     });
-    describe('"Edit resource in Linked Data Editor" action item', () => {
+    describe('"Edit resource in Linked data editor" action item', () => {
       const renderInstanceWithArgs = ({ ...args } = {}) => {
         const selectedInstance = {
           ...instance,
@@ -1189,13 +1189,13 @@ describe('ViewInstance', () => {
 
       const clickEditResourceButton = () => {
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
-        fireEvent.click(screen.getByRole('button', { name: 'Edit resource in Linked Data Editor' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Edit resource in Linked data editor' }));
       };
 
       it('should be rendered', () => {
         renderInstanceWithArgs();
 
-        checkActionItemExists('Edit resource in Linked Data Editor');
+        checkActionItemExists('Edit resource in Linked data editor');
       });
 
       it('should navigate to the relevant resource within the linked data editor', () => {
