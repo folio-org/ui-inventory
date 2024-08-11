@@ -518,7 +518,7 @@
   "location.confirm.inactive.message": "This location has a status of inactive. Are you sure you want to select this location?",
   "contributorType": "Contributor type",
   "contributorTypes": "Contributor types",
-  "editInLinkedDataEditor": "Edit resource in Linked Data Editor",
+  "editInLinkedDataEditor": "Edit resource in Linked data editor",
   "instanceStatusTypes": "Instance status types",
   "instanceStatusType": "Instance status type",
   "administrativeData": "Administrative data",
