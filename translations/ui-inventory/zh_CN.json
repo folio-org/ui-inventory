@@ -263,8 +263,8 @@
     "statisticalCode": "统计代码",
     "statisticalCodeNames": "统计代码名称",
     "selectStatisticalCode": "选择统计代码类型",
-    "numberOfMissingPieces": "遗失件数",
-    "missingPieces": "遗失件",
+    "numberOfMissingPieces": "缺失件数",
+    "missingPieces": "缺失件",
     "itemDamagedStatus": "单件损坏状态",
     "typeFreeText": "类型, 自由文本",
     "name": "名称",
@@ -816,7 +816,7 @@
     "boundPieces.remove.message": "从装订单件中移除此件吗？",
     "boundPieces.remove.button": "移除",
     "boundPieces.remove.heading": "你确定吗？",
-    "searchForTitle": "Search for {title}",
-    "ld.label": "Linked Data Editor",
-    "editInLinkedDataEditor": "Edit resource in Linked Data Editor"
+    "searchForTitle": "搜索{title}",
+    "ld.label": "关联数据编辑器",
+    "editInLinkedDataEditor": "在关联数据编辑器中编辑资源"
 }
