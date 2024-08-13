@@ -293,6 +293,19 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.subject-types",
+        "displayName": "Settings (Inventory): Create, edit, delete subject types",
+        "subPermissions": [
+          "inventory-storage.subject-types.collection.get",
+          "inventory-storage.subject-types.item.get",
+          "inventory-storage.subject-types.item.post",
+          "inventory-storage.subject-types.item.put",
+          "inventory-storage.subject-types.item.delete",
+          "settings.inventory.enabled"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.instance-statuses",
         "displayName": "Settings (Inventory): Create, edit, delete instance status types",
         "subPermissions": [
