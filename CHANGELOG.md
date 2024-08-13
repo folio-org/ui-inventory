@@ -66,6 +66,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Prevent callbacks from being triggered when clicking on the current tab, whether it's lookup mode or a segment. Fixes UIIN-2949.
 * Hide call number type options for Local, Other scheme, and SuDoc for perf environment. Refs UIIN-2923.
 * Edit Inventory Instances: "Save & close" and "Save and keep editing" buttons could be clicked 2 times in a row. Fixes UIIN-2939.
+* Add inventory permission: Settings (Inventory): Create, edit, delete subject sources. Refs UIIN-3010.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)

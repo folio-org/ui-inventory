@@ -680,6 +680,7 @@
   "permission.settings.classification-browse": "Settings (Inventory): Configure classification browse",
   "permission.settings.classification-types": "Settings (Inventory): Create, edit, delete classification identifier types",
   "permission.settings.identifier-types": "Settings (Inventory): Create, edit, delete resource identifier types",
+  "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
   "permission.settings.instance-statuses": "Settings (Inventory): Create, edit, delete instance status types",
   "permission.settings.statistical-codes": "Settings (Inventory): Create, edit, delete statistical codes",
   "permission.settings.alternative-title-types": "Settings (Inventory): Create, edit, delete alternative title types",
