@@ -680,6 +680,8 @@
   "permission.settings.classification-browse": "Settings (Inventory): Configure classification browse",
   "permission.settings.classification-types": "Settings (Inventory): Create, edit, delete classification identifier types",
   "permission.settings.identifier-types": "Settings (Inventory): Create, edit, delete resource identifier types",
+  "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
+  "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types",
   "permission.settings.instance-statuses": "Settings (Inventory): Create, edit, delete instance status types",
   "permission.settings.statistical-codes": "Settings (Inventory): Create, edit, delete statistical codes",
   "permission.settings.alternative-title-types": "Settings (Inventory): Create, edit, delete alternative title types",
@@ -719,6 +721,7 @@
   "permission.items.mark-long-missing": "Inventory: Mark items long missing",
   "permission.items.mark-in-process-non-requestable": "Inventory: Mark items in process (non-requestable)",
   "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
+  "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
   "permission.items.create-in-transit-report": "Inventory: Create and download In transit items report",
 
   "moveItems.moveButton": "Move to",
