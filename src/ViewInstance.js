@@ -746,7 +746,7 @@ class ViewInstance extends React.Component {
     const canCentralTenantCreateOrder = checkIfUserInCentralTenant(stripes) && checkIfCentralOrderingIsActive(centralOrdering);
     const canCreateOrder = (!checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder')) || canCentralTenantCreateOrder;
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
-    const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
+    const canExportMarc = stripes.hasPerm('ui-data-export.edit');
     const canAccessLinkedDataOptions = stripes.hasPerm(LINKED_DATA_EDITOR_PERM);
     const isSourceLinkedData = isLinkedDataSource(source);
     const showLinkedDataMenuSection = canAccessLinkedDataOptions && (isSourceLinkedData || linkedDataEditorId);
