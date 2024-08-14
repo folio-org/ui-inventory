@@ -720,6 +720,7 @@
   "permission.items.mark-long-missing": "Inventory: Mark items long missing",
   "permission.items.mark-in-process-non-requestable": "Inventory: Mark items in process (non-requestable)",
   "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
+  "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
   "permission.items.create-in-transit-report": "Inventory: Create and download In transit items report",
 
   "moveItems.moveButton": "Move to",
