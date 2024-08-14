@@ -65,6 +65,10 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Disable Move to button if no items selected or no more holdings exists within an instance. Refs UIIN-2995.
 * Prevent callbacks from being triggered when clicking on the current tab, whether it's lookup mode or a segment. Fixes UIIN-2949.
 * Hide call number type options for Local, Other scheme, and SuDoc for perf environment. Refs UIIN-2923.
+* Edit Inventory Instances: "Save & close" and "Save and keep editing" buttons could be clicked 2 times in a row. Fixes UIIN-2939.
+* Create a new ‘Inventory: Update ownership’ permission to control display of Update ownership action. Refs UIIN-2981.
+* Add inventory permission: Settings (Inventory): Create, edit, delete subject sources. Refs UIIN-3010.
+* Add inventory permission: Settings (Inventory): Create, edit, delete subject types. Refs UIIN-3009.
 * Update required permissions for quick export of instances. Refs UIIN-3003.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
