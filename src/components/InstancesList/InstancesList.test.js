@@ -121,32 +121,34 @@ const getInstancesListTree = ({ segment, ...rest }) => {
     <Harness translations={translationsProperties}>
       <Router history={history}>
         <ModuleHierarchyProvider module="@folio/inventory">
-          <InstancesList
-            isRequestUrlExceededLimit={false}
-            parentResources={resources}
-            parentMutator={{
-              resultOffset: { replace: mockResultOffsetReplace },
-              resultCount: { replace: noop },
-              query: { update: updateMock, replace: mockQueryReplace },
-              records: { reset: mockRecordsReset },
-              itemsByQuery: { reset: noop, GET: mockItemsByQuery },
-              recordsToExportIDs: { reset: noop, GET: mockRecordsToExportIDs },
-            }}
-            data={{
-              ...data,
-              query
-            }}
-            onSelectRow={noop}
-            renderFilters={noop}
-            segment={segment}
-            searchableIndexes={indexes}
-            getLastBrowse={jest.fn()}
-            getLastSearchOffset={mockGetLastSearchOffset}
-            storeLastSearch={mockStoreLastSearch}
-            storeLastSearchOffset={mockStoreLastSearchOffset}
-            storeLastSegment={noop}
-            {...rest}
-          />
+          <div id="ModuleContainer">
+            <InstancesList
+              isRequestUrlExceededLimit={false}
+              parentResources={resources}
+              parentMutator={{
+                resultOffset: { replace: mockResultOffsetReplace },
+                resultCount: { replace: noop },
+                query: { update: updateMock, replace: mockQueryReplace },
+                records: { reset: mockRecordsReset },
+                itemsByQuery: { reset: noop, GET: mockItemsByQuery },
+                recordsToExportIDs: { reset: noop, GET: mockRecordsToExportIDs },
+              }}
+              data={{
+                ...data,
+                query
+              }}
+              onSelectRow={noop}
+              renderFilters={noop}
+              segment={segment}
+              searchableIndexes={indexes}
+              getLastBrowse={jest.fn()}
+              getLastSearchOffset={mockGetLastSearchOffset}
+              storeLastSearch={mockStoreLastSearch}
+              storeLastSearchOffset={mockStoreLastSearchOffset}
+              storeLastSegment={noop}
+              {...rest}
+            />
+          </div>
         </ModuleHierarchyProvider>
       </Router>
     </Harness>
@@ -518,7 +520,7 @@ describe('InstancesList', () => {
         });
 
         describe('when canceling a record', () => {
-          it('should remove the "layer" parameter and focus on the search field', () => {
+          it('should remove the "layer" parameter and focus on the search field', async () => {
             history.push('/inventory?filters=staffSuppress.false&layer=foo');
 
             jest.spyOn(history, 'push');
@@ -527,7 +529,7 @@ describe('InstancesList', () => {
             SearchAndSort.mock.calls[0][0].onCloseNewRecord();
 
             expect(history.push).toHaveBeenCalledWith('/?filters=staffSuppress.false');
-            expect(getByRole('textbox', { name: /search/i })).toHaveFocus();
+            await waitFor(() => expect(getByRole('textbox', { name: /search/i })).toHaveFocus())
           });
         });
       });
