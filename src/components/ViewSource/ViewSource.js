@@ -40,6 +40,9 @@ import {
 import MARC_TYPES from './marcTypes';
 
 import styles from './ViewSource.css';
+import ActionItem from '../ActionItem';
+import { useQuickExport } from '../../hooks';
+import { IdReportGenerator } from '../../reports';
 
 const ViewSource = ({
   mutator,
@@ -56,6 +59,7 @@ const ViewSource = ({
   const history = useHistory();
   const callout = useCallout();
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
+  const { exportRecords } = useQuickExport();
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
   const isHoldingsRecord = marcType === MARC_TYPES.HOLDINGS;
@@ -80,12 +84,14 @@ const ViewSource = ({
     redirectToMarcEditPage(pathname, instance, location, history);
   }, [isHoldingsRecord]);
 
+  const canEdit = (marcType === MARC_TYPES.BIB && stripes.hasPerm('ui-quick-marc.quick-marc-editor.all'))
+    || (marcType === MARC_TYPES.HOLDINGS && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all'));
+
   const shortcuts = useMemo(() => [
     {
       name: 'editMARC',
       handler: handleKeyCommand(() => {
-        if ((marcType === MARC_TYPES.BIB && !stripes.hasPerm('ui-quick-marc.quick-marc-editor.all'))
-        || (marcType === MARC_TYPES.HOLDINGS && !stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all'))) {
+        if (!canEdit) {
           callout.sendCallout({
             type: 'error',
             message: intl.formatMessage({ id: 'ui-inventory.shortcut.editMARC.noPermission' }),
@@ -116,6 +122,65 @@ const ViewSource = ({
       .finally(() => {
         setIsMarcLoading(false);
       });
+  }, []);
+
+  const canExport = !isHoldingsRecord && stripes.hasPerm('ui-data-export.app.enabled');
+
+  const triggerQuickExport = useCallback(async () => {
+    const instanceIds = [instanceId];
+    try {
+      await exportRecords({ uuids: instanceIds, recordType: 'INSTANCE' });
+      new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
+    } catch (e) {
+      callout.sendCallout({
+        type: 'error',
+        message: intl.formatMessage({ id: 'ui-inventory.communicationProblem' }),
+      });
+    }
+  }, []);
+
+  const actionMenu = useCallback(({ onToggle }) => {
+    if (!canEdit && !canExport && !isPrintAvailable) {
+      return null;
+    }
+
+    return (
+      <>
+        {canEdit && (
+          <ActionItem
+            id="edit-marc"
+            icon="edit"
+            messageId={`ui-inventory.${isHoldingsRecord ? 'editMARCHoldings' : 'editInstanceMarc'}`}
+            onClickHandler={() => {
+              onToggle();
+              redirectToMARCEdit();
+            }}
+          />
+        )}
+        {canExport && (
+          <ActionItem
+            id="quick-export-trigger"
+            icon="download"
+            messageId="ui-inventory.exportInstanceInMARC"
+            onClickHandler={() => {
+              onToggle();
+              triggerQuickExport();
+            }}
+          />
+        )}
+        {isPrintAvailable && (
+          <ActionItem
+            id="print-marc"
+            icon="print"
+            messageId="ui-quick-marc.print"
+            onClickHandler={() => {
+              onToggle();
+              openPrintPopup();
+            }}
+          />
+        )}
+      </>
+    );
   }, []);
 
   if (isMarcLoading || isInstanceLoading) return <LoadingView />;
@@ -152,16 +217,7 @@ const ViewSource = ({
           marcTitle={marcTitle}
           marc={marc}
           onClose={goBack}
-          lastMenu={
-            isPrintAvailable &&
-              <Button
-                marginBottom0
-                buttonStyle="primary"
-                onClick={openPrintPopup}
-              >
-                <FormattedMessage id="ui-quick-marc.print" />
-              </Button>
-          }
+          actionMenu={actionMenu}
         />
         {isPrintAvailable && isShownPrintPopup && (
           <PrintPopup
