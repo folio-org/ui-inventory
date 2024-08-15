@@ -15,7 +15,6 @@ import {
 } from 'react-intl';
 
 import {
-  Button,
   LoadingView,
   HasCommand,
   checkScope,
@@ -30,8 +29,10 @@ import {
   getHeaders,
 } from '@folio/stripes-marc-components';
 
+import ActionItem from '../ActionItem';
 import { useGoBack } from '../../common/hooks';
-
+import { useQuickExport } from '../../hooks';
+import { IdReportGenerator } from '../../reports';
 import {
   isUserInConsortiumMode,
   handleKeyCommand,
@@ -40,9 +41,6 @@ import {
 import MARC_TYPES from './marcTypes';
 
 import styles from './ViewSource.css';
-import ActionItem from '../ActionItem';
-import { useQuickExport } from '../../hooks';
-import { IdReportGenerator } from '../../reports';
 
 const ViewSource = ({
   mutator,

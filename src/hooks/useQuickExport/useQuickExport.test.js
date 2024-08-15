@@ -18,35 +18,17 @@ const wrapper = ({ children }) => (
 );
 
 describe('useQuickExport', () => {
-  it('should make post request', async () => {
+  it('should make a post request', async () => {
     const postMock = jest.fn().mockResolvedValue({});
 
     useOkapiKy.mockClear().mockReturnValue({
       post: postMock,
     });
 
-    const { result } = renderHook(() => useQuickExport({}), { wrapper });
+    const { result } = renderHook(() => useQuickExport(), { wrapper });
 
-    result.current.exportRecords();
+    result.current.exportRecords({ uuids: [] });
 
     waitFor(() => expect(postMock).toHaveBeenCalled());
-  });
-
-  it('should make post request and call onError', async () => {
-    const postMock = jest.fn().mockRejectedValue(new Error('Async error'));
-    const errorMock = jest.fn();
-
-    useOkapiKy.mockClear().mockReturnValue({
-      post: postMock,
-    });
-
-    const { result } = renderHook(() => useQuickExport({ onError: errorMock }), { wrapper });
-
-    result.current.exportRecords([]);
-
-    waitFor(() => {
-      expect(postMock).toHaveBeenCalled();
-      expect(errorMock).toHaveBeenCalled();
-    });
   });
 });
