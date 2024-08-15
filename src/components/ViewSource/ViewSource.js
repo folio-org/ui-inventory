@@ -172,7 +172,7 @@ const ViewSource = ({
           <ActionItem
             id="print-marc"
             icon="print"
-            messageId="ui-quick-marc.print"
+            messageId="ui-inventory.print"
             onClickHandler={() => {
               onToggle();
               openPrintPopup();
