@@ -39,6 +39,7 @@ import {
   redirectToMarcEditPage,
 } from '../../utils';
 import MARC_TYPES from './marcTypes';
+import { INSTANCE_RECORD_TYPE } from '../../constants';
 
 import styles from './ViewSource.css';
 
@@ -127,7 +128,7 @@ const ViewSource = ({
   const triggerQuickExport = useCallback(async () => {
     const instanceIds = [instanceId];
     try {
-      await exportRecords({ uuids: instanceIds, recordType: 'INSTANCE' });
+      await exportRecords({ uuids: instanceIds, recordType: INSTANCE_RECORD_TYPE });
       new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
     } catch (e) {
       callout.sendCallout({

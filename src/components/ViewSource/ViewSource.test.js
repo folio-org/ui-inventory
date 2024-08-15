@@ -203,7 +203,7 @@ describe('ViewSource', () => {
       });
     });
 
-    it('should render actions', async () => {
+    it('should render actions', () => {
       expect(screen.getByText('Edit MARC bibliographic record')).toBeInTheDocument();
       expect(screen.getByText('Export instance (MARC)')).toBeInTheDocument();
       expect(screen.getByText('Print')).toBeInTheDocument();
