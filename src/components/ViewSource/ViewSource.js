@@ -90,7 +90,7 @@ const ViewSource = ({
   const { userPermissions: centralTenantPermissions } = useUserTenantPermissions({
     tenantId: centralTenantId,
   }, {
-    enabled: Boolean(instance.shared && checkIfUserInMemberTenant(stripes)),
+    enabled: Boolean(instance?.shared && checkIfUserInMemberTenant(stripes)),
   });
 
   const flattenedPermissions = useMemo(() => flattenCentralTenantPermissions(centralTenantPermissions), [centralTenantPermissions]);
@@ -100,12 +100,12 @@ const ViewSource = ({
       return stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
     }
 
-    if (checkIfUserInMemberTenant(stripes) && instance.shared) {
+    if (checkIfUserInMemberTenant(stripes) && instance?.shared) {
       return flattenedPermissions.has('ui-quick-marc.quick-marc-editor.all');
     }
 
     return stripes.hasPerm('ui-quick-marc.quick-marc-editor.all');
-  }, [marcType, instance.shared]);
+  }, [marcType, instance?.shared]);
 
   const shortcuts = useMemo(() => [
     {
