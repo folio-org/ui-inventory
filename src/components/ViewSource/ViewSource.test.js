@@ -17,14 +17,22 @@ import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
 import ViewSource from './ViewSource';
 import useGoBack from '../../common/hooks/useGoBack';
+import { useQuickExport } from '../../hooks';
 import { CONSORTIUM_PREFIX } from '../../constants';
 import MARC_TYPES from './marcTypes';
 
-jest.mock('../../common/hooks/useGoBack', () => jest.fn());
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn().mockReturnValue({
     push: jest.fn(),
+  }),
+}));
+
+jest.mock('../../common/hooks/useGoBack', () => jest.fn());
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useQuickExport: jest.fn().mockReturnValue({
+    exportRecords: jest.fn(),
   }),
 }));
 
@@ -36,6 +44,7 @@ const mutator = {
 
 const mockGoBack = jest.fn();
 const mockPush = jest.fn();
+const mockExportRecords = jest.fn().mockResolvedValue({});
 const mockInstance = {
   id: 'instance-id',
   title: 'Instance title',
@@ -180,6 +189,45 @@ describe('ViewSource', () => {
       expect(mockPush).toHaveBeenLastCalledWith({
         pathname: `/inventory/quick-marc/edit-bib/${mockInstance.id}`,
         search: '',
+      });
+    });
+  });
+
+  describe('action menu', () => {
+    beforeEach(async () => {
+      useQuickExport.mockClear().mockReturnValue({
+        exportRecords: mockExportRecords,
+      });
+      await act(async () => {
+        await renderWithIntl(getViewSource(), translations);
+      });
+    });
+
+    it('should render actions', () => {
+      expect(screen.getByText('Edit MARC bibliographic record')).toBeInTheDocument();
+      expect(screen.getByText('Export instance (MARC)')).toBeInTheDocument();
+      expect(screen.getByText('Print')).toBeInTheDocument();
+    });
+
+    describe('when clicking on Edit', () => {
+      it('should redirect to marc edit page', () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Edit MARC bibliographic record' }));
+
+        expect(mockPush).toHaveBeenLastCalledWith({
+          pathname: `/inventory/quick-marc/edit-bib/${mockInstance.id}`,
+          search: '',
+        });
+      });
+    });
+
+    describe('when clicking on Export', () => {
+      it('should start record export', () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
+
+        expect(mockExportRecords).toHaveBeenLastCalledWith({
+          uuids: [mockInstance.id],
+          recordType: 'INSTANCE',
+        });
       });
     });
   });
