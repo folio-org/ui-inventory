@@ -821,5 +821,6 @@
     "editInLinkedDataEditor": "Modifier la ressource dans l'éditeur de données liées",
     "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
     "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
-    "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types"
+    "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types",
+    "print": "Print"
 }

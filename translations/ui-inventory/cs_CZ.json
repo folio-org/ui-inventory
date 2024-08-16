@@ -102,7 +102,7 @@
     "place": "Místo",
     "resourceType": "Typ zdroje",
     "resourceTypes": "Typy zdrojů",
-    "subjectHeadings": "Předmětové nadpisy",
+    "subjectHeadings": "Předmětová hesla",
     "classification": "Klasifikace",
     "seriesStatement": "Sady prohlášení",
     "editInstanceDialog": "Dialogové okno Upravit titul",
@@ -665,7 +665,7 @@
     "administrativeNote": "Administrativní poznámka",
     "administrativeNotes": "Administrativní poznámky",
     "browseCallNumbers": "Procházet signatury",
-    "browseSubjects": "Procházet katalog",
+    "browseSubjects": "Procházet předměty",
     "browse": "Procházet",
     "notLoadedMessage.browseCall": "Procházejte výsledky zadáním dotazu nebo výběrem filtru.",
     "title.browseCall": "Procházet katalog",
@@ -819,7 +819,8 @@
     "searchForTitle": "Vyhledat {title}",
     "ld.label": "Editor propojených dat",
     "editInLinkedDataEditor": "Upravit zdroj v Editoru propojených dat",
-    "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
-    "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
-    "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types"
+    "permission.consortia.inventory.update.ownership": "Katalog: Aktualizace vlastnictví",
+    "permission.settings.subject-sources": "Nastavení (Katalog): Vytváření, úpravy, mazání zdrojů předmětů",
+    "permission.settings.subject-types": "Nastavení (Katalog): Vytváření, úpravy, mazání typů předmětů",
+    "print": "Print"
 }
