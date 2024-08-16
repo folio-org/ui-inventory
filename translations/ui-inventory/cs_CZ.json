@@ -627,14 +627,14 @@
     "acq.receiptStatus.Awaiting Receipt": "Čeká se na stvrzenku",
     "acq.receiptStatus.Cancelled": "Zrušeno",
     "acq.receiptStatus.Fully Received": "Kompletně přijato",
-    "acq.receiptStatus.Ongoing": "Pokračující",
+    "acq.receiptStatus.Ongoing": "Probíhající",
     "acq.receiptStatus.Partially Received": "Částečně přijato",
     "acq.receiptStatus.Pending": "Čekající",
     "acq.receiptStatus.Receipt Not Required": "Stvrzenka není povinná",
     "acq.orderSentDate": "Datum odeslání objednávky",
     "acq.orderType": "Typ objednávky",
     "acq.orderType.One-Time": "Jednorázový",
-    "acq.orderType.Ongoing": "Pokračující",
+    "acq.orderType.Ongoing": "Probíhající",
     "boundWith": "a {boundWithCount, plural, one {ještě jeden název} other {další názvy}}",
     "receivingHistory.receivedDate": "Datum přijetí",
     "receivingHistory.comment": "Komentář",
@@ -818,5 +818,8 @@
     "boundPieces.remove.heading": "Opravdu?",
     "searchForTitle": "Vyhledat {title}",
     "ld.label": "Editor propojených dat",
-    "editInLinkedDataEditor": "Upravit zdroj v Editoru propojených dat"
+    "editInLinkedDataEditor": "Upravit zdroj v Editoru propojených dat",
+    "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
+    "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
+    "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types"
 }

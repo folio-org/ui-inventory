@@ -818,5 +818,8 @@
     "boundPieces.remove.heading": "Você tem certeza?",
     "searchForTitle": "Buscar por {title}",
     "ld.label": "Editor de Dados Vinculados",
-    "editInLinkedDataEditor": "Editar recurso no Editor de Dados Vinculados"
+    "editInLinkedDataEditor": "Editar recurso no Editor de Dados Vinculados",
+    "permission.consortia.inventory.update.ownership": "Inventário: Atualizar propriedade",
+    "permission.settings.subject-sources": "Configurações (Inventário): Criar, editar, excluir fontes de assunto",
+    "permission.settings.subject-types": "Configurações (Inventário): Criar, editar, excluir tipos de assunto"
 }
