@@ -22,6 +22,8 @@ import {
 import {
   useCallout,
   useStripes,
+  checkIfUserInMemberTenant,
+  useUserTenantPermissions,
 } from '@folio/stripes/core';
 import {
   MarcView,
@@ -37,6 +39,7 @@ import {
   isUserInConsortiumMode,
   handleKeyCommand,
   redirectToMarcEditPage,
+  flattenCentralTenantPermissions,
 } from '../../utils';
 import MARC_TYPES from './marcTypes';
 import { INSTANCE_RECORD_TYPE } from '../../constants';
@@ -63,6 +66,7 @@ const ViewSource = ({
   const closePrintPopup = () => setIsShownPrintPopup(false);
   const isHoldingsRecord = marcType === MARC_TYPES.HOLDINGS;
 
+  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
   const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
   const isPrintHoldingsAvailable = isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
   const isPrintAvailable = isPrintBibAvailable || isPrintHoldingsAvailable;
@@ -83,8 +87,25 @@ const ViewSource = ({
     redirectToMarcEditPage(pathname, instance, location, history);
   }, [isHoldingsRecord]);
 
-  const canEdit = (marcType === MARC_TYPES.BIB && stripes.hasPerm('ui-quick-marc.quick-marc-editor.all'))
-    || (marcType === MARC_TYPES.HOLDINGS && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all'));
+  const { userPermissions: centralTenantPermissions } = useUserTenantPermissions({
+    tenantId: centralTenantId,
+  }, {
+    enabled: Boolean(instance.shared && checkIfUserInMemberTenant(stripes)),
+  });
+
+  const flattenedPermissions = useMemo(() => flattenCentralTenantPermissions(centralTenantPermissions), [centralTenantPermissions]);
+
+  const canEdit = useMemo(() => {
+    if (marcType === MARC_TYPES.HOLDINGS) {
+      return stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
+    }
+
+    if (checkIfUserInMemberTenant(stripes) && instance.shared) {
+      return flattenedPermissions.has('ui-quick-marc.quick-marc-editor.all');
+    }
+
+    return stripes.hasPerm('ui-quick-marc.quick-marc-editor.all');
+  }, [marcType, instance.shared]);
 
   const shortcuts = useMemo(() => [
     {
