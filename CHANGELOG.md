@@ -73,6 +73,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Add `showSortIndicator` prop to `SearchAndSort` to display sort indicator next to the column names, and add correct `nonInteractiveHeaders`. Refs UIIN-2986.
 * Change casing of `Linked data editor` label. Refs UIIN-3007.
 * MARC bib/holdings | View Source: Add Edit and Export actions. Refs UIIN-3012.
+* Trim call numbers when Creating/Editing/Deriving Holdings/Items. Fixes UIIN-2889.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
