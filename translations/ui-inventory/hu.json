@@ -817,6 +817,10 @@
     "boundPieces.remove.button": "Remove",
     "boundPieces.remove.heading": "Are you sure?",
     "searchForTitle": "Search for {title}",
-    "ld.label": "Linked Data Editor",
-    "editInLinkedDataEditor": "Edit resource in Linked data editor"
+    "ld.label": "Linked data editor",
+    "editInLinkedDataEditor": "Edit resource in Linked data editor",
+    "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
+    "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
+    "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types",
+    "print": "Print"
 }
