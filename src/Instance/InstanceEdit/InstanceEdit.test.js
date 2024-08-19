@@ -115,18 +115,17 @@ describe('InstanceEdit', () => {
       });
     });
 
-    it('should call mutation request', () => {
-      const {
-        getByRole,
-        getByText,
-      } = renderInstanceEdit();
+    it('should call mutation request and disable "Save & close" button', () => {
+      const { getByRole } = renderInstanceEdit();
 
       const resourceTitleField = getByRole('textbox', { name: /resource title/i });
-
       fireEvent.change(resourceTitleField, { target: { value: 'new title' } });
-      fireEvent.click(getByText(/Save & close/i));
+
+      const saveAndCloseButton = getByRole('button', { name: /save & close/i });
+      fireEvent.click(saveAndCloseButton);
 
       expect(mockMutate).toHaveBeenCalled();
+      expect(saveAndCloseButton).toBeDisabled();
     });
   });
 });

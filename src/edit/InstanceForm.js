@@ -253,7 +253,7 @@ class InstanceForm extends React.Component {
     const {
       onCancel,
       pristine,
-      submitting,
+      isSubmitting,
       copy,
       showKeepEditingButton,
     } = this.props;
@@ -272,7 +272,7 @@ class InstanceForm extends React.Component {
         buttonStyle="default mega"
         buttonClass={styles.saveAndKeepEditingButton}
         type="submit"
-        disabled={(pristine || submitting) && !copy}
+        disabled={(pristine || isSubmitting) && !copy}
         onClick={(e) => this.handleSaveClick(e, true)}
       >
         <FormattedMessage id="stripes-components.saveAndKeepEditing" />
@@ -283,7 +283,7 @@ class InstanceForm extends React.Component {
         id="clickable-save-instance"
         buttonStyle="primary mega"
         type="submit"
-        disabled={(pristine || submitting) && !copy}
+        disabled={(pristine || isSubmitting) && !copy}
         onClick={(e) => this.handleSaveClick(e, false)}
       >
         <FormattedMessage id="stripes-components.saveAndClose" />
@@ -327,7 +327,7 @@ class InstanceForm extends React.Component {
       referenceTables,
       handleSubmit,
       pristine,
-      submitting,
+      isSubmitting,
       history,
       httpError,
       id,
@@ -400,7 +400,7 @@ class InstanceForm extends React.Component {
       },
       {
         name: 'save',
-        handler: handleKeyCommand(handleSubmit, { disabled: pristine || submitting }),
+        handler: handleKeyCommand(handleSubmit, { disabled: pristine || isSubmitting }),
       },
       {
         name: 'cancel',
@@ -837,7 +837,7 @@ InstanceForm.propTypes = {
   newinstance: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
   handleSubmit: PropTypes.func.isRequired,
   pristine: PropTypes.bool,
-  submitting: PropTypes.bool,
+  isSubmitting: PropTypes.bool,
   onCancel: PropTypes.func,
   initialValues: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
