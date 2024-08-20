@@ -329,6 +329,10 @@ class ViewHoldingsRecord extends React.Component {
     this.setState({ isLocationLookupOpen: false });
   }
 
+  openUpdateOwnershipModal = () => {
+    this.setState({ isUpdateOwnershipModalOpen: true });
+  }
+
   hideUpdateOwnershipModal = () => {
     this.setState({ isUpdateOwnershipModalOpen: false });
   }
@@ -341,7 +345,7 @@ class ViewHoldingsRecord extends React.Component {
       {
         toInstanceId: holdingsRecord.instanceId,
         holdingsRecordIds: [holdingsRecord.id],
-        targetTenantId: this.state.updateOwnershipData.new.id,
+        targetTenantId: this.state.updateOwnershipData.targetTenant.id,
         targetLocationId: this.state.updateOwnershipData.targetLocationId,
       },
       okapi,
@@ -353,7 +357,7 @@ class ViewHoldingsRecord extends React.Component {
           id="ui-inventory.updateOwnership.message.success"
           values={{
             holdingsHrid: holdingsRecord.hrid,
-            newTenant: this.state.updateOwnershipData.new.name,
+            targetTenant: this.state.updateOwnershipData.targetTenant.name,
           }}
         />
       );
@@ -452,7 +456,8 @@ class ViewHoldingsRecord extends React.Component {
     const canDelete = stripes.hasPerm('ui-inventory.holdings.delete');
     const canViewMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
     const canEditMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
-    const canUpdateOwnership = isSharedInstance && !isEmpty(this.state.tenants);
+    const hasUpdateOwnershipPermission = stripes.hasPerm('consortia.inventory.update.ownership');
+    const canUpdateOwnership = hasUpdateOwnershipPermission && isSharedInstance && !isEmpty(this.state.tenants);
 
     const isSourceMARC = this.isMARCSource();
 
@@ -565,23 +570,24 @@ class ViewHoldingsRecord extends React.Component {
     } = this.props;
 
     const currentTenantId = stripes.okapi.tenant;
-    const newTenantId = location.tenantId;
+    const targetTenantId = location.tenantId;
 
     const currentTenant = stripes.user.user.tenants.find(tenant => tenant.id === currentTenantId);
-    const newTenant = stripes.user.user.tenants.find(tenant => tenant.id === newTenantId);
+    const targetTenant = stripes.user.user.tenants.find(tenant => tenant.id === targetTenantId);
 
     const holdingsRecord = this.getMostRecentHolding();
     const permanentLocationName = get(referenceTables?.locationsById[holdingsRecord?.permanentLocationId], ['name'], '-');
 
     this.setState({
       updateOwnershipData: {
-        current: currentTenant,
-        new: newTenant,
+        currentTenant,
+        targetTenant,
         currentLocation: permanentLocationName,
         targetLocationId: location.id,
       },
-      isUpdateOwnershipModalOpen: true,
     });
+
+    this.openUpdateOwnershipModal();
   }
 
   isAwaitingResource = () => {
@@ -860,8 +866,8 @@ class ViewHoldingsRecord extends React.Component {
                 <FormattedMessage
                   id="ui-inventory.updateOwnership.holdings.modal.message"
                   values={{
-                    currentTenant: this.state.updateOwnershipData.current?.name,
-                    newTenant: this.state.updateOwnershipData.new?.name,
+                    currentTenant: this.state.updateOwnershipData.currentTenant?.name,
+                    targetTenant: this.state.updateOwnershipData.targetTenant?.name,
                     holdingsHrid: holdingsRecord.hrid,
                   }}
                 />

@@ -1,7 +1,10 @@
 import '../../test/jest/__mock__';
 
 import { MemoryRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 import {
   render,
   screen,

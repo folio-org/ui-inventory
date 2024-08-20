@@ -313,6 +313,7 @@ describe('ViewHoldingsRecord actions', () => {
     });
 
     const targetTenantId = 'university';
+    const targetLocationId = 'targetLocationId';
     const stripes = {
       ...buildStripes({
         okapi: { tenant: 'college' },
@@ -343,7 +344,7 @@ describe('ViewHoldingsRecord actions', () => {
     });
 
     describe('when instance is local', () => {
-      it('should be rendered', () => {
+      it('should be hidden', () => {
         renderViewHoldingsRecord({ stripes, isInstanceShared: false });
 
         const updateOwnershipBtn = screen.queryByTestId('update-ownership-btn');
@@ -371,7 +372,7 @@ describe('ViewHoldingsRecord actions', () => {
         const updateOwnershipBtn = await screen.findByTestId('update-ownership-btn');
         fireEvent.click(updateOwnershipBtn);
 
-        FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: 'university' }]);
+        await waitFor(() => FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: 'university' }]));
 
         const confirmationModal = await screen.findByText('Update ownership of holdings');
         expect(confirmationModal).toBeInTheDocument();
@@ -380,12 +381,14 @@ describe('ViewHoldingsRecord actions', () => {
 
     describe('when confirm updating ownership', () => {
       it('should call the function to update ownership', async () => {
+        spyOnUpdateOwnership.mockResolvedValue({ ok: true });
+
         renderViewHoldingsRecord({ stripes, isInstanceShared: true });
 
         const updateOwnershipBtn = await screen.findByTestId('update-ownership-btn');
         fireEvent.click(updateOwnershipBtn);
 
-        FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: targetTenantId }]);
+        await waitFor(() => FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: targetTenantId, id: targetLocationId }]));
 
         const confirmationModal = await screen.findByText('Update ownership of holdings');
         const confirmButton = within(confirmationModal).getByRole('button', { name: /confirm/i });
@@ -396,9 +399,29 @@ describe('ViewHoldingsRecord actions', () => {
             holdingsRecordIds: [defaultProps.holdingsrecordid],
             targetTenantId,
             toInstanceId: defaultProps.resources.holdingsRecords.records[0].instanceId,
+            targetLocationId,
           },
           { tenant: stripes.okapi.tenant }
         );
+      });
+    });
+
+    describe('when an error was occured updating ownership', () => {
+      it('should show an error message', async () => {
+        spyOnUpdateOwnership.mockRejectedValue({ ok: false });
+
+        renderViewHoldingsRecord({ stripes, isInstanceShared: true });
+
+        const updateOwnershipBtn = await screen.findByTestId('update-ownership-btn');
+        fireEvent.click(updateOwnershipBtn);
+
+        await waitFor(() => FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: targetTenantId }]));
+
+        const confirmationModal = await screen.findByText('Update ownership of holdings');
+        const confirmButton = within(confirmationModal).getByRole('button', { name: /confirm/i });
+        fireEvent.click(confirmButton);
+
+        await waitFor(() => expect(screen.queryByText('Server communication problem. Please try again')).toBeDefined());
       });
     });
 

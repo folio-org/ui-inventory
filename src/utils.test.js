@@ -20,6 +20,7 @@ import {
   batchQueryIntoSmaller,
   checkIfCentralOrderingIsActive,
   omitCurrentAndCentralTenants,
+  updateOwnership,
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
@@ -413,5 +414,40 @@ describe('omitCurrentAndCentralTenants', () => {
 
   it('should omit current and central tenants', () => {
     expect(omitCurrentAndCentralTenants(stripes)).toEqual([{ id: 'university' }]);
+  });
+});
+
+describe('updateOwnership', () => {
+  const okapi = {
+    token: 'token',
+    url: 'url/test',
+  };
+
+  const requestBody = {
+    toInstanceId: 'toInstanceId',
+    holdingsRecordIds: ['holdingsRecordIds'],
+    targetTenantId: 'university',
+    targetLocationId: 'locationId',
+  };
+
+  it('should return the appropriate response', () => {
+    global.fetch = jest.fn().mockReturnValue({ ok: true });
+
+    updateOwnership(requestBody, okapi);
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${okapi.url}/inventory/holdings/update-ownership`,
+      {
+        credentials: 'include',
+        headers: expect.objectContaining({
+          [OKAPI_TOKEN_HEADER]: okapi.token,
+          [CONTENT_TYPE_HEADER]: 'application/json',
+        }),
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+      },
+    );
+
+    expect(global.fetch.mock.results[0].value.ok).toBe(true);
   });
 });
