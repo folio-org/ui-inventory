@@ -342,9 +342,35 @@ class ViewHoldingsRecord extends React.Component {
         toInstanceId: holdingsRecord.instanceId,
         holdingsRecordIds: [holdingsRecord.id],
         targetTenantId: this.state.updateOwnershipData.new.id,
+        targetLocationId: this.state.updateOwnershipData.targetLocationId,
       },
       okapi,
-    );
+    ).then(() => {
+      this.hideUpdateOwnershipModal();
+
+      const message = (
+        <FormattedMessage
+          id="ui-inventory.updateOwnership.message.success"
+          values={{
+            holdingsHrid: holdingsRecord.hrid,
+            newTenant: this.state.updateOwnershipData.new.name,
+          }}
+        />
+      );
+      this.context.sendCallout({
+        type: 'success',
+        message,
+      });
+
+      this.goToInstanceView();
+    }).catch(() => {
+      this.hideUpdateOwnershipModal();
+
+      this.calloutRef.current.sendCallout({
+        type: 'error',
+        message: <FormattedMessage id="ui-data-import.communicationProblem" />,
+      });
+    });
   }
 
   canDeleteHoldingsRecord = () => {
@@ -532,14 +558,14 @@ class ViewHoldingsRecord extends React.Component {
     );
   };
 
-  onLocationSelect = ([data]) => {
+  onLocationSelect = ([location]) => {
     const {
       stripes,
       referenceTables,
     } = this.props;
 
     const currentTenantId = stripes.okapi.tenant;
-    const newTenantId = data.tenantId;
+    const newTenantId = location.tenantId;
 
     const currentTenant = stripes.user.user.tenants.find(tenant => tenant.id === currentTenantId);
     const newTenant = stripes.user.user.tenants.find(tenant => tenant.id === newTenantId);
@@ -552,6 +578,7 @@ class ViewHoldingsRecord extends React.Component {
         current: currentTenant,
         new: newTenant,
         currentLocation: permanentLocationName,
+        targetLocationId: location.id,
       },
       isUpdateOwnershipModalOpen: true,
     });
