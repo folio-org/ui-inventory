@@ -70,49 +70,52 @@ const InstancesRouteSetup = ({
               storeLastBrowseOffset: jest.fn(),
             }}
             >
-              <Paneset>
-                <Layer
-                  isOpen
-                  contentLabel="label"
-                >
-                  <OverlayContainer />
-                  <InstancesRoute
-                    resources={{
-                      query: {
-                        query: '',
-                        sort: 'title',
-                      },
-                      records: {
-                        hasLoaded: true,
-                        resource: 'records',
-                        records: instances,
-                        other: { totalRecords: instances.length },
-                      },
-                      recordsBrowseCallNumber : {
-                        hasLoaded: true,
-                        resource: 'records',
-                        records: callNumbers,
-                        other: {
-                          totalRecords: callNumbers.length
+              <div id="ModuleContainer">
+                <Paneset>
+                  <Layer
+                    isOpen
+                    contentLabel="label"
+                  >
+                    <OverlayContainer />
+                    <InstancesRoute
+                      tenantId="diku"
+                      resources={{
+                        query: {
+                          query: '',
+                          sort: 'title',
                         },
-                      },
-                      resultCount: instances.length,
-                      resultOffset: 0,
-                    }}
-                    mutator={{
-                      quickExport: { POST: quickExportPOST },
-                      resultCount: { replace: noop },
-                      resultOffset: { replace: noop },
-                      query: {
-                        update: jest.fn(),
-                        replace: jest.fn(),
-                      },
-                      browseModeRecords: { reset: jest.fn() },
-                      records: { reset: jest.fn() },
-                    }}
-                  />
-                </Layer>
-              </Paneset>
+                        records: {
+                          hasLoaded: true,
+                          resource: 'records',
+                          records: instances,
+                          other: { totalRecords: instances.length },
+                        },
+                        recordsBrowseCallNumber : {
+                          hasLoaded: true,
+                          resource: 'records',
+                          records: callNumbers,
+                          other: {
+                            totalRecords: callNumbers.length
+                          },
+                        },
+                        resultCount: instances.length,
+                        resultOffset: 0,
+                      }}
+                      mutator={{
+                        quickExport: { POST: quickExportPOST },
+                        resultCount: { replace: noop },
+                        resultOffset: { replace: noop },
+                        query: {
+                          update: jest.fn(),
+                          replace: jest.fn(),
+                        },
+                        browseModeRecords: { reset: jest.fn() },
+                        records: { reset: jest.fn() },
+                      }}
+                    />
+                  </Layer>
+                </Paneset>
+              </div>
             </LastSearchTermsContext.Provider>
           </DataContext.Provider>
         </ModuleHierarchyProvider>
@@ -358,4 +361,3 @@ describe('InstancesRoute', () => {
     });
   });
 });
-

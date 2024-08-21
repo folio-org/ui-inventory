@@ -7,7 +7,10 @@ import {
   ButtonGroup,
   Button,
 } from '@folio/stripes/components';
-import { segments } from '@folio/stripes-inventory-components';
+import {
+  handleSegmentChange,
+  segments,
+} from '@folio/stripes-inventory-components';
 
 import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 import { useLastSearchTerms } from '../../hooks';
@@ -36,7 +39,7 @@ const FilterNavigation = ({ segment, onChange }) => {
               }}
               buttonStyle={`${segment === name ? 'primary' : 'default'}`}
               id={`segment-navigation-${name}`}
-              onClick={() => onChange(name)}
+              onClick={() => handleSegmentChange(name, segment, onChange)}
             >
               <FormattedMessage id={`ui-inventory.filters.${name}`} />
             </Button>

@@ -1,11 +1,14 @@
-import { useMemo } from 'react';
+import {
+  useCallback,
+  useMemo,
+} from 'react';
 
 import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
 import useInstanceQuery from './useInstanceQuery';
 
 const useInstance = (id) => {
   const {
-    refetch,
+    refetch: refetchSearch,
     isLoading: isSearchInstanceByIdLoading,
     instance: _instance,
   } = useSearchInstanceByIdQuery(id);
@@ -14,6 +17,7 @@ const useInstance = (id) => {
   const isShared = _instance?.shared;
 
   const {
+    refetch: refetchInstance,
     isLoading: isInstanceLoading,
     isFetching,
     instance: data,
@@ -37,6 +41,9 @@ const useInstance = (id) => {
     () => isSearchInstanceByIdLoading || isInstanceLoading,
     [isSearchInstanceByIdLoading, isInstanceLoading],
   );
+  const refetch = useCallback(() => {
+    refetchSearch().then(() => refetchInstance());
+  });
 
   return {
     instance,
