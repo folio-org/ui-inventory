@@ -85,6 +85,7 @@ import {
   SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
+  INSTANCE_RECORD_TYPE,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -112,6 +113,9 @@ const ALL_COLUMNS = Array.from(new Set([
   ...TOGGLEABLE_COLUMNS,
 ]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
+const SORTABLE_COLUMNS = Object.values(SORTABLE_SEARCH_RESULT_LIST_COLUMNS)
+  .filter(column => column !== SORTABLE_SEARCH_RESULT_LIST_COLUMNS.RELEVANCE);
+const NON_INTERACTIVE_HEADERS = ALL_COLUMNS.filter(column => !SORTABLE_COLUMNS.includes(column));
 
 class InstancesList extends React.Component {
   static defaultProps = {
@@ -663,7 +667,7 @@ class InstancesList extends React.Component {
       await this.props.parentMutator.quickExport.POST({
         uuids: instanceIds,
         type: 'uuid',
-        recordType: 'INSTANCE'
+        recordType: INSTANCE_RECORD_TYPE,
       });
       new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
     } catch (error) {
@@ -825,7 +829,7 @@ class InstancesList extends React.Component {
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
-    const canExportMarc = stripes.hasPerm('ui-data-export.app.enabled');
+    const canExportMarc = stripes.hasPerm('ui-data-export.edit');
     const canCreateItemsInTransitReport = stripes.hasPerm('ui-inventory.items.create-in-transit-report');
 
     const buildOnClickHandler = onClickHandler => {
@@ -1036,7 +1040,6 @@ class InstancesList extends React.Component {
     const { intl } = this.props;
 
     const columnMapping = {
-      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
       select: !this.state.isSelectedRecordsModalOpened && (
         <Checkbox
           checked={this.getIsAllRowsSelected()}
@@ -1048,11 +1051,6 @@ class InstancesList extends React.Component {
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-      numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' }),
-      subject: intl.formatMessage({ id: 'ui-inventory.subject' }),
-      contributor: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributor' }),
-      contributorType: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributorType' }),
-      relatorTerm: intl.formatMessage({ id: 'ui-inventory.instances.columns.relatorTerm' }),
     };
 
     return columnMapping;
@@ -1394,20 +1392,14 @@ class InstancesList extends React.Component {
               source: 'FOLIO',
             }}
             visibleColumns={visibleColumns}
-            nonInteractiveHeaders={['select']}
+            nonInteractiveHeaders={NON_INTERACTIVE_HEADERS}
             columnMapping={columnMapping}
             columnWidths={{
-              callNumber: '15%',
-              subject: '50%',
-              contributor: '50%',
               contributors: {
                 max: '400px',
               },
-              numberOfTitles: '15%',
               select: '30px',
               title: '40%',
-              contributorType: '15%',
-              relatorTerm: '15%',
             }}
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
@@ -1435,7 +1427,8 @@ class InstancesList extends React.Component {
             extraParamsToReset={this.extraParamsToReset}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
-            sortableColumns={['title', 'contributors']}
+            showSortIndicator
+            sortableColumns={SORTABLE_COLUMNS}
             syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}

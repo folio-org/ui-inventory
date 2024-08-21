@@ -818,5 +818,9 @@
     "boundPieces.remove.heading": "你确定吗？",
     "searchForTitle": "搜索{title}",
     "ld.label": "关联数据编辑器",
-    "editInLinkedDataEditor": "在关联数据编辑器中编辑资源"
+    "editInLinkedDataEditor": "在关联数据编辑器中编辑资源",
+    "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
+    "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
+    "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types",
+    "print": "Print"
 }
