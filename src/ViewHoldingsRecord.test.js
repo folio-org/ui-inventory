@@ -413,7 +413,7 @@ describe('ViewHoldingsRecord actions', () => {
     });
   });
 
-describe('Update ownership action item', () => {
+  describe('Update ownership action item', () => {
     beforeEach(() => {
       checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
     });
