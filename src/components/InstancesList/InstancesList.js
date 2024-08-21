@@ -56,6 +56,7 @@ import {
   OKAPI_TENANT_HEADER,
   getCurrentFilters,
   buildSearchQuery,
+  SORT_OPTIONS,
 } from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
@@ -79,10 +80,10 @@ import {
   addFilter,
   replaceFilter,
   batchQueryIntoSmaller,
+  getSortOptions,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
-  SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
 } from '../../constants';
@@ -112,8 +113,8 @@ const ALL_COLUMNS = Array.from(new Set([
   ...TOGGLEABLE_COLUMNS,
 ]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
-const SORTABLE_COLUMNS = Object.values(SORTABLE_SEARCH_RESULT_LIST_COLUMNS)
-  .filter(column => column !== SORTABLE_SEARCH_RESULT_LIST_COLUMNS.RELEVANCE);
+const SORTABLE_COLUMNS = Object.values(SORT_OPTIONS)
+  .filter(column => column !== SORT_OPTIONS.RELEVANCE);
 const NON_INTERACTIVE_HEADERS = ALL_COLUMNS.filter(column => !SORTABLE_COLUMNS.includes(column));
 
 class InstancesList extends React.Component {
@@ -159,6 +160,7 @@ class InstancesList extends React.Component {
       replace: PropTypes.func,
     }),
     getLastBrowse: PropTypes.func.isRequired,
+    getLastSearch: PropTypes.func.isRequired,
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
@@ -197,9 +199,12 @@ class InstancesList extends React.Component {
     const {
       history,
       getParams,
+      data,
+      updateLocation,
     } = this.props;
 
     const params = getParams();
+    const defaultSort = data.displaySettings.defaultSort;
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -219,17 +224,27 @@ class InstancesList extends React.Component {
       this.paneTitleRef.current.focus();
     }
 
-    this.processLastSearchTerms();
+    this.processLastSearchTermsOnMount();
 
     this.applyDefaultStaffSuppressFilter();
+
+    if (params.sort !== defaultSort) {
+      updateLocation({ sort: defaultSort }, { replace: true });
+    }
   }
 
   componentDidUpdate(prevProps) {
+    const {
+      data,
+      updateLocation,
+      segment,
+    } = this.props;
     const sortBy = this.getSortFromParams();
 
     this.storeLastSearchTerms(prevProps);
 
-    if (this.state.segmentsSortBy.find(x => x.name === this.props.segment && x.sort !== sortBy)) {
+    // change sortBy action only if sort parameter exists. It is absent for a while after reset is hit.
+    if (sortBy && this.state.segmentsSortBy.find(x => x.name === segment && x.sort !== sortBy)) {
       this.setSegmentSortBy(sortBy);
     }
 
@@ -244,6 +259,11 @@ class InstancesList extends React.Component {
 
     if (prevProps.segment !== this.props.segment) {
       this.applyDefaultStaffSuppressFilter();
+    }
+
+    // it is missing after reset button is hit
+    if (!sortBy) {
+      updateLocation({ sort: data.displaySettings.defaultSort }, { replace: true });
     }
   }
 
@@ -331,20 +351,37 @@ class InstancesList extends React.Component {
     return intl.formatMessage({ id: 'ui-inventory.documentTitle.search' }, { query: query.query });
   }
 
-  processLastSearchTerms = () => {
+  processLastSearchTermsOnMount = () => {
     const {
       getParams,
       location,
       parentMutator,
       getLastSearchOffset,
+      getLastSearch,
       storeLastSearch,
-      segment,
+      segment: currentSegment,
     } = this.props;
     const params = getParams();
-    const lastSearchOffset = getLastSearchOffset(segment);
+    const lastSearchOffset = getLastSearchOffset(currentSegment);
     const offset = params.selectedBrowseResult === 'true' ? 0 : lastSearchOffset;
 
-    storeLastSearch(location.search, segment);
+    // Remove the sort option on mount from last searches, as the sort option from Settings should be used
+    // until it is changed there or via the result headers or actions.
+    const storeLastSearchWithoutSortParam = (search, segment) => {
+      const searchParams = new URLSearchParams(search);
+      searchParams.delete('sort');
+      storeLastSearch(`?${searchParams.toString()}`, segment);
+    };
+
+    Object.values(segments).forEach(segment => {
+      if (segment === currentSegment) {
+        storeLastSearchWithoutSortParam(location.search, currentSegment);
+      } else {
+        const lastSegmentSearch = getLastSearch(segment);
+        storeLastSearchWithoutSortParam(lastSegmentSearch, segment);
+      }
+    });
+
     parentMutator.resultOffset.replace(offset);
   }
 
@@ -376,9 +413,12 @@ class InstancesList extends React.Component {
   }
 
   getInitialSegmentsSortBy = () => {
-    return Object.keys(segments).map(name => (
-      { name, sort: SORTABLE_SEARCH_RESULT_LIST_COLUMNS.TITLE }
-    ));
+    const { data } = this.props;
+
+    return Object.keys(segments).map(name => ({
+      name,
+      sort: data.displaySettings.defaultSort,
+    }));
   }
 
   getVisibleColumns = () => {
@@ -514,6 +554,7 @@ class InstancesList extends React.Component {
         onSearchModeSwitch={this.onSearchModeSwitch}
       />
       <FilterNavigation
+        data={this.props.data}
         segment={this.props.segment}
         onChange={this.handleSearchSegmentChange}
       />
@@ -859,11 +900,6 @@ class InstancesList extends React.Component {
       goTo(path, { ...queryParams });
     };
 
-    const sortOptions = Object.values(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).map(option => ({
-      value: option,
-      label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option}` }),
-    }));
-
     const getSortByValue = () => {
       return this.state.segmentsSortBy.find(x => x.name === segment).sort?.replace('-', '') || '';
     };
@@ -975,7 +1011,7 @@ class InstancesList extends React.Component {
         >
           <Select
             data-testid="sort-by-selection"
-            dataOptions={sortOptions}
+            dataOptions={getSortOptions(intl)}
             value={getSortByValue()}
             onChange={setSortedColumn}
           />

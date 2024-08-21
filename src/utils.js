@@ -30,6 +30,7 @@ import {
   segments,
   LIMIT_MAX,
   OKAPI_TENANT_HEADER,
+  SORT_OPTIONS,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -1045,3 +1046,10 @@ export const batchQueryIntoSmaller = (query, VALUES_PER_BATCH = 50) => {
 };
 
 export const checkIfCentralOrderingIsActive = centralOrdering => centralOrdering.records[0]?.settings[0]?.value === 'true';
+
+export const getSortOptions = (intl) => {
+  return Object.values(SORT_OPTIONS).map(option => ({
+    value: option,
+    label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option}` }),
+  }));
+};

@@ -169,12 +169,6 @@ export const SORT_DIRECTION = {
   DESCENDING: 'descending',
 };
 
-export const SORTABLE_SEARCH_RESULT_LIST_COLUMNS = {
-  TITLE: 'title',
-  CONTRIBUTORS: 'contributors',
-  RELEVANCE: 'relevance',
-};
-
 export const ERROR_TYPES = {
   OPTIMISTIC_LOCKING: 'optimisticLocking',
 };

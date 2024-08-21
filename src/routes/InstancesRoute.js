@@ -49,6 +49,7 @@ class InstancesRoute extends React.Component {
       resources,
       mutator,
       getParams,
+      getLastSearch,
       getLastBrowse,
       getLastSearchOffset,
       storeLastSearch,
@@ -77,6 +78,7 @@ class InstancesRoute extends React.Component {
             })}
             segment={segment}
             searchableIndexes={indexes}
+            getLastSearch={getLastSearch}
             getLastBrowse={getLastBrowse}
             getLastSearchOffset={getLastSearchOffset}
             storeLastSearch={storeLastSearch}
