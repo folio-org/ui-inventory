@@ -13,6 +13,13 @@ import {
 } from '@folio/stripes/core';
 
 import { RECORD_SOURCE } from '../constants';
+import { validateUniqueness } from './validateUniqueness';
+
+const validate = (item, index, items) => {
+  const nameError = validateUniqueness(index, item, items, 'name') || undefined;
+
+  return { name: nameError };
+};
 
 const SubjectTypesSettings = (props) => {
   const intl = useIntl();
@@ -46,6 +53,7 @@ const SubjectTypesSettings = (props) => {
         nameKey="name"
         actionSuppressor={{ edit: suppress, delete: suppress }}
         editable={hasPerm}
+        validate={validate}
       />
     </TitleManager>
   );

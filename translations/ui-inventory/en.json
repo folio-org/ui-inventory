@@ -486,6 +486,7 @@
   "subjectSources": "Subject sources",
   "subjectType": "Subject type",
   "subjectTypes": "Subject types",
+  "validation.error.mustBeUnique": "Error saving data. Name must be unique.",
   "subjectHeadings": "Subject headings",
   "classification": "Classification",
   "classificationBrowse": "Classification browse",
