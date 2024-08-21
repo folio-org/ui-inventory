@@ -8,36 +8,88 @@ import {
 import PropTypes from 'prop-types';
 
 import {
+  Col,
   Label,
   RepeatableField,
+  Row,
+  Select,
   TextField,
 } from '@folio/stripes/components';
 
-const SubjectFields = props => {
+const SubjectFields = ({
+  subjectSources,
+  subjectTypes,
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
 
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
+  const subjectSourcesOptions = subjectSources.map(it => ({
+    label: it.name,
+    value: it.id,
+  }));
+  const subjectTypesOptions = subjectTypes.map(it => ({
+    label: it.name,
+    value: it.id,
+  }));
 
   const subjectsLabel = formatMessage({ id: 'ui-inventory.subjects' });
+  const subjectSourceLabel = formatMessage({ id: 'ui-inventory.subjectSource' });
+  const subjectTypeLabel = formatMessage({ id: 'ui-inventory.subjectType' });
 
-  const legend = (
-    <Label tagName="legend">
-      {subjectsLabel}
-    </Label>
+  const headLabels = (
+    <Row>
+      <Col sm={4}>
+        <Label tagName="legend">
+          {subjectsLabel}
+        </Label>
+      </Col>
+      <Col sm={4}>
+        <Label tagName="legend">
+          {subjectSourceLabel}
+        </Label>
+      </Col>
+      <Col sm={4}>
+        <Label tagName="legend">
+          {subjectTypeLabel}
+        </Label>
+      </Col>
+    </Row>
   );
 
   const renderField = field => {
     return (
-      <Field
-        ariaLabel={subjectsLabel}
-        name={`${field}.value`}
-        component={TextField}
-        disabled={!canEdit}
-      />
+      <Row>
+        <Col sm={4}>
+          <Field
+            ariaLabel={subjectsLabel}
+            name={`${field}.value`}
+            component={TextField}
+            disabled={!canEdit}
+          />
+        </Col>
+        <Col sm={4}>
+          <Field
+            ariaLabel={subjectSourceLabel}
+            name={`${field}.source`} //change
+            component={Select}
+            dataOptions={subjectSourcesOptions}
+            placeholder={formatMessage({ id: 'ui-inventory.subjectSource.placeholder' })}
+            disabled={!canEdit}
+          />
+        </Col>
+        <Col sm={4}>
+          <Field
+            ariaLabel={subjectTypeLabel}
+            name={`${field}.type`} //change
+            component={Select}
+            dataOptions={subjectTypesOptions}
+            placeholder={formatMessage({ id: 'ui-inventory.subjectType.placeholder' })}
+            disabled={!canEdit}
+          />
+        </Col>
+      </Row>
     );
   };
 
@@ -47,7 +99,7 @@ const SubjectFields = props => {
       component={RepeatableField}
       addLabel={<FormattedMessage id="ui-inventory.addSubject" />}
       onAdd={fields => fields.push({ value: '' })}
-      headLabels={legend}
+      headLabels={headLabels}
       renderField={renderField}
       canAdd={canAdd}
       canRemove={canDelete}
@@ -56,14 +108,11 @@ const SubjectFields = props => {
 };
 
 SubjectFields.propTypes = {
+  subjectSources: PropTypes.arrayOf(PropTypes.object).isRequired,
+  subjectTypes: PropTypes.arrayOf(PropTypes.object).isRequired,
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-SubjectFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default SubjectFields;

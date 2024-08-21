@@ -482,6 +482,8 @@
   "dateOfPublication": "Publication date",
   "resourceType": "Resource type",
   "resourceTypes": "Resource types",
+  "subjectSource.placeholder": "Select source",
+  "subjectType.placeholder": "Select type",
   "subjectHeadings": "Subject headings",
   "classification": "Classification",
   "classificationBrowse": "Classification browse",
