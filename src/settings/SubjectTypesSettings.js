@@ -1,67 +1,96 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
+import { baseManifest } from '@folio/stripes-acq-components';
 import { getSourceSuppressor } from '@folio/stripes/util';
 import {
-  IntlConsumer,
   TitleManager,
+  useStripes,
 } from '@folio/stripes/core';
 
 import { RECORD_SOURCE } from '../constants';
 
-class SubjectTypesSettings extends React.Component {
-  static propTypes = {
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      hasPerm: PropTypes.func.isRequired,
-    }).isRequired,
-  };
+const SubjectTypesSettings = (props) => {
+  const intl = useIntl();
+  const stripes = useStripes();
 
-  constructor(props) {
-    super(props);
+  const hasPerm = stripes.hasPerm('ui-inventory.settings.subject-types');
+  const suppress = getSourceSuppressor([RECORD_SOURCE.FOLIO]);
 
-    this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
-  }
+  return (
+    <TitleManager
+      page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+      record={intl.formatMessage({ id: 'ui-inventory.subjectTypes' })}
+    >
+      <ControlledVocab
+        {...props}
+        id="subject-types"
+        stripes={stripes}
+        baseUrl="subject-types"
+        records="subjectTypes"
+        label={<FormattedMessage id="ui-inventory.subjectTypes" />}
+        labelSingular={intl.formatMessage({ id: 'ui-inventory.subjectType' })}
+        objectLabel={<FormattedMessage id="ui-inventory.subjectTypes" />}
+        visibleFields={['name', 'source']}
+        columnMapping={{
+          name: intl.formatMessage({ id: 'ui-inventory.name' }),
+          source: intl.formatMessage({ id: 'ui-inventory.source' }),
+        }}
+        readOnlyFields={['source']}
+        itemTemplate={{ source: 'local' }}
+        hiddenFields={['numberOfObjects']}
+        nameKey="name"
+        actionSuppressor={{ edit: suppress, delete: suppress }}
+        editable={hasPerm}
+      />
+    </TitleManager>
+  );
+};
 
-  render() {
-    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.subject-types');
-    const suppress = getSourceSuppressor([RECORD_SOURCE.FOLIO]);
+SubjectTypesSettings.manifest = Object.freeze({
+  values: {
+    ...baseManifest,
+    path: 'subject-types',
+    records: 'subjectTypes',
+    GET: {
+      params: { sortby: 'name' }
+    },
+    POST: {
+      path: 'subject-types',
+    },
+    PUT: {
+      path: 'subject-types/%{activeRecord.id}',
+    },
+    DELETE: {
+      path: 'subject-types/%{activeRecord.id}',
+    },
+  },
+  updaterIds: [],
+  activeRecord: {},
+  updaters: {
+    type: 'okapi',
+    records: 'users',
+    path: 'users',
+    GET: {
+      params: {
+        query: (queryParams, pathComponents, resourceValues) => {
+          if (resourceValues.updaterIds && resourceValues.updaterIds.length) {
+            return `(${resourceValues.updaterIds.join(' or ')})`;
+          }
+          return null;
+        },
+      },
+    },
+  },
+});
 
-    return (
-      <IntlConsumer>
-        {intl => (
-          <TitleManager
-            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
-            record={intl.formatMessage({ id: 'ui-inventory.subjectTypes' })}
-          >
-            <this.connectedControlledVocab
-              {...this.props}
-              baseUrl="subject-types"
-              records="subjectTypes"
-              label={<FormattedMessage id="ui-inventory.subjectTypes" />}
-              labelSingular={intl.formatMessage({ id: 'ui-inventory.subjectType' })}
-              objectLabel={<FormattedMessage id="ui-inventory.subjectTypes" />}
-              visibleFields={['name', 'source']}
-              columnMapping={{
-                name: intl.formatMessage({ id: 'ui-inventory.name' }),
-                source: intl.formatMessage({ id: 'ui-inventory.source' }),
-              }}
-              readOnlyFields={['source']}
-              itemTemplate={{ source: 'local' }}
-              hiddenFields={['numberOfObjects']}
-              nameKey="name"
-              actionSuppressor={{ edit: suppress, delete: suppress }}
-              id="subject-types"
-              sortby="name"
-              editable={hasPerm}
-            />
-          </TitleManager>
-        )}
-      </IntlConsumer>
-    );
-  }
-}
+SubjectTypesSettings.propTypes = {
+  resources: PropTypes.object,
+  mutator: PropTypes.object,
+};
 
 export default SubjectTypesSettings;

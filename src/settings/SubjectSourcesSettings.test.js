@@ -17,6 +17,8 @@ const defaultProps = {
     ...stripesStub,
     connect: component => component,
   },
+  resources: {},
+  mutator: {},
 };
 
 const SubjectSourcesSettingsSetup = () => (
