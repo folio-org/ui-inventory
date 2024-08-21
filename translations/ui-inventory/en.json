@@ -663,6 +663,7 @@
   "editMARCHoldings": "Edit in quickMARC",
   "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
   "quickMarcNotAvailable": "No plugin available!",
+  "print": "Print",
 
   "settings.instanceClassification.all": "Classification (all)",
   "settings.instanceClassification.dewey": "Dewey Decimal classification",

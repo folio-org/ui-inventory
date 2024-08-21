@@ -86,6 +86,7 @@ import {
   INSTANCES_ID_REPORT_TIMEOUT,
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
+  INSTANCE_RECORD_TYPE,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -707,7 +708,7 @@ class InstancesList extends React.Component {
       await this.props.parentMutator.quickExport.POST({
         uuids: instanceIds,
         type: 'uuid',
-        recordType: 'INSTANCE'
+        recordType: INSTANCE_RECORD_TYPE,
       });
       new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
     } catch (error) {

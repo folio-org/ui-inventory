@@ -271,3 +271,5 @@ export const ITEM_ACCORDION_LABELS = {
 };
 
 export const LINKED_DATA_EDITOR_PERM = 'linked-data.resources.bib.post';
+
+export const INSTANCE_RECORD_TYPE = 'INSTANCE';

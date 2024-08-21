@@ -566,6 +566,8 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
+                          format={v => v?.trim()}
+                          formatOnBlur
                           disabled={this.isFieldBlocked('callNumberPrefix')}
                         />
                       </Col>
@@ -577,6 +579,8 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
+                          format={v => v?.trim()}
+                          formatOnBlur
                           disabled={this.isFieldBlocked('callNumber')}
                         />
                       </Col>
@@ -588,6 +592,8 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
+                          format={v => v?.trim()}
+                          formatOnBlur
                           disabled={this.isFieldBlocked('callNumberSuffix')}
                         />
                       </Col>
