@@ -21,6 +21,7 @@ import {
   queryIndexes,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   buildSearchQuery,
+  resetFacetStates,
 } from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
@@ -120,31 +121,34 @@ const getInstancesListTree = ({ segment, ...rest }) => {
     <Harness translations={translationsProperties}>
       <Router history={history}>
         <ModuleHierarchyProvider module="@folio/inventory">
-          <InstancesList
-            parentResources={resources}
-            parentMutator={{
-              resultOffset: { replace: mockResultOffsetReplace },
-              resultCount: { replace: noop },
-              query: { update: updateMock, replace: mockQueryReplace },
-              records: { reset: mockRecordsReset },
-              itemsByQuery: { reset: noop, GET: mockItemsByQuery },
-              recordsToExportIDs: { reset: noop, GET: mockRecordsToExportIDs },
-            }}
-            data={{
-              ...data,
-              query
-            }}
-            onSelectRow={noop}
-            renderFilters={noop}
-            segment={segment}
-            searchableIndexes={indexes}
-            getLastBrowse={jest.fn()}
-            getLastSearchOffset={mockGetLastSearchOffset}
-            storeLastSearch={mockStoreLastSearch}
-            storeLastSearchOffset={mockStoreLastSearchOffset}
-            storeLastSegment={noop}
-            {...rest}
-          />
+          <div id="ModuleContainer">
+            <InstancesList
+              isRequestUrlExceededLimit={false}
+              parentResources={resources}
+              parentMutator={{
+                resultOffset: { replace: mockResultOffsetReplace },
+                resultCount: { replace: noop },
+                query: { update: updateMock, replace: mockQueryReplace },
+                records: { reset: mockRecordsReset },
+                itemsByQuery: { reset: noop, GET: mockItemsByQuery },
+                recordsToExportIDs: { reset: noop, GET: mockRecordsToExportIDs },
+              }}
+              data={{
+                ...data,
+                query
+              }}
+              onSelectRow={noop}
+              renderFilters={noop}
+              segment={segment}
+              searchableIndexes={indexes}
+              getLastBrowse={jest.fn()}
+              getLastSearchOffset={mockGetLastSearchOffset}
+              storeLastSearch={mockStoreLastSearch}
+              storeLastSearchOffset={mockStoreLastSearchOffset}
+              storeLastSegment={noop}
+              {...rest}
+            />
+          </div>
         </ModuleHierarchyProvider>
       </Router>
     </Harness>
@@ -196,6 +200,28 @@ describe('InstancesList', () => {
             state: undefined,
           }));
         });
+      });
+    });
+
+    describe('when switching lookup mode', () => {
+      it('should delete facet states', () => {
+        renderInstancesList({
+          segment: 'instances',
+        });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
+
+        expect(deleteFacetStates).toHaveBeenCalledWith('@folio/inventory');
+      });
+    });
+
+    describe('when switching segment (Instance/Holdings/Item)', () => {
+      it('should delete facet states', async () => {
+        renderInstancesList({ segment: 'instances' });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Holdings' }));
+
+        expect(deleteFacetStates).toHaveBeenCalledWith('@folio/inventory');
       });
     });
 
@@ -374,6 +400,14 @@ describe('InstancesList', () => {
 
         expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
       });
+
+      it('should reset facet states', () => {
+        renderInstancesList({ segment: 'instances' });
+
+        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+        expect(resetFacetStates).toHaveBeenCalledWith({ namespace: '@folio/inventory' });
+      });
     });
 
     describe('when search segment is changed', () => {
@@ -486,7 +520,7 @@ describe('InstancesList', () => {
         });
 
         describe('when canceling a record', () => {
-          it('should remove the "layer" parameter and focus on the search field', () => {
+          it('should remove the "layer" parameter and focus on the search field', async () => {
             history.push('/inventory?filters=staffSuppress.false&layer=foo');
 
             jest.spyOn(history, 'push');
@@ -495,7 +529,7 @@ describe('InstancesList', () => {
             SearchAndSort.mock.calls[0][0].onCloseNewRecord();
 
             expect(history.push).toHaveBeenCalledWith('/?filters=staffSuppress.false');
-            expect(getByRole('textbox', { name: /search/i })).toHaveFocus();
+            await waitFor(() => expect(getByRole('textbox', { name: /search/i })).toHaveFocus())
           });
         });
       });

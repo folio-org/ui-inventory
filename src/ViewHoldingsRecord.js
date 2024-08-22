@@ -463,7 +463,10 @@ class ViewHoldingsRecord extends React.Component {
 
     const isSourceMARC = this.isMARCSource();
 
-    if (!canCreate && !canEdit && !canDelete) {
+    const hasFolioPermissions = canCreate || canEdit || canDelete;
+    const hasMARCPermissions = canViewMARC || canEditMARC;
+
+    if ((isSourceMARC && (!hasMARCPermissions && !hasFolioPermissions)) || (!isSourceMARC && !hasFolioPermissions)) {
       return null;
     }
 

@@ -1045,6 +1045,16 @@ export const batchQueryIntoSmaller = (query, VALUES_PER_BATCH = 50) => {
 };
 
 export const checkIfCentralOrderingIsActive = centralOrdering => centralOrdering.records[0]?.settings[0]?.value === 'true';
+export const flattenCentralTenantPermissions = (centralTenantPermissions) => {
+  // Set is used to collect unique permission names because subPermissions can duplicate
+  return new Set(centralTenantPermissions?.reduce((acc, currentPermission) => {
+    return [
+      ...acc,
+      currentPermission.permissionName,
+      ...currentPermission.subPermissions,
+    ];
+  }, []));
+};
 
 export const omitCurrentAndCentralTenants = (stripes) => {
   const tenants = stripes?.user?.user?.tenants;

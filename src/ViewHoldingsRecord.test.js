@@ -60,13 +60,21 @@ const mockData = jest.fn().mockResolvedValue({ id: 'testId' });
 const mockGoTo = jest.fn();
 const mockOnUpdateOwnership = jest.fn().mockResolvedValue({});
 
+const permissions = {
+  FOLIO_CREATE: 'ui-inventory.holdings.create',
+  FOLIO_EDIT: 'ui-inventory.holdings.edit',
+  FOLIO_DELETE: 'ui-inventory.holdings.delete',
+  MARC_VIEW: 'ui-quick-marc.quick-marc-holdings-editor.view',
+  MARC_ALL: 'ui-quick-marc.quick-marc-holdings-editor.all',
+};
+
 const defaultProps = {
   id: 'id',
   goTo: mockGoTo,
   onUpdateOwnership: mockOnUpdateOwnership,
   holdingsrecordid: 'holdingId',
   referenceTables: {
-    holdingsSources: [{ id: 'sourceId', name: 'MARC' }],
+    holdingsSources: [{ id: 'MARC', name: 'MARC' }, { id: 'FOLIO', name: 'FOLIO' }],
     locationsById: {
       inactiveLocation: { name: 'Location 1', isActive: false },
     },
@@ -75,7 +83,7 @@ const defaultProps = {
     holdingsRecords: {
       records: [
         {
-          sourceId: 'sourceId',
+          sourceId: 'MARC',
           temporaryLocationId: 'inactiveLocation',
           id: 'holdingId',
           instanceId: 'instanceId',
@@ -302,6 +310,104 @@ describe('ViewHoldingsRecord actions', () => {
       fireEvent.click(screen.getByRole('button', { name: 'editMARC' }));
 
       expect(mockGoTo).toHaveBeenLastCalledWith(`/inventory/quick-marc/edit-holdings/instanceId/${defaultProps.holdingsrecordid}?%2F=&relatedRecordVersion=1`);
+    });
+  });
+
+  describe('when source is MARC', () => {
+    describe('and user has FOLIO record permissions', () => {
+      const assignedPerms = [permissions.FOLIO_CREATE];
+
+      it('should render the action menu', () => {
+        const { queryByText } = renderViewHoldingsRecord({
+          stripes: {
+            ...buildStripes({
+              hasPerm: (perm) => assignedPerms.includes(perm),
+            }),
+          },
+        });
+
+        waitFor(() => expect(queryByText('Actions')).toBeInTheDocument());
+      });
+    });
+
+    describe('and user has MARC record permissions', () => {
+      const assignedPerms = [permissions.MARC_ALL];
+
+      it('should render the action menu', () => {
+        const { queryByText } = renderViewHoldingsRecord({
+          stripes: {
+            ...buildStripes({
+              hasPerm: (perm) => assignedPerms.includes(perm),
+            }),
+          },
+        });
+
+        waitFor(() => expect(queryByText('Actions')).toBeInTheDocument());
+      });
+    });
+
+    describe('and user does not have any record permissions', () => {
+      it('should not render the action menu', () => {
+        const { queryByText } = renderViewHoldingsRecord({
+          stripes: {
+            ...buildStripes({
+              hasPerm: () => false,
+            }),
+          },
+        });
+
+        waitFor(() => expect(queryByText('Actions')).not.toBeInTheDocument());
+      });
+    });
+  });
+
+  describe('when source is FOLIO', () => {
+    const resourcesProp = {
+      ...defaultProps.resources,
+      resources: {
+        holdingsRecords: {
+          records: [
+            {
+              sourceId: 'FOLIO',
+              temporaryLocationId: 'inactiveLocation',
+              id: 'holdingId',
+              _version: 1,
+            }
+          ],
+        },
+      },
+    };
+
+    describe('and user has FOLIO record permissions', () => {
+      const assignedPerms = [permissions.FOLIO_CREATE];
+
+      it('should render the action menu', () => {
+        const { queryByText } = renderViewHoldingsRecord({
+          resources: resourcesProp,
+          stripes: {
+            ...buildStripes({
+              hasPerm: (perm) => assignedPerms.includes(perm),
+            }),
+          },
+        });
+
+        waitFor(() => expect(queryByText('Actions')).toBeInTheDocument());
+      });
+    });
+
+    describe('and user does not have FOLIO record permissions', () => {
+      it('should not render the action menu', () => {
+        const { queryByText } = renderViewHoldingsRecord({
+          resources: resourcesProp,
+          stripes: {
+            ...buildStripes({
+              hasPerm: () => false,
+            }),
+          },
+        });
+
+        waitFor(() => expect(queryByText('Actions')).toBeInTheDocument());
+      });
     });
   });
 

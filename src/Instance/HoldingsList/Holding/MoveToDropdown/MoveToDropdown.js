@@ -32,12 +32,15 @@ export const MoveToDropdown = ({
   const { locationsById } = useContext(DataContext);
 
   const {
-    instances,
+    instances = [],
     selectedItemsMap,
     allHoldings,
     onSelect,
   } = useContext(DnDContext);
 
+  // when moving items within an instance the array is empty
+  // when moving holdings/items to another instance the array contains two instances
+  const [moveFromInstance, moveToInstance] = instances;
   const filteredHoldings = allHoldings
     ? allHoldings.filter(el => el.instanceId !== holding.instanceId)
     : holdings.filter(el => el.id !== holding.id);
@@ -52,6 +55,8 @@ export const MoveToDropdown = ({
   const selectedItems = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
   const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
   const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
+  const isMovementWithinInstance = !instances.length;
+  const canMoveItemsWithinInstance = selectedItems.length && movetoHoldings.length && canMoveItems;
 
   const dropdownButton = useCallback(({ getTriggerProps }) => (
     <DropdownButton
@@ -63,13 +68,23 @@ export const MoveToDropdown = ({
     </DropdownButton>
   ), [holding.id]);
 
+  const createMoveToLabel = (moveToHolding) => {
+    const moveToInstanceTitle = instances.filter(instance => instance.id === moveToHolding.instanceId)[0]?.title;
+    const moveToHoldingsLabel = selectedItems.length ? `${moveToHolding.labelLocation} ${moveToHolding.callNumber}` : '';
+
+    if (moveToInstanceTitle && !selectedItems.length) return moveToInstanceTitle;
+    if (isMovementWithinInstance && moveToHoldingsLabel) return moveToHoldingsLabel;
+
+    return `${moveToInstanceTitle} ${moveToHoldingsLabel}`;
+  };
+
   const dropdownMenu = useCallback(() => (
     <DropdownMenu
       data-role="menu"
       data-test-move-to-dropdown
     >
       {
-        instances && !selectedItems.length
+        !isMovementWithinInstance && !selectedItems.length
           ? canMoveHoldings && (
             <div
               role="button"
@@ -77,39 +92,31 @@ export const MoveToDropdown = ({
               className={styles.dropDownItem}
               data-item-id={holding.id}
               data-to-id={
-                instances[0].id === holding.instanceId
-                  ? instances[1].id
-                  : instances[0].id
+                moveFromInstance.id === holding.instanceId
+                  ? moveToInstance.id
+                  : moveFromInstance.id
               }
               data-is-holding
               onClick={onSelect}
               onKeyPress={onSelect}
             >
-              {instances[0].id === holding.instanceId
-                ? instances[1].title
-                : instances[0].title}
+              {moveFromInstance.id === holding.instanceId
+                ? moveToInstance.title
+                : moveFromInstance.title}
             </div>
           )
-          : canMoveItems && movetoHoldings.map((item, index) => (
+          : canMoveItems && movetoHoldings.map((moveToHolding, index) => (
             <div
               role="button"
               tabIndex={index}
               className={styles.dropDownItem}
-              key={item.id}
-              data-to-id={item.id}
+              key={moveToHolding.id}
+              data-to-id={moveToHolding.id}
               data-item-id={holding.id}
               onClick={onSelect}
               onKeyPress={onSelect}
             >
-              {
-                instances?.filter(instance => instance.id === item.instanceId)[0].title
-              }
-              {' '}
-              {
-              selectedItems.length
-                ? `${item.labelLocation} ${item.callNumber}`
-                : ''
-              }
+              {createMoveToLabel(moveToHolding)}
             </div>
           ))}
     </DropdownMenu>
@@ -119,6 +126,7 @@ export const MoveToDropdown = ({
     <Dropdown
       renderTrigger={dropdownButton}
       renderMenu={dropdownMenu}
+      disabled={isMovementWithinInstance && !canMoveItemsWithinInstance}
     />
   );
 };
