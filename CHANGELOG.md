@@ -71,6 +71,8 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Add inventory permission: Settings (Inventory): Create, edit, delete subject types. Refs UIIN-3009.
 * Update required permissions for quick export of instances. Refs UIIN-3003.
 * Add `showSortIndicator` prop to `SearchAndSort` to display sort indicator next to the column names, and add correct `nonInteractiveHeaders`. Refs UIIN-2986.
+* Change casing of `Linked data editor` label. Refs UIIN-3007.
+* MARC bib/holdings | View Source: Add Edit and Export actions. Refs UIIN-3012.
 * Disable `Save and keep editing` and `Save & close` buttons when submit the instance form. Fixes UIIN-2939. 
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)

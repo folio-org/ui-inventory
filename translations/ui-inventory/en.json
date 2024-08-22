@@ -6,7 +6,7 @@
   "appMenu.keyboardShortcuts": "Keyboard shortcuts",
   "appMenu.inventorySearch": "Inventory app search",
   "quickMARC.label": "quickMARC",
-  "ld.label": "Linked Data Editor",
+  "ld.label": "Linked data editor",
   "inventory.label": "Inventory",
   "searchForTitle": "Search for {title}",
   "instances.columns.title": "Title",
@@ -663,6 +663,7 @@
   "editMARCHoldings": "Edit in quickMARC",
   "editMARCHoldings.paneTitle": "Location: {location} - [{callNumber}]",
   "quickMarcNotAvailable": "No plugin available!",
+  "print": "Print",
 
   "settings.instanceClassification.all": "Classification (all)",
   "settings.instanceClassification.dewey": "Dewey Decimal classification",
