@@ -8,6 +8,7 @@ import { useStripes } from '@folio/stripes/core';
 
 import { useSearchInstanceByIdQuery } from '../common';
 import { DataContext } from '../contexts';
+import { useUpdateOwnership } from '../hooks';
 import ViewHoldingsRecord from '../ViewHoldingsRecord';
 
 const ViewHoldingRoute = () => {
@@ -16,6 +17,7 @@ const ViewHoldingRoute = () => {
   const { okapi } = useStripes();
   const { state } = useLocation();
   const { instance } = useSearchInstanceByIdQuery(instanceId);
+  const { updateOwnership } = useUpdateOwnership();
 
   return (
     <ViewHoldingsRecord
@@ -24,6 +26,7 @@ const ViewHoldingRoute = () => {
       tenantTo={state?.tenantTo || okapi.tenant}
       referenceTables={referenceTables}
       holdingsrecordid={holdingsrecordid}
+      onUpdateOwnership={updateOwnership}
     />
   );
 };

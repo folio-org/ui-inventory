@@ -23,8 +23,6 @@ import {
   translationsProperties,
 } from '../test/jest/helpers';
 
-import * as utils from './utils';
-
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 
 jest.mock('./Holding/ViewHolding/HoldingReceivingHistory/useReceivingHistory', () => jest.fn(() => ({
@@ -58,14 +56,14 @@ jest.mock('./utils', () => ({
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
 const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
 
-const spyOnUpdateOwnership = jest.spyOn(utils, 'updateOwnership');
-
 const mockData = jest.fn().mockResolvedValue({ id: 'testId' });
 const mockGoTo = jest.fn();
+const mockOnUpdateOwnership = jest.fn().mockResolvedValue({});
 
 const defaultProps = {
   id: 'id',
   goTo: mockGoTo,
+  onUpdateOwnership: mockOnUpdateOwnership,
   holdingsrecordid: 'holdingId',
   referenceTables: {
     holdingsSources: [{ id: 'sourceId', name: 'MARC' }],
@@ -162,7 +160,7 @@ describe('ViewHoldingsRecord actions', () => {
   it('should translate to edit holding form page', async () => {
     renderViewHoldingsRecord();
 
-    const editHoldingBtn = await screen.findByTestId('edit-holding-btn');
+    const editHoldingBtn = await screen.findByRole('button', { name: 'edit' });
     fireEvent.click(editHoldingBtn);
 
     expect(mockPush).toHaveBeenCalled();
@@ -171,7 +169,7 @@ describe('ViewHoldingsRecord actions', () => {
   it('should translate to duplicate holding form page', async () => {
     renderViewHoldingsRecord();
 
-    const duplicatHoldingBtn = await screen.findByTestId('duplicate-holding-btn');
+    const duplicatHoldingBtn = await screen.findByRole('button', { name: 'duplicateRecord' });
     fireEvent.click(duplicatHoldingBtn);
 
     expect(mockPush).toHaveBeenCalled();
@@ -338,7 +336,7 @@ describe('ViewHoldingsRecord actions', () => {
       it('should be rendered', async () => {
         renderViewHoldingsRecord({ stripes, isInstanceShared: true });
 
-        const updateOwnershipBtn = await screen.findByTestId('update-ownership-btn');
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
         expect(updateOwnershipBtn).toBeInTheDocument();
       });
     });
@@ -347,7 +345,7 @@ describe('ViewHoldingsRecord actions', () => {
       it('should be hidden', () => {
         renderViewHoldingsRecord({ stripes, isInstanceShared: false });
 
-        const updateOwnershipBtn = screen.queryByTestId('update-ownership-btn');
+        const updateOwnershipBtn = screen.queryByText('Update ownership');
         expect(updateOwnershipBtn).not.toBeInTheDocument();
       });
     });
@@ -356,7 +354,7 @@ describe('ViewHoldingsRecord actions', () => {
       it('should render location lookup', async () => {
         renderViewHoldingsRecord({ stripes, isInstanceShared: true });
 
-        const updateOwnershipBtn = await screen.findByTestId('update-ownership-btn');
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
         fireEvent.click(updateOwnershipBtn);
 
         const locationLookup = await screen.findByText('FindLocation');
@@ -369,7 +367,7 @@ describe('ViewHoldingsRecord actions', () => {
       it('should render confirmation modal', async () => {
         renderViewHoldingsRecord({ stripes, isInstanceShared: true });
 
-        const updateOwnershipBtn = await screen.findByTestId('update-ownership-btn');
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
         fireEvent.click(updateOwnershipBtn);
 
         await waitFor(() => FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: 'university' }]));
@@ -381,11 +379,9 @@ describe('ViewHoldingsRecord actions', () => {
 
     describe('when confirm updating ownership', () => {
       it('should call the function to update ownership', async () => {
-        spyOnUpdateOwnership.mockResolvedValue({ ok: true });
-
         renderViewHoldingsRecord({ stripes, isInstanceShared: true });
 
-        const updateOwnershipBtn = await screen.findByTestId('update-ownership-btn');
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
         fireEvent.click(updateOwnershipBtn);
 
         await waitFor(() => FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: targetTenantId, id: targetLocationId }]));
@@ -394,7 +390,7 @@ describe('ViewHoldingsRecord actions', () => {
         const confirmButton = within(confirmationModal).getByRole('button', { name: /confirm/i });
         fireEvent.click(confirmButton);
 
-        expect(spyOnUpdateOwnership).toHaveBeenCalledWith(
+        expect(mockOnUpdateOwnership).toHaveBeenCalledWith(
           {
             holdingsRecordIds: [defaultProps.holdingsrecordid],
             targetTenantId,
@@ -406,13 +402,11 @@ describe('ViewHoldingsRecord actions', () => {
       });
     });
 
-    describe('when an error was occured updating ownership', () => {
+    describe('when an error was occured during updating ownership', () => {
       it('should show an error message', async () => {
-        spyOnUpdateOwnership.mockRejectedValue({ ok: false });
-
         renderViewHoldingsRecord({ stripes, isInstanceShared: true });
 
-        const updateOwnershipBtn = await screen.findByTestId('update-ownership-btn');
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
         fireEvent.click(updateOwnershipBtn);
 
         await waitFor(() => FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: targetTenantId }]));
@@ -429,7 +423,7 @@ describe('ViewHoldingsRecord actions', () => {
       it('should hide the confirmation modal', async () => {
         const { container } = renderViewHoldingsRecord({ stripes, isInstanceShared: true });
 
-        const updateOwnershipBtn = await screen.findByTestId('update-ownership-btn');
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
         fireEvent.click(updateOwnershipBtn);
 
         FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: targetTenantId }]);

@@ -31,7 +31,6 @@ import {
   LIMIT_MAX,
   OKAPI_TENANT_HEADER,
 } from '@folio/stripes-inventory-components';
-import { getHeaderWithCredentials } from '@folio/stripes-util';
 
 import {
   itemStatusesMap,
@@ -1054,13 +1053,4 @@ export const omitCurrentAndCentralTenants = (stripes) => {
   const centralTenantId = stripes.user?.user?.consortium?.centralTenantId;
 
   return tenants?.filter(tenant => tenant.id !== currentTenantId && tenant.id !== centralTenantId);
-};
-
-export const updateOwnership = (body, okapi) => {
-  return fetch(`${okapi.url}/inventory/holdings/update-ownership`,
-    {
-      method: 'POST',
-      ...getHeaderWithCredentials(okapi),
-      body: JSON.stringify(body),
-    });
 };

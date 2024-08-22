@@ -21,7 +21,6 @@ import {
   ExpandAllButton,
   KeyValue,
   MultiColumnList,
-  Icon,
   Button,
   Modal,
   ConfirmationModal,
@@ -59,7 +58,6 @@ import {
   switchAffiliation,
   isInstanceShadowCopy,
   omitCurrentAndCentralTenants,
-  updateOwnership,
 } from './utils';
 import withLocation from './withLocation';
 import {
@@ -71,6 +69,7 @@ import {
 import {
   WarningMessage,
   AdministrativeNoteList,
+  ActionItem,
 } from './components';
 import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
@@ -338,10 +337,13 @@ class ViewHoldingsRecord extends React.Component {
   }
 
   callUpdateOwnership = () => {
-    const { stripes: { okapi } } = this.props;
+    const {
+      stripes: { okapi },
+      onUpdateOwnership,
+    } = this.props;
     const holdingsRecord = this.getMostRecentHolding();
 
-    updateOwnership(
+    onUpdateOwnership(
       {
         toInstanceId: holdingsRecord.instanceId,
         holdingsRecordIds: [holdingsRecord.id],
@@ -469,96 +471,70 @@ class ViewHoldingsRecord extends React.Component {
 
     return (
       <>
-        {
-          canEdit &&
-          <Button
+        {canEdit && (
+          <ActionItem
             id="edit-holdings"
-            onClick={this.onEditHolding}
-            buttonStyle="dropdownItem"
-            data-testid="edit-holding-btn"
-          >
-            <Icon icon="edit">
-              <FormattedMessage id="ui-inventory.editHoldings" />
-            </Icon>
-          </Button>
-        }
-        {
-          canCreate &&
-          <Button
+            onClickHandler={this.onEditHolding}
+            icon="edit"
+            messageId="ui-inventory.editHoldings"
+          />
+        )}
+        {canCreate && (
+          <ActionItem
             id="copy-holdings"
-            onClick={this.onCopyHolding}
-            buttonStyle="dropdownItem"
-            data-testid="duplicate-holding-btn"
-          >
-            <Icon icon="duplicate">
-              <FormattedMessage id="ui-inventory.duplicateHoldings" />
-            </Icon>
-          </Button>
-        }
-        {
-          canUpdateOwnership &&
-          <Button
+            onClickHandler={this.onCopyHolding}
+            icon="duplicate"
+            messageId="ui-inventory.duplicateHoldings"
+          />
+        )}
+        {canUpdateOwnership && (
+          <ActionItem
             id="update-ownership"
-            onClick={this.openLocationLookup}
-            buttonStyle="dropdownItem"
-            data-testid="update-ownership-btn"
-          >
-            <Icon icon="profile">
-              <FormattedMessage id="ui-inventory.updateOwnership" />
-            </Icon>
-          </Button>
-        }
+            onClickHandler={this.openLocationLookup}
+            icon="profile"
+            messageId="ui-inventory.updateOwnership"
+          />
+        )}
         {isSourceMARC && (
           <>
             {canViewMARC && (
-              <Button
+              <ActionItem
                 id="clickable-view-source"
-                buttonStyle="dropdownItem"
-                disabled={!marcRecord}
-                onClick={(e) => {
+                onClickHandler={(e) => {
                   onToggle();
                   this.handleViewSource(e, instance);
                 }}
-              >
-                <Icon icon="document">
-                  <FormattedMessage id="ui-inventory.viewSource" />
-                </Icon>
-              </Button>
+                icon="document"
+                messageId="ui-inventory.viewSource"
+                disabled={!marcRecord}
+              />
             )}
             {canEditMARC && (
-              <Button
+              <ActionItem
                 id="clickable-edit-marc-holdings"
-                buttonStyle="dropdownItem"
-                disabled={!marcRecord}
-                onClick={(e) => {
+                onClickHandler={(e) => {
                   onToggle();
                   this.handleEditInQuickMarc(e);
                 }}
-              >
-                <Icon icon="edit">
-                  <FormattedMessage id="ui-inventory.editMARCHoldings" />
-                </Icon>
-              </Button>
+                icon="edit"
+                messageId="ui-inventory.editMARCHoldings"
+                disabled={!marcRecord}
+              />
             )}
           </>
         )}
-        {
-          canDelete &&
-          <Button
+        {canDelete && (
+          <ActionItem
             id="clickable-delete-holdingsrecord"
-            onClick={() => {
+            onClickHandler={() => {
               onToggle();
               this.setState(this.canDeleteHoldingsRecord(firstRecordOfHoldings) ?
                 { confirmHoldingsRecordDeleteModal: true } : { noHoldingsRecordDeleteModal: true });
             }}
-            buttonStyle="dropdownItem"
-            data-test-inventory-delete-holdingsrecord-action
-          >
-            <Icon icon="trash">
-              <FormattedMessage id="ui-inventory.deleteHoldingsRecord" />
-            </Icon>
-          </Button>
-        }
+            icon="trash"
+            messageId="ui-inventory.deleteHoldingsRecord"
+          />
+        )}
       </>
     );
   };
@@ -1354,6 +1330,7 @@ ViewHoldingsRecord.propTypes = {
   }),
   goTo: PropTypes.func.isRequired,
   isInstanceShared: PropTypes.bool,
+  onUpdateOwnership: PropTypes.func,
 };
 
 export default flowRight(
