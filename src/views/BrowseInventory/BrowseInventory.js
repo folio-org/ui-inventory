@@ -15,7 +15,6 @@ import querystring from 'query-string';
 import {
   TitleManager,
   useNamespace,
-  useStripes,
 } from '@folio/stripes/core';
 import {
   PersistedPaneset,
@@ -28,10 +27,7 @@ import {
   useItemToView,
   useLocationFilters,
 } from '@folio/stripes-acq-components';
-import {
-  browseModeOptions,
-  useResetFacetStates,
-} from '@folio/stripes-inventory-components';
+import { useResetFacetStates } from '@folio/stripes-inventory-components';
 
 import {
   BrowseInventoryFilters,
@@ -48,7 +44,6 @@ import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
 import css from './BrowseInventory.css';
 
 const BrowseInventory = () => {
-  const stripes = useStripes();
   const history = useHistory();
   const location = useLocation();
   const intl = useIntl();
