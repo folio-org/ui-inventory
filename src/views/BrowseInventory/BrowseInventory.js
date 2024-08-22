@@ -124,16 +124,6 @@ const BrowseInventory = () => {
   const searchableIndexesPlaceholder = intl.formatMessage({ id: 'ui-inventory.browse.searchableIndexesPlaceholder' });
   const isResetButtonDisabled = !location.search && !searchQuery;
 
-  const isSearchOptionHidden = (option) => {
-    // Hide some of the call number type options for this temporary environment (UIIN-2923).
-    return stripes.okapi.url === 'https://folio-perf-quesnelia-okapi.ci.folio.org'
-      && [
-        browseModeOptions.LOCAL,
-        browseModeOptions.OTHER,
-        browseModeOptions.SUPERINTENDENT,
-      ].includes(option.value);
-  };
-
   const searchableOptions = browseInstanceIndexes.map((searchableIndex) => {
     if (searchableIndex.subIndexes) {
       return (
@@ -142,16 +132,14 @@ const BrowseInventory = () => {
           label={intl.formatMessage({ id: searchableIndex.label })}
           className={css.optgroup}
         >
-          {searchableIndex.subIndexes
-            .filter(subOption => !isSearchOptionHidden(subOption))
-            .map((subOption) => (
-              <option
-                key={subOption.value}
-                value={subOption.value}
-              >
-                {intl.formatMessage({ id: subOption.label })}
-              </option>
-            ))}
+          {searchableIndex.subIndexes.map((subOption) => (
+            <option
+              key={subOption.value}
+              value={subOption.value}
+            >
+              {intl.formatMessage({ id: subOption.label })}
+            </option>
+          ))}
         </optgroup>
       );
     }

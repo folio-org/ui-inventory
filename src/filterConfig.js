@@ -8,10 +8,7 @@ export const browseInstanceIndexes = [
       { label: 'ui-inventory.browse.callNumbersAll', value: browseModeOptions.CALL_NUMBERS },
       { label: 'ui-inventory.browse.dewey', value: browseModeOptions.DEWEY },
       { label: 'ui-inventory.browse.libOfCongress', value: browseModeOptions.LIBRARY_OF_CONGRESS },
-      { label: 'ui-inventory.browse.local', value: browseModeOptions.LOCAL },
       { label: 'ui-inventory.browse.natLibOfMed', value: browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE },
-      { label: 'ui-inventory.browse.other', value: browseModeOptions.OTHER },
-      { label: 'ui-inventory.browse.superintendent', value: browseModeOptions.SUPERINTENDENT },
     ],
   },
   {
