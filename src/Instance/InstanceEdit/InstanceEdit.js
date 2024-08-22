@@ -112,12 +112,15 @@ const InstanceEdit = ({
   const isMemberTenant = checkIfUserInMemberTenant(stripes);
   const tenantId = (isMemberTenant && instance?.shared) ? stripes.user.user.consortium?.centralTenantId : stripes.okapi.tenant;
 
-  const { mutateInstance } = useInstanceMutation({ tenantId });
+  const { mutateInstance } = useInstanceMutation({
+    options: { onSuccess },
+    tenantId,
+  });
 
-  const onSubmit = useCallback((initialInstance) => {
+  const onSubmit = useCallback(async (initialInstance) => {
     const updatedInstance = marshalInstance(initialInstance, identifierTypesByName);
 
-    return mutateInstance(updatedInstance, { onSuccess, onError });
+    return mutateInstance(updatedInstance).catch(onError);
   }, [mutateInstance]);
 
   if (isInstanceLoading) return <LoadingView />;
