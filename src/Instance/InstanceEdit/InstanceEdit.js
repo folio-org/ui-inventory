@@ -46,7 +46,6 @@ const InstanceEdit = ({
   const { identifierTypesById, identifierTypesByName } = referenceData ?? {};
   const [httpError, setHttpError] = useState();
   const [initialValues, setInitialValues] = useState();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const callout = useCallout();
   const keepEditing = useRef(false);
   const { instance, isFetching: isInstanceLoading, refetch: refetchInstance } = useInstance(instanceId);
@@ -86,7 +85,6 @@ const InstanceEdit = ({
       goBack();
     } else {
       refetchInstance();
-      setIsSubmitting(false);
     }
   }, [callout, goBack]);
 
@@ -100,7 +98,6 @@ const InstanceEdit = ({
       status: response?.status,
     };
 
-    setIsSubmitting(false);
     setHttpError(err);
   };
 
@@ -118,7 +115,6 @@ const InstanceEdit = ({
   const { mutateInstance } = useInstanceMutation({ tenantId });
 
   const onSubmit = useCallback((initialInstance) => {
-    setIsSubmitting(true);
     const updatedInstance = marshalInstance(initialInstance, identifierTypesByName);
 
     return mutateInstance(updatedInstance, { onSuccess, onError });
@@ -139,7 +135,6 @@ const InstanceEdit = ({
         stripes={stripes}
         onCancel={goBack}
         setKeepEditing={setKeepEditing}
-        isSubmitting={isSubmitting}
         showKeepEditingButton
       />
       {httpError && !httpError?.errorType &&
