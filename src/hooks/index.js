@@ -13,3 +13,4 @@ export { default as useSearchForShadowInstanceTenants } from './useSearchForShad
 export { default as useClassificationIdentifierTypes } from './useClassificationIdentifierTypes';
 export { default as useClassificationBrowseConfig } from './useClassificationBrowseConfig';
 export * from './useQuickExport';
+export * from './useInstanceDateTypes';

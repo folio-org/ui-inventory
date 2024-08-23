@@ -71,13 +71,15 @@ import {
 import {
   validateTitles,
   validateSubInstances,
+  validateDates,
 } from '../validation';
 
 import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields';
 import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
+import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
+import DateFields from './dateFields';
 
 import styles from './InstanceForm.css';
-import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
 
 const FORMATS_WITH_BLOCKED_FIELDS = ['MARC', 'LINKED_DATA'];
 
@@ -86,6 +88,7 @@ function validate(values) {
   const requiredTextMessage = <FormattedMessage id="ui-inventory.fillIn" />;
   const requiredSelectMessage = <FormattedMessage id="ui-inventory.selectToContinue" />;
   const requiredPublicationFieldMessage = <FormattedMessage id="ui-inventory.onePublicationFieldToContinue" />;
+  const dateLengthMessage = <FormattedMessage id="ui-inventory.dateLength" />;
 
   if (!values.title) {
     errors.title = requiredTextMessage;
@@ -155,6 +158,8 @@ function validate(values) {
       errors[listProps.list] = listErrors;
     }
   });
+
+  validateDates(values, errors, dateLengthMessage, null);
 
   validateTitles(values, 'preceding', errors, requiredTextMessage);
   validateTitles(values, 'succeeding', errors, requiredTextMessage);
@@ -343,6 +348,14 @@ class InstanceForm extends React.Component {
         label: it.name,
         value: it.id,
         selected: it.id === initialValues.instanceTypeId,
+      }),
+    ) : [];
+
+    const instanceDateTypeOptions = referenceTables.instanceDateTypes ? referenceTables.instanceDateTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.instanceDate?.instanceDateTypeId,
       }),
     ) : [];
 
@@ -738,6 +751,7 @@ class InstanceForm extends React.Component {
                         canEdit={!this.isFieldBlocked('publicationRange')}
                         canDelete={!this.isFieldBlocked('publicationRange')}
                       />
+                      <DateFields instanceDateTypeOptions={instanceDateTypeOptions} />
                     </Accordion>
                     <Accordion
                       label={(

@@ -599,7 +599,7 @@ export const marshalInstance = (instance, identifierTypesByName) => {
  *
  */
 export const unmarshalInstance = (instance, identifierTypesById) => {
-  const unmarshaledInstance = { ...instance };
+  const unmarshaledInstance = { ...instance, dates: {} };
 
   unmarshalTitles(unmarshaledInstance, identifierTypesById, 'preceding');
   unmarshalTitles(unmarshaledInstance, identifierTypesById, 'succeeding');

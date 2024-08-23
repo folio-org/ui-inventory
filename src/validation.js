@@ -1,3 +1,5 @@
+const DATE_LENGTH = 4;
+
 export const validateTitles = (instance, type, errors, message) => {
   const titleAttr = `${type}Titles`;
   const errorList = [];
@@ -27,6 +29,18 @@ export const validateSubInstances = (instance, type, errors, message) => {
 
   if (errorList.length) {
     errors[type] = errorList;
+  }
+};
+
+export const validateDates = (instance, errors, dateLengthMessage, dateTypeMessage) => {
+  errors.dates = {};
+
+  if (instance.dates?.date1?.length !== DATE_LENGTH) {
+    errors.dates.date1 = dateLengthMessage;
+  }
+
+  if (instance.dates?.date2?.length !== DATE_LENGTH) {
+    errors.dates.date2 = dateLengthMessage;
   }
 };
 

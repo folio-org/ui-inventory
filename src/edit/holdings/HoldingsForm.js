@@ -579,8 +579,7 @@ class HoldingsForm extends React.Component {
                           component={TextArea}
                           rows={1}
                           fullWidth
-                          format={v => v?.trim()}
-                          formatOnBlur
+                          parse={v => v?.trim()}
                           disabled={this.isFieldBlocked('callNumber')}
                         />
                       </Col>
