@@ -289,6 +289,7 @@ describe('InstancesList', () => {
         const getLastSearch = jest.fn(segment => {
           if (segment === segments.holdings) return '?query=foo&segment=holdings&sort=title';
           if (segment === segments.items) return '?query=foo&segment=items&sort=title';
+          return '?qindex=title&query=book&sort=title';
         });
 
         renderInstancesList({

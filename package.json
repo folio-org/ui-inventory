@@ -122,8 +122,7 @@
           "search.index.inventory.reindex.post",
           "search.facets.collection.get",
           "consortium-search.holdings.collection.get",
-          "consortium-search.items.collection.get",
-          "mod-settings.global.read.ui-inventory.display-settings"
+          "consortium-search.items.collection.get"
         ]
       },
       {
@@ -173,8 +172,7 @@
         "permissionName": "settings.inventory.enabled",
         "displayName": "Settings (Inventory): Module is enabled.",
         "subPermissions": [
-          "settings.enabled",
-          "mod-settings.global.write.ui-inventory.display-settings"
+          "settings.enabled"
         ],
         "visible": false
       },
@@ -910,6 +908,19 @@
         "permissionName": "mod-settings.global.write.ui-inventory.display-settings",
         "displayName": "Settings (Inventory): write the settings in the 'Display settings' section",
         "visible": false
+      },
+      {
+        "permissionName": "ui-inventory.settings.displaySettings",
+        "displayName": "Settings (Inventory): Can view and edit general settings",
+        "subPermissions": [
+          "settings.inventory.enabled",
+          "mod-settings.entries.collection.get",
+          "mod-settings.entries.item.post",
+          "mod-settings.entries.item.put",
+          "mod-settings.global.read.ui-inventory.display-settings",
+          "mod-settings.global.write.ui-inventory.display-settings"
+        ],
+        "visible": true
       }
     ]
   },

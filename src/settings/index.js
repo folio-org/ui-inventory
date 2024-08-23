@@ -47,6 +47,7 @@ class InventorySettings extends React.Component {
             route: 'displaySettings',
             label: <FormattedMessage id="ui-inventory.settings.section.displaySettings" />,
             component: DisplaySettings,
+            perm: 'ui-inventory.settings.displaySettings',
           },
         ],
       },

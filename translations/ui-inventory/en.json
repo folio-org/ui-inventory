@@ -724,6 +724,7 @@
   "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
   "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
   "permission.items.create-in-transit-report": "Inventory: Create and download In transit items report",
+  "permission.settings.displaySettings": "Settings (Inventory): Can view and edit general settings",
 
   "moveItems.moveButton": "Move to",
   "moveItems.selectAll": "Select/unselect all items for movement",
