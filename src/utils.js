@@ -1055,3 +1055,12 @@ export const flattenCentralTenantPermissions = (centralTenantPermissions) => {
     ];
   }, []));
 };
+
+export const omitCurrentAndCentralTenants = (stripes) => {
+  const tenants = stripes?.user?.user?.tenants;
+
+  const currentTenantId = stripes.okapi.tenant;
+  const centralTenantId = stripes.user?.user?.consortium?.centralTenantId;
+
+  return tenants?.filter(tenant => tenant.id !== currentTenantId && tenant.id !== centralTenantId);
+};
