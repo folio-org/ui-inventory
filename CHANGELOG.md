@@ -74,6 +74,8 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Change casing of `Linked data editor` label. Refs UIIN-3007.
 * MARC bib/holdings | View Source: Add Edit and Export actions. Refs UIIN-3012.
 * Trim call numbers when Creating/Editing/Deriving Holdings/Items. Fixes UIIN-2889.
+* New Inventory Settings: Subject types and Subject sources. Refs UIIN-2822.
+* Disable `Save and keep editing` and `Save & close` buttons when submit the instance form. Fixes UIIN-2939.
 * Edit/Create -- Subject accordion instance UI changes. Refs UIIN-2944.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)

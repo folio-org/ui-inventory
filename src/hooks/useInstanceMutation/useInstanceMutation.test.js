@@ -22,7 +22,7 @@ const wrapper = ({ children }) => (
 
 describe('useInstanceMutation', () => {
   it('should make post request when id is not provided', async () => {
-    const postMock = jest.fn();
+    const postMock = jest.fn().mockReturnValue({ json: jest.fn() });
 
     useTenantKy.mockClear().mockReturnValue({
       post: postMock,
@@ -39,7 +39,7 @@ describe('useInstanceMutation', () => {
   });
 
   it('should make put request when id is provided', async () => {
-    const putMock = jest.fn();
+    const putMock = jest.fn().mockReturnValue({ json: jest.fn() });
 
     useTenantKy.mockClear().mockReturnValue({
       put: putMock,

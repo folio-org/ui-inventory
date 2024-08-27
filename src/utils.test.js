@@ -19,6 +19,7 @@ import {
   sendCalloutOnAffiliationChange,
   batchQueryIntoSmaller,
   checkIfCentralOrderingIsActive,
+  omitCurrentAndCentralTenants,
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
@@ -390,5 +391,27 @@ describe('checkIfCentralOrderingIsActive', () => {
 
   it('should return true, when central ordering is active', () => {
     expect(checkIfCentralOrderingIsActive(activeCenralOrdering)).toBeTruthy();
+  });
+});
+
+describe('omitCurrentAndCentralTenants', () => {
+  const stripes = {
+    okapi: { tenant: 'college' },
+    user: {
+      user: {
+        consortium: { centralTenantId: 'consortium' },
+        tenants: [{
+          id: 'college',
+        }, {
+          id: 'university'
+        }, {
+          id: 'consortium'
+        }],
+      },
+    },
+  };
+
+  it('should omit current and central tenants', () => {
+    expect(omitCurrentAndCentralTenants(stripes)).toEqual([{ id: 'university' }]);
   });
 });

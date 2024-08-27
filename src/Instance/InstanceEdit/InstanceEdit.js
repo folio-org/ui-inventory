@@ -93,9 +93,9 @@ const InstanceEdit = ({
     const parsedError = await parseHttpError(response);
     const defaultErrorMessage = formatMessage({ id: 'ui-inventory.communicationProblem' });
     const err = {
-      errorType: parsedError.errorType,
+      errorType: parsedError?.errorType,
       message: parsedError?.message || parsedError?.errors?.[0]?.message || defaultErrorMessage,
-      status: response.status,
+      status: response?.status,
     };
 
     setHttpError(err);
@@ -112,12 +112,15 @@ const InstanceEdit = ({
   const isMemberTenant = checkIfUserInMemberTenant(stripes);
   const tenantId = (isMemberTenant && instance?.shared) ? stripes.user.user.consortium?.centralTenantId : stripes.okapi.tenant;
 
-  const { mutateInstance } = useInstanceMutation({ tenantId });
+  const { mutateInstance } = useInstanceMutation({
+    options: { onSuccess },
+    tenantId,
+  });
 
-  const onSubmit = useCallback((initialInstance) => {
+  const onSubmit = useCallback(async (initialInstance) => {
     const updatedInstance = marshalInstance(initialInstance, identifierTypesByName);
 
-    return mutateInstance(updatedInstance, { onSuccess, onError });
+    return mutateInstance(updatedInstance).catch(onError);
   }, [mutateInstance]);
 
   if (isInstanceLoading) return <LoadingView />;
