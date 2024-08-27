@@ -71,8 +71,7 @@ const SubjectFields = ({
         </Col>
         <Col sm={4}>
           <Field
-            ariaLabel={subjectSourceLabel}
-            name={`${field}.source`} //change
+            name={`${field}.subjectSourceId`}
             component={Select}
             dataOptions={subjectSourcesOptions}
             placeholder={formatMessage({ id: 'ui-inventory.subjectSource.placeholder' })}
@@ -81,8 +80,7 @@ const SubjectFields = ({
         </Col>
         <Col sm={4}>
           <Field
-            ariaLabel={subjectTypeLabel}
-            name={`${field}.type`} //change
+            name={`${field}.subjectTypeId`}
             component={Select}
             dataOptions={subjectTypesOptions}
             placeholder={formatMessage({ id: 'ui-inventory.subjectType.placeholder' })}
