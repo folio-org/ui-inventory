@@ -144,7 +144,7 @@ const ViewSource = ({
       });
   }, []);
 
-  const canExport = !isHoldingsRecord && stripes.hasPerm('ui-data-export.app.enabled');
+  const canExport = !isHoldingsRecord && stripes.hasPerm('ui-data-export.edit');
 
   const triggerQuickExport = useCallback(async () => {
     const instanceIds = [instanceId];
