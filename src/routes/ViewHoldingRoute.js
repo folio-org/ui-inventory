@@ -6,7 +6,9 @@ import {
 
 import { useStripes } from '@folio/stripes/core';
 
+import { useSearchInstanceByIdQuery } from '../common';
 import { DataContext } from '../contexts';
+import { useUpdateOwnership } from '../hooks';
 import ViewHoldingsRecord from '../ViewHoldingsRecord';
 
 const ViewHoldingRoute = () => {
@@ -14,13 +16,17 @@ const ViewHoldingRoute = () => {
   const referenceTables = useContext(DataContext);
   const { okapi } = useStripes();
   const { state } = useLocation();
+  const { instance } = useSearchInstanceByIdQuery(instanceId);
+  const { updateOwnership } = useUpdateOwnership();
 
   return (
     <ViewHoldingsRecord
       id={instanceId}
+      isInstanceShared={instance?.shared}
       tenantTo={state?.tenantTo || okapi.tenant}
       referenceTables={referenceTables}
       holdingsrecordid={holdingsrecordid}
+      onUpdateOwnership={updateOwnership}
     />
   );
 };

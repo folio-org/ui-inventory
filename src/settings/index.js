@@ -33,6 +33,8 @@ import InstanceNoteTypesSettings from './InstanceNoteTypesSettings';
 import NatureOfContentTermsSettings from './NatureOfContentTermsSettings';
 import FastAddSettings from './FastAdd/FastAddSettings';
 import ClassificationBrowseSettings from './ClassificationBrowseSettings';
+import SubjectSourcesSettings from './SubjectSourcesSettings';
+import SubjectTypesSettings from './SubjectTypesSettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
@@ -107,6 +109,18 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.resourceTypes" />,
             component: ResourceTypesSettings,
             perm: this.addPerm('ui-inventory.settings.instance-types'),
+          },
+          {
+            route: 'subjectsources',
+            label: <FormattedMessage id="ui-inventory.subjectSources" />,
+            component: SubjectSourcesSettings,
+            perm: this.addPerm('ui-inventory.settings.subject-sources'),
+          },
+          {
+            route: 'subjecttypes',
+            label: <FormattedMessage id="ui-inventory.subjectTypes" />,
+            component: SubjectTypesSettings,
+            perm: this.addPerm('ui-inventory.settings.subject-types'),
           },
         ]
       },

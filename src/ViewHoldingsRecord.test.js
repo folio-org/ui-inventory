@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import {
   QueryClient,
   QueryClientProvider,
@@ -8,10 +8,13 @@ import { createMemoryHistory } from 'history';
 
 import {
   screen,
-  act,
   fireEvent,
   waitFor,
+  within,
 } from '@folio/jest-config-stripes/testing-library/react';
+
+import { checkIfUserInMemberTenant } from '@folio/stripes/core';
+import { FindLocation } from '@folio/stripes-acq-components';
 
 import '../test/jest/__mock__';
 import buildStripes from '../test/jest/__mock__/stripesCore.mock';
@@ -32,6 +35,11 @@ const mockPush = jest.fn();
 const history = createMemoryHistory();
 history.push = mockPush;
 
+jest.mock('@folio/stripes-acq-components', () => ({
+  ...jest.requireActual('@folio/stripes-acq-components'),
+  FindLocation: jest.fn(() => <span>FindLocation</span>),
+}));
+
 jest.mock('./withLocation', () => jest.fn(c => c));
 
 jest.mock('./common', () => ({
@@ -42,6 +50,7 @@ jest.mock('./common', () => ({
 jest.mock('./utils', () => ({
   ...jest.requireActual('./utils'),
   switchAffiliation: jest.fn(() => mockPush()),
+  updateOwnership: jest.fn(),
 }));
 
 const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
@@ -49,6 +58,7 @@ const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 
 
 const mockData = jest.fn().mockResolvedValue({ id: 'testId' });
 const mockGoTo = jest.fn();
+const mockOnUpdateOwnership = jest.fn().mockResolvedValue({});
 
 const permissions = {
   FOLIO_CREATE: 'ui-inventory.holdings.create',
@@ -61,6 +71,7 @@ const permissions = {
 const defaultProps = {
   id: 'id',
   goTo: mockGoTo,
+  onUpdateOwnership: mockOnUpdateOwnership,
   holdingsrecordid: 'holdingId',
   referenceTables: {
     holdingsSources: [{ id: 'MARC', name: 'MARC' }, { id: 'FOLIO', name: 'FOLIO' }],
@@ -75,6 +86,7 @@ const defaultProps = {
           sourceId: 'MARC',
           temporaryLocationId: 'inactiveLocation',
           id: 'holdingId',
+          instanceId: 'instanceId',
           _version: 1,
         }
       ],
@@ -147,7 +159,8 @@ describe('ViewHoldingsRecord actions', () => {
   it('should close view holding page', async () => {
     renderViewHoldingsRecord();
 
-    fireEvent.click(await screen.findByRole('button', { name: 'confirm' }));
+    const confirmButtons = await screen.findAllByRole('button', { name: 'confirm' });
+    fireEvent.click(confirmButtons[0]);
 
     expect(mockPush).toHaveBeenCalled();
   });
@@ -155,7 +168,7 @@ describe('ViewHoldingsRecord actions', () => {
   it('should translate to edit holding form page', async () => {
     renderViewHoldingsRecord();
 
-    const editHoldingBtn = await screen.findByTestId('edit-holding-btn');
+    const editHoldingBtn = await screen.findByRole('button', { name: 'edit' });
     fireEvent.click(editHoldingBtn);
 
     expect(mockPush).toHaveBeenCalled();
@@ -164,7 +177,7 @@ describe('ViewHoldingsRecord actions', () => {
   it('should translate to duplicate holding form page', async () => {
     renderViewHoldingsRecord();
 
-    const duplicatHoldingBtn = await screen.findByTestId('duplicate-holding-btn');
+    const duplicatHoldingBtn = await screen.findByRole('button', { name: 'duplicateRecord' });
     fireEvent.click(duplicatHoldingBtn);
 
     expect(mockPush).toHaveBeenCalled();
@@ -394,6 +407,138 @@ describe('ViewHoldingsRecord actions', () => {
         });
 
         waitFor(() => expect(queryByText('Actions')).toBeInTheDocument());
+      });
+    });
+  });
+
+  describe('Update ownership action item', () => {
+    beforeEach(() => {
+      checkIfUserInMemberTenant.mockClear().mockReturnValue(true);
+    });
+
+    const targetTenantId = 'university';
+    const targetLocationId = 'targetLocationId';
+    const stripes = {
+      ...buildStripes({
+        okapi: { tenant: 'college' },
+        user: {
+          user: {
+            tenants: [{
+              id: 'college',
+              name: 'College',
+            }, {
+              id: 'university',
+              name: 'University',
+            }, {
+              id: 'consortium',
+              name: 'Consortium',
+            }],
+          },
+        },
+      }),
+    };
+
+    describe('when instance is shared', () => {
+      it('should be rendered', async () => {
+        renderViewHoldingsRecord({ stripes, isInstanceShared: true });
+
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
+        expect(updateOwnershipBtn).toBeInTheDocument();
+      });
+    });
+
+    describe('when instance is local', () => {
+      it('should be hidden', () => {
+        renderViewHoldingsRecord({ stripes, isInstanceShared: false });
+
+        const updateOwnershipBtn = screen.queryByText('Update ownership');
+        expect(updateOwnershipBtn).not.toBeInTheDocument();
+      });
+    });
+
+    describe('when click on the button', () => {
+      it('should render location lookup', async () => {
+        renderViewHoldingsRecord({ stripes, isInstanceShared: true });
+
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
+        fireEvent.click(updateOwnershipBtn);
+
+        const locationLookup = await screen.findByText('FindLocation');
+
+        expect(locationLookup).toBeInTheDocument();
+      });
+    });
+
+    describe('when choose the location', () => {
+      it('should render confirmation modal', async () => {
+        renderViewHoldingsRecord({ stripes, isInstanceShared: true });
+
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
+        fireEvent.click(updateOwnershipBtn);
+
+        await waitFor(() => FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: 'university' }]));
+
+        const confirmationModal = await screen.findByText('Update ownership of holdings');
+        expect(confirmationModal).toBeInTheDocument();
+      });
+    });
+
+    describe('when confirm updating ownership', () => {
+      it('should call the function to update ownership', async () => {
+        renderViewHoldingsRecord({ stripes, isInstanceShared: true });
+
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
+        fireEvent.click(updateOwnershipBtn);
+
+        await waitFor(() => FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: targetTenantId, id: targetLocationId }]));
+
+        const confirmationModal = await screen.findByText('Update ownership of holdings');
+        const confirmButton = within(confirmationModal).getByRole('button', { name: /confirm/i });
+        fireEvent.click(confirmButton);
+
+        expect(mockOnUpdateOwnership).toHaveBeenCalledWith(
+          {
+            holdingsRecordIds: [defaultProps.holdingsrecordid],
+            targetTenantId,
+            toInstanceId: defaultProps.resources.holdingsRecords.records[0].instanceId,
+            targetLocationId,
+          },
+          { tenant: stripes.okapi.tenant }
+        );
+      });
+    });
+
+    describe('when an error was occured during updating ownership', () => {
+      it('should show an error message', async () => {
+        renderViewHoldingsRecord({ stripes, isInstanceShared: true });
+
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
+        fireEvent.click(updateOwnershipBtn);
+
+        await waitFor(() => FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: targetTenantId }]));
+
+        const confirmationModal = await screen.findByText('Update ownership of holdings');
+        const confirmButton = within(confirmationModal).getByRole('button', { name: /confirm/i });
+        fireEvent.click(confirmButton);
+
+        await waitFor(() => expect(screen.queryByText('Server communication problem. Please try again')).toBeDefined());
+      });
+    });
+
+    describe('when cancel updating ownership', () => {
+      it('should hide the confirmation modal', async () => {
+        const { container } = renderViewHoldingsRecord({ stripes, isInstanceShared: true });
+
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
+        fireEvent.click(updateOwnershipBtn);
+
+        FindLocation.mock.calls[0][0].onRecordsSelect([{ tenantId: targetTenantId }]);
+
+        const confirmationModal = await screen.findByText('Update ownership of holdings');
+        const cancelButton = within(confirmationModal).getByRole('button', { name: /cancel/i });
+        fireEvent.click(cancelButton);
+
+        expect(container.querySelector('#update-ownership-modal')).not.toBeInTheDocument();
       });
     });
   });
