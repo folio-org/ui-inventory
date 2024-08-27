@@ -7,8 +7,6 @@ import { act, screen, fireEvent, waitFor } from '@folio/jest-config-stripes/test
 
 import stripesAcqComponents from '@folio/stripes-acq-components';
 import { browseModeOptions } from '@folio/stripes-inventory-components';
-import { useStripes } from '@folio/stripes/core';
-
 
 import {
   renderWithIntl,
@@ -21,7 +19,6 @@ import {
   useLastSearchTerms,
   useInventoryBrowse,
 } from '../../hooks';
-import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 
 const { useLocationFilters } = stripesAcqComponents;
 
@@ -105,7 +102,6 @@ describe('BrowseInventory', () => {
       isFetched: false,
       isFetching: false,
     });
-    useStripes.mockReturnValue(buildStripes());
   });
 
   describe('when the component is mounted', () => {
@@ -309,31 +305,12 @@ describe('BrowseInventory', () => {
     expect(getByText('Call numbers (all)')).toBeDefined();
     expect(getAllByText('Dewey Decimal classification')[0]).toBeDefined();
     expect(getAllByText('Library of Congress classification')[0]).toBeDefined();
-    expect(getByText('Local')).toBeDefined();
     expect(getByText('National Library of Medicine classification')).toBeDefined();
-    expect(getByText('Other scheme')).toBeDefined();
-    expect(getByText('Superintendent of Documents classification')).toBeDefined();
     expect(getByText('Classification (all)')).toBeDefined();
     expect(getAllByText('Dewey Decimal classification')[1]).toBeDefined();
     expect(getAllByText('Library of Congress classification')[1]).toBeDefined();
     expect(getByText('Contributors')).toBeDefined();
     expect(getByText('Subjects')).toBeDefined();
-  });
-
-  describe('when environment is https://folio-perf-quesnelia-okapi.ci.folio.org', () => {
-    it('should remove browse options: "Local", "Other scheme", and "Superintendent of Documents classification"', () => {
-      useStripes.mockReturnValue(buildStripes({
-        okapi: {
-          url: 'https://folio-perf-quesnelia-okapi.ci.folio.org',
-        },
-      }));
-
-      const { queryByText } = renderBrowseInventory();
-
-      expect(queryByText('Local')).not.toBeInTheDocument();
-      expect(queryByText('Other scheme')).not.toBeInTheDocument();
-      expect(queryByText('Superintendent of Documents classification')).not.toBeInTheDocument();
-    });
   });
 
   describe('when user clicks on Reset all', () => {
