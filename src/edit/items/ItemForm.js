@@ -197,7 +197,6 @@ class ItemForm extends React.Component {
   getFooter = () => {
     const {
       onCancel,
-      handleSubmit,
       pristine,
       submitting,
       copy,

@@ -529,7 +529,7 @@ describe('InstancesList', () => {
             SearchAndSort.mock.calls[0][0].onCloseNewRecord();
 
             expect(history.push).toHaveBeenCalledWith('/?filters=staffSuppress.false');
-            await waitFor(() => expect(getByRole('textbox', { name: /search/i })).toHaveFocus())
+            await waitFor(() => expect(getByRole('textbox', { name: /search/i })).toHaveFocus());
           });
         });
       });
