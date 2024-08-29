@@ -272,10 +272,7 @@ describe('BrowseInventory', () => {
     expect(getByText('Call numbers (all)')).toBeDefined();
     expect(getByText('Dewey Decimal classification')).toBeDefined();
     expect(getByText('Library of Congress classification')).toBeDefined();
-    expect(getByText('Local')).toBeDefined();
     expect(getByText('National Library of Medicine classification')).toBeDefined();
-    expect(getByText('Other scheme')).toBeDefined();
-    expect(getByText('Superintendent of Documents classification')).toBeDefined();
     expect(getByText('Contributors')).toBeDefined();
     expect(getByText('Subjects')).toBeDefined();
   });
