@@ -122,36 +122,38 @@ const getInstancesListTree = ({ segment, ...rest }) => {
     <Harness translations={translationsProperties}>
       <Router history={history}>
         <ModuleHierarchyProvider module="@folio/inventory">
-          <InstancesList
-            parentResources={resources}
-            parentMutator={{
-              resultOffset: { replace: mockResultOffsetReplace },
-              resultCount: { replace: noop },
-              query: { update: updateMock, replace: mockQueryReplace },
-              records: { reset: mockRecordsReset },
-              itemsByQuery: { reset: noop, GET: mockItemsByQuery },
-            }}
-            data={{
-              ...data,
-              query
-            }}
-            onSelectRow={noop}
-            renderFilters={renderer({
-              ...data,
-              query,
-              parentResources: resources,
-            })}
-            segment={segment}
-            searchableIndexes={indexes}
-            searchableIndexesES={indexesES}
-            fetchFacets={noop}
-            getLastBrowse={jest.fn()}
-            getLastSearchOffset={mockGetLastSearchOffset}
-            storeLastSearch={mockStoreLastSearch}
-            storeLastSearchOffset={mockStoreLastSearchOffset}
-            storeLastSegment={noop}
-            {...rest}
-          />
+          <div id="ModuleContainer">
+            <InstancesList
+              parentResources={resources}
+              parentMutator={{
+                resultOffset: { replace: mockResultOffsetReplace },
+                resultCount: { replace: noop },
+                query: { update: updateMock, replace: mockQueryReplace },
+                records: { reset: mockRecordsReset },
+                itemsByQuery: { reset: noop, GET: mockItemsByQuery },
+              }}
+              data={{
+                ...data,
+                query
+              }}
+              onSelectRow={noop}
+              renderFilters={renderer({
+                ...data,
+                query,
+                parentResources: resources,
+              })}
+              segment={segment}
+              searchableIndexes={indexes}
+              searchableIndexesES={indexesES}
+              fetchFacets={noop}
+              getLastBrowse={jest.fn()}
+              getLastSearchOffset={mockGetLastSearchOffset}
+              storeLastSearch={mockStoreLastSearch}
+              storeLastSearchOffset={mockStoreLastSearchOffset}
+              storeLastSegment={noop}
+              {...rest}
+            />
+          </div>
         </ModuleHierarchyProvider>
       </Router>
     </Harness>
