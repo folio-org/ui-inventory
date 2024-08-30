@@ -17,7 +17,7 @@
     "handlerName": "eventHandler",
     "displayName": "ui-inventory.meta.title",
     "route": "/inventory",
-    "home": "/inventory?filters=staffSuppress.false&sort=title",
+    "home": "/inventory?filters=staffSuppress.false",
     "queryResource": "query",
     "icons": [
       {
@@ -896,6 +896,29 @@
           "copycat.profiles.collection.get",
           "copycat.imports.post",
           "converter-storage.jobprofile.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "mod-settings.global.read.ui-inventory.display-settings",
+        "displayName": "Settings (Inventory): read the settings in the 'Display settings' section",
+        "visible": false
+      },
+      {
+        "permissionName": "mod-settings.global.write.ui-inventory.display-settings",
+        "displayName": "Settings (Inventory): write the settings in the 'Display settings' section",
+        "visible": false
+      },
+      {
+        "permissionName": "ui-inventory.settings.displaySettings",
+        "displayName": "Settings (Inventory): Can view and edit general settings",
+        "subPermissions": [
+          "settings.inventory.enabled",
+          "mod-settings.entries.collection.get",
+          "mod-settings.entries.item.post",
+          "mod-settings.entries.item.put",
+          "mod-settings.global.read.ui-inventory.display-settings",
+          "mod-settings.global.write.ui-inventory.display-settings"
         ],
         "visible": true
       }

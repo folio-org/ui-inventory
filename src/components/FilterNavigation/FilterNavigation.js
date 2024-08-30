@@ -12,10 +12,13 @@ import {
   segments,
 } from '@folio/stripes-inventory-components';
 
-import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 import { useLastSearchTerms } from '../../hooks';
 
-const FilterNavigation = ({ segment, onChange }) => {
+const FilterNavigation = ({
+  data,
+  segment,
+  onChange,
+}) => {
   const { getLastSearch } = useLastSearchTerms();
 
   return (
@@ -28,7 +31,7 @@ const FilterNavigation = ({ segment, onChange }) => {
           const searchParams = queryString.parse(getLastSearch(name));
 
           searchParams.segment = name;
-          if (!searchParams.sort) searchParams.sort = SORTABLE_SEARCH_RESULT_LIST_COLUMNS.TITLE;
+          if (!searchParams.sort) searchParams.sort = data.displaySettings.defaultSort;
 
           return (
             <Button
@@ -51,6 +54,7 @@ const FilterNavigation = ({ segment, onChange }) => {
 };
 
 FilterNavigation.propTypes = {
+  data: PropTypes.object.isRequired,
   segment: PropTypes.string,
   onChange: PropTypes.func,
 };

@@ -19,6 +19,7 @@ import {
   Layer,
   Paneset
 } from '@folio/stripes/components';
+import { SORT_OPTIONS } from '@folio/stripes-inventory-components';
 
 import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
 import OverlayContainer from '../../test/helpers/OverlayContainer';
@@ -57,6 +58,9 @@ const InstancesRouteSetup = ({
             instanceFormats: [],
             modesOfIssuance: [],
             natureOfContentTerms: [],
+            displaySettings: {
+              defaultSort: SORT_OPTIONS.TITLE,
+            },
           }}
           >
             <LastSearchTermsContext.Provider value={{

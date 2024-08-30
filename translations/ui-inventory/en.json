@@ -641,7 +641,7 @@
   "precedingField.notConnected": "Not connected",
   "precedingField.connected": "Connected",
   "browse": "Browse",
-  "browse.callNumbers": "Call numbers",
+  "browse.callNumbers": "Call numbers (item)",
   "browse.callNumbersAll": "Call numbers (all)",
   "browse.dewey": "Dewey Decimal classification",
   "browse.libOfCongress": "Library of Congress classification",
@@ -649,7 +649,7 @@
   "browse.natLibOfMed": "National Library of Medicine classification",
   "browse.other": "Other scheme",
   "browse.superintendent": "Superintendent of Documents classification",
-  "browse.classification": "Classification",
+  "browse.classification": "Classification (instance)",
   "browse.classification.all": "Classification (all)",
   "browse.classification.dewey": "Dewey Decimal classification",
   "browse.classification.lc": "Library of Congress classification",
@@ -735,6 +735,7 @@
   "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
   "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
   "permission.items.create-in-transit-report": "Inventory: Create and download In transit items report",
+  "permission.settings.displaySettings": "Settings (Inventory): Can view and edit general settings",
 
   "moveItems.moveButton": "Move to",
   "moveItems.selectAll": "Select/unselect all items for movement",
@@ -846,5 +847,9 @@
   "shortcut.nextSubfield": "quickMARC only: Move to the next subfield in a text box",
   "shortcut.prevSubfield": "quickMARC only: Move to the previous subfield in a text box",
   "shortcut.editMARC": "Edit MARC record",
-  "shortcut.editMARC.noPermission": "You do not have permission to edit the record."
+  "shortcut.editMARC.noPermission": "You do not have permission to edit the record.",
+
+  "settings.heading.general": "General",
+  "settings.section.displaySettings": "Display settings",
+  "settings.displaySettings.defaultSort": "Default sort"
 }
