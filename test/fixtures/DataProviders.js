@@ -153,4 +153,26 @@ export const resources = {
       }
     ],
   },
+  subjectSources: {
+    hasLoaded: true,
+    isPending: false,
+    failed: false,
+    records: [
+      {
+        id: 'id-1',
+        name: 'source',
+      }
+    ],
+  },
+  subjectTypes: {
+    hasLoaded: true,
+    isPending: false,
+    failed: false,
+    records: [
+      {
+        id: 'id-1',
+        name: 'type',
+      }
+    ],
+  },
 };
