@@ -601,7 +601,9 @@
           "perms.users.get",
           "inventory-storage.bound-with-parts.collection.get",
           "consortium-search.locations.collection.get",
-          "browse.config.collection.get"
+          "browse.config.collection.get",
+          "mod-settings.entries.collection.get",
+          "mod-settings.global.read.ui-inventory.display-settings"
         ],
         "visible": true
       },
