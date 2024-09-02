@@ -36,6 +36,8 @@ const referenceData = {
   contributorTypes: [],
   identifierTypes: [],
   alternativeTitleTypes: [],
+  subjectSources: [],
+  subjectTypes: [],
 };
 const stripesStub = {
   connect: Component => <Component />,

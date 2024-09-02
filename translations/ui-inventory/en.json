@@ -491,6 +491,8 @@
   "subjectType": "Subject type",
   "subjectTypes": "Subject types",
   "validation.error.mustBeUnique": "Error saving data. Name must be unique.",
+  "subjectSource.placeholder": "Select source",
+  "subjectType.placeholder": "Select type",
   "subjectHeadings": "Subject headings",
   "classification": "Classification",
   "classificationBrowse": "Classification browse",

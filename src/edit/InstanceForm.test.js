@@ -58,7 +58,9 @@ const mockReferenceTables = {
   instanceFormats: [],
   instanceNoteTypes: [],
   electronicAccessRelationships: [],
-  classificationTypes: []
+  classificationTypes: [],
+  subjectSources: [],
+  subjectTypes: [],
 };
 
 const mockBlockedFields = [

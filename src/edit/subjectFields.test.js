@@ -1,48 +1,61 @@
-import PropTypes from 'prop-types';
-import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  act,
+  screen,
+} from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+
 import '../../test/jest/__mock__';
-import stripesFinalForm from '@folio/stripes/final-form';
-import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
-import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
+
+import {
+  renderWithRouter,
+  renderWithIntl,
+  renderWithFinalForm,
+  translationsProperties,
+} from '../../test/jest/helpers';
+
 import SubjectFields from './subjectFields';
-import translationsProperties from '../../test/jest/helpers/translationsProperties';
 
-jest.unmock('@folio/stripes/components');
-const onSubmit = jest.fn();
-const Form = ({ handleSubmit }) => (
-  <form onSubmit={handleSubmit}>
-    <SubjectFields />
-  </form>
-);
+const renderSubjectFields = () => {
+  const component = (
+    <SubjectFields
+      subjectSources={[{ id: 'sourceId', name: 'sourceName' }]}
+      subjectTypes={[{ id: 'typeId', name: 'typeName' }]}
+    />
+  );
 
-Form.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
+  return renderWithIntl(
+    renderWithRouter(renderWithFinalForm(component)),
+    translationsProperties,
+  );
 };
 
-const WrappedForm = stripesFinalForm({
-  navigationCheck: true,
-  enableReinitialize: false,
-})(Form);
-
-const renderSubjectFields = () => renderWithIntl(
-  renderWithRouter(<WrappedForm onSubmit={onSubmit} />),
-  translationsProperties,
-);
-
-afterEach(() => jest.clearAllMocks());
 describe('SubjectFields', () => {
-  test('Add subject should be in the document', () => {
+  it('should have Add subject button', () => {
     renderSubjectFields();
-    expect(screen.getByText('Add subject')).toBeInTheDocument();
+
+    expect(screen.getByRole('button', { name: 'Add subject' })).toBeInTheDocument();
   });
 
-  test('Entering value in text box', async () => {
+  it('should have correct columns', async () => {
     renderSubjectFields();
-    const subject = screen.getByText('Add subject');
-    fireEvent.click(subject);
-    const inputText = screen.getByRole('textbox', { name: 'Subjects' });
-    expect(inputText).toHaveValue('');
-    fireEvent.change(inputText, { target: { value: 'Enter text for subjects' } });
-    expect(inputText).toHaveValue('Enter text for subjects');
+
+    const addSubjectButton = screen.getByRole('button', { name: 'Add subject' });
+
+    await act(async () => userEvent.click(addSubjectButton));
+
+    expect(screen.getByText('Subjects')).toBeInTheDocument();
+    expect(screen.getByText('Subject source')).toBeInTheDocument();
+    expect(screen.getByText('Subject type')).toBeInTheDocument();
+  });
+
+  it('should have correct source/type options', async () => {
+    renderSubjectFields();
+
+    const addSubjectButton = screen.getByRole('button', { name: 'Add subject' });
+
+    await act(async () => userEvent.click(addSubjectButton));
+
+    expect(screen.getByRole('option', { name: 'sourceName' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'typeName' })).toBeInTheDocument();
   });
 });
