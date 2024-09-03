@@ -822,5 +822,20 @@
     "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
     "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
     "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types",
-    "print": "Print"
+    "print": "Print",
+    "subjectSource": "Subject source",
+    "subjectSources": "Subject sources",
+    "subjectType": "Subject type",
+    "subjectTypes": "Subject types",
+    "validation.error.mustBeUnique": "Error saving data. Name must be unique.",
+    "updateOwnership": "Update ownership",
+    "updateOwnership.holdings.modal.heading": "Update ownership of holdings",
+    "updateOwnership.holdings.modal.message": "Would you like to update ownership of Holdings <strong>{holdingsHrid}</strong> from <strong>{currentTenant}</strong> to <strong>{targetTenant}</strong>? Please note that updating Holdings ownership will also migrate all linked Items.",
+    "updateOwnership.message.success": "Ownership of Holdings <strong>{holdingsHrid}</strong> and all linked Items has been successfully updated to <strong>{targetTenant}</strong>",
+    "permission.settings.displaySettings": "Settings (Inventory): Can view and edit general settings",
+    "settings.heading.general": "General",
+    "settings.section.displaySettings": "Display settings",
+    "settings.displaySettings.defaultSort": "Default sort",
+    "subjectSource.placeholder": "Select source",
+    "subjectType.placeholder": "Select type"
 }
