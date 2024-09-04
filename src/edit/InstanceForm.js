@@ -793,6 +793,8 @@ class InstanceForm extends React.Component {
                       id="instanceSection09"
                     >
                       <SubjectFields
+                        subjectSources={referenceTables.subjectSources}
+                        subjectTypes={referenceTables.subjectTypes}
                         canAdd={!this.isFieldBlocked('subjects')}
                         canEdit={!this.isFieldBlocked('subjects')}
                         canDelete={!this.isFieldBlocked('subjects')}

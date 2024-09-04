@@ -76,6 +76,15 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Trim call numbers when Creating/Editing/Deriving Holdings/Items. Fixes UIIN-2889.
 * New Inventory Settings: Subject types and Subject sources. Refs UIIN-2822.
 * Disable `Save and keep editing` and `Save & close` buttons when submit the instance form. Fixes UIIN-2939.
+* Remove call number type options for Local, Other scheme, and SuDoc. Refs UIIN-3014.
+* Use the sort option from the new `DisplaySettings` until the user changes it in any available way. Refs UIIN-2722.
+* Rename `Classification` and `Call numbers` sections in browse options. Refs UIIN-2982.
+* Edit/Create -- Subject accordion instance UI changes. Refs UIIN-2944.
+
+## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
+
+* Remove call number type options for Local, Other scheme, and SuDoc. Refs UIIN-3014.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
