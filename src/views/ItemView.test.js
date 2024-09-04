@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import { waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
-
+import { waitFor, screen, fireEvent, within } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -13,10 +12,16 @@ import {
 } from '@folio/stripes/core';
 import { renderWithIntl, translationsProperties } from '../../test/jest/helpers';
 
+import { UpdateItemOwnershipModal } from '../components';
 import ItemView from './ItemView';
 
 jest.mock('../Item/ViewItem/ItemAcquisition', () => ({
   ItemAcquisition: jest.fn(() => 'ItemAcquisition'),
+}));
+
+jest.mock('../components', () => ({
+  ...jest.requireActual('../components'),
+  UpdateItemOwnershipModal: jest.fn(() => <span>UpdateItemOwnershipModal</span>),
 }));
 
 const stripesStub = {
@@ -26,6 +31,15 @@ const stripesStub = {
   logger: { log: noop },
   locale: 'en-US',
   plugins: {},
+  okapi: { tenant: 'college' },
+  user: {
+    user: {
+      tenants: [{
+        id: 'university',
+        name: 'University',
+      }],
+    },
+  },
 };
 
 const resources = {
@@ -117,6 +131,7 @@ const ItemViewSetup = () => (
           resources={resources}
           referenceTables={referenceTables}
           stripes={stripesStub}
+          isInstanceShared
         />
       </ModuleHierarchyProvider>
     </StripesContext.Provider>
@@ -124,6 +139,9 @@ const ItemViewSetup = () => (
 );
 
 describe('ItemView', () => {
+  beforeEach(() => {
+    console.error = jest.fn();
+  });
   describe('rendering ItemView', () => {
     beforeEach(() => {
       renderWithIntl(<ItemViewSetup />, translationsProperties);
@@ -205,6 +223,59 @@ describe('ItemView', () => {
       renderWithIntl(<ItemViewSetup />, translationsProperties);
 
       expect(screen.queryByRole('button', { name: 'Actions' })).not.toBeInTheDocument();
+    });
+
+    describe('"Update ownership" action item', () => {
+      it('should be rendered', async () => {
+        checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+        renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
+        expect(updateOwnershipBtn).toBeInTheDocument();
+      });
+
+      describe('when click on "Update onership"', () => {
+        it('should render modal window', async () => {
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+          renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+          const updateOwnershipBtn = await screen.findByText('Update ownership');
+          fireEvent.click(updateOwnershipBtn);
+
+          expect(screen.getByText('UpdateItemOwnershipModal')).toBeInTheDocument();
+        });
+      });
+
+      describe('when submit updating ownership', () => {
+        it('should render confirmation modal', async () => {
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+          renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+          const updateOwnershipBtn = await screen.findByText('Update ownership');
+          fireEvent.click(updateOwnershipBtn);
+
+          UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit('university', { id: 'locationId' }, 'holdingId');
+
+          expect(screen.getByText('Update ownership of items')).toBeInTheDocument();
+        });
+      });
+
+      describe('when confirm the action', () => {
+        it('should render confirmation modal', async () => {
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+          renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+          const updateOwnershipBtn = await screen.findByText('Update ownership');
+          fireEvent.click(updateOwnershipBtn);
+
+          UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit({ id: 'university' }, { id: 'locationId' }, 'holdingId');
+
+          const confirmationModal = screen.getByText('Update ownership of items');
+          fireEvent.click(within(confirmationModal).getByText('confirm'));
+
+          expect(document.querySelector('#update-ownership-modal')).not.toBeInTheDocument();
+        });
+      });
     });
   });
 });
