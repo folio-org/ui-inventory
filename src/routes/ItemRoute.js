@@ -1,10 +1,10 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import { useParams } from 'react-router-dom';
 import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { DataContext } from '../contexts';
