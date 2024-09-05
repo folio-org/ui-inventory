@@ -76,6 +76,8 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Trim call numbers when Creating/Editing/Deriving Holdings/Items. Fixes UIIN-2889.
 * New Inventory Settings: Subject types and Subject sources. Refs UIIN-2822.
 * Disable `Save and keep editing` and `Save & close` buttons when submit the instance form. Fixes UIIN-2939.
+* Add the ability to update ownership of holdings. Refs UIIN-2753.
+* Add the ability to update ownership of items. Refs UIIN-2754.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
