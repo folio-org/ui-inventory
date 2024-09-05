@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
+import { createMemoryHistory } from 'history';
 import {
   waitFor,
   screen,
@@ -29,6 +30,11 @@ jest.mock('../components', () => ({
   UpdateItemOwnershipModal: jest.fn(() => <span>UpdateItemOwnershipModal</span>),
 }));
 
+const mockPush = jest.fn();
+
+const history = createMemoryHistory();
+history.push = mockPush;
+
 const stripesStub = {
   connect: Component => <Component />,
   hasPerm: () => true,
@@ -47,77 +53,99 @@ const stripesStub = {
   },
 };
 
-const resources = {
-  holdingsRecords: {
-    hasLoaded: true,
-    records: [
-      {
-        permanentLocationId: 1,
-        temporaryLocationId: 'inactiveLocation',
-      }
-    ],
+const defaultProps = {
+  mutator: {
+    markItemAsMissing: {
+      POST: jest.fn().mockResolvedValue({}),
+    },
+    requestOnItem: {
+      replace: jest.fn(),
+    },
+    requests: {
+      PUT: jest.fn(),
+    },
   },
-  itemsResource: {
-    hasLoaded: true,
-    records: [
-      {
-        id: 'item1',
-        status: {
-          name: 'Available',
-        },
-        permanentLocation: {
-          id: 'inactiveLocation',
-          name: 'Location 1',
-        },
-        temporaryLocation: {
-          id: 'inactiveLocation',
-          name: 'Location 1',
-        },
-        effectiveLocation: {
-          id: 'inactiveLocation',
-          name: 'Location 1',
-        },
-        isBoundWith: true,
-        boundWithTitles: [
-          {
-            'briefHoldingsRecord' : {
-              'id' : '704ea4ec-456c-4740-852b-0814d59f7d21',
-              'hrid' : 'BW-1',
-            },
-            'briefInstance' : {
-              'id' : 'cd3288a4-898c-4347-a003-2d810ef70f03',
-              'title' : 'Elpannan och dess ekonomiska förutsättningar / av Hakon Wærn',
-              'hrid' : 'bwinst0001',
-            },
+  resources: {
+    holdingsRecords: {
+      hasLoaded: true,
+      records: [
+        {
+          permanentLocationId: 1,
+          temporaryLocationId: 'inactiveLocation',
+        }
+      ],
+    },
+    itemsResource: {
+      hasLoaded: true,
+      records: [
+        {
+          id: 'item1',
+          status: {
+            name: 'Available',
           },
-          {
-            'briefHoldingsRecord' : {
-              'id' : '704ea4ec-456c-4740-852b-0814d59f7d22',
-              'hrid' : 'BW-2',
-            },
-            'briefInstance' : {
-              'id' : 'cd3288a4-898c-4347-a003-2d810ef70f04',
-              'title' : 'Second Title',
-              'hrid' : 'bwinst0002',
-            },
+          permanentLocation: {
+            id: 'inactiveLocation',
+            name: 'Location 1',
           },
-        ],
-        materialType: { name: 'book' },
-      },
-    ],
+          temporaryLocation: {
+            id: 'inactiveLocation',
+            name: 'Location 1',
+          },
+          effectiveLocation: {
+            id: 'inactiveLocation',
+            name: 'Location 1',
+          },
+          isBoundWith: true,
+          boundWithTitles: [
+            {
+              'briefHoldingsRecord' : {
+                'id' : '704ea4ec-456c-4740-852b-0814d59f7d21',
+                'hrid' : 'BW-1',
+              },
+              'briefInstance' : {
+                'id' : 'cd3288a4-898c-4347-a003-2d810ef70f03',
+                'title' : 'Elpannan och dess ekonomiska förutsättningar / av Hakon Wærn',
+                'hrid' : 'bwinst0001',
+              },
+            },
+            {
+              'briefHoldingsRecord' : {
+                'id' : '704ea4ec-456c-4740-852b-0814d59f7d22',
+                'hrid' : 'BW-2',
+              },
+              'briefInstance' : {
+                'id' : 'cd3288a4-898c-4347-a003-2d810ef70f04',
+                'title' : 'Second Title',
+                'hrid' : 'bwinst0002',
+              },
+            },
+          ],
+          materialType: { name: 'book' },
+        },
+      ],
+    },
+    instanceRecords: {
+      hasLoaded: true,
+      records: [
+        {
+          id: 1,
+        }
+      ],
+    },
+    requests: {
+      records: [{
+        id: 'requestId',
+        holdShelfExpirationDate: new Date().setDate(new Date().getDate() + 1),
+        item: {
+          status: 'Awaiting pickup',
+        },
+      }],
+    },
+    loanTypes: {},
+    okapi: {},
+    location: {},
   },
-  instanceRecords: {
-    hasLoaded: true,
-    records: [
-      {
-        id: 1,
-      }
-    ],
-  },
-  requests: {},
-  loanTypes: {},
-  okapi: {},
-  location: {},
+  isInstanceShared: true,
 };
 
 const referenceTables = {
@@ -127,16 +155,16 @@ const referenceTables = {
   },
 };
 
-const ItemViewSetup = () => (
-  <Router>
+const ItemViewSetup = props => (
+  <Router history={history}>
     <StripesContext.Provider value={stripesStub}>
       <ModuleHierarchyProvider module="@folio/inventory">
         <ItemView
           onCloseViewItem={noop}
-          resources={resources}
           referenceTables={referenceTables}
           stripes={stripesStub}
-          isInstanceShared
+          {...defaultProps}
+          {...props}
         />
       </ModuleHierarchyProvider>
     </StripesContext.Provider>
@@ -146,6 +174,7 @@ const ItemViewSetup = () => (
 describe('ItemView', () => {
   describe('rendering ItemView', () => {
     beforeEach(() => {
+      console.error = jest.fn();
       renderWithIntl(<ItemViewSetup />, translationsProperties);
     });
 
@@ -166,14 +195,14 @@ describe('ItemView', () => {
     });
 
     it('should link to the instance view from the instance HRID', () => {
-      const id = resources.itemsResource.records[0].boundWithTitles[0].briefInstance.id;
+      const id = defaultProps.resources.itemsResource.records[0].boundWithTitles[0].briefInstance.id;
       expect(document.querySelector('#item-list-bound-with-titles a.instanceHrid'))
         .toHaveAttribute('href', '/inventory/view/' + id);
     });
 
     it('should link to the holdings view from the holdings HRID', () => {
-      const instanceId = resources.itemsResource.records[0].boundWithTitles[0].briefInstance.id;
-      const holdingsRecordId = resources.itemsResource.records[0].boundWithTitles[0].briefHoldingsRecord.id;
+      const instanceId = defaultProps.resources.itemsResource.records[0].boundWithTitles[0].briefInstance.id;
+      const holdingsRecordId = defaultProps.resources.itemsResource.records[0].boundWithTitles[0].briefHoldingsRecord.id;
       expect(document.querySelector('#item-list-bound-with-titles a.holdingsRecordHrid'))
         .toHaveAttribute('href', '/inventory/view/' + instanceId + '/' + holdingsRecordId);
     });
@@ -217,6 +246,17 @@ describe('ItemView', () => {
       expect(screen.getAllByTestId('info-icon-effective-call-number')[0]).toBeDefined();
       expect(screen.getAllByTestId('info-icon-shelving-order')[0]).toBeDefined();
     });
+
+    describe('when close view page', () => {
+      it('should call the function to redirect user to instance page', () => {
+        checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+        renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+        fireEvent.click(document.querySelector('[aria-label="Close "]'));
+
+        expect(mockPush).toHaveBeenCalled();
+      });
+    });
   });
 
   describe('action menu', () => {
@@ -227,7 +267,27 @@ describe('ItemView', () => {
       expect(screen.queryByRole('button', { name: 'Actions' })).not.toBeInTheDocument();
     });
 
-    describe('"Update ownership" action item', () => {
+    describe('"Edit" action item', () => {
+      it('should be rendered', () => {
+        checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+        renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+        expect(screen.getByRole('button', { name: 'edit' })).toBeInTheDocument();
+      });
+
+      describe('when click on "Edit"', () => {
+        it('should call the function to redirect user to edit page', () => {
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+          renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+          fireEvent.click(screen.getByText('Edit'));
+
+          expect(mockPush).toHaveBeenCalled();
+        });
+      });
+    });
+
+    describe('Update ownership action item', () => {
       it('should be rendered', async () => {
         checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
         renderWithIntl(<ItemViewSetup />, translationsProperties);
@@ -276,6 +336,97 @@ describe('ItemView', () => {
           fireEvent.click(within(confirmationModal).getByText('confirm'));
 
           expect(document.querySelector('#update-ownership-modal')).not.toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('"Duplicate" action item', () => {
+      it('should be rendered', () => {
+        checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+        renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+        expect(screen.getByText('Duplicate')).toBeInTheDocument();
+      });
+
+      describe('when click on "Duplicate"', () => {
+        it('should call the function to redirect user to duplicate page', () => {
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+          renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+          fireEvent.click(screen.getByText('Duplicate'));
+          screen.debug();
+
+          expect(mockPush).toHaveBeenCalled();
+        });
+      });
+    });
+
+    describe('"Delete" action item', () => {
+      it('should be rendered', () => {
+        checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+        renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+        expect(screen.getByText('Delete')).toBeInTheDocument();
+      });
+
+      describe('when click on "Delete"', () => {
+        describe('and status of item is on order', () => {
+          it('should render modal that user can\'t delete the item', () => {
+            checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+            renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+            fireEvent.click(screen.getByText('Delete'));
+
+            expect(document.querySelector('#cannotDeleteItemModal-label')).toBeInTheDocument();
+          });
+
+          describe('when close the modal', () => {
+            it('should be closed', () => {
+              checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+              renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+              fireEvent.click(screen.getByText('Delete'));
+              fireEvent.click(screen.getByText('Back'));
+
+              expect(document.querySelector('#cannotDeleteItemModal-label')).not.toBeInTheDocument();
+            });
+          });
+        });
+      });
+    });
+
+    describe('"Mark as missing" action item', () => {
+      it('should be rendered', () => {
+        checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+        renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+        expect(screen.getByText('Missing')).toBeInTheDocument();
+      });
+
+      describe('when click on "Mark as missing"', () => {
+        it('should render confirmation modal', () => {
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+          renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+          fireEvent.click(screen.getByText('Missing'));
+          screen.debug();
+
+          expect(screen.getByText('Confirm item status: Missing')).toBeInTheDocument();
+        });
+
+        describe('when confirm to mark item as missing', () => {
+          it('should render confirmation modal', () => {
+            checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+            renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+            fireEvent.click(screen.getByText('Missing'));
+            screen.debug();
+
+            const confirmationModal = screen.getByRole('dialog');
+            fireEvent.click(within(confirmationModal).getByText('Confirm'));
+
+            expect(defaultProps.mutator.markItemAsMissing.POST).toHaveBeenCalled();
+          });
         });
       });
     });

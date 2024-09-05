@@ -148,7 +148,7 @@ const ItemView = props => {
   const [isUpdateOwnershipModalOpen, setIsUpdateOwnershipModalOpen] = useState(false);
   const [cannotDeleteItemModalMessageId, setCannotDeleteItemModalMessageId] = useState('');
   const [isConfirmUpdateOwnershipModalOpen, setIsConfirmUpdateOwnershipModalOpen] = useState(false);
-  const [updateOwnershiData, setUpdateOwnershipData] = useState({});
+  const [updateOwnershipData, setUpdateOwnershipData] = useState({});
   const [tenants, setTenants] = useState([]);
   const [targetTenant, setTargetTenant] = useState({});
 
@@ -352,7 +352,7 @@ const ItemView = props => {
         id="clickable-copy-item"
         onClickHandler={() => {
           onToggle();
-          onCopy(firstItem);
+          onCopy();
         }}
         icon="duplicate"
         messageId="ui-inventory.copyItem"
@@ -530,7 +530,7 @@ const ItemView = props => {
   };
 
   const handleUpdateOwnership = async () => {
-    const { targetLocation, tenantId, holdingId } = updateOwnershiData;
+    const { targetLocation, tenantId, holdingId } = updateOwnershipData;
     const newTenant = stripes.user.user.tenants.find(tenant => tenant.id === tenantId);
     const item = itemsResource.records[0] || {};
     setTargetTenant(newTenant);
