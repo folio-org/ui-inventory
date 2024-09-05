@@ -12,6 +12,7 @@
   "instances.columns.title": "Title",
   "instances.columns.contributors": "Contributors",
   "instances.columns.publishers": "Publishers",
+  "instances.columns.date": "Date",
   "instances.columns.relation": "Relation",
   "instances.columns.callNumber": "Call number",
   "instances.columns.numberOfTitles": "Number of titles",

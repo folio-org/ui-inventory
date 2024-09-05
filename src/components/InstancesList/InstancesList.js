@@ -107,7 +107,7 @@ import css from './instances.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
+const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'date', 'relation'];
 const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
 const ALL_COLUMNS = Array.from(new Set([
   ...NON_TOGGLEABLE_COLUMNS,
@@ -1086,6 +1086,7 @@ class InstancesList extends React.Component {
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
+      date: intl.formatMessage({ id: 'ui-inventory.instances.columns.date' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
     };
 
@@ -1362,6 +1363,7 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
+      date: r => formatters.dateFormatter(r, data.instanceDateTypes),
     };
 
     const visibleColumns = this.getVisibleColumns();
