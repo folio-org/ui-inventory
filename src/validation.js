@@ -1,4 +1,4 @@
-const DATE_LENGTH = 4;
+export const DATE_LENGTH = 4;
 
 export const validateTitles = (instance, type, errors, message) => {
   const titleAttr = `${type}Titles`;
@@ -32,14 +32,18 @@ export const validateSubInstances = (instance, type, errors, message) => {
   }
 };
 
-export const validateDates = (instance, errors, dateLengthMessage, dateTypeMessage) => {
+export const validateDates = (instance, errors, dateLengthMessage) => {
   errors.dates = {};
 
-  if (instance.dates?.date1?.length !== DATE_LENGTH) {
+  const date1Length = instance.dates?.date1?.length;
+  const date2Length = instance.dates?.date2?.length;
+
+  // dates are not required, so the can be empty, but if they're not empty - they must be 4 characters long
+  if (date1Length && date1Length !== DATE_LENGTH) {
     errors.dates.date1 = dateLengthMessage;
   }
 
-  if (instance.dates?.date2?.length !== DATE_LENGTH) {
+  if (date2Length && date2Length !== DATE_LENGTH) {
     errors.dates.date2 = dateLengthMessage;
   }
 };

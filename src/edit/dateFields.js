@@ -10,6 +10,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import { DATE_LENGTH } from '../validation';
+
 const DateFields = ({ instanceDateTypeOptions }) => {
   const { formatMessage } = useIntl();
 
@@ -22,10 +24,9 @@ const DateFields = ({ instanceDateTypeOptions }) => {
       <Col sm={3}>
         <Field
           label={typeLabel}
-          name="instanceDate.instanceDateTypeId"
+          name="dates.dateTypeId"
           component={Select}
           dataOptions={instanceDateTypeOptions}
-          placeholder={formatMessage({ id: 'ui-inventory.selectInstanceDateType' })}
         />
       </Col>
       <Col sm={3}>
@@ -34,7 +35,7 @@ const DateFields = ({ instanceDateTypeOptions }) => {
           label={date1Label}
           name="dates.date1"
           component={TextField}
-          maxLength={4}
+          maxLength={DATE_LENGTH}
         />
       </Col>
       <Col sm={3}>
@@ -43,7 +44,7 @@ const DateFields = ({ instanceDateTypeOptions }) => {
           label={date2Label}
           name="dates.date2"
           component={TextField}
-          maxLength={4}
+          maxLength={DATE_LENGTH}
         />
       </Col>
     </Row>

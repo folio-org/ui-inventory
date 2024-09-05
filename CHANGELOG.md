@@ -80,6 +80,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Use the sort option from the new `DisplaySettings` until the user changes it in any available way. Refs UIIN-2722.
 * Rename `Classification` and `Call numbers` sections in browse options. Refs UIIN-2982.
 * Edit/Create -- Subject accordion instance UI changes. Refs UIIN-2944.
+* Instance Detail/Edit/New: Add new section for Date type, Date 1, & Date 2. Refs UIIN-2849.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)

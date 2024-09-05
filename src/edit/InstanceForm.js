@@ -159,7 +159,7 @@ function validate(values) {
     }
   });
 
-  validateDates(values, errors, dateLengthMessage, null);
+  validateDates(values, errors, dateLengthMessage);
 
   validateTitles(values, 'preceding', errors, requiredTextMessage);
   validateTitles(values, 'succeeding', errors, requiredTextMessage);
@@ -351,13 +351,16 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
-    const instanceDateTypeOptions = referenceTables.instanceDateTypes ? referenceTables.instanceDateTypes.map(
+    const instanceDateTypeOptions = [{
+      label: <FormattedMessage id="ui-inventory.selectInstanceDateType" />,
+      value: '',
+    }, ...referenceTables.instanceDateTypes ? referenceTables.instanceDateTypes.map(
       it => ({
         label: it.name,
         value: it.id,
         selected: it.id === initialValues.instanceDate?.instanceDateTypeId,
       }),
-    ) : [];
+    ) : []];
 
     const instanceNoteTypeOptions = referenceTables.instanceNoteTypes ? referenceTables.instanceNoteTypes.map(
       it => ({
