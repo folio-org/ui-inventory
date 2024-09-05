@@ -55,8 +55,6 @@ const DuplicateHolding = ({
   const onSuccess = useCallback(async (response) => {
     const { id, hrid } = response;
 
-    console.log('here');
-
     await switchAffiliation(stripes, tenantFrom, () => goToDuplicatedHolding(id));
 
     return callout.sendCallout({

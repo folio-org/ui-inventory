@@ -480,7 +480,7 @@ const ItemView = props => {
     );
   };
 
-  const showMessageAndGoBack = itemHrid => {
+  const showSuccessMessageAndGoBack = itemHrid => {
     calloutContext.sendCallout({
       type: 'success',
       message: <FormattedMessage
@@ -495,38 +495,60 @@ const ItemView = props => {
     goBack();
   };
 
-  const createNewHoldingForlocation = (itemId, tenantId, targetLocation, targetTenantId) => {
+  const showErrorMessage = () => {
+    calloutContext.sendCallout({
+      type: 'error',
+      message: <FormattedMessage id="ui-inventory.communicationProblem" />,
+    });
+
+    setTargetTenant({});
+    setUpdateOwnershipData({});
+    setIsConfirmUpdateOwnershipModalOpen(false);
+  };
+
+  const createNewHoldingForlocation = async (itemId, targetLocation, targetTenantId) => {
     const instance = instanceRecords.records[0];
     const item = itemsResource.records[0] || {};
 
-    mutateHolding({
-      permanentLocationId: targetLocation.id,
-      instanceId: instance.id,
-      sourceId: holdingsSourcesByName.FOLIO.id,
-    }).then((holding) => {
-      updateOwnership({
-        toHoldingsRecordId: holding.id,
+    try {
+      const newHoldingData = await mutateHolding({
+        permanentLocationId: targetLocation.id,
+        instanceId: instance.id,
+        sourceId: holdingsSourcesByName.FOLIO.id,
+      });
+
+      await updateOwnership({
+        toHoldingsRecordId: newHoldingData.id,
         itemIds: [itemId],
         targetTenantId,
-      }).then(() => showMessageAndGoBack(item.hrid));
-    });
+      });
+
+      showSuccessMessageAndGoBack(item.hrid);
+    } catch (e) {
+      showErrorMessage();
+    }
   };
 
-  const handleUpdateOwnership = () => {
+  const handleUpdateOwnership = async () => {
     const { targetLocation, tenantId, holdingId } = updateOwnershiData;
-    const targetTenant2 = stripes.user.user.tenants.find(tenant => tenant.id === tenantId);
-    setTargetTenant(targetTenant2);
+    const newTenant = stripes.user.user.tenants.find(tenant => tenant.id === tenantId);
     const item = itemsResource.records[0] || {};
+    setTargetTenant(newTenant);
     if (targetLocation) {
-      createNewHoldingForlocation(item.id, tenantId, targetLocation, targetTenant2.id);
+      createNewHoldingForlocation(item.id, targetLocation, newTenant.id);
     }
 
     if (holdingId) {
-      updateOwnership({
-        toHoldingsRecordId: holdingId,
-        itemIds: [item.id],
-        targetTenantId: tenantId,
-      }).then(() => showMessageAndGoBack(item.hrid));
+      try {
+        await updateOwnership({
+          toHoldingsRecordId: holdingId,
+          itemIds: [item.id],
+          targetTenantId: tenantId,
+        });
+        showSuccessMessageAndGoBack(item.hrid);
+      } catch (e) {
+        showErrorMessage();
+      }
     }
   };
 

@@ -48,13 +48,14 @@ const UpdateItemOwnershipModal = ({
     fieldProps.input.onChange(value);
   }, []);
 
-  const onLocationSelect = useCallback((location, _f, _n, holdingId) => {
+  const onLocationSelect = useCallback(fieldProps => (location, _f, _n, holdingId) => {
     if (!location || !holdingId) {
       setTargetHolding();
       setTargetLocation();
     }
 
     if (holdingId) {
+      fieldProps.input.onChange(holdingId);
       setTargetHolding(holdingId);
     } else {
       setTargetLocation(location);
@@ -104,7 +105,7 @@ const UpdateItemOwnershipModal = ({
                 <FieldHolding
                   {...fieldProps.input}
                   labelId="stripes-acq-components.holding.label"
-                  onChange={onLocationSelect}
+                  onChange={onLocationSelect(fieldProps)}
                   locationFieldName="locationName"
                   affiliationName="affiliationName"
                   holdingName="holdingId"

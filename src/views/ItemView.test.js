@@ -1,7 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import { waitFor, screen, fireEvent, within } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  waitFor,
+  screen,
+  fireEvent,
+  within,
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -139,9 +144,6 @@ const ItemViewSetup = () => (
 );
 
 describe('ItemView', () => {
-  beforeEach(() => {
-    console.error = jest.fn();
-  });
   describe('rendering ItemView', () => {
     beforeEach(() => {
       renderWithIntl(<ItemViewSetup />, translationsProperties);
