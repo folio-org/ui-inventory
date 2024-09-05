@@ -35,12 +35,24 @@ import FastAddSettings from './FastAdd/FastAddSettings';
 import ClassificationBrowseSettings from './ClassificationBrowseSettings';
 import SubjectSourcesSettings from './SubjectSourcesSettings';
 import SubjectTypesSettings from './SubjectTypesSettings';
+import DisplaySettings from './DisplaySettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
     super(props);
 
     this.sections = [
+      {
+        label: <FormattedMessage id="ui-inventory.settings.heading.general" />,
+        pages: [
+          {
+            route: 'displaySettings',
+            label: <FormattedMessage id="ui-inventory.settings.section.displaySettings" />,
+            component: DisplaySettings,
+            perm: 'ui-inventory.settings.displaySettings',
+          },
+        ],
+      },
       {
         label: <FormattedMessage id="ui-inventory.instances" />,
         pages: [
