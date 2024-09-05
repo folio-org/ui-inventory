@@ -31,7 +31,7 @@ const commonData = {
   instanceStatuses: [{ id: 'id-1', code: 'batch' }],
   instanceFormats: [{ id: 'id-1', code: 'sb' }],
   holdingsSources: [{ id: 'id-1', name: 'FOLIO' }],
-  instanceTypes: [{ id: 'id-1', code: 'crd' }]
+  instanceTypes: [{ id: 'id-1', code: 'crd' }],
 };
 
 useCommonData.mockReturnValue({

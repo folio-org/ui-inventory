@@ -1,4 +1,5 @@
 import { render, cleanup } from '@folio/jest-config-stripes/testing-library/react';
+
 import * as Formatter from './referenceFormatters';
 
 describe('ContributorsFormatter', () => {
