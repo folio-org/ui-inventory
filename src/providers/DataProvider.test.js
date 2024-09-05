@@ -5,11 +5,15 @@ import { resources } from '../../test/fixtures/DataProviders';
 
 import DataProvider from './DataProvider';
 import { DataContext } from '../contexts';
-import { useClassificationBrowseConfig } from '../hooks';
+import {
+  useClassificationBrowseConfig,
+  useInstanceDateTypes,
+} from '../hooks';
 
 jest.mock('../hooks', () => ({
   ...jest.requireActual('../hooks'),
   useClassificationBrowseConfig: jest.fn(),
+  useInstanceDateTypes: jest.fn(),
 }));
 
 const commonData = {
@@ -61,6 +65,10 @@ useClassificationBrowseConfig.mockReturnValue({
   classificationBrowseConfig,
   isLoading: false,
 });
+useInstanceDateTypes.mockReturnValue({
+  instanceDateTypes: [],
+  isLoading: false,
+});
 
 const mockPassedData = jest.fn();
 
@@ -83,6 +91,7 @@ describe('DataProvider', () => {
     expect(mockPassedData).toHaveBeenCalledWith({
       ...commonData,
       classificationBrowseConfig,
+      instanceDateTypes: [],
       ...Object.keys(resources).reduce((acc, name) => ({ ...acc, [name]: resources[name].records }), {}),
       identifierTypesById: {
         'identifierTypes-1': {

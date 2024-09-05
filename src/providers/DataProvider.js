@@ -5,7 +5,10 @@ import keyBy from 'lodash/keyBy';
 import { stripesConnect } from '@folio/stripes/core';
 import { useCommonData } from '@folio/stripes-inventory-components';
 
-import { useClassificationBrowseConfig, useInstanceDateTypes } from '../hooks';
+import {
+  useClassificationBrowseConfig,
+  useInstanceDateTypes,
+} from '../hooks';
 import { DataContext } from '../contexts';
 
 // Provider which loads dictionary data used in various places in ui-inventory.
