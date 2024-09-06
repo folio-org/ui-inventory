@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { act } from 'react';
 import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
@@ -8,6 +8,7 @@ import {
   fireEvent,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../test/jest/__mock__';
 
@@ -35,6 +36,9 @@ const mockPush = jest.fn();
 const history = createMemoryHistory();
 history.push = mockPush;
 
+const spyOncollapseAllSections = jest.spyOn(require('@folio/stripes/components'), 'collapseAllSections');
+const spyOnexpandAllSections = jest.spyOn(require('@folio/stripes/components'), 'expandAllSections');
+
 const stripesStub = {
   connect: Component => <Component />,
   hasPerm: () => true,
@@ -58,6 +62,9 @@ const defaultProps = {
     markItemAsMissing: {
       POST: jest.fn().mockResolvedValue({}),
     },
+    markItemAsWithdrawn: {
+      POST: jest.fn().mockResolvedValue({}),
+    },
     requestOnItem: {
       replace: jest.fn(),
     },
@@ -65,6 +72,7 @@ const defaultProps = {
       PUT: jest.fn(),
     },
   },
+  goTo: jest.fn(),
   resources: {
     holdingsRecords: {
       hasLoaded: true,
@@ -121,6 +129,7 @@ const defaultProps = {
             },
           ],
           materialType: { name: 'book' },
+          statisticalCodeIds: ['statisticalCodeId']
         },
       ],
     },
@@ -172,6 +181,12 @@ const ItemViewSetup = props => (
 );
 
 describe('ItemView', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = await act(async () => renderWithIntl(<ItemViewSetup />, translationsProperties));
+
+    await runAxeTest({ rootNode: container });
+  });
+
   describe('rendering ItemView', () => {
     beforeEach(() => {
       console.error = jest.fn();
@@ -322,6 +337,24 @@ describe('ItemView', () => {
         });
       });
 
+      describe('when cancel the action', () => {
+        it('should hide confirmation modal', async () => {
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+          renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+          const updateOwnershipBtn = await screen.findByText('Update ownership');
+          fireEvent.click(updateOwnershipBtn);
+
+          UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit({ id: 'university' }, { id: 'locationId' }, 'holdingId');
+
+          const confirmationModal = screen.getByText('Update ownership of items');
+          fireEvent.click(within(confirmationModal).getByText('cancel'));
+
+          expect(document.querySelector('#update-ownership-modal')).not.toBeInTheDocument();
+        });
+      });
+
+      // ???????
       describe('when confirm the action', () => {
         it('should render confirmation modal', async () => {
           checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
@@ -429,6 +462,74 @@ describe('ItemView', () => {
           });
         });
       });
+    });
+
+    describe('"Mark as withdrawn" action item', () => {
+      it('should be rendered', () => {
+        checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+        renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+        expect(screen.getByText('Withdrawn')).toBeInTheDocument();
+      });
+
+      describe('when click on "Mark as withdrawn"', () => {
+        it('should render confirmation modal', () => {
+          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+          renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+          fireEvent.click(screen.getByText('Withdrawn'));
+          screen.debug();
+
+          expect(screen.getByText('Confirm item status: Withdrawn')).toBeInTheDocument();
+        });
+
+        describe('when confirm to mark item as withdrawn', () => {
+          it('should render confirmation modal', () => {
+            checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+            renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+            fireEvent.click(screen.getByText('Withdrawn'));
+            screen.debug();
+
+            const confirmationModal = screen.getByRole('dialog');
+            fireEvent.click(within(confirmationModal).getByText('Confirm'));
+
+            expect(defaultProps.mutator.markItemAsWithdrawn.POST).toHaveBeenCalled();
+          });
+        });
+      });
+    });
+  });
+
+  describe('Tests for shortcut of HasCommand', () => {
+    it('onClickEditItem function to be triggered on clicking edit button', () => {
+      renderWithIntl(<ItemViewSetup />, translationsProperties);
+      fireEvent.click(screen.getByRole('button', { name: 'edit' }));
+      expect(mockPush).toHaveBeenCalled();
+    });
+
+    it('onCopy function to be triggered on clicking duplicateRecord button', () => {
+      renderWithIntl(<ItemViewSetup />, translationsProperties);
+      fireEvent.click(screen.getByRole('button', { name: 'duplicateRecord' }));
+      expect(mockPush).toHaveBeenCalled();
+    });
+
+    it('collapseAllSections triggered on clicking collapseAllSections button', () => {
+      renderWithIntl(<ItemViewSetup />, translationsProperties);
+      fireEvent.click(screen.getByRole('button', { name: 'collapseAllSections' }));
+      expect(spyOncollapseAllSections).toHaveBeenCalled();
+    });
+
+    it('expandAllSections triggered on clicking expandAllSections button', () => {
+      renderWithIntl(<ItemViewSetup />, translationsProperties);
+      fireEvent.click(screen.getByRole('button', { name: 'expandAllSections' }));
+      expect(spyOnexpandAllSections).toHaveBeenCalled();
+    });
+
+    it('goTo triggered on clicking search button', () => {
+      renderWithIntl(<ItemViewSetup />, translationsProperties);
+      fireEvent.click(screen.getByRole('button', { name: 'search' }));
+      expect(defaultProps.goTo).toHaveBeenCalled();
     });
   });
 });

@@ -271,14 +271,18 @@ const ItemView = props => {
     setIsUpdateOwnershipModalOpen(false);
   };
 
-  const openConfirmUpdateOwnershipModal = (tenantId, targetLocation, holdingId) => {
+  const openConfirmUpdateOwnershipModal = () => {
+    setIsConfirmUpdateOwnershipModalOpen(true);
+  };
+
+  const handleSubmitUpdateOwnership = (tenantId, targetLocation, holdingId) => {
     setUpdateOwnershipData({
       tenantId,
       targetLocation,
       holdingId,
     });
-    setIsConfirmUpdateOwnershipModalOpen(true);
-    setIsUpdateOwnershipModalOpen(false);
+    openConfirmUpdateOwnershipModal();
+    hideUpdateOwnershipModal();
   };
 
   const hideConfirmUpdateOwnershipModal = () => {
@@ -853,6 +857,7 @@ const ItemView = props => {
       return (
         <Link
           to={`/inventory/view/${x.briefInstance?.id}`}
+          ariaLabel={`Instance HRID - ${x.briefInstance?.id}`}
           className="instanceHrid"
         >
           <span>{x.briefInstance?.hrid}</span>
@@ -913,7 +918,7 @@ const ItemView = props => {
   ];
 
   const currentTenantId = stripes.okapi.tenant;
-  const currentTenant = stripes.user.user.tenants.find(tenant => tenant.id === currentTenantId);
+  const currentTenant = stripes.user?.user?.tenants?.find(tenant => tenant.id === currentTenantId);
 
   const itemRecord = resources.itemsResource.records[0];
   // getEntity needs to return an object from a closure so that Tags can compare old and new entity versions
@@ -962,7 +967,7 @@ const ItemView = props => {
         >
           <UpdateItemOwnershipModal
             isOpen={isUpdateOwnershipModalOpen}
-            handleSubmit={openConfirmUpdateOwnershipModal}
+            handleSubmit={handleSubmitUpdateOwnership}
             tenantsList={tenants}
             onCancel={hideUpdateOwnershipModal}
             onChangeAffiliation={setTargetTenant}

@@ -4,7 +4,10 @@ import React, {
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import {
   Field,
   Form,
@@ -30,6 +33,7 @@ const UpdateItemOwnershipModal = ({
   targetTenantId,
   instanceId,
 }) => {
+  const { formatMessage } = useIntl();
   const [targetLocation, setTargetLocation] = useState(null);
   const [targetHolding, setTargetHolding] = useState(null);
   const { locations } = useLocationsQuery({ consortium: true });
@@ -93,7 +97,7 @@ const UpdateItemOwnershipModal = ({
                 <Selection
                   {...fieldProps.input}
                   label={<FormattedMessage id="ui-inventory.affiliation" />}
-                  placeholder="Select affiliation"
+                  placeholder={formatMessage({ id: 'ui-inventory.affiliation.select' })}
                   dataOptions={tenantsOptions}
                   onChange={onAffiliationChange(fieldProps)}
                   required

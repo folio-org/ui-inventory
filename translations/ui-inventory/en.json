@@ -557,6 +557,7 @@
   "unknownNoteType": "Unknown note type",
   "communicationProblem": "Server communication problem. Please try again",
   "affiliation": "Affiliation",
+  "affiliation.select": "Select affiliation",
   "affiliationChanging.notification": "Active affiliation has changed",
   "affiliationChanging.namedNotification": "Active affiliation has changed to {name}",
   "item.status.missing": "Missing",
