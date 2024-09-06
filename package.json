@@ -603,7 +603,8 @@
           "consortium-search.locations.collection.get",
           "browse.config.collection.get",
           "mod-settings.entries.collection.get",
-          "mod-settings.global.read.ui-inventory.display-settings"
+          "mod-settings.global.read.ui-inventory.display-settings",
+          "inventory-storage.instance-date-types.collection.get"
         ],
         "visible": true
       },

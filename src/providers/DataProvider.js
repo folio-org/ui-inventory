@@ -5,10 +5,7 @@ import keyBy from 'lodash/keyBy';
 import { stripesConnect } from '@folio/stripes/core';
 import { useCommonData } from '@folio/stripes-inventory-components';
 
-import {
-  useClassificationBrowseConfig,
-  useInstanceDateTypes,
-} from '../hooks';
+import { useClassificationBrowseConfig } from '../hooks';
 import { DataContext } from '../contexts';
 
 // Provider which loads dictionary data used in various places in ui-inventory.
@@ -21,10 +18,9 @@ const DataProvider = ({
 
   const { commonData, isCommonDataLoading } = useCommonData();
   const { classificationBrowseConfig, isLoading: isBrowseConfigLoading } = useClassificationBrowseConfig();
-  const { instanceDateTypes, isLoading: isInstanceDateTypesLoading } = useInstanceDateTypes();
 
   const isLoading = useMemo(() => {
-    if (isCommonDataLoading || isBrowseConfigLoading || isInstanceDateTypesLoading) {
+    if (isCommonDataLoading || isBrowseConfigLoading) {
       return true;
     }
     // eslint-disable-next-line guard-for-in
@@ -59,7 +55,6 @@ const DataProvider = ({
     loadedData.holdingsSourcesByName = keyBy(commonData.holdingsSources, 'name');
     loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
     loadedData.classificationBrowseConfig = classificationBrowseConfig;
-    loadedData.instanceDateTypes = instanceDateTypes;
 
     return loadedData;
   }, [

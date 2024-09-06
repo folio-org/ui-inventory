@@ -14,4 +14,4 @@ export { default as useClassificationIdentifierTypes } from './useClassification
 export { default as useClassificationBrowseConfig } from './useClassificationBrowseConfig';
 export { default as useUpdateOwnership } from './useUpdateOwnership';
 export * from './useQuickExport';
-export * from './useInstanceDateTypes';
+export * from '@folio/stripes-inventory-components/lib/queries/useInstanceDateTypes';
