@@ -57,6 +57,8 @@ import {
   getCurrentFilters,
   buildSearchQuery,
   SORT_OPTIONS,
+  SEARCH_COLUMN_NAMES,
+  getSearchResultsFormatter,
 } from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
@@ -107,8 +109,16 @@ import css from './instances.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'date', 'relation'];
-const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
+const TOGGLEABLE_COLUMNS = [
+  SEARCH_COLUMN_NAMES.CONTRIBUTORS,
+  SEARCH_COLUMN_NAMES.PUBLISHERS,
+  SEARCH_COLUMN_NAMES.DATE,
+  'relation',
+];
+const NON_TOGGLEABLE_COLUMNS = [
+  'select',
+  SEARCH_COLUMN_NAMES.TITLE,
+];
 const ALL_COLUMNS = Array.from(new Set([
   ...NON_TOGGLEABLE_COLUMNS,
   ...TOGGLEABLE_COLUMNS,
@@ -1290,6 +1300,7 @@ class InstancesList extends React.Component {
     const itemToView = getItem(`${namespace}.position`);
 
     const resultsFormatter = {
+      ...getSearchResultsFormatter(data),
       'select': ({
         id,
         ...rowData
@@ -1363,7 +1374,6 @@ class InstancesList extends React.Component {
       'publishers': r => (r?.publication ?? []).map(p => (p ? `${p.publisher} ${p.dateOfPublication ? `(${p.dateOfPublication})` : ''}` : '')).join(', '),
       'publication date': r => r.publication.map(p => p.dateOfPublication).join(', '),
       'contributors': r => formatters.contributorsFormatter(r, data.contributorTypes),
-      date: r => formatters.dateFormatter(r, data.instanceDateTypes),
     };
 
     const visibleColumns = this.getVisibleColumns();
