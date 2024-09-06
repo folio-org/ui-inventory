@@ -59,6 +59,7 @@ import {
   SORT_OPTIONS,
   SEARCH_COLUMN_NAMES,
   getSearchResultsFormatter,
+  SEARCH_COLUMN_MAPPINGS,
 } from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
@@ -1086,6 +1087,7 @@ class InstancesList extends React.Component {
     const { intl } = this.props;
 
     const columnMapping = {
+      ...SEARCH_COLUMN_MAPPINGS,
       select: !this.state.isSelectedRecordsModalOpened && (
         <Checkbox
           checked={this.getIsAllRowsSelected()}
@@ -1096,7 +1098,6 @@ class InstancesList extends React.Component {
       title: intl.formatMessage({ id: 'ui-inventory.instances.columns.title' }),
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
-      date: intl.formatMessage({ id: 'ui-inventory.instances.columns.date' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
     };
 
