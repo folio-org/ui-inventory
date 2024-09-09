@@ -138,7 +138,9 @@ const defaultProps = {
             },
           ],
           materialType: { name: 'book' },
-          statisticalCodeIds: ['statisticalCodeId']
+          statisticalCodeIds: ['statisticalCodeId'],
+          notes: [{ itemNoteTypeId: 'noteTypeId1' }],
+          circulationNotes: [{ noteType: 'Check out' }],
         },
       ],
     },
@@ -159,6 +161,16 @@ const defaultProps = {
         },
       }],
     },
+    openLoans: {
+      records: [{
+        userId: 'userId',
+        borrower: {
+          barcode: 'testBarcode',
+        },
+        loanDate: new Date(),
+        dueDate: new Date().setDate(new Date().getDate() + 1),
+      }],
+    },
     loanTypes: {},
     okapi: {},
     location: {},
@@ -167,7 +179,7 @@ const defaultProps = {
 };
 
 const referenceTables = {
-  itemNoteTypes: [],
+  itemNoteTypes: [{ id: 'noteTypeId1', name: 'Note type name' }],
   locationsById: {
     inactiveLocation: { name: 'Location 1', isActive: false },
   },
@@ -338,6 +350,26 @@ describe('ItemView', () => {
             toHoldingsRecordId: 'holdingId',
           });
         });
+
+        describe('when an error was occured', () => {
+          it('should show an error message', async () => {
+            useHoldingMutation.mockClear().mockReturnValue({ mutateHolding: mockMutate });
+            useUpdateOwnership.mockClear().mockReturnValue({ updateOwnership: jest.fn().mockRejectedValue() });
+            checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+
+            renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+            const updateOwnershipBtn = screen.getByText('Update ownership');
+            fireEvent.click(updateOwnershipBtn);
+
+            act(() => UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit('university', { id: 'locationId' }, 'holdingId'));
+
+            const confirmationModal = screen.getByText('Update ownership of items');
+            fireEvent.click(within(confirmationModal).getByText('confirm'));
+
+            await waitFor(() => expect(screen.queryByText('Server communication problem. Please try again')).toBeDefined());
+          });
+        });
       });
 
       describe('when cancel the action', () => {
@@ -372,7 +404,6 @@ describe('ItemView', () => {
           renderWithIntl(<ItemViewSetup />, translationsProperties);
 
           fireEvent.click(screen.getByText('Duplicate'));
-          screen.debug();
 
           expect(mockPush).toHaveBeenCalled();
         });
@@ -427,7 +458,6 @@ describe('ItemView', () => {
           renderWithIntl(<ItemViewSetup />, translationsProperties);
 
           fireEvent.click(screen.getByText('Missing'));
-          screen.debug();
 
           expect(screen.getByText('Confirm item status: Missing')).toBeInTheDocument();
         });
@@ -438,7 +468,6 @@ describe('ItemView', () => {
             renderWithIntl(<ItemViewSetup />, translationsProperties);
 
             fireEvent.click(screen.getByText('Missing'));
-            screen.debug();
 
             const confirmationModal = screen.getByRole('dialog');
             fireEvent.click(within(confirmationModal).getByText('Confirm'));
@@ -463,7 +492,6 @@ describe('ItemView', () => {
           renderWithIntl(<ItemViewSetup />, translationsProperties);
 
           fireEvent.click(screen.getByText('Withdrawn'));
-          screen.debug();
 
           expect(screen.getByText('Confirm item status: Withdrawn')).toBeInTheDocument();
         });
@@ -474,7 +502,6 @@ describe('ItemView', () => {
             renderWithIntl(<ItemViewSetup />, translationsProperties);
 
             fireEvent.click(screen.getByText('Withdrawn'));
-            screen.debug();
 
             const confirmationModal = screen.getByRole('dialog');
             fireEvent.click(within(confirmationModal).getByText('Confirm'));
