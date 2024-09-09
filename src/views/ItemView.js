@@ -1,6 +1,8 @@
 import React, {
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
@@ -47,6 +49,8 @@ import {
   InfoPopover,
   Layout,
   MenuSection,
+  NoValue,
+  TextLink,
 } from '@folio/stripes/components';
 
 import {
@@ -555,6 +559,169 @@ const ItemView = props => {
     }
   };
 
+  const instance = instanceRecords.records[0];
+  const item = itemsResource.records[0] || {};
+  const holdingsRecord = holdingsRecords.records[0];
+  const { locationsById } = referenceTables;
+  const permanentHoldingsLocation = locationsById[holdingsRecord?.permanentLocationId];
+  const temporaryHoldingsLocation = locationsById[holdingsRecord?.temporaryLocationId];
+  const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
+
+  const refLookup = (referenceTable, id) => {
+    const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
+
+    return ref || {};
+  };
+
+  const layoutNotes = useCallback((noteTypes, notes) => {
+    return noteTypes
+      .filter(noteType => notes.find(note => note.itemNoteTypeId === noteType.id))
+      .map((noteType, i) => (
+        <Row key={i}>
+          <Col xs={1}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.staffOnly" />}
+              value={notes.map((note, j) => {
+                if (note.itemNoteTypeId === noteType.id) {
+                  return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
+                }
+                return null;
+              })}
+            />
+          </Col>
+          <Col xs={11}>
+            <KeyValue
+              label={noteType.name}
+              value={notes.map((note, j) => {
+                if (note.itemNoteTypeId === noteType.id) {
+                  return <div key={j}>{note.note || noValue}</div>;
+                }
+                return null;
+              })}
+            />
+          </Col>
+        </Row>
+      ));
+  }, []);
+
+  const layoutCirculationNotes = useCallback((noteTypes, notes) => {
+    return noteTypes
+      .filter(noteType => notes.find(note => note.noteType === noteType))
+      .map((noteType, i) => (
+        <Row key={i}>
+          <Col xs={1}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.staffOnly" />}
+              value={notes.map((note, j) => {
+                if (note.noteType === noteType) {
+                  return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
+                }
+                return null;
+              })}
+            />
+          </Col>
+          <Col xs={11}>
+            <KeyValue
+              label={`${noteType} note`}
+              value={notes.map((note, j) => {
+                if (note.noteType === noteType) {
+                  return <div key={j}>{note.note || noValue}</div>;
+                }
+                return null;
+              })}
+            />
+          </Col>
+        </Row>
+      ));
+  }, []);
+
+  const confirmDeleteItemModalMessage = useMemo(() => (
+    <FormattedMessage
+      id="ui-inventory.confirmItemDeleteModal.message"
+      values={{
+        hrid: item.hrid,
+        barcode: item.barcode,
+      }}
+    />
+  ), [item.hrid, item.barcode]);
+
+  const cannotDeleteItemFooter = useMemo(() => (
+    <Button
+      data-test-cannot-delete-item-back-action
+      onClick={hideCannotDeleteItemModal}
+    >
+      <FormattedMessage id="stripes-core.button.back" />
+    </Button>
+  ), [hideCannotDeleteItemModal]);
+
+  const administrativeData = useMemo(() => ({
+    discoverySuppress: get(instance, 'discoverySuppress', <NoValue />),
+    hrid: get(item, 'hrid', <NoValue />),
+    barcode: get(item, 'barcode', <NoValue />),
+    accessionNumber: get(item, 'accessionNumber', <NoValue />),
+    identifier: get(item, 'itemIdentifier', <NoValue />),
+    formerIds: get(item, 'formerIds', []),
+    statisticalCodeIds: get(item, 'statisticalCodeIds', []),
+  }), [instance, item]);
+
+  const itemData = useMemo(() => ({
+    materialType: get(item, ['materialType', 'name'], <NoValue />),
+    callNumberType: refLookup(referenceTables.callNumberTypes, get(item, 'itemLevelCallNumberTypeId')).name || <NoValue />,
+    callNumberPrefix: get(item, 'itemLevelCallNumberPrefix', <NoValue />),
+    callNumber: get(item, 'itemLevelCallNumber', <NoValue />),
+    callNumberSuffix: get(item, 'itemLevelCallNumberSuffix', <NoValue />),
+    copyNumber: get(item, 'copyNumber', <NoValue />),
+    numberOfPieces: get(item, 'numberOfPieces', <NoValue />),
+    descriptionOfPieces: get(item, 'descriptionOfPieces', <NoValue />),
+    effectiveShelvingOrder: get(item, 'effectiveShelvingOrder', <NoValue />),
+  }), [item, referenceTables]);
+
+  const enumerationData = useMemo(() => ({
+    displaySummary: get(item, 'displaySummary', <NoValue />),
+    enumeration: get(item, 'enumeration', <NoValue />),
+    chronology: get(item, 'chronology', <NoValue />),
+    volume: get(item, 'volume', <NoValue />),
+    yearCaption: get(item, 'yearCaption', []),
+  }), [item]);
+
+  const condition = useMemo(() => ({
+    numberOfMissingPieces: get(item, 'numberOfMissingPieces', <NoValue />),
+    missingPieces: get(item, 'missingPieces', <NoValue />),
+    missingPiecesDate: getDate(get(item, 'missingPiecesDate')),
+    itemDamagedStatus: refLookup(referenceTables.itemDamagedStatuses, get(item, 'itemDamagedStatusId')).name || <NoValue />,
+    itemDamagedStatusDate: getDate(get(item, 'itemDamagedStatusDate')),
+  }), [item, referenceTables]);
+
+  const itemNotes = useMemo(() => ({
+    notes: layoutNotes(referenceTables.itemNoteTypes, get(item, 'notes', [])),
+  }), [item, referenceTables, layoutNotes]);
+
+  const holdingLocation = useMemo(() => ({
+    permanentLocation: {
+      name: get(permanentHoldingsLocation, 'name', <NoValue />),
+      isActive: permanentHoldingsLocation?.isActive,
+    },
+    temporaryLocation: {
+      name: get(temporaryHoldingsLocation, 'name', <NoValue />),
+      isActive: temporaryHoldingsLocation?.isActive,
+    },
+  }), [permanentHoldingsLocation, temporaryHoldingsLocation]);
+
+  const itemLocation = useMemo(() => ({
+    permanentLocation: {
+      name: get(item, ['permanentLocation', 'name'], <NoValue />),
+      isActive: locationsById[item.permanentLocation?.id]?.isActive,
+    },
+    temporaryLocation: {
+      name: get(item, ['temporaryLocation', 'name'], <NoValue />),
+      isActive: locationsById[item.temporaryLocation?.id]?.isActive,
+    },
+    effectiveLocation: {
+      name: get(item, ['effectiveLocation', 'name'], <NoValue />),
+      isActive: locationsById[item.effectiveLocation?.id]?.isActive,
+    },
+  }), [item, locationsById]);
+
   const isLoading = () => {
     return !itemsResource?.hasLoaded || !instanceRecords?.hasLoaded || !holdingsRecords?.hasLoaded;
   };
@@ -574,30 +741,27 @@ const ItemView = props => {
     <Link to={`/users/view/${staffMember.id}`}>
       {`${staffMember.personal.lastName}, ${staffMember.personal.firstName} ${staffMember.personal.middleName || ''}`}
     </Link> :
-    '-';
-
-  const instance = instanceRecords.records[0];
-  const item = itemsResource.records[0] || {};
-  const holdingsRecord = holdingsRecords.records[0];
-  const { locationsById } = referenceTables;
-  const permanentHoldingsLocation = locationsById[holdingsRecord.permanentLocationId];
-  const temporaryHoldingsLocation = locationsById[holdingsRecord.temporaryLocationId];
-  const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
+    <NoValue />;
 
   const requestCount = requests.other?.totalRecords ?? 0;
 
   const requestsUrl = `/requests?filters=${requestStatusFiltersString}&query=${item.id}&sort=Request Date`;
 
-  let borrowerLink = '-';
+  let borrowerLink = <NoValue />;
 
   if (openLoan) {
     borrowerLink = <Link to={`/users/view/${openLoan.userId}`}>{openLoan.borrower.barcode}</Link>;
   }
 
-  const refLookup = (referenceTable, id) => {
-    const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
-
-    return ref || {};
+  const loanAndAvailability = {
+    permanentLoanType: get(item, ['permanentLoanType', 'name'], <NoValue />),
+    temporaryLoanType: get(item, ['temporaryLoanType', 'name'], <NoValue />),
+    itemStatusDate: getDateWithTime(item?.status?.date),
+    requestLink: requestCount ? <Link to={requestsUrl}>{requestCount}</Link> : 0,
+    borrower: borrowerLink,
+    loanDate: openLoan ? getDateWithTime(openLoan.loanDate) : <NoValue />,
+    dueDate: openLoan ? getDateWithTime(openLoan.dueDate) : <NoValue />,
+    circulationNotes: layoutCirculationNotes(['Check out', 'Check in'], get(item, 'circulationNotes', [])),
   };
 
   const emptyNotes = (
@@ -617,177 +781,11 @@ const ItemView = props => {
     </Row>
   );
 
-  const layoutNotes = (noteTypes, notes) => {
-    return noteTypes
-      .filter(noteType => notes.find(note => note.itemNoteTypeId === noteType.id))
-      .map((noteType, i) => {
-        return (
-          <Row key={i}>
-            <Col xs={1}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.staffOnly" />}
-                value={get(item, ['notes'], []).map((note, j) => {
-                  if (note.itemNoteTypeId === noteType.id) {
-                    return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
-                  }
-
-                  return null;
-                })}
-              />
-            </Col>
-            <Col xs={11}>
-              <KeyValue
-                label={noteType.name}
-                value={get(item, ['notes'], []).map((note, j) => {
-                  if (note.itemNoteTypeId === noteType.id) {
-                    return <div key={j}>{note.note || noValue}</div>;
-                  }
-
-                  return null;
-                })}
-              />
-            </Col>
-          </Row>
-        );
-      });
-  };
-
-  const layoutCirculationNotes = (noteTypes, notes) => {
-    return noteTypes
-      .filter(noteType => notes.find(note => note.noteType === noteType))
-      .map((noteType, i) => {
-        return (
-          <Row key={i}>
-            <Col xs={1}>
-              <KeyValue
-                label={<FormattedMessage id="ui-inventory.staffOnly" />}
-                value={get(item, ['circulationNotes'], []).map((note, j) => {
-                  if (note.noteType === noteType) {
-                    return <div key={j}>{note.staffOnly ? 'Yes' : 'No'}</div>;
-                  }
-
-                  return null;
-                })}
-              />
-            </Col>
-            <Col xs={11}>
-              <KeyValue
-                label={`${noteType} note`}
-                value={get(item, ['circulationNotes'], []).map((note, j) => {
-                  if (note.noteType === noteType) {
-                    return <div key={j}>{note.note || noValue}</div>;
-                  }
-
-                  return null;
-                })}
-              />
-            </Col>
-          </Row>
-        );
-      });
-  };
-
-  const confirmDeleteItemModalMessage = (
-    <FormattedMessage
-      id="ui-inventory.confirmItemDeleteModal.message"
-      values={{
-        hrid: item.hrid,
-        barcode: item.barcode,
-      }}
-    />
-  );
-
-  const cannotDeleteItemFooter = (
-    <Button
-      data-test-cannot-delete-item-back-action
-      onClick={hideCannotDeleteItemModal}
-    >
-      <FormattedMessage id="stripes-core.button.back" />
-    </Button>
-  );
-
-  const administrativeData = {
-    discoverySuppress: get(instance, 'discoverySuppress', '-'),
-    hrid: get(item, 'hrid', '-'),
-    barcode: get(item, 'barcode', '-'),
-    accessionNumber: get(item, 'accessionNumber', '-'),
-    identifier: get(item, 'itemIdentifier', '-'),
-    formerIds: get(item, 'formerIds', []),
-    statisticalCodeIds: get(item, 'statisticalCodeIds', []),
-  };
-
-  const itemData = {
-    materialType: get(item, ['materialType', 'name'], '-'),
-    callNumberType: refLookup(referenceTables.callNumberTypes, get(item, 'itemLevelCallNumberTypeId')).name || '-',
-    callNumberPrefix: get(item, 'itemLevelCallNumberPrefix', '-'),
-    callNumber: get(item, 'itemLevelCallNumber', '-'),
-    callNumberSuffix: get(item, 'itemLevelCallNumberSuffix', '-'),
-    copyNumber: get(item, 'copyNumber', '-'),
-    numberOfPieces: get(item, 'numberOfPieces', '-'),
-    descriptionOfPieces: get(item, 'descriptionOfPieces', '-'),
-    effectiveShelvingOrder: get(item, 'effectiveShelvingOrder', '-'),
-  };
-
-  const enumerationData = {
-    displaySummary: get(item, 'displaySummary', '-'),
-    enumeration: get(item, 'enumeration', '-'),
-    chronology: get(item, 'chronology', '-'),
-    volume: get(item, 'volume', '-'),
-    yearCaption: get(item, 'yearCaption', []),
-  };
-
-  const condition = {
-    numberOfMissingPieces: get(item, 'numberOfMissingPieces', '-'),
-    missingPieces: get(item, 'missingPieces', '-'),
-    missingPiecesDate: getDate(get(item, 'missingPiecesDate')),
-    itemDamagedStatus: refLookup(referenceTables.itemDamagedStatuses, get(item, 'itemDamagedStatusId')).name || '-',
-    itemDamagedStatusDate: getDate(get(item, 'itemDamagedStatusDate')),
-  };
-
-  const itemNotes = { notes: layoutNotes(referenceTables.itemNoteTypes, get(item, 'notes', [])) };
-
-  const loanAndAvailability = {
-    permanentLoanType: get(item, ['permanentLoanType', 'name'], '-'),
-    temporaryLoanType: get(item, ['temporaryLoanType', 'name'], '-'),
-    itemStatusDate: getDateWithTime(item?.status?.date),
-    requestLink: requestCount ? <Link to={requestsUrl}>{requestCount}</Link> : 0,
-    borrower: borrowerLink,
-    loanDate: openLoan ? getDateWithTime(openLoan.loanDate) : '-',
-    dueDate: openLoan ? getDateWithTime(openLoan.dueDate) : '-',
-    circulationNotes: layoutCirculationNotes(['Check out', 'Check in'], get(item, 'circulationNotes', [])),
-  };
-
-  const holdingLocation = {
-    permanentLocation: {
-      name: get(permanentHoldingsLocation, 'name', '-'),
-      isActive: permanentHoldingsLocation?.isActive,
-    },
-    temporaryLocation: {
-      name: get(temporaryHoldingsLocation, 'name', '-'),
-      isActive: temporaryHoldingsLocation?.isActive,
-    },
-  };
-
-  const itemLocation = {
-    permanentLocation: {
-      name: get(item, ['permanentLocation', 'name'], '-'),
-      isActive: locationsById[item.permanentLocation?.id]?.isActive,
-    },
-    temporaryLocation: {
-      name: get(item, ['temporaryLocation', 'name'], '-'),
-      isActive: locationsById[item.temporaryLocation?.id]?.isActive,
-    },
-    effectiveLocation: {
-      name: get(item, ['effectiveLocation', 'name'], '-'),
-      isActive: locationsById[item.effectiveLocation.id]?.isActive,
-    },
-  };
-
   const electronicAccess = { electronicAccess: get(item, 'electronicAccess', []) };
 
   const checkInDate = getDateWithTime(get(item, ['lastCheckIn', 'dateTime']));
 
-  const servicePointName = checkInDate === '-' ? '-' : get(servicePoints, 'records[0].name', '-');
+  const servicePointName = checkInDate === '-' ? <NoValue /> : get(servicePoints, 'records[0].name', <NoValue />);
 
   const circulationHistory = {
     checkInDate,
@@ -819,7 +817,7 @@ const ItemView = props => {
 
   const statisticalCodeContent = !isEmpty(administrativeData.statisticalCodeIds)
     ? administrativeData.statisticalCodeIds.map(id => ({ codeId: id }))
-    : [{ codeId: '-' }];
+    : [{ codeId: <NoValue /> }];
 
   const statisticalCodeFormatter = {
     'Statistical code type': x => refLookup(referenceTables.statisticalCodeTypes,
@@ -835,14 +833,14 @@ const ItemView = props => {
 
       return uri
         ? (
-          <a
-            href={uri}
+          <TextLink
+            to={uri}
             rel="noreferrer noopener"
             target="_blank"
             style={wrappingCell}
           >
             {uri}
-          </a>
+          </TextLink>
         )
         : noValue;
     },
@@ -879,7 +877,7 @@ const ItemView = props => {
     <Col xs={2}>
       <KeyValue
         label={<FormattedMessage id="ui-inventory.effectiveLocation" />}
-        value={checkIfElementIsEmpty(itemLocation.effectiveLocation.name)}
+        value={checkIfElementIsEmpty(itemLocation.effectiveLocation?.name)}
         subValue={!itemLocation.effectiveLocation?.isActive &&
           <FormattedMessage id="ui-inventory.inactive" />
         }

@@ -50,7 +50,7 @@ const UpdateItemOwnershipModal = ({
 
     onChangeAffiliation(targetTenant);
     fieldProps.input.onChange(value);
-  }, []);
+  }, [tenantsList]);
 
   const onLocationSelect = useCallback(fieldProps => (location, _f, _n, holdingId) => {
     if (!location || !holdingId) {

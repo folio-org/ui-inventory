@@ -5,6 +5,7 @@ import {
   fireEvent,
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 import { FieldHolding } from '@folio/stripes-acq-components';
 
 import {
@@ -39,6 +40,12 @@ const renderUpdateItemOwnershipModal = () => renderWithIntl(
 describe('UpdateItemOwnershipModal', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it('should be rendered with no axe errors', async () => {
+    const { container } = renderUpdateItemOwnershipModal();
+
+    await runAxeTest({ rootNode: container });
   });
 
   it('should be rendered', async () => {
