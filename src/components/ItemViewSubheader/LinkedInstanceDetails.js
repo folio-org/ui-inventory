@@ -12,7 +12,10 @@ const LinkedInstanceDetails = ({
   const boundWithCount = item?.boundWithTitles?.length ?? 0;
   const instancePublicationCount = instance.publication?.length ?? 0;
   const linkedInstanceTitle = (
-    <Link to={`/inventory/view/${instance.id}`}>
+    <Link
+      to={`/inventory/view/${instance.id}`}
+      aria-label={`Linked instance id - ${instance.id}`}
+    >
       {instance.title}
     </Link>
   );
