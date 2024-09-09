@@ -537,7 +537,6 @@ const ItemView = props => {
     const { targetLocation, tenantId, holdingId } = updateOwnershipData;
     const newTenant = stripes.user.user.tenants.find(tenant => tenant.id === tenantId);
     const item = itemsResource.records[0] || {};
-    setTargetTenant(newTenant);
     if (targetLocation) {
       createNewHoldingForlocation(item.id, targetLocation, newTenant.id);
     }

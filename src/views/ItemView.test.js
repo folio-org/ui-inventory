@@ -19,6 +19,7 @@ import {
 } from '@folio/stripes/core';
 import { renderWithIntl, translationsProperties } from '../../test/jest/helpers';
 
+import { useHoldingMutation, useUpdateOwnership } from '../hooks';
 import { UpdateItemOwnershipModal } from '../components';
 import ItemView from './ItemView';
 
@@ -31,6 +32,14 @@ jest.mock('../components', () => ({
   UpdateItemOwnershipModal: jest.fn(() => <span>UpdateItemOwnershipModal</span>),
 }));
 
+jest.mock('../hooks', () => ({
+  ...jest.requireActual('../hooks'),
+  useHoldingMutation: jest.fn().mockReturnValue({ mutateHolding: jest.fn().mockResolvedValue({}) }),
+  useUpdateOwnership: jest.fn().mockReturnValue({ updateOwnership: jest.fn() }),
+}));
+
+const mockMutate = jest.fn().mockResolvedValue({ json: () => ({ id: 'testId' }) });
+const mockUpdateOwnership = jest.fn().mockResolvedValue({});
 const mockPush = jest.fn();
 
 const history = createMemoryHistory();
@@ -162,6 +171,11 @@ const referenceTables = {
   locationsById: {
     inactiveLocation: { name: 'Location 1', isActive: false },
   },
+  holdingsSourcesByName: {
+    FOLIO: {
+      id: 'folioId',
+    },
+  },
 };
 
 const ItemViewSetup = props => (
@@ -181,20 +195,19 @@ const ItemViewSetup = props => (
 );
 
 describe('ItemView', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should be rendered with no axe errors', async () => {
-    const { container } = await act(async () => renderWithIntl(<ItemViewSetup />, translationsProperties));
+    const { container } = await act(() => renderWithIntl(<ItemViewSetup />, translationsProperties));
 
     await runAxeTest({ rootNode: container });
   });
 
   describe('rendering ItemView', () => {
     beforeEach(() => {
-      console.error = jest.fn();
       renderWithIntl(<ItemViewSetup />, translationsProperties);
-    });
-
-    afterEach(() => {
-      jest.clearAllMocks();
     });
 
     it('should display item record with material type, status, and bound with in lower case in parentheses', () => {
@@ -302,71 +315,43 @@ describe('ItemView', () => {
       });
     });
 
-    describe('Update ownership action item', () => {
-      it('should be rendered', async () => {
-        checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
-        renderWithIntl(<ItemViewSetup />, translationsProperties);
-
-        const updateOwnershipBtn = await screen.findByText('Update ownership');
-        expect(updateOwnershipBtn).toBeInTheDocument();
-      });
-
-      describe('when click on "Update onership"', () => {
-        it('should render modal window', async () => {
+    describe('"Update ownership" action item', () => {
+      describe('when confirm the action', () => {
+        it('should call the method to update ownership of item', () => {
+          useHoldingMutation.mockClear().mockReturnValue({ mutateHolding: mockMutate });
+          useUpdateOwnership.mockClear().mockReturnValue({ updateOwnership: mockUpdateOwnership });
           checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+
           renderWithIntl(<ItemViewSetup />, translationsProperties);
 
-          const updateOwnershipBtn = await screen.findByText('Update ownership');
+          const updateOwnershipBtn = screen.getByText('Update ownership');
           fireEvent.click(updateOwnershipBtn);
 
-          expect(screen.getByText('UpdateItemOwnershipModal')).toBeInTheDocument();
-        });
-      });
+          act(() => UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit('university', { id: 'locationId' }, 'holdingId'));
 
-      describe('when submit updating ownership', () => {
-        it('should render confirmation modal', async () => {
-          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
-          renderWithIntl(<ItemViewSetup />, translationsProperties);
+          const confirmationModal = screen.getByText('Update ownership of items');
+          fireEvent.click(within(confirmationModal).getByText('confirm'));
 
-          const updateOwnershipBtn = await screen.findByText('Update ownership');
-          fireEvent.click(updateOwnershipBtn);
-
-          UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit('university', { id: 'locationId' }, 'holdingId');
-
-          expect(screen.getByText('Update ownership of items')).toBeInTheDocument();
+          expect(mockUpdateOwnership).toHaveBeenCalledWith({
+            itemIds: [defaultProps.resources.itemsResource.records[0].id],
+            targetTenantId: 'university',
+            toHoldingsRecordId: 'holdingId',
+          });
         });
       });
 
       describe('when cancel the action', () => {
-        it('should hide confirmation modal', async () => {
+        it('should hide confirmation modal', () => {
           checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
           renderWithIntl(<ItemViewSetup />, translationsProperties);
 
-          const updateOwnershipBtn = await screen.findByText('Update ownership');
+          const updateOwnershipBtn = screen.getByText('Update ownership');
           fireEvent.click(updateOwnershipBtn);
 
-          UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit({ id: 'university' }, { id: 'locationId' }, 'holdingId');
+          act(() => UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit('university', { id: 'locationId' }, 'holdingId'));
 
           const confirmationModal = screen.getByText('Update ownership of items');
           fireEvent.click(within(confirmationModal).getByText('cancel'));
-
-          expect(document.querySelector('#update-ownership-modal')).not.toBeInTheDocument();
-        });
-      });
-
-      // ???????
-      describe('when confirm the action', () => {
-        it('should render confirmation modal', async () => {
-          checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
-          renderWithIntl(<ItemViewSetup />, translationsProperties);
-
-          const updateOwnershipBtn = await screen.findByText('Update ownership');
-          fireEvent.click(updateOwnershipBtn);
-
-          UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit({ id: 'university' }, { id: 'locationId' }, 'holdingId');
-
-          const confirmationModal = screen.getByText('Update ownership of items');
-          fireEvent.click(within(confirmationModal).getByText('confirm'));
 
           expect(document.querySelector('#update-ownership-modal')).not.toBeInTheDocument();
         });
