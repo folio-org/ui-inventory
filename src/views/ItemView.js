@@ -834,7 +834,7 @@ const ItemView = props => {
       return uri
         ? (
           <TextLink
-            to={uri}
+            href={uri}
             rel="noreferrer noopener"
             target="_blank"
             style={wrappingCell}
