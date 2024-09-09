@@ -80,6 +80,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Use the sort option from the new `DisplaySettings` until the user changes it in any available way. Refs UIIN-2722.
 * Rename `Classification` and `Call numbers` sections in browse options. Refs UIIN-2982.
 * Edit/Create -- Subject accordion instance UI changes. Refs UIIN-2944.
+* Add the Date column to the results list. Refs UIIN-1876.
 * Add the ability to update ownership of holdings. Refs UIIN-2753.
 * Add the ability to update ownership of items. Refs UIIN-2754.
 

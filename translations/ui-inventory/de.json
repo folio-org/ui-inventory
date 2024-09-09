@@ -733,7 +733,7 @@
     "editInstance.title": "Instanz bearbeiten • {title}",
     "item.status.agedToLost.lowercase": "Verloren erklärt",
     "item.status.available.lowercase": "Verfügbar",
-    "item.status.awaitingPickup.lowercase": "Im Abholregal",
+    "item.status.awaitingPickup.lowercase": "abholbereit",
     "item.status.awaitingDelivery.lowercase": "Warten auf Lieferung",
     "item.status.checkedOut.lowercase": "Ausgeliehen",
     "item.status.claimedReturned.lowercase": "Angeblich zurückgegeben",
