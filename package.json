@@ -584,6 +584,8 @@
           "inventory-storage.service-points.collection.get",
           "inventory-storage.hrid-settings.item.get",
           "inventory-storage.record-bulk.ids.get",
+          "inventory-storage.subject-sources.collection.get",
+          "inventory-storage.subject-types.collection.get",
           "data-export.quick.export.post",
           "orders.holding-summary.collection.get",
           "orders.pieces.collection.get",
