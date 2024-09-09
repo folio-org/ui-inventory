@@ -856,7 +856,6 @@ const ItemView = props => {
       return (
         <Link
           to={`/inventory/view/${x.briefInstance?.id}`}
-          aria-label={`Instance HRID - ${x.briefInstance?.id}`}
           className="instanceHrid"
         >
           <span>{x.briefInstance?.hrid}</span>

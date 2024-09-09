@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import css from '../../View.css';
@@ -9,12 +9,13 @@ const LinkedInstanceDetails = ({
   item,
   instance,
 }) => {
+  const { formatMessage } = useIntl();
   const boundWithCount = item?.boundWithTitles?.length ?? 0;
   const instancePublicationCount = instance.publication?.length ?? 0;
   const linkedInstanceTitle = (
     <Link
       to={`/inventory/view/${instance.id}`}
-      aria-label={`Linked instance id - ${instance.id}`}
+      aria-label={formatMessage({ id: 'ui-inventory.instance.linked.id' }, { id: instance.id })}
     >
       {instance.title}
     </Link>

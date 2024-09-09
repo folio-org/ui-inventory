@@ -857,5 +857,7 @@
 
   "settings.heading.general": "General",
   "settings.section.displaySettings": "Display settings",
-  "settings.displaySettings.defaultSort": "Default sort"
+  "settings.displaySettings.defaultSort": "Default sort",
+
+  "instance.linked.id": "Linked instance ID - {id}"
 }
