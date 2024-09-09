@@ -61,6 +61,7 @@ const InstancesRouteSetup = ({
             displaySettings: {
               defaultSort: SORT_OPTIONS.TITLE,
             },
+            instanceDateTypes: [],
           }}
           >
             <LastSearchTermsContext.Provider value={{

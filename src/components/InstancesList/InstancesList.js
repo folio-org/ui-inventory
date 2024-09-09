@@ -57,6 +57,9 @@ import {
   getCurrentFilters,
   buildSearchQuery,
   SORT_OPTIONS,
+  SEARCH_COLUMN_NAMES,
+  getSearchResultsFormatter,
+  SEARCH_COLUMN_MAPPINGS,
 } from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
@@ -107,8 +110,16 @@ import css from './instances.css';
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
-const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
+const TOGGLEABLE_COLUMNS = [
+  SEARCH_COLUMN_NAMES.CONTRIBUTORS,
+  SEARCH_COLUMN_NAMES.PUBLISHERS,
+  SEARCH_COLUMN_NAMES.DATE,
+  'relation',
+];
+const NON_TOGGLEABLE_COLUMNS = [
+  'select',
+  SEARCH_COLUMN_NAMES.TITLE,
+];
 const ALL_COLUMNS = Array.from(new Set([
   ...NON_TOGGLEABLE_COLUMNS,
   ...TOGGLEABLE_COLUMNS,
@@ -1076,6 +1087,7 @@ class InstancesList extends React.Component {
     const { intl } = this.props;
 
     const columnMapping = {
+      ...SEARCH_COLUMN_MAPPINGS,
       select: !this.state.isSelectedRecordsModalOpened && (
         <Checkbox
           checked={this.getIsAllRowsSelected()}
@@ -1289,6 +1301,7 @@ class InstancesList extends React.Component {
     const itemToView = getItem(`${namespace}.position`);
 
     const resultsFormatter = {
+      ...getSearchResultsFormatter(data),
       'select': ({
         id,
         ...rowData
