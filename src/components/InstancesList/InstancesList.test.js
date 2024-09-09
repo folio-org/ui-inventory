@@ -88,6 +88,7 @@ const data = {
   displaySettings: {
     defaultSort: SORT_OPTIONS.CONTRIBUTORS,
   },
+  instanceDateTypes: [],
 };
 const query = {
   query: '',
@@ -116,7 +117,7 @@ const openActionMenu = () => {
   fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 };
 
-const getInstancesListTree = ({ segment, ...rest }) => {
+const getInstancesListTree = ({ segment = segments.instances, ...rest } = {}) => {
   const {
     indexes,
   } = filterConfig[segment];
@@ -971,6 +972,134 @@ describe('InstancesList', () => {
 
         expect(mockResetSelectedItem).toHaveBeenCalled();
         expect(clickedListItem).toHaveFocus();
+      });
+    });
+  });
+
+  describe('Date column', () => {
+    describe('when there is no delimiter', () => {
+      it('should use a comma', () => {
+        const { getByText } = renderInstancesList({
+          parentResources: {
+            ...resources,
+            records: {
+              ...resources.records,
+              records: [{
+                id: 'id-1',
+                title: 'testDate',
+                dates: {
+                  date1: '2022',
+                  date2: '2024',
+                },
+              }],
+            },
+          },
+        });
+
+        expect(getByText('2022, 2024')).toBeVisible();
+      });
+    });
+
+    describe('when delimiter is a comma', () => {
+      it('should be displayed with a space after comma', () => {
+        const { getByText } = renderInstancesList({
+          data: {
+            ...data,
+            ...query,
+            instanceDateTypes: [{
+              id: 'id-1',
+              displayFormat: {
+                delimiter: ',',
+                keepDelimiter: true,
+              },
+            }],
+          },
+          parentResources: {
+            ...resources,
+            records: {
+              ...resources.records,
+              records: [{
+                id: 'record-id',
+                title: 'testDate',
+                dates: {
+                  date1: '2023',
+                  date2: '2024',
+                  dateTypeId: 'id-1',
+                },
+              }],
+            },
+          },
+        });
+
+        expect(getByText('2023, 2024')).toBeVisible();
+      });
+    });
+
+    describe('when keepDelimiter is true', () => {
+      it('should display the delimiter', () => {
+        const { getByText } = renderInstancesList({
+          data: {
+            ...data,
+            ...query,
+            instanceDateTypes: [{
+              id: 'id-1',
+              displayFormat: {
+                delimiter: '-',
+                keepDelimiter: true,
+              },
+            }],
+          },
+          parentResources: {
+            ...resources,
+            records: {
+              ...resources.records,
+              records: [{
+                id: 'record-id',
+                title: 'testDate',
+                dates: {
+                  date2: '2024',
+                  dateTypeId: 'id-1',
+                },
+              }],
+            },
+          },
+        });
+
+        expect(getByText('-2024')).toBeVisible();
+      });
+    });
+
+    describe('when keepDelimiter is false', () => {
+      it('should not display a delimiter', () => {
+        const { getByText } = renderInstancesList({
+          data: {
+            ...data,
+            ...query,
+            instanceDateTypes: [{
+              id: 'id-1',
+              displayFormat: {
+                delimiter: '-',
+                keepDelimiter: false,
+              },
+            }],
+          },
+          parentResources: {
+            ...resources,
+            records: {
+              ...resources.records,
+              records: [{
+                id: 'record-id',
+                title: 'testDate',
+                dates: {
+                  date2: '2024',
+                  dateTypeId: 'id-1',
+                },
+              }],
+            },
+          },
+        });
+
+        expect(getByText('2024')).toBeVisible();
       });
     });
   });
