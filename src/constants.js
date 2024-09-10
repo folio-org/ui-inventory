@@ -273,3 +273,8 @@ export const ITEM_ACCORDION_LABELS = {
 export const LINKED_DATA_EDITOR_PERM = 'linked-data.resources.bib.post';
 
 export const INSTANCE_RECORD_TYPE = 'INSTANCE';
+
+export const UPDATE_OWNERSHIP_API = {
+  HOLDINGS: 'inventory/holdings/update-ownership',
+  ITEMS: 'inventory/items/update-ownership',
+};

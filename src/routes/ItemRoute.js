@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 
@@ -7,6 +8,7 @@ import { stripesConnect } from '@folio/stripes/core';
 import withLocation from '../withLocation';
 import { ItemView } from '../views';
 import { DataContext } from '../contexts';
+import { useSearchInstanceByIdQuery } from '../common';
 
 const ItemRoute = props => {
   const {
@@ -14,11 +16,15 @@ const ItemRoute = props => {
     location: { state },
   } = props;
 
+  const { id: instanceId } = useParams();
+  const { instance } = useSearchInstanceByIdQuery(instanceId);
+
   return (
     <DataContext.Consumer>
       {data => (
         <ItemView
           {...props}
+          isInstanceShared={instance?.shared}
           tenantTo={state?.tenantTo || okapi.tenant}
           referenceTables={data}
         />

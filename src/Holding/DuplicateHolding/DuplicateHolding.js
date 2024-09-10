@@ -53,7 +53,7 @@ const DuplicateHolding = ({
   }, [search, instanceId]);
 
   const onSuccess = useCallback(async (response) => {
-    const { id, hrid } = await response.json();
+    const { id, hrid } = response;
 
     await switchAffiliation(stripes, tenantFrom, () => goToDuplicatedHolding(id));
 
@@ -66,7 +66,7 @@ const DuplicateHolding = ({
     });
   }, [goTo, callout]);
 
-  const { mutateHolding } = useHoldingMutation({ onSuccess });
+  const { mutateHolding } = useHoldingMutation(stripes.okapi.tenant, { onSuccess });
 
   const goBack = useCallback(() => {
     history.push({
