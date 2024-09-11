@@ -127,7 +127,7 @@ const ALL_COLUMNS = Array.from(new Set([
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 const SORTABLE_COLUMNS = Object.values(SORT_OPTIONS)
   .filter(column => column !== SORT_OPTIONS.RELEVANCE);
-const NON_INTERACTIVE_HEADERS = ['select'];
+const NON_INTERACTIVE_HEADERS = ALL_COLUMNS.filter(column => !SORTABLE_COLUMNS.includes(column));
 
 class InstancesList extends React.Component {
   static defaultProps = {
