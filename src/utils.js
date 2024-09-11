@@ -785,6 +785,7 @@ export const switchAffiliation = async (stripes, tenantId, move) => {
         perms: stripes.user.perms,
       },
     );
+    await handleUpdateUser(stripes);
 
     const handleUpdateUserPromise = handleUpdateUser(stripes);
 
