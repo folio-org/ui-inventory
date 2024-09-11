@@ -43,5 +43,6 @@ describe('DisplaySettings', () => {
     expect(getByText('Title')).toBeInTheDocument();
     expect(getByText('Contributors')).toBeInTheDocument();
     expect(getByText('Relevance')).toBeInTheDocument();
+    expect(getByText('Date')).toBeInTheDocument();
   });
 });
