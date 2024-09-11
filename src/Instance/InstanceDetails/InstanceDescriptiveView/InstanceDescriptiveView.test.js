@@ -15,6 +15,11 @@ const resourceTypes = [{
   source: 'Resource Type Source',
 }];
 
+const instanceDateTypes = [{
+  id: 'instanceDateType',
+  name: 'Test Date Type',
+}];
+
 const natureOfContentTerms = [{
   id: 'natureOfContentTermId1',
   name: 'Nature of Content Term Name 1',
@@ -42,6 +47,11 @@ const instance = {
   }],
   publicationFrequency: ['Publication Frequency 1'],
   publicationRange: ['Publication Range 1'],
+  dates: {
+    dateTypeId: 'instanceDateType',
+    date1: '1234',
+    date2: '1235',
+  },
 };
 
 const props = {
@@ -50,6 +60,7 @@ const props = {
   resourceTypes,
   resourceFormats,
   natureOfContentTerms,
+  instanceDateTypes,
 };
 
 const renderInstanceDescriptiveView = () => (
@@ -66,5 +77,13 @@ describe('InstanceDescriptiveView', () => {
     const databutton = getByText(/ui-inventory.descriptiveData/i);
     userEvent.click(databutton);
     expect(getByText).toBeDefined();
+  });
+
+  it('should render Date Type, Date1 and Date2', () => {
+    const { getByText } = renderInstanceDescriptiveView();
+
+    expect(getByText('Test Date Type')).toBeInTheDocument();
+    expect(getByText('1234')).toBeInTheDocument();
+    expect(getByText('1235')).toBeInTheDocument();
   });
 });
