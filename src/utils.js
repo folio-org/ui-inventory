@@ -21,6 +21,7 @@ import {
 import {
   updateTenant,
   validateUser,
+  updateUser,
 } from '@folio/stripes/core';
 import {
   FormattedTime,
@@ -751,6 +752,25 @@ export const hasMemberTenantPermission = (permissionName, tenantId, permissions 
   return hasPermission;
 };
 
+const handleUpdateUser = async (stripes) => {
+  const consortium = stripes.user.user?.consortium;
+
+  if (consortium) {
+    const centralTenant = stripes.user.user.consortium.centralTenantId;
+    const userTenants = stripes.user.user.tenants;
+
+    if (userTenants) {
+      await updateUser(stripes.store, {
+        tenants: userTenants,
+        consortium: {
+          id: consortium.id,
+          centralTenantId: centralTenant,
+        },
+      });
+    }
+  }
+};
+
 export const switchAffiliation = async (stripes, tenantId, move) => {
   if (stripes.okapi.tenant !== tenantId) {
     await updateTenant(stripes.okapi, tenantId);
@@ -765,6 +785,7 @@ export const switchAffiliation = async (stripes, tenantId, move) => {
         perms: stripes.user.perms,
       },
     );
+    await handleUpdateUser(stripes);
 
     move();
   } else {
