@@ -87,7 +87,7 @@ const EditHolding = ({
     setHttpError(parsedError);
   };
 
-  const { mutateHolding } = useHoldingMutation({ onSuccess });
+  const { mutateHolding } = useHoldingMutation(stripes.okapi.tenant, { onSuccess });
 
   const onSubmit = useCallback(holdingValues => {
     const clonedHolding = cloneDeep(holdingValues);

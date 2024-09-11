@@ -19,7 +19,7 @@ const wrapper = ({ children }) => (
 
 describe('useHoldingMutation', () => {
   it('should make post request when id is not provided', async () => {
-    const postMock = jest.fn();
+    const postMock = jest.fn().mockReturnValue({ json: jest.fn() });
 
     useOkapiKy.mockClear().mockReturnValue({
       post: postMock,
@@ -36,7 +36,7 @@ describe('useHoldingMutation', () => {
   });
 
   it('should make put request when id is provided', async () => {
-    const putMock = jest.fn();
+    const putMock = jest.fn().mockReturnValue({ json: jest.fn() });
 
     useOkapiKy.mockClear().mockReturnValue({
       put: putMock,

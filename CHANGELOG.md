@@ -82,6 +82,8 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Edit/Create -- Subject accordion instance UI changes. Refs UIIN-2944.
 * Add the Date column to the results list. Refs UIIN-1876.
 * Instance Detail/Edit/New: Add new section for Date type, Date 1, & Date 2. Refs UIIN-2849.
+* Add the ability to update ownership of holdings. Refs UIIN-2753.
+* Add the ability to update ownership of items. Refs UIIN-2754.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)

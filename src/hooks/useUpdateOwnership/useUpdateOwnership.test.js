@@ -8,6 +8,7 @@ import '../../../test/jest/__mock__';
 import { useOkapiKy } from '@folio/stripes/core';
 
 import useUpdateOwnership from './useUpdateOwnership';
+import { UPDATE_OWNERSHIP_API } from '../../constants';
 
 const queryClient = new QueryClient();
 
@@ -26,7 +27,7 @@ describe('useUpdateOwnership', () => {
     });
 
     const { result } = renderHook(
-      () => useUpdateOwnership(),
+      () => useUpdateOwnership(UPDATE_OWNERSHIP_API.HOLDINGS),
       { wrapper },
     );
 
@@ -36,7 +37,7 @@ describe('useUpdateOwnership', () => {
       await result.current.updateOwnership(body);
     });
 
-    expect(postMock).toHaveBeenCalledWith('inventory/holdings/update-ownership', { json: body });
+    expect(postMock).toHaveBeenCalledWith(UPDATE_OWNERSHIP_API.HOLDINGS, { json: body });
     expect(postMock).toHaveBeenCalledTimes(1);
   });
 });
