@@ -35,6 +35,7 @@
   "item.availability.dueDate": "Due date",
   "uniqueCode": "Code must be unique",
   "uniqueName": "Name must be unique",
+  "dateLength": "Date must contain four characters.",
   "fillIn": "Please fill this in to continue",
   "selectToContinue": "Please select to continue",
   "add": "Add",
@@ -65,6 +66,7 @@
   "save": "Save",
   "cancel": "Cancel",
   "confirm": "Confirm",
+  "update": "Update",
   "edit": "Edit",
   "newInstance": "New instance",
   "editInstance": "Edit instance",
@@ -175,6 +177,7 @@
   "selectStatisticalCode": "Select statistical code type",
   "selectCode": "Select code",
   "statisticalCodeType": "Statistical code type",
+  "selectInstanceDateType": "Select date type",
   "selectIdentifierType": "Select identifier type",
   "selectTemporaryLocation": "Select temporary location",
   "selectLocation": "Select location",
@@ -437,6 +440,9 @@
   "updateOwnership.holdings.modal.heading": "Update ownership of holdings",
   "updateOwnership.holdings.modal.message": "Would you like to update ownership of Holdings <strong>{holdingsHrid}</strong> from <strong>{currentTenant}</strong> to <strong>{targetTenant}</strong>? Please note that updating Holdings ownership will also migrate all linked Items.",
   "updateOwnership.message.success": "Ownership of Holdings <strong>{holdingsHrid}</strong> and all linked Items has been successfully updated to <strong>{targetTenant}</strong>",
+  "updateOwnership.items.modal.heading": "Update ownership of items",
+  "updateOwnership.items.modal.message": "Would you like to update ownership of Item <strong>{itemHrid}</strong> from <strong>{currentTenant}</strong> to <strong>{targetTenant}</strong>?",
+  "updateOwnership.item.message.success": "Ownership of item <strong>{itemHrid}</strong> has been successfully updated to <strong>{targetTenantName}</strong>",
   "consortialHoldings": "Consortial holdings",
   "instanceData": "Administrative data",
   "instanceHrid": "Instance HRID",
@@ -476,6 +482,9 @@
   "resourceTitle": "Resource title",
   "contributor": "Contributor",
   "publication": "Publication",
+  "dateType": "Date type",
+  "date1": "Date 1",
+  "date2": "Date 2",
   "publisher": "Publisher",
   "placeOfPublication": "Place of publication",
   "publisherRole": "Publisher role",
@@ -552,6 +561,8 @@
   "marc": "MARC",
   "unknownNoteType": "Unknown note type",
   "communicationProblem": "Server communication problem. Please try again",
+  "affiliation": "Affiliation",
+  "affiliation.select": "Select affiliation",
   "affiliationChanging.notification": "Active affiliation has changed",
   "affiliationChanging.namedNotification": "Active affiliation has changed to {name}",
   "item.status.missing": "Missing",
@@ -852,5 +863,7 @@
 
   "settings.heading.general": "General",
   "settings.section.displaySettings": "Display settings",
-  "settings.displaySettings.defaultSort": "Default sort"
+  "settings.displaySettings.defaultSort": "Default sort",
+
+  "instance.linked.id": "Linked instance ID - {id}"
 }
