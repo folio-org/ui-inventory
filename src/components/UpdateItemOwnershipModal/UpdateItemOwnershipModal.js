@@ -24,6 +24,8 @@ import {
   useLocationsQuery,
 } from '@folio/stripes-acq-components';
 
+import css from './UpdateItemOwnershipModal.css';
+
 const UpdateItemOwnershipModal = ({
   isOpen,
   handleSubmit: onSubmit,
@@ -87,6 +89,7 @@ const UpdateItemOwnershipModal = ({
       label={<FormattedMessage id="ui-inventory.updateOwnership" />}
       footer={footer}
       size="small"
+      contentClass={css.modalContent}
     >
       <Form
         onSubmit={onSubmit}
