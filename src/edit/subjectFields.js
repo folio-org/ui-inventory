@@ -16,6 +16,8 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+const SOURCE_SPECIFIED_IN_SUBFIELD_$2 = 'Source specified in subfield $2';
+
 const SubjectFields = ({
   subjectSources,
   subjectTypes,
@@ -25,10 +27,12 @@ const SubjectFields = ({
 }) => {
   const { formatMessage } = useIntl();
 
-  const subjectSourcesOptions = subjectSources.map(it => ({
-    label: it.name,
-    value: it.id,
-  }));
+  const subjectSourcesOptions = subjectSources
+    .filter(it => it.name !== SOURCE_SPECIFIED_IN_SUBFIELD_$2)
+    .map(it => ({
+      label: it.name,
+      value: it.id,
+    }));
   const subjectTypesOptions = subjectTypes.map(it => ({
     label: it.name,
     value: it.id,
@@ -71,7 +75,7 @@ const SubjectFields = ({
         </Col>
         <Col sm={4}>
           <Field
-            name={`${field}.subjectSourceId`}
+            name={`${field}.sourceId`}
             component={Select}
             dataOptions={subjectSourcesOptions}
             placeholder={formatMessage({ id: 'ui-inventory.subjectSource.placeholder' })}
@@ -80,7 +84,7 @@ const SubjectFields = ({
         </Col>
         <Col sm={4}>
           <Field
-            name={`${field}.subjectTypeId`}
+            name={`${field}.typeId`}
             component={Select}
             dataOptions={subjectTypesOptions}
             placeholder={formatMessage({ id: 'ui-inventory.subjectType.placeholder' })}

@@ -277,6 +277,8 @@ const InstanceDetails = forwardRef(({
             <InstanceSubjectView
               id={accordions.subjects}
               subjects={instance.subjects}
+              subjectSources={referenceData.subjectSources}
+              subjectTypes={referenceData.subjectTypes}
               source={instance.source}
               segment={searchParams.get('segment')}
             />
