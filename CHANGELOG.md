@@ -84,6 +84,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Instance Detail/Edit/New: Add new section for Date type, Date 1, & Date 2. Refs UIIN-2849.
 * Add the ability to update ownership of holdings. Refs UIIN-2753.
 * Add the ability to update ownership of items. Refs UIIN-2754.
+* Update user when switching affiliation. Fixes UIIN-2932.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
