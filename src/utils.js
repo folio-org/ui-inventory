@@ -1093,9 +1093,9 @@ export const flattenCentralTenantPermissions = (centralTenantPermissions) => {
 };
 
 export const getSortOptions = (intl) => {
-  return Object.values(SORT_OPTIONS).map(option => ({
-    value: option,
-    label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option}` }),
+  return Object.keys(SORT_OPTIONS).map(option => ({
+    value: SORT_OPTIONS[option],
+    label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option.toLowerCase()}` }),
   }));
 };
 

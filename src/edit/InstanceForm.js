@@ -754,6 +754,7 @@ class InstanceForm extends React.Component {
                       <DateFields
                         instanceDateTypeOptions={instanceDateTypeOptions}
                         initialDateTypeId={initialValues.dates?.dateTypeId}
+                        disabled={this.isFieldBlocked('dates')}
                       />
                     </Accordion>
                     <Accordion

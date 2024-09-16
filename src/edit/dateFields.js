@@ -12,7 +12,7 @@ import {
 
 import { DATE_LENGTH } from '../validation';
 
-const DateFields = ({ instanceDateTypeOptions, initialDateTypeId }) => {
+const DateFields = ({ instanceDateTypeOptions, disabled, initialDateTypeId }) => {
   const { formatMessage } = useIntl();
 
   const typeLabel = formatMessage({ id: 'ui-inventory.dateType' });
@@ -40,6 +40,7 @@ const DateFields = ({ instanceDateTypeOptions, initialDateTypeId }) => {
           component={Select}
           dataOptions={dataOptions}
           placeholder={canUnselectDateType ? null : formatMessage({ id: 'ui-inventory.selectInstanceDateType' })}
+          disabled={disabled}
         />
       </Col>
       <Col sm={3}>
@@ -49,6 +50,7 @@ const DateFields = ({ instanceDateTypeOptions, initialDateTypeId }) => {
           name="dates.date1"
           component={TextField}
           maxLength={DATE_LENGTH}
+          disabled={disabled}
         />
       </Col>
       <Col sm={3}>
@@ -58,6 +60,7 @@ const DateFields = ({ instanceDateTypeOptions, initialDateTypeId }) => {
           name="dates.date2"
           component={TextField}
           maxLength={DATE_LENGTH}
+          disabled={disabled}
         />
       </Col>
     </Row>
@@ -70,6 +73,8 @@ DateFields.propTypes = {
     name: PropTypes.string.isRequired,
     selected: PropTypes.bool,
   })).isRequired,
+  disabled: PropTypes.bool,
+  initialDateTypeId: PropTypes.string,
 };
 
 export default DateFields;
