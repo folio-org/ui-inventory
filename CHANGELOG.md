@@ -70,6 +70,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Add inventory permission: Settings (Inventory): Create, edit, delete subject sources. Refs UIIN-3010.
 * Add inventory permission: Settings (Inventory): Create, edit, delete subject types. Refs UIIN-3009.
 * Update required permissions for quick export of instances. Refs UIIN-3003.
+* Remove 'Overlay' and 'Set for deletion' functions for LINKED_DATA source type. UIIN-3011
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
