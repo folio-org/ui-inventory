@@ -351,16 +351,13 @@ class InstanceForm extends React.Component {
       }),
     ) : [];
 
-    const instanceDateTypeOptions = [{
-      label: <FormattedMessage id="ui-inventory.selectInstanceDateType" />,
-      value: '',
-    }, ...referenceTables.instanceDateTypes ? referenceTables.instanceDateTypes.map(
+    const instanceDateTypeOptions = referenceTables.instanceDateTypes ? referenceTables.instanceDateTypes.map(
       it => ({
         label: it.name,
         value: it.id,
         selected: it.id === initialValues.instanceDate?.instanceDateTypeId,
       }),
-    ) : []];
+    ) : [];
 
     const instanceNoteTypeOptions = referenceTables.instanceNoteTypes ? referenceTables.instanceNoteTypes.map(
       it => ({
@@ -754,7 +751,10 @@ class InstanceForm extends React.Component {
                         canEdit={!this.isFieldBlocked('publicationRange')}
                         canDelete={!this.isFieldBlocked('publicationRange')}
                       />
-                      <DateFields instanceDateTypeOptions={instanceDateTypeOptions} />
+                      <DateFields
+                        instanceDateTypeOptions={instanceDateTypeOptions}
+                        initialDateTypeId={initialValues.dates?.dateTypeId}
+                      />
                     </Accordion>
                     <Accordion
                       label={(

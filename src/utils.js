@@ -579,9 +579,10 @@ export const marshalRelationship = (instance, relationshipName, relationshipIdKe
  *
  * @param instance instance object
  * @param identifierTypesByName object
+ * @param instanceDateTypesByCode object
  *
  */
-export const marshalInstance = (instance, identifierTypesByName) => {
+export const marshalInstance = (instance, identifierTypesByName, instanceDateTypesByCode) => {
   const marshaledInstance = { ...instance };
 
   marshalTitles(marshaledInstance, identifierTypesByName, 'preceding');
@@ -589,6 +590,14 @@ export const marshalInstance = (instance, identifierTypesByName) => {
 
   marshalRelationship(marshaledInstance, 'parentInstances', 'superInstanceId');
   marshalRelationship(marshaledInstance, 'childInstances', 'subInstanceId');
+
+  const { dates } = instance;
+  if (dates && (dates.date1 || dates.date2) && !dates.dateTypeId) {
+    marshaledInstance.dates = {
+      ...dates,
+      dateTypeId: instanceDateTypesByCode['|']?.id
+    };
+  }
 
   return marshaledInstance;
 };
