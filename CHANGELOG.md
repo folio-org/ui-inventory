@@ -85,6 +85,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Add the ability to update ownership of holdings. Refs UIIN-2753.
 * Add the ability to update ownership of items. Refs UIIN-2754.
 * Update user when switching affiliation. Fixes UIIN-2932.
+* Add ability to sort Search results by Date. Refs UIIN-2850.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
