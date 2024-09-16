@@ -191,6 +191,20 @@ DataProvider.manifest = {
     resourceShouldRefresh: true,
     throwErrors: false,
   },
+  subjectSources: {
+    type: 'okapi',
+    path: 'subject-sources?query=cql.allRecords=1 sortby name',
+    records: 'subjectSources',
+    resourceShouldRefresh: true,
+    throwErrors: false,
+  },
+  subjectTypes: {
+    type: 'okapi',
+    path: 'subject-types?limit=1000&query=cql.allRecords=1 sortby name',
+    records: 'subjectTypes',
+    resourceShouldRefresh: true,
+    throwErrors: false,
+  },
 };
 
 export default stripesConnect(DataProvider);

@@ -12,3 +12,6 @@ export { default as useLastSearchTerms } from './useLastSearchTerms';
 export { default as useSearchForShadowInstanceTenants } from './useSearchForShadowInstanceTenants';
 export { default as useClassificationIdentifierTypes } from './useClassificationIdentifierTypes';
 export { default as useClassificationBrowseConfig } from './useClassificationBrowseConfig';
+export { default as useUpdateOwnership } from './useUpdateOwnership';
+export * from './useQuickExport';
+export * from '@folio/stripes-inventory-components/lib/queries/useInstanceDateTypes';

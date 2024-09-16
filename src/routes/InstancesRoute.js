@@ -25,6 +25,7 @@ class InstancesRoute extends React.Component {
     onSelectRow: PropTypes.func,
     getParams: PropTypes.func,
     getLastBrowse: PropTypes.func.isRequired,
+    getLastSearch: PropTypes.func.isRequired,
     getLastSearchOffset: PropTypes.func.isRequired,
     isRequestUrlExceededLimit: PropTypes.bool.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
@@ -49,6 +50,7 @@ class InstancesRoute extends React.Component {
       resources,
       mutator,
       getParams,
+      getLastSearch,
       getLastBrowse,
       getLastSearchOffset,
       storeLastSearch,
@@ -77,6 +79,7 @@ class InstancesRoute extends React.Component {
             })}
             segment={segment}
             searchableIndexes={indexes}
+            getLastSearch={getLastSearch}
             getLastBrowse={getLastBrowse}
             getLastSearchOffset={getLastSearchOffset}
             storeLastSearch={storeLastSearch}

@@ -21,6 +21,7 @@ import {
 import {
   updateTenant,
   validateUser,
+  updateUser,
 } from '@folio/stripes/core';
 import {
   FormattedTime,
@@ -30,6 +31,7 @@ import {
   segments,
   LIMIT_MAX,
   OKAPI_TENANT_HEADER,
+  SORT_OPTIONS,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -750,11 +752,30 @@ export const hasMemberTenantPermission = (permissionName, tenantId, permissions 
   return hasPermission;
 };
 
+const handleUpdateUser = async (stripes) => {
+  const consortium = stripes.user.user?.consortium;
+
+  if (consortium) {
+    const centralTenant = stripes.user.user.consortium.centralTenantId;
+    const userTenants = stripes.user.user.tenants;
+
+    if (userTenants) {
+      await updateUser(stripes.store, {
+        tenants: userTenants,
+        consortium: {
+          id: consortium.id,
+          centralTenantId: centralTenant,
+        },
+      });
+    }
+  }
+};
+
 export const switchAffiliation = async (stripes, tenantId, move) => {
   if (stripes.okapi.tenant !== tenantId) {
-    await updateTenant(stripes.okapi, tenantId);
+    const updateTenantPromise = updateTenant(stripes.okapi, tenantId);
 
-    await validateUser(
+    const validateUserPromise = validateUser(
       stripes.okapi.url,
       stripes.store,
       tenantId,
@@ -764,6 +785,11 @@ export const switchAffiliation = async (stripes, tenantId, move) => {
         perms: stripes.user.perms,
       },
     );
+    await handleUpdateUser(stripes);
+
+    const handleUpdateUserPromise = handleUpdateUser(stripes);
+
+    await Promise.all([updateTenantPromise, validateUserPromise, handleUpdateUserPromise]);
 
     move();
   } else {
@@ -1045,3 +1071,30 @@ export const batchQueryIntoSmaller = (query, VALUES_PER_BATCH = 50) => {
 };
 
 export const checkIfCentralOrderingIsActive = centralOrdering => centralOrdering.records[0]?.settings[0]?.value === 'true';
+
+export const flattenCentralTenantPermissions = (centralTenantPermissions) => {
+  // Set is used to collect unique permission names because subPermissions can duplicate
+  return new Set(centralTenantPermissions?.reduce((acc, currentPermission) => {
+    return [
+      ...acc,
+      currentPermission.permissionName,
+      ...currentPermission.subPermissions,
+    ];
+  }, []));
+};
+
+export const getSortOptions = (intl) => {
+  return Object.keys(SORT_OPTIONS).map(option => ({
+    value: SORT_OPTIONS[option],
+    label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option.toLowerCase()}` }),
+  }));
+};
+
+export const omitCurrentAndCentralTenants = (stripes) => {
+  const tenants = stripes?.user?.user?.tenants;
+
+  const currentTenantId = stripes.okapi.tenant;
+  const centralTenantId = stripes.user?.user?.consortium?.centralTenantId;
+
+  return tenants?.filter(tenant => tenant.id !== currentTenantId && tenant.id !== centralTenantId);
+};

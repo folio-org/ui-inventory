@@ -13,6 +13,12 @@ jest.mock('../../hooks', () => ({
   useLastSearchTerms: jest.fn(),
 }));
 
+const data = {
+  displaySettings: {
+    defaultSort: 'contributors',
+  },
+};
+
 const mockOnChange = jest.fn();
 
 const defaultHistory = createMemoryHistory();
@@ -20,6 +26,7 @@ const defaultHistory = createMemoryHistory();
 const renderFilterNavigation = ({ history, ...props } = {}) => renderWithIntl(
   <Router history={history || defaultHistory}>
     <FilterNavigation
+      data={data}
       segment={segments.instances}
       onChange={mockOnChange}
       {...props}

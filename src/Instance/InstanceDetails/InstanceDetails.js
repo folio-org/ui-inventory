@@ -260,6 +260,7 @@ const InstanceDetails = forwardRef(({
               resourceTypes={referenceData.instanceTypes}
               resourceFormats={referenceData.instanceFormats}
               natureOfContentTerms={referenceData.natureOfContentTerms}
+              instanceDateTypes={referenceData.instanceDateTypes}
             />
 
             <InstanceNotesView

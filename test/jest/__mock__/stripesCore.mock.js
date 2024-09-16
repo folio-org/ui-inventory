@@ -111,6 +111,11 @@ const mockStripesCore = {
 
   checkIfUserInCentralTenant: jest.fn(() => false),
 
+  useUserTenantPermissions: jest.fn().mockReturnValue({
+    userPermissions: [],
+    isLoading: false,
+  }),
+
   updateTenant: jest.fn(() => {}),
 
   validateUser: jest.fn(() => {}),

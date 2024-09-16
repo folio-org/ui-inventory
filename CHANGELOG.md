@@ -70,7 +70,28 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Add inventory permission: Settings (Inventory): Create, edit, delete subject sources. Refs UIIN-3010.
 * Add inventory permission: Settings (Inventory): Create, edit, delete subject types. Refs UIIN-3009.
 * Update required permissions for quick export of instances. Refs UIIN-3003.
-* Remove 'Overlay' and 'Set for deletion' functions for LINKED_DATA source type. UIIN-3011
+* Add `showSortIndicator` prop to `SearchAndSort` to display sort indicator next to the column names, and add correct `nonInteractiveHeaders`. Refs UIIN-2986.
+* Change casing of `Linked data editor` label. Refs UIIN-3007.
+* MARC bib/holdings | View Source: Add Edit and Export actions. Refs UIIN-3012.
+* Trim call numbers when Creating/Editing/Deriving Holdings/Items. Fixes UIIN-2889.
+* New Inventory Settings: Subject types and Subject sources. Refs UIIN-2822.
+* Disable `Save and keep editing` and `Save & close` buttons when submit the instance form. Fixes UIIN-2939.
+* Remove call number type options for Local, Other scheme, and SuDoc. Refs UIIN-3014.
+* Use the sort option from the new `DisplaySettings` until the user changes it in any available way. Refs UIIN-2722.
+* Rename `Classification` and `Call numbers` sections in browse options. Refs UIIN-2982.
+* Edit/Create -- Subject accordion instance UI changes. Refs UIIN-2944.
+* Add the Date column to the results list. Refs UIIN-1876.
+* Instance Detail/Edit/New: Add new section for Date type, Date 1, & Date 2. Refs UIIN-2849.
+* Add the ability to update ownership of holdings. Refs UIIN-2753.
+* Add the ability to update ownership of items. Refs UIIN-2754.
+* Update user when switching affiliation. Fixes UIIN-2932.
+* Add ability to sort Search results by Date. Refs UIIN-2850.
+* Remove 'Overlay' and 'Set for deletion' functions for LINKED_DATA source type. Refs UIIN-3011.
+
+## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
+
+* Remove call number type options for Local, Other scheme, and SuDoc. Refs UIIN-3014.
 
 ## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)

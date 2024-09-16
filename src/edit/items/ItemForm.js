@@ -197,7 +197,6 @@ class ItemForm extends React.Component {
   getFooter = () => {
     const {
       onCancel,
-      handleSubmit,
       pristine,
       submitting,
       copy,
@@ -596,6 +595,8 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumberPrefix"
                           id="additem_callnumberprefix"
                           component={TextArea}
+                          format={v => v?.trim()}
+                          formatOnBlur
                           rows={1}
                           fullWidth
                         />
@@ -606,6 +607,8 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumber"
                           id="additem_callnumber"
                           component={TextArea}
+                          format={v => v?.trim()}
+                          formatOnBlur
                           rows={1}
                           fullWidth
                         />
@@ -616,6 +619,8 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumberSuffix"
                           id="additem_callnumbersuffix"
                           component={TextArea}
+                          format={v => v?.trim()}
+                          formatOnBlur
                           rows={1}
                           fullWidth
                         />

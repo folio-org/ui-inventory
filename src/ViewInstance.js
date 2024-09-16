@@ -49,6 +49,7 @@ import {
   CONSORTIUM_PREFIX,
   HTTP_RESPONSE_STATUS_CODES,
   indentifierTypeNames,
+  INSTANCE_RECORD_TYPE,
   INSTANCE_SHARING_STATUSES,
   layers,
   LEADER_RECORD_STATUSES,
@@ -464,7 +465,7 @@ class ViewInstance extends React.Component {
       await this.props.mutator.quickExport.POST({
         uuids: instanceIds,
         type: 'uuid',
-        recordType: 'INSTANCE'
+        recordType: INSTANCE_RECORD_TYPE
       });
       new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
     } catch (error) {

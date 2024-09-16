@@ -27,10 +27,16 @@ const InstanceDescriptiveView = ({
   resourceTypes,
   resourceFormats,
   natureOfContentTerms,
+  instanceDateTypes,
 }) => {
   const resourceType = useMemo(() => {
     return resourceTypes.find(type => type.id === instance.instanceTypeId) || {};
   }, [instance, resourceTypes]);
+
+  const dateType = useMemo(() => {
+    return instanceDateTypes.find(type => type.id === instance.dates?.dateTypeId)?.name;
+  }, [instance.dates?.dateTypeId, instanceDateTypes]);
+
   const formattedContentTerms = useMemo(() => {
     const natureOfContentTermsMap = natureOfContentTerms.reduce((acc, term) => {
       acc[term.id] = term.name;
@@ -130,6 +136,26 @@ const InstanceDescriptiveView = ({
           />
         </Col>
       </Row>
+      <Row>
+        <Col xs={3}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.dateType" />}
+            value={dateType}
+          />
+        </Col>
+        <Col xs={3}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.date1" />}
+            value={instance.dates?.date1}
+          />
+        </Col>
+        <Col xs={3}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.date2" />}
+            value={instance.dates?.date2}
+          />
+        </Col>
+      </Row>
     </Accordion>
   );
 };
@@ -140,6 +166,7 @@ InstanceDescriptiveView.propTypes = {
   resourceTypes: PropTypes.arrayOf(PropTypes.object),
   resourceFormats: PropTypes.arrayOf(PropTypes.object),
   natureOfContentTerms: PropTypes.arrayOf(PropTypes.object),
+  instanceDateTypes: PropTypes.arrayOf(PropTypes.object),
 };
 
 InstanceDescriptiveView.defaultProps = {
@@ -147,6 +174,7 @@ InstanceDescriptiveView.defaultProps = {
   resourceTypes: [],
   resourceFormats: [],
   natureOfContentTerms: [],
+  instanceDateTypes: [],
 };
 
 export default InstanceDescriptiveView;

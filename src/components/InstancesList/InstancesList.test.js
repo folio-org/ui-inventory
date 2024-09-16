@@ -22,13 +22,14 @@ import {
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   buildSearchQuery,
   resetFacetStates,
+  SORT_OPTIONS,
+  segments,
 } from '@folio/stripes-inventory-components';
 
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
 import { instances as instancesFixture } from '../../../test/fixtures/instances';
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
-import { SORTABLE_SEARCH_RESULT_LIST_COLUMNS } from '../../constants';
 import * as utils from '../../utils';
 import Harness from '../../../test/jest/helpers/Harness';
 
@@ -84,6 +85,10 @@ const data = {
   instanceFormats: [],
   modesOfIssuance: [],
   natureOfContentTerms: [],
+  displaySettings: {
+    defaultSort: SORT_OPTIONS.CONTRIBUTORS,
+  },
+  instanceDateTypes: [],
 };
 const query = {
   query: '',
@@ -112,7 +117,7 @@ const openActionMenu = () => {
   fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 };
 
-const getInstancesListTree = ({ segment, ...rest }) => {
+const getInstancesListTree = ({ segment = segments.instances, ...rest } = {}) => {
   const {
     indexes,
   } = filterConfig[segment];
@@ -121,32 +126,35 @@ const getInstancesListTree = ({ segment, ...rest }) => {
     <Harness translations={translationsProperties}>
       <Router history={history}>
         <ModuleHierarchyProvider module="@folio/inventory">
-          <InstancesList
-            isRequestUrlExceededLimit={false}
-            parentResources={resources}
-            parentMutator={{
-              resultOffset: { replace: mockResultOffsetReplace },
-              resultCount: { replace: noop },
-              query: { update: updateMock, replace: mockQueryReplace },
-              records: { reset: mockRecordsReset },
-              itemsByQuery: { reset: noop, GET: mockItemsByQuery },
-              recordsToExportIDs: { reset: noop, GET: mockRecordsToExportIDs },
-            }}
-            data={{
-              ...data,
-              query
-            }}
-            onSelectRow={noop}
-            renderFilters={noop}
-            segment={segment}
-            searchableIndexes={indexes}
-            getLastBrowse={jest.fn()}
-            getLastSearchOffset={mockGetLastSearchOffset}
-            storeLastSearch={mockStoreLastSearch}
-            storeLastSearchOffset={mockStoreLastSearchOffset}
-            storeLastSegment={noop}
-            {...rest}
-          />
+          <div id="ModuleContainer">
+            <InstancesList
+              isRequestUrlExceededLimit={false}
+              parentResources={resources}
+              parentMutator={{
+                resultOffset: { replace: mockResultOffsetReplace },
+                resultCount: { replace: noop },
+                query: { update: updateMock, replace: mockQueryReplace },
+                records: { reset: mockRecordsReset },
+                itemsByQuery: { reset: noop, GET: mockItemsByQuery },
+                recordsToExportIDs: { reset: noop, GET: mockRecordsToExportIDs },
+              }}
+              data={{
+                ...data,
+                query
+              }}
+              onSelectRow={noop}
+              renderFilters={noop}
+              segment={segment}
+              searchableIndexes={indexes}
+              getLastSearch={mockGetLastSearch}
+              getLastBrowse={jest.fn()}
+              getLastSearchOffset={mockGetLastSearchOffset}
+              storeLastSearch={mockStoreLastSearch}
+              storeLastSearchOffset={mockStoreLastSearchOffset}
+              storeLastSegment={noop}
+              {...rest}
+            />
+          </div>
         </ModuleHierarchyProvider>
       </Router>
     </Harness>
@@ -276,12 +284,46 @@ describe('InstancesList', () => {
     });
 
     describe('when the component is mounted', () => {
-      it('should write location.search to the session storage', () => {
-        renderInstancesList({ segment: 'instances' });
+      it('should write location.search to the session storage and delete "sort" from all stored searches', () => {
+        history.push({ search: '?qindex=title&query=book&sort=title' });
 
-        const search = '?qindex=title&query=book&sort=title';
-        act(() => { history.push({ search }); });
-        expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
+        const getLastSearch = jest.fn(segment => {
+          if (segment === segments.holdings) return '?query=foo&segment=holdings&sort=title';
+          if (segment === segments.items) return '?query=foo&segment=items&sort=title';
+          return '?qindex=title&query=book&sort=title';
+        });
+
+        renderInstancesList({
+          segment: segments.instances,
+          getLastSearch,
+        });
+
+        expect(mockStoreLastSearch).toHaveBeenNthCalledWith(1, '?qindex=title&query=book', segments.instances);
+        expect(mockStoreLastSearch).toHaveBeenNthCalledWith(2, '?query=foo&segment=holdings', segments.holdings);
+        expect(mockStoreLastSearch).toHaveBeenNthCalledWith(3, '?query=foo&segment=items', segments.items);
+      });
+
+      describe('and sort parameter does not match the one selected in Settings', () => {
+        it('should call history.replace with sort parameter from Settings', () => {
+          jest.spyOn(history, 'replace');
+
+          history.push('/inventory?filters=staffSuppress.false&sort=title');
+
+          renderInstancesList({
+            segment: 'instances',
+            data: {
+              ...data,
+              query: {
+                query: '',
+              },
+              displaySettings: {
+                defaultSort: SORT_OPTIONS.RELEVANCE,
+              },
+            },
+          });
+
+          expect(history.replace).toHaveBeenLastCalledWith('/inventory?filters=staffSuppress.false&sort=relevance');
+        });
       });
 
       describe('when query is present', () => {
@@ -406,6 +448,31 @@ describe('InstancesList', () => {
 
         expect(resetFacetStates).toHaveBeenCalledWith({ namespace: '@folio/inventory' });
       });
+
+      it('should call history.replace to add the default sort query parameter from inventory settings', () => {
+        jest.spyOn(history, 'replace');
+
+        history.push('/inventory?filters=staffSuppress.false&sort=contributors');
+
+        renderInstancesList({
+          segment: 'instances',
+          data: {
+            ...data,
+            query: {
+              query: '',
+              sort: SORT_OPTIONS.CONTRIBUTORS,
+            },
+            displaySettings: {
+              defaultSort: SORT_OPTIONS.RELEVANCE,
+            },
+          }
+        });
+
+        fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'test' } });
+        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+        expect(history.replace).toHaveBeenLastCalledWith('/?filters=staffSuppress.false&sort=relevance');
+      });
     });
 
     describe('when search segment is changed', () => {
@@ -518,7 +585,7 @@ describe('InstancesList', () => {
         });
 
         describe('when canceling a record', () => {
-          it('should remove the "layer" parameter and focus on the search field', () => {
+          it('should remove the "layer" parameter and focus on the search field', async () => {
             history.push('/inventory?filters=staffSuppress.false&layer=foo');
 
             jest.spyOn(history, 'push');
@@ -526,8 +593,8 @@ describe('InstancesList', () => {
             const { getByRole } = renderInstancesList({ segment: 'instances' });
             SearchAndSort.mock.calls[0][0].onCloseNewRecord();
 
-            expect(history.push).toHaveBeenCalledWith('/?filters=staffSuppress.false');
-            expect(getByRole('textbox', { name: /search/i })).toHaveFocus();
+            expect(history.push).toHaveBeenCalledWith('/?filters=staffSuppress.false&sort=contributors');
+            await waitFor(() => expect(getByRole('textbox', { name: /search/i })).toHaveFocus());
           });
         });
       });
@@ -553,7 +620,7 @@ describe('InstancesList', () => {
 
             expect(history.push).toHaveBeenCalledWith({
               pathname: '/inventory/view/fast-add-record-id',
-              search: '?filters=staffSuppress.false',
+              search: '?filters=staffSuppress.false&sort=contributors',
             });
           });
         });
@@ -593,7 +660,7 @@ describe('InstancesList', () => {
 
           fireEvent.click(button);
 
-          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bib?filters=staffSuppress.false');
+          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bib?filters=staffSuppress.false&sort=contributors');
         });
       });
 
@@ -625,7 +692,7 @@ describe('InstancesList', () => {
 
           const options = within(screen.getByTestId('sort-by-selection')).getAllByRole('option');
 
-          expect(options).toHaveLength(Object.keys(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).length);
+          expect(options).toHaveLength(Object.keys(SORT_OPTIONS).length);
         });
       });
 
@@ -687,11 +754,22 @@ describe('InstancesList', () => {
           const sortCols = document.querySelectorAll('[aria-sort="ascending"], [aria-sort="descending"]');
           expect(sortCols).toHaveLength(0);
         });
+
+        it('should select Date option', () => {
+          renderInstancesList();
+
+          openActionMenu();
+          fireEvent.change(screen.getByTestId('sort-by-selection'), { target: { value: SORT_OPTIONS.DATE } });
+          openActionMenu();
+
+          const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Date' });
+          expect(option.selected).toBeTruthy();
+        });
       });
     });
 
     describe('when clicking on the `Holdings` or `Items` segments', () => {
-      it('should select Title as default sort option on Holdings or Item segments', async () => {
+      it('should take default sort option from data for Holdings or Item segments', async () => {
         renderInstancesList({ segment: 'instances' });
 
         const search = '?segment=instances&sort=title';
@@ -702,8 +780,8 @@ describe('InstancesList', () => {
         await act(async () => fireEvent.click(screen.getByRole('button', { name: /^item$/i })));
         const paramSortItems = new URLSearchParams(history.location.search).get('sort');
 
-        expect(paramSortHoldings).toEqual('title');
-        expect(paramSortItems).toEqual('title');
+        expect(paramSortHoldings).toEqual(data.displaySettings.defaultSort);
+        expect(paramSortItems).toEqual(data.displaySettings.defaultSort);
       });
     });
 
@@ -728,7 +806,7 @@ describe('InstancesList', () => {
       describe('when the search option is changed', () => {
         it('should not change the URL in the onChangeIndex function', async () => {
           history = createMemoryHistory({ initialEntries: [{
-            search: '?qindex=advancedSearch&query=keyword containsAll test&filters=language.eng',
+            search: '?qindex=advancedSearch&query=keyword containsAll test&filters=language.eng&sort=contributors',
           }] });
           history.push = jest.fn();
 
@@ -748,7 +826,7 @@ describe('InstancesList', () => {
           await waitFor(() => {
             expect(history.push).toHaveBeenCalledTimes(1);
             expect(history.push).toHaveBeenCalledWith(
-              '/?filters=language.eng%2CstaffSuppress.false&qindex=advancedSearch&query=keyword%20containsAll%20test2'
+              '/?filters=language.eng%2CstaffSuppress.false&qindex=advancedSearch&query=keyword%20containsAll%20test2&sort=contributors'
             );
           });
         });
@@ -905,6 +983,134 @@ describe('InstancesList', () => {
 
         expect(mockResetSelectedItem).toHaveBeenCalled();
         expect(clickedListItem).toHaveFocus();
+      });
+    });
+  });
+
+  describe('Date column', () => {
+    describe('when there is no delimiter', () => {
+      it('should use a comma', () => {
+        const { getByText } = renderInstancesList({
+          parentResources: {
+            ...resources,
+            records: {
+              ...resources.records,
+              records: [{
+                id: 'id-1',
+                title: 'testDate',
+                dates: {
+                  date1: '2022',
+                  date2: '2024',
+                },
+              }],
+            },
+          },
+        });
+
+        expect(getByText('2022, 2024')).toBeVisible();
+      });
+    });
+
+    describe('when delimiter is a comma', () => {
+      it('should be displayed with a space after comma', () => {
+        const { getByText } = renderInstancesList({
+          data: {
+            ...data,
+            ...query,
+            instanceDateTypes: [{
+              id: 'id-1',
+              displayFormat: {
+                delimiter: ',',
+                keepDelimiter: true,
+              },
+            }],
+          },
+          parentResources: {
+            ...resources,
+            records: {
+              ...resources.records,
+              records: [{
+                id: 'record-id',
+                title: 'testDate',
+                dates: {
+                  date1: '2023',
+                  date2: '2024',
+                  dateTypeId: 'id-1',
+                },
+              }],
+            },
+          },
+        });
+
+        expect(getByText('2023, 2024')).toBeVisible();
+      });
+    });
+
+    describe('when keepDelimiter is true', () => {
+      it('should display the delimiter', () => {
+        const { getByText } = renderInstancesList({
+          data: {
+            ...data,
+            ...query,
+            instanceDateTypes: [{
+              id: 'id-1',
+              displayFormat: {
+                delimiter: '-',
+                keepDelimiter: true,
+              },
+            }],
+          },
+          parentResources: {
+            ...resources,
+            records: {
+              ...resources.records,
+              records: [{
+                id: 'record-id',
+                title: 'testDate',
+                dates: {
+                  date2: '2024',
+                  dateTypeId: 'id-1',
+                },
+              }],
+            },
+          },
+        });
+
+        expect(getByText('-2024')).toBeVisible();
+      });
+    });
+
+    describe('when keepDelimiter is false', () => {
+      it('should not display a delimiter', () => {
+        const { getByText } = renderInstancesList({
+          data: {
+            ...data,
+            ...query,
+            instanceDateTypes: [{
+              id: 'id-1',
+              displayFormat: {
+                delimiter: '-',
+                keepDelimiter: false,
+              },
+            }],
+          },
+          parentResources: {
+            ...resources,
+            records: {
+              ...resources.records,
+              records: [{
+                id: 'record-id',
+                title: 'testDate',
+                dates: {
+                  date2: '2024',
+                  dateTypeId: 'id-1',
+                },
+              }],
+            },
+          },
+        });
+
+        expect(getByText('2024')).toBeVisible();
       });
     });
   });

@@ -71,13 +71,15 @@ import {
 import {
   validateTitles,
   validateSubInstances,
+  validateDates,
 } from '../validation';
 
 import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields';
 import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
+import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
+import DateFields from './dateFields';
 
 import styles from './InstanceForm.css';
-import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
 
 const FORMATS_WITH_BLOCKED_FIELDS = ['MARC', 'LINKED_DATA'];
 
@@ -86,6 +88,7 @@ function validate(values) {
   const requiredTextMessage = <FormattedMessage id="ui-inventory.fillIn" />;
   const requiredSelectMessage = <FormattedMessage id="ui-inventory.selectToContinue" />;
   const requiredPublicationFieldMessage = <FormattedMessage id="ui-inventory.onePublicationFieldToContinue" />;
+  const dateLengthMessage = <FormattedMessage id="ui-inventory.dateLength" />;
 
   if (!values.title) {
     errors.title = requiredTextMessage;
@@ -155,6 +158,8 @@ function validate(values) {
       errors[listProps.list] = listErrors;
     }
   });
+
+  validateDates(values, errors, dateLengthMessage);
 
   validateTitles(values, 'preceding', errors, requiredTextMessage);
   validateTitles(values, 'succeeding', errors, requiredTextMessage);
@@ -345,6 +350,17 @@ class InstanceForm extends React.Component {
         selected: it.id === initialValues.instanceTypeId,
       }),
     ) : [];
+
+    const instanceDateTypeOptions = [{
+      label: <FormattedMessage id="ui-inventory.selectInstanceDateType" />,
+      value: '',
+    }, ...referenceTables.instanceDateTypes ? referenceTables.instanceDateTypes.map(
+      it => ({
+        label: it.name,
+        value: it.id,
+        selected: it.id === initialValues.instanceDate?.instanceDateTypeId,
+      }),
+    ) : []];
 
     const instanceNoteTypeOptions = referenceTables.instanceNoteTypes ? referenceTables.instanceNoteTypes.map(
       it => ({
@@ -738,6 +754,10 @@ class InstanceForm extends React.Component {
                         canEdit={!this.isFieldBlocked('publicationRange')}
                         canDelete={!this.isFieldBlocked('publicationRange')}
                       />
+                      <DateFields
+                        disabled={this.isFieldBlocked('dates')}
+                        instanceDateTypeOptions={instanceDateTypeOptions}
+                      />
                     </Accordion>
                     <Accordion
                       label={(
@@ -779,6 +799,8 @@ class InstanceForm extends React.Component {
                       id="instanceSection09"
                     >
                       <SubjectFields
+                        subjectSources={referenceTables.subjectSources}
+                        subjectTypes={referenceTables.subjectTypes}
                         canAdd={!this.isFieldBlocked('subjects')}
                         canEdit={!this.isFieldBlocked('subjects')}
                         canDelete={!this.isFieldBlocked('subjects')}

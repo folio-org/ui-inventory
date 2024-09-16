@@ -169,12 +169,6 @@ export const SORT_DIRECTION = {
   DESCENDING: 'descending',
 };
 
-export const SORTABLE_SEARCH_RESULT_LIST_COLUMNS = {
-  TITLE: 'title',
-  CONTRIBUTORS: 'contributors',
-  RELEVANCE: 'relevance',
-};
-
 export const ERROR_TYPES = {
   OPTIMISTIC_LOCKING: 'optimisticLocking',
 };
@@ -277,3 +271,10 @@ export const ITEM_ACCORDION_LABELS = {
 };
 
 export const LINKED_DATA_EDITOR_PERM = 'linked-data.resources.bib.post';
+
+export const INSTANCE_RECORD_TYPE = 'INSTANCE';
+
+export const UPDATE_OWNERSHIP_API = {
+  HOLDINGS: 'inventory/holdings/update-ownership',
+  ITEMS: 'inventory/items/update-ownership',
+};

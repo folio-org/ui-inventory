@@ -33,12 +33,26 @@ import InstanceNoteTypesSettings from './InstanceNoteTypesSettings';
 import NatureOfContentTermsSettings from './NatureOfContentTermsSettings';
 import FastAddSettings from './FastAdd/FastAddSettings';
 import ClassificationBrowseSettings from './ClassificationBrowseSettings';
+import SubjectSourcesSettings from './SubjectSourcesSettings';
+import SubjectTypesSettings from './SubjectTypesSettings';
+import DisplaySettings from './DisplaySettings';
 
 class InventorySettings extends React.Component {
   constructor(props) {
     super(props);
 
     this.sections = [
+      {
+        label: <FormattedMessage id="ui-inventory.settings.heading.general" />,
+        pages: [
+          {
+            route: 'displaySettings',
+            label: <FormattedMessage id="ui-inventory.settings.section.displaySettings" />,
+            component: DisplaySettings,
+            perm: 'ui-inventory.settings.displaySettings',
+          },
+        ],
+      },
       {
         label: <FormattedMessage id="ui-inventory.instances" />,
         pages: [
@@ -107,6 +121,18 @@ class InventorySettings extends React.Component {
             label: <FormattedMessage id="ui-inventory.resourceTypes" />,
             component: ResourceTypesSettings,
             perm: this.addPerm('ui-inventory.settings.instance-types'),
+          },
+          {
+            route: 'subjectsources',
+            label: <FormattedMessage id="ui-inventory.subjectSources" />,
+            component: SubjectSourcesSettings,
+            perm: this.addPerm('ui-inventory.settings.subject-sources'),
+          },
+          {
+            route: 'subjecttypes',
+            label: <FormattedMessage id="ui-inventory.subjectTypes" />,
+            component: SubjectTypesSettings,
+            perm: this.addPerm('ui-inventory.settings.subject-types'),
           },
         ]
       },

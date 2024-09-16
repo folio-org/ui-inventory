@@ -45,7 +45,7 @@ describe('LinkedInstanceDetails', () => {
   it('should display instance title as a link', () => {
     const { getByRole } = renderLinkedInstanceDetails();
 
-    expect(getByRole('link', { name: /instancetitle/i })).toBeInTheDocument();
+    expect(getByRole('link', { name: /Linked instance ID - instanceId/i })).toBeInTheDocument();
   });
 
   it('should display publisher information', () => {

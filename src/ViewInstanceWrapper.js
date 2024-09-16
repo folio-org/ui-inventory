@@ -12,6 +12,7 @@ import {
   useInstanceMutation,
 } from './hooks';
 import { useInstance } from './common';
+import { flattenCentralTenantPermissions } from './utils';
 
 const ViewInstanceWrapper = (props) => {
   const {
@@ -42,20 +43,11 @@ const ViewInstanceWrapper = (props) => {
     enabled: Boolean(isShared && checkIfUserInMemberTenant(stripes)),
   });
 
-  const flattenCentralTenantPermissions = useMemo(() => {
-    // Set is used to collect unique permission names because subPermissions can duplicate
-    return new Set(centralTenantPermissions?.reduce((acc, currentPermission) => {
-      return [
-        ...acc,
-        currentPermission.permissionName,
-        ...currentPermission.subPermissions,
-      ];
-    }, []));
-  }, [centralTenantPermissions]);
-
   const mutateInstance = (entity, { onError }) => {
     mutateEntity(entity, { onSuccess: refetch, onError });
   };
+
+  const flattenedPermissions = useMemo(() => flattenCentralTenantPermissions(centralTenantPermissions), [centralTenantPermissions]);
 
   return (
     <ViewInstance
@@ -70,7 +62,7 @@ const ViewInstanceWrapper = (props) => {
       isLoading={isLoading}
       isError={isError}
       error={error}
-      centralTenantPermissions={flattenCentralTenantPermissions}
+      centralTenantPermissions={flattenedPermissions}
       isCentralTenantPermissionsLoading={isCentralTenantPermissionsLoading}
     />
   );
