@@ -754,7 +754,10 @@ class InstanceForm extends React.Component {
                         canEdit={!this.isFieldBlocked('publicationRange')}
                         canDelete={!this.isFieldBlocked('publicationRange')}
                       />
-                      <DateFields instanceDateTypeOptions={instanceDateTypeOptions} />
+                      <DateFields
+                        disabled={this.isFieldBlocked('dates')}
+                        instanceDateTypeOptions={instanceDateTypeOptions}
+                      />
                     </Accordion>
                     <Accordion
                       label={(
