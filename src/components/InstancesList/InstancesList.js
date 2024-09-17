@@ -471,10 +471,10 @@ class InstancesList extends React.Component {
   };
 
   createInstance = (instanceData) => {
-    const { data: { identifierTypesByName } } = this.props;
+    const { data: { identifierTypesByName, instanceDateTypesByCode } } = this.props;
 
     // Massage record to add preceeding and succeeding title fields
-    const instance = marshalInstance(instanceData, identifierTypesByName);
+    const instance = marshalInstance(instanceData, identifierTypesByName, instanceDateTypesByCode);
 
     // POST item record
     return this.props.parentMutator.records.POST(instance);

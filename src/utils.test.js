@@ -20,6 +20,7 @@ import {
   batchQueryIntoSmaller,
   checkIfCentralOrderingIsActive,
   omitCurrentAndCentralTenants,
+  marshalInstance,
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
@@ -413,5 +414,34 @@ describe('omitCurrentAndCentralTenants', () => {
 
   it('should omit current and central tenants', () => {
     expect(omitCurrentAndCentralTenants(stripes)).toEqual([{ id: 'university' }]);
+  });
+});
+
+describe('marshalInstance', () => {
+  describe('when dates are present and date type is missing', () => {
+    it('should add a default date type', () => {
+      const instance = {
+        title: 'test',
+        dates: {
+          date1: '1234',
+          date2: '1235',
+        },
+      };
+
+      const instanceDateTypesByCode = {
+        '|': {
+          id: 'date-type-id',
+        },
+      };
+
+      expect(marshalInstance(instance, {}, instanceDateTypesByCode)).toEqual(expect.objectContaining({
+        ...instance,
+        dates: {
+          date1: '1234',
+          date2: '1235',
+          dateTypeId: 'date-type-id',
+        },
+      }));
+    });
   });
 });
