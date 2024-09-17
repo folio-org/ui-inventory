@@ -43,7 +43,11 @@ const InstanceEdit = ({
   stripes,
 }) => {
   const { formatMessage } = useIntl();
-  const { identifierTypesById, identifierTypesByName } = referenceData ?? {};
+  const {
+    identifierTypesById,
+    identifierTypesByName,
+    instanceDateTypesByCode,
+  } = referenceData ?? {};
   const [httpError, setHttpError] = useState();
   const [initialValues, setInitialValues] = useState();
   const callout = useCallout();
@@ -118,7 +122,7 @@ const InstanceEdit = ({
   });
 
   const onSubmit = useCallback(async (initialInstance) => {
-    const updatedInstance = marshalInstance(initialInstance, identifierTypesByName);
+    const updatedInstance = marshalInstance(initialInstance, identifierTypesByName, instanceDateTypesByCode);
 
     return mutateInstance(updatedInstance).catch(onError);
   }, [mutateInstance]);

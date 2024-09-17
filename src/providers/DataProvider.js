@@ -47,11 +47,13 @@ const DataProvider = ({
     const {
       identifierTypes,
       instanceRelationshipTypes,
+      instanceDateTypes,
     } = loadedData;
 
     loadedData.locationsById = keyBy(loadedData.locations, 'id');
     loadedData.identifierTypesById = keyBy(identifierTypes, 'id');
     loadedData.identifierTypesByName = keyBy(identifierTypes, 'name');
+    loadedData.instanceDateTypesByCode = keyBy(instanceDateTypes, 'code');
     loadedData.holdingsSourcesByName = keyBy(commonData.holdingsSources, 'name');
     loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
     loadedData.classificationBrowseConfig = classificationBrowseConfig;
