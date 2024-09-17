@@ -1,9 +1,6 @@
 import PropTypes from 'prop-types';
 
-import {
-  screen,
-  fireEvent,
-} from '@folio/jest-config-stripes/testing-library/react';
+import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import stripesFinalForm from '@folio/stripes/final-form';
 
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
