@@ -32,7 +32,7 @@ const commonData = {
   instanceFormats: [{ id: 'id-1', code: 'sb' }],
   holdingsSources: [{ id: 'id-1', name: 'FOLIO' }],
   instanceTypes: [{ id: 'id-1', code: 'crd' }],
-  instanceDateTypes: [{ id: 'id-1', name: 'date type' }],
+  instanceDateTypes: [{ id: 'id-1', code: 'dt', name: 'date type' }],
 };
 
 useCommonData.mockReturnValue({
@@ -95,6 +95,13 @@ describe('DataProvider', () => {
         'IdentifierType 1': {
           id: 'identifierTypes-1',
           name: 'IdentifierType 1',
+        },
+      },
+      instanceDateTypesByCode: {
+        'dt': {
+          id: 'id-1',
+          name: 'date type',
+          code: 'dt',
         },
       },
       instanceRelationshipTypesById: {

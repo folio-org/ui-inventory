@@ -19,9 +19,4 @@ jest.mock('@folio/stripes-inventory-components', () => ({
   HoldingsRecordFilters: jest.fn(() => <div>HoldingsRecordFilters</div>),
   ItemFilters: jest.fn(() => <div>ItemFilters</div>),
   buildSearchQuery: jest.fn(),
-  SORT_OPTIONS: {
-    TITLE: 'title',
-    CONTRIBUTORS: 'contributors',
-    RELEVANCE: 'relevance',
-  },
 }));

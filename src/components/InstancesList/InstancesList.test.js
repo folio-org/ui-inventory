@@ -754,6 +754,17 @@ describe('InstancesList', () => {
           const sortCols = document.querySelectorAll('[aria-sort="ascending"], [aria-sort="descending"]');
           expect(sortCols).toHaveLength(0);
         });
+
+        it('should select Date option', () => {
+          renderInstancesList();
+
+          openActionMenu();
+          fireEvent.change(screen.getByTestId('sort-by-selection'), { target: { value: SORT_OPTIONS.DATE } });
+          openActionMenu();
+
+          const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Date' });
+          expect(option.selected).toBeTruthy();
+        });
       });
     });
 
