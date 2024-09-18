@@ -44,9 +44,9 @@ export const instances = [
       'primary': false
     }],
     dates: {
-      "dateTypeId": "42dac21e-3c81-4cb1-9f16-9e50c81bacc4",
-      "date1": "2020",
-      "date2": "2022"
+      dateTypeId: '42dac21e-3c81-4cb1-9f16-9e50c81bacc4',
+      date1: '2020',
+      date2: '2022'
     },
     'subjects': [
       { 'value': 'Information society--Political aspects', 'authorityId': '55c57ab2-96d2-11ed-a8fc-0242ac120002' },

@@ -7,19 +7,24 @@ import { useIntl } from 'react-intl';
 import {
   Accordion,
   MultiColumnList,
+  NoValue,
 } from '@folio/stripes/components';
 import { segments } from '@folio/stripes-inventory-components';
 
 import { ControllableDetail } from '../ControllableDetail';
 
-const visibleColumns = ['subject'];
+const visibleColumns = ['subject', 'subjectSource', 'subjectType'];
 const getColumnMapping = intl => ({
   subject: intl.formatMessage({ id: 'ui-inventory.subjectHeadings' }),
+  subjectSource: intl.formatMessage({ id: 'ui-inventory.subjectSource' }),
+  subjectType: intl.formatMessage({ id: 'ui-inventory.subjectType' }),
 });
 
 const InstanceSubjectView = ({
   id,
-  subjects,
+  subjects = [],
+  subjectSources = [],
+  subjectTypes = [],
   segment,
   source,
 }) => {
@@ -36,6 +41,8 @@ const InstanceSubjectView = ({
         source={source}
       />
     ),
+    subjectSource: item => subjectSources.find(src => src.id === item.sourceId)?.name || <NoValue />,
+    subjectType: item => subjectTypes.find(type => type.id === item.typeId)?.name || <NoValue />,
   };
 
   return (
@@ -58,13 +65,11 @@ const InstanceSubjectView = ({
 
 InstanceSubjectView.propTypes = {
   id: PropTypes.string.isRequired,
-  subjects: PropTypes.arrayOf(PropTypes.string),
   segment: PropTypes.oneOf(Object.values(segments)).isRequired,
   source: PropTypes.string.isRequired,
-};
-
-InstanceSubjectView.defaultProps = {
-  subjects: [],
+  subjects: PropTypes.arrayOf(PropTypes.object),
+  subjectSources: PropTypes.arrayOf(PropTypes.object),
+  subjectTypes: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default InstanceSubjectView;

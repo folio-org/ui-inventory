@@ -1,23 +1,50 @@
-import React from 'react';
+import { Router } from 'react-router';
+import { createMemoryHistory } from 'history';
+
+import {
+  screen,
+  act,
+} from '@folio/jest-config-stripes/testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
+import { segments } from '@folio/stripes-inventory-components';
 
 import '../../../../test/jest/__mock__';
 
-import { Router } from 'react-router';
-import { createMemoryHistory } from 'history';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { segments } from '@folio/stripes-inventory-components';
-
 import { DataContext } from '../../../contexts';
-
-import { renderWithIntl, translationsProperties } from '../../../../test/jest/helpers';
-
 import InstanceSubjectView from './InstanceSubjectView';
+
+import {
+  renderWithIntl,
+  translationsProperties,
+} from '../../../../test/jest/helpers';
 
 const history = createMemoryHistory();
 
 const defaultProps = {
   id: 'subject-accordion',
-  subjects: ['Subject 1'],
+  subjects: [{
+    value: 'subject 1',
+    sourceId: 'source1',
+    typeId: 'type1',
+  }, {
+    value: 'subject 2',
+    sourceId: 'source2',
+    typeId: 'type2',
+  }],
+  subjectSources: [{
+    id: 'source1',
+    name: 'source 1',
+  }, {
+    id: 'source2',
+    name: 'source 2',
+  }],
+  subjectTypes: [{
+    id: 'type1',
+    name: 'type 1',
+  }, {
+    id: 'type2',
+    name: 'type 2',
+  }],
 };
 
 const renderInstanceSubjectView = (props) => renderWithIntl(
@@ -30,16 +57,38 @@ const renderInstanceSubjectView = (props) => renderWithIntl(
       />
     </DataContext.Provider>
   </Router>,
-  translationsProperties
+  translationsProperties,
 );
 
 describe('InstanceSubjectView', () => {
-  it('renders InstanceSubjectView component', () => {
-    const { getByText, getByRole } = renderInstanceSubjectView({ ...defaultProps });
-    const subjectButton = getByRole('button', { name: /Subject/i });
-    userEvent.click(subjectButton);
-    expect(getByText(/Subject headings/i)).toBeInTheDocument();
-    expect(getByText(/No value set/i)).toBeInTheDocument();
-    expect(getByText(/End of list/i)).toBeInTheDocument();
+  it('should be rendered with no axe errors', async () => {
+    const { container } = await act(async () => renderInstanceSubjectView({ ...defaultProps }));
+
+    await runAxeTest({ rootNode: container });
+  });
+
+  it('should render Subject accordion', () => {
+    renderInstanceSubjectView({ ...defaultProps });
+
+    expect(screen.getByText('Subject')).toBeInTheDocument();
+  });
+
+  it('should render correct table columns', () => {
+    renderInstanceSubjectView({ ...defaultProps });
+
+    expect(screen.getByText('Subject headings')).toBeInTheDocument();
+    expect(screen.getByText('Subject source')).toBeInTheDocument();
+    expect(screen.getByText('Subject type')).toBeInTheDocument();
+  });
+
+  it('should render correct table content', () => {
+    renderInstanceSubjectView({ ...defaultProps });
+
+    expect(screen.getByText('subject 1')).toBeInTheDocument();
+    expect(screen.getByText('source 1')).toBeInTheDocument();
+    expect(screen.getByText('type 1')).toBeInTheDocument();
+    expect(screen.getByText('subject 2')).toBeInTheDocument();
+    expect(screen.getByText('source 2')).toBeInTheDocument();
+    expect(screen.getByText('type 2')).toBeInTheDocument();
   });
 });

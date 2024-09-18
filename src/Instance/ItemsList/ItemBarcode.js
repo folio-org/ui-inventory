@@ -21,6 +21,7 @@ import {
 } from '@folio/stripes/components';
 import css from '../../View.css';
 import { QUERY_INDEXES } from '../../constants';
+import { useLocalStorageItems } from '../../hooks';
 import {
   switchAffiliation,
   sendCalloutOnAffiliationChange,
@@ -37,6 +38,10 @@ const ItemBarcode = ({
   const history = useHistory();
   const stripes = useStripes();
   const callout = useContext(CalloutContext);
+  const {
+    addItem,
+    getItem,
+  } = useLocalStorageItems(holdingId);
   const { search } = location;
   const queryBarcode = queryString.parse(search)?.query;
   const isQueryByBarcode = queryString.parse(search)?.qindex === QUERY_INDEXES.BARCODE;
@@ -82,8 +87,10 @@ const ItemBarcode = ({
           to={`/inventory/view/${instanceId}/${holdingId}/${item.id}`}
           onClick={async (e) => {
             e.preventDefault();
+            addItem(item.id);
             await switchAffiliation(stripes, tenantId, onViewItem);
           }}
+          className={getItem(item.id) && css.visited}
         >
           {itemBarcode}
         </TextLink>
