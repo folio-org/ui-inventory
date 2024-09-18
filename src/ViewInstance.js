@@ -870,7 +870,7 @@ class ViewInstance extends React.Component {
                 }}
               />
             )}
-            {canUseSingleRecordImport && (
+            {canUseSingleRecordImport && !isSourceLinkedData && (
               <ActionItem
                 id="dropdown-clickable-reimport-record"
                 icon="lightning"
@@ -911,7 +911,7 @@ class ViewInstance extends React.Component {
                 onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
               />
             )}
-            {canSetForDeletion && !isInstanceSuppressed && (
+            {canSetForDeletion && !isInstanceSuppressed && !isSourceLinkedData && (
               <ActionItem
                 id="quick-export-trigger"
                 icon="flag"

@@ -87,6 +87,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Update user when switching affiliation. Fixes UIIN-2932.
 * Add ability to sort Search results by Date. Refs UIIN-2850.
 * Implement default Date type when not present - No attempt to code. Refs UIIN-3034.
+* Remove 'Overlay' and 'Set for deletion' functions for LINKED_DATA source type. Refs UIIN-3011.
 * Store item IDs in local storage in order to make it visited. Fixes UIIN-2994.
 * View -- Subject accordion instance UI changes. Refs UIIN-2823.
 
