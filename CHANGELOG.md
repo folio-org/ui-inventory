@@ -87,6 +87,8 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Update user when switching affiliation. Fixes UIIN-2932.
 * Add ability to sort Search results by Date. Refs UIIN-2850.
 * Implement default Date type when not present - No attempt to code. Refs UIIN-3034.
+* Store item IDs in local storage in order to make it visited. Fixes UIIN-2994.
+* View -- Subject accordion instance UI changes. Refs UIIN-2823.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
