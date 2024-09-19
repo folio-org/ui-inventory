@@ -1,12 +1,22 @@
-import React, { createRef } from 'react';
-import { FormattedMessage } from 'react-intl';
-import PropTypes from 'prop-types';
+import React, {
+  useRef,
+  useEffect,
+  useMemo,
+} from 'react';
+import {
+  useIntl,
+  FormattedMessage,
+} from 'react-intl';
 
 import { Settings } from '@folio/stripes/smart-components';
 import {
-  IntlConsumer,
   TitleManager,
+  useStripes,
+  useUserTenantPermissions,
+  checkIfUserInMemberTenant,
+  checkIfUserInCentralTenant,
 } from '@folio/stripes/core';
+import { LoadingPane } from '@folio/stripes/components';
 
 import MaterialTypesSettings from './MaterialTypesSettings';
 import LoanTypesSettings from './LoanTypesSettings';
@@ -36,12 +46,40 @@ import ClassificationBrowseSettings from './ClassificationBrowseSettings';
 import SubjectSourcesSettings from './SubjectSourcesSettings';
 import SubjectTypesSettings from './SubjectTypesSettings';
 import DisplaySettings from './DisplaySettings';
+import { flattenCentralTenantPermissions } from '../utils';
 
-class InventorySettings extends React.Component {
-  constructor(props) {
-    super(props);
+const InventorySettings = (props) => {
+  const stripes = useStripes();
+  const intl = useIntl();
+  const paneTitleRef = useRef();
 
-    this.sections = [
+  useEffect(() => {
+    if (paneTitleRef.current) {
+      paneTitleRef.current.focus();
+    }
+  }, []);
+
+  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
+  const isUserInMemberTenant = checkIfUserInMemberTenant(stripes);
+
+  const {
+    userPermissions: centralTenantPermissions,
+    isFetched: isCentralTenantPermissionsFetched,
+  } = useUserTenantPermissions({
+    tenantId: centralTenantId,
+  }, {
+    enabled: Boolean(isUserInMemberTenant) && Boolean(centralTenantId),
+  });
+
+  const addPerm = permission => {
+    return stripes.hasPerm(permission) ? permission : 'ui-inventory.settings.list.view';
+  };
+
+  const getSections = (_centralTenantPermissions) => {
+    const canUserViewClassificationBrowse = checkIfUserInCentralTenant(stripes)
+      || flattenCentralTenantPermissions(_centralTenantPermissions).has('ui-inventory.settings.classification-browse');
+
+    const _sections = [
       {
         label: <FormattedMessage id="ui-inventory.settings.heading.general" />,
         pages: [
@@ -60,79 +98,79 @@ class InventorySettings extends React.Component {
             route: 'alternativeTitleTypes',
             label: <FormattedMessage id="ui-inventory.alternativeTitleTypes" />,
             component: AlternativeTitleTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.alternative-title-types'),
+            perm: addPerm('ui-inventory.settings.alternative-title-types'),
           },
-          {
+          ...(canUserViewClassificationBrowse ? [{
             route: 'classificationBrowse',
             label: <FormattedMessage id="ui-inventory.classificationBrowse" />,
             component: ClassificationBrowseSettings,
             perm: 'ui-inventory.settings.classification-browse',
-          },
+          }] : []),
           {
             route: 'classificationTypes',
             label: <FormattedMessage id="ui-inventory.classificationIdentifierTypes" />,
             component: ClassificationTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.classification-types'),
+            perm: addPerm('ui-inventory.settings.classification-types'),
           },
           {
             route: 'contributortypes',
             label: <FormattedMessage id="ui-inventory.contributorTypes" />,
             component: ContributorTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.contributor-types'),
+            perm: addPerm('ui-inventory.settings.contributor-types'),
           },
           {
             route: 'formats',
             label: <FormattedMessage id="ui-inventory.formats" />,
             component: FormatsSettings,
-            perm: this.addPerm('ui-inventory.settings.instance-formats'),
+            perm: addPerm('ui-inventory.settings.instance-formats'),
           },
           {
             route: 'instanceNoteTypes',
             label: <FormattedMessage id="ui-inventory.instanceNoteTypes" />,
             component: InstanceNoteTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.instance-note-types'),
+            perm: addPerm('ui-inventory.settings.instance-note-types'),
           },
           {
             route: 'instanceStatusTypes',
             label: <FormattedMessage id="ui-inventory.instanceStatusTypes" />,
             component: InstanceStatusTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.instance-statuses'),
+            perm: addPerm('ui-inventory.settings.instance-statuses'),
           },
           {
             route: 'modesOfIssuance',
             label: <FormattedMessage id="ui-inventory.modesOfIssuance" />,
             component: ModesOfIssuanceSettings,
-            perm: this.addPerm('ui-inventory.settings.modes-of-issuance'),
+            perm: addPerm('ui-inventory.settings.modes-of-issuance'),
           },
           {
             route: 'natureOfContentTerms',
             label: <FormattedMessage id="ui-inventory.natureOfContentTerms" />,
             component: NatureOfContentTermsSettings,
-            perm: this.addPerm('ui-inventory.settings.nature-of-content-terms'),
+            perm: addPerm('ui-inventory.settings.nature-of-content-terms'),
           },
           {
             route: 'identifierTypes',
             label: <FormattedMessage id="ui-inventory.resourceIdentifierTypes" />,
             component: IdentifierTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.identifier-types'),
+            perm: addPerm('ui-inventory.settings.identifier-types'),
           },
           {
             route: 'resourcetypes',
             label: <FormattedMessage id="ui-inventory.resourceTypes" />,
             component: ResourceTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.instance-types'),
+            perm: addPerm('ui-inventory.settings.instance-types'),
           },
           {
             route: 'subjectsources',
             label: <FormattedMessage id="ui-inventory.subjectSources" />,
             component: SubjectSourcesSettings,
-            perm: this.addPerm('ui-inventory.settings.subject-sources'),
+            perm: addPerm('ui-inventory.settings.subject-sources'),
           },
           {
             route: 'subjecttypes',
             label: <FormattedMessage id="ui-inventory.subjectTypes" />,
             component: SubjectTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.subject-types'),
+            perm: addPerm('ui-inventory.settings.subject-types'),
           },
         ]
       },
@@ -143,25 +181,25 @@ class InventorySettings extends React.Component {
             route: 'holdingsNoteTypes',
             label: <FormattedMessage id="ui-inventory.holdingsNoteTypes" />,
             component: HoldingsNoteTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.holdings-note-types'),
+            perm: addPerm('ui-inventory.settings.holdings-note-types'),
           },
           {
             route: 'holdingsSources',
             label: <FormattedMessage id="ui-inventory.holdingsSources" />,
             component: HoldingsSourcesSettings,
-            perm: this.addPerm('ui-inventory.settings.holdings-sources'),
+            perm: addPerm('ui-inventory.settings.holdings-sources'),
           },
           {
             route: 'holdingsTypes',
             label: <FormattedMessage id="ui-inventory.holdingsTypes" />,
             component: HoldingsTypeSettings,
-            perm: this.addPerm('ui-inventory.settings.holdings-types'),
+            perm: addPerm('ui-inventory.settings.holdings-types'),
           },
           {
             route: 'ILLPolicy',
             label: <FormattedMessage id="ui-inventory.ILLPolicy" />,
             component: ILLPolicy,
-            perm: this.addPerm('ui-inventory.settings.ill-policies'),
+            perm: addPerm('ui-inventory.settings.ill-policies'),
           },
         ]
       },
@@ -172,19 +210,19 @@ class InventorySettings extends React.Component {
             route: 'itemNoteTypes',
             label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
             component: ItemNoteTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.item-note-types'),
+            perm: addPerm('ui-inventory.settings.item-note-types'),
           },
           {
             route: 'loantypes',
             label: <FormattedMessage id="ui-inventory.loanTypes" />,
             component: LoanTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.loantypes'),
+            perm: addPerm('ui-inventory.settings.loantypes'),
           },
           {
             route: 'materialtypes',
             label: <FormattedMessage id="ui-inventory.materialTypes" />,
             component: MaterialTypesSettings,
-            perm: this.addPerm('ui-inventory.settings.materialtypes'),
+            perm: addPerm('ui-inventory.settings.materialtypes'),
           },
         ]
       },
@@ -195,31 +233,31 @@ class InventorySettings extends React.Component {
             route: 'fastAdd',
             label: <FormattedMessage id="ui-inventory.fastAdd" />,
             component: FastAddSettings,
-            perm: this.addPerm('ui-inventory.settings.fast-add'),
+            perm: addPerm('ui-inventory.settings.fast-add'),
           },
           {
             route: 'hridHandling',
             label: <FormattedMessage id="ui-inventory.hridHandling" />,
             component: HRIDHandlingSettings,
-            perm: this.addPerm('ui-inventory.settings.hrid-handling'),
+            perm: addPerm('ui-inventory.settings.hrid-handling'),
           },
           {
             route: 'statisticalCodeTypes',
             label: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,
             component: StatisticalCodeTypes,
-            perm: this.addPerm('ui-inventory.settings.statistical-code-types'),
+            perm: addPerm('ui-inventory.settings.statistical-code-types'),
           },
           {
             route: 'StatisticalCodeSettings',
             label: <FormattedMessage id="ui-inventory.statisticalCodes" />,
             component: StatisticalCodeSettings,
-            perm: this.addPerm('ui-inventory.settings.statistical-codes'),
+            perm: addPerm('ui-inventory.settings.statistical-codes'),
           },
           {
             route: 'URLrelationship',
             label: <FormattedMessage id="ui-inventory.URLrelationship" />,
             component: URLRelationshipSettings,
-            perm: this.addPerm('ui-inventory.settings.electronic-access-relationships'),
+            perm: addPerm('ui-inventory.settings.electronic-access-relationships'),
           },
         ]
       },
@@ -230,15 +268,14 @@ class InventorySettings extends React.Component {
             route: 'callNumberTypes',
             label: <FormattedMessage id="ui-inventory.callNumberTypes" />,
             component: CallNumberTypes,
-            perm: this.addPerm('ui-inventory.settings.call-number-types'),
+            perm: addPerm('ui-inventory.settings.call-number-types'),
           },
         ]
       },
     ];
 
-    if (this.props.stripes.hasInterface('copycat-imports')
-      && this.props.stripes.hasInterface('data-import-converter-storage', '1.3')) {
-      this.sections.push({
+    if (stripes.hasInterface('copycat-imports') && stripes.hasInterface('data-import-converter-storage', '1.3')) {
+      _sections.push({
         label: <FormattedMessage id="ui-inventory.integrations" />,
         pages: [
           {
@@ -251,42 +288,24 @@ class InventorySettings extends React.Component {
       });
     }
 
-    this.paneTitleRef = createRef();
-  }
-
-  componentDidMount() {
-    if (this.paneTitleRef.current) {
-      this.paneTitleRef.current.focus();
-    }
-  }
-
-  addPerm = permission => {
-    const { stripes } = this.props;
-
-    return stripes.hasPerm(permission) ? permission : 'ui-inventory.settings.list.view';
+    return _sections;
   };
 
-  render() {
-    return (
-      <IntlConsumer>
-        {intl => (
-          <TitleManager page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}>
-            <Settings
-              {...this.props}
-              sections={this.sections}
-              paneTitle={<FormattedMessage id="ui-inventory.inventory.label" />}
-              paneTitleRef={this.paneTitleRef}
-              data-test-inventory-settings
-            />
-          </TitleManager>
-        )}
-      </IntlConsumer>
-    );
+  if (!centralTenantId || (isUserInMemberTenant && !isCentralTenantPermissionsFetched)) {
+    return <LoadingPane defaultWidth="15%" />;
   }
-}
 
-InventorySettings.propTypes = {
-  stripes: PropTypes.object,
+  return (
+    <TitleManager page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}>
+      <Settings
+        {...props}
+        sections={getSections(centralTenantPermissions)}
+        paneTitle={<FormattedMessage id="ui-inventory.inventory.label" />}
+        paneTitleRef={paneTitleRef}
+        data-test-inventory-settings
+      />
+    </TitleManager>
+  );
 };
 
 export default InventorySettings;

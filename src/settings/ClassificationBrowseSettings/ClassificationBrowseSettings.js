@@ -37,6 +37,7 @@ const ClassificationBrowseSettings = () => {
     isFetching: isCentralTenantPermissionsLoading,
   } = useUserTenantPermissions({
     tenantId: centralTenantId,
+  }, {
   });
 
   const permission = 'ui-inventory.settings.classification-browse';
