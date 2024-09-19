@@ -11,19 +11,21 @@ import {
 import { PIECE_COLUMNS } from './constants';
 
 // eslint-disable-next-line import/prefer-default-export
-export const getColumnFormatter = ({ hasViewReceivingPermissions, onRemove }) => {
+export const getColumnFormatter = ({ hasViewReceivingPermissions, onRemove, instanceId }) => {
   return ({
     [PIECE_COLUMNS.barcode]: record => {
-      const { barcode, titleId } = record;
+      const { barcode, itemId, holdingId } = record;
       const barcodeText = barcode || <FormattedMessage id="ui-inventory.noBarcode" />;
+
+      if (!itemId) return <NoValue />;
 
       if (!hasViewReceivingPermissions) return barcodeText;
 
-      if (titleId) {
+      if (itemId) {
         return (
           <TextLink
             target="_blank"
-            to={`/receiving/${titleId}/view`}
+            to={`/inventory/view/${instanceId}/${holdingId}/${itemId}`}
           >
             {barcodeText}
           </TextLink>
