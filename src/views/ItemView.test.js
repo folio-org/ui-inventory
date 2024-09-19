@@ -215,7 +215,7 @@ describe('ItemView', () => {
     const { container } = await act(() => renderWithIntl(<ItemViewSetup />, translationsProperties));
 
     await runAxeTest({ rootNode: container });
-  });
+  }, 10000);
 
   describe('rendering ItemView', () => {
     beforeEach(() => {

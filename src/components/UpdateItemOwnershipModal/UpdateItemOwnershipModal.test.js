@@ -59,6 +59,7 @@ describe('UpdateItemOwnershipModal', () => {
     it('should call the function to change the affiliation', () => {
       renderUpdateItemOwnershipModal();
 
+      fireEvent.click(screen.getByText('Select control'));
       fireEvent.click(screen.getByText('University'));
 
       expect(onChangeAffiliationMock).toHaveBeenCalledWith(defaultProps.tenantsList[0]);
@@ -69,6 +70,7 @@ describe('UpdateItemOwnershipModal', () => {
     it('should enable "Update" button', () => {
       renderUpdateItemOwnershipModal();
 
+      fireEvent.click(screen.getByText('Select control'));
       fireEvent.click(screen.getByText('University'));
 
       FieldHolding.mock.calls[0][0].onChange({ id: 'locationId' });

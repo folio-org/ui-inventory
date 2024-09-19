@@ -2,6 +2,7 @@ import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import {
   fireEvent,
+  screen,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
@@ -83,7 +84,6 @@ describe('TargetProfileForm', () => {
       const {
         container,
         getByText,
-        getAllByText,
         getByLabelText,
       } = renderTargetProfileForm();
       const nameInput = container.querySelector('#input-targetprofile-name');
@@ -91,14 +91,14 @@ describe('TargetProfileForm', () => {
 
       const addJobCreateButton = getByText('Add job profile for import/create');
       fireEvent.click(addJobCreateButton);
-      fireEvent.click(getByLabelText('Select job profile for import/create'));
-      fireEvent.click(getAllByText('Job profile for create (job profile id for create)')[0]);
+      fireEvent.click(screen.getAllByText('Select control')[0]);
+      fireEvent.click(getByText('Job profile for create (job profile id for create)'));
       fireEvent.click(getByLabelText('Set 0 job profile for create as default'));
 
       const addJobUpdateButton = getByText('Add job profile for overlay/update');
       fireEvent.click(addJobUpdateButton);
-      fireEvent.click(getByLabelText('Select job profile for overlay/update'));
-      fireEvent.click(getAllByText('Job profile for update (job profile id for update)')[1]);
+      fireEvent.click(screen.getAllByText('Select control')[1]);
+      fireEvent.click(getByText('Job profile for update (job profile id for update)'));
       fireEvent.click(getByLabelText('Set 0 job profile for update as default'));
 
       const submit = getByText('Save & close');
