@@ -700,13 +700,17 @@ describe('InstancesList', () => {
           expect(screen.getByTestId('sort-by-selection')).toBeInTheDocument();
         });
 
-        it('should render as many options as defined', () => {
+        it('should render correct order of options', () => {
           renderInstancesList({ segment: 'instances' });
           openActionMenu();
 
           const options = within(screen.getByTestId('sort-by-selection')).getAllByRole('option');
 
           expect(options).toHaveLength(Object.keys(SORT_OPTIONS).length);
+          expect(options[0]).toHaveTextContent('Title');
+          expect(options[1]).toHaveTextContent('Contributors');
+          expect(options[2]).toHaveTextContent('Date');
+          expect(options[3]).toHaveTextContent('Relevance');
         });
       });
 
@@ -1111,5 +1115,32 @@ describe('InstancesList', () => {
         expect(getByText('2024')).toBeVisible();
       });
     });
+  });
+
+  it('should have correct order of search columns', () => {
+    const { getAllByRole } = renderInstancesList();
+
+    const searchColumns = getAllByRole('columnheader');
+
+    expect(searchColumns[0]).toHaveTextContent('');
+    expect(searchColumns[1]).toHaveTextContent('Title');
+    expect(searchColumns[2]).toHaveTextContent('Contributors');
+    expect(searchColumns[3]).toHaveTextContent('Publishers');
+    expect(searchColumns[4]).toHaveTextContent('Date');
+    expect(searchColumns[5]).toHaveTextContent('Relation');
+  });
+
+  it('should render correct order of options in "Show columns" section of actions', async () => {
+    renderInstancesList();
+    openActionMenu();
+
+    const checkboxes = within(document.getElementById('columns-menu-section')).getAllByText(
+      /Contributors|Date|Publishers|Relation/
+    );
+
+    expect(checkboxes[0]).toHaveTextContent('Contributors');
+    expect(checkboxes[1]).toHaveTextContent('Date');
+    expect(checkboxes[2]).toHaveTextContent('Publishers');
+    expect(checkboxes[3]).toHaveTextContent('Relation');
   });
 });
