@@ -74,6 +74,7 @@ const SelectedRecordsModal = ({
       dismissible
       size="large"
       footer={renderFooter()}
+      data-testid="selected-record-modal"
       onClose={onCancel}
     >
       <MultiColumnList
