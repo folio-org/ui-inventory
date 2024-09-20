@@ -738,7 +738,10 @@ describe('ViewInstance', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         fireEvent.click(screen.getByRole('button', { name: 'New order' }));
         expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
-        fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+
+        const cancelButton = screen.getAllByText(/cancel/i)[1];
+
+        fireEvent.click(cancelButton);
         await waitFor(() => {
           expect(screen.queryByText(/Create order/i)).not.toBeInTheDocument();
         });

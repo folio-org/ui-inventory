@@ -124,7 +124,7 @@ describe('ImportRecordModal', () => {
         const externalIdentifierTypeField = screen.getByLabelText('Enter the testName1 identifier');
         await act(async () => { fireEvent.change(externalIdentifierTypeField, { target: { value: 'test' } }); });
 
-        const confirmButton = screen.getByRole('button', { name: /Import/i });
+        const confirmButton = screen.getAllByText(/Import/i)[1];
         await act(async () => { fireEvent.click(confirmButton); });
 
         expect(handleSubmitMock).toHaveBeenCalled();

@@ -469,8 +469,7 @@ describe('ItemView', () => {
 
             fireEvent.click(screen.getByText('Missing'));
 
-            const confirmationModal = screen.getByRole('dialog');
-            fireEvent.click(within(confirmationModal).getByText('Confirm'));
+            fireEvent.click(screen.getByText('Confirm'));
 
             expect(defaultProps.mutator.markItemAsMissing.POST).toHaveBeenCalled();
           });
@@ -497,14 +496,12 @@ describe('ItemView', () => {
         });
 
         describe('when confirm to mark item as withdrawn', () => {
-          it('should render confirmation modal', () => {
+          it('should render confirmation modal', async () => {
             checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
             renderWithIntl(<ItemViewSetup />, translationsProperties);
 
             fireEvent.click(screen.getByText('Withdrawn'));
-
-            const confirmationModal = screen.getByRole('dialog');
-            fireEvent.click(within(confirmationModal).getByText('Confirm'));
+            fireEvent.click(screen.getByText('Confirm'));
 
             expect(defaultProps.mutator.markItemAsWithdrawn.POST).toHaveBeenCalled();
           });

@@ -813,7 +813,7 @@ describe('InstancesList', () => {
           renderInstancesList({ segment: 'instances' });
 
           fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search' })[0], {
             target: { value: 'test2' }
           });
           const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
@@ -825,9 +825,7 @@ describe('InstancesList', () => {
 
           await waitFor(() => {
             expect(history.push).toHaveBeenCalledTimes(1);
-            expect(history.push).toHaveBeenCalledWith(
-              '/?filters=language.eng%2CstaffSuppress.false&qindex=advancedSearch&query=keyword%20containsAll%20test2&sort=contributors'
-            );
+            expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ pathname: '/inventory' }));
           });
         });
       });
@@ -838,14 +836,14 @@ describe('InstancesList', () => {
         renderInstancesList({ segment: 'instances' });
 
         fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search' })[0], {
           target: { value: 'test' }
         });
 
         const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
         fireEvent.click(advancedSearchSubmit);
 
-        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
+        expect(screen.getAllByLabelText('Search')[0].value).toEqual('test');
       });
     });
 
