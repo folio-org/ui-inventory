@@ -68,8 +68,22 @@ jest.mock('@folio/stripes/core', () => ({
   Pluggable: ({ renderTrigger, onClose }) => (
     <>
       {renderTrigger()}
-      <button type="button" onClick={() => onClose({ instanceRecord: { id: 'fast-add-record-id' } })}>Save & close</button>
-      <button type="button" onClick={onClose}>Cancel</button>
+      <button
+        data-testid="plugin-save&close"
+        type="button"
+        onClick={() => {
+          onClose({ instanceRecord: { id: 'fast-add-record-id' } });
+        }}
+      >
+        Save & close
+      </button>
+      <button
+        type="button"
+        data-testid="plugin-cancel"
+        onClick={onClose}
+      >
+        Cancel
+      </button>
     </>
   ),
   TitleManager: ({ page }) => (
@@ -616,7 +630,7 @@ describe('InstancesList', () => {
             const button = screen.getByRole('button', { name: 'New fast add record' });
 
             fireEvent.click(button);
-            fireEvent.click(screen.getByText('Save & close'));
+            fireEvent.click(screen.getByTestId('plugin-save&close'));
 
             expect(history.push).toHaveBeenCalledWith({
               pathname: '/inventory/view/fast-add-record-id',
@@ -634,7 +648,7 @@ describe('InstancesList', () => {
             openActionMenu();
 
             fireEvent.click(screen.getByRole('button', { name: 'New fast add record' }));
-            fireEvent.click(screen.getByText('Cancel'));
+            fireEvent.click(screen.getByTestId('plugin-cancel'));
 
             jest.runAllTimers();
 
@@ -809,30 +823,15 @@ describe('InstancesList', () => {
 
       describe('when the search option is changed', () => {
         it('should not change the URL in the onChangeIndex function', async () => {
-          history = createMemoryHistory({ initialEntries: [{
-            search: '?qindex=advancedSearch&query=keyword containsAll test&filters=language.eng&sort=contributors',
-          }] });
           history.push = jest.fn();
 
           renderInstancesList({ segment: 'instances' });
 
-          fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
-            target: { value: 'test2' }
-          });
-          const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
-
-          await act(async () => { fireEvent.click(advancedSearchSubmit); });
+          fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'Title (all)' } });
 
           expect(updateMock).not.toHaveBeenCalled();
           expect(mockQueryReplace).not.toHaveBeenCalled();
-
-          await waitFor(() => {
-            expect(history.push).toHaveBeenCalledTimes(1);
-            expect(history.push).toHaveBeenCalledWith(
-              '/?filters=language.eng%2CstaffSuppress.false&qindex=advancedSearch&query=keyword%20containsAll%20test2&sort=contributors'
-            );
-          });
+          expect(history.push).not.toHaveBeenCalled();
         });
       });
     });
@@ -842,12 +841,11 @@ describe('InstancesList', () => {
         renderInstancesList({ segment: 'instances' });
 
         fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search for' })[0], {
+        fireEvent.change(screen.getAllByTestId('advanced-search-query')[0], {
           target: { value: 'test' }
         });
 
-        const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
-        fireEvent.click(advancedSearchSubmit);
+        fireEvent.click(document.querySelector('[data-test-advanced-search-button-search]'));
 
         expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
       });

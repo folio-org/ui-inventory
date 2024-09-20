@@ -989,6 +989,7 @@ const ItemView = props => {
             confirmLabel={<FormattedMessage id="ui-inventory.confirm" />}
           />
           <Modal
+            data-testid="missing-confirmation-modal"
             data-test-missingConfirmation-modal
             open={itemMissingModal}
             label={<FormattedMessage id="ui-inventory.missingModal.heading" />}
@@ -1006,6 +1007,7 @@ const ItemView = props => {
             />
           </Modal>
           <Modal
+            data-testid="withdrawn-confirmation-modal"
             data-test-withdrawn-confirmation-modal
             open={itemWithdrawnModal}
             label={<FormattedMessage id="ui-inventory.withdrawnModal.heading" />}
