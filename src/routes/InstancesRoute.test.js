@@ -230,8 +230,7 @@ describe('InstancesRoute', () => {
           expect(getByRole(cells[0], 'checkbox', { name: 'Select instance' })).toBeVisible();
           expect(getByText(cells[1], '#youthaction')).toBeVisible();
           expect(getByText(cells[2], 'Kirshner, Benjamin ; Middaugh, Ellen')).toBeVisible();
-          expect(getByText(cells[3], '2020, 2022')).toBeVisible();
-          expect(getByText(cells[4], 'Information Age Publishing, Inc. (2015)')).toBeVisible();
+          expect(getByText(cells[3], 'Information Age Publishing, Inc. (2015)')).toBeVisible();
         });
 
         it('should have all rows selected', () => {

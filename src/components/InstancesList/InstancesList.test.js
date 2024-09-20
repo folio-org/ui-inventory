@@ -847,7 +847,7 @@ describe('InstancesList', () => {
 
         fireEvent.click(document.querySelector('[data-test-advanced-search-button-search]'));
 
-        expect(screen.getAllByLabelText('Search')[0].value).toEqual('test');
+        expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
       });
     });
 
