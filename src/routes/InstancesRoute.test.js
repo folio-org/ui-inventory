@@ -71,6 +71,7 @@ const InstancesRouteSetup = ({
               storeLastBrowse: jest.fn(),
               storeLastSearchOffset: jest.fn(),
               storeLastBrowseOffset: jest.fn(),
+              storeLastSegment: jest.fn(),
             }}
             >
               <div id="ModuleContainer">
@@ -208,7 +209,7 @@ describe('InstancesRoute', () => {
         });
 
         it('should open selected records modal', () => {
-          expect(screen.getByText('Selected records')).toBeInTheDocument();
+          expect(screen.getByTestId('selected-record-modal')).toBeInTheDocument();
         });
 
         it('should have correct heading', () => {
@@ -216,13 +217,15 @@ describe('InstancesRoute', () => {
         });
 
         it('should display correct amount of records in modal', () => {
-          const modal = screen.getByText('Selected records').closest('dialog');
+          const modal = screen.getByTestId('selected-record-modal');
 
           expect(modal.querySelectorAll('.mclRowContainer > [role=row]').length).toEqual(2);
         });
 
         it('should display correct data in list', () => {
-          const cells = screen.getAllByRole('gridcell');
+          const modal = screen.getByTestId('selected-record-modal');
+          const row = modal.querySelector('.mclRowContainer > [role=row]');
+          const cells = getAllByRole(row, 'gridcell');
 
           expect(getByRole(cells[0], 'checkbox', { name: 'Select instance' })).toBeVisible();
           expect(getByText(cells[1], '#youthaction')).toBeVisible();
@@ -232,15 +235,16 @@ describe('InstancesRoute', () => {
         });
 
         it('should have all rows selected', () => {
-          const selectRowCheckboxesInModal = screen.getAllByRole('checkbox', { name: 'Select instance', checked: true });
+          const modal = screen.getByTestId('selected-record-modal');
+          const selectRowCheckboxesInModal = getAllByRole(modal, 'checkbox', { name: 'Select instance' });
 
           selectRowCheckboxesInModal.forEach(checkbox => expect(checkbox).toBeChecked());
         });
 
         describe('unselecting rows in the modal', () => {
           beforeEach(() => {
-            const modal = screen.getByRole('dialog', { label: 'label' });
-            const selectRowCheckboxesInModal = getAllByRole(modal, 'checkbox', { name: 'Select instance', checked: true });
+            const modal = screen.getByTestId('selected-record-modal');
+            const selectRowCheckboxesInModal = getAllByRole(modal, 'checkbox', { name: 'Select instance' });
 
             selectRowCheckboxesInModal.forEach(fireEvent.click);
           });
@@ -249,15 +253,12 @@ describe('InstancesRoute', () => {
             const cancelBt = await screen.findByText(/cancel/i);
             fireEvent.click(cancelBt);
 
-            await waitFor(() => expect(screen.queryByText('Selected records')).toBeNull());
-
             expect(selectRowCheckboxes[1]).toBeChecked();
             expect(selectRowCheckboxes[2]).toBeChecked();
           });
 
-          it.skip('should unselect corresponding rows in the results list after close of the modal upon click on save button', async () => {
-            fireEvent.click(screen.getByText('Save & close'));
-            await waitFor(() => expect(screen.queryByText('Selected records')).toBeNull());
+          it('should unselect corresponding rows in the results list after close of the modal upon click on save button', async () => {
+            fireEvent.click(screen.getByRole('button', { name: 'Save & close' }));
 
             expect(selectRowCheckboxes[1]).not.toBeChecked();
             expect(selectRowCheckboxes[2]).not.toBeChecked();

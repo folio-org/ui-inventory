@@ -426,7 +426,7 @@ describe('ItemView', () => {
 
             fireEvent.click(screen.getByText('Delete'));
 
-            expect(document.querySelector('#cannotDeleteItemModal-label')).toBeInTheDocument();
+            expect(document.querySelector('#cannotDeleteItemModal')).toBeInTheDocument();
           });
 
           describe('when close the modal', () => {
@@ -469,7 +469,8 @@ describe('ItemView', () => {
 
             fireEvent.click(screen.getByText('Missing'));
 
-            fireEvent.click(screen.getByText('Confirm'));
+            const confirmationModal = screen.getByTestId('missing-confirmation-modal');
+            fireEvent.click(within(confirmationModal).getByText('Confirm'));
 
             expect(defaultProps.mutator.markItemAsMissing.POST).toHaveBeenCalled();
           });
@@ -501,7 +502,9 @@ describe('ItemView', () => {
             renderWithIntl(<ItemViewSetup />, translationsProperties);
 
             fireEvent.click(screen.getByText('Withdrawn'));
-            fireEvent.click(screen.getByText('Confirm'));
+
+            const confirmationModal = screen.getByTestId('withdrawn-confirmation-modal');
+            fireEvent.click(within(confirmationModal).getByText('Confirm'));
 
             expect(defaultProps.mutator.markItemAsWithdrawn.POST).toHaveBeenCalled();
           });

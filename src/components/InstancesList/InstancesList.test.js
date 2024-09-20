@@ -68,8 +68,22 @@ jest.mock('@folio/stripes/core', () => ({
   Pluggable: ({ renderTrigger, onClose }) => (
     <>
       {renderTrigger()}
-      <button type="button" onClick={() => onClose({ instanceRecord: { id: 'fast-add-record-id' } })}>Save & close</button>
-      <button type="button" onClick={onClose}>Cancel</button>
+      <button
+        data-testid="plugin-save&close"
+        type="button"
+        onClick={() => {
+          onClose({ instanceRecord: { id: 'fast-add-record-id' } });
+        }}
+      >
+        Save & close
+      </button>
+      <button
+        type="button"
+        data-testid="plugin-cancel"
+        onClick={onClose}
+      >
+        Cancel
+      </button>
     </>
   ),
   TitleManager: ({ page }) => (
@@ -616,7 +630,7 @@ describe('InstancesList', () => {
             const button = screen.getByRole('button', { name: 'New fast add record' });
 
             fireEvent.click(button);
-            fireEvent.click(screen.getByText('Save & close'));
+            fireEvent.click(screen.getByTestId('plugin-save&close'));
 
             expect(history.push).toHaveBeenCalledWith({
               pathname: '/inventory/view/fast-add-record-id',
@@ -634,7 +648,7 @@ describe('InstancesList', () => {
             openActionMenu();
 
             fireEvent.click(screen.getByRole('button', { name: 'New fast add record' }));
-            fireEvent.click(screen.getByText('Cancel'));
+            fireEvent.click(screen.getByTestId('plugin-cancel'));
 
             jest.runAllTimers();
 
@@ -686,13 +700,17 @@ describe('InstancesList', () => {
           expect(screen.getByTestId('sort-by-selection')).toBeInTheDocument();
         });
 
-        it('should render as many options as defined', () => {
+        it('should render correct order of options', () => {
           renderInstancesList({ segment: 'instances' });
           openActionMenu();
 
           const options = within(screen.getByTestId('sort-by-selection')).getAllByRole('option');
 
           expect(options).toHaveLength(Object.keys(SORT_OPTIONS).length);
+          expect(options[0]).toHaveTextContent('Title');
+          expect(options[1]).toHaveTextContent('Contributors');
+          expect(options[2]).toHaveTextContent('Date');
+          expect(options[3]).toHaveTextContent('Relevance');
         });
       });
 
@@ -805,28 +823,15 @@ describe('InstancesList', () => {
 
       describe('when the search option is changed', () => {
         it('should not change the URL in the onChangeIndex function', async () => {
-          history = createMemoryHistory({ initialEntries: [{
-            search: '?qindex=advancedSearch&query=keyword containsAll test&filters=language.eng&sort=contributors',
-          }] });
           history.push = jest.fn();
 
           renderInstancesList({ segment: 'instances' });
 
-          fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-          fireEvent.change(screen.getAllByRole('textbox', { name: 'Search' })[0], {
-            target: { value: 'test2' }
-          });
-          const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
-
-          await act(async () => { fireEvent.click(advancedSearchSubmit); });
+          fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'Title (all)' } });
 
           expect(updateMock).not.toHaveBeenCalled();
           expect(mockQueryReplace).not.toHaveBeenCalled();
-
-          await waitFor(() => {
-            expect(history.push).toHaveBeenCalledTimes(1);
-            expect(history.push).toHaveBeenCalledWith(expect.objectContaining({ pathname: '/inventory' }));
-          });
+          expect(history.push).not.toHaveBeenCalled();
         });
       });
     });
@@ -836,12 +841,11 @@ describe('InstancesList', () => {
         renderInstancesList({ segment: 'instances' });
 
         fireEvent.click(screen.getByRole('button', { name: 'Advanced search' }));
-        fireEvent.change(screen.getAllByRole('textbox', { name: 'Search' })[0], {
+        fireEvent.change(screen.getAllByTestId('advanced-search-query')[0], {
           target: { value: 'test' }
         });
 
-        const advancedSearchSubmit = screen.getAllByRole('button', { name: 'Search' })[0];
-        fireEvent.click(advancedSearchSubmit);
+        fireEvent.click(document.querySelector('[data-test-advanced-search-button-search]'));
 
         expect(screen.getAllByLabelText('Search')[0].value).toEqual('test');
       });
@@ -1111,5 +1115,32 @@ describe('InstancesList', () => {
         expect(getByText('2024')).toBeVisible();
       });
     });
+  });
+
+  it('should have correct order of search columns', () => {
+    const { getAllByRole } = renderInstancesList();
+
+    const searchColumns = getAllByRole('columnheader');
+
+    expect(searchColumns[0]).toHaveTextContent('');
+    expect(searchColumns[1]).toHaveTextContent('Title');
+    expect(searchColumns[2]).toHaveTextContent('Contributors');
+    expect(searchColumns[3]).toHaveTextContent('Publishers');
+    expect(searchColumns[4]).toHaveTextContent('Date');
+    expect(searchColumns[5]).toHaveTextContent('Relation');
+  });
+
+  it('should render correct order of options in "Show columns" section of actions', async () => {
+    renderInstancesList();
+    openActionMenu();
+
+    const checkboxes = within(document.getElementById('columns-menu-section')).getAllByText(
+      /Contributors|Date|Publishers|Relation/
+    );
+
+    expect(checkboxes[0]).toHaveTextContent('Contributors');
+    expect(checkboxes[1]).toHaveTextContent('Date');
+    expect(checkboxes[2]).toHaveTextContent('Publishers');
+    expect(checkboxes[3]).toHaveTextContent('Relation');
   });
 });

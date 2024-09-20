@@ -90,6 +90,8 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Remove 'Overlay' and 'Set for deletion' functions for LINKED_DATA source type. Refs UIIN-3011.
 * Store item IDs in local storage in order to make it visited. Fixes UIIN-2994.
 * View -- Subject accordion instance UI changes. Refs UIIN-2823.
+* Mock `Modal` from `stripes-components`; fix tests. Refs UIIN-3045.
+* Extend permissions for creating, editing and deleting reference data. Fixes UIIN-2586.
 * Update "Barcode" column link in "Bound pieces data" accordion. Refs UIIN-3041.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
