@@ -113,6 +113,8 @@ const mockStripesCore = {
 
   useUserTenantPermissions: jest.fn().mockReturnValue({
     userPermissions: [],
+    isFetched: true,
+    isFetching: false,
     isLoading: false,
   }),
 
