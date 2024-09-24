@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   screen,
@@ -214,7 +213,7 @@ describe('InstancesRoute', () => {
         });
 
         it('should have correct heading', () => {
-          expect(screen.getByRole('heading', { name: 'Selected records' })).toBeInTheDocument();
+          expect(screen.getByText('Selected records', { selector: 'h1' })).toBeInTheDocument();
         });
 
         it('should display correct amount of records in modal', () => {
@@ -250,7 +249,8 @@ describe('InstancesRoute', () => {
           });
 
           it('should preserve the selected state for the corresponding rows in the results list after close of the modal upon click on cancel button', async () => {
-            fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+            const cancelBt = await screen.findByText(/cancel/i);
+            fireEvent.click(cancelBt);
 
             expect(selectRowCheckboxes[1]).toBeChecked();
             expect(selectRowCheckboxes[2]).toBeChecked();

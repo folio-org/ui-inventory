@@ -497,7 +497,7 @@ describe('ItemView', () => {
         });
 
         describe('when confirm to mark item as withdrawn', () => {
-          it('should render confirmation modal', () => {
+          it('should render confirmation modal', async () => {
             checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
             renderWithIntl(<ItemViewSetup />, translationsProperties);
 

@@ -59,7 +59,7 @@ describe('Given MultiSelectionFacet', () => {
   it('should call onClearFilter handler if clear btn is clicked', () => {
     renderMultiSelectionFacet();
 
-    fireEvent.click(screen.getAllByLabelText('Clear selected filters for "filter-label"')[0]);
+    fireEvent.click(screen.getAllByRole('button')[1]);
 
     expect(mockOnClearFilter).toHaveBeenCalled();
   });
