@@ -92,6 +92,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * View -- Subject accordion instance UI changes. Refs UIIN-2823.
 * Mock `Modal` from `stripes-components`; fix tests. Refs UIIN-3045.
 * Extend permissions for creating, editing and deleting reference data. Fixes UIIN-2586.
+* Display action menu when user has only permission to move holdings/items. Fixes UIIN-3040.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)

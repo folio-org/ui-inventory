@@ -809,7 +809,7 @@ class ViewInstance extends React.Component {
 
     const showQuickMarcMenuSection = isSourceMARC && (canCreateMARCHoldings || canEditMARCRecord || canDeriveMARCRecord);
 
-    if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
+    if (!isSourceMARC && !canEditInstance && !canCreateInstance && !canMoveItems && !canMoveHoldings) {
       return null;
     }
 
