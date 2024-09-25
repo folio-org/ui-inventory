@@ -1659,6 +1659,7 @@ const ItemView = props => {
                 <BoundPiecesList
                   id="bound-pieces-list"
                   itemId={item.id}
+                  instanceId={instance.id}
                 />
               </Accordion>
             </AccordionSet>

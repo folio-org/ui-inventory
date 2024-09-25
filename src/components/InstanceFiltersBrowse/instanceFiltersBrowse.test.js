@@ -107,7 +107,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
 
       expect(getByText('Shared')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
@@ -135,7 +135,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
 
       expect(getByText('Shared')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
@@ -145,7 +145,7 @@ describe('InstanceFiltersBrowse', () => {
   describe('When callNumber browseType was selected', () => {
     it('should call onClear handler if clear btn is clicked', () => {
       renderInstanceFilters();
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Effective location (item)"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Effective location (item) filters'));
 
       expect(mockOnClear).toHaveBeenCalled();
     });
@@ -159,7 +159,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Held by filters'));
 
       expect(getByRole('heading', { name: 'Held by' })).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
@@ -190,7 +190,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Name type"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Name type filters'));
 
       expect(getByRole('heading', { name: 'Name type' })).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
@@ -205,7 +205,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
 
       expect(getByText('Shared')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
@@ -220,7 +220,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Held by filters'));
 
       expect(getByText('Held by')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
@@ -237,7 +237,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Shared"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
 
       expect(getByText('Shared')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
@@ -252,7 +252,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Held by"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Held by filters'));
 
       expect(getByText('Held by')).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();

@@ -28,7 +28,7 @@ import {
 } from './constants';
 import { getColumnFormatter } from './utils';
 
-const BoundPiecesList = ({ id, itemId }) => {
+const BoundPiecesList = ({ id, itemId, instanceId }) => {
   const stripes = useStripes();
   const showCallout = useShowCallout();
   const { updatePiece } = usePiecesMutation();
@@ -71,7 +71,7 @@ const BoundPiecesList = ({ id, itemId }) => {
   };
 
   const formatter = useMemo(() => {
-    return getColumnFormatter({ onRemove, hasViewReceivingPermissions });
+    return getColumnFormatter({ onRemove, hasViewReceivingPermissions, instanceId });
   }, [hasViewReceivingPermissions]);
 
   if (isFetching) return <Loading />;
@@ -105,6 +105,7 @@ const BoundPiecesList = ({ id, itemId }) => {
 BoundPiecesList.propTypes = {
   id: PropTypes.string,
   itemId: PropTypes.string.isRequired,
+  instanceId: PropTypes.string.isRequired,
 };
 
 export default BoundPiecesList;
