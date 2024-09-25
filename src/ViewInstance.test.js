@@ -737,8 +737,9 @@ describe('ViewInstance', () => {
         renderViewInstance();
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         fireEvent.click(screen.getByRole('button', { name: 'New order' }));
-        expect(screen.queryByText(/Create order/i)).toBeInTheDocument();
+        expect(await screen.findByText(/Create order/i)).toBeInTheDocument();
         fireEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+
         await waitFor(() => {
           expect(screen.queryByText(/Create order/i)).not.toBeInTheDocument();
         });

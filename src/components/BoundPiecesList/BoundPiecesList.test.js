@@ -43,6 +43,7 @@ const renderBoundPiecesList = (props = {}) => renderWithIntl(
   <BoundPiecesList
     id="boundPiecesListId"
     itemId={boundPieces[0].itemId}
+    instanceId="instanceId"
     {...props}
   />,
   translationsProperties
