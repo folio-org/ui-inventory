@@ -93,6 +93,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Mock `Modal` from `stripes-components`; fix tests. Refs UIIN-3045.
 * Extend permissions for creating, editing and deleting reference data. Fixes UIIN-2586.
 * Update "Barcode" column link in "Bound pieces data" accordion. Refs UIIN-3041.
+* ECS - check for central tenant permissions in Settings > Classification Browse. Fixes UIIN-3038.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
