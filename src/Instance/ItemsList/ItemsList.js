@@ -149,6 +149,7 @@ const visibleColumns = [
   'yearCaption',
   'materialType',
 ];
+const columnWidths = { barcode: '160px' };
 const dragVisibleColumns = ['dnd', 'select', ...visibleColumns];
 const rowMetadata = ['id', 'holdingsRecordId'];
 
@@ -243,6 +244,7 @@ const ItemsList = ({
       ariaLabel={ariaLabel}
       interactive={false}
       onNeedMoreData={onNeedMoreData}
+      columnWidths={columnWidths}
       pagingType={MCLPagingTypes.PREV_NEXT}
       totalCount={total}
       nonInteractiveHeaders={['loanType', 'effectiveLocation', 'materialType']}
