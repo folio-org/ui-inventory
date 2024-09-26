@@ -45,7 +45,10 @@ import ClassificationBrowseSettings from '../ClassificationBrowseSettings';
 import SubjectSourcesSettings from '../SubjectSourcesSettings';
 import SubjectTypesSettings from '../SubjectTypesSettings';
 import DisplaySettings from '../DisplaySettings';
-import { flattenCentralTenantPermissions } from '../../utils';
+import {
+  flattenCentralTenantPermissions,
+  isUserInConsortiumMode,
+} from '../../utils';
 
 const InventorySettings = (props) => {
   const stripes = useStripes();
@@ -290,7 +293,7 @@ const InventorySettings = (props) => {
     return _sections;
   };
 
-  if (!centralTenantId || (isUserInMemberTenant && !isCentralTenantPermissionsFetched)) {
+  if (isUserInConsortiumMode(stripes) && (!centralTenantId || (isUserInMemberTenant && !isCentralTenantPermissionsFetched))) {
     return <LoadingPane defaultWidth="15%" />;
   }
 
