@@ -809,10 +809,6 @@ class ViewInstance extends React.Component {
 
     const showQuickMarcMenuSection = isSourceMARC && (canCreateMARCHoldings || canEditMARCRecord || canDeriveMARCRecord);
 
-    if (!isSourceMARC && !canEditInstance && !canCreateInstance) {
-      return null;
-    }
-
     // the `identifier` is responsible for displaying the plugin `copyright-permissions-checker`
     if (!showInventoryMenuSection && !showQuickMarcMenuSection && !identifier) {
       return null;
