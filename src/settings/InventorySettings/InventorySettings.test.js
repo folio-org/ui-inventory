@@ -11,10 +11,13 @@ import {
 
 import InventorySettings from './InventorySettings';
 
+import * as utils from '../../utils';
+
 jest.mock('@folio/stripes/smart-components', () => ({
   ...jest.requireActual('@folio/stripes/smart-components'),
   Settings: () => <div>Settings</div>
 }));
+const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 
 const renderInventorySettings = (props = {}) => renderWithIntl(
   <InventorySettings {...props} />,
@@ -23,6 +26,10 @@ const renderInventorySettings = (props = {}) => renderWithIntl(
 
 describe('InventorySettings', () => {
   describe('when consortium data is not loaded', () => {
+    beforeEach(() => {
+      spyOnIsUserInConsortiumMode.mockReturnValue(true);
+    });
+
     it('should show a loading pane', () => {
       useStripes.mockReturnValueOnce({
         user: {
