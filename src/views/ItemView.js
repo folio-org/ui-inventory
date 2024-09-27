@@ -749,7 +749,7 @@ const ItemView = props => {
 
   let borrowerLink = <NoValue />;
 
-  if (openLoan) {
+  if (openLoan?.borrower) {
     borrowerLink = <Link to={`/users/view/${openLoan.userId}`}>{openLoan.borrower.barcode}</Link>;
   }
 
