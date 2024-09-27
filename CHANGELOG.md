@@ -96,6 +96,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * ECS - check for central tenant permissions in Settings > Classification Browse. Fixes UIIN-3038.
 * Display action menu when user has only permission to move holdings/items. Fixes UIIN-3040.
 * Make "Barcode" field wrapping to next row when there are many characters in the value. Fixes UIIN-2958.
+* Fixed "Settings" > "Inventory" page does not load. Fixes UIIN-3053.
 * Display an item that has an open loan whose patron record has been removed. Fixes UIIN-3044.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
