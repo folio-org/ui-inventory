@@ -837,5 +837,18 @@
     "settings.section.displaySettings": "Configurações de exibição",
     "settings.displaySettings.defaultSort": "Classificação padrão",
     "subjectSource.placeholder": "Selecione a fonte",
-    "subjectType.placeholder": "Selecione o tipo"
+    "subjectType.placeholder": "Selecione o tipo",
+    "dateLength": "A data deve conter quatro caracteres.",
+    "selectInstanceDateType": "Selecione o tipo de data",
+    "dateType": "Tipo de data",
+    "date1": "Data 1",
+    "date2": "Data 2",
+    "update": "Atualizar",
+    "updateOwnership.items.modal.heading": "Atualizar propriedade de itens",
+    "updateOwnership.items.modal.message": "Gostaria de atualizar a propriedade do Item <strong>{itemHrid}</strong> de <strong>{currentTenant}</strong> para <strong>{targetTenant}</strong>?",
+    "updateOwnership.item.message.success": "Propriedade do item <strong>{itemHrid}</strong> foi atualizado com sucesso para <strong>{targetTenantName}</strong>",
+    "affiliation": "Afiliação",
+    "affiliation.select": "Selecione a afiliação",
+    "instance.linked.id": "ID da instância vinculada - {id}",
+    "actions.menuSection.sortBy.date": "Data"
 }

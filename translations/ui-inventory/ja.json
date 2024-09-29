@@ -837,5 +837,18 @@
     "settings.section.displaySettings": "Display settings",
     "settings.displaySettings.defaultSort": "Default sort",
     "subjectSource.placeholder": "Select source",
-    "subjectType.placeholder": "Select type"
+    "subjectType.placeholder": "タイプの選択",
+    "dateLength": "日付は 4 文字にする必要があります",
+    "selectInstanceDateType": "日付タイプの選択",
+    "dateType": "日付タイプ",
+    "date1": "日付 1",
+    "date2": "日付 2",
+    "update": "更新",
+    "updateOwnership.items.modal.heading": "Update ownership of items",
+    "updateOwnership.items.modal.message": "Would you like to update ownership of Item <strong>{itemHrid}</strong> from <strong>{currentTenant}</strong> to <strong>{targetTenant}</strong>?",
+    "updateOwnership.item.message.success": "Ownership of item <strong>{itemHrid}</strong> has been successfully updated to <strong>{targetTenantName}</strong>",
+    "affiliation": "Affiliation",
+    "affiliation.select": "Select affiliation",
+    "instance.linked.id": "Linked instance ID - {id}",
+    "actions.menuSection.sortBy.date": "Date"
 }
