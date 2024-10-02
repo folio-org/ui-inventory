@@ -78,8 +78,10 @@ const InventorySettings = (props) => {
   };
 
   const getSections = (_centralTenantPermissions) => {
-    const canUserViewClassificationBrowse = checkIfUserInCentralTenant(stripes)
-      || flattenCentralTenantPermissions(_centralTenantPermissions).has('ui-inventory.settings.classification-browse');
+    const canUserViewClassificationBrowse = isUserInConsortiumMode(stripes)
+      ? checkIfUserInCentralTenant(stripes)
+        || flattenCentralTenantPermissions(_centralTenantPermissions).has('ui-inventory.settings.classification-browse')
+      : true;
 
     const _sections = [
       {

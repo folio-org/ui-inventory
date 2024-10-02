@@ -3,6 +3,7 @@ import {
   useUserTenantPermissions,
   checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
+import { Settings } from '@folio/stripes/smart-components';
 
 import {
   renderWithIntl,
@@ -15,7 +16,7 @@ import * as utils from '../../utils';
 
 jest.mock('@folio/stripes/smart-components', () => ({
   ...jest.requireActual('@folio/stripes/smart-components'),
-  Settings: () => <div>Settings</div>
+  Settings: jest.fn(() => <div>Settings</div>),
 }));
 const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 
@@ -67,6 +68,36 @@ describe('InventorySettings', () => {
       const { getByText } = renderInventorySettings();
 
       expect(getByText('Settings')).toBeInTheDocument();
+    });
+  });
+
+  describe('when non-consortia', () => {
+    it('should display "Classification Browse" settings', () => {
+      spyOnIsUserInConsortiumMode.mockReturnValue(false);
+      checkIfUserInMemberTenant.mockReturnValue(false);
+      useUserTenantPermissions.mockReturnValue({
+        userPermissions: [],
+        isFetched: false,
+        isFetching: false,
+        isLoading: false,
+      });
+
+      renderInventorySettings();
+
+      const expectedProps = {
+        sections: expect.arrayContaining([
+          expect.objectContaining({
+            pages: expect.arrayContaining([
+              expect.objectContaining({
+                route: 'classificationBrowse',
+                perm: 'ui-inventory.settings.classification-browse',
+              }),
+            ]),
+          }),
+        ]),
+      };
+
+      expect(Settings).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
     });
   });
 });
