@@ -35,7 +35,14 @@ const InstanceAcquisition = ({ accordionId, instanceId }) => {
     stripes.hasInterface('orders') &&
     stripes.hasInterface('acquisitions-units'))) return null;
 
-  const renderTenantAcquisitionAccordion = (accId, tenantId, tenantAcquisitions, isLoading, controlledAccorionProps) => {
+  const renderTenantAcquisitionAccordion = (
+    accId,
+    tenantId,
+    tenantAcquisitions,
+    isLoading,
+    controlledAccorionProps,
+    isActiveTenantAcqisition = false,
+  ) => {
     const getTenantAccordionLabel = (tenants, id) => tenants?.find(tenant => tenant.id === id).name;
 
     return (
@@ -49,6 +56,7 @@ const InstanceAcquisition = ({ accordionId, instanceId }) => {
           acquisitions={tenantAcquisitions}
           isLoading={isLoading}
           tenantId={tenantId}
+          isActiveTenantAcqisition={isActiveTenantAcqisition}
         />
       </Accordion>
     );
@@ -68,6 +76,7 @@ const InstanceAcquisition = ({ accordionId, instanceId }) => {
             activeTenantAcquisition,
             isLoadingActiveTenantAcquisition,
             controlledActiveTenantAcqAccorion,
+            true,
           )}
           {renderTenantAcquisitionAccordion(
             'central-acquisition-accordion',

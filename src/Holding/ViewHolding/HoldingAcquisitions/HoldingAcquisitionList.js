@@ -24,24 +24,29 @@ const columnMapping = {
   [ACQUISITION_COLUMN_NAMES.orderType]: <FormattedMessage id="ui-inventory.acq.orderType" />,
 };
 
-const formatter = {
-  [ACQUISITION_COLUMN_NAMES.poLineNumber]: acq => <Link to={`/orders/lines/view/${acq.poLineId}`}>{acq.poLineNumber}</Link>,
-  [ACQUISITION_COLUMN_NAMES.orderStatus]: acq => (
-    <>
-      <FormattedMessage id={`ui-inventory.acq.orderStatus.${acq.orderStatus}`} />
-      {acq.orderCloseReason?.reason && ` - ${acq.orderCloseReason.reason}`}
-    </>
-  ),
-  [ACQUISITION_COLUMN_NAMES.polReceiptStatus]: acq => <FormattedMessage id={`ui-inventory.acq.receiptStatus.${acq.polReceiptStatus}`} />,
-  [ACQUISITION_COLUMN_NAMES.orderSentDate]: acq => getDateWithTime(acq.orderSentDate),
-  [ACQUISITION_COLUMN_NAMES.orderType]: acq => <FormattedMessage id={`ui-inventory.acq.orderType.${acq.orderType}`} />,
-};
-
 const HoldingAcquisitionList = ({
   isLoading,
   holdingOrderLines,
   tenantId,
+  isActiveTenantAcqisition,
 }) => {
+  const formatter = {
+    [ACQUISITION_COLUMN_NAMES.poLineNumber]: acq => (
+      isActiveTenantAcqisition
+        ? <Link to={`/orders/lines/view/${acq.poLineId}`}>{acq.poLineNumber}</Link>
+        : <span>{acq.poLineNumber}</span>
+    ),
+    [ACQUISITION_COLUMN_NAMES.orderStatus]: acq => (
+      <>
+        <FormattedMessage id={`ui-inventory.acq.orderStatus.${acq.orderStatus}`} />
+        {acq.orderCloseReason?.reason && ` - ${acq.orderCloseReason.reason}`}
+      </>
+    ),
+    [ACQUISITION_COLUMN_NAMES.polReceiptStatus]: acq => <FormattedMessage id={`ui-inventory.acq.receiptStatus.${acq.polReceiptStatus}`} />,
+    [ACQUISITION_COLUMN_NAMES.orderSentDate]: acq => getDateWithTime(acq.orderSentDate),
+    [ACQUISITION_COLUMN_NAMES.orderType]: acq => <FormattedMessage id={`ui-inventory.acq.orderType.${acq.orderType}`} />,
+  };
+
   return (
     <MultiColumnList
       id={`${tenantId}-list-holding-order-lines`}
@@ -59,6 +64,7 @@ HoldingAcquisitionList.propTypes = {
   holdingOrderLines: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
   tenantId: PropTypes.string.isRequired,
+  isActiveTenantAcqisition: PropTypes.bool.isRequired,
 };
 
 export default HoldingAcquisitionList;

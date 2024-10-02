@@ -9,13 +9,14 @@ import { renderWithIntl } from '../../../../test/jest/helpers';
 import { resultData, line } from './fixtures';
 import TenantAcquisition from './TenantAcquisition';
 
-const renderTenantAcquisition = () => (
+const renderTenantAcquisition = (isActiveTenantAcqisition = false) => (
   renderWithIntl(
     <Router>
       <TenantAcquisition
         acquisitions={resultData}
         isLoading={false}
         tenantId="diku"
+        isActiveTenantAcqisition={isActiveTenantAcqisition}
       />
     </Router>
   )
@@ -26,5 +27,27 @@ describe('TenantAcquisition', () => {
     renderTenantAcquisition();
 
     expect(screen.getByText(line.poLineNumber)).toBeInTheDocument();
+  });
+
+  describe('when active tenant has acquisitions', () => {
+    it('should render PO line as a link', () => {
+      renderTenantAcquisition(true);
+
+      const link = screen.getByText(line.poLineNumber);
+
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute('href', `/orders/lines/view/${line.id}`);
+    });
+  });
+
+  describe('when central tenant has acquisitions', () => {
+    it('should render PO line as a plain text', () => {
+      renderTenantAcquisition();
+
+      const poLineNumber = screen.getByText(line.poLineNumber);
+
+      expect(poLineNumber).toBeInTheDocument();
+      expect(poLineNumber).not.toHaveAttribute('href', `/orders/lines/view/${line.id}`);
+    });
   });
 });

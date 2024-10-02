@@ -50,7 +50,14 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
 
   if (isFetchingActiveTenantOrderLines || isFetchingCentralTenantOrderLines) return <Loading size="large" />;
 
-  const renderTenantOrderLinesAccordion = (accId, tenantId, tenantOrderLines, isLoading, controlledAccorionProps) => {
+  const renderTenantOrderLinesAccordion = (
+    accId,
+    tenantId,
+    tenantOrderLines,
+    isLoading,
+    controlledAccorionProps,
+    isActiveTenantAcqisition = false,
+  ) => {
     const getTenantAccordionLabel = (tenants, id) => tenants?.find(tenant => tenant.id === id).name;
 
     return (
@@ -64,6 +71,7 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
           holdingOrderLines={tenantOrderLines}
           isLoading={isLoading}
           tenantId={tenantId}
+          isActiveTenantAcqisition={isActiveTenantAcqisition}
         />
       </Accordion>
     );
@@ -107,6 +115,7 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
               activeTenantOrderLines,
               isFetchingActiveTenantOrderLines,
               controlledActiveTenantOrderLinesAccorion,
+              true,
             )}
             {renderTenantOrderLinesAccordion(
               'central-tenant-order-lines-accordion',

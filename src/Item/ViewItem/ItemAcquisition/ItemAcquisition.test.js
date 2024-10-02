@@ -28,6 +28,29 @@ describe('ItemAcquisition', () => {
     useItemAcquisition.mockClear().mockReturnValue({ itemAcquisition: resultData });
   });
 
+  describe('when active tenant has acquisitions', () => {
+    it('should render PO line as a link', () => {
+      renderItemAcquisition({ itemId: 'itemId' });
+
+      const link = screen.getByText(orderLine.poLineNumber);
+
+      expect(link).toBeInTheDocument();
+      expect(link).toHaveAttribute('href', `/orders/lines/view/${orderLine.id}`);
+    });
+  });
+
+  describe('when central tenant has acquisitions', () => {
+    it('should render PO line as a plain text', () => {
+      useItemAcquisition.mockClear().mockReturnValue({ itemAcquisition: resultData, isCentralTenantAcq: true });
+      renderItemAcquisition({ itemId: 'itemId' });
+
+      const poLineNumber = screen.getByText(orderLine.poLineNumber);
+
+      expect(poLineNumber).toBeInTheDocument();
+      expect(poLineNumber).not.toHaveAttribute('href', `/orders/lines/view/${orderLine.id}`);
+    });
+  });
+
   it('should display fetched item acquisition data - PO line number', () => {
     renderItemAcquisition({ itemId: 'itemId' });
 
