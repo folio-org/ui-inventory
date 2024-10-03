@@ -18,7 +18,8 @@ import { DataContext } from '../contexts';
 
 class InstancesRoute extends React.Component {
   static propTypes = {
-    tenantId: PropTypes.string.isRequired,
+    // tenantId is used in buildManifestObject()
+    tenantId: PropTypes.string.isRequired, // eslint-disable-line react/no-unused-prop-types
     resources: PropTypes.object.isRequired,
     mutator: PropTypes.object.isRequired,
     disableRecordCreation: PropTypes.bool,
