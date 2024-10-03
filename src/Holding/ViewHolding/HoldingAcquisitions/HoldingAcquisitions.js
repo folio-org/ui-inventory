@@ -56,7 +56,7 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
     tenantOrderLines,
     isLoading,
     controlledAccorionProps,
-    isActiveTenantAcqisition = false,
+    isActiveTenantAcquisition = false,
   ) => {
     const getTenantAccordionLabel = (tenants, id) => tenants?.find(tenant => tenant.id === id).name;
 
@@ -71,7 +71,7 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
           holdingOrderLines={tenantOrderLines}
           isLoading={isLoading}
           tenantId={tenantId}
-          isActiveTenantAcqisition={isActiveTenantAcqisition}
+          isActiveTenantAcquisition={isActiveTenantAcquisition}
         />
       </Accordion>
     );

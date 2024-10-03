@@ -33,11 +33,11 @@ const TenantAcquisition = ({
   acquisitions,
   isLoading,
   tenantId,
-  isActiveTenantAcqisition,
+  isActiveTenantAcquisition,
 }) => {
   const formatter = {
     [ACQUISITION_COLUMN_NAMES.poLineNumber]: i => (
-      isActiveTenantAcqisition
+      isActiveTenantAcquisition
         ? <Link to={`/orders/lines/view/${i.id}`}>{i.poLineNumber}</Link>
         : <span>{i.poLineNumber}</span>
     ),
@@ -70,7 +70,7 @@ TenantAcquisition.propTypes = {
   acquisitions: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
   tenantId: PropTypes.string.isRequired,
-  isActiveTenantAcqisition: PropTypes.bool.isRequired,
+  isActiveTenantAcquisition: PropTypes.bool.isRequired,
 };
 
 export default TenantAcquisition;

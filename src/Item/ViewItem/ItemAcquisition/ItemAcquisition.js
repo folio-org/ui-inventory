@@ -17,7 +17,11 @@ import useItemAcquisition from './useItemAcquisition';
 
 const ItemAcquisition = ({ accordionId, itemId }) => {
   const stripes = useStripes();
-  const { isLoading, itemAcquisition = {}, isCentralTenantAcq } = useItemAcquisition(itemId);
+  const {
+    isLoading,
+    itemAcquisition = {},
+    isCentralTenantAcquisition,
+  } = useItemAcquisition(itemId);
 
   if (!(stripes.hasInterface('pieces') &&
     stripes.hasInterface('order-lines') &&
@@ -49,7 +53,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.polNumber" />}
             value={orderLine && (
-              isCentralTenantAcq
+              isCentralTenantAcquisition
                 ? <span>{orderLine.poLineNumber}</span>
                 : <Link to={`/orders/lines/view/${orderLine.id}`}>{orderLine.poLineNumber}</Link>
             )}
@@ -81,7 +85,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.receiptDate" />}
             value={piece?.receivedDate && (
-              isCentralTenantAcq
+              isCentralTenantAcquisition
                 ? <span>{receiptDate}</span>
                 : <Link to={`/receiving/${piece.titleId}/view`}>{receiptDate}</Link>
             )}

@@ -28,11 +28,11 @@ const HoldingAcquisitionList = ({
   isLoading,
   holdingOrderLines,
   tenantId,
-  isActiveTenantAcqisition,
+  isActiveTenantAcquisition,
 }) => {
   const formatter = {
     [ACQUISITION_COLUMN_NAMES.poLineNumber]: acq => (
-      isActiveTenantAcqisition
+      isActiveTenantAcquisition
         ? <Link to={`/orders/lines/view/${acq.poLineId}`}>{acq.poLineNumber}</Link>
         : <span>{acq.poLineNumber}</span>
     ),
@@ -64,7 +64,7 @@ HoldingAcquisitionList.propTypes = {
   holdingOrderLines: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool.isRequired,
   tenantId: PropTypes.string.isRequired,
-  isActiveTenantAcqisition: PropTypes.bool.isRequired,
+  isActiveTenantAcquisition: PropTypes.bool.isRequired,
 };
 
 export default HoldingAcquisitionList;

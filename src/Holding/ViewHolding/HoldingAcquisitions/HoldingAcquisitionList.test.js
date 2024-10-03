@@ -12,14 +12,14 @@ import { holdingSummaries } from './fixtures';
 
 import HoldingAcquisitionList from './HoldingAcquisitionList';
 
-const renderHoldingAcquisitionList = (isActiveTenantAcqisition = false) => (
+const renderHoldingAcquisitionList = (isActiveTenantAcquisition = false) => (
   renderWithIntl(
     <Router>
       <HoldingAcquisitionList
         holdingOrderLines={holdingSummaries}
         isLoading={false}
         tenantId="diku"
-        isActiveTenantAcqisition={isActiveTenantAcqisition}
+        isActiveTenantAcquisition={isActiveTenantAcquisition}
       />
     </Router>,
     translationsProperties,

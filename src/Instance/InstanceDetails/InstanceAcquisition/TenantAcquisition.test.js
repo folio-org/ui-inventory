@@ -9,14 +9,14 @@ import { renderWithIntl } from '../../../../test/jest/helpers';
 import { resultData, line } from './fixtures';
 import TenantAcquisition from './TenantAcquisition';
 
-const renderTenantAcquisition = (isActiveTenantAcqisition = false) => (
+const renderTenantAcquisition = (isActiveTenantAcquisition = false) => (
   renderWithIntl(
     <Router>
       <TenantAcquisition
         acquisitions={resultData}
         isLoading={false}
         tenantId="diku"
-        isActiveTenantAcqisition={isActiveTenantAcqisition}
+        isActiveTenantAcquisition={isActiveTenantAcquisition}
       />
     </Router>
   )
