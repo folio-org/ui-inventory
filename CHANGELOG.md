@@ -98,6 +98,9 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Make "Barcode" field wrapping to next row when there are many characters in the value. Fixes UIIN-2958.
 * Fixed "Settings" > "Inventory" page does not load. Fixes UIIN-3053.
 * Display an item that has an open loan whose patron record has been removed. Fixes UIIN-3044.
+* Display "Classification browse" settings for non-consortia. Fixes UIIN-3057.
+* Fix eslint warnings. Refs UIIN-3064.
+* Disable link to POL when it leads to another tenant (instance, holding and item). Refs UIIN-3024.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)

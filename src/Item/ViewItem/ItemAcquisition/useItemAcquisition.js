@@ -81,6 +81,7 @@ const useItemAcquisition = (id) => {
   return {
     isLoading,
     itemAcquisition: data,
+    isCentralTenantAcquisition: activeTenant === centralTenant,
   };
 };
 
