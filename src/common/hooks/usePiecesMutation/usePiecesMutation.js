@@ -9,8 +9,8 @@ const usePiecesMutation = (options = {}) => {
   const ky = useOkapiKy();
 
   const { mutateAsync, isLoading } = useMutation({
-    mutationFn: (piece) => {
-      const httpClient = piece?.tenantId ? extendKyWithTenant(ky, piece.tenantId) : ky;
+    mutationFn: ({ tenantId, ...piece }) => {
+      const httpClient = tenantId ? extendKyWithTenant(ky, tenantId) : ky;
 
       return httpClient.put(`${ORDER_PIECES_API}/${piece.id}`, { json: piece });
     },
