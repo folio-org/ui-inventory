@@ -17,14 +17,17 @@ import useItemAcquisition from './useItemAcquisition';
 
 const ItemAcquisition = ({ accordionId, itemId }) => {
   const stripes = useStripes();
-  const { isLoading, itemAcquisition = {} } = useItemAcquisition(itemId);
+  const {
+    isLoading,
+    itemAcquisition = {},
+    isCentralTenantAcquisition,
+  } = useItemAcquisition(itemId);
 
   if (!(stripes.hasInterface('pieces') &&
     stripes.hasInterface('order-lines') &&
     stripes.hasInterface('orders') &&
     stripes.hasInterface('organizations.organizations'))) return null;
 
-  const { orderLine, order, piece, vendor } = itemAcquisition;
 
   if (isLoading) {
     return (
@@ -37,6 +40,9 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
     );
   }
 
+  const { orderLine, order, piece, vendor } = itemAcquisition;
+  const receiptDate = getDateWithTime(piece?.receivedDate);
+
   return (
     <Accordion
       id={accordionId}
@@ -46,7 +52,11 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.polNumber" />}
-            value={orderLine && <Link to={`/orders/lines/view/${orderLine.id}`}>{orderLine.poLineNumber}</Link>}
+            value={orderLine && (
+              isCentralTenantAcquisition
+                ? <span>{orderLine.poLineNumber}</span>
+                : <Link to={`/orders/lines/view/${orderLine.id}`}>{orderLine.poLineNumber}</Link>
+            )}
           />
         </Col>
 
@@ -74,10 +84,11 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.receiptDate" />}
-            value={
-              piece?.receivedDate
-              && <Link to={`/receiving/${piece.titleId}/view`}>{getDateWithTime(piece.receivedDate)}</Link>
-            }
+            value={piece?.receivedDate && (
+              isCentralTenantAcquisition
+                ? <span>{receiptDate}</span>
+                : <Link to={`/receiving/${piece.titleId}/view`}>{receiptDate}</Link>
+            )}
           />
         </Col>
 
