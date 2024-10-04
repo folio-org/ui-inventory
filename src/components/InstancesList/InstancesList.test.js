@@ -16,12 +16,10 @@ import '../../../test/jest/__mock__';
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
-  deleteFacetStates,
   filterConfig,
   queryIndexes,
   USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   buildSearchQuery,
-  resetFacetStates,
   SORT_OPTIONS,
   segments,
 } from '@folio/stripes-inventory-components';
@@ -223,28 +221,6 @@ describe('InstancesList', () => {
       });
     });
 
-    describe('when switching lookup mode', () => {
-      it('should delete facet states', () => {
-        renderInstancesList({
-          segment: 'instances',
-        });
-
-        fireEvent.click(screen.getByRole('button', { name: 'Browse' }));
-
-        expect(deleteFacetStates).toHaveBeenCalledWith('@folio/inventory');
-      });
-    });
-
-    describe('when switching segment (Instance/Holdings/Item)', () => {
-      it('should delete facet states', async () => {
-        renderInstancesList({ segment: 'instances' });
-
-        fireEvent.click(screen.getByRole('button', { name: 'Holdings' }));
-
-        expect(deleteFacetStates).toHaveBeenCalledWith('@folio/inventory');
-      });
-    });
-
     describe('when switching to Holdings tab', () => {
       const mockSetItem = jest.fn();
 
@@ -264,16 +240,6 @@ describe('InstancesList', () => {
         await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
 
         expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
-      });
-
-      it('should delete facet states', async () => {
-        renderInstancesList({ segment: 'instances' });
-
-        const search = '?segment=instances&sort=title';
-        act(() => { history.push({ search }); });
-        await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
-
-        expect(deleteFacetStates).toHaveBeenCalled();
       });
 
       describe('when staffSuppress filter is not present', () => {
@@ -453,14 +419,6 @@ describe('InstancesList', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
 
         expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
-      });
-
-      it('should reset facet states', () => {
-        renderInstancesList({ segment: 'instances' });
-
-        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
-
-        expect(resetFacetStates).toHaveBeenCalledWith({ namespace: '@folio/inventory' });
       });
 
       it('should call history.replace to add the default sort query parameter from inventory settings', () => {

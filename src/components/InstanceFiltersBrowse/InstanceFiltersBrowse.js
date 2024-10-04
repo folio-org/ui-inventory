@@ -1,13 +1,9 @@
-import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
-import omit from 'lodash/omit';
 
 import {
   checkIfUserInMemberTenant,
   useStripes,
 } from '@folio/stripes/core';
-import { AccordionSet } from '@folio/stripes/components';
 import {
   FACETS,
   HeldByFacet,
@@ -15,27 +11,23 @@ import {
   browseCallNumberOptions,
   browseClassificationOptions,
   useFacets,
-  FACETS_TO_REQUEST,
   SharedFacet,
   EffectiveLocationFacet,
+  NameTypeFacet,
   isConsortiaEnv,
 } from '@folio/stripes-inventory-components';
-
-import { MultiSelectionFacet } from '../MultiSelectionFacet';
 
 const InstanceFiltersBrowse = props => {
   const {
     data,
     query,
     onChange,
-    onClear,
   } = props;
 
-  const intl = useIntl();
   const stripes = useStripes();
   const qindex = query.qindex;
 
-  const initialAccordionStates = useMemo(() => ({
+  const initialFacetStates = {
     [FACETS.SHARED]: false,
     [FACETS.CALL_NUMBERS_HELD_BY]: false,
     [FACETS.CLASSIFICATION_SHARED]: false,
@@ -45,54 +37,46 @@ const InstanceFiltersBrowse = props => {
     [FACETS.SUBJECTS_HELD_BY]: false,
     [FACETS.EFFECTIVE_LOCATION]: false,
     [FACETS.NAME_TYPE]: false,
-  }), []);
-
-  const activeFilters = useMemo(() => omit(query || {}, ['qindex', 'query']), [query]);
+  };
 
   const {
-    accordionStatus,
-    facetOptions,
-    getIsLoading,
-    onToggleAccordion,
-    onInputFocusAndMoreClick,
-    onFacetOptionSearch,
-  } = useFacets({
-    initialAccordionStates,
-    query,
-    isBrowseLookup: true,
+    accordionsStatus,
     activeFilters,
+    facetOptions,
+    onToggleAccordion,
+    getIsLoading,
+  } = useFacets({
+    initialAccordionStates: initialFacetStates,
+    query,
     data,
+    isBrowseLookup: true,
   });
 
   const renderSharedFacet = (name) => (
     <SharedFacet
       name={name}
+      accordionsStatus={accordionsStatus}
       activeFilters={activeFilters}
+      getIsLoading={getIsLoading}
       facetOptions={facetOptions}
       onChange={onChange}
-      onClear={onClear}
-      getIsLoading={getIsLoading}
+      onToggle={onToggleAccordion}
     />
   );
 
   const renderHeldByFacet = (name) => (
     <HeldByFacet
       name={name}
+      accordionsStatus={accordionsStatus}
       activeFilters={activeFilters}
       facetOptions={facetOptions}
-      getIsLoading={getIsLoading}
       onChange={onChange}
-      onClear={onClear}
-      onFetch={onInputFocusAndMoreClick}
-      onSearch={onFacetOptionSearch}
+      onToggle={onToggleAccordion}
     />
   );
 
   return (
-    <AccordionSet
-      accordionStatus={accordionStatus}
-      onToggle={onToggleAccordion}
-    >
+    <>
       {Object.values(browseClassificationOptions).includes(qindex) && (
         renderSharedFacet(FACETS.CLASSIFICATION_SHARED)
       )}
@@ -102,14 +86,12 @@ const InstanceFiltersBrowse = props => {
           {renderHeldByFacet(FACETS.CALL_NUMBERS_HELD_BY)}
           <EffectiveLocationFacet
             name={FACETS.EFFECTIVE_LOCATION}
+            accordionsStatus={accordionsStatus}
             facetOptions={facetOptions}
             separator={isConsortiaEnv(stripes)}
             activeFilters={activeFilters}
-            getIsLoading={getIsLoading}
             onChange={onChange}
-            onClear={onClear}
-            onFetch={onInputFocusAndMoreClick}
-            onSearch={onFacetOptionSearch}
+            onToggle={onToggleAccordion}
           />
         </>
       )}
@@ -118,18 +100,14 @@ const InstanceFiltersBrowse = props => {
           {renderSharedFacet(FACETS.CONTRIBUTORS_SHARED)}
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* {renderHeldByFacet(FACETS.CONTRIBUTORS_HELD_BY)} */}
-          <MultiSelectionFacet
-            id={FACETS.NAME_TYPE}
-            label={intl.formatMessage({ id: `ui-inventory.filters.${FACETS.NAME_TYPE}` })}
+          <NameTypeFacet
             name={FACETS.NAME_TYPE}
-            closedByDefault
+            accordionsStatus={accordionsStatus}
+            activeFilters={activeFilters}
             separator={checkIfUserInMemberTenant(stripes)}
-            options={facetOptions[FACETS_TO_REQUEST[FACETS.NAME_TYPE]]}
-            selectedValues={activeFilters[FACETS.NAME_TYPE]}
-            onFilterChange={onChange}
-            onClearFilter={() => onClear(FACETS.NAME_TYPE)}
-            displayClearButton={!!activeFilters[FACETS.NAME_TYPE]?.length}
-            isPending={getIsLoading(FACETS.NAME_TYPE)}
+            facetOptions={facetOptions}
+            onChange={onChange}
+            onToggle={onToggleAccordion}
           />
         </>
       )}
@@ -140,7 +118,7 @@ const InstanceFiltersBrowse = props => {
           {/* {renderHeldByFacet(FACETS.SUBJECTS_HELD_BY)} */}
         </>
       )}
-    </AccordionSet>
+    </>
   );
 };
 
@@ -148,7 +126,6 @@ export default InstanceFiltersBrowse;
 
 InstanceFiltersBrowse.propTypes = {
   onChange: PropTypes.func.isRequired,
-  onClear: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired,
   query: PropTypes.object.isRequired,
 };

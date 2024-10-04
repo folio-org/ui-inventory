@@ -7,7 +7,10 @@ import {
 } from '@folio/jest-config-stripes/testing-library/react';
 
 import { ModuleHierarchyProvider } from '@folio/stripes/core';
-import { browseModeOptions } from '@folio/stripes-inventory-components';
+import {
+  browseModeOptions,
+  FACETS,
+} from '@folio/stripes-inventory-components';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
@@ -15,7 +18,6 @@ import translations from '../../../test/jest/helpers/translationsProperties';
 import InstanceFiltersBrowse from './InstanceFiltersBrowse';
 
 const mockOnChange = jest.fn();
-const mockOnClear = jest.fn();
 
 const consortiaTenants = [
   {
@@ -41,6 +43,7 @@ const consortiaTenants = [
 const data = {
   locations: [],
   consortiaTenants,
+  classificationBrowseConfig: [],
 };
 
 const query = {
@@ -66,7 +69,6 @@ const renderInstanceFilters = (props = {}) => {
           data={data}
           query={query}
           onChange={mockOnChange}
-          onClear={mockOnClear}
           {...props}
         />
       </ModuleHierarchyProvider>
@@ -80,26 +82,20 @@ describe('InstanceFiltersBrowse', () => {
     jest.clearAllMocks();
   });
 
-  it('Contains a filter for creation date ', () => {
-    renderInstanceFilters();
-
-    expect(screen.getByText('Effective location (item)')).toBeInTheDocument();
-  });
-
   describe('when call numbers browseType was selected', () => {
     it('should display filter by effective location accordion', () => {
-      const { getByText } = renderInstanceFilters({
+      const { getByRole } = renderInstanceFilters({
         data,
         query: {
           qindex: browseModeOptions.CALL_NUMBERS,
         },
       });
 
-      expect(getByText('effectiveLocation-field')).toBeInTheDocument();
+      expect(getByRole('heading', { name: 'Effective location (item)' })).toBeInTheDocument();
     });
 
     it('should display shared filter accordion', () => {
-      const { getByText } = renderInstanceFilters({
+      const { getByRole } = renderInstanceFilters({
         data,
         query: {
           ...query,
@@ -109,25 +105,28 @@ describe('InstanceFiltersBrowse', () => {
 
       fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
 
-      expect(getByText('Shared')).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
+      expect(getByRole('heading', { name: 'Shared' })).toBeInTheDocument();
+      expect(mockOnChange).toHaveBeenCalledWith({
+        name: 'shared',
+        values: [],
+      });
     });
   });
 
   describe('when call numbers browse sub-type was selected', () => {
     it('should display filter by effective location accordion', () => {
-      const { getByText } = renderInstanceFilters({
+      const { getByRole } = renderInstanceFilters({
         data,
         query: {
           qindex: browseModeOptions.DEWEY,
         },
       });
 
-      expect(getByText('effectiveLocation-field')).toBeInTheDocument();
+      expect(getByRole('heading', { name: 'Effective location (item)' })).toBeInTheDocument();
     });
 
     it('should display shared filter accordion', () => {
-      const { getByText } = renderInstanceFilters({
+      const { getByRole } = renderInstanceFilters({
         data,
         query: {
           ...query,
@@ -137,8 +136,11 @@ describe('InstanceFiltersBrowse', () => {
 
       fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
 
-      expect(getByText('Shared')).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
+      expect(getByRole('heading', { name: 'Shared' })).toBeInTheDocument();
+      expect(mockOnChange).toHaveBeenCalledWith({
+        name: FACETS.SHARED,
+        values: [],
+      });
     });
   });
 
@@ -147,7 +149,10 @@ describe('InstanceFiltersBrowse', () => {
       renderInstanceFilters();
       fireEvent.click(screen.getByLabelText('Clear selected Effective location (item) filters'));
 
-      expect(mockOnClear).toHaveBeenCalled();
+      expect(mockOnChange).toHaveBeenCalledWith({
+        name: FACETS.EFFECTIVE_LOCATION,
+        values: [],
+      });
     });
 
     it('should display "Held By" facet accordion', () => {
@@ -162,13 +167,16 @@ describe('InstanceFiltersBrowse', () => {
       fireEvent.click(screen.getByLabelText('Clear selected Held by filters'));
 
       expect(getByRole('heading', { name: 'Held by' })).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
+      expect(mockOnChange).toHaveBeenCalledWith({
+        name: FACETS.CALL_NUMBERS_HELD_BY,
+        values: [],
+      });
     });
   });
 
   describe('when "Classification (all)" browse sub-type was selected', () => {
     it('should display "Shared" facet', () => {
-      const { getByText } = renderInstanceFilters({
+      const { getByRole } = renderInstanceFilters({
         data,
         query: {
           ...query,
@@ -176,7 +184,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      expect(getByText('Shared')).toBeInTheDocument();
+      expect(getByRole('heading', { name: 'Shared' })).toBeInTheDocument();
     });
   });
 
@@ -193,11 +201,14 @@ describe('InstanceFiltersBrowse', () => {
       fireEvent.click(screen.getByLabelText('Clear selected Name type filters'));
 
       expect(getByRole('heading', { name: 'Name type' })).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
+      expect(mockOnChange).toHaveBeenCalledWith({
+        name: FACETS.NAME_TYPE,
+        values: [],
+      });
     });
 
     it('should display shared filter accordion', () => {
-      const { getByText } = renderInstanceFilters({
+      const { getByRole } = renderInstanceFilters({
         data,
         query: {
           ...query,
@@ -207,12 +218,15 @@ describe('InstanceFiltersBrowse', () => {
 
       fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
 
-      expect(getByText('Shared')).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
+      expect(getByRole('heading', { name: 'Shared' })).toBeInTheDocument();
+      expect(mockOnChange).toHaveBeenCalledWith({
+        name: FACETS.CONTRIBUTORS_SHARED,
+        values: [],
+      });
     });
 
     it.skip('should display Held by filter accordion', () => {
-      const { getByText } = renderInstanceFilters({
+      const { getByRole } = renderInstanceFilters({
         data,
         query: {
           ...query,
@@ -222,14 +236,17 @@ describe('InstanceFiltersBrowse', () => {
 
       fireEvent.click(screen.getByLabelText('Clear selected Held by filters'));
 
-      expect(getByText('Held by')).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
+      expect(getByRole('heading', { name: 'Held by' })).toBeInTheDocument();
+      expect(mockOnChange).toHaveBeenCalledWith({
+        name: FACETS.CONTRIBUTORS_HELD_BY,
+        values: [],
+      });
     });
   });
 
   describe('When subjects browseType was selected', () => {
     it('should display shared filter accordion', () => {
-      const { getByText } = renderInstanceFilters({
+      const { getByRole } = renderInstanceFilters({
         data,
         query: {
           ...query,
@@ -239,12 +256,15 @@ describe('InstanceFiltersBrowse', () => {
 
       fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
 
-      expect(getByText('Shared')).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
+      expect(getByRole('heading', { name: 'Shared' })).toBeInTheDocument();
+      expect(mockOnChange).toHaveBeenCalledWith({
+        name: FACETS.SUBJECTS_SHARED,
+        values: [],
+      });
     });
 
     it.skip('should display Held by filter accordion', () => {
-      const { getByText } = renderInstanceFilters({
+      const { getByRole } = renderInstanceFilters({
         data,
         query: {
           ...query,
@@ -254,8 +274,11 @@ describe('InstanceFiltersBrowse', () => {
 
       fireEvent.click(screen.getByLabelText('Clear selected Held by filters'));
 
-      expect(getByText('Held by')).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
+      expect(getByRole('heading', { name: 'Held by' })).toBeInTheDocument();
+      expect(mockOnChange).toHaveBeenCalledWith({
+        name: FACETS.SHARED,
+        values: [],
+      });
     });
   });
 });

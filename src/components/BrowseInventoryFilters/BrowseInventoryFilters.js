@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+import {
+  useCallback,
+  useContext,
+} from 'react';
 
 import { DataContext } from '../../contexts';
 import InstanceFiltersBrowse from '../InstanceFiltersBrowse';
@@ -10,12 +13,15 @@ const BrowseInventoryFilters = ({
 }) => {
   const data = useContext(DataContext);
 
+  const handleChange = useCallback(({ name, values }) => {
+    applyFilters(name, values);
+  }, [applyFilters]);
+
   return (
     <InstanceFiltersBrowse
       data={data}
       query={query}
-      onChange={({ name, values }) => applyFilters(name, values)}
-      onClear={(name) => applyFilters(name, [])}
+      onChange={handleChange}
     />
   );
 };
