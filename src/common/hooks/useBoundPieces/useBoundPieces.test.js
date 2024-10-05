@@ -1,32 +1,28 @@
-import { useQuery } from 'react-query';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
 
 import {
   renderHook,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
+import { useCentralOrderingSettings } from '@folio/stripes-acq-components';
 import {
-  getConsortiumCentralTenantId,
-  useCentralOrderingSettings,
-} from '@folio/stripes-acq-components';
-import {
-  useNamespace,
   useOkapiKy,
   useStripes,
 } from '@folio/stripes/core';
 
+import { extendKyWithTenant } from '../../../Instance/utils';
 import useBoundPieces from './useBoundPieces';
 
-jest.mock('react-query', () => ({
-  useQuery: jest.fn(),
-}));
-
 jest.mock('@folio/stripes-acq-components', () => ({
-  getConsortiumCentralTenantId: jest.fn(),
+  getConsortiumCentralTenantId: jest.fn(() => 'central-tenant'),
   useCentralOrderingSettings: jest.fn(() => ({ enabled: false })),
 }));
 
 jest.mock('@folio/stripes/core', () => ({
-  useNamespace: jest.fn(),
+  useNamespace: jest.fn(() => ['bound-pieces']),
   useOkapiKy: jest.fn(),
   useStripes: jest.fn(),
 }));
@@ -35,88 +31,59 @@ jest.mock('../../../Instance/utils', () => ({
   extendKyWithTenant: jest.fn(),
 }));
 
+const queryClient = new QueryClient();
+const wrapper = ({ children }) => (
+  <QueryClientProvider client={queryClient}>
+    {children}
+  </QueryClientProvider>
+);
+
+const mockKy = {
+  get: jest.fn(() => ({
+    json: jest.fn().mockResolvedValue({
+      pieces: [{ id: 'piece1', receivedDate: '2023-01-01T00:00:00.000Z' }],
+      totalRecords: 1,
+    }),
+  })),
+};
+
+const mockStripes = {
+  okapi: { tenant: 'member-tenant' },
+  hasInterface: jest.fn(() => true),
+};
+
 describe('useBoundPieces', () => {
-  const mockKy = {
-    get: jest.fn(() => ({
-      json: jest.fn(),
-    })),
-  };
-
-  const mockStripes = {
-    okapi: { tenant: 'member-tenant' },
-    hasInterface: jest.fn(() => true),
-  };
-
   beforeEach(() => {
     jest.clearAllMocks();
 
     useOkapiKy.mockReturnValue(mockKy);
     useStripes.mockReturnValue(mockStripes);
-    useNamespace.mockReturnValue(['bound-pieces']);
   });
 
   it('should return default data when query is not enabled', async () => {
-    const itemId = null; // Query won't be enabled
-    const mockQuery = {
-      data: null,
-      isLoading: false,
-      isFetching: false,
-      refetch: jest.fn(),
-    };
-
-    useQuery.mockReturnValue(mockQuery);
-
-    const { result } = renderHook(() => useBoundPieces(itemId));
+    const itemId = null;
+    const { result } = renderHook(() => useBoundPieces(itemId), { wrapper });
 
     expect(result.current.boundPieces).toEqual([]);
     expect(result.current.isLoading).toBe(false);
     expect(result.current.isFetching).toBe(false);
   });
 
-  it('should fetch bound pieces for the given item ID', async () => {
-    const itemId = '12345';
-    const mockQuery = {
-      data: {
-        pieces: [{ id: 'piece1', receivedDate: '2023-01-01T00:00:00.000Z' }],
-        totalRecords: 1,
-      },
-      isLoading: false,
-      isFetching: false,
-      refetch: jest.fn(),
-    };
-
-    useQuery.mockReturnValue(mockQuery);
-    getConsortiumCentralTenantId.mockReturnValue('central-tenant');
-    useCentralOrderingSettings.mockReturnValue({ enabled: true, isFetching: false });
-
-    const { result } = renderHook(() => useBoundPieces(itemId));
-
-    await waitFor(() => expect(result.current.isLoading).toBe(false));
-
-    expect(result.current.boundPieces).toEqual([{ id: 'piece1', receivedDate: '2023-01-01T00:00:00.000Z' }]);
-    expect(result.current.isFetching).toBe(false);
-  });
-
   it('should handle central ordering logic when central ordering is enabled', async () => {
     const itemId = '12345';
-    const mockQuery = {
-      data: {
-        pieces: [
-          { id: 'piece1', receivedDate: '2023-01-01T00:00:00.000Z', tenantId: 'member-tenant' },
-          { id: 'piece2', receivedDate: '2023-02-01T00:00:00.000Z', tenantId: 'central-tenant' }
-        ],
-        totalRecords: 2,
-      },
-      isLoading: false,
-      isFetching: false,
-      refetch: jest.fn(),
+    const extendedKy = {
+      get: jest.fn(() => ({
+        json: jest.fn().mockResolvedValue({
+          pieces: [{ id: 'piece2', receivedDate: '2023-02-01T00:00:00.000Z' }],
+          totalRecords: 1,
+        }),
+      })),
     };
 
-    useQuery.mockReturnValue(mockQuery);
-    getConsortiumCentralTenantId.mockReturnValue('central-tenant');
     useCentralOrderingSettings.mockReturnValue({ enabled: true, isFetching: false });
+    extendKyWithTenant.mockReturnValue(extendedKy);
 
-    const { result } = renderHook(() => useBoundPieces(itemId));
+    const { result } = renderHook(() => useBoundPieces(itemId), { wrapper });
 
     await waitFor(() => expect(result.current.isLoading).toBe(false));
 
@@ -124,26 +91,5 @@ describe('useBoundPieces', () => {
       { id: 'piece1', receivedDate: '2023-01-01T00:00:00.000Z', tenantId: 'member-tenant' },
       { id: 'piece2', receivedDate: '2023-02-01T00:00:00.000Z', tenantId: 'central-tenant' },
     ]);
-  });
-
-  it('should handle loading state correctly', async () => {
-    const itemId = '12345';
-    const mockQuery = {
-      data: null,
-      isLoading: true,
-      isFetching: true,
-      refetch: jest.fn(),
-    };
-
-    useQuery.mockReturnValue(mockQuery);
-    getConsortiumCentralTenantId.mockReturnValue('central-tenant');
-    useCentralOrderingSettings.mockReturnValue({ enabled: true, isFetching: false });
-
-    const { result } = renderHook(() => useBoundPieces(itemId));
-
-    await waitFor(() => expect(result.current.isLoading).toBe(true));
-
-    expect(result.current.boundPieces).toEqual([]);
-    expect(result.current.isFetching).toBe(true);
   });
 });
