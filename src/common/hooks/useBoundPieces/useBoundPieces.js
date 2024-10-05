@@ -46,25 +46,24 @@ const useBoundPieces = (itemId, options = {}) => {
     refetch,
   } = useQuery({
     queryKey: [namespace, itemId],
-    queryFn: ({ signal }) => {
+    queryFn: async ({ signal }) => {
       const makeRequest = (httpClient) => httpClient.get(ORDER_PIECES_API, { searchParams, signal }).json();
 
       if (isCentralOrderingEnabled) {
-        return Promise.allSettled([
+        const fulfilledResults = await Promise.allSettled([
           makeRequest(ky),
           makeRequest(extendKyWithTenant(ky, consortiumCentralTenantId))
-        ]).then((results) => {
-          const fulfilledResults = results.filter(({ status }) => status === 'fulfilled');
-          const totalRecords = fulfilledResults.reduce((acc, { value }) => acc + value.totalRecords, 0);
-          const pieces = fulfilledResults
-            .flatMap(({ value }, index) => value.pieces.map(piece => ({ ...piece, tenantId: index === 1 ? consortiumCentralTenantId : stripes.okapi.tenant })))
-            .sort((a, b) => new Date(a[SORTING_FIELD]) - new Date(b[SORTING_FIELD]));
+        ]).then((results) => results.filter(({ status }) => status === 'fulfilled'));
 
-          return {
-            pieces,
-            totalRecords,
-          };
-        });
+        const totalRecords = fulfilledResults.reduce((acc, { value }) => acc + value.totalRecords, 0);
+        const pieces = fulfilledResults
+          .flatMap(({ value }, index) => value.pieces.map(piece => ({ ...piece, tenantId: index === 1 ? consortiumCentralTenantId : stripes.okapi.tenant })))
+          .sort((a, b) => new Date(a[SORTING_FIELD]) - new Date(b[SORTING_FIELD]));
+
+        return {
+          pieces,
+          totalRecords,
+        };
       }
 
       return makeRequest(ky);
