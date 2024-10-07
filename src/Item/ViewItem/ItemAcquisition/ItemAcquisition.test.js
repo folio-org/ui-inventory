@@ -41,7 +41,7 @@ describe('ItemAcquisition', () => {
 
   describe('when central tenant has acquisitions', () => {
     it('should render PO line as a plain text', () => {
-      useItemAcquisition.mockClear().mockReturnValue({ itemAcquisition: resultData, isCentralTenantAcq: true });
+      useItemAcquisition.mockClear().mockReturnValue({ itemAcquisition: resultData, isCentralTenantAcquisition: true });
       renderItemAcquisition({ itemId: 'itemId' });
 
       const poLineNumber = screen.getByText(orderLine.poLineNumber);
