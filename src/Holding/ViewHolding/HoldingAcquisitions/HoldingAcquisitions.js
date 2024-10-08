@@ -130,6 +130,7 @@ const HoldingAcquisitions = ({ holding, withSummary }) => {
             holdingOrderLines={activeTenantOrderLines}
             isLoading={isFetchingActiveTenantOrderLines}
             tenantId={activeTenant}
+            isActiveTenantAcquisition
           />
         ))
       }

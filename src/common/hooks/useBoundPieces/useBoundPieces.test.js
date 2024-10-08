@@ -60,7 +60,7 @@ describe('useBoundPieces', () => {
     useStripes.mockReturnValue(mockStripes);
   });
 
-  it('should return default data when query is not enabled', async () => {
+  it('should return default data when query is not enabled', () => {
     const itemId = null;
     const { result } = renderHook(() => useBoundPieces(itemId), { wrapper });
 
