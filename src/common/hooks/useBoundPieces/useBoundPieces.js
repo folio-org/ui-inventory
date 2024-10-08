@@ -13,6 +13,7 @@ import {
 } from '@folio/stripes/core';
 
 import { extendKyWithTenant } from '../../../Instance/utils';
+import { isUserInConsortiumMode } from '../../../utils';
 
 const DEFAULT_DATA = [];
 const SORTING_FIELD = 'receivedDate';
@@ -71,8 +72,8 @@ const useBoundPieces = (itemId, options = {}) => {
     enabled: Boolean(
       enabled
       && itemId
-      && consortiumCentralTenantId
       && !isCentralOrderingSettingsFetching
+      && (isUserInConsortiumMode(stripes) ? consortiumCentralTenantId : true)
     ),
     ...otherOptions,
   });
