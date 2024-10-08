@@ -15,6 +15,7 @@ import {
 
 import { extendKyWithTenant } from '../../../Instance/utils';
 import useBoundPieces from './useBoundPieces';
+import { isUserInConsortiumMode } from '../../../utils';
 
 jest.mock('@folio/stripes-acq-components', () => ({
   getConsortiumCentralTenantId: jest.fn(() => 'central-tenant'),
@@ -29,6 +30,10 @@ jest.mock('@folio/stripes/core', () => ({
 
 jest.mock('../../../Instance/utils', () => ({
   extendKyWithTenant: jest.fn(),
+}));
+
+jest.mock('../../../utils', () => ({
+  isUserInConsortiumMode: jest.fn(() => false),
 }));
 
 const queryClient = new QueryClient();
@@ -70,6 +75,8 @@ describe('useBoundPieces', () => {
   });
 
   it('should handle central ordering logic when central ordering is enabled', async () => {
+    isUserInConsortiumMode.mockReturnValue(true);
+
     const itemId = '12345';
     const extendedKy = {
       get: jest.fn(() => ({
