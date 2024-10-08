@@ -1,20 +1,11 @@
 import { useOkapiKy } from '@folio/stripes/core';
-import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
+
+import { extendKyWithTenant } from '../../../Instance/utils';
 
 const useTenantKy = ({ tenantId } = {}) => {
   const ky = useOkapiKy();
 
-  return tenantId
-    ? ky.extend({
-      hooks: {
-        beforeRequest: [
-          request => {
-            request.headers.set(OKAPI_TENANT_HEADER, tenantId);
-          },
-        ],
-      },
-    })
-    : ky;
+  return tenantId ? extendKyWithTenant(ky, tenantId) : ky;
 };
 
 export default useTenantKy;

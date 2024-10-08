@@ -1,3 +1,5 @@
+import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
+
 export const isItemsSelected = (items, selectedItemsMap) => {
   return items.every((item) => Boolean(
     selectedItemsMap[item.holdingsRecordId] && selectedItemsMap[item.holdingsRecordId][item.id]
@@ -54,6 +56,18 @@ export const navigateToHoldingsViewPage = (history, location, instance, holding,
     state: {
       tenantTo,
       tenantFrom,
+    },
+  });
+};
+
+export const extendKyWithTenant = (ky, tenantId) => {
+  return ky.extend({
+    hooks: {
+      beforeRequest: [
+        request => {
+          request.headers.set(OKAPI_TENANT_HEADER, tenantId);
+        },
+      ],
     },
   });
 };
