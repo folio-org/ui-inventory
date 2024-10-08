@@ -50,7 +50,7 @@
   "itemRecord": "Item record",
   "itemRecordWithDescription": "Item record ({materialType}, {status})",
   "itemRecordWithDescriptionBW": "Item record ({materialType}, {status}, bound with)",
-  "code": "code",
+  "code": "Code",
   "duplicateInstance": "Duplicate instance",
   "shareLocalInstance": "Share local instance",
   "shareLocalInstance.modal.header": "Are you sure you want to share this instance?",

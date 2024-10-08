@@ -42,9 +42,10 @@ const SubjectSourcesSettings = (props) => {
         label={<FormattedMessage id="ui-inventory.subjectSources" />}
         labelSingular={intl.formatMessage({ id: 'ui-inventory.subjectSource' })}
         objectLabel={<FormattedMessage id="ui-inventory.subjectSources" />}
-        visibleFields={['name', 'source']}
+        visibleFields={['name', 'code', 'source']}
         columnMapping={{
           name: intl.formatMessage({ id: 'ui-inventory.name' }),
+          code: intl.formatMessage({ id: 'ui-inventory.code' }),
           source: intl.formatMessage({ id: 'ui-inventory.source' }),
         }}
         readOnlyFields={['source']}
