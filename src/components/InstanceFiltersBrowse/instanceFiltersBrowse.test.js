@@ -228,6 +228,36 @@ describe('InstanceFiltersBrowse', () => {
   });
 
   describe('When subjects browseType was selected', () => {
+    it('should display filter by subjectSource accordion', () => {
+      const { getByRole } = renderInstanceFilters({
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.SUBJECTS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected Subject source filters'));
+
+      expect(getByRole('heading', { name: 'Subject source' })).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display filter by subjectType accordion', () => {
+      const { getByRole } = renderInstanceFilters({
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.SUBJECTS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected Subject type filters'));
+
+      expect(getByRole('heading', { name: 'Subject type' })).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
     it('should display shared filter accordion', () => {
       const { getByText } = renderInstanceFilters({
         data,
