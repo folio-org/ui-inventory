@@ -39,6 +39,8 @@ const consortiaTenants = [
 ];
 
 const data = {
+  subjectSources: [{ id: 'sourceId', name: 'source'}],
+  subjectTypes: [{ id: 'typeId', name: 'type'}],
   locations: [],
   consortiaTenants,
 };
@@ -56,6 +58,8 @@ const query = {
   subjectsShared: ['true'],
   subjectsTenantId: ['consortium'],
   nameType: ['nameType1'],
+  subjectSource: ['sourceId'],
+  subjectType: ['typeId'],
 };
 
 const renderInstanceFilters = (props = {}) => {
@@ -71,7 +75,7 @@ const renderInstanceFilters = (props = {}) => {
         />
       </ModuleHierarchyProvider>
     </Router>,
-    translations
+    translations,
   );
 };
 
@@ -228,6 +232,36 @@ describe('InstanceFiltersBrowse', () => {
   });
 
   describe('When subjects browseType was selected', () => {
+    it('should display filter by subjectSource accordion', () => {
+      const { getByRole } = renderInstanceFilters({
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.SUBJECTS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Subject source"'));
+
+      expect(getByRole('heading', { name: 'Subject source' })).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    it('should display filter by subjectType accordion', () => {
+      const { getByRole } = renderInstanceFilters({
+        data,
+        query: {
+          ...query,
+          qindex: browseModeOptions.SUBJECTS,
+        },
+      });
+
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Subject type"'));
+
+      expect(getByRole('heading', { name: 'Subject type' })).toBeInTheDocument();
+      expect(mockOnClear).toHaveBeenCalled();
+    });
+
     it('should display shared filter accordion', () => {
       const { getByText } = renderInstanceFilters({
         data,

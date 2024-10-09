@@ -45,6 +45,8 @@ const InstanceFiltersBrowse = props => {
     [FACETS.SUBJECTS_HELD_BY]: false,
     [FACETS.EFFECTIVE_LOCATION]: false,
     [FACETS.NAME_TYPE]: false,
+    [FACETS.SUBJECT_SOURCE]: false,
+    [FACETS.SUBJECT_TYPE]: false,
   }), []);
 
   const activeFilters = useMemo(() => omit(query || {}, ['qindex', 'query']), [query]);
@@ -138,6 +140,32 @@ const InstanceFiltersBrowse = props => {
           {renderSharedFacet(FACETS.SUBJECTS_SHARED)}
           {/* Hide Held by facet for contributors and subjects browse until back-end requirements and implementation are done */}
           {/* {renderHeldByFacet(FACETS.SUBJECTS_HELD_BY)} */}
+          <MultiSelectionFacet
+            id={FACETS.SUBJECT_SOURCE}
+            label={intl.formatMessage({ id: `ui-inventory.${FACETS.SUBJECT_SOURCE}` })}
+            name={FACETS.SUBJECT_SOURCE}
+            closedByDefault
+            separator={checkIfUserInMemberTenant(stripes)}
+            options={facetOptions[FACETS_TO_REQUEST[FACETS.SUBJECT_SOURCE]]}
+            selectedValues={activeFilters[FACETS.SUBJECT_SOURCE]}
+            onFilterChange={onChange}
+            onClearFilter={() => onClear(FACETS.SUBJECT_SOURCE)}
+            displayClearButton={!!activeFilters[FACETS.SUBJECT_SOURCE]?.length}
+            isPending={getIsLoading(FACETS.SUBJECT_SOURCE)}
+          />
+          <MultiSelectionFacet
+            id={FACETS.SUBJECT_TYPE}
+            label={intl.formatMessage({ id: `ui-inventory.${FACETS.SUBJECT_TYPE}` })}
+            name={FACETS.SUBJECT_TYPE}
+            closedByDefault
+            separator={checkIfUserInMemberTenant(stripes)}
+            options={facetOptions[FACETS_TO_REQUEST[FACETS.SUBJECT_TYPE]]}
+            selectedValues={activeFilters[FACETS.SUBJECT_TYPE]}
+            onFilterChange={onChange}
+            onClearFilter={() => onClear(FACETS.SUBJECT_TYPE)}
+            displayClearButton={!!activeFilters[FACETS.SUBJECT_TYPE]?.length}
+            isPending={getIsLoading(FACETS.SUBJECT_TYPE)}
+          />
         </>
       )}
     </AccordionSet>
