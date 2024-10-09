@@ -433,7 +433,7 @@
     "mostRecentCheckIn": "直近返却日",
     "checkInDate": "返却日",
     "servicePoint": "サービスポイント",
-    "hridHandling.toast.updated": "Setting was successfully updated.",
+    "hridHandling.toast.updated": "設定が正常に更新されました",
     "hridHandling.toast.notUpdated": "設定は更新されませんでした。",
     "hridHandling.modal.header": "確認",
     "hridHandling.modal.body": "WARNING: Changing the HRID setting may create conflicts if records already exist in Inventory.",
@@ -728,7 +728,7 @@
     "actions.menuSection.sortBy": "並べ替え",
     "actions.menuSection.sortBy.relevance": "関連度",
     "actions.menuSection.sortBy.title": "タイトル",
-    "actions.menuSection.sortBy.contributors": "Contributors",
+    "actions.menuSection.sortBy.contributors": "寄与者",
     "exportInstanceInMARC": "インスタンスのエクスポート (MARC)",
     "editInstance.title": "インスタンスの編集 • {title}",
     "item.status.agedToLost.lowercase": "aged to lost",
@@ -850,5 +850,5 @@
     "affiliation": "Affiliation",
     "affiliation.select": "Select affiliation",
     "instance.linked.id": "Linked instance ID - {id}",
-    "actions.menuSection.sortBy.date": "Date"
+    "actions.menuSection.sortBy.date": "日付"
 }
