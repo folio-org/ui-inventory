@@ -740,7 +740,7 @@ class ViewInstance extends React.Component {
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
     const canViewSource = canViewMARCSource && canViewInstance;
     const canShareLocalInstance = checkIfUserInMemberTenant(stripes)
-      && stripes.hasPerm('consortia.inventory.share.local.instance')
+      && stripes.hasPerm('consortia.inventory.local.sharing-instances.execute')
       && !isShared
       && !isInstanceShadowCopy(source);
 
