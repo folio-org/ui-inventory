@@ -102,6 +102,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Fix eslint warnings. Refs UIIN-3064.
 * Disable link to POL when it leads to another tenant (instance, holding and item). Refs UIIN-3024.
 * Add code to subject source settings. UIIN-3056.
+* Alter rules for display of 'Edit in Linked data editor' option in Inventory Action drop down. Refs UIIN-3051.
 * Upgrade `inventory` to `14.0` and `instance-storage` to `11.0`. Refs UIIN-3065.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
