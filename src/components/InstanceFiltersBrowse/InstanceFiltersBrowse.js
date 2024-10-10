@@ -158,7 +158,6 @@ const InstanceFiltersBrowse = props => {
             label={intl.formatMessage({ id: `ui-inventory.${FACETS.SUBJECT_TYPE}` })}
             name={FACETS.SUBJECT_TYPE}
             closedByDefault
-            separator={checkIfUserInMemberTenant(stripes)}
             options={facetOptions[FACETS_TO_REQUEST[FACETS.SUBJECT_TYPE]]}
             selectedValues={activeFilters[FACETS.SUBJECT_TYPE]}
             onFilterChange={onChange}
