@@ -39,8 +39,8 @@ const consortiaTenants = [
 ];
 
 const data = {
-  subjectSources: [{ id: 'sourceId', name: 'source'}],
-  subjectTypes: [{ id: 'typeId', name: 'type'}],
+  subjectSources: [{ id: 'sourceId', name: 'source' }],
+  subjectTypes: [{ id: 'typeId', name: 'type' }],
   locations: [],
   consortiaTenants,
 };
