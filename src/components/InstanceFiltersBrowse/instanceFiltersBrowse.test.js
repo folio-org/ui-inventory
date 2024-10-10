@@ -39,6 +39,8 @@ const consortiaTenants = [
 ];
 
 const data = {
+  subjectSources: [{ id: 'sourceId', name: 'source' }],
+  subjectTypes: [{ id: 'typeId', name: 'type' }],
   locations: [],
   consortiaTenants,
 };
@@ -71,7 +73,7 @@ const renderInstanceFilters = (props = {}) => {
         />
       </ModuleHierarchyProvider>
     </Router>,
-    translations
+    translations,
   );
 };
 
@@ -237,7 +239,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected Subject source filters'));
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Subject source"'));
 
       expect(getByRole('heading', { name: 'Subject source' })).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
@@ -252,7 +254,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected Subject type filters'));
+      fireEvent.click(screen.getByLabelText('Clear selected filters for "Subject type"'));
 
       expect(getByRole('heading', { name: 'Subject type' })).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
