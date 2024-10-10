@@ -53,6 +53,7 @@ import {
   INSTANCE_SHARING_STATUSES,
   layers,
   LEADER_RECORD_STATUSES,
+  LINKED_DATA_CHECK_EXTERNAL_RESOURCE_FETCHABLE,
   LINKED_DATA_EDITOR_PERM,
   LINKED_DATA_ID_PREFIX,
   LINKED_DATA_RESOURCES_ROUTE,
@@ -195,9 +196,9 @@ class ViewInstance extends React.Component {
       accumulate: true,
       throwErrors: false,
     },
-    linkedDataEditorId: {
+    checkCanBeOpenedInLinkedData: {
       type: 'okapi',
-      path: 'resource/metadata/:{id}/id',
+      path: 'resource/check/:{id}/supported',
       accumulate: true,
       throwErrors: false,
     }
@@ -212,7 +213,7 @@ class ViewInstance extends React.Component {
     this.state = {
       isInstanceSharing: false,
       marcRecord: null,
-      linkedDataEditorId: null,
+      canBeOpenedInLinkedData: false,
       findInstancePluginOpened: false,
       isItemsMovement: false,
       isImportRecordModalOpened: false,
@@ -245,7 +246,7 @@ class ViewInstance extends React.Component {
 
     if (isMARCSourceRecord || isLinkedDataSourceRecord) {
       this.getMARCRecord();
-      this.getLinkedDataEditorId();
+      this.checkCanBeOpenedInLinkedData();
     }
 
     this.setTlrSettings();
@@ -276,7 +277,7 @@ class ViewInstance extends React.Component {
 
     if ((isMARCSourceRecord || isLinkedDataSourceRecord) && (isViewingAnotherRecord || recordSourceWasChanged)) {
       this.getMARCRecord();
-      this.getLinkedDataEditorId();
+      this.checkCanBeOpenedInLinkedData();
     }
 
     // component got updated after a new record was created
@@ -319,27 +320,26 @@ class ViewInstance extends React.Component {
       });
   };
 
-  getLinkedDataEditorId = async () => {
+  checkCanBeOpenedInLinkedData = async () => {
     const {
       mutator,
       stripes,
       selectedInstance: { id, source },
     } = this.props;
     const {
-      linkedDataEditorId: prevLinkedDataEditorId,
+      canBeOpenedInLinkedData: prevCanBeOpenedInLinkedData,
     } = this.state;
 
-    if (prevLinkedDataEditorId) this.setState({ linkedDataEditorId: null });
+    if (prevCanBeOpenedInLinkedData) this.setState({ canBeOpenedInLinkedData: false });
 
-    if (!id || !isMARCSource(source) || !stripes.hasPerm(LINKED_DATA_EDITOR_PERM)) return;
+    if (!id || !isMARCSource(source) || !stripes.hasPerm(LINKED_DATA_EDITOR_PERM) || !stripes.hasPerm(LINKED_DATA_CHECK_EXTERNAL_RESOURCE_FETCHABLE)) return;
 
     try {
-      const response = await mutator.linkedDataEditorId.GET(id);
-      const linkedDataEditorId = response?.id;
+      const response = await mutator.checkCanBeOpenedInLinkedData.GET(id);
 
-      this.setState({ linkedDataEditorId });
+      this.setState({ canBeOpenedInLinkedData: response });
     } catch {
-      this.setState({ linkedDataEditorId: null });
+      this.setState({ canBeOpenedInLinkedData: false });
     }
   }
 
@@ -715,7 +715,7 @@ class ViewInstance extends React.Component {
     } = this.props;
     const {
       marcRecord,
-      linkedDataEditorId,
+      canBeOpenedInLinkedData,
       titleLevelRequestsFeatureEnabled,
     } = this.state;
     const source = instance?.source;
@@ -750,7 +750,7 @@ class ViewInstance extends React.Component {
     const canExportMarc = stripes.hasPerm('ui-data-export.edit');
     const canAccessLinkedDataOptions = stripes.hasPerm(LINKED_DATA_EDITOR_PERM);
     const isSourceLinkedData = isLinkedDataSource(source);
-    const showLinkedDataMenuSection = canAccessLinkedDataOptions && (isSourceLinkedData || linkedDataEditorId);
+    const showLinkedDataMenuSection = canAccessLinkedDataOptions && (isSourceLinkedData || canBeOpenedInLinkedData);
 
     const hasSetForDeletionPermission = stripes.hasPerm(setForDeletionAndSuppressPerm);
     const canNonConsortialTenantSetForDeletion = !stripes.hasInterface('consortia') && hasSetForDeletionPermission;
@@ -780,15 +780,21 @@ class ViewInstance extends React.Component {
     };
 
     const navigateToLinkedDataEditor = () => {
-      const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value || linkedDataEditorId;
+      const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;
 
-      if (!selectedIdentifier) return;
+      if (!selectedIdentifier) {
+        if (!canBeOpenedInLinkedData) return;
 
-      const identifierLiteral = selectedIdentifier?.replace(LINKED_DATA_ID_PREFIX, '');
+        history.push({
+          pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instance.id}/edit`,
+        });
+      } else {
+        const identifierLiteral = selectedIdentifier?.replace(LINKED_DATA_ID_PREFIX, '');
 
-      history.push({
-        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
-      });
+        history.push({
+          pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
+        });
+      }
     };
 
     const suppressEditInstanceForMemberTenant = checkIfUserInMemberTenant(stripes)
@@ -1298,7 +1304,7 @@ ViewInstance.propTypes = {
       POST: PropTypes.func.isRequired,
       GET: PropTypes.func.isRequired,
     }).isRequired,
-    linkedDataEditorId: PropTypes.shape({
+    checkCanBeOpenedInLinkedData: PropTypes.shape({
       GET: PropTypes.func.isRequired,
     }).isRequired,
     authorities: PropTypes.shape({
