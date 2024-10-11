@@ -782,9 +782,9 @@ const handleUpdateUser = async (stripes) => {
 
 export const switchAffiliation = async (stripes, tenantId, move) => {
   if (stripes.okapi.tenant !== tenantId) {
-    const updateTenantPromise = updateTenant(stripes.okapi, tenantId);
+    await updateTenant(stripes.okapi, tenantId);
 
-    const validateUserPromise = validateUser(
+    await validateUser(
       stripes.okapi.url,
       stripes.store,
       tenantId,
@@ -794,11 +794,8 @@ export const switchAffiliation = async (stripes, tenantId, move) => {
         perms: stripes.user.perms,
       },
     );
+
     await handleUpdateUser(stripes);
-
-    const handleUpdateUserPromise = handleUpdateUser(stripes);
-
-    await Promise.all([updateTenantPromise, validateUserPromise, handleUpdateUserPromise]);
 
     move();
   } else {
