@@ -47,6 +47,8 @@ const data = {
       ],
     },
   ],
+  subjectSources: [{ id: 'sourceId1', name: 'sourceName1' }, { id: 'sourceId2', name: 'sourceName2' }],
+  subjectTypes: [{ id: 'typeId1', name: 'typeName1' }, { id: 'typeId2', name: 'typeName2' }],
 };
 const missedMatchText = 'would be here';
 
@@ -252,10 +254,14 @@ describe('getBrowseResultsFormatter', () => {
       {
         isAnchor: true,
         value: 'Africa Politics and government 20th century',
+        sourceId: 'sourceId1',
+        typeId: 'typeId1',
         totalRecords: 1,
       },
       {
         value: 'Corporate governance',
+        sourceId: 'sourceId2',
+        typeId: 'typeId2',
         totalRecords: 2,
       }
     ];
@@ -273,9 +279,13 @@ describe('getBrowseResultsFormatter', () => {
 
       // Anchor row
       expect(screen.getByText(anchorRecord.value).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText('sourceName1')).toBeInTheDocument();
+      expect(screen.getByText('typeName1')).toBeInTheDocument();
       expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
       // Default row
       expect(screen.getByText(nonAnchorRecord.value).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText('sourceName2')).toBeInTheDocument();
+      expect(screen.getByText('typeName2')).toBeInTheDocument();
       expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
     });
 
