@@ -58,6 +58,8 @@ const query = {
   subjectsShared: ['true'],
   subjectsTenantId: ['consortium'],
   nameType: ['nameType1'],
+  subjectSource: ['sourceId'],
+  subjectType: ['typeId'],
 };
 
 const renderInstanceFilters = (props = {}) => {
@@ -239,7 +241,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Subject source"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Subject source filters'));
 
       expect(getByRole('heading', { name: 'Subject source' })).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
@@ -254,7 +256,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected filters for "Subject type"'));
+      fireEvent.click(screen.getByLabelText('Clear selected Subject type filters'));
 
       expect(getByRole('heading', { name: 'Subject type' })).toBeInTheDocument();
       expect(mockOnClear).toHaveBeenCalled();
