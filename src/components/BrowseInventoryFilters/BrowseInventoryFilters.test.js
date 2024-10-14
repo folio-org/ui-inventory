@@ -39,7 +39,6 @@ describe('BrowseInventoryFilters', () => {
       data,
       query,
       onChange: expect.any(Function),
-      onClear: expect.any(Function),
     }, {});
   });
 });

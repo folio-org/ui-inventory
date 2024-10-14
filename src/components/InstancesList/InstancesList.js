@@ -46,8 +46,6 @@ import {
 } from '@folio/stripes/components';
 import {
   advancedSearchQueryBuilder,
-  deleteFacetStates,
-  resetFacetStates,
   FACETS,
   queryIndexes,
   advancedSearchIndexes,
@@ -544,9 +542,6 @@ class InstancesList extends React.Component {
   }
 
   handleSearchSegmentChange = (segment) => {
-    const { namespace } = this.props;
-
-    deleteFacetStates(namespace);
     this.refocusOnInputSearch(segment);
     this.setState({ selectedRows: {} });
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
@@ -560,8 +555,6 @@ class InstancesList extends React.Component {
     } = this.props;
 
     const id = pathname.split('/')[3];
-
-    deleteFacetStates(namespace);
 
     if (id) {
       setItem(`${namespace}.${segment}.lastOpenRecord`, id);
@@ -1122,13 +1115,10 @@ class InstancesList extends React.Component {
   };
 
   handleResetAll = () => {
-    const { namespace } = this.props;
-
     this.setState({
       selectedRows: {},
     });
 
-    resetFacetStates({ namespace });
     this.inputRef.current.focus();
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
   }
