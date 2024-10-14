@@ -101,10 +101,11 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Display "Classification browse" settings for non-consortia. Fixes UIIN-3057.
 * Fix eslint warnings. Refs UIIN-3064.
 * Disable link to POL when it leads to another tenant (instance, holding and item). Refs UIIN-3024.
-* Add code to subject source settings. UIIN-3056.
+* Add code to subject source settings. Refs UIIN-3056.
 * Alter rules for display of 'Edit in Linked data editor' option in Inventory Action drop down. Refs UIIN-3051.
 * Upgrade `inventory` to `14.0` and `instance-storage` to `11.0`. Refs UIIN-3065.
 * Add subject source and subject type to Inventory subject browse results. Refs UIIN-2960.
+* Add filters for subject source and type to Inventory subject browse. Refs UIIN-2961.
 * Create alert to prevent moving holding to another instance if Po Line has multiple holdings. Refs UIIN-3046.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
