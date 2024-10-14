@@ -5,6 +5,7 @@ import { AppIcon } from '@folio/stripes/core';
 import {
   TextLink,
   Tooltip,
+  NoValue,
 } from '@folio/stripes/components';
 import {
   browseModeOptions,
@@ -129,6 +130,18 @@ const getBrowseResultsFormatter = ({
       }
 
       return subject;
+    },
+    subjectSource: r => {
+      const sourceId = r?.sourceId;
+      const sourceName = data?.subjectSources.find(source => source.id === sourceId)?.name;
+
+      return sourceName || <NoValue />;
+    },
+    subjectType: r => {
+      const typeId = r?.typeId;
+      const typeName = data?.subjectTypes.find(source => source.id === typeId)?.name;
+
+      return typeName || <NoValue />;
     },
     callNumber: r => {
       if (r?.instance || r?.totalRecords) {

@@ -104,6 +104,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Add code to subject source settings. Refs UIIN-3056.
 * Alter rules for display of 'Edit in Linked data editor' option in Inventory Action drop down. Refs UIIN-3051.
 * Upgrade `inventory` to `14.0` and `instance-storage` to `11.0`. Refs UIIN-3065.
+* Add subject source and subject type to Inventory subject browse results. Refs UIIN-2960.
 * Add filters for subject source and type to Inventory subject browse. Refs UIIN-2961.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)

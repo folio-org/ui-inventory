@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 export const VISIBLE_COLUMNS_MAP = {
-  [browseModeOptions.SUBJECTS]: ['subject', 'numberOfTitles'],
+  [browseModeOptions.SUBJECTS]: ['subject', 'subjectSource', 'subjectType', 'numberOfTitles'],
   [browseModeOptions.CALL_NUMBERS]: ['callNumber', 'title', 'numberOfTitles'],
   [browseModeOptions.DEWEY]: ['callNumber', 'title', 'numberOfTitles'],
   [browseModeOptions.LIBRARY_OF_CONGRESS]: ['callNumber', 'title', 'numberOfTitles'],
@@ -25,6 +25,8 @@ export const COLUMNS_MAPPING = {
   relation: <FormattedMessage id="ui-inventory.instances.columns.relation" />,
   numberOfTitles: <FormattedMessage id="ui-inventory.instances.columns.numberOfTitles" />,
   subject: <FormattedMessage id="ui-inventory.subject" />,
+  subjectSource: <FormattedMessage id="ui-inventory.subjectSource" />,
+  subjectType: <FormattedMessage id="ui-inventory.subjectType" />,
   contributor: <FormattedMessage id="ui-inventory.instances.columns.contributor" />,
   contributorType: <FormattedMessage id="ui-inventory.instances.columns.contributorType" />,
   relatorTerm: <FormattedMessage id="ui-inventory.instances.columns.relatorTerm" />,
@@ -51,6 +53,8 @@ export const COLUMNS_WIDTHS = {
     relatorTerm: '15%',
   },
   [browseModeOptions.SUBJECTS]: {
-    subject: '50%',
+    subject: '40%',
+    subjectSource: '20%',
+    subjectType: '20%',
   },
 };
