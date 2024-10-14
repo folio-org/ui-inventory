@@ -1,15 +1,18 @@
-import React, {
+import keyBy from 'lodash/keyBy';
+import {
   createContext,
   useContext,
   useState,
 } from 'react';
 import { useQuery } from 'react-query';
-import { keyBy } from 'lodash';
+
+import { useNamespace } from '@folio/stripes/core';
 
 import { useTenantKy } from '../common';
 
 const API = 'holdings-storage/holdings';
 const LIMIT = 5000;
+const DEFAULT_DATA = [];
 
 
 const Context = createContext({});
@@ -30,9 +33,9 @@ export const HoldingsProvider = ({ ...rest }) => {
 };
 
 
-export const useInstanceHoldingsQuery = (instanceId, { tenantId, enabled } = {}) => {
+export const useInstanceHoldingsQuery = (instanceId, options = {}) => {
+  const { tenantId, enabled = true, refreshKey, ...otherOptions } = options;
   const ky = useTenantKy({ tenantId });
-
   const holdings = useHoldings();
 
   const searchParams = {
@@ -40,17 +43,25 @@ export const useInstanceHoldingsQuery = (instanceId, { tenantId, enabled } = {})
     query: `instanceId==${instanceId}`,
   };
 
-  const queryKey = [API, searchParams, tenantId];
+  const [namespace] = useNamespace({ key: 'fetch-holding-by-instance-id' });
+  const queryKey = [namespace, instanceId, tenantId, refreshKey];
   const queryFn = () => ky(API, { searchParams }).json();
 
-  const onSuccess = data => holdings?.update(data.holdingsRecords);
+  const onSuccess = data => {
+    return holdings?.update(data.holdingsRecords);
+  };
 
   const { data, ...rest } = useQuery({
     queryKey,
     queryFn,
     onSuccess,
-    enabled,
+    enabled: enabled && Boolean(instanceId),
+    ...otherOptions,
   });
 
-  return { ...data, ...rest };
+  return {
+    ...data,
+    ...rest,
+    holdingsRecords: data?.holdingsRecords || DEFAULT_DATA,
+  };
 };
