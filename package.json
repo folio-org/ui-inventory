@@ -476,7 +476,8 @@
           "copycat.profiles.item.post",
           "copycat.profiles.item.put",
           "copycat.profiles.item.delete",
-          "converter-storage.jobprofile.get",
+          "converter-storage.jobprofile.item.get",
+          "converter-storage.jobprofile.collection.get",
           "inventory-storage.identifier-types.collection.get"
         ],
         "visible": true
@@ -552,7 +553,12 @@
           "module.inventory.enabled",
           "users.collection.get",
           "tags.collection.get",
-          "source-storage.records.get",
+          "source-storage.stream.marc-record-identifiers.collection.post",
+          "source-storage.records.collection.get",
+          "source-storage.records.item.get",
+          "source-storage.records.formatted.item.get",
+          "source-storage.stream.records.collection.get",
+          "source-storage.records.matching.collection.post",
           "circulation.loans.collection.get",
           "circulation.loans.collection.get",
           "circulation.requests.collection.get",
@@ -561,6 +567,7 @@
           "inventory.instances.collection.get",
           "inventory.instances.item.get",
           "inventory.items.collection.get",
+          "inventory.items-by-holdings-id.collection.get",
           "inventory.items.item.get",
           "inventory-storage.items.item.get",
           "inventory-storage.items.collection.get",
@@ -793,7 +800,12 @@
         "subPermissions": [
           "settings.inventory.enabled",
           "users.collection.get",
-          "source-storage.records.get",
+          "source-storage.stream.marc-record-identifiers.collection.post",
+          "source-storage.records.collection.get",
+          "source-storage.records.item.get",
+          "source-storage.records.formatted.item.get",
+          "source-storage.stream.records.collection.get",
+          "source-storage.records.matching.collection.post",
           "inventory-storage.material-types.collection.get",
           "inventory-storage.material-types.item.get",
           "inventory-storage.loan-types.collection.get",
@@ -920,7 +932,8 @@
           "ui-inventory.instance.view",
           "copycat.profiles.collection.get",
           "copycat.imports.post",
-          "converter-storage.jobprofile.get"
+          "converter-storage.jobprofile.item.get",
+          "converter-storage.jobprofile.collection.get"
         ],
         "visible": true
       },
