@@ -206,7 +206,6 @@ const MoveHoldingContext = ({
     }
 
     const hasLinkedHoldings = await checkHasMultiplePOLsOrHoldings(holdingIds);
-    console.log('hasLinkedHoldings', hasLinkedHoldings, holdingIds, leftInstance.id === to);
 
     setMovingItems(hasLinkedHoldings ? holdingIds : items);
     setHasLinkedPOLsOrHoldings(hasLinkedHoldings);
@@ -232,6 +231,7 @@ const MoveHoldingContext = ({
             {
               selectedHoldingIds.map(holdingId => (
                 <HoldingContainer
+                  key={holdingId}
                   holding={allHoldings.find(holding => holding.id === holdingId)}
                   holdings={holdings}
                   isDraggable={false}
