@@ -109,7 +109,7 @@ describe('InstanceDetails', () => {
     expect(screen.getByText('Materials specified')).toBeInTheDocument();
     expect(screen.getByText('URL public note')).toBeInTheDocument();
     expect(screen.getByText('Classification identifier type')).toBeInTheDocument();
-    expect(screen.getByText('Instance relationship (analytics and bound-with)')).toBeInTheDocument();
+    expect(screen.getByText('Instance relationship')).toBeInTheDocument();
   });
 
   it('should show a correct Warning message banner when staff suppressed', () => {
