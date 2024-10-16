@@ -107,6 +107,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Add subject source and subject type to Inventory subject browse results. Refs UIIN-2960.
 * Add filters for subject source and type to Inventory subject browse. Refs UIIN-2961.
 * Update 'Instance relationship' accordion name - VIEW/EDIT/CREATE Instance. Refs UIIN-3081.
+* Create alert to prevent moving holding to another instance if Po Line has multiple holdings. Refs UIIN-3046.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
