@@ -766,6 +766,7 @@
   "moveItems.modal.confirmLabel": "Continue",
   "moveItems.modal.title": "Confirm move",
   "moveItems.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
+  "moveItems.modal.message.hasLinkedPOLsOrHoldings": "This holdings is linked to a purchase order line. Moving this holdings to a new instance will move any other holdings and items that are linked to this purchase order line to the new instance as well. The purchase order line will also be linked to the new instance. Do you want to continue?",
   "moveItems.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}",
 
   "showTags": "Show tags",

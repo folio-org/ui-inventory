@@ -1,19 +1,19 @@
-import React, {
+import PropTypes from 'prop-types';
+import {
   useState,
   useCallback,
   useMemo,
   useContext,
 } from 'react';
-import PropTypes from 'prop-types';
 import { DragDropContext } from 'react-beautiful-dnd';
-import {
-  useIntl,
-} from 'react-intl';
+import { useIntl } from 'react-intl';
 
 import {
   Loading,
   MessageBanner,
 } from '@folio/stripes/components';
+import { useOkapiKy } from '@folio/stripes/core';
+import { LINES_API, LIMIT_MAX } from '@folio/stripes-acq-components';
 
 import {
   callNumberLabel
@@ -27,8 +27,8 @@ import {
   selectItems,
 } from '../utils';
 import DnDContext from '../DnDContext';
+import { HoldingContainer } from '../HoldingsList';
 import * as Move from '../Move';
-
 
 const MoveHoldingContext = ({
   children,
@@ -37,17 +37,13 @@ const MoveHoldingContext = ({
   rightInstance,
 }) => {
   const intl = useIntl();
+  const ky = useOkapiKy();
 
   const { locationsById } = useContext(DataContext);
-
   const { holdingsById } = useHoldings();
 
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
   const { moveItems, isMoving: isItemsMoving } = Move.useItems();
-
-  const { holdingsRecords: leftHoldings } = useInstanceHoldingsQuery(leftInstance.id);
-  const { holdingsRecords: rightHoldings } = useInstanceHoldingsQuery(rightInstance.id);
-  const allHoldings = [...(leftHoldings ?? []), ...(rightHoldings ?? [])];
 
   const [isMoving, setIsMoving] = useState(false);
   const [selectedItemsMap, setSelectedItemsMap] = useState({});
@@ -58,6 +54,24 @@ const MoveHoldingContext = ({
   const [dragToId, setDragToId] = useState();
   const [dragFromId, setDragFromId] = useState();
   const [isHoldingMoved, setIsHoldingMoved] = useState();
+  const [hasLinkedPOLsOrHoldings, setHasLinkedPOLsOrHoldings] = useState(false);
+  const [selectedHoldingIds, setSelectedHoldingIds] = useState([]);
+
+  const {
+    holdingsRecords: leftHoldings,
+    isLoading: isLoadingLeftHoldings,
+    refetch: refetchLeftHolding
+  } = useInstanceHoldingsQuery(leftInstance.id, { refreshKey: !isMoving });
+  const {
+    holdingsRecords: rightHoldings,
+    isLoading: isLoadingRightHoldings,
+    refetch: refetchRightHolding,
+  } = useInstanceHoldingsQuery(rightInstance.id, { refreshKey: !isMoving });
+
+  const allHoldings = useMemo(() => [
+    ...(leftHoldings ?? []),
+    ...(rightHoldings ?? [])
+  ], [leftHoldings, rightHoldings]);
 
   const onConfirm = useCallback(() => {
     setIsModalOpen(false);
@@ -76,6 +90,10 @@ const MoveHoldingContext = ({
     }));
     setSelectedHoldingsMap([]);
     setActiveDropZone(undefined);
+
+    setSelectedHoldingIds([]);
+    refetchLeftHolding();
+    refetchRightHolding();
   }, [movingItems, dragToId]);
 
   const onBeforeCapture = useCallback((result) => {
@@ -153,11 +171,28 @@ const MoveHoldingContext = ({
     setIsModalOpen(false);
   }, [setIsModalOpen]);
 
-  const onSelect = useCallback(({ target }) => {
+  const checkHasMultiplePOLsOrHoldings = async (holdingIds = []) => {
+    try {
+      const { poLines = [] } = await ky.get(LINES_API, {
+        searchParams: {
+          query: holdingIds.map(id => `locations=="*${id}*"`).join(' or '),
+          limit: LIMIT_MAX,
+        }
+      }).json();
+
+      return poLines.length > 1 || poLines[0]?.locations?.length > 1;
+    } catch (error) {
+      return false;
+    }
+  };
+
+  const onSelect = useCallback(async ({ target }) => {
     const to = target.dataset.toId;
     const from = target.dataset.itemId;
     const isHolding = target.dataset.isHolding;
     const fromSelectedMap = selectedItemsMap[from] || {};
+    const selectedColumnHoldings = leftInstance.id === to ? rightHoldings : leftHoldings;
+    const holdingIds = selectedColumnHoldings.map(i => i.id);
     const items = isHolding
       ? selectedHoldingsMap
       : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
@@ -169,17 +204,44 @@ const MoveHoldingContext = ({
     if (!items.length) {
       items.push(from);
     }
-    setMovingItems(items);
+
+    const hasLinkedHoldings = await checkHasMultiplePOLsOrHoldings(holdingIds);
+
+    setMovingItems(hasLinkedHoldings ? holdingIds : items);
+    setHasLinkedPOLsOrHoldings(hasLinkedHoldings);
+    setSelectedHoldingIds(holdingIds);
     setIsModalOpen(true);
-  }, [selectedHoldingsMap, selectedItemsMap]);
+  }, [selectedItemsMap, selectedHoldingsMap, leftHoldings, rightHoldings]);
 
   const movingMessage = useMemo(
     () => {
       const targetHolding = holdingsById[dragToId];
       const callNumber = callNumberLabel(targetHolding);
       const labelLocation = targetHolding?.permanentLocationId ? locationsById[targetHolding.permanentLocationId]?.name : '';
+      const holdings = allHoldings.filter(holding => selectedHoldingIds.includes(holding.id));
 
       const count = movingItems.length;
+
+      if (hasLinkedPOLsOrHoldings) {
+        return (
+          <>
+            { intl.formatMessage(
+              { id: 'ui-inventory.moveItems.modal.message.hasLinkedPOLsOrHoldings' },
+            )}
+            {
+              selectedHoldingIds.map(holdingId => (
+                <HoldingContainer
+                  key={holdingId}
+                  holding={allHoldings.find(holding => holding.id === holdingId)}
+                  holdings={holdings}
+                  isDraggable={false}
+                  instance={rightInstance.id === dragToId ? rightInstance : leftInstance}
+                />
+              ))
+            }
+          </>
+        );
+      }
 
       if (isHoldingMoved) {
         return intl.formatMessage(
@@ -222,52 +284,52 @@ const MoveHoldingContext = ({
       dragFromId,
       rightInstance.id,
       rightInstance.title,
-      leftInstance.title
+      leftInstance.title,
+      allHoldings,
+      selectedHoldingIds,
     ],
   );
 
-  if (isMoving || isItemsMoving) {
+  if (isMoving || isItemsMoving || isLoadingLeftHoldings || isLoadingRightHoldings) {
     return <Loading size="large" />;
   }
 
   return (
-    <>
-      <DragDropContext
-        onBeforeCapture={onBeforeCapture}
-        onDragStart={onDragStart}
-        onDragEnd={onDragEnd}
+    <DragDropContext
+      onBeforeCapture={onBeforeCapture}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
+    >
+      <DnDContext.Provider
+        value={{
+          activeDropZone,
+          selectItemsForDrag,
+          isItemsDragSelected,
+          selectHoldingsForDrag,
+          isHoldingDragSelected,
+          getDraggingItems,
+          draggingHoldingsCount: selectedHoldingsMap.length,
+          isItemsDroppable: !isHoldingMoved,
+          instances: [
+            rightInstance,
+            leftInstance,
+          ],
+          selectedItemsMap,
+          allHoldings,
+          onSelect,
+          selectedHoldingsMap,
+        }}
       >
-        <DnDContext.Provider
-          value={{
-            activeDropZone,
-            selectItemsForDrag,
-            isItemsDragSelected,
-            selectHoldingsForDrag,
-            isHoldingDragSelected,
-            getDraggingItems,
-            draggingHoldingsCount: selectedHoldingsMap.length,
-            isItemsDroppable: !isHoldingMoved,
-            instances: [
-              rightInstance,
-              leftInstance,
-            ],
-            selectedItemsMap,
-            allHoldings,
-            onSelect,
-            selectedHoldingsMap,
-          }}
-        >
-          {children}
-        </DnDContext.Provider>
-      </DragDropContext>
-      <Move.ConfirmationModal
-        id="move-holding-confirmation"
-        message={movingMessage}
-        onCancel={closeModal}
-        onConfirm={onConfirm}
-        open={isModalOpen}
-      />
-    </>
+        {children}
+        <Move.ConfirmationModal
+          id="move-holding-confirmation"
+          message={movingMessage}
+          onCancel={closeModal}
+          onConfirm={onConfirm}
+          open={isModalOpen}
+        />
+      </DnDContext.Provider>
+    </DragDropContext>
   );
 };
 
