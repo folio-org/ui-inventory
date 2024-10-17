@@ -1,20 +1,36 @@
-import React from 'react';
+import keyBy from 'lodash/keyBy';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { keyBy } from 'lodash';
 
-import { screen, waitFor, configure, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  act,
+  configure,
+  fireEvent,
+  screen,
+  waitFor,
+} from '@folio/jest-config-stripes/testing-library/react';
 import { within } from '@folio/jest-config-stripes/testing-library/dom';
 import { useLocationsQuery } from '@folio/stripes-inventory-components';
+import { useOkapiKy } from '@folio/stripes/core';
 
-import { DataContext } from '../../contexts';
-import { useHoldings, useInstanceHoldingsQuery } from '../../providers';
-import { holdingsById, identifierTypes, instanceRelationshipTypes } from '../../../test/fixtures';
+import {
+  holdingsById,
+  identifierTypes,
+  instanceRelationshipTypes
+} from '../../../test/fixtures';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../test/jest/helpers/translationsProperties';
-import MoveHoldingContext from './MoveHoldingContext';
-import { leftInstance, rightInstance } from '../../../test/fixtures/movingInstances';
+import {
+  leftInstance,
+  rightInstance
+} from '../../../test/fixtures/movingInstances';
 import { locationsById } from '../../../test/fixtures/locationsById';
+import { DataContext } from '../../contexts';
+import {
+  useHoldings,
+  useInstanceHoldingsQuery
+} from '../../providers';
 import { InstanceMovementDetailsContainer } from '../InstanceMovement';
+import MoveHoldingContext from './MoveHoldingContext';
 
 configure({ testIdAttribute: 'id' });
 
@@ -40,6 +56,7 @@ useHoldings.mockImplementation(() => ({
 useInstanceHoldingsQuery.mockImplementation((id) => ({
   holdingsRecords: Object.values(holdingsById).filter(holding => holding.instanceId === id),
   isLoading: false,
+  refetch: jest.fn(),
 }));
 
 useLocationsQuery.mockImplementation(() => ({
@@ -182,7 +199,22 @@ describe('MoveHoldingContext', () => {
   });
 
   describe('when "Move" button is clicked', () => {
-    const clickMoveFlow = ({ getByTestId, getByText }) => {
+    beforeEach(() => {
+      useOkapiKy.mockClear().mockReturnValue({
+        get: () => ({
+          json: () => ({
+            poLines: [{
+              locations: [
+                { locationId: '53cf956f-c1df-410b-8bea-27f712cca7c0' },
+                { locationId: '53cf956f-c1df-410b-8bea-27f712cca7c0' },
+              ],
+            }],
+          }),
+        }),
+      });
+    });
+
+    const clickMoveFlow = async ({ getByTestId, findByText }) => {
       const holdingsAnnex = getByTestId('item-row-c4a15834-0184-4a6f-9c0c-0ca5bad8286d');
 
       const moveToBtn = within(holdingsAnnex).getByText('Move to');
@@ -192,15 +224,17 @@ describe('MoveHoldingContext', () => {
       const dropdownMoveBtn = within(holdingsAnnex).getByText('A journey through Europe Bildtontraeger high-speed lines European Commission, Directorate-General for Mobility and Transport');
       expect(dropdownMoveBtn).toBeInTheDocument();
 
-      fireEvent.click(dropdownMoveBtn);
+      await act(async () => {
+        fireEvent.click(dropdownMoveBtn);
+      });
 
-      expect(getByText('1 holding will be moved to')).toBeInTheDocument();
+      expect(await findByText(/This holdings is linked to a purchase order line/)).toBeInTheDocument();
     };
 
-    it('should move selected holdings if "Confirm button" is clicked', () => {
-      const { getByText, getByTestId } = renderMoveHoldingContext();
+    it('should move selected holdings if "Confirm button" is clicked', async () => {
+      const { findByText, getByTestId } = renderMoveHoldingContext();
 
-      clickMoveFlow({ getByText, getByTestId });
+      await clickMoveFlow({ findByText, getByTestId });
 
       const confirmBtn = screen.getByRole('button', { name: /confirm/ });
 
@@ -209,10 +243,10 @@ describe('MoveHoldingContext', () => {
       expect(screen.queryByText('Loading')).toBeInTheDocument();
     });
 
-    it('should close modal and stop moving when "Cancel" is clicked', () => {
-      const { getByText, getByTestId } = renderMoveHoldingContext();
+    it('should close modal and stop moving when "Cancel" is clicked', async () => {
+      const { findByText, getByTestId } = renderMoveHoldingContext();
 
-      clickMoveFlow({ getByText, getByTestId });
+      await clickMoveFlow({ findByText, getByTestId });
 
       const cancelBtn = screen.getByRole('button', { name: /cancel/ });
 

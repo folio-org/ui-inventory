@@ -65,7 +65,7 @@
       "electronic-access-relationships": "1.0",
       "holdings-note-types": "1.0",
       "holdings-sources": "1.0",
-      "holdings-storage": "3.0 4.4 5.0 6.0 7.0",
+      "holdings-storage": "3.0 4.4 5.0 6.0 7.0 8.0",
       "holdings-types": "1.0",
       "identifier-types": "1.1",
       "ill-policies": "1.0",
@@ -705,7 +705,8 @@
         "subPermissions": [
           "ui-inventory.item.create",
           "inventory.items.item.put",
-          "inventory-storage.bound-with-parts.item.delete"
+          "inventory-storage.bound-with-parts.item.delete",
+          "inventory-storage.bound-withs.collection.put"
         ],
         "visible": true
       },
