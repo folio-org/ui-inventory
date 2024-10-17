@@ -106,7 +106,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Upgrade `inventory` to `14.0` and `instance-storage` to `11.0`. Refs UIIN-3065.
 * Add subject source and subject type to Inventory subject browse results. Refs UIIN-2960.
 * Add filters for subject source and type to Inventory subject browse. Refs UIIN-2961.
-* Bump `stripes` to `v9.2.0` for Ramsons release. Refs UIIN-2961.
+* *BREAKING* Bump `stripes` to `v9.2.0` for Ramsons release. Refs UIIN-2961.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
