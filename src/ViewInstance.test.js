@@ -96,7 +96,7 @@ history.push = mockPush;
 history.replace = mockReplace;
 const instance = {
   ...instances[0],
-  subjects:['Information society--Political aspects'],
+  subjects:[{ subject: 'Information society--Political aspects' }],
   parentInstances: [],
   childInstances: [],
 };
@@ -210,7 +210,7 @@ const defaultProp = {
     allInstanceItems: {
       reset: mockReset
     },
-    allInstanceHoldings: {},
+    allInstanceHoldings: { other: { totalRecords: 1 } },
     locations: {},
     configs: {
       hasLoaded: true,
@@ -496,6 +496,20 @@ describe('ViewInstance', () => {
           expect(screen.queryByRole('button', { name: 'Move items within an instance' })).not.toBeInTheDocument();
         });
       });
+
+      describe('when instance does not have local holdings', () => {
+        it('should be hidden', () => {
+          const resources = {
+            ...defaultProp.resources,
+            allInstanceHoldings: { other: { totalRecords: 0 } },
+          };
+
+          renderViewInstance({ resources });
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.queryByRole('button', { name: 'Move items within an instance' })).not.toBeInTheDocument();
+        });
+      });
     });
     describe('"Move holdings/items to another instance" action item', () => {
       it('should be rendered', () => {
@@ -520,6 +534,20 @@ describe('ViewInstance', () => {
           checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
 
           renderViewInstance({ stripes });
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+
+          expect(screen.queryByRole('button', { name: 'Move holdings/items to another instance' })).not.toBeInTheDocument();
+        });
+      });
+
+      describe('when instance does not have local holdings', () => {
+        it('should be hidden', () => {
+          const resources = {
+            ...defaultProp.resources,
+            allInstanceHoldings: { other: { totalRecords: 0 } },
+          };
+
+          renderViewInstance({ resources });
           fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
           expect(screen.queryByRole('button', { name: 'Move holdings/items to another instance' })).not.toBeInTheDocument();

@@ -109,6 +109,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Update 'Instance relationship' accordion name - VIEW/EDIT/CREATE Instance. Refs UIIN-3081.
 * Create alert to prevent moving holding to another instance if Po Line has multiple holdings. Refs UIIN-3046.
 * Update sub permissions in the `package.json` and upgrade `holdings-storage` to `8.0`. Refs UIIN-3061.
+* ECS - Disallow 'Move items within an instance' and 'Move holdings/items to another instance' if no LOCAL Items/Holdings exist. Refs UIIN-3073.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
