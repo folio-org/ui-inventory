@@ -711,6 +711,7 @@ class ViewInstance extends React.Component {
       resources: {
         instanceRequests,
         centralOrdering,
+        allInstanceHoldings,
       },
     } = this.props;
     const {
@@ -719,6 +720,7 @@ class ViewInstance extends React.Component {
       titleLevelRequestsFeatureEnabled,
     } = this.state;
     const source = instance?.source;
+    const noInstanceHoldings = allInstanceHoldings?.other?.totalRecords === 0;
 
     const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
     const editInstancePerm = 'ui-inventory.instance.edit';
@@ -727,9 +729,9 @@ class ViewInstance extends React.Component {
     const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
-    const canMoveItems = !checkIfUserInCentralTenant(stripes) && stripes.hasPerm('ui-inventory.item.move');
+    const canMoveItems = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && stripes.hasPerm('ui-inventory.item.move');
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
-    const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && stripes.hasPerm('ui-inventory.holdings.move');
+    const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && isShared
       ? this.hasCentralTenantPerm(editBibRecordPerm)
       : stripes.hasPerm(editBibRecordPerm);
