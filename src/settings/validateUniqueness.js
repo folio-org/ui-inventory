@@ -1,5 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 
+import { isEmpty } from 'lodash';
+
 export const validateUniqueness = (
   index,
   item,
@@ -9,7 +11,7 @@ export const validateUniqueness = (
   return (
     items.some((entry, i) => (
       i !== index
-      && item[field]?.toLocaleLowerCase() === entry[field]?.toLocaleLowerCase()
+      && !isEmpty(item[field]) && item[field]?.toLocaleLowerCase() === entry[field]?.toLocaleLowerCase()
     ))
       ? <FormattedMessage id="ui-inventory.validation.error.mustBeUnique" />
       : undefined
