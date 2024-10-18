@@ -724,7 +724,7 @@ class ViewInstance extends React.Component {
 
     const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
     const editInstancePerm = 'ui-inventory.instance.edit';
-    const setForDeletionAndSuppressPerm = 'ui-inventory.instance.set-deletion-and-staff-suppress';
+    const setForDeletionAndSuppressPerm = 'ui-inventory.instance.set-records-for-deletion.execute';
     const isSourceMARC = isMARCSource(source);
     const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
@@ -747,7 +747,7 @@ class ViewInstance extends React.Component {
       && !isInstanceShadowCopy(source);
 
     const canCentralTenantCreateOrder = checkIfUserInCentralTenant(stripes) && checkIfCentralOrderingIsActive(centralOrdering);
-    const canCreateOrder = (!checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder')) || canCentralTenantCreateOrder;
+    const canCreateOrder = (!checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.order.create')) || canCentralTenantCreateOrder;
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const canExportMarc = stripes.hasPerm('ui-data-export.edit');
     const canAccessLinkedDataOptions = stripes.hasPerm(LINKED_DATA_EDITOR_PERM);

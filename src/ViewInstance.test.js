@@ -1136,7 +1136,7 @@ describe('ViewInstance', () => {
       describe('when user is in member tenant and instance is shared and has central tenant permission to set record for deletion', () => {
         it('should render "Set record for deletion" action item', () => {
           renderViewInstance({
-            centralTenantPermissions: new Set(['ui-inventory.instance.set-deletion-and-staff-suppress']),
+            centralTenantPermissions: new Set(['ui-inventory.instance.set-records-for-deletion.execute']),
             isShared: true,
             tenantId: 'tenantId',
           });
