@@ -114,6 +114,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * *BREAKING* Bump `stripes` to `v9.2.0` for Ramsons release. Refs UIIN-2961.
 * Include current location into redirects to Linked data editor. Refs UIIN-3092.
 * Use `ResetProvider` to subscribe and publish the reset event and unsubscribe from it after a segment switch. Refs UIIN-3093.
+* Refactor ui-inventory permissions. Refs UIIN-3087.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
