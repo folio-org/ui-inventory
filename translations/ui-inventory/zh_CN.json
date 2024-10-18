@@ -850,5 +850,6 @@
     "affiliation": "隶属关系",
     "affiliation.select": "选择隶属关系",
     "instance.linked.id": "链接实例 ID - {id}",
-    "actions.menuSection.sortBy.date": "日期"
+    "actions.menuSection.sortBy.date": "日期",
+    "moveItems.modal.message.hasLinkedPOLsOrHoldings": "This holdings is linked to a purchase order line. Moving this holdings to a new instance will move any other holdings and items that are linked to this purchase order line to the new instance as well. The purchase order line will also be linked to the new instance. Do you want to continue?"
 }

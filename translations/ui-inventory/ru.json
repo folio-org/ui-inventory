@@ -227,7 +227,7 @@
     "addHoldingsStatementForIndexes": "Add holdings statement for indexes",
     "addHoldingsStatementForSupplements": "Add holdings statement for supplements",
     "relatedInstances": "Связанные документы",
-    "instanceRelationshipsAnalyticsBoundWith": "Instance relationships (analytics and bound-with)",
+    "instanceRelationshipsAnalyticsBoundWith": "Instance relationships",
     "instanceStatusTypes": "Instance status types",
     "instanceStatusType": "Instance status type",
     "instanceHoldingsItem": "Документы, Холдинги, Экземпляры",
@@ -258,7 +258,7 @@
     "copyNumbers": "Copy numbers",
     "addCopyNumber": "Add copy number",
     "removeCopyNumbre": "Remove copy number {num}",
-    "code": "code",
+    "code": "Code",
     "statisticalCodes": "Statistical codes",
     "statisticalCode": "Statistical code",
     "statisticalCodeNames": "Statistical code names",
@@ -355,7 +355,7 @@
     "items.damageStatus.notdamaged": "Not damaged",
     "instanceNotes": "Instance notes",
     "addClassification": "Добавить классификацию",
-    "instanceRelationshipAnalyticsBoundWith": "Instance relationship (analytics and bound-with)",
+    "instanceRelationshipAnalyticsBoundWith": "Instance relationship",
     "acquisition": "Комплектование",
     "holdingsNoteType": "Holdings note type",
     "itemNoteType": "Item note type",
@@ -850,5 +850,6 @@
     "affiliation": "Affiliation",
     "affiliation.select": "Select affiliation",
     "instance.linked.id": "Linked instance ID - {id}",
-    "actions.menuSection.sortBy.date": "Date"
+    "actions.menuSection.sortBy.date": "Date",
+    "moveItems.modal.message.hasLinkedPOLsOrHoldings": "This holdings is linked to a purchase order line. Moving this holdings to a new instance will move any other holdings and items that are linked to this purchase order line to the new instance as well. The purchase order line will also be linked to the new instance. Do you want to continue?"
 }

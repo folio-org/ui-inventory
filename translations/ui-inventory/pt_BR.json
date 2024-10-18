@@ -258,7 +258,7 @@
     "copyNumbers": "Números de exemplares",
     "addCopyNumber": "Adicionar número de exemplar",
     "removeCopyNumbre": "Remover número de exemplar {num}",
-    "code": "código",
+    "code": "Código",
     "statisticalCodes": "Códigos estatísticos",
     "statisticalCode": "Código estatístico",
     "statisticalCodeNames": "Nomes de códigos estatísticos",
@@ -850,5 +850,6 @@
     "affiliation": "Afiliação",
     "affiliation.select": "Selecione a afiliação",
     "instance.linked.id": "ID da instância vinculada - {id}",
-    "actions.menuSection.sortBy.date": "Data"
+    "actions.menuSection.sortBy.date": "Data",
+    "moveItems.modal.message.hasLinkedPOLsOrHoldings": "Esse coleção está vinculada a uma linha de pedido de compra. Mover essa coleção para uma nova instância moverá quaisquer outras coleções e itens que estejam vinculados a essa linha de pedido de compra para a nova instância também. A linha do pedido de compra também será vinculada à nova instância. Deseja continuar?"
 }
