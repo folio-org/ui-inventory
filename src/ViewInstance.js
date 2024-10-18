@@ -783,18 +783,28 @@ class ViewInstance extends React.Component {
 
     const navigateToLinkedDataEditor = () => {
       const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;
+      const currentLocationState = {
+        state: {
+          from: {
+            pathname: history?.location?.pathname,
+            search: history?.location?.search,
+          },
+        },
+      };
 
       if (!selectedIdentifier) {
         if (!canBeOpenedInLinkedData) return;
 
         history.push({
           pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instance.id}/edit`,
+          ...currentLocationState,
         });
       } else {
         const identifierLiteral = selectedIdentifier?.replace(LINKED_DATA_ID_PREFIX, '');
 
         history.push({
           pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
+          ...currentLocationState,
         });
       }
     };
