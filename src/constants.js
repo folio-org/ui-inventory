@@ -271,6 +271,7 @@ export const ITEM_ACCORDION_LABELS = {
 };
 
 export const LINKED_DATA_EDITOR_PERM = 'linked-data.resources.bib.post';
+export const LINKED_DATA_CHECK_EXTERNAL_RESOURCE_FETCHABLE = 'linked-data.resources.support-check.get';
 
 export const INSTANCE_RECORD_TYPE = 'INSTANCE';
 

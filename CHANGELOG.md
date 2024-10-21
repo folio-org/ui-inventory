@@ -101,7 +101,19 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Display "Classification browse" settings for non-consortia. Fixes UIIN-3057.
 * Fix eslint warnings. Refs UIIN-3064.
 * Disable link to POL when it leads to another tenant (instance, holding and item). Refs UIIN-3024.
-* Add code to subject source settings. UIIN-3056.
+* Add code to subject source settings. Refs UIIN-3056.
+* Alter rules for display of 'Edit in Linked data editor' option in Inventory Action drop down. Refs UIIN-3051.
+* Upgrade `inventory` to `14.0` and `instance-storage` to `11.0`. Refs UIIN-3065.
+* Add subject source and subject type to Inventory subject browse results. Refs UIIN-2960.
+* Add filters for subject source and type to Inventory subject browse. Refs UIIN-2961.
+* Update 'Instance relationship' accordion name - VIEW/EDIT/CREATE Instance. Refs UIIN-3081.
+* Create alert to prevent moving holding to another instance if Po Line has multiple holdings. Refs UIIN-3046.
+* Update sub permissions in the `package.json` and upgrade `holdings-storage` to `8.0`. Refs UIIN-3061.
+* ECS - Disallow 'Move items within an instance' and 'Move holdings/items to another instance' if no LOCAL Items/Holdings exist. Refs UIIN-3073.
+* *BREAKING* Update sub permissions in the `package.json` and upgrade `source-storage-records` to `3.3` and `data-import-converter-storage` to `1.5`. Refs UIIN-3086.
+* *BREAKING* Bump `stripes` to `v9.2.0` for Ramsons release. Refs UIIN-2961.
+* Include current location into redirects to Linked data editor. Refs UIIN-3092.
+* Use `ResetProvider` to subscribe and publish the reset event and unsubscribe from it after a segment switch. Refs UIIN-3093.
 * Rename inventory.consortia permissions. Refs UIIN-3076.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)

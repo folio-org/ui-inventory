@@ -93,6 +93,8 @@ const mockContext = {
       ],
     },
   ],
+  subjectSources: [{ id: 'sourceId', name: 'sourceName' }],
+  subjectTypes: [{ id: 'typeId', name: 'typeName' }],
 };
 
 const contributorsData = [
@@ -109,6 +111,8 @@ const contributorsData = [
 const subjectsData = [
   {
     'value': 'Trivia and miscellanea',
+    'sourceId': 'sourceId',
+    'typeId': 'typeId',
     'totalRecords': 8
   },
 ];

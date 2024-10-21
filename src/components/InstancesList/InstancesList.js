@@ -60,6 +60,7 @@ import {
   SEARCH_COLUMN_NAMES,
   getSearchResultsFormatter,
   SEARCH_COLUMN_MAPPINGS,
+  withReset,
 } from '@folio/stripes-inventory-components';
 
 import { withSingleRecordImport } from '..';
@@ -149,7 +150,9 @@ class InstancesList extends React.Component {
     data: PropTypes.object,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object,
+    publishOnReset: PropTypes.func.isRequired,
     disableRecordCreation: PropTypes.bool,
+    unsubscribeFromReset: PropTypes.func.isRequired,
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
@@ -544,12 +547,16 @@ class InstancesList extends React.Component {
   }
 
   handleSearchSegmentChange = (segment) => {
-    const { namespace } = this.props;
+    const {
+      namespace,
+      unsubscribeFromReset,
+    } = this.props;
 
     deleteFacetStates(namespace);
     this.refocusOnInputSearch(segment);
     this.setState({ selectedRows: {} });
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+    unsubscribeFromReset();
   }
 
   onSearchModeSwitch = () => {
@@ -1122,7 +1129,10 @@ class InstancesList extends React.Component {
   };
 
   handleResetAll = () => {
-    const { namespace } = this.props;
+    const {
+      namespace,
+      publishOnReset,
+    } = this.props;
 
     this.setState({
       selectedRows: {},
@@ -1131,6 +1141,7 @@ class InstancesList extends React.Component {
     resetFacetStates({ namespace });
     this.inputRef.current.focus();
     sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+    publishOnReset();
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
@@ -1527,4 +1538,5 @@ export default withNamespace(flowRight(
   injectIntl,
   withLocation,
   withSingleRecordImport,
+  withReset,
 )(stripesConnect(InstancesList)));

@@ -17,8 +17,12 @@ import { validateUniqueness } from './validateUniqueness';
 
 const validate = (item, index, items) => {
   const nameError = validateUniqueness(index, item, items, 'name') || undefined;
+  const codeError = validateUniqueness(index, item, items, 'code') || undefined;
 
-  return { name: nameError };
+  return {
+    name: nameError,
+    code: codeError,
+  };
 };
 
 const SubjectSourcesSettings = (props) => {
