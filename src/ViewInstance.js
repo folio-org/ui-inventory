@@ -1126,7 +1126,6 @@ class ViewInstance extends React.Component {
       updateLocation,
       canUseSingleRecordImport,
       selectedInstance,
-      isShared,
     } = this.props;
     const {
       linkedAuthoritiesLength,
@@ -1208,7 +1207,7 @@ class ViewInstance extends React.Component {
                   onSelect={this.selectInstance}
                   onClose={this.toggleFindInstancePlugin}
                   withTrigger={false}
-                  isSharedFacetVisible={!isShared}
+                  suppressSharedFacet
                 />
               )
             }
