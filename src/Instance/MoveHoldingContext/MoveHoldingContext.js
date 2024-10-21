@@ -29,6 +29,7 @@ import {
 import DnDContext from '../DnDContext';
 import { HoldingContainer } from '../HoldingsList';
 import * as Move from '../Move';
+import { getPOLineHoldingIds } from './utils';
 
 const MoveHoldingContext = ({
   children,
@@ -171,7 +172,7 @@ const MoveHoldingContext = ({
     setIsModalOpen(false);
   }, [setIsModalOpen]);
 
-  const checkHasMultiplePOLsOrHoldings = async (holdingIds = []) => {
+  const checkHasMultiplePOLsOrHoldings = async (holdingIds = [], selectedHoldingIdsFromInstance) => {
     try {
       const { poLines = [] } = await ky.get(LINES_API, {
         searchParams: {
@@ -180,9 +181,15 @@ const MoveHoldingContext = ({
         }
       }).json();
 
-      return poLines.length > 1 || poLines[0]?.locations?.length > 1;
+      return {
+        hasLinkedPOLs:  poLines.length > 1 || poLines[0]?.locations?.length > 1,
+        poLineHoldingIds: getPOLineHoldingIds(poLines, selectedHoldingIdsFromInstance),
+      };
     } catch (error) {
-      return false;
+      return {
+        hasLinkedPOLs: false,
+        poLineHoldingIds: [],
+      };
     }
   };
 
@@ -191,8 +198,9 @@ const MoveHoldingContext = ({
     const from = target.dataset.itemId;
     const isHolding = target.dataset.isHolding;
     const fromSelectedMap = selectedItemsMap[from] || {};
-    const selectedColumnHoldings = leftInstance.id === to ? rightHoldings : leftHoldings;
-    const holdingIds = selectedColumnHoldings.map(i => i.id);
+    const selectedInstanceHoldings = leftInstance.id === to ? rightHoldings : leftHoldings;
+    const selectedInstanceHoldingsHoldingIds = selectedInstanceHoldings.map(i => i.id);
+
     const items = isHolding
       ? selectedHoldingsMap
       : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
@@ -201,17 +209,22 @@ const MoveHoldingContext = ({
     setDragToId(to);
     setDragFromId(from);
 
-    if (!items.length) {
-      items.push(from);
-    }
+    const holdingIds = [...new Set([...items, from])];
 
-    const hasLinkedHoldings = await checkHasMultiplePOLsOrHoldings(holdingIds);
+    const holdingIdsFromSelection = selectedInstanceHoldingsHoldingIds.filter(holdingId => holdingIds.includes(holdingId));
 
-    setMovingItems(hasLinkedHoldings ? holdingIds : items);
-    setHasLinkedPOLsOrHoldings(hasLinkedHoldings);
-    setSelectedHoldingIds(holdingIds);
+    const {
+      hasLinkedPOLs,
+      poLineHoldingIds
+    } = await checkHasMultiplePOLsOrHoldings(selectedInstanceHoldingsHoldingIds, holdingIdsFromSelection);
+
+    const holdingIdsToMove = hasLinkedPOLs ? poLineHoldingIds : holdingIdsFromSelection;
+
+    setMovingItems(holdingIdsToMove);
+    setHasLinkedPOLsOrHoldings(hasLinkedPOLs);
+    setSelectedHoldingIds(holdingIdsToMove);
     setIsModalOpen(true);
-  }, [selectedItemsMap, selectedHoldingsMap, leftHoldings, rightHoldings]);
+  }, [selectedItemsMap, leftInstance, rightHoldings, leftHoldings, selectedHoldingsMap, checkHasMultiplePOLsOrHoldings]);
 
   const movingMessage = useMemo(
     () => {
