@@ -112,6 +112,8 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * ECS - Disallow 'Move items within an instance' and 'Move holdings/items to another instance' if no LOCAL Items/Holdings exist. Refs UIIN-3073.
 * *BREAKING* Update sub permissions in the `package.json` and upgrade `source-storage-records` to `3.3` and `data-import-converter-storage` to `1.5`. Refs UIIN-3086.
 * *BREAKING* Bump `stripes` to `v9.2.0` for Ramsons release. Refs UIIN-2961.
+* Include current location into redirects to Linked data editor. Refs UIIN-3092.
+* Use `ResetProvider` to subscribe and publish the reset event and unsubscribe from it after a segment switch. Refs UIIN-3093.
 * Disallow displaying shared instances when find instance modal is open. Refs UIIN-3072.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
