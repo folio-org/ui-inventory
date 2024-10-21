@@ -748,7 +748,7 @@
     "item.status.onOrder.lowercase": "im Erwerbungsvorgang",
     "item.status.paged.lowercase": "Bestellt",
     "item.status.restricted.lowercase": "beschränkt",
-    "item.status.orderClosed.lowercase": "Bestellung abgeschlossen",
+    "item.status.orderClosed.lowercase": "Erwerbungsvorgang abgeschlossen",
     "item.status.unavailable.lowercase": "Nicht verfügbar",
     "item.status.unknown.lowercase": "Unbekannt",
     "item.status.withdrawn.lowercase": "Ausgesondert",
@@ -850,5 +850,6 @@
     "affiliation": "Zugehörigkeit",
     "affiliation.select": "Zugehörigkeit auswählen",
     "instance.linked.id": "Verknüpfte Instanz-ID - {id}",
-    "actions.menuSection.sortBy.date": "Date"
+    "actions.menuSection.sortBy.date": "Date",
+    "moveItems.modal.message.hasLinkedPOLsOrHoldings": "This holdings is linked to a purchase order line. Moving this holdings to a new instance will move any other holdings and items that are linked to this purchase order line to the new instance as well. The purchase order line will also be linked to the new instance. Do you want to continue?"
 }
