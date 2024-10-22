@@ -1084,7 +1084,7 @@ export const flattenCentralTenantPermissions = (centralTenantPermissions) => {
     return [
       ...acc,
       currentPermission?.permissionName,
-      currentPermission ? { ...currentPermission.subPermissions } : null,
+      ...currentPermission?.subPermissions,
     ];
   }, []));
 };
