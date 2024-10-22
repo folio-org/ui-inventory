@@ -23,7 +23,7 @@ const RequestsReorderButton = ({
   }
 
   return (
-    <IfPermission perm="ui-requests.reorderQueue">
+    <IfPermission perm="ui-requests.reorderQueue.execute">
       <Button
         to={getInstanceQueueReorderLink(requestId, instanceId)}
         buttonStyle="dropdownItem"
