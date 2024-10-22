@@ -961,7 +961,6 @@ class ViewHoldingsRecord extends React.Component {
                     await switchAffiliation(stripes, tenantFrom, this.onClose);
                   }}
                   actionMenu={this.getPaneHeaderActionMenu}
-                  test="holdings-record-view-pane"
                 >
                   <Row center="xs">
                     <Col sm={6}>

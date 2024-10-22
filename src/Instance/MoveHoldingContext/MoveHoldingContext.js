@@ -172,7 +172,7 @@ const MoveHoldingContext = ({
     setIsModalOpen(false);
   }, [setIsModalOpen]);
 
-  const checkHasMultiplePOLsOrHoldings = async (holdingIds = [], selectedHoldingIdsFromInstance) => {
+  const checkHasMultiplePOLsOrHoldings = async (holdingIds = [], selectedHoldingIdsFromInstance = []) => {
     try {
       const { poLines = [] } = await ky.get(LINES_API, {
         searchParams: {
