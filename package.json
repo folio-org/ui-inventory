@@ -178,7 +178,7 @@
         "visible": false
       },
       {
-        "permissionName": "ui-inventory.settings.materialtypes",
+        "permissionName": "ui-inventory.settings.material-types",
         "displayName": "Settings (Inventory): Create, edit, delete material types",
         "subPermissions": [
           "inventory-storage.material-types.collection.get",
@@ -192,7 +192,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.settings.loantypes",
+        "permissionName": "ui-inventory.settings.loan-types",
         "displayName": "Settings (Inventory): Create, edit, delete loan types",
         "subPermissions": [
           "inventory-storage.loan-types.collection.get",
@@ -630,7 +630,7 @@
           "consortium-search.locations.collection.get",
           "browse.config.collection.get",
           "mod-settings.entries.collection.get",
-          "mod-settings.global.ui-inventory.display-settings.view",
+          "mod-settings.global.read.ui-inventory.display-settings",
           "inventory-storage.instance-date-types.collection.get"
         ],
         "visible": true
@@ -935,12 +935,12 @@
         "visible": true
       },
       {
-        "permissionName": "mod-settings.global.ui-inventory.display-settings.view",
+        "permissionName": "mod-settings.global.read.ui-inventory.display-settings",
         "displayName": "Settings (Inventory): read the settings in the 'Display settings' section",
         "visible": false
       },
       {
-        "permissionName": "mod-settings.global.ui-inventory.display-settings.create",
+        "permissionName": "mod-settings.global.write.ui-inventory.display-settings",
         "displayName": "Settings (Inventory): write the settings in the 'Display settings' section",
         "visible": false
       },
@@ -952,8 +952,8 @@
           "mod-settings.entries.collection.get",
           "mod-settings.entries.item.post",
           "mod-settings.entries.item.put",
-          "mod-settings.global.ui-inventory.display-settings.view",
-          "mod-settings.global.ui-inventory.display-settings.create"
+          "mod-settings.global.read.ui-inventory.display-settings",
+          "mod-settings.global.write.ui-inventory.display-settings"
         ],
         "visible": true
       }
