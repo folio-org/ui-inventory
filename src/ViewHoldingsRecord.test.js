@@ -115,6 +115,9 @@ const defaultProps = {
     marcRecordId: {
       replace: jest.fn(),
     },
+    orderLine: {
+      GET: jest.fn(() => Promise.resolve({ id: 'orderLineId' })),
+    },
     permanentLocationQuery: {},
     temporaryLocationQuery: {},
     query: {},
@@ -466,6 +469,33 @@ describe('ViewHoldingsRecord actions', () => {
         const locationLookup = await screen.findByText('FindLocation');
 
         expect(locationLookup).toBeInTheDocument();
+      });
+
+      it('should render Linked order line message and close the modal on click continue button', async () => {
+        renderViewHoldingsRecord({
+          stripes,
+          isInstanceShared: true,
+          mutator: {
+            ...defaultProps.mutator,
+            orderLine: {
+              ...defaultProps.mutator.orderLine,
+              GET: jest.fn(() => Promise.resolve()),
+            },
+          },
+          resources: {
+            ...defaultProps.resources,
+            items: { records: [{ id: 'itemId', purchaseOrderLineIdentifier: 'POL-1' }] }
+          },
+        });
+
+        const updateOwnershipBtn = await screen.findByText('Update ownership');
+        fireEvent.click(updateOwnershipBtn);
+
+        const hasLocalPOLMessage = await screen.findByText('Linked order line');
+        expect(hasLocalPOLMessage).toBeInTheDocument();
+
+        fireEvent.click(screen.getByRole('button', { name: /continue/i }));
+        expect(screen.queryByText('Linked order line')).not.toBeInTheDocument();
       });
     });
 
