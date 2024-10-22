@@ -694,8 +694,8 @@
   "settings.instanceClassification.identifierTypesPopover": "Please note that if no classification identifier types are selected for a browse option, this option will display all classification identifier types.",
 
   "permission.all-permissions.TEMPORARY": "Inventory: All permissions",
-  "permission.settings.materialtypes": "Settings (Inventory): Create, edit, delete material types",
-  "permission.settings.loantypes": "Settings (Inventory): Create, edit, delete loan types",
+  "permission.settings.material-types": "Settings (Inventory): Create, edit, delete material types",
+  "permission.settings.loan-types": "Settings (Inventory): Create, edit, delete loan types",
   "permission.settings.statistical-code-types": "Settings (Inventory): Create, edit, delete statistical code types",
   "permission.settings.instance-formats": "Settings (Inventory): Create, edit, delete formats",
   "permission.settings.electronic-access-relationships": "Settings (Inventory): Create, edit, delete URL relationships",
