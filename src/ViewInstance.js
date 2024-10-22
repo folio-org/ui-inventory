@@ -729,9 +729,9 @@ class ViewInstance extends React.Component {
     const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
-    const canMoveItems = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && stripes.hasPerm('ui-inventory.item.move');
+    const canMoveItems = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && !isShared && stripes.hasPerm('ui-inventory.item.move');
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
-    const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && stripes.hasPerm('ui-inventory.holdings.move');
+    const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && !isShared && stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && isShared
       ? this.hasCentralTenantPerm(editBibRecordPerm)
       : stripes.hasPerm(editBibRecordPerm);
@@ -742,7 +742,7 @@ class ViewInstance extends React.Component {
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
     const canViewSource = canViewMARCSource && canViewInstance;
     const canShareLocalInstance = checkIfUserInMemberTenant(stripes)
-      && stripes.hasPerm('consortia.inventory.share.local.instance')
+      && stripes.hasPerm('consortia.inventory.local.sharing-instances.execute')
       && !isShared
       && !isInstanceShadowCopy(source);
 
@@ -1217,6 +1217,7 @@ class ViewInstance extends React.Component {
                   onSelect={this.selectInstance}
                   onClose={this.toggleFindInstancePlugin}
                   withTrigger={false}
+                  suppressSharedFacet
                 />
               )
             }
