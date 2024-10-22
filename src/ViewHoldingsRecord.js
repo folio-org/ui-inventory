@@ -7,6 +7,7 @@ import {
   last,
   flowRight,
   first,
+  uniq,
 } from 'lodash';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
@@ -23,6 +24,7 @@ import {
   MultiColumnList,
   Button,
   Modal,
+  ModalFooter,
   ConfirmationModal,
   LoadingView,
   MessageBanner,
@@ -104,6 +106,13 @@ class ViewHoldingsRecord extends React.Component {
       path: 'inventory/instances/:{id}',
       accumulate: true,
       tenant: '!{tenantTo}',
+    },
+    orderLine: {
+      accumulate: true,
+      path: 'orders/order-lines/:{poLineId}',
+      throwErrors: false,
+      type: 'okapi',
+      fetch: false,
     },
     tagSettings: {
       type: 'okapi',
@@ -320,6 +329,24 @@ class ViewHoldingsRecord extends React.Component {
     this.setState({ noHoldingsRecordDeleteModal: false });
   }
 
+  handleUpdateOwnership = () => {
+    const { mutator: { orderLine }, resources } = this.props;
+    const poLineIds = uniq(resources.items?.records?.map(({ purchaseOrderLineIdentifier }) => purchaseOrderLineIdentifier));
+
+    if (poLineIds?.length) {
+      const poLineRequest = poLineIds.map(poLineId => orderLine.GET({ path: `orders/order-lines/${poLineId}` }));
+
+      Promise.all(poLineRequest)
+        .then(() => {
+          this.openLinkedOrderLineModal();
+        }).catch(() => {
+          this.openLocationLookup();
+        });
+    } else {
+      this.openLocationLookup();
+    }
+  }
+
   openLocationLookup = () => {
     this.setState({ isLocationLookupOpen: true });
   }
@@ -334,6 +361,14 @@ class ViewHoldingsRecord extends React.Component {
 
   hideUpdateOwnershipModal = () => {
     this.setState({ isUpdateOwnershipModalOpen: false });
+  }
+
+  hideLinkedOrderLineModal = () => {
+    this.setState({ hasLinkedLocalOrderLineModal: false });
+  }
+
+  openLinkedOrderLineModal = () => {
+    this.setState({ hasLinkedLocalOrderLineModal: true });
   }
 
   callUpdateOwnership = () => {
@@ -493,7 +528,7 @@ class ViewHoldingsRecord extends React.Component {
         {canUpdateOwnership && (
           <ActionItem
             id="update-ownership"
-            onClickHandler={this.openLocationLookup}
+            onClickHandler={this.handleUpdateOwnership}
             icon="profile"
             messageId="ui-inventory.updateOwnership"
           />
@@ -837,6 +872,24 @@ class ViewHoldingsRecord extends React.Component {
               onCancel={this.hideConfirmHoldingsRecordDeleteModal}
               confirmLabel={<FormattedMessage id="stripes-core.button.delete" />}
             />
+            <Modal
+              id="linked-local-order-line-confirmation-modal"
+              open={this.state.hasLinkedLocalOrderLineModal}
+              label={<FormattedMessage id="ui-inventory.hasLinkedLocalOrderLine.modal.heading" />}
+              footer={(
+                <ModalFooter>
+                  <Button
+                    buttonStyle="primary"
+                    onClick={this.hideLinkedOrderLineModal}
+                    marginBottom0
+                  >
+                    <FormattedMessage id="stripes-core.button.continue" />
+                  </Button>
+                </ModalFooter>
+              )}
+            >
+              <FormattedMessage id="ui-inventory.hasLinkedLocalOrderLine.modal.message" />
+            </Modal>
             <ConfirmationModal
               id="update-ownership-modal"
               open={this.state.isUpdateOwnershipModalOpen}
@@ -1321,6 +1374,9 @@ ViewHoldingsRecord.propTypes = {
       POST: PropTypes.func.isRequired,
       DELETE: PropTypes.func.isRequired,
       reset: PropTypes.func.isRequired,
+    }),
+    orderLine: PropTypes.shape({
+      GET: PropTypes.func.isRequired,
     }),
     marcRecordId: PropTypes.shape({
       replace: PropTypes.func.isRequired,
