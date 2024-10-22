@@ -199,7 +199,7 @@ const MoveHoldingContext = ({
     const isHolding = target.dataset.isHolding;
     const fromSelectedMap = selectedItemsMap[from] || {};
     const selectedInstanceHoldings = leftInstance.id === to ? rightHoldings : leftHoldings;
-    const selectedInstanceHoldingsHoldingIds = selectedInstanceHoldings.map(i => i.id);
+    const selectedInstanceHoldingsIds = selectedInstanceHoldings.map(i => i.id);
 
     const items = isHolding
       ? selectedHoldingsMap
@@ -211,12 +211,12 @@ const MoveHoldingContext = ({
 
     const holdingIds = [...new Set([...items, from])];
 
-    const holdingIdsFromSelection = selectedInstanceHoldingsHoldingIds.filter(holdingId => holdingIds.includes(holdingId));
+    const holdingIdsFromSelection = selectedInstanceHoldingsIds.filter(holdingId => holdingIds.includes(holdingId));
 
     const {
       hasLinkedPOLs,
       poLineHoldingIds
-    } = await checkHasMultiplePOLsOrHoldings(selectedInstanceHoldingsHoldingIds, holdingIdsFromSelection);
+    } = await checkHasMultiplePOLsOrHoldings(selectedInstanceHoldingsIds, holdingIdsFromSelection);
 
     const holdingIdsToMove = hasLinkedPOLs ? poLineHoldingIds : holdingIdsFromSelection;
 
