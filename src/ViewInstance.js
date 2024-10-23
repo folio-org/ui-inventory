@@ -729,9 +729,9 @@ class ViewInstance extends React.Component {
     const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
-    const canMoveItems = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && !isShared && stripes.hasPerm('ui-inventory.item.move');
+    const canMoveItems = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && stripes.hasPerm('ui-inventory.item.move');
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
-    const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && !isShared && stripes.hasPerm('ui-inventory.holdings.move');
+    const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && isShared
       ? this.hasCentralTenantPerm(editBibRecordPerm)
       : stripes.hasPerm(editBibRecordPerm);
@@ -816,6 +816,7 @@ class ViewInstance extends React.Component {
     );
 
     const showQuickMarcMenuSection = isSourceMARC && (canCreateMARCHoldings || canEditMARCRecord || canDeriveMARCRecord);
+    const canMoveHoldingsItemsToAnotherInstance = (canMoveItems || canMoveHoldings) && !isShared;
 
     // the `identifier` is responsible for displaying the plugin `copyright-permissions-checker`
     if (!showInventoryMenuSection && !showQuickMarcMenuSection && !identifier) {
@@ -863,7 +864,7 @@ class ViewInstance extends React.Component {
                 }}
               />
             )}
-            {(canMoveItems || canMoveHoldings) && (
+            {canMoveHoldingsItemsToAnotherInstance && (
               <ActionItem
                 id="move-instance"
                 icon="arrow-right"
