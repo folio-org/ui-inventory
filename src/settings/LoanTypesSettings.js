@@ -29,7 +29,7 @@ class LoanTypesSettings extends React.Component {
   }
 
   render() {
-    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.loantypes');
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.loan-types');
 
     return (
       <IntlConsumer>

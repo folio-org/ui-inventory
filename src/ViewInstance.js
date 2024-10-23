@@ -724,14 +724,14 @@ class ViewInstance extends React.Component {
 
     const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
     const editInstancePerm = 'ui-inventory.instance.edit';
-    const setForDeletionAndSuppressPerm = 'ui-inventory.instance.set-deletion-and-staff-suppress';
+    const setForDeletionAndSuppressPerm = 'ui-inventory.instance.set-records-for-deletion.execute';
     const isSourceMARC = isMARCSource(source);
     const canEditInstance = stripes.hasPerm(editInstancePerm);
     const canCreateInstance = stripes.hasPerm('ui-inventory.instance.create');
     const canCreateRequest = stripes.hasPerm('ui-requests.create');
-    const canMoveItems = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && stripes.hasPerm('ui-inventory.item.move');
+    const canMoveItems = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && !isShared && stripes.hasPerm('ui-inventory.item.move');
     const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
-    const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && stripes.hasPerm('ui-inventory.holdings.move');
+    const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && !isShared && stripes.hasPerm('ui-inventory.holdings.move');
     const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && isShared
       ? this.hasCentralTenantPerm(editBibRecordPerm)
       : stripes.hasPerm(editBibRecordPerm);
@@ -742,12 +742,12 @@ class ViewInstance extends React.Component {
     const canViewInstance = stripes.hasPerm('ui-inventory.instance.view');
     const canViewSource = canViewMARCSource && canViewInstance;
     const canShareLocalInstance = checkIfUserInMemberTenant(stripes)
-      && stripes.hasPerm('consortia.inventory.share.local.instance')
+      && stripes.hasPerm('consortia.inventory.local.sharing-instances.execute')
       && !isShared
       && !isInstanceShadowCopy(source);
 
     const canCentralTenantCreateOrder = checkIfUserInCentralTenant(stripes) && checkIfCentralOrderingIsActive(centralOrdering);
-    const canCreateOrder = (!checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.createOrder')) || canCentralTenantCreateOrder;
+    const canCreateOrder = (!checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.order.create')) || canCentralTenantCreateOrder;
     const canReorder = stripes.hasPerm('ui-requests.reorderQueue');
     const canExportMarc = stripes.hasPerm('ui-data-export.edit');
     const canAccessLinkedDataOptions = stripes.hasPerm(LINKED_DATA_EDITOR_PERM);
@@ -783,18 +783,28 @@ class ViewInstance extends React.Component {
 
     const navigateToLinkedDataEditor = () => {
       const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;
+      const currentLocationState = {
+        state: {
+          from: {
+            pathname: history?.location?.pathname,
+            search: history?.location?.search,
+          },
+        },
+      };
 
       if (!selectedIdentifier) {
         if (!canBeOpenedInLinkedData) return;
 
         history.push({
           pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instance.id}/edit`,
+          ...currentLocationState,
         });
       } else {
         const identifierLiteral = selectedIdentifier?.replace(LINKED_DATA_ID_PREFIX, '');
 
         history.push({
           pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
+          ...currentLocationState,
         });
       }
     };

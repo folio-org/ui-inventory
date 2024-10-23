@@ -220,13 +220,13 @@ const InventorySettings = (props) => {
             route: 'loantypes',
             label: <FormattedMessage id="ui-inventory.loanTypes" />,
             component: LoanTypesSettings,
-            perm: addPerm('ui-inventory.settings.loantypes'),
+            perm: addPerm('ui-inventory.settings.loan-types'),
           },
           {
             route: 'materialtypes',
             label: <FormattedMessage id="ui-inventory.materialTypes" />,
             component: MaterialTypesSettings,
-            perm: addPerm('ui-inventory.settings.materialtypes'),
+            perm: addPerm('ui-inventory.settings.material-types'),
           },
         ]
       },

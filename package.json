@@ -127,7 +127,7 @@
         ]
       },
       {
-        "permissionName": "ui-inventory.all-permissions.TEMPORARY",
+        "permissionName": "ui-inventory.all",
         "displayName": "Inventory: All permissions",
         "description": "Some subperms to support enabling/using the Inventory app",
         "subPermissions": [
@@ -139,7 +139,7 @@
           "ui-inventory.instance.edit",
           "ui-inventory.item.edit",
           "ui-inventory.holdings.edit",
-          "ui-inventory.item.markasmissing",
+          "ui-inventory.item.mark-as-missing.execute",
           "ui-inventory.item.delete",
           "ui-inventory.holdings.delete",
           "browse.contributors.instances.collection.get",
@@ -178,7 +178,7 @@
         "visible": false
       },
       {
-        "permissionName": "ui-inventory.settings.materialtypes",
+        "permissionName": "ui-inventory.settings.material-types",
         "displayName": "Settings (Inventory): Create, edit, delete material types",
         "subPermissions": [
           "inventory-storage.material-types.collection.get",
@@ -192,7 +192,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.settings.loantypes",
+        "permissionName": "ui-inventory.settings.loan-types",
         "displayName": "Settings (Inventory): Create, edit, delete loan types",
         "subPermissions": [
           "inventory-storage.loan-types.collection.get",
@@ -658,7 +658,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.instance.createOrder",
+        "permissionName": "ui-inventory.instance.order.create",
         "displayName": "Inventory: Create order from instance",
         "subPermissions": [
           "ui-inventory.instance.view",
@@ -720,7 +720,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.item.markasmissing",
+        "permissionName": "ui-inventory.item.mark-as-missing.execute",
         "displayName": "Inventory: View, create, edit, mark missing items",
         "subPermissions": [
           "ui-inventory.item.edit",
@@ -777,7 +777,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.instance.view-staff-suppressed-records",
+        "permissionName": "ui-inventory.instance.staff-suppressed-records.view",
         "displayName": "Inventory: Enable staff suppress facet",
         "subPermissions": [
           "ui-inventory.instance.view"
@@ -785,7 +785,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.instance.set-deletion-and-staff-suppress",
+        "permissionName": "ui-inventory.instance.set-records-for-deletion.execute",
         "displayName": "Inventory: Set records for deletion",
         "subPermissions": [
           "ui-inventory.instance.view",
@@ -851,7 +851,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.mark-items-withdrawn",
+        "permissionName": "ui-inventory.items.mark-withdrawn.execute",
         "displayName": "Inventory: Mark items withdrawn",
         "subPermissions": [
           "inventory.items.item.mark-withdrawn.post"
@@ -859,7 +859,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.mark-intellectual-item",
+        "permissionName": "ui-inventory.items.mark-intellectual-item.execute",
         "displayName": "Inventory: Mark items intellectual item",
         "subPermissions": [
           "inventory.items.item.mark-intellectual-item.post"
@@ -867,7 +867,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.mark-restricted",
+        "permissionName": "ui-inventory.items.mark-restricted.execute",
         "displayName": "Inventory: Mark items restricted",
         "subPermissions": [
           "inventory.items.item.mark-restricted.post"
@@ -875,7 +875,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.mark-unknown",
+        "permissionName": "ui-inventory.items.mark-unknown.execute",
         "displayName": "Inventory: Mark items unknown",
         "subPermissions": [
           "inventory.items.item.mark-unknown.post"
@@ -883,7 +883,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.mark-unavailable",
+        "permissionName": "ui-inventory.items.mark-unavailable.execute",
         "displayName": "Inventory: Mark items unavailable",
         "subPermissions": [
           "inventory.items.item.mark-unavailable.post"
@@ -891,7 +891,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.mark-long-missing",
+        "permissionName": "ui-inventory.items.mark-long-missing.execute",
         "displayName": "Inventory: Mark items long missing",
         "subPermissions": [
           "inventory.items.item.mark-long-missing.post"
@@ -899,7 +899,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.mark-in-process-non-requestable",
+        "permissionName": "ui-inventory.items.mark-in-process-non-requestable.execute",
         "displayName": "Inventory: Mark items in process (non-requestable)",
         "subPermissions": [
           "inventory.items.item.mark-in-process-non-requestable.post"
@@ -907,7 +907,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.mark-in-process",
+        "permissionName": "ui-inventory.items.mark-in-process.execute",
         "displayName": "Inventory: Mark items in process",
         "subPermissions": [
           "inventory.items.item.mark-in-process.post"
@@ -915,7 +915,7 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.items.create-in-transit-report",
+        "permissionName": "ui-inventory.items.in-transit-report.create",
         "displayName": "Inventory: Create and download In transit items report",
         "subPermissions": [
           "circulation.inventory.items-in-transit-report.get"
