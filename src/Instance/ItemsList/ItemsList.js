@@ -18,7 +18,10 @@ import {
   MultiColumnList,
   MCLPagingTypes,
 } from '@folio/stripes/components';
-import { itemStatuses, useLocationsQuery } from '@folio/stripes-inventory-components';
+import {
+  itemStatuses,
+  useLocationsQuery,
+} from '@folio/stripes-inventory-components';
 
 import { useStripes } from '@folio/stripes/core';
 import {
@@ -171,7 +174,10 @@ const ItemsList = ({
 }) => {
   const stripes = useStripes();
   const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items, tenantId);
-  const { locations: tenantLocations } = useLocationsQuery({ enabled: tenantId !== stripes.okapi.tenant, tenantId });
+  const { locations: tenantLocations } = useLocationsQuery({
+    enabled: tenantId !== stripes.okapi.tenant,
+    tenantId,
+  });
   const { locationsById } = useContext(DataContext);
   const holdingsMapById = keyBy(holdings, 'id');
   const intl = useIntl();
