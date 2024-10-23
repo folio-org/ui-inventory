@@ -29,7 +29,7 @@ class MaterialTypesSettings extends React.Component {
   }
 
   render() {
-    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.materialtypes');
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.material-types');
 
     return (
       <IntlConsumer>
