@@ -18,8 +18,9 @@ import {
   MultiColumnList,
   MCLPagingTypes,
 } from '@folio/stripes/components';
-import { itemStatuses } from '@folio/stripes-inventory-components';
+import { itemStatuses, useLocationsQuery } from '@folio/stripes-inventory-components';
 
+import { useStripes } from '@folio/stripes/core';
 import {
   DEFAULT_ITEM_TABLE_SORTBY_FIELD,
   ITEM_TABLE_PAGE_AMOUNT,
@@ -168,7 +169,10 @@ const ItemsList = ({
   isBarcodeAsHotlink,
   tenantId,
 }) => {
+  const stripes = useStripes();
   const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items, tenantId);
+  const { locations: tenantLocations } = useLocationsQuery({ enabled: tenantId !== stripes.okapi.tenant, tenantId });
+  const { locationsById } = useContext(DataContext);
   const holdingsMapById = keyBy(holdings, 'id');
   const intl = useIntl();
   const [itemsSorting, setItemsSorting] = useState({
@@ -177,7 +181,10 @@ const ItemsList = ({
   });
   const [records, setRecords] = useState([]);
 
-  const { locationsById } = useContext(DataContext);
+  const allLocationsById = {
+    ...keyBy(tenantLocations, 'id'),
+    ...locationsById,
+  };
   const pagingCanGoPrevious = offset > 0;
   const pagingCanGoNext = offset < total && total - offset > ITEM_TABLE_PAGE_AMOUNT;
 
@@ -189,7 +196,7 @@ const ItemsList = ({
   const formatter = useMemo(
     () => getFormatter(
       intl,
-      locationsById,
+      allLocationsById,
       holdingsMapById,
       selectItemsForDrag,
       isItemsDragSelected,

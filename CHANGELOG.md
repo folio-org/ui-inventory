@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [12.0.1] (IN PROGRESS)
+
+* Display location when navigating to another member tenant’s holdings. Fixes UIIN-3095.
+
 ## [12.0.0] (IN PROGRESS)
 
 * Remove unused code related to auto-open record detail view. Refs UIIN-2819.
