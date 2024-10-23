@@ -345,7 +345,7 @@ class InstancesList extends React.Component {
       return;
     }
 
-    const isStaffSuppressFilterAvailable = this.props.stripes.hasPerm('ui-inventory.instance.view-staff-suppressed-records');
+    const isStaffSuppressFilterAvailable = this.props.stripes.hasPerm('ui-inventory.instance.staff-suppressed-records.view');
     const isStaffSuppressTrueSelected = filters.includes(`${FACETS.STAFF_SUPPRESS}.true`);
 
     if (!isStaffSuppressFilterAvailable && isStaffSuppressTrueSelected) {
@@ -892,7 +892,7 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
     const canExportMarc = stripes.hasPerm('ui-data-export.edit');
-    const canCreateItemsInTransitReport = stripes.hasPerm('ui-inventory.items.create-in-transit-report');
+    const canCreateItemsInTransitReport = stripes.hasPerm('ui-inventory.items.in-transit-report.create');
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
