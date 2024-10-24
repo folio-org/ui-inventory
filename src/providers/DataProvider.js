@@ -13,10 +13,11 @@ import { DataContext } from '../contexts';
 const DataProvider = ({
   children,
   resources,
+  stripes,
 }) => {
   const { manifest } = DataProvider;
 
-  const { commonData, isCommonDataLoading } = useCommonData();
+  const { commonData, isCommonDataLoading } = useCommonData(stripes.okapi.tenant);
   const { classificationBrowseConfig, isLoading: isBrowseConfigLoading } = useClassificationBrowseConfig();
 
   const isLoading = useMemo(() => {
@@ -79,6 +80,7 @@ const DataProvider = ({
 
 DataProvider.propTypes = {
   resources: PropTypes.object.isRequired,
+  stripes: PropTypes.object.isRequired,
   children: PropTypes.object,
 };
 
