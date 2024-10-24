@@ -119,6 +119,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * ECS: Item affiliation cannot be changed when it is attached to a local order. Refs UIIN-3063.
 * Refactor ui-inventory permissions. Refs UIIN-3087.
 * Disallow displaying shared instances when find instance modal is open. Refs UIIN-3072.
+* Update permission name after Review and cleanup Module Descriptor for ui-requests. Refs UIIN-3058.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)

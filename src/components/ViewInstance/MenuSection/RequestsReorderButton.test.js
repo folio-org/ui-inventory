@@ -79,7 +79,7 @@ describe('RequestsReorderButton', () => {
       });
 
       it('should check for permission to reorder requests queue', () => {
-        const expectedResult = { perm: 'ui-requests.reorderQueue' };
+        const expectedResult = { perm: 'ui-requests.reorderQueue.execute' };
 
         expect(IfPermission).toHaveBeenCalledWith(expect.objectContaining(expectedResult), {});
       });
