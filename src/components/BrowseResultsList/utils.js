@@ -45,6 +45,14 @@ const getExtraFilters = (row, qindex, allFilters) => {
     if (row.authorityId) {
       extraFacets.push(`${FACETS.AUTHORITY_ID}.${row.authorityId}`);
     }
+
+    if (row.sourceId) {
+      extraFacets.push(`${FACETS.SEARCH_SUBJECT_SOURCE}.${row.sourceId}`);
+    }
+
+    if (row.typeId) {
+      extraFacets.push(`${FACETS.SEARCH_SUBJECT_TYPE}.${row.typeId}`);
+    }
   } else if (qindex === browseModeOptions.CONTRIBUTORS) {
     sharedFacetName = FACETS.CONTRIBUTORS_SHARED;
     heldByFacetName = FACETS.CONTRIBUTORS_HELD_BY;
