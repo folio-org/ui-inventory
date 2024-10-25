@@ -358,7 +358,9 @@ describe('BrowseResultsList', () => {
 
         fireEvent.click(screen.getByText(subjectsData[0].value));
 
-        expect(history.location.search).toContain('?filters=shared.true%2Cshared.false%2CtenantId.college');
+        expect(history.location.search).toContain('?filters=searchSubjectSource.sourceId%2C' +
+          'searchSubjectType.typeId%2Cshared.true%2Cshared.false%2C' +
+          'tenantId.college&qindex=subject&query=Trivia%20and%20miscellanea&selectedBrowseResult=true');
       });
     });
   });
