@@ -796,7 +796,7 @@ class ViewInstance extends React.Component {
         if (!canBeOpenedInLinkedData) return;
 
         history.push({
-          pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instance.id}/edit`,
+          pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instance.id}/preview`,
           ...currentLocationState,
         });
       } else {
