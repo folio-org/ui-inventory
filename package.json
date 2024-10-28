@@ -986,7 +986,7 @@
     "@folio/stripes-core": "^10.2.0",
     "@folio/stripes-inventory-components": "^1.0.0",
     "@folio/stripes-marc-components": "^1.0.1",
-    "@folio/stripes-smart-components": "^9.2.0",
+    "@folio/stripes-smart-components": "^10.0.0",
     "@folio/stripes-testing": "^4.6.0",
     "@folio/stripes-util": "^6.2.0",
     "@formatjs/cli": "^6.1.3",
