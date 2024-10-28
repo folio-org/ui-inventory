@@ -1,3 +1,4 @@
+import uniq from 'lodash/uniq';
 import PropTypes from 'prop-types';
 import {
   useState,
@@ -218,7 +219,7 @@ const MoveHoldingContext = ({
       poLineHoldingIds
     } = await checkHasMultiplePOLsOrHoldings(selectedInstanceHoldingsIds, holdingIdsFromSelection);
 
-    const holdingIdsToMove = hasLinkedPOLs ? poLineHoldingIds : holdingIdsFromSelection;
+    const holdingIdsToMove = uniq(hasLinkedPOLs ? poLineHoldingIds : holdingIdsFromSelection);
 
     setMovingItems(holdingIdsToMove);
     setHasLinkedPOLsOrHoldings(hasLinkedPOLs);
