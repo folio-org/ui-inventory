@@ -735,7 +735,7 @@ class ViewInstance extends React.Component {
     const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && isShared
       ? this.hasCentralTenantPerm(editBibRecordPerm)
       : stripes.hasPerm(editBibRecordPerm);
-    const canDeriveMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.duplicate');
+    const canDeriveMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.duplicate.execute');
     const canAddMARCHoldingsRecord = !checkIfUserInCentralTenant(stripes) && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
     const hasReorderPermissions = canCreateRequest || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
     const canViewMARCSource = stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
