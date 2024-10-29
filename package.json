@@ -630,7 +630,7 @@
           "consortium-search.locations.collection.get",
           "browse.config.collection.get",
           "mod-settings.entries.collection.get",
-          "mod-settings.global.read.ui-inventory.display-settings",
+          "mod-settings.global.read.ui-inventory.display-settings.manage",
           "inventory-storage.instance-date-types.collection.get"
         ],
         "visible": true
@@ -935,12 +935,12 @@
         "visible": true
       },
       {
-        "permissionName": "mod-settings.global.read.ui-inventory.display-settings",
+        "permissionName": "mod-settings.global.read.ui-inventory.display-settings.manage",
         "displayName": "Settings (Inventory): read the settings in the 'Display settings' section",
         "visible": false
       },
       {
-        "permissionName": "mod-settings.global.write.ui-inventory.display-settings",
+        "permissionName": "mod-settings.global.write.ui-inventory.display-settings.manage",
         "displayName": "Settings (Inventory): write the settings in the 'Display settings' section",
         "visible": false
       },
@@ -952,8 +952,8 @@
           "mod-settings.entries.collection.get",
           "mod-settings.entries.item.post",
           "mod-settings.entries.item.put",
-          "mod-settings.global.read.ui-inventory.display-settings",
-          "mod-settings.global.write.ui-inventory.display-settings"
+          "mod-settings.global.read.ui-inventory.display-settings.manage",
+          "mod-settings.global.write.ui-inventory.display-settings.manage"
         ],
         "visible": true
       }
