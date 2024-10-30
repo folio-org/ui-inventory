@@ -41,6 +41,7 @@ import {
   Icon,
   ConfirmationModal,
   Modal,
+  ModalFooter,
   MessageBanner,
   checkScope,
   HasCommand,
@@ -65,6 +66,7 @@ import {
   checkIfUserInCentralTenant,
   checkIfUserInMemberTenant,
   stripesConnect,
+  useOkapiKy,
 } from '@folio/stripes/core';
 
 import { requestsStatusString } from '../Instance/ViewRequests/utils';
@@ -144,6 +146,8 @@ const ItemView = props => {
     isInstanceShared,
   } = props;
 
+  const ky = useOkapiKy();
+
   const [itemMissingModal, setItemMissingModal] = useState(false);
   const [itemWithdrawnModal, setItemWithdrawnModal] = useState(false);
   const [confirmDeleteItemModal, setConfirmDeleteItemModal] = useState(false);
@@ -152,6 +156,7 @@ const ItemView = props => {
   const [isUpdateOwnershipModalOpen, setIsUpdateOwnershipModalOpen] = useState(false);
   const [cannotDeleteItemModalMessageId, setCannotDeleteItemModalMessageId] = useState('');
   const [isConfirmUpdateOwnershipModalOpen, setIsConfirmUpdateOwnershipModalOpen] = useState(false);
+  const [isLinkedLocalOrderLineModalOpen, setIsLinkedLocalOrderLineModalOpen] = useState(false);
   const [updateOwnershipData, setUpdateOwnershipData] = useState({});
   const [tenants, setTenants] = useState([]);
   const [targetTenant, setTargetTenant] = useState({});
@@ -279,6 +284,31 @@ const ItemView = props => {
     setIsConfirmUpdateOwnershipModalOpen(true);
   };
 
+  const hideLinkedOrderLineModal = () => {
+    setIsLinkedLocalOrderLineModalOpen(false);
+  };
+
+  const openLinkedOrderLineModal = () => {
+    setIsLinkedLocalOrderLineModalOpen(true);
+  };
+
+  const handleUpdateOwnership = () => {
+    const { purchaseOrderLineIdentifier } = itemsResource.records[0] || {};
+
+    if (purchaseOrderLineIdentifier) {
+      return ky
+        .get(`orders/order-lines/${purchaseOrderLineIdentifier}`)
+        .json()
+        .then(() => {
+          openLinkedOrderLineModal();
+        }).catch(() => {
+          openUpdateOwnershipModal();
+        });
+    } else {
+      return openUpdateOwnershipModal();
+    }
+  };
+
   const handleSubmitUpdateOwnership = (tenantId, targetLocation, holdingId) => {
     setUpdateOwnershipData({
       tenantId,
@@ -369,7 +399,7 @@ const ItemView = props => {
     const updateOwnershipButton = (
       <ActionItem
         id="clickable-update-ownership-item"
-        onClickHandler={openUpdateOwnershipModal}
+        onClickHandler={handleUpdateOwnership}
         icon="profile"
         messageId="ui-inventory.updateOwnership"
       />
@@ -537,7 +567,7 @@ const ItemView = props => {
     }
   };
 
-  const handleUpdateOwnership = async () => {
+  const onConfirmHandleUpdateOwnership = async () => {
     const { targetLocation, tenantId, holdingId } = updateOwnershipData;
     const newTenant = stripes.user.user.tenants.find(tenant => tenant.id === tenantId);
     const item = itemsResource.records[0] || {};
@@ -984,10 +1014,28 @@ const ItemView = props => {
                 }}
               />
             }
-            onConfirm={handleUpdateOwnership}
+            onConfirm={onConfirmHandleUpdateOwnership}
             onCancel={hideConfirmUpdateOwnershipModal}
             confirmLabel={<FormattedMessage id="ui-inventory.confirm" />}
           />
+          <Modal
+            id="linked-local-order-line-confirmation-modal"
+            open={isLinkedLocalOrderLineModalOpen}
+            label={<FormattedMessage id="ui-inventory.hasLinkedLocalOrderLine.modal.heading" />}
+            footer={(
+              <ModalFooter>
+                <Button
+                  buttonStyle="primary"
+                  onClick={hideLinkedOrderLineModal}
+                  marginBottom0
+                >
+                  <FormattedMessage id="stripes-core.button.continue" />
+                </Button>
+              </ModalFooter>
+              )}
+          >
+            <FormattedMessage id="ui-inventory.hasLinkedLocalOrderLine.modal.message" />
+          </Modal>
           <Modal
             data-testid="missing-confirmation-modal"
             data-test-missingConfirmation-modal
