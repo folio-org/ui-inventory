@@ -482,7 +482,7 @@ const ItemView = props => {
 
         return (
           <IfPermission
-            perm={`ui-inventory.items.mark-${parameterizedStatus}`}
+            perm={`ui-inventory.items.mark-${parameterizedStatus}.execute`}
             key={parameterizedStatus}
           >
             {actionMenuItem}
