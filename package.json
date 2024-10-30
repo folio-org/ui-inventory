@@ -129,6 +129,7 @@
       {
         "permissionName": "ui-inventory.all",
         "displayName": "Inventory: All permissions",
+        "replaces": ["ui-inventory.all-permissions.TEMPORARY"],
         "description": "Some subperms to support enabling/using the Inventory app",
         "subPermissions": [
           "ui-plugin-create-inventory-records.create",
@@ -180,6 +181,7 @@
       {
         "permissionName": "ui-inventory.settings.material-types",
         "displayName": "Settings (Inventory): Create, edit, delete material types",
+        "replaces": ["ui-inventory.settings.materialtypes"],
         "subPermissions": [
           "inventory-storage.material-types.collection.get",
           "inventory-storage.material-types.item.delete",
@@ -194,6 +196,7 @@
       {
         "permissionName": "ui-inventory.settings.loan-types",
         "displayName": "Settings (Inventory): Create, edit, delete loan types",
+        "replaces": ["ui-inventory.settings.loantypes"],
         "subPermissions": [
           "inventory-storage.loan-types.collection.get",
           "inventory-storage.loan-types.item.delete",
@@ -630,7 +633,7 @@
           "consortium-search.locations.collection.get",
           "browse.config.collection.get",
           "mod-settings.entries.collection.get",
-          "mod-settings.global.read.ui-inventory.display-settings",
+          "mod-settings.global.read.ui-inventory.display-settings.manage",
           "inventory-storage.instance-date-types.collection.get"
         ],
         "visible": true
@@ -660,6 +663,7 @@
       {
         "permissionName": "ui-inventory.instance.order.create",
         "displayName": "Inventory: Create order from instance",
+        "replaces": ["ui-inventory.instance.createOrder"],
         "subPermissions": [
           "ui-inventory.instance.view",
           "acquisitions-units.memberships.collection.get",
@@ -722,6 +726,7 @@
       {
         "permissionName": "ui-inventory.item.mark-as-missing.execute",
         "displayName": "Inventory: View, create, edit, mark missing items",
+        "replaces": ["ui-inventory.item.markasmissing"],
         "subPermissions": [
           "ui-inventory.item.edit",
           "inventory.items.item.mark-missing.post"
@@ -779,6 +784,7 @@
       {
         "permissionName": "ui-inventory.instance.staff-suppressed-records.view",
         "displayName": "Inventory: Enable staff suppress facet",
+        "replaces": ["ui-inventory.instance.view-staff-suppressed-records"],
         "subPermissions": [
           "ui-inventory.instance.view"
         ],
@@ -787,6 +793,7 @@
       {
         "permissionName": "ui-inventory.instance.set-records-for-deletion.execute",
         "displayName": "Inventory: Set records for deletion",
+        "replaces": ["ui-inventory.instance.set-deletion-and-staff-suppress"],
         "subPermissions": [
           "ui-inventory.instance.view",
           "source-storage.records.update"
@@ -853,6 +860,7 @@
       {
         "permissionName": "ui-inventory.items.mark-withdrawn.execute",
         "displayName": "Inventory: Mark items withdrawn",
+        "replaces": ["ui-inventory.items.mark-items-withdrawn"],
         "subPermissions": [
           "inventory.items.item.mark-withdrawn.post"
         ],
@@ -861,6 +869,7 @@
       {
         "permissionName": "ui-inventory.items.mark-intellectual-item.execute",
         "displayName": "Inventory: Mark items intellectual item",
+        "replaces": ["ui-inventory.items.mark-intellectual-item"],
         "subPermissions": [
           "inventory.items.item.mark-intellectual-item.post"
         ],
@@ -869,6 +878,7 @@
       {
         "permissionName": "ui-inventory.items.mark-restricted.execute",
         "displayName": "Inventory: Mark items restricted",
+        "replaces": ["ui-inventory.items.mark-restricted"],
         "subPermissions": [
           "inventory.items.item.mark-restricted.post"
         ],
@@ -877,6 +887,7 @@
       {
         "permissionName": "ui-inventory.items.mark-unknown.execute",
         "displayName": "Inventory: Mark items unknown",
+        "replaces": ["ui-inventory.items.mark-unknown"],
         "subPermissions": [
           "inventory.items.item.mark-unknown.post"
         ],
@@ -885,6 +896,7 @@
       {
         "permissionName": "ui-inventory.items.mark-unavailable.execute",
         "displayName": "Inventory: Mark items unavailable",
+        "replaces": ["ui-inventory.items.mark-unavailable"],
         "subPermissions": [
           "inventory.items.item.mark-unavailable.post"
         ],
@@ -893,6 +905,7 @@
       {
         "permissionName": "ui-inventory.items.mark-long-missing.execute",
         "displayName": "Inventory: Mark items long missing",
+        "replaces": ["ui-inventory.items.mark-long-missing"],
         "subPermissions": [
           "inventory.items.item.mark-long-missing.post"
         ],
@@ -901,6 +914,7 @@
       {
         "permissionName": "ui-inventory.items.mark-in-process-non-requestable.execute",
         "displayName": "Inventory: Mark items in process (non-requestable)",
+        "replaces": ["ui-inventory.items.mark-in-process-non-requestable"],
         "subPermissions": [
           "inventory.items.item.mark-in-process-non-requestable.post"
         ],
@@ -909,6 +923,7 @@
       {
         "permissionName": "ui-inventory.items.mark-in-process.execute",
         "displayName": "Inventory: Mark items in process",
+        "replaces": ["ui-inventory.items.mark-in-process"],
         "subPermissions": [
           "inventory.items.item.mark-in-process.post"
         ],
@@ -917,6 +932,7 @@
       {
         "permissionName": "ui-inventory.items.in-transit-report.create",
         "displayName": "Inventory: Create and download In transit items report",
+        "replaces": ["ui-inventory.items.create-in-transit-report"],
         "subPermissions": [
           "circulation.inventory.items-in-transit-report.get"
         ],
@@ -935,12 +951,12 @@
         "visible": true
       },
       {
-        "permissionName": "mod-settings.global.read.ui-inventory.display-settings",
+        "permissionName": "mod-settings.global.read.ui-inventory.display-settings.manage",
         "displayName": "Settings (Inventory): read the settings in the 'Display settings' section",
         "visible": false
       },
       {
-        "permissionName": "mod-settings.global.write.ui-inventory.display-settings",
+        "permissionName": "mod-settings.global.write.ui-inventory.display-settings.manage",
         "displayName": "Settings (Inventory): write the settings in the 'Display settings' section",
         "visible": false
       },
@@ -952,8 +968,8 @@
           "mod-settings.entries.collection.get",
           "mod-settings.entries.item.post",
           "mod-settings.entries.item.put",
-          "mod-settings.global.read.ui-inventory.display-settings",
-          "mod-settings.global.write.ui-inventory.display-settings"
+          "mod-settings.global.read.ui-inventory.display-settings.manage",
+          "mod-settings.global.write.ui-inventory.display-settings.manage"
         ],
         "visible": true
       }

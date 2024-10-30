@@ -30,7 +30,7 @@ const SubjectSourcesSettings = (props) => {
   const stripes = useStripes();
 
   const hasPerm = stripes.hasPerm('ui-inventory.settings.subject-sources');
-  const suppress = getSourceSuppressor([RECORD_SOURCE.FOLIO]);
+  const suppress = getSourceSuppressor([RECORD_SOURCE.FOLIO, RECORD_SOURCE.CONSORTIUM]);
 
   return (
     <TitleManager
