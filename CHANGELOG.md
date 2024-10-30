@@ -127,6 +127,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Add 'replaces' array to refactored ui permissions. Refs UIIN-3110.
 * Update quick-marc permission name. Refs UIIN-3111.
 * ECS: Prevent Item affiliation ownership change if it is attached to a local PO line. Refs UIIN-3105.
+* Add missing BE permission`source-storage.records.matching.collection.post`. Fixes UIIN-3086.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
