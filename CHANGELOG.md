@@ -123,6 +123,7 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Browse | Number of titles in Subject browse results does not match the number of instances returned in search. Fixes UIIN-3101.
 * Adjust the URI of a redirect to Linked data editor. Fixes UIIN-3107.
 * Rename "mod-settings.global.*" permissions. Refs UIIN-3109.
+* Suppress edit and delete actions of subject types and sources for `consortium` source. Refs UIIN-3112.
 * Add 'replaces' array to refactored ui permissions. Refs UIIN-3110.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
