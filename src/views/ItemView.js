@@ -301,7 +301,7 @@ const ItemView = props => {
         .json()
         .then(() => {
           openLinkedOrderLineModal();
-        }).catch(error => {
+        }).catch(() => {
           openUpdateOwnershipModal();
         });
     } else {
