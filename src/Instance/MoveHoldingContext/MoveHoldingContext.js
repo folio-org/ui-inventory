@@ -61,12 +61,10 @@ const MoveHoldingContext = ({
 
   const {
     holdingsRecords: leftHoldings,
-    isLoading: isLoadingLeftHoldings,
     refetch: refetchLeftHolding
   } = useInstanceHoldingsQuery(leftInstance.id, { refreshKey: !isMoving });
   const {
     holdingsRecords: rightHoldings,
-    isLoading: isLoadingRightHoldings,
     refetch: refetchRightHolding,
   } = useInstanceHoldingsQuery(rightInstance.id, { refreshKey: !isMoving });
 
@@ -173,7 +171,7 @@ const MoveHoldingContext = ({
     setIsModalOpen(false);
   }, [setIsModalOpen]);
 
-  const checkHasMultiplePOLsOrHoldings = async (holdingIds = [], selectedHoldingIdsFromInstance = []) => {
+  const checkHasMultiplePOLsOrHoldings = async (holdingIds = []) => {
     try {
       const { poLines = [] } = await ky.get(LINES_API, {
         searchParams: {
@@ -184,7 +182,7 @@ const MoveHoldingContext = ({
 
       return {
         hasLinkedPOLs:  poLines.length > 1 || poLines[0]?.locations?.length > 1,
-        poLineHoldingIds: getPOLineHoldingIds(poLines, selectedHoldingIdsFromInstance),
+        poLineHoldingIds: getPOLineHoldingIds(poLines, holdingIds),
       };
     } catch (error) {
       return {
@@ -217,9 +215,9 @@ const MoveHoldingContext = ({
     const {
       hasLinkedPOLs,
       poLineHoldingIds
-    } = await checkHasMultiplePOLsOrHoldings(selectedInstanceHoldingsIds, holdingIdsFromSelection);
+    } = await checkHasMultiplePOLsOrHoldings(holdingIdsFromSelection);
 
-    const holdingIdsToMove = uniq(hasLinkedPOLs ? poLineHoldingIds : holdingIdsFromSelection);
+    const holdingIdsToMove = uniq([...poLineHoldingIds, ...holdingIdsFromSelection]);
 
     setMovingItems(holdingIdsToMove);
     setHasLinkedPOLsOrHoldings(hasLinkedPOLs);
@@ -304,7 +302,7 @@ const MoveHoldingContext = ({
     ],
   );
 
-  if (isMoving || isItemsMoving || isLoadingLeftHoldings || isLoadingRightHoldings) {
+  if (isMoving || isItemsMoving) {
     return <Loading size="large" />;
   }
 
