@@ -61,12 +61,10 @@ const MoveHoldingContext = ({
 
   const {
     holdingsRecords: leftHoldings,
-    isLoading: isLoadingLeftHoldings,
     refetch: refetchLeftHolding
   } = useInstanceHoldingsQuery(leftInstance.id, { refreshKey: !isMoving });
   const {
     holdingsRecords: rightHoldings,
-    isLoading: isLoadingRightHoldings,
     refetch: refetchRightHolding,
   } = useInstanceHoldingsQuery(rightInstance.id, { refreshKey: !isMoving });
 
@@ -304,7 +302,7 @@ const MoveHoldingContext = ({
     ],
   );
 
-  if (isMoving || isItemsMoving || isLoadingLeftHoldings || isLoadingRightHoldings) {
+  if (isMoving || isItemsMoving) {
     return <Loading size="large" />;
   }
 
