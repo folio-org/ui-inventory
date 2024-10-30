@@ -124,6 +124,9 @@ and disable fields when "Settings (Inventory): Create, edit and delete HRID hand
 * Adjust the URI of a redirect to Linked data editor. Fixes UIIN-3107.
 * Rename "mod-settings.global.*" permissions. Refs UIIN-3109.
 * Suppress edit and delete actions of subject types and sources for `consortium` source. Refs UIIN-3112.
+* Add 'replaces' array to refactored ui permissions. Refs UIIN-3110.
+* Update quick-marc permission name. Refs UIIN-3111.
+* ECS: Prevent Item affiliation ownership change if it is attached to a local PO line. Refs UIIN-3105.
 
 ## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)

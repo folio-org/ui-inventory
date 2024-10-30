@@ -351,6 +351,32 @@ describe('ItemView', () => {
           });
         });
 
+        it('should display Linked order lines modal', async () => {
+          renderWithIntl(
+            <ItemViewSetup
+              resources={{
+                ...defaultProps.resources,
+                itemsResource: {
+                  ...defaultProps.resources.itemsResource,
+                  records: [{
+                    ...defaultProps.resources.itemsResource.records[0],
+                    purchaseOrderLineIdentifier: 'POL-1',
+                  }]
+                },
+              }}
+            />, translationsProperties
+          );
+
+          const updateOwnershipBtn = await screen.findByText('Update ownership');
+          fireEvent.click(updateOwnershipBtn);
+
+          const hasLocalPOLMessage = await screen.findByText('Linked order line');
+          expect(hasLocalPOLMessage).toBeInTheDocument();
+
+          fireEvent.click(screen.getByRole('button', { name: /continue/i }));
+          expect(screen.queryByText('Linked order line')).not.toBeInTheDocument();
+        });
+
         describe('when an error was occured', () => {
           it('should show an error message', async () => {
             useHoldingMutation.mockClear().mockReturnValue({ mutateHolding: mockMutate });
