@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [12.0.0] (IN PROGRESS)
+## [12.0.0](https://github.com/folio-org/ui-inventory/tree/v12.0.0) (2024-10-31)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.5...v12.0.0)
 
 * Remove unused code related to auto-open record detail view. Refs UIIN-2819.
 * Keyboard shortcuts modal: Add quickMARC shortcuts to modal. Refs UIIN-2795.
