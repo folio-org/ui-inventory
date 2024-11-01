@@ -168,7 +168,7 @@
     "instanceStatus": "Instance status term",
     "selectInstanceStatus": "インスタンス ステータスの選択",
     "selectModeOfIssuance": "発行モードの選択",
-    "instanceStatusUpdatedDate": "Status updated date",
+    "instanceStatusUpdatedDate": "ステータス更新日",
     "hridTaken": "このHRIDはすでに使用されています",
     "instances.columns.title": "タイトル",
     "instances.columns.contributors": "寄与者",
