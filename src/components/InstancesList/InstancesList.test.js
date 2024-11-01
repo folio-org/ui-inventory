@@ -206,11 +206,11 @@ describe('InstancesList', () => {
 
         renderInstancesList({ segment: 'instances' });
 
-        await waitFor(() => expect(history.replace).toHaveBeenCalledWith({
+        expect(history.replace).toHaveBeenLastCalledWith({
           pathname: '/',
-          search: 'filters=staffSuppress.false',
+          search: 'filters=staffSuppress.false&sort=contributors',
           state: undefined,
-        }));
+        });
       });
     });
 
@@ -231,11 +231,11 @@ describe('InstancesList', () => {
             },
           });
 
-          await waitFor(() => expect(history.replace).toHaveBeenCalledWith({
+          expect(history.replace).toHaveBeenLastCalledWith({
             pathname: '/',
-            search: 'filters=staffSuppress.false',
+            search: 'filters=staffSuppress.false&sort=contributors',
             state: undefined,
-          }));
+          });
         });
       });
     });
@@ -315,7 +315,7 @@ describe('InstancesList', () => {
 
           await waitFor(() => expect(history.replace).toHaveBeenCalledWith({
             pathname: '/',
-            search: 'segment=holdings&filters=staffSuppress.false',
+            search: 'segment=holdings&filters=staffSuppress.false&sort=contributors',
             state: undefined,
           }));
         });
@@ -361,7 +361,11 @@ describe('InstancesList', () => {
             },
           });
 
-          expect(history.replace).toHaveBeenLastCalledWith('/inventory?filters=staffSuppress.false&sort=relevance');
+          expect(history.replace).toHaveBeenLastCalledWith({
+            pathname: '/inventory',
+            search: 'filters=staffSuppress.false&sort=relevance',
+            state: undefined,
+          });
         });
       });
 
@@ -518,7 +522,11 @@ describe('InstancesList', () => {
         fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'test' } });
         fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
 
-        expect(history.replace).toHaveBeenLastCalledWith('/?filters=staffSuppress.false&sort=relevance');
+        expect(history.replace).toHaveBeenLastCalledWith({
+          pathname: '/',
+          search: 'filters=staffSuppress.false&sort=relevance',
+          state: undefined,
+        });
       });
     });
 
