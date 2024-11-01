@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [12.0.1] (IN PROGRESS)
+
+* ECS | "FOLIO/MARC-shared" source is displayed in manually shared instance record. Fixes UIIN-3115.
+
 ## [12.0.0](https://github.com/folio-org/ui-inventory/tree/v12.0.0) (2024-10-31)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.5...v12.0.0)
 
