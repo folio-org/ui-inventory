@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [12.0.1] (IN PROGRESS)
+
+* Run `history.replace` once during component mount and update to avoid URL rewriting. Refs UIIN-3099.
+
 ## [12.0.0](https://github.com/folio-org/ui-inventory/tree/v12.0.0) (2024-10-31)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.5...v12.0.0)
 

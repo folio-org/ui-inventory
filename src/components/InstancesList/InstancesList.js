@@ -222,9 +222,9 @@ class InstancesList extends React.Component {
   componentDidMount() {
     const {
       history,
+      location: _location,
       getParams,
       data,
-      updateLocation,
     } = this.props;
 
     const params = getParams();
@@ -250,17 +250,20 @@ class InstancesList extends React.Component {
 
     this.processLastSearchTermsOnMount();
 
-    this.applyDefaultStaffSuppressFilter();
+    const searchParams = new URLSearchParams(_location.search);
 
-    if (params.sort !== defaultSort) {
-      updateLocation({ sort: defaultSort }, { replace: true });
+    const isStaffSuppressFilterChanged = this.applyDefaultStaffSuppressFilter(searchParams);
+
+    if (params.sort !== defaultSort || isStaffSuppressFilterChanged) {
+      searchParams.set('sort', defaultSort);
+      this.redirectToSearchParams(searchParams);
     }
   }
 
   componentDidUpdate(prevProps) {
     const {
       data,
-      updateLocation,
+      location,
       segment,
     } = this.props;
     const sortBy = this.getSortFromParams();
@@ -281,13 +284,18 @@ class InstancesList extends React.Component {
       setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, null);
     }
 
+    const searchParams = new URLSearchParams(location.search);
+
+    let isStaffSuppressFilterChanged = false;
+
     if (prevProps.segment !== this.props.segment) {
-      this.applyDefaultStaffSuppressFilter();
+      isStaffSuppressFilterChanged = this.applyDefaultStaffSuppressFilter(searchParams);
     }
 
-    // it is missing after reset button is hit
-    if (!sortBy) {
-      updateLocation({ sort: data.displaySettings.defaultSort }, { replace: true });
+    // `sort` is missing after reset button is hit
+    if (!sortBy || isStaffSuppressFilterChanged) {
+      searchParams.set('sort', data.displaySettings.defaultSort);
+      this.redirectToSearchParams(searchParams);
     }
   }
 
@@ -324,14 +332,10 @@ class InstancesList extends React.Component {
     });
   }
 
-  applyDefaultStaffSuppressFilter = () => {
-    const { location } = this.props;
-
+  applyDefaultStaffSuppressFilter = (searchParams) => {
     if (JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY))) {
-      return;
+      return false;
     }
-
-    const searchParams = new URLSearchParams(location.search);
 
     const filters = searchParams.get('filters');
 
@@ -342,9 +346,8 @@ class InstancesList extends React.Component {
       const newFiltersValue = addFilter(filters, staffSuppressFalse);
 
       searchParams.set('filters', newFiltersValue);
-      this.redirectToSearchParams(searchParams);
 
-      return;
+      return true;
     }
 
     const isStaffSuppressFilterAvailable = this.props.stripes.hasPerm('ui-inventory.instance.staff-suppressed-records.view');
@@ -354,8 +357,11 @@ class InstancesList extends React.Component {
       const newFiltersValue = replaceFilter(filters, staffSuppressTrue, staffSuppressFalse);
 
       searchParams.set('filters', newFiltersValue);
-      this.redirectToSearchParams(searchParams);
+
+      return true;
     }
+
+    return false;
   }
 
   getInstanceIdFromLocation = (location) => {
