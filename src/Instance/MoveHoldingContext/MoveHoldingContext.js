@@ -8,6 +8,7 @@ import {
 } from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { useIntl } from 'react-intl';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   Loading,
@@ -172,6 +173,13 @@ const MoveHoldingContext = ({
   }, [setIsModalOpen]);
 
   const checkHasMultiplePOLsOrHoldings = async (holdingIds = []) => {
+    if (isEmpty(holdingIds)) {
+      return {
+        hasLinkedPOLs: false,
+        poLineHoldingIds: [],
+      };
+    }
+
     try {
       const { poLines = [] } = await ky.get(LINES_API, {
         searchParams: {
@@ -181,7 +189,7 @@ const MoveHoldingContext = ({
       }).json();
 
       return {
-        hasLinkedPOLs:  poLines.length > 1 || poLines[0]?.locations?.length > 1,
+        hasLinkedPOLs: poLines.length > 1 || poLines[0]?.locations?.length > 1,
         poLineHoldingIds: getPOLineHoldingIds(poLines, holdingIds),
       };
     } catch (error) {
@@ -219,7 +227,7 @@ const MoveHoldingContext = ({
 
     const holdingIdsToMove = uniq([...poLineHoldingIds, ...holdingIdsFromSelection]);
 
-    setMovingItems(holdingIdsToMove);
+    setMovingItems(isHolding || hasLinkedPOLs ? holdingIdsToMove : items);
     setHasLinkedPOLsOrHoldings(hasLinkedPOLs);
     setSelectedHoldingIds(holdingIdsToMove);
     setIsModalOpen(true);
