@@ -14,14 +14,20 @@ import {
   Loading,
   MessageBanner,
 } from '@folio/stripes/components';
-import { useOkapiKy } from '@folio/stripes/core';
+import {
+  useOkapiKy,
+  useStripes
+} from '@folio/stripes/core';
 import { LINES_API, LIMIT_MAX } from '@folio/stripes-acq-components';
 
 import {
   callNumberLabel
 } from '../../utils';
 import { DataContext } from '../../contexts';
-import { useHoldings, useInstanceHoldingsQuery } from '../../providers';
+import {
+  useHoldings,
+  useInstanceHoldingsQuery,
+} from '../../providers';
 import * as RemoteStorage from '../../RemoteStorageService';
 
 import {
@@ -29,8 +35,11 @@ import {
   selectItems,
 } from '../utils';
 import DnDContext from '../DnDContext';
-import { HoldingContainer } from '../HoldingsList';
-import * as Move from '../Move';
+import { HoldingsList } from '../HoldingsList';
+import {
+  useItems,
+  ConfirmationModal
+} from '../Move';
 import { getPOLineHoldingIds } from './utils';
 
 const MoveHoldingContext = ({
@@ -41,12 +50,13 @@ const MoveHoldingContext = ({
 }) => {
   const intl = useIntl();
   const ky = useOkapiKy();
+  const stripes = useStripes();
 
   const { locationsById } = useContext(DataContext);
   const { holdingsById } = useHoldings();
 
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
-  const { moveItems, isMoving: isItemsMoving } = Move.useItems();
+  const { moveItems, isMoving: isItemsMoving } = useItems();
 
   const [isMoving, setIsMoving] = useState(false);
   const [selectedItemsMap, setSelectedItemsMap] = useState({});
@@ -233,82 +243,74 @@ const MoveHoldingContext = ({
     setIsModalOpen(true);
   }, [selectedItemsMap, leftInstance, rightHoldings, leftHoldings, selectedHoldingsMap, checkHasMultiplePOLsOrHoldings]);
 
-  const movingMessage = useMemo(
-    () => {
-      const targetHolding = holdingsById[dragToId];
-      const callNumber = callNumberLabel(targetHolding);
-      const labelLocation = targetHolding?.permanentLocationId ? locationsById[targetHolding.permanentLocationId]?.name : '';
-      const holdings = allHoldings.filter(holding => selectedHoldingIds.includes(holding.id));
+  const movingMessage = useMemo(() => {
+    const targetHolding = holdingsById[dragToId];
+    const callNumber = callNumberLabel(targetHolding);
+    const labelLocation = targetHolding?.permanentLocationId ? locationsById[targetHolding.permanentLocationId]?.name : '';
+    const holdings = allHoldings.filter(holding => selectedHoldingIds.includes(holding.id));
+    const currentInstance = rightInstance.id === dragToId ? rightInstance : leftInstance;
 
-      const count = movingItems.length;
+    const count = movingItems.length;
 
-      if (hasLinkedPOLsOrHoldings) {
-        return (
-          <>
-            { intl.formatMessage(
-              { id: 'ui-inventory.moveItems.modal.message.hasLinkedPOLsOrHoldings' },
-            )}
-            {
-              selectedHoldingIds.map(holdingId => (
-                <HoldingContainer
-                  key={holdingId}
-                  holding={allHoldings.find(holding => holding.id === holdingId)}
-                  holdings={holdings}
-                  isDraggable={false}
-                  instance={rightInstance.id === dragToId ? rightInstance : leftInstance}
-                />
-              ))
-            }
-          </>
-        );
-      }
-
-      if (isHoldingMoved) {
-        return intl.formatMessage(
-          { id: 'ui-inventory.moveItems.modal.message.holdings' },
-          {
-            count,
-            targetName: <b>{rightInstance.id === dragToId ? rightInstance.title : leftInstance.title}</b>
-          }
-        );
-      }
-
-      const moveMsg = intl.formatMessage(
-        { id: 'ui-inventory.moveItems.modal.message.items' },
-        {
-          count,
-          targetName: <b>{`${labelLocation} ${callNumber}`}</b>
-        }
-      );
-
+    if (hasLinkedPOLsOrHoldings) {
       return (
         <>
-          {moveMsg}
-          <MessageBanner
-            show={checkFromRemoteToNonRemote({ fromHoldingsId: dragFromId, toHoldingsId: dragToId })}
-            type="warning"
-          >
-            <RemoteStorage.Confirmation.Message count={count} />
-          </MessageBanner>
+          { intl.formatMessage(
+            { id: 'ui-inventory.moveItems.modal.message.hasLinkedPOLsOrHoldings' },
+          )}
+          <HoldingsList
+            holdings={holdings}
+            instance={currentInstance}
+            tenantId={stripes.okapi?.tenant}
+          />
         </>
       );
-    },
-    [
-      holdingsById,
-      dragToId,
-      locationsById,
-      movingItems.length,
-      isHoldingMoved,
-      intl,
-      checkFromRemoteToNonRemote,
-      dragFromId,
-      rightInstance.id,
-      rightInstance.title,
-      leftInstance.title,
-      allHoldings,
-      selectedHoldingIds,
-    ],
-  );
+    }
+
+    if (isHoldingMoved) {
+      return intl.formatMessage(
+        { id: 'ui-inventory.moveItems.modal.message.holdings' },
+        {
+          count,
+          targetName: <b>{rightInstance.id === dragToId ? rightInstance.title : leftInstance.title}</b>
+        }
+      );
+    }
+
+    const moveMsg = intl.formatMessage(
+      { id: 'ui-inventory.moveItems.modal.message.items' },
+      {
+        count,
+        targetName: <b>{`${labelLocation} ${callNumber}`}</b>
+      }
+    );
+
+    return (
+      <>
+        {moveMsg}
+        <MessageBanner
+          show={checkFromRemoteToNonRemote({ fromHoldingsId: dragFromId, toHoldingsId: dragToId })}
+          type="warning"
+        >
+          <RemoteStorage.Confirmation.Message count={count} />
+        </MessageBanner>
+      </>
+    );
+  }, [
+    holdingsById,
+    dragToId,
+    locationsById,
+    movingItems.length,
+    isHoldingMoved,
+    intl,
+    checkFromRemoteToNonRemote,
+    dragFromId,
+    rightInstance.id,
+    rightInstance.title,
+    leftInstance.title,
+    allHoldings,
+    selectedHoldingIds,
+  ]);
 
   if (isMoving || isItemsMoving) {
     return <Loading size="large" />;
@@ -341,7 +343,7 @@ const MoveHoldingContext = ({
         }}
       >
         {children}
-        <Move.ConfirmationModal
+        <ConfirmationModal
           id="move-holding-confirmation"
           message={movingMessage}
           onCancel={closeModal}
