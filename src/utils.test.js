@@ -8,6 +8,7 @@ import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
 import buildStripes from '../test/jest/__mock__/stripesCore.mock';
 
 import {
+  hasMemberTenantPermission,
   validateRequiredField,
   validateFieldLength,
   validateNumericField,
@@ -442,6 +443,50 @@ describe('marshalInstance', () => {
           dateTypeId: 'date-type-id',
         },
       }));
+    });
+  });
+});
+
+describe('hasMemberTenantPermission', () => {
+  it('returns false without permissions', () => {
+    expect(hasMemberTenantPermission('foo', 'tenant')).toBe(false);
+  });
+
+  it('returns false with empty permissions', () => {
+    expect(hasMemberTenantPermission('foo', 'tenant', [])).toBe(false);
+  });
+
+  it('returns false if tenant does not match', () => {
+    expect(hasMemberTenantPermission(
+      'foo',
+      'tenant',
+      [{ permissionNames: [{ permissionName: 'foo' }], tenantId: 'asdf' }]
+    )).toBe(false);
+  });
+
+  describe('when tenant matches', () => {
+    it('returns true if matching permissionName is present', () => {
+      expect(hasMemberTenantPermission(
+        'foo',
+        'tenant',
+        [{ permissionNames: [{ permissionName: 'foo' }], tenantId: 'tenant' }]
+      )).toBe(true);
+    });
+
+    it('returns true if matching subPermissions entry is present', () => {
+      expect(hasMemberTenantPermission(
+        'foo',
+        'tenant',
+        [{ permissionNames: [{ permissionName: 'bar', subPermissions: ['foo'] }], tenantId: 'tenant' }]
+      )).toBe(true);
+    });
+
+    it('returns false if no matching permissions entry is present', () => {
+      expect(hasMemberTenantPermission(
+        'foo',
+        'tenant',
+        [{ permissionNames: [{ permissionName: 'bar' }], tenantId: 'tenant' }]
+      )).toBe(false);
     });
   });
 });
