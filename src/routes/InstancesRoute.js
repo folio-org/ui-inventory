@@ -8,6 +8,7 @@ import {
   renderFilters,
   segments,
   withSearchErrors,
+  ResetProvider,
 } from '@folio/stripes-inventory-components';
 
 import withLocation from '../withLocation';
@@ -67,27 +68,29 @@ class InstancesRoute extends React.Component {
     return (
       <DataContext.Consumer>
         {data => (
-          <InstancesView
-            parentResources={parentResources}
-            parentMutator={mutator}
-            data={{ ...data, query }}
-            onSelectRow={onSelectRow}
-            disableRecordCreation={disableRecordCreation}
-            renderFilters={renderFilters({
-              data,
-              query,
-              onFilterChange: this.handleFilterChange,
-            })}
-            segment={segment}
-            searchableIndexes={indexes}
-            getLastSearch={getLastSearch}
-            getLastBrowse={getLastBrowse}
-            getLastSearchOffset={getLastSearchOffset}
-            storeLastSearch={storeLastSearch}
-            storeLastSearchOffset={storeLastSearchOffset}
-            storeLastSegment={storeLastSegment}
-            isRequestUrlExceededLimit={isRequestUrlExceededLimit}
-          />
+          <ResetProvider>
+            <InstancesView
+              parentResources={parentResources}
+              parentMutator={mutator}
+              data={{ ...data, query }}
+              onSelectRow={onSelectRow}
+              disableRecordCreation={disableRecordCreation}
+              renderFilters={renderFilters({
+                data,
+                query,
+                onFilterChange: this.handleFilterChange,
+              })}
+              segment={segment}
+              searchableIndexes={indexes}
+              getLastSearch={getLastSearch}
+              getLastBrowse={getLastBrowse}
+              getLastSearchOffset={getLastSearchOffset}
+              storeLastSearch={storeLastSearch}
+              storeLastSearchOffset={storeLastSearchOffset}
+              storeLastSegment={storeLastSegment}
+              isRequestUrlExceededLimit={isRequestUrlExceededLimit}
+            />
+          </ResetProvider>
         )}
       </DataContext.Consumer>
     );

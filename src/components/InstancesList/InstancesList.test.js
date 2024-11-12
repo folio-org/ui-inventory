@@ -46,6 +46,9 @@ const mockItemsByQuery = jest.fn().mockResolvedValue([{
 const mockRecordsToExportIDs = jest.fn().mockResolvedValue([{
   id: 'UUID',
 }]);
+const mockUnsubscribeFromReset = jest.fn();
+const mockPublishOnReset = jest.fn();
+
 const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 const spyOnCheckIfUserInCentralTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInCentralTenant');
 
@@ -87,6 +90,20 @@ jest.mock('@folio/stripes/core', () => ({
   TitleManager: ({ page }) => (
     <div>{page}</div>
   ),
+}));
+
+jest.mock('@folio/stripes-inventory-components', () => ({
+  ...jest.requireActual('@folio/stripes-inventory-components'),
+  withReset: (Comp) => (props) => (
+    <Comp
+      {...props}
+      unsubscribeFromReset={mockUnsubscribeFromReset}
+      publishOnReset={mockPublishOnReset}
+    />
+  ),
+  deleteFacetStates: jest.fn(),
+  resetFacetStates: jest.fn(),
+  buildSearchQuery: jest.fn(),
 }));
 
 const data = {
@@ -218,6 +235,16 @@ describe('InstancesList', () => {
             state: undefined,
           }));
         });
+      });
+    });
+
+    describe('when switching segment (Instance/Holdings/Item)', () => {
+      it('should unsubscribe from reset event', () => {
+        renderInstancesList();
+
+        fireEvent.click(screen.getByRole('button', { name: 'Holdings' }));
+
+        expect(mockUnsubscribeFromReset).toHaveBeenCalled();
       });
     });
 
@@ -419,6 +446,14 @@ describe('InstancesList', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
 
         expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
+      });
+
+      it('should publish the reset event', () => {
+        renderInstancesList();
+
+        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+        expect(mockPublishOnReset).toHaveBeenCalled();
       });
 
       it('should call history.replace to add the default sort query parameter from inventory settings', () => {

@@ -8,6 +8,7 @@ import {
 } from 'react-query';
 
 import { CalloutContext } from '@folio/stripes/core';
+import { ResetProvider } from '@folio/stripes-inventory-components';
 
 import translations from '../../../translations/ui-inventory/en';
 import prefixKeys from './prefixKeys';
@@ -42,7 +43,9 @@ const Harness = ({
           defaultRichTextElements={defaultRichTextElements}
           messages={allTranslations}
         >
-          {children}
+          <ResetProvider>
+            {children}
+          </ResetProvider>
         </IntlProvider>
       </CalloutContext.Provider>
     </QueryClientProvider>
