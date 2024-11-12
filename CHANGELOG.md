@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [13.0.0] (IN PROGRESS)
+
+* *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
+
 ## [12.0.1] (IN PROGRESS)
 
 * Run `history.replace` once during component mount and update to avoid URL rewriting. Refs UIIN-3099.

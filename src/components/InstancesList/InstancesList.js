@@ -508,7 +508,7 @@ class InstancesList extends React.Component {
 
   openCreateMARCRecord = () => {
     const searchParams = new URLSearchParams(this.props.location.search);
-    this.props.goTo(`/inventory/quick-marc/create-bib?${searchParams}`);
+    this.props.goTo(`/inventory/quick-marc/create-bibliographic?${searchParams}`);
   }
 
   copyInstance = (instance) => {
