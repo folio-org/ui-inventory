@@ -460,14 +460,28 @@ class ViewInstance extends React.Component {
     this.setState({ instancesQuickExportInProgress: true });
 
     try {
+      const generator = new IdReportGenerator('QuickInstanceExport');
       const instanceIds = [match.params.id];
 
-      await this.props.mutator.quickExport.POST({
+      const result = await this.props.mutator.quickExport.POST({
         uuids: instanceIds,
         type: 'uuid',
         recordType: INSTANCE_RECORD_TYPE
       });
-      new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
+
+      const csvFileName = generator.getCSVFileName();
+      const marcFileName = generator.getMARCFileName(result?.jobExecutionHrId);
+
+      generator.toCSV(instanceIds);
+
+      this.calloutRef.current.sendCallout({
+        timeout: 0,
+        type: 'success',
+        message: <FormattedMessage
+          id="ui-inventory.exportInstancesInMARC.complete"
+          values={{ csvFileName, marcFileName }}
+        />,
+      });
     } catch (error) {
       this.calloutRef.current.sendCallout({
         type: 'error',

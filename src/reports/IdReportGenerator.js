@@ -14,11 +14,19 @@ class IdReportGenerator {
     return records.map(record => ({ id: recordFinder(record) }));
   }
 
+  getCSVFileName() {
+    return `${this.fileNamePrefix}${moment().format()}`;
+  }
+
+  getMARCFileName(jobHRID) {
+    return `quick-export-${jobHRID}`;
+  }
+
   toCSV(records, recordFinder) {
     const parsedRecords = this.parse(records, recordFinder);
     const fileTitle = {
       header: false,
-      filename: `${this.fileNamePrefix}${moment().format()}`,
+      filename: this.getCSVFileName(),
     };
     const generateReport = !isTestEnv() ? exportCsv : noop;
 
