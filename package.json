@@ -972,7 +972,7 @@
     "@folio/stripes-components": "^12.1.2",
     "@folio/stripes-connect": "^9.1.0",
     "@folio/stripes-core": "^10.1.1",
-    "@folio/stripes-inventory-components": "^1.0.0",
+    "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^1.0.1",
     "@folio/stripes-smart-components": "^9.1.1",
     "@folio/stripes-testing": "^4.6.0",
@@ -1016,7 +1016,7 @@
   },
   "peerDependencies": {
     "@folio/stripes": "^9.1.2",
-    "@folio/stripes-inventory-components": "^1.0.0",
+    "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^1.0.1",
     "react": "^18.2.0",
     "react-intl": "^6.4.4",
@@ -1027,7 +1027,7 @@
   },
   "optionalDependencies": {
     "@folio/plugin-create-inventory-records": "^4.0.0",
-    "@folio/plugin-find-instance": "^7.0.0"
+    "@folio/plugin-find-instance": "^9.0.0"
   },
   "resolutions": {
     "moment": "~2.29.4"
