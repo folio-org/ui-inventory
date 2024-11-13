@@ -749,13 +749,32 @@ export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia
 
 export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
 
+/**
+ * hasMemberTenantPermission
+ * return true if permissionName is present in the array of permissions for
+ * the given tenant. permissionName may match a top-level permissionName or a
+ * permission's subPermissions.
+ *
+ * @param {string} permissionName
+ * @param {string} tenantId
+ * @param {array} permissions array of objects shaped like
+ * {
+ *   permissionNames: [{
+ *     permissionName: 'string',
+ *     subPermissions: ['string'],
+ *   }],
+ *   tenantId: 'string'
+ * }
+ *
+ * @returns true if permissions contains a value matching the given permissionName and tenant
+ */
 export const hasMemberTenantPermission = (permissionName, tenantId, permissions = []) => {
   const tenantPermissions = permissions?.find(permission => permission?.tenantId === tenantId)?.permissionNames || [];
 
   const hasPermission = tenantPermissions?.some(tenantPermission => tenantPermission?.permissionName === permissionName);
 
   if (!hasPermission) {
-    return tenantPermissions.some(tenantPermission => tenantPermission.subPermissions.includes(permissionName));
+    return tenantPermissions.some(tenantPermission => tenantPermission.subPermissions?.includes(permissionName));
   }
 
   return hasPermission;

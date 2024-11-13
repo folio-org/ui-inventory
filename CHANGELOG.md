@@ -5,6 +5,7 @@
 * Run `history.replace` once during component mount and update to avoid URL rewriting. Refs UIIN-3099.
 * ECS | "FOLIO/MARC-shared" source is displayed in manually shared instance record. Fixes UIIN-3115.
 * Allow user to move item to another holdings associated with another instance. Fixes UIIN-3102.
+* Cautiously evaluate tenant permissions to avoid NPEs. Refs UIIN-3124.
 
 ## [12.0.0](https://github.com/folio-org/ui-inventory/tree/v12.0.0) (2024-10-31)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.5...v12.0.0)
