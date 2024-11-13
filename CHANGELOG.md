@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [12.0.2] (IN PROGRESS)
+
+* ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
+
 ## [12.0.1](https://github.com/folio-org/ui-inventory/tree/v12.0.1) (2024-11-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.0...v12.0.1)
 
