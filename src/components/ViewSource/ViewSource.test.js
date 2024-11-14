@@ -187,7 +187,7 @@ describe('ViewSource', () => {
       fireEvent.click(screen.getByRole('button', { name: 'editMARC' }));
 
       expect(mockPush).toHaveBeenLastCalledWith({
-        pathname: `/inventory/quick-marc/edit-bib/${mockInstance.id}`,
+        pathname: `/inventory/quick-marc/edit-bibliographic/${mockInstance.id}`,
         search: '',
       });
     });
@@ -214,7 +214,7 @@ describe('ViewSource', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Edit MARC bibliographic record' }));
 
         expect(mockPush).toHaveBeenLastCalledWith({
-          pathname: `/inventory/quick-marc/edit-bib/${mockInstance.id}`,
+          pathname: `/inventory/quick-marc/edit-bibliographic/${mockInstance.id}`,
           search: '',
         });
       });

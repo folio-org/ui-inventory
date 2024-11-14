@@ -2,6 +2,7 @@
 
 ## [13.0.0] (IN PROGRESS)
 
+* *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
 * *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
 
 ## [12.0.1] (IN PROGRESS)

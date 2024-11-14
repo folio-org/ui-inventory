@@ -675,7 +675,7 @@ describe('InstancesList', () => {
 
           fireEvent.click(button);
 
-          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bib?filters=staffSuppress.false&sort=contributors');
+          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bibliographic?filters=staffSuppress.false&sort=contributors');
         });
       });
 
