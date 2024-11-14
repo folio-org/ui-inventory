@@ -91,6 +91,7 @@ const InstanceAcquisition = ({ accordionId, instanceId }) => {
           acquisitions={activeTenantAcquisition}
           isLoading={isLoadingActiveTenantAcquisition}
           tenantId={activeTenant}
+          isActiveTenantAcquisition
         />
       )
       }
