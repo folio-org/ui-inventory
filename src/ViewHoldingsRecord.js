@@ -458,7 +458,7 @@ class ViewHoldingsRecord extends React.Component {
     const canDelete = stripes.hasPerm('ui-inventory.holdings.delete');
     const canViewMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.view');
     const canEditMARC = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.all');
-    const hasUpdateOwnershipPermission = stripes.hasPerm('consortia.inventory.update.ownership');
+    const hasUpdateOwnershipPermission = stripes.hasPerm('consortia.inventory.update-ownership.item.post');
     const canUpdateOwnership = hasUpdateOwnershipPermission && isSharedInstance && !isEmpty(this.state.tenants);
 
     const isSourceMARC = this.isMARCSource();

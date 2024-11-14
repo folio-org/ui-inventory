@@ -328,7 +328,7 @@ const ItemView = props => {
     const newRequestLink = `/requests?itemId=${firstItem.id}&query=${firstItem.id}&layer=create`;
     const userHasPermToCreate = stripes.hasPerm('ui-inventory.item.create');
     const userHasPermToEdit = stripes.hasPerm('ui-inventory.item.edit');
-    const canUpdateOwnership = stripes.hasPerm('consortia.inventory.update.ownership');
+    const canUpdateOwnership = stripes.hasPerm('consortia.inventory.update-ownership.item.post');
     const userHasPermToUpdateOwnership = canUpdateOwnership && isSharedInstance && !isEmpty(tenants);
     const userHasPermToMarkAsMissing = stripes.hasPerm('ui-inventory.item.markasmissing');
     const userHasPermToMarkAsWithdrawn = stripes.hasPerm('ui-inventory.items.mark-items-withdrawn');
