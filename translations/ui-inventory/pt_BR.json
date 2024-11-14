@@ -700,7 +700,7 @@
     "select.createJobProfileId": "Selecione o perfil de trabalho para importar/criar",
     "select.updateJobProfileId": "Selecione o perfil do trabalho para sobreposição/atualização",
     "defaultJobProfile": "Padrão",
-    "copycat.externalTarget": "Alvo externo",
+    "copycat.externalTarget": "Catálogo externo",
     "copycat.jobProfileToBeUsed": "Selecione o perfil a ser usado",
     "copycat.defaultJobProfile": "{jobProfile} (Padrão)",
     "ariaLabel.createJobProfile": "Definir o perfil de trabalho {profileIndex} para criar como padrão",
