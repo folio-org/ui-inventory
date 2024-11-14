@@ -3,18 +3,23 @@ import {
   useMemo,
 } from 'react';
 
+import { useStripes } from '@folio/stripes/core';
+
 import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
 import useInstanceQuery from './useInstanceQuery';
 
 const useInstance = (id) => {
+  const stripes = useStripes();
+  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
+
   const {
     refetch: refetchSearch,
     isLoading: isSearchInstanceByIdLoading,
     instance: _instance,
   } = useSearchInstanceByIdQuery(id);
 
-  const instanceTenantId = _instance?.tenantId;
   const isShared = _instance?.shared;
+  const instanceTenantId = isShared ? centralTenantId : _instance?.tenantId;
 
   const {
     refetch: refetchInstance,
@@ -26,7 +31,7 @@ const useInstance = (id) => {
   } = useInstanceQuery(
     id,
     { tenantId: instanceTenantId },
-    { enabled: Boolean(id && !isSearchInstanceByIdLoading) }
+    { enabled: Boolean(id && !isSearchInstanceByIdLoading && instanceTenantId) }
   );
 
   const instance = useMemo(

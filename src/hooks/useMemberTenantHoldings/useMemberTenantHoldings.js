@@ -11,10 +11,14 @@ const useMemberTenantHoldings = (instance, tenantId, userTenantPermissions) => {
   const { holdingsRecords: expandedHoldings, isLoading: isExpandedHoldingsLoading } = useInstanceHoldingsQuery(instance?.id, { tenantId, enabled: canViewHoldings });
   const { holdings: limitedHoldings, isLoading: isLimitedHoldingsLoading } = useConsortiumHoldings(instance?.id, tenantId, { enabled: !canViewHoldings });
 
-  const holdings = useMemo(() => expandedHoldings || limitedHoldings || [],
-    [expandedHoldings, limitedHoldings, isExpandedHoldingsLoading, isLimitedHoldingsLoading]);
-  const isLoading = useMemo(() => isExpandedHoldingsLoading || isLimitedHoldingsLoading,
-    [isExpandedHoldingsLoading, isLimitedHoldingsLoading]);
+  const holdings = useMemo(
+    () => (expandedHoldings?.length ? expandedHoldings : limitedHoldings?.length ? limitedHoldings : []),
+    [expandedHoldings, limitedHoldings, isExpandedHoldingsLoading, isLimitedHoldingsLoading],
+  );
+  const isLoading = useMemo(
+    () => isExpandedHoldingsLoading || isLimitedHoldingsLoading,
+    [isExpandedHoldingsLoading, isLimitedHoldingsLoading],
+  );
 
   return {
     holdings,
