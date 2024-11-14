@@ -898,7 +898,7 @@ describe('ViewInstance', () => {
       it('push function should be called when the user clicks the "Edit MARC bibliographic record" button', async () => {
         renderViewInstance();
         const expectedValue = {
-          pathname: `/inventory/quick-marc/edit-bib/${defaultProp.selectedInstance.id}`,
+          pathname: `/inventory/quick-marc/edit-bibliographic/${defaultProp.selectedInstance.id}`,
           search: 'filters=test1&query=test2&sort=test3&qindex=test',
         };
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -991,7 +991,7 @@ describe('ViewInstance', () => {
       it('push function should be called when the user clicks the "Derive new MARC bibliographic record" button', async () => {
         renderViewInstance({ isShared: false });
         const expectedValue = {
-          pathname: `/inventory/quick-marc/duplicate-bib/${defaultProp.selectedInstance.id}`,
+          pathname: `/inventory/quick-marc/derive-bibliographic/${defaultProp.selectedInstance.id}`,
           search: 'filters=test1&query=test2&sort=test3&qindex=test',
         };
         fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
@@ -1284,7 +1284,7 @@ describe('ViewInstance', () => {
       fireEvent.click(screen.getByRole('button', { name: 'editMARC' }));
 
       expect(mockPush).toHaveBeenLastCalledWith({
-        pathname: `/inventory/quick-marc/edit-bib/${instance.id}`,
+        pathname: `/inventory/quick-marc/edit-bibliographic/${instance.id}`,
         search: 'filters=test1&query=test2&sort=test3&qindex=test&shared=true',
       });
     });

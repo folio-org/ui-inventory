@@ -81,8 +81,8 @@ import RequestsReorderButton from './components/ViewInstance/MenuSection/Request
 import { IdReportGenerator } from './reports';
 
 const quickMarcPages = {
-  editInstance: 'edit-bib',
-  duplicateInstance: 'duplicate-bib',
+  editInstance: 'edit-bibliographic',
+  duplicateInstance: 'derive-bibliographic',
   createHoldings: 'create-holdings',
 };
 

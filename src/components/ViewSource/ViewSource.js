@@ -82,7 +82,7 @@ const ViewSource = ({
 
   const redirectToMARCEdit = useCallback(() => {
     const urlId = isHoldingsRecord ? `${instanceId}/${holdingsRecordId}` : instanceId;
-    const pathname = `/inventory/quick-marc/edit-${isHoldingsRecord ? 'holdings' : 'bib'}/${urlId}`;
+    const pathname = `/inventory/quick-marc/edit-${isHoldingsRecord ? 'holdings' : 'bibliographic'}/${urlId}`;
 
     redirectToMarcEditPage(pathname, instance, location, history);
   }, [isHoldingsRecord]);
