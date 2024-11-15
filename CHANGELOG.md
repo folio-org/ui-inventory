@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [12.0.1] (IN PROGRESS)
+## [12.0.1](https://github.com/folio-org/ui-inventory/tree/v12.0.1) (2024-11-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.0...v12.0.1)
 
 * Run `history.replace` once during component mount and update to avoid URL rewriting. Refs UIIN-3099.
 * ECS | "FOLIO/MARC-shared" source is displayed in manually shared instance record. Fixes UIIN-3115.
