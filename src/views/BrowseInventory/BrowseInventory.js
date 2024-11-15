@@ -27,7 +27,6 @@ import {
   useItemToView,
   useLocationFilters,
 } from '@folio/stripes-acq-components';
-import { useResetFacetStates } from '@folio/stripes-inventory-components';
 
 import {
   BrowseInventoryFilters,
@@ -48,7 +47,6 @@ const BrowseInventory = () => {
   const location = useLocation();
   const intl = useIntl();
   const [namespace] = useNamespace();
-  const resetFacetStates = useResetFacetStates(namespace);
   const {
     getLastSearch,
     getLastBrowseOffset,
@@ -160,7 +158,6 @@ const BrowseInventory = () => {
   }, [searchQuery, filters]);
 
   const onChangeSearchIndex = useCallback((e) => {
-    resetFacetStates({ isBrowseLookup: true });
     deleteItemToView();
     /*
       useLocationFilters hook returns `resetLocationFilters` function, but it also resets search index and query, which we want to avoid in our case
@@ -169,13 +166,12 @@ const BrowseInventory = () => {
     */
     changeSearchIndex(e);
     clearFilters();
-  }, [deleteItemToView, clearFilters, changeSearchIndex, resetFacetStates]);
+  }, [deleteItemToView, clearFilters, changeSearchIndex]);
 
   const onReset = useCallback(() => {
-    resetFacetStates({ isBrowseLookup: true });
     resetAll();
     inputRef.current.focus();
-  }, [inputRef.current, resetAll, resetFacetStates]);
+  }, [inputRef.current, resetAll]);
 
   useEffect(() => {
     if (hasFocusedSearchOptionOnMount.current) {
