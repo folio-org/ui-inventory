@@ -16,11 +16,11 @@ class IdReportGenerator {
   }
 
   getCSVFileName() {
-    return `${this.fileNamePrefix}${moment().format()}.csv`;
+    return `${this.fileNamePrefix}${moment().format()}`;
   }
 
   getMARCFileName() {
-    return `quick-export-${this.jobHrId}.mrc`;
+    return `quick-export-${this.jobHrId}`;
   }
 
   toCSV(records, recordFinder) {
