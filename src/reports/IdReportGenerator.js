@@ -6,8 +6,9 @@ import { exportCsv } from '@folio/stripes/util';
 import { isTestEnv } from '../utils';
 
 class IdReportGenerator {
-  constructor(fileNamePrefix) {
+  constructor(fileNamePrefix, jobHrId) {
     this.fileNamePrefix = fileNamePrefix;
+    this.jobHrId = jobHrId;
   }
 
   parse(records, recordFinder = record => record) {
@@ -15,11 +16,11 @@ class IdReportGenerator {
   }
 
   getCSVFileName() {
-    return `${this.fileNamePrefix}${moment().format()}`;
+    return `${this.fileNamePrefix}${moment().format()}.csv`;
   }
 
-  getMARCFileName(jobHRID) {
-    return `quick-export-${jobHRID}`;
+  getMARCFileName() {
+    return `quick-export-${this.jobHrId}.mrc`;
   }
 
   toCSV(records, recordFinder) {

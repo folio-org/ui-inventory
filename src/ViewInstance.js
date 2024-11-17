@@ -460,7 +460,6 @@ class ViewInstance extends React.Component {
     this.setState({ instancesQuickExportInProgress: true });
 
     try {
-      const generator = new IdReportGenerator('QuickInstanceExport');
       const instanceIds = [match.params.id];
 
       const result = await this.props.mutator.quickExport.POST({
@@ -468,9 +467,10 @@ class ViewInstance extends React.Component {
         type: 'uuid',
         recordType: INSTANCE_RECORD_TYPE
       });
+      const generator = new IdReportGenerator('QuickInstanceExport', result?.jobExecutionHrId);
 
       const csvFileName = generator.getCSVFileName();
-      const marcFileName = generator.getMARCFileName(result?.jobExecutionHrId);
+      const marcFileName = generator.getMARCFileName();
 
       generator.toCSV(instanceIds);
 

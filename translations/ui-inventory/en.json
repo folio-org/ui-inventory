@@ -601,7 +601,7 @@
   "saveHoldingsUIIDS.error": "Error occurred while saving holdings UUIDs. Please try again.",
   "saveInstancesCQLQuery": "Save instances CQL query",
   "exportInstancesInMARC": "Export instances (MARC)",
-  "exportInstancesInMARC.complete": "The export is complete. The downloaded {csvFileName}.csv contains selected record's UIID. To retrieve the {marcFileName}.mrc file, please go to the Data export app.",
+  "exportInstancesInMARC.complete": "The export is complete. The downloaded {csvFileName} contains selected record's UIID. To retrieve the {marcFileName} file, please go to the Data export app.",
   "exportInstanceInMARC": "Export instance (MARC)",
   "setRecordForDeletion": "Set record for deletion",
   "setForDeletion.toast.successful": "<b>{instanceTitle}</b> has been set for deletion",
