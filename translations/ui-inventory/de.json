@@ -523,7 +523,7 @@
     "permission.item.move": "Katalog: Exemplare verschieben",
     "permission.holdings.move": "Katalog: Bestandsdatensätze verschieben",
     "moveItems.moveButton": "Verschieben an",
-    "moveItems.modal.message.holdings": "{count, number} {count, plural, one {Bestand wird} other {Besände werden}} nach {targetName} verschoben",
+    "moveItems.modal.message.holdings": "{count, number} {count, plural, one {Bestand wird} other {Bestände werden}} nach {targetName} verschoben",
     "moveItems.modal.message.items": "{count, number} {count, plural, one {Exemplar} other {Exemplare}} werden nach {targetName} verschoben",
     "save": "Speichern",
     "defaultDiscoverySuppress": "Standardmäßig Nachweis unterdrücken",

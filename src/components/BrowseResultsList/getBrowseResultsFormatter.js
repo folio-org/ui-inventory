@@ -9,7 +9,6 @@ import {
 } from '@folio/stripes/components';
 import {
   browseModeOptions,
-  deleteFacetStates,
 } from '@folio/stripes-inventory-components';
 
 import {
@@ -53,14 +52,9 @@ const getTargetRecord = (
     }),
   };
 
-  const handleClick = () => {
-    deleteFacetStates(namespace);
-  };
-
   return (
     <TextLink
       to={toParams}
-      onClick={handleClick}
     >
       {record}
     </TextLink>

@@ -1,10 +1,18 @@
 # Change history for ui-inventory
 
-## [12.0.1] (IN PROGRESS)
+## [13.0.0] (IN PROGRESS)
+
+* ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
+* *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
+* *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
+
+## [12.0.1](https://github.com/folio-org/ui-inventory/tree/v12.0.1) (2024-11-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.0...v12.0.1)
 
 * Run `history.replace` once during component mount and update to avoid URL rewriting. Refs UIIN-3099.
 * ECS | "FOLIO/MARC-shared" source is displayed in manually shared instance record. Fixes UIIN-3115.
 * Allow user to move item to another holdings associated with another instance. Fixes UIIN-3102.
+* Cautiously evaluate tenant permissions to avoid NPEs. Refs UIIN-3124.
 
 ## [12.0.0](https://github.com/folio-org/ui-inventory/tree/v12.0.0) (2024-10-31)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.5...v12.0.0)
