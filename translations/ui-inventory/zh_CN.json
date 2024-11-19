@@ -678,7 +678,6 @@
     "instances.columns.contributor": "贡献者",
     "instances.columns.contributorType": "类型",
     "instances.columns.relatorTerm": "关系词术语",
-    "filters.nameType": "名称类型",
     "browseContributors.results.error": "返回结果时出错。请重试或修改搜索。",
     "remote.warning.common.items": "单件已在FOLIO中成功移动。要完成从远程存储中删除该单件，请运行一个例外报告或直接将其传达给你的远程存储位置。",
     "search": "搜索",

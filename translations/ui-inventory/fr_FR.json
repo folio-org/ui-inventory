@@ -678,7 +678,6 @@
     "instances.columns.contributor": "Contributeur",
     "instances.columns.contributorType": "Type",
     "instances.columns.relatorTerm": "Relator term",
-    "filters.nameType": "Name type",
     "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
     "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
     "search": "Rechercher",

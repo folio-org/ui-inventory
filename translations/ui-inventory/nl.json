@@ -678,7 +678,6 @@
     "instances.columns.contributor": "Bijdrager",
     "instances.columns.contributorType": "Soort",
     "instances.columns.relatorTerm": "Gerelateerde term",
-    "filters.nameType": "Type naam",
     "browseContributors.results.error": "Fout bij het retourneren van resultaten. Probeer het opnieuw of wijzig uw zoekopdracht.",
     "remote.warning.common.items": "Item is succesvol verplaatst in FOLIO. Om het verwijderen van dit item uit externe opslag te voltooien, voert u een uitzonderingsrapport uit of communiceert u dit rechtstreeks naar uw externe opslaglocatie.",
     "search": "Zoeken",

@@ -678,7 +678,6 @@
     "instances.columns.contributor": "Colaborador",
     "instances.columns.contributorType": "Tipo",
     "instances.columns.relatorTerm": "Término relativo",
-    "filters.nameType": "Tipo de nombre",
     "browseContributors.results.error": "Error en los resultados. Vuelva a intentarlo o revise su búsqueda.",
     "remote.warning.common.items": "El elemento se ha movido con éxito en FOLIO. Para completar la eliminación de este elemento del almacenamiento remoto, ejecute un informe de excepción o comunique esto directamente a su ubicación de almacenamiento remoto.",
     "search": "Buscar",

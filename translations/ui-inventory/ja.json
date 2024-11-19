@@ -678,7 +678,6 @@
     "instances.columns.contributor": "Contributor",
     "instances.columns.contributorType": "タイプ",
     "instances.columns.relatorTerm": "Relator term",
-    "filters.nameType": "名称タイプ",
     "browseContributors.results.error": "Error returning results. Please retry or revise your search.",
     "remote.warning.common.items": "Item has been successfully moved in FOLIO. To complete removing this item from remote storage, run an exception report or communicate this directly to your remote storage location.",
     "search": "検索",

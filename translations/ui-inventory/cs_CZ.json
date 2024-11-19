@@ -678,7 +678,6 @@
     "instances.columns.contributor": "Autor",
     "instances.columns.contributorType": "Typ",
     "instances.columns.relatorTerm": "Role",
-    "filters.nameType": "Typ jména",
     "browseContributors.results.error": "Chyba při vracení výsledků. Zkuste prosím znovu nebo upravte vyhledávání.",
     "remote.warning.common.items": "Jednotka byla úspěšně přesunuta do FOLIO. Chcete-li dokončit odstranění této jednotky ze vzdáleného úložiště, spusťte výstup o výjimce nebo to sdělte přímo lokaci vzdáleného úložiště.",
     "search": "Vyhledat",
