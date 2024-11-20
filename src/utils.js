@@ -702,7 +702,7 @@ export const parseHttpError = async httpError => {
   let jsonError = {};
 
   try {
-    if (contentType === 'text/plain') {
+    if (contentType.includes('text/plain')) {
       jsonError.message = await httpError.text();
     } else {
       jsonError = await httpError.json();

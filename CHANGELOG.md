@@ -5,6 +5,7 @@
 * ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
 * *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
 * *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
+* Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
 
 ## [12.0.1](https://github.com/folio-org/ui-inventory/tree/v12.0.1) (2024-11-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.0...v12.0.1)
