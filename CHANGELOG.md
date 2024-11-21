@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## [12.0.5] (IN PROGRESS)
+* Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
+
 ## [12.0.4](https://github.com/folio-org/ui-inventory/tree/v12.0.4) (2024-12-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.3...v12.0.4)
 
