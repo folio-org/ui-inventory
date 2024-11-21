@@ -27,10 +27,10 @@ const columnWidths = {
 };
 
 const AlternativeTitlesList = ({
-  titles,
-  titleTypes,
   source,
   segment,
+  titles = [],
+  titleTypes = [],
 }) => {
   const intl = useIntl();
 
@@ -79,15 +79,10 @@ const AlternativeTitlesList = ({
 };
 
 AlternativeTitlesList.propTypes = {
-  titles: PropTypes.arrayOf(PropTypes.object),
-  titleTypes: PropTypes.arrayOf(PropTypes.object),
   segment: PropTypes.oneOf([Object.values(segments)]).isRequired,
   source: PropTypes.string.isRequired,
-};
-
-AlternativeTitlesList.defaultProps = {
-  titles: [],
-  titleTypes: [],
+  titles: PropTypes.arrayOf(PropTypes.object),
+  titleTypes: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default AlternativeTitlesList;

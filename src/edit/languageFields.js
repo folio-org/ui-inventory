@@ -15,13 +15,11 @@ import {
   Label,
 } from '@folio/stripes/components';
 
-const LanguageFields = props => {
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
-
+const LanguageFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const intl = useIntl();
   const stripes = useStripes();
   const langOptions = languageOptions(intl, stripes.locale);
@@ -67,11 +65,6 @@ LanguageFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-LanguageFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default LanguageFields;

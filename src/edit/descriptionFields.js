@@ -13,14 +13,12 @@ import {
   RepeatableField,
 } from '@folio/stripes/components';
 
-const DescriptionFields = props => {
+const DescriptionFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
 
   const physicalDescriptionLabel = formatMessage({ id: 'ui-inventory.physicalDescription' });
 
@@ -58,11 +56,6 @@ DescriptionFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-DescriptionFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default DescriptionFields;

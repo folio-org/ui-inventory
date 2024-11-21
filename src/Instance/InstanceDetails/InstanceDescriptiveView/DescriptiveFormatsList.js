@@ -36,8 +36,8 @@ const columnWidths = {
 };
 
 const DescriptiveFormatsList = ({
-  formats,
-  resourceFormats,
+  formats = [],
+  resourceFormats = [],
 }) => {
   const intl = useIntl();
 
@@ -77,11 +77,6 @@ const DescriptiveFormatsList = ({
 DescriptiveFormatsList.propTypes = {
   formats: PropTypes.arrayOf(PropTypes.string),
   resourceFormats: PropTypes.arrayOf(PropTypes.object),
-};
-
-DescriptiveFormatsList.defaultProps = {
-  formats: [],
-  resourceFormats: [],
 };
 
 export default DescriptiveFormatsList;

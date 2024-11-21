@@ -18,7 +18,12 @@ const renderIcon = (icon, iconClassName) => (
   />
 );
 
-const WarningMessage = ({ id, icon, fill, iconPosition }) => (
+const WarningMessage = ({
+  id,
+  icon = 'exclamation-circle',
+  iconPosition = 'start',
+  fill = false,
+}) => (
   <div className={fill ? css.fill : ''}>
     {iconPosition === 'start' && renderIcon(icon, css.iconStart)}
     <FormattedMessage id={id} />
@@ -31,12 +36,6 @@ WarningMessage.propTypes = {
   icon: PropTypes.string,
   iconPosition: PropTypes.oneOf(['start', 'end']),
   fill: PropTypes.bool,
-};
-
-WarningMessage.defaultProps = {
-  icon: 'exclamation-circle',
-  iconPosition: 'start',
-  fill: false,
 };
 
 export default WarningMessage;

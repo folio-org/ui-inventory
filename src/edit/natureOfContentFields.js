@@ -13,15 +13,13 @@ import {
   Select,
 } from '@folio/stripes/components';
 
-const NatureOfContentFields = props => {
+const NatureOfContentFields = ({
+  natureOfContentTerms = [],
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-    natureOfContentTerms,
-  } = props;
 
   const natureOfContentTermOptions = natureOfContentTerms
     ? natureOfContentTerms.map(it => ({
@@ -66,15 +64,10 @@ const NatureOfContentFields = props => {
 };
 
 NatureOfContentFields.propTypes = {
+  natureOfContentTerms: PropTypes.arrayOf(PropTypes.object),
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-  natureOfContentTerms: PropTypes.arrayOf(PropTypes.object),
-};
-NatureOfContentFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default NatureOfContentFields;

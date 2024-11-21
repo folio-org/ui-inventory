@@ -16,15 +16,14 @@ import {
   Label,
 } from '@folio/stripes/components';
 
-const ClassificationFields = props => {
+const ClassificationFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+  classificationTypes = [],
+}) => {
   const { formatMessage } = useIntl();
 
-  const {
-    classificationTypes,
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
   const classificationTypeOptions = classificationTypes.map(it => ({
     label: it.name,
     value: it.id,
@@ -96,11 +95,6 @@ ClassificationFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-ClassificationFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default ClassificationFields;

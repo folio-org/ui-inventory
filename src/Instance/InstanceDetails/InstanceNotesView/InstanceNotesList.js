@@ -32,8 +32,8 @@ const formatter = {
 
 const InstanceNotesList = ({
   id,
-  notes,
   notesType,
+  notes = [],
 }) => {
   const intl = useIntl();
 
@@ -59,10 +59,6 @@ InstanceNotesList.propTypes = {
   id: PropTypes.string.isRequired,
   notesType: PropTypes.node.isRequired,
   notes: PropTypes.arrayOf(PropTypes.object),
-};
-
-InstanceNotesList.defaultProps = {
-  notes: [],
 };
 
 export default InstanceNotesList;

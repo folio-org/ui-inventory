@@ -23,7 +23,7 @@ const formatter = {
 };
 
 const AdministrativeNoteList = ({
-  administrativeNotes,
+  administrativeNotes = [],
 }) => {
   const intl = useIntl();
   const columnMapping = useMemo(() => getColumnMapping(intl), []);
@@ -46,10 +46,6 @@ const AdministrativeNoteList = ({
 
 AdministrativeNoteList.propTypes = {
   administrativeNotes: PropTypes.arrayOf(PropTypes.string),
-};
-
-AdministrativeNoteList.defaultProps = {
-  administrativeNotes: [],
 };
 
 export default AdministrativeNoteList;

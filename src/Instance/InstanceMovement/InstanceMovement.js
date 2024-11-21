@@ -11,10 +11,10 @@ import {
 import { InstanceMovementDetailsContainer } from './InstanceMovementDetails';
 
 const InstanceMovement = ({
-  instanceFrom,
-  instanceTo,
   onClose,
   moveHoldings,
+  instanceFrom = {},
+  instanceTo = {},
 }) => {
   return (
     <Paneset data-test-movement>
@@ -42,15 +42,10 @@ const InstanceMovement = ({
 };
 
 InstanceMovement.propTypes = {
-  instanceFrom: PropTypes.object,
-  instanceTo: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   moveHoldings: PropTypes.func.isRequired,
-};
-
-InstanceMovement.defaultProps = {
-  instanceFrom: {},
-  instanceTo: {},
+  instanceFrom: PropTypes.object,
+  instanceTo: PropTypes.object,
 };
 
 export default InstanceMovement;

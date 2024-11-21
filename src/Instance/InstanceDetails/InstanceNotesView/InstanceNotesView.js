@@ -18,8 +18,8 @@ import InstanceNotesList from './InstanceNotesList';
 
 const InstanceNotesView = ({
   id,
-  instance,
-  noteTypes,
+  instance = {},
+  noteTypes = [],
 }) => {
   const notesGroups = useMemo(() => {
     if (isEmpty(instance.notes)) {
@@ -60,11 +60,6 @@ InstanceNotesView.propTypes = {
   id: PropTypes.string,
   instance: PropTypes.object,
   noteTypes: PropTypes.arrayOf(PropTypes.object),
-};
-
-InstanceNotesView.defaultProps = {
-  instance: {},
-  noteTypes: [],
 };
 
 export default InstanceNotesView;

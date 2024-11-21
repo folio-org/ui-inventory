@@ -5,14 +5,14 @@ import { HoldingContainer } from './Holding';
 
 const HoldingsList = ({
   instance,
-  holdings,
+  holdings = [],
   tenantId,
   showViewHoldingsButton,
   showAddItemButton,
   isBarcodeAsHotlink,
-  pathToAccordionsState,
-  draggable,
-  droppable,
+  pathToAccordionsState = [],
+  draggable = false,
+  droppable = false,
 }) => holdings.map(holding => (
   <HoldingContainer
     key={`items_${holding.id}`}
@@ -39,11 +39,6 @@ HoldingsList.propTypes = {
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
   draggable: PropTypes.bool,
   droppable: PropTypes.bool,
-};
-
-HoldingsList.defaultProps = {
-  holdings: [],
-  pathToAccordionsState: [],
 };
 
 export default HoldingsList;

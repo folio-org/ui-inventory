@@ -36,11 +36,11 @@ import StatisticalCodesList from './StatisticalCodesList';
 
 const InstanceAdministrativeView = ({
   id,
-  instance,
-  instanceStatuses,
-  issuanceModes,
-  statisticalCodes,
-  statisticalCodeTypes,
+  instance = {},
+  instanceStatuses = [],
+  issuanceModes = [],
+  statisticalCodes = [],
+  statisticalCodeTypes = [],
 }) => {
   const { search } = useLocation();
 
@@ -210,14 +210,6 @@ InstanceAdministrativeView.propTypes = {
   issuanceModes: PropTypes.arrayOf(PropTypes.object),
   statisticalCodes: PropTypes.arrayOf(PropTypes.object),
   statisticalCodeTypes: PropTypes.arrayOf(PropTypes.object),
-};
-
-InstanceAdministrativeView.defaultProps = {
-  instance: {},
-  instanceStatuses: [],
-  issuanceModes: [],
-  statisticalCodes: [],
-  statisticalCodeTypes: [],
 };
 
 export default InstanceAdministrativeView;

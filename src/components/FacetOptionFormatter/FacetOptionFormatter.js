@@ -9,7 +9,10 @@ const propTypes = {
   searchTerm: PropTypes.string,
 };
 
-const FacetOptionFormatter = ({ option, searchTerm }) => {
+const FacetOptionFormatter = ({
+  option = null,
+  searchTerm = '',
+}) => {
   if (!option) {
     return null;
   }
@@ -25,10 +28,5 @@ const FacetOptionFormatter = ({ option, searchTerm }) => {
 };
 
 FacetOptionFormatter.propTypes = propTypes;
-
-FacetOptionFormatter.defaultProps = {
-  option: null,
-  searchTerm: '',
-};
 
 export default FacetOptionFormatter;

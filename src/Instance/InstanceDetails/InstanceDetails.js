@@ -72,13 +72,13 @@ const accordions = {
 
 const InstanceDetails = forwardRef(({
   children,
-  instance,
   onClose,
   actionMenu,
-  tagsEnabled,
   mutateInstance,
-  userTenantPermissions,
-  isShared,
+  instance = {},
+  userTenantPermissions = [],
+  tagsEnabled = false,
+  isShared = false,
   ...rest
 }, ref) => {
   const intl = useIntl();
@@ -316,21 +316,15 @@ const InstanceDetails = forwardRef(({
 });
 
 InstanceDetails.propTypes = {
+  onClose: PropTypes.func.isRequired,
   children: PropTypes.node,
   actionMenu: PropTypes.func,
-  onClose: PropTypes.func.isRequired,
   mutateInstance: PropTypes.func,
   instance: PropTypes.object,
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
   userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
   isShared: PropTypes.bool,
-};
-
-InstanceDetails.defaultProps = {
-  instance: {},
-  tagsEnabled: false,
-  isShared: false,
 };
 
 export default InstanceDetails;

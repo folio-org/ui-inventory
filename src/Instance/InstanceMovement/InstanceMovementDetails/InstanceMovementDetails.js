@@ -14,10 +14,10 @@ import { HoldingsListContainer } from '../../HoldingsList';
 import InstanceMovementDetailsActions from './InstanceMovementDetailsActions';
 
 const InstanceMovementDetails = ({
-  instance,
   onClose,
   hasMarc,
-  id,
+  instance = {},
+  id = 'movement-instance-details',
 }) => {
   const stripes = useStripes();
 
@@ -85,15 +85,10 @@ const InstanceMovementDetails = ({
 };
 
 InstanceMovementDetails.propTypes = {
-  instance: PropTypes.object,
-  hasMarc: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
+  hasMarc: PropTypes.bool,
+  instance: PropTypes.object,
   id: PropTypes.string,
-};
-
-InstanceMovementDetails.defaultProps = {
-  instance: {},
-  id: 'movement-instance-details',
 };
 
 export default InstanceMovementDetails;

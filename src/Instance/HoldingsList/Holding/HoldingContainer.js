@@ -51,7 +51,7 @@ const DraggableHolding = ({
   showAddItemButton,
   isBarcodeAsHotlink,
   instanceId,
-  pathToAccordionsState,
+  pathToAccordionsState = [],
   ...rest
 }) => {
   const rowStyles = useMemo(() => (
@@ -115,8 +115,6 @@ DraggableHolding.propTypes = {
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
-DraggableHolding.defaultProps = { pathToAccordionsState: [] };
-
 const HoldingContainer = ({
   location,
   history,
@@ -125,11 +123,11 @@ const HoldingContainer = ({
   isBarcodeAsHotlink,
   instance,
   holding,
-  isDraggable,
+  isDraggable = false,
   holdingIndex,
   draggingHoldingsCount,
   tenantId,
-  pathToAccordionsState,
+  pathToAccordionsState = [],
   ...rest
 }) => {
   const stripes = useStripes();
@@ -201,7 +199,5 @@ HoldingContainer.propTypes = {
   isBarcodeAsHotlink: PropTypes.bool,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
-
-HoldingContainer.defaultProps = { pathToAccordionsState: [] };
 
 export default withRouter(HoldingContainer);

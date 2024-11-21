@@ -26,10 +26,10 @@ import {
 } from '../../../constants';
 
 const NoteFields = ({
-  noteTypeOptions,
-  canAdd,
-  canEdit,
-  canDelete,
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+  noteTypeOptions = [],
 }) => {
   const { formatMessage } = useIntl();
 
@@ -126,12 +126,6 @@ NoteFields.propTypes = {
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
   noteTypeOptions: PropTypes.arrayOf(PropTypes.object),
-};
-
-NoteFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default NoteFields;

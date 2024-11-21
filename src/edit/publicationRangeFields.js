@@ -13,14 +13,12 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-const PublicationRangeFields = props => {
+const PublicationRangeFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
 
   const publicationRangeLabel = formatMessage({ id: 'ui-inventory.publicationRange' });
 
@@ -59,11 +57,6 @@ PublicationRangeFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-PublicationRangeFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default PublicationRangeFields;

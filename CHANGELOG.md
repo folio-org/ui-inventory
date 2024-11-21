@@ -5,6 +5,7 @@
 * ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
 * *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
 * *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
+* React v19: refactor away from default props for functional components. Refs UIIN-2890.
 
 ## [12.0.1](https://github.com/folio-org/ui-inventory/tree/v12.0.1) (2024-11-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.0...v12.0.1)

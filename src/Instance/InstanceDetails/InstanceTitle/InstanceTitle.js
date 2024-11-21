@@ -12,7 +12,10 @@ import {
   Headline,
 } from '@folio/stripes/components';
 
-const InstanceTitle = ({ instance, instanceTypes }) => {
+const InstanceTitle = ({
+  instance = {},
+  instanceTypes = [],
+}) => {
   const instanceTypeName = useMemo(() => {
     return instanceTypes.find(instanceType => instanceType.id === instance.instanceTypeId)?.name;
   }, [instance, instanceTypes]);
@@ -58,11 +61,6 @@ const InstanceTitle = ({ instance, instanceTypes }) => {
 InstanceTitle.propTypes = {
   instance: PropTypes.object,
   instanceTypes: PropTypes.arrayOf(PropTypes.object),
-};
-
-InstanceTitle.defaultProps = {
-  instance: {},
-  instanceTypes: [],
 };
 
 export default InstanceTitle;

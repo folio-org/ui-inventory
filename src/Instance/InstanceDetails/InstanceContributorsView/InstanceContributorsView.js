@@ -35,11 +35,11 @@ const columnWidths = {
 
 const InstanceContributorsView = ({
   id,
-  contributors,
-  contributorTypes,
-  contributorNameTypes,
   source,
-  segment,
+  contributors = [],
+  contributorTypes = [],
+  contributorNameTypes = [],
+  segment = '',
 }) => {
   const intl = useIntl();
 
@@ -103,17 +103,11 @@ const InstanceContributorsView = ({
 
 InstanceContributorsView.propTypes = {
   id: PropTypes.string.isRequired,
+  source: PropTypes.string.isRequired,
   contributors: PropTypes.arrayOf(PropTypes.object),
   contributorTypes: PropTypes.arrayOf(PropTypes.object),
   contributorNameTypes: PropTypes.arrayOf(PropTypes.object),
-  source: PropTypes.string.isRequired,
   segment: PropTypes.string,
-};
-
-InstanceContributorsView.defaultProps = {
-  contributors: [],
-  contributorTypes: [],
-  contributorNameTypes: [],
 };
 
 export default InstanceContributorsView;

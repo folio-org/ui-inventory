@@ -18,8 +18,8 @@ import {
 
 const InstanceMovementDetailsActions = ({
   onToggle,
-  instance,
   hasMarc,
+  instance = {},
 }) => {
   const history = useHistory();
   const location = useLocation();
@@ -84,10 +84,6 @@ InstanceMovementDetailsActions.propTypes = {
   onToggle: PropTypes.func.isRequired,
   instance: PropTypes.object,
   hasMarc: PropTypes.bool,
-};
-
-InstanceMovementDetailsActions.defaultProps = {
-  instance: {},
 };
 
 export default InstanceMovementDetailsActions;

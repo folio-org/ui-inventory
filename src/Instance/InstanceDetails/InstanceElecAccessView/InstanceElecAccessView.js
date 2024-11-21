@@ -59,8 +59,8 @@ const getFormatter = (elAccessRelationshipsMap) => ({
 
 const InstanceElecAccessView = ({
   id,
-  electronicAccessLines,
-  electronicAccessRelationships,
+  electronicAccessLines = [],
+  electronicAccessRelationships = [],
 }) => {
   const intl = useIntl();
 
@@ -99,11 +99,6 @@ InstanceElecAccessView.propTypes = {
   id: PropTypes.string.isRequired,
   electronicAccessLines: PropTypes.arrayOf(PropTypes.object),
   electronicAccessRelationships: PropTypes.arrayOf(PropTypes.object),
-};
-
-InstanceElecAccessView.defaultProps = {
-  electronicAccessLines: [],
-  electronicAccessRelationships: [],
 };
 
 export default InstanceElecAccessView;

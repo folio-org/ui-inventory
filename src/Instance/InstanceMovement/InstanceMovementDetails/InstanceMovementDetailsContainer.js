@@ -9,10 +9,10 @@ import { stripesConnect } from '@folio/stripes/core';
 import InstanceMovementDetails from './InstanceMovementDetails';
 
 const InstanceMovementDetailsContainer = ({
-  instance,
   onClose,
   mutator,
-  id,
+  instance = {},
+  id = 'movement-instance-details',
 }) => {
   const [marc, setMarc] = useState();
 
@@ -33,15 +33,10 @@ const InstanceMovementDetailsContainer = ({
 };
 
 InstanceMovementDetailsContainer.propTypes = {
-  instance: PropTypes.object,
   onClose: PropTypes.func.isRequired,
   mutator: PropTypes.object.isRequired,
+  instance: PropTypes.object,
   id: PropTypes.string,
-};
-
-InstanceMovementDetailsContainer.defaultProps = {
-  instance: {},
-  id: 'movement-instance-details',
 };
 
 InstanceMovementDetailsContainer.manifest = Object.freeze({

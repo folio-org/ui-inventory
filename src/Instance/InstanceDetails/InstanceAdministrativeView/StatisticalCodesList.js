@@ -31,7 +31,7 @@ const columnWidths = {
 };
 
 const StatisticalCodesList = ({
-  statisticalCodes,
+  statisticalCodes = [],
 }) => {
   const intl = useIntl();
 
@@ -55,10 +55,6 @@ const StatisticalCodesList = ({
 
 StatisticalCodesList.propTypes = {
   statisticalCodes: PropTypes.arrayOf(PropTypes.object),
-};
-
-StatisticalCodesList.defaultProps = {
-  statisticalCodes: [],
 };
 
 export default StatisticalCodesList;
