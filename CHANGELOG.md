@@ -7,6 +7,9 @@
 * *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
 * React v19: refactor away from default props for functional components. Refs UIIN-2890.
 
+## [12.0.2] (IN PROGRESS)
+* Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
+
 ## [12.0.1](https://github.com/folio-org/ui-inventory/tree/v12.0.1) (2024-11-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.0...v12.0.1)
 
