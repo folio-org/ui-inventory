@@ -5,6 +5,7 @@
 * ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
 * *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
 * *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
+* Add permission for "Share local instance" option on Member tenants. Refs UIIN-3140.
 
 ## [12.0.3] (IN PROGRESS)
 
