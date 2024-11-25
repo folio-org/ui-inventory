@@ -10,9 +10,9 @@ import { useInstanceHoldingsQuery } from '../../providers';
 
 const HoldingsListContainer = ({
   instance,
-  isHoldingsMove,
   tenantId,
-  pathToAccordionsState,
+  isHoldingsMove = false,
+  pathToAccordionsState = [],
   ...rest
 }) => {
   const stripes = useStripes();
@@ -56,7 +56,5 @@ HoldingsListContainer.propTypes = {
   tenantId: PropTypes.string,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
-
-HoldingsListContainer.defaultProps = { pathToAccordionsState: [] };
 
 export default HoldingsListContainer;

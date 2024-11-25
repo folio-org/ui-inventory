@@ -36,7 +36,7 @@ const columnWidths = {
 };
 
 const DescriptivePublicationsList = ({
-  publications,
+  publications = [],
 }) => {
   const intl = useIntl();
 
@@ -59,10 +59,6 @@ const DescriptivePublicationsList = ({
 
 DescriptivePublicationsList.propTypes = {
   publications: PropTypes.arrayOf(PropTypes.object),
-};
-
-DescriptivePublicationsList.defaultProps = {
-  publications: [],
 };
 
 export default DescriptivePublicationsList;

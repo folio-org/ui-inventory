@@ -16,14 +16,12 @@ import {
   Label,
 } from '@folio/stripes/components';
 
-const PublicationFields = props => {
+const PublicationFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
 
   const publisherLabel = formatMessage({ id: 'ui-inventory.publisher' });
   const publisherRoleLabel = formatMessage({ id: 'ui-inventory.publisherRole' });
@@ -118,11 +116,6 @@ PublicationFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-PublicationFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default PublicationFields;

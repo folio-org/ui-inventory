@@ -22,10 +22,10 @@ import TitleSeriesStatements from './TitleSeriesStatements';
 
 const InstanceTitleData = ({
   id,
-  instance,
-  titleTypes,
-  identifierTypesById,
   segment,
+  instance = {},
+  titleTypes = [],
+  identifierTypesById = {},
 }) => {
   const precedingTitles = useMemo(() => {
     return checkIfArrayIsEmpty(instance.precedingTitles);
@@ -100,15 +100,10 @@ const InstanceTitleData = ({
 
 InstanceTitleData.propTypes = {
   id: PropTypes.string.isRequired,
-  instance: PropTypes.object,
   segment: PropTypes.string.isRequired,
+  instance: PropTypes.object,
   titleTypes: PropTypes.arrayOf(PropTypes.object),
   identifierTypesById: PropTypes.object,
-};
-
-InstanceTitleData.defaultProps = {
-  instance: {},
-  titleTypes: [],
 };
 
 export default InstanceTitleData;

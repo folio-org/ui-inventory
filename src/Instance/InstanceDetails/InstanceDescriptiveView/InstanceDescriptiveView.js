@@ -23,11 +23,11 @@ import {
 
 const InstanceDescriptiveView = ({
   id,
-  instance,
-  resourceTypes,
-  resourceFormats,
-  natureOfContentTerms,
-  instanceDateTypes,
+  instance = {},
+  resourceTypes = [],
+  resourceFormats = [],
+  natureOfContentTerms = [],
+  instanceDateTypes = [],
 }) => {
   const resourceType = useMemo(() => {
     return resourceTypes.find(type => type.id === instance.instanceTypeId) || {};
@@ -167,14 +167,6 @@ InstanceDescriptiveView.propTypes = {
   resourceFormats: PropTypes.arrayOf(PropTypes.object),
   natureOfContentTerms: PropTypes.arrayOf(PropTypes.object),
   instanceDateTypes: PropTypes.arrayOf(PropTypes.object),
-};
-
-InstanceDescriptiveView.defaultProps = {
-  instance: {},
-  resourceTypes: [],
-  resourceFormats: [],
-  natureOfContentTerms: [],
-  instanceDateTypes: [],
 };
 
 export default InstanceDescriptiveView;

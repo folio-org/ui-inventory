@@ -6,6 +6,7 @@
 * *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
 * *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
 * Add permission for "Share local instance" option on Member tenants. Refs UIIN-3140.
+* React v19: refactor away from default props for functional components. Refs UIIN-2890.
 
 ## [12.0.3] (IN PROGRESS)
 

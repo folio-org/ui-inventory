@@ -47,8 +47,8 @@ const classificationsRowFormatter = {
 
 const InstanceClassificationView = ({
   id,
-  classifications,
-  classificationTypes,
+  classifications = [],
+  classificationTypes = [],
 }) => {
   const intl = useIntl();
 
@@ -98,11 +98,6 @@ InstanceClassificationView.propTypes = {
   id: PropTypes.string.isRequired,
   classifications: PropTypes.arrayOf(PropTypes.object),
   classificationTypes: PropTypes.arrayOf(PropTypes.object),
-};
-
-InstanceClassificationView.defaultProps = {
-  classifications: [],
-  classificationTypes: [],
 };
 
 export default InstanceClassificationView;

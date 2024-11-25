@@ -15,19 +15,19 @@ const Holding = ({
   holding,
   onViewHolding,
   onAddItem,
-  holdings,
-  draggable,
-  droppable,
+  holdings = [],
+  draggable = false,
+  droppable = false,
   selectHoldingsForDrag,
   isHoldingDragSelected,
-  isDraggable,
-  isItemsDroppable,
+  isDraggable = false,
+  isItemsDroppable = true,
   tenantId,
   showViewHoldingsButton,
   showAddItemButton,
   isBarcodeAsHotlink,
   instanceId,
-  pathToAccordionsState,
+  pathToAccordionsState = [],
 }) => {
   return (
     <div>
@@ -92,11 +92,6 @@ Holding.propTypes = {
   showAddItemButton: PropTypes.bool,
   isBarcodeAsHotlink: PropTypes.bool,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
-};
-
-Holding.defaultProps = {
-  isItemsDroppable: true,
-  pathToAccordionsState: [],
 };
 
 export default Holding;

@@ -19,14 +19,14 @@ const getDropStyle = (holdingsLength) => {
 
 const HoldingsListMovement = ({
   instance,
-  holdings,
-  draggable,
-  droppable,
   tenantId,
   showViewHoldingsButton,
   showAddItemButton,
   isBarcodeAsHotlink,
-  pathToAccordionsState,
+  holdings = [],
+  draggable = false,
+  droppable = false,
+  pathToAccordionsState = [],
 }) => {
   const {
     selectItemsForDrag,
@@ -91,11 +91,6 @@ HoldingsListMovement.propTypes = {
   droppable: PropTypes.bool,
   tenantId: PropTypes.string,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
-};
-
-HoldingsListMovement.defaultProps = {
-  holdings: [],
-  pathToAccordionsState: [],
 };
 
 export default HoldingsListMovement;

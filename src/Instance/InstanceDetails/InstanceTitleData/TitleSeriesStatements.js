@@ -16,9 +16,9 @@ const getColumnMapping = intl => ({
 });
 
 const TitleSeriesStatements = ({
-  seriesStatements,
   segment,
   source,
+  seriesStatements = [],
 }) => {
   const intl = useIntl();
 
@@ -49,13 +49,9 @@ const TitleSeriesStatements = ({
 };
 
 TitleSeriesStatements.propTypes = {
-  seriesStatements: PropTypes.arrayOf(PropTypes.string),
   segment: PropTypes.oneOf(Object.values(segments)).isRequired,
   source: PropTypes.string.isRequired,
-};
-
-TitleSeriesStatements.defaultProps = {
-  seriesStatements: [],
+  seriesStatements: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default TitleSeriesStatements;

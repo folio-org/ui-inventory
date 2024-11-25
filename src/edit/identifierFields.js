@@ -16,13 +16,12 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-const IdentifierFields = props => {
-  const {
-    identifierTypes,
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
+const IdentifierFields = ({
+  identifierTypes = [],
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
 
   const identifierTypeOptions = identifierTypes.map(it => ({
@@ -93,11 +92,6 @@ IdentifierFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-IdentifierFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default IdentifierFields;

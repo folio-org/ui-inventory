@@ -17,14 +17,12 @@ import {
   Label,
 } from '@folio/stripes/components';
 
-const CirculationNotesFields = props => {
+const CirculationNotesFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
 
   const noteTypeOptions = [
     { label: formatMessage({ id: 'ui-inventory.selectType' }), value: '' },
@@ -114,11 +112,6 @@ CirculationNotesFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-CirculationNotesFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default CirculationNotesFields;

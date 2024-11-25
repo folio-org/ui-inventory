@@ -14,9 +14,9 @@ import {
 } from '@folio/stripes/components';
 
 const FormerIdentifierFields = ({
-  canAdd,
-  canEdit,
-  canDelete,
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -55,12 +55,6 @@ FormerIdentifierFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-
-FormerIdentifierFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default FormerIdentifierFields;

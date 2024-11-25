@@ -16,8 +16,8 @@ import { useLastSearchTerms } from '../../hooks';
 
 const FilterNavigation = ({
   data,
-  segment,
   onChange,
+  segment = segments.instances,
 }) => {
   const { getLastSearch } = useLastSearchTerms();
 
@@ -55,12 +55,8 @@ const FilterNavigation = ({
 
 FilterNavigation.propTypes = {
   data: PropTypes.object.isRequired,
-  segment: PropTypes.string,
   onChange: PropTypes.func,
-};
-
-FilterNavigation.defaultProps = {
-  segment: segments.instances,
+  segment: PropTypes.string,
 };
 
 export default FilterNavigation;

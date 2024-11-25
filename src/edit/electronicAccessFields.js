@@ -18,15 +18,14 @@ import {
 
 import { parseEmptyFormValue } from '../utils';
 
-const ElectronicAccessFields = props => {
+const ElectronicAccessFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+  relationship = [],
+}) => {
   const { formatMessage } = useIntl();
 
-  const {
-    relationship,
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
   const relationshipOptions = relationship.map(it => ({
     label: it.name,
     value: it.id,
@@ -139,13 +138,6 @@ ElectronicAccessFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-
-ElectronicAccessFields.defaultProps = {
-  relationship: [],
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default ElectronicAccessFields;

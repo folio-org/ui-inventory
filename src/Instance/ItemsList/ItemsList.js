@@ -155,18 +155,18 @@ const rowMetadata = ['id', 'holdingsRecordId'];
 
 const ItemsList = ({
   holding,
-  items,
   setOffset,
   setSorting,
-  total,
-  draggable,
-  offset,
-  isItemsDragSelected,
   selectItemsForDrag,
+  isItemsDragSelected,
   getDraggingItems,
-  isFetching,
   isBarcodeAsHotlink,
   tenantId,
+  items = [],
+  total = 0,
+  draggable = false,
+  offset = 0,
+  isFetching = false,
 }) => {
   const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items, tenantId);
   const holdingsMapById = keyBy(holdings, 'id');
@@ -264,22 +264,18 @@ const ItemsList = ({
 
 ItemsList.propTypes = {
   holding: PropTypes.object.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object),
   setOffset: PropTypes.func.isRequired,
   setSorting: PropTypes.func.isRequired,
-  offset: PropTypes.number,
-  total: PropTypes.number,
-  draggable: PropTypes.bool,
   selectItemsForDrag: PropTypes.func.isRequired,
   isItemsDragSelected: PropTypes.func.isRequired,
   getDraggingItems: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool,
-  tenantId: PropTypes.string,
   isBarcodeAsHotlink: PropTypes.bool,
-};
-
-ItemsList.defaultProps = {
-  items: [],
+  tenantId: PropTypes.string,
+  items: PropTypes.arrayOf(PropTypes.object),
+  offset: PropTypes.number,
+  total: PropTypes.number,
+  draggable: PropTypes.bool,
+  isFetching: PropTypes.bool,
 };
 
 export default ItemsList;

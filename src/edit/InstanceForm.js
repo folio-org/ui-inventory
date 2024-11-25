@@ -181,6 +181,42 @@ class InstanceForm extends React.Component {
     },
   });
 
+  static propTypes = {
+    onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
+    newinstance: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
+    handleSubmit: PropTypes.func.isRequired,
+    pristine: PropTypes.bool,
+    submitting: PropTypes.bool,
+    onCancel: PropTypes.func,
+    initialValues: PropTypes.object,
+    referenceTables: PropTypes.object.isRequired,
+    copy: PropTypes.bool,
+    setKeepEditing: PropTypes.func,
+    showKeepEditingButton: PropTypes.bool,
+    stripes: PropTypes.shape({
+      connect: PropTypes.func.isRequired,
+      locale: PropTypes.string.isRequired,
+      logger: PropTypes.object.isRequired,
+    }).isRequired,
+    resources: PropTypes.shape({
+      instanceBlockedFields: PropTypes.shape({
+        records: PropTypes.arrayOf(PropTypes.object),
+      }),
+    }),
+    instanceSource: PropTypes.string,
+    history: PropTypes.object.isRequired,
+    id: PropTypes.string,
+    httpError: PropTypes.object,
+  };
+
+  static defaultProps = {
+    instanceSource: 'FOLIO',
+    initialValues: {},
+    id: 'instance-form',
+    showKeepEditingButton: false,
+    setKeepEditing: noop,
+  };
+
   constructor(props) {
     super(props);
 
@@ -851,41 +887,6 @@ class InstanceForm extends React.Component {
     );
   }
 }
-
-InstanceForm.propTypes = {
-  onClose: PropTypes.func, // eslint-disable-line react/no-unused-prop-types
-  newinstance: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
-  handleSubmit: PropTypes.func.isRequired,
-  pristine: PropTypes.bool,
-  submitting: PropTypes.bool,
-  onCancel: PropTypes.func,
-  initialValues: PropTypes.object,
-  referenceTables: PropTypes.object.isRequired,
-  copy: PropTypes.bool,
-  setKeepEditing: PropTypes.func,
-  showKeepEditingButton: PropTypes.bool,
-  stripes: PropTypes.shape({
-    connect: PropTypes.func.isRequired,
-    locale: PropTypes.string.isRequired,
-    logger: PropTypes.object.isRequired,
-  }).isRequired,
-  resources: PropTypes.shape({
-    instanceBlockedFields: PropTypes.shape({
-      records: PropTypes.arrayOf(PropTypes.object),
-    }),
-  }),
-  instanceSource: PropTypes.string,
-  history: PropTypes.object.isRequired,
-  id: PropTypes.string,
-  httpError: PropTypes.object,
-};
-InstanceForm.defaultProps = {
-  instanceSource: 'FOLIO',
-  initialValues: {},
-  id: 'instance-form',
-  showKeepEditingButton: false,
-  setKeepEditing: noop,
-};
 
 export default withRouter(stripesFinalForm({
   validate,

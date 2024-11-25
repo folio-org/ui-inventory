@@ -19,7 +19,12 @@ import { getDateWithTime } from '../../utils';
 
 const label = <FormattedMessage id="ui-inventory.item.availability.itemStatus" />;
 
-const ItemStatus = ({ itemId, status, openLoan, mutator }) => {
+const ItemStatus = ({
+  itemId,
+  status,
+  mutator,
+  openLoan = {},
+}) => {
   const [servicePoint, setServicePoint] = useState();
 
   useEffect(
@@ -94,12 +99,8 @@ ItemStatus.manifest = Object.freeze({
 ItemStatus.propTypes = {
   itemId: PropTypes.string.isRequired,
   status: PropTypes.object.isRequired,
-  openLoan: PropTypes.object,
   mutator: PropTypes.object.isRequired,
-};
-
-ItemStatus.defaultProps = {
-  openLoan: {},
+  openLoan: PropTypes.object,
 };
 
 export default stripesConnect(ItemStatus);

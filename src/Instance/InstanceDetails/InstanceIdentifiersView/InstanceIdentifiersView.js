@@ -34,8 +34,8 @@ const formatter = {
 
 const InstanceIdentifiersView = ({
   id,
-  identifiers,
-  identifierTypes,
+  identifiers = [],
+  identifierTypes = [],
 }) => {
   const intl = useIntl();
 
@@ -85,11 +85,6 @@ InstanceIdentifiersView.propTypes = {
   id: PropTypes.string.isRequired,
   identifiers: PropTypes.arrayOf(PropTypes.object),
   identifierTypes: PropTypes.arrayOf(PropTypes.object),
-};
-
-InstanceIdentifiersView.defaultProps = {
-  identifiers: [],
-  identifierTypes: [],
 };
 
 export default InstanceIdentifiersView;

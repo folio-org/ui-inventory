@@ -15,10 +15,10 @@ import {
 } from '@folio/stripes/components';
 
 const StatisticalCodeFields = ({
-  canAdd,
-  canEdit,
-  canDelete,
-  statisticalCodeOptions,
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+  statisticalCodeOptions = [],
 }) => {
   const { formatMessage } = useIntl();
 
@@ -64,12 +64,6 @@ StatisticalCodeFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-
-StatisticalCodeFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default StatisticalCodeFields;

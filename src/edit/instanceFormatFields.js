@@ -13,15 +13,13 @@ import {
   RepeatableField,
 } from '@folio/stripes/components';
 
-const InstanceFormatFields = props => {
+const InstanceFormatFields = ({
+  instanceFormats = [],
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    instanceFormats,
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
 
   const instanceFormatOptions = instanceFormats
     ? instanceFormats.map(it => ({
@@ -71,11 +69,6 @@ InstanceFormatFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-InstanceFormatFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default InstanceFormatFields;

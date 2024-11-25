@@ -16,15 +16,14 @@ import {
   Col,
 } from '@folio/stripes/components';
 
-const AlternativeTitles = props => {
+const AlternativeTitles = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+  alternativeTitleTypes = [],
+}) => {
   const { formatMessage } = useIntl();
 
-  const {
-    alternativeTitleTypes,
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
   const alternativeTitleTypeOptions = alternativeTitleTypes.map(it => ({
     label: it.name,
     value: it.id,
@@ -98,11 +97,6 @@ AlternativeTitles.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-AlternativeTitles.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default AlternativeTitles;
