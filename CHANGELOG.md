@@ -11,6 +11,7 @@
 ## [12.0.3] (IN PROGRESS)
 
 * Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
+* Display user's name instaed of "Unknown user" in "Last updated" field in "Settings" for member tenant. Fixes UIIN-3144.
 
 ## [12.0.2](https://github.com/folio-org/ui-inventory/tree/v12.0.2) (2024-11-22)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.1...v12.0.2)
