@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [12.0.6] (IN PROGRESS)
+
+* Display user's name instead of "Unknown user" in "Last updated" field in "Settings" for member tenant. Fixes UIIN-3144.
+
 ## [12.0.5](https://github.com/folio-org/ui-inventory/tree/v12.0.5) (2024-12-04)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.4...v12.0.5)
 
