@@ -198,7 +198,7 @@ class ViewInstance extends React.Component {
     },
     checkCanBeOpenedInLinkedData: {
       type: 'okapi',
-      path: 'resource/check/:{id}/supported',
+      path: 'linked-data/inventory-instance/:{id}/import-supported',
       accumulate: true,
       throwErrors: false,
     }
