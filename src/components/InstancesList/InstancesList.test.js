@@ -416,6 +416,27 @@ describe('InstancesList', () => {
           expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
         });
       });
+
+      describe('and segment has been changed', () => {
+        it('should apply offset from storage', () => {
+          const lastSearchOffset = 200;
+
+          const { rerender } = renderInstancesList({
+            segment: segments.instances,
+          });
+
+          mockStoreLastSearchOffset.mockClear();
+          mockResultOffsetReplace.mockClear();
+          mockGetLastSearchOffset.mockReturnValueOnce(lastSearchOffset);
+
+          rerender(getInstancesListTree({
+            segment: segments.holdings,
+          }));
+
+          expect(mockGetLastSearchOffset).toHaveBeenCalledWith(segments.holdings);
+          expect(mockResultOffsetReplace).toHaveBeenCalledWith(lastSearchOffset);
+        });
+      });
     });
 
     describe('when user clicks Reset all', () => {
