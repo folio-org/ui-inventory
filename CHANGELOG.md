@@ -3,6 +3,7 @@
 ## [12.0.4] (IN PROGRESS)
 
 * Add permission for "Share local instance" option on Member tenants. Refs UIIN-3140.
+* Update Linked data API URL to use the new API path. Fixes UIIN-3146.
 
 ## [12.0.3](https://github.com/folio-org/ui-inventory/tree/v12.0.3) (2024-11-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.2...v12.0.3)
