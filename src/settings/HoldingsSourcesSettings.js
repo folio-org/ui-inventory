@@ -27,7 +27,7 @@ class HoldingsSourcesSettings extends React.Component {
 
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.holdings-sources');
-    const suppress = getSourceSuppressor(RECORD_SOURCE.FOLIO);
+    const suppress = getSourceSuppressor([RECORD_SOURCE.FOLIO, RECORD_SOURCE.CONSORTIUM]);
 
     return (
       <IntlConsumer>
