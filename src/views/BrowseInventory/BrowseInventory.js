@@ -197,6 +197,9 @@ const BrowseInventory = () => {
         >
           <SearchModeNavigation
             search={getLastSearch()}
+            state={{
+              isSearchToggleHitInBrowse: true,
+            }}
           />
 
           <SingleSearchForm

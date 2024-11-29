@@ -225,6 +225,7 @@ class InstancesList extends React.Component {
       data,
     } = this.props;
 
+    const { isSearchToggleHitInBrowse } = _location.state || {};
     const params = getParams();
     const defaultSort = data.displaySettings.defaultSort;
 
@@ -251,9 +252,16 @@ class InstancesList extends React.Component {
     const searchParams = new URLSearchParams(_location.search);
 
     const isStaffSuppressFilterChanged = this.applyDefaultStaffSuppressFilter(searchParams);
+    let isSortingChanged = false;
 
-    if (params.sort !== defaultSort || isStaffSuppressFilterChanged) {
+    // don't set the default sort when redirecting from Browse search by hitting the Search toggle,
+    // the previously selected sort option should be used (it will be taken from session storage).
+    if (params.sort !== defaultSort && !isSearchToggleHitInBrowse) {
+      isSortingChanged = true;
       searchParams.set('sort', defaultSort);
+    }
+
+    if (isSortingChanged || isStaffSuppressFilterChanged) {
       this.redirectToSearchParams(searchParams);
     }
   }
