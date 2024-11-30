@@ -678,7 +678,6 @@
     "instances.columns.contributor": "贡献者",
     "instances.columns.contributorType": "类型",
     "instances.columns.relatorTerm": "关系词术语",
-    "filters.nameType": "名称类型",
     "browseContributors.results.error": "返回结果时出错。请重试或修改搜索。",
     "remote.warning.common.items": "单件已在FOLIO中成功移动。要完成从远程存储中删除该单件，请运行一个例外报告或直接将其传达给你的远程存储位置。",
     "search": "搜索",
@@ -853,5 +852,6 @@
     "permission.items.mark-in-process-non-requestable.execute": "Inventory: Mark items in process (non-requestable)",
     "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
     "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
-    "permission.items.in-transit-report.create": "Inventory: Create and download In transit items report"
+    "permission.items.in-transit-report.create": "Inventory: Create and download In transit items report",
+    "exportInstancesInMARC.complete": "The export is complete. The downloaded {csvFileName}.csv contains selected record's UUID. To retrieve the {marcFileName}.mrc file, please go to the Data export app."
 }
