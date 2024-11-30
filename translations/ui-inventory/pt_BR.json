@@ -678,7 +678,6 @@
     "instances.columns.contributor": "Colaborador",
     "instances.columns.contributorType": "Tipo",
     "instances.columns.relatorTerm": "Termo Relator",
-    "filters.nameType": "Tipo de nome",
     "browseContributors.results.error": "Erro ao retornar resultados. Por favor, tente novamente ou revise sua busca.",
     "remote.warning.common.items": "O item foi movido com sucesso no FOLIO. Para completar a remoção deste item do armazenamento remoto, execute um relatório de exceção ou comunique isto diretamente ao seu local de armazenamento remoto.",
     "search": "Buscar",
@@ -853,5 +852,6 @@
     "permission.items.mark-in-process-non-requestable.execute": "Inventário: Marcar os itens como em processamento (não solicitável)",
     "permission.consortia.inventory.share.local.instance": "Inventário: Compartilhar a instância local com o consórcio",
     "permission.consortia.inventory.update.ownership": "Inventário: Atualizar propriedade",
-    "permission.items.in-transit-report.create": "Inventário: criar e baixar relatório de itens em trânsito"
+    "permission.items.in-transit-report.create": "Inventário: criar e baixar relatório de itens em trânsito",
+    "exportInstancesInMARC.complete": "A exportação foi concluída. O arquivo {csvFileName}.csv baixado contém o UIID do registro selecionado. Para recuperar o arquivo {marcFileName}.mrc, acesse o aplicativo Data export (Exportação de dados)."
 }

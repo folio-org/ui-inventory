@@ -678,7 +678,6 @@
     "instances.columns.contributor": "Autor",
     "instances.columns.contributorType": "Typ",
     "instances.columns.relatorTerm": "Role",
-    "filters.nameType": "Typ jména",
     "browseContributors.results.error": "Chyba při vracení výsledků. Zkuste prosím znovu nebo upravte vyhledávání.",
     "remote.warning.common.items": "Jednotka byla úspěšně přesunuta do FOLIO. Chcete-li dokončit odstranění této jednotky ze vzdáleného úložiště, spusťte výstup o výjimce nebo to sdělte přímo lokaci vzdáleného úložiště.",
     "search": "Vyhledat",
@@ -853,5 +852,6 @@
     "permission.items.mark-in-process-non-requestable.execute": "Katalog: Označení jednotek v procesu (nevyžádané)",
     "permission.consortia.inventory.share.local.instance": "Katalog: Sdílet místní titul s konsorciem",
     "permission.consortia.inventory.update.ownership": "Katalog: Aktualizace vlastnictví",
-    "permission.items.in-transit-report.create": "Katalog: Vytvořit a stáhnout výstup Přepravované jednotky"
+    "permission.items.in-transit-report.create": "Katalog: Vytvořit a stáhnout výstup Přepravované jednotky",
+    "exportInstancesInMARC.complete": "The export is complete. The downloaded {csvFileName}.csv contains selected record's UUID. To retrieve the {marcFileName}.mrc file, please go to the Data export app."
 }
