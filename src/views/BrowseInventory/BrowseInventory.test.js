@@ -142,11 +142,17 @@ describe('BrowseInventory', () => {
 
   it('should have search prop in SearchModeNavigation component', () => {
     const search = '?qindex=title&query=book&sort=title';
+    const state = {
+      isSearchToggleHitInBrowse: true,
+    };
 
     mockGetLastSearch.mockClear().mockImplementation(() => search);
     renderBrowseInventory();
 
-    expect(SearchModeNavigation).toHaveBeenCalledWith({ search }, {});
+    expect(SearchModeNavigation).toHaveBeenCalledWith({
+      search,
+      state,
+    }, {});
     mockGetLastSearch.mockRestore();
   });
 
