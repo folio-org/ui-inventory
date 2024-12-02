@@ -678,7 +678,6 @@
     "instances.columns.contributor": "Bijdrager",
     "instances.columns.contributorType": "Soort",
     "instances.columns.relatorTerm": "Gerelateerde term",
-    "filters.nameType": "Type naam",
     "browseContributors.results.error": "Fout bij het retourneren van resultaten. Probeer het opnieuw of wijzig uw zoekopdracht.",
     "remote.warning.common.items": "Item is succesvol verplaatst in FOLIO. Om het verwijderen van dit item uit externe opslag te voltooien, voert u een uitzonderingsrapport uit of communiceert u dit rechtstreeks naar uw externe opslaglocatie.",
     "search": "Zoeken",
@@ -853,5 +852,6 @@
     "permission.items.mark-in-process-non-requestable.execute": "Inventory: Mark items in process (non-requestable)",
     "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
     "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
-    "permission.items.in-transit-report.create": "Inventory: Create and download In transit items report"
+    "permission.items.in-transit-report.create": "Inventory: Create and download In transit items report",
+    "exportInstancesInMARC.complete": "The export is complete. The downloaded {csvFileName}.csv contains selected record's UUID. To retrieve the {marcFileName}.mrc file, please go to the Data export app."
 }
