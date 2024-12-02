@@ -263,6 +263,8 @@ class InstancesList extends React.Component {
       data,
       location,
       segment,
+      parentMutator,
+      getLastSearchOffset,
     } = this.props;
     const sortBy = this.getSortFromParams();
 
@@ -294,6 +296,12 @@ class InstancesList extends React.Component {
     if (!sortBy || isStaffSuppressFilterChanged) {
       searchParams.set('sort', data.displaySettings.defaultSort);
       this.redirectToSearchParams(searchParams);
+    }
+
+    if (prevProps.segment !== segment) {
+      const lastSearchOffset = getLastSearchOffset(segment);
+
+      parentMutator.resultOffset.replace(lastSearchOffset);
     }
   }
 
