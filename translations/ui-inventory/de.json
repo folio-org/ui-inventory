@@ -678,7 +678,6 @@
     "instances.columns.contributor": "Mitwirkende/-r",
     "instances.columns.contributorType": "Typ",
     "instances.columns.relatorTerm": "Beziehungskennzeichnung",
-    "filters.nameType": "Namenstyp",
     "browseContributors.results.error": "Fehler beim Zurückgeben von Ergebnissen. Bitte erneut versuchen oder Suche überarbeiten.",
     "remote.warning.common.items": "Exemplar wurde erfolgreich in FOLIO verschoben. Um die Entfernung dieses Exemplars aus dem Fernspeicher abzuschließen, einen Ausnahmebericht ausführen oder dem Fernspeicher direkt mitteilen.",
     "search": "Suchen",
@@ -853,5 +852,6 @@
     "permission.items.mark-in-process-non-requestable.execute": "Inventory: Mark items in process (non-requestable)",
     "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
     "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
-    "permission.items.in-transit-report.create": "Inventory: Create and download In transit items report"
+    "permission.items.in-transit-report.create": "Inventory: Create and download In transit items report",
+    "exportInstancesInMARC.complete": "The export is complete. The downloaded {csvFileName}.csv contains selected record's UUID. To retrieve the {marcFileName}.mrc file, please go to the Data export app."
 }
