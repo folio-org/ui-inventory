@@ -314,13 +314,7 @@ describe('InstancesList', () => {
         it('should call history.replace with sort parameter from Settings', () => {
           jest.spyOn(history, 'replace');
 
-          history.push({
-            pathname: '/inventory',
-            search: '?filters=staffSuppress.false&sort=title',
-            state: {
-              isSearchToggleHitInBrowse: false,
-            },
-          });
+          history.push('/inventory?filters=staffSuppress.false&sort=title');
 
           renderInstancesList({
             segment: 'instances',
@@ -335,41 +329,10 @@ describe('InstancesList', () => {
             },
           });
 
-          expect(history.replace).toHaveBeenLastCalledWith(expect.objectContaining({
-            search: expect.stringContaining('sort=relevance'),
-          }));
-        });
-
-        describe('and redirection from Browse search by pressing Search toggle', () => {
-          it('should not call history.replace with sort parameter from Settings', () => {
-            jest.spyOn(history, 'replace');
-
-            history.push({
-              pathname: '/inventory',
-              search: '?filters=staffSuppress.false&sort=title',
-              state: {
-                isSearchToggleHitInBrowse: true,
-              },
-            });
-
-            const defaultSort = SORT_OPTIONS.RELEVANCE;
-
-            renderInstancesList({
-              segment: segments.instances,
-              data: {
-                ...data,
-                query: {
-                  query: '',
-                },
-                displaySettings: {
-                  defaultSort,
-                },
-              },
-            });
-
-            expect(history.replace).not.toHaveBeenLastCalledWith(expect.objectContaining({
-              search: expect.stringContaining(`sort=${defaultSort}`),
-            }));
+          expect(history.replace).toHaveBeenLastCalledWith({
+            pathname: '/inventory',
+            search: 'filters=staffSuppress.false&sort=relevance',
+            state: undefined,
           });
         });
       });

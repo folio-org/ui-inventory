@@ -14,7 +14,6 @@
 * Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
 * Display user's name instead of "Unknown user" in "Last updated" field in "Settings" for member tenant. Fixes UIIN-3144.
 * Update Linked data API URL to use the new API path. Fixes UIIN-3146.
-* Add the `isSearchToggleHitInBrowse` flag to the history state to use in the condition that specifies whether to use the default sort on mount.  Fixes UIIN-3137.
 
 ## [12.0.3](https://github.com/folio-org/ui-inventory/tree/v12.0.3) (2024-11-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.2...v12.0.3)
