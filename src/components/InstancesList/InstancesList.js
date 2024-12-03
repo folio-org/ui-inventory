@@ -182,7 +182,6 @@ class InstancesList extends React.Component {
       replace: PropTypes.func,
     }),
     getLastBrowse: PropTypes.func.isRequired,
-    getLastSearch: PropTypes.func.isRequired,
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
@@ -251,9 +250,14 @@ class InstancesList extends React.Component {
     const searchParams = new URLSearchParams(_location.search);
 
     const isStaffSuppressFilterChanged = this.applyDefaultStaffSuppressFilter(searchParams);
+    let isSortingUpdated = false;
 
-    if (params.sort !== defaultSort || isStaffSuppressFilterChanged) {
+    if (!params.sort) {
+      isSortingUpdated = true;
       searchParams.set('sort', defaultSort);
+    }
+
+    if (isSortingUpdated || isStaffSuppressFilterChanged) {
       this.redirectToSearchParams(searchParams);
     }
   }
@@ -287,14 +291,19 @@ class InstancesList extends React.Component {
     const searchParams = new URLSearchParams(location.search);
 
     let isStaffSuppressFilterChanged = false;
+    let isSortingUpdated = false;
 
     if (prevProps.segment !== this.props.segment) {
       isStaffSuppressFilterChanged = this.applyDefaultStaffSuppressFilter(searchParams);
     }
 
     // `sort` is missing after reset button is hit
-    if (!sortBy || isStaffSuppressFilterChanged) {
+    if (!sortBy) {
+      isSortingUpdated = true;
       searchParams.set('sort', data.displaySettings.defaultSort);
+    }
+
+    if (isSortingUpdated || isStaffSuppressFilterChanged) {
       this.redirectToSearchParams(searchParams);
     }
 
@@ -390,33 +399,13 @@ class InstancesList extends React.Component {
   processLastSearchTermsOnMount = () => {
     const {
       getParams,
-      location,
       parentMutator,
       getLastSearchOffset,
-      getLastSearch,
-      storeLastSearch,
       segment: currentSegment,
     } = this.props;
     const params = getParams();
     const lastSearchOffset = getLastSearchOffset(currentSegment);
     const offset = params.selectedBrowseResult === 'true' ? 0 : lastSearchOffset;
-
-    // Remove the sort option on mount from last searches, as the sort option from Settings should be used
-    // until it is changed there or via the result headers or actions.
-    const storeLastSearchWithoutSortParam = (search, segment) => {
-      const searchParams = new URLSearchParams(search);
-      searchParams.delete('sort');
-      storeLastSearch(`?${searchParams.toString()}`, segment);
-    };
-
-    Object.values(segments).forEach(segment => {
-      if (segment === currentSegment) {
-        storeLastSearchWithoutSortParam(location.search, currentSegment);
-      } else {
-        const lastSegmentSearch = getLastSearch(segment);
-        storeLastSearchWithoutSortParam(lastSegmentSearch, segment);
-      }
-    });
 
     parentMutator.resultOffset.replace(offset);
   }
