@@ -405,7 +405,7 @@
     "reports.inTransitItem.checkInDateTime": "Data i czas zwrotu",
     "reports.inTransitItem.destinationServicePoint": "Docelowy punkt obsługi",
     "reports.inTransitItem.requestType": "Rodzaj rezerwacji",
-    "reports.inTransitItem.requesterPatronGroup": "Grupa czytelników rezerwującego",
+    "reports.inTransitItem.requesterPatronGroup": "Grupa czytelnika rezerwującego",
     "reports.inTransitItem.requestCreationDate": "Data utworzenia zamówienia",
     "reports.inTransitItem.requestExpirationDate": "Dzień wygaśnięcia rezerwacji",
     "reports.inTransitItem.requestPickupServicePoint": "Punkt obsługi odbioru zamówienia",
