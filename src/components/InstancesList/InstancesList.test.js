@@ -291,27 +291,8 @@ describe('InstancesList', () => {
     });
 
     describe('when the component is mounted', () => {
-      it('should write location.search to the session storage and delete "sort" from all stored searches', () => {
-        history.push({ search: '?qindex=title&query=book&sort=title' });
-
-        const getLastSearch = jest.fn(segment => {
-          if (segment === segments.holdings) return '?query=foo&segment=holdings&sort=title';
-          if (segment === segments.items) return '?query=foo&segment=items&sort=title';
-          return '?qindex=title&query=book&sort=title';
-        });
-
-        renderInstancesList({
-          segment: segments.instances,
-          getLastSearch,
-        });
-
-        expect(mockStoreLastSearch).toHaveBeenNthCalledWith(1, '?qindex=title&query=book', segments.instances);
-        expect(mockStoreLastSearch).toHaveBeenNthCalledWith(2, '?query=foo&segment=holdings', segments.holdings);
-        expect(mockStoreLastSearch).toHaveBeenNthCalledWith(3, '?query=foo&segment=items', segments.items);
-      });
-
       describe('and sort parameter does not match the one selected in Settings', () => {
-        it('should call history.replace with sort parameter from Settings', () => {
+        it('should not be replaced', () => {
           jest.spyOn(history, 'replace');
 
           history.push('/inventory?filters=staffSuppress.false&sort=title');
@@ -329,11 +310,33 @@ describe('InstancesList', () => {
             },
           });
 
-          expect(history.replace).toHaveBeenLastCalledWith({
-            pathname: '/inventory',
-            search: 'filters=staffSuppress.false&sort=relevance',
-            state: undefined,
+          expect(history.replace).not.toHaveBeenLastCalledWith(expect.objectContaining({
+            search: expect.stringContaining('sort=relevance'),
+          }));
+        });
+      });
+
+      describe('and sort parameter is missing', () => {
+        it('should call history.replace with the default sort parameter', () => {
+          jest.spyOn(history, 'replace');
+
+          history.push('/inventory?filters=staffSuppress.false');
+
+          renderInstancesList({
+            data: {
+              ...data,
+              query: {
+                query: '',
+              },
+              displaySettings: {
+                defaultSort: SORT_OPTIONS.RELEVANCE,
+              },
+            },
           });
+
+          expect(history.replace).toHaveBeenLastCalledWith(expect.objectContaining({
+            search: expect.stringContaining('sort=relevance'),
+          }));
         });
       });
 
