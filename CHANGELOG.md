@@ -5,20 +5,21 @@
 * ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
 * *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
 * *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
-* Add permission for "Share local instance" option on Member tenants. Refs UIIN-3140.
 * React v19: refactor away from default props for functional components. Refs UIIN-2890.
 * User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
 
 ## [12.0.5] (IN PROGRESS)
 
-* Set default sorting to URL in componentDidMount and componentDidUpdate if it is missing. Fixes UIIN-3137.
-
-## [12.0.4] (IN PROGRESS)
-
 * Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
 * Display user's name instead of "Unknown user" in "Last updated" field in "Settings" for member tenant. Fixes UIIN-3144.
-* Update Linked data API URL to use the new API path. Fixes UIIN-3146.
 * Set the previously used offset by executing `resultOffset.replace` when changing the segment. Fixes UIIN-3143.
+* Set default sorting to URL in componentDidMount and componentDidUpdate if it is missing. Fixes UIIN-3137.
+
+## [12.0.4](https://github.com/folio-org/ui-inventory/tree/v12.0.4) (2024-12-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.3...v12.0.4)
+
+* Add permission for "Share local instance" option on Member tenants. Refs UIIN-3140.
+* Update Linked data API URL to use the new API path. Fixes UIIN-3146.
 
 ## [12.0.3](https://github.com/folio-org/ui-inventory/tree/v12.0.3) (2024-11-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.2...v12.0.3)
