@@ -1,6 +1,8 @@
 # Change history for ui-inventory
 
-## [12.0.5] (IN PROGRESS)
+## [12.0.5](https://github.com/folio-org/ui-inventory/tree/v12.0.5) (2024-12-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.4...v12.0.5)
+
 * Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
 * User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
 * Set the previously used offset by executing `resultOffset.replace` when changing the segment. Fixes UIIN-3143.
