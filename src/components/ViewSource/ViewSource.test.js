@@ -3,9 +3,9 @@ import {
   BrowserRouter as Router,
   useHistory,
 } from 'react-router-dom';
-import { act } from 'react-dom/test-utils';
 
 import {
+  act,
   screen,
   waitFor,
   fireEvent,
@@ -27,7 +27,6 @@ jest.mock('react-router-dom', () => ({
     push: jest.fn(),
   }),
 }));
-
 jest.mock('../../common/hooks/useGoBack', () => jest.fn());
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
