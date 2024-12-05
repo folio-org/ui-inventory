@@ -7,6 +7,7 @@
 * *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
 * React v19: refactor away from default props for functional components. Refs UIIN-2890.
 * User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
+* React 19: refactor away from react-dom/test-utils. Refs UIIN-2888.
 
 ## [12.0.5] (IN PROGRESS)
 
