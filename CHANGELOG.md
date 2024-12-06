@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [12.0.6] (IN PROGRESS)
+## [12.0.6](https://github.com/folio-org/ui-inventory/tree/v12.0.6) (2024-12-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.5...v12.0.6)
 
 * Display user's name instead of "Unknown user" in "Last updated" field in "Settings" for member tenant. Fixes UIIN-3144.
 * Set default sorting to URL in componentDidMount and componentDidUpdate if it is missing. Fixes UIIN-3137.
