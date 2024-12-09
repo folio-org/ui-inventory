@@ -87,7 +87,7 @@ const getClassificationQuery = (qindex, data, row) => {
     .find(config => config.id === classificationBrowseConfigId)?.typeIds;
 
   const classificationBrowseTypesQuery = classificationBrowseTypes
-    .map(typeId => `classifications.classificationTypeId=="${typeId}"`)
+    ?.map(typeId => `classifications.classificationTypeId=="${typeId}"`)
     .join(' or ');
 
   if (classificationBrowseTypesQuery) {
