@@ -9,6 +9,10 @@
 * User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
 * React 19: refactor away from react-dom/test-utils. Refs UIIN-2888.
 
+## [12.0.7] (IN PROGRESS)
+
+* Add `limit=1000` to `subject-sources` request to fetch more subject sources. Fixes UIIN-3163.
+
 ## [12.0.5] (IN PROGRESS)
 
 * Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
