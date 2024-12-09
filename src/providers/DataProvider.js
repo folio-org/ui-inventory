@@ -195,7 +195,7 @@ DataProvider.manifest = {
   },
   subjectSources: {
     type: 'okapi',
-    path: 'subject-sources?query=cql.allRecords=1 sortby name',
+    path: 'subject-sources?limit=1000&query=cql.allRecords=1 sortby name',
     records: 'subjectSources',
     resourceShouldRefresh: true,
     throwErrors: false,
