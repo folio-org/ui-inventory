@@ -9,6 +9,10 @@
 * User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
 * React 19: refactor away from react-dom/test-utils. Refs UIIN-2888.
 
+## [12.0.7] (IN PROGRESS)
+
+* Handle `null` `typeIds` in `browse/config/instance-classification` response. Fixes UIIN-3161.
+
 ## [12.0.6](https://github.com/folio-org/ui-inventory/tree/v12.0.6) (2024-12-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.5...v12.0.6)
 
