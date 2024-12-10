@@ -11,14 +11,21 @@
 
 ## [12.0.7] (IN PROGRESS)
 
+* Handle `null` `typeIds` in `browse/config/instance-classification` response. Fixes UIIN-3161.
 * Add `limit=1000` to `subject-sources` request to fetch more subject sources. Fixes UIIN-3163.
 
-## [12.0.5] (IN PROGRESS)
+## [12.0.6](https://github.com/folio-org/ui-inventory/tree/v12.0.6) (2024-12-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.5...v12.0.6)
+
+* Display user's name instead of "Unknown user" in "Last updated" field in "Settings" for member tenant. Fixes UIIN-3144.
+* Set default sorting to URL in componentDidMount and componentDidUpdate if it is missing. Fixes UIIN-3137.
+
+## [12.0.5](https://github.com/folio-org/ui-inventory/tree/v12.0.5) (2024-12-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.4...v12.0.5)
 
 * Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
-* Display user's name instead of "Unknown user" in "Last updated" field in "Settings" for member tenant. Fixes UIIN-3144.
+* User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
 * Set the previously used offset by executing `resultOffset.replace` when changing the segment. Fixes UIIN-3143.
-* Set default sorting to URL in componentDidMount and componentDidUpdate if it is missing. Fixes UIIN-3137.
 
 ## [12.0.4](https://github.com/folio-org/ui-inventory/tree/v12.0.4) (2024-12-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.3...v12.0.4)
