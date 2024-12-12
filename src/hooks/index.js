@@ -16,3 +16,4 @@ export { default as useUpdateOwnership } from './useUpdateOwnership';
 export { default as useLocalStorageItems } from './useLocalStorageItems';
 export * from './useQuickExport';
 export * from '@folio/stripes-inventory-components/lib/queries/useInstanceDateTypes';
+export * from './useCallNumberTypesQuery';
