@@ -10,7 +10,6 @@ import {
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import {
   InfoPopover,
-  List,
   LoadingPane,
 } from '@folio/stripes/components';
 import {
@@ -19,9 +18,10 @@ import {
   useUserTenantPermissions,
 } from '@folio/stripes/core';
 
+import { CallNumberTypeList } from './CallNumberTypeList';
+import { CallNumberTypeField } from './CallNumberTypeField';
 import { useCallNumberTypesQuery } from '../../hooks';
 import { CALL_NUMBER_BROWSE_COLUMNS } from './constants';
-import getFieldComponents from './getFieldComponents';
 
 const CallNumberBrowseSettings = () => {
   const stripes = useStripes();
@@ -82,15 +82,6 @@ const CallNumberBrowseSettings = () => {
     [CALL_NUMBER_BROWSE_COLUMNS.TYPE_IDS]: item[CALL_NUMBER_BROWSE_COLUMNS.TYPE_IDS].map(type => type.id),
   }), []);
 
-  const renderCallNumberTypes = (types = []) => (
-    <List
-      items={types}
-      itemFormatter={type => <li>{type?.label}</li>}
-      listStyle="bullets"
-      marginBottom0
-    />
-  );
-
   if (!hasRequiredPermissions) {
     return null;
   }
@@ -115,7 +106,7 @@ const CallNumberBrowseSettings = () => {
         columnMapping={columnMapping}
         hiddenFields={[CALL_NUMBER_BROWSE_COLUMNS.SHELVING_ALGORITHM, 'lastUpdated', 'numberOfObjects']}
         formatter={{
-          [CALL_NUMBER_BROWSE_COLUMNS.TYPE_IDS]: ({ typeIds }) => renderCallNumberTypes(typeIds),
+          [CALL_NUMBER_BROWSE_COLUMNS.TYPE_IDS]: CallNumberTypeList,
         }}
         readOnlyFields={[CALL_NUMBER_BROWSE_COLUMNS.NAME]}
         nameKey="name"
@@ -123,7 +114,15 @@ const CallNumberBrowseSettings = () => {
         id="call-number-browse"
         preUpdateHook={formatItemForSaving}
         editable
-        fieldComponents={getFieldComponents(fieldLabels, callNumberTypeOptions)}
+        fieldComponents={{
+          [CALL_NUMBER_BROWSE_COLUMNS.TYPE_IDS]: (callNumberTypeProps) => (
+            <CallNumberTypeField
+              {...callNumberTypeProps}
+              fieldLabels={fieldLabels}
+              callNumberTypeOptions={callNumberTypeOptions}
+            />
+          ),
+        }}
         canCreate={false}
         parseRow={formatRowData}
         actionSuppressor={{
