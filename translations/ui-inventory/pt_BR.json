@@ -853,5 +853,5 @@
     "permission.consortia.inventory.share.local.instance": "Inventário: Compartilhar a instância local com o consórcio",
     "permission.consortia.inventory.update.ownership": "Inventário: Atualizar propriedade",
     "permission.items.in-transit-report.create": "Inventário: criar e baixar relatório de itens em trânsito",
-    "exportInstancesInMARC.complete": "A exportação foi concluída. O arquivo {csvFileName}.csv baixado contém o UIID do registro selecionado. Para recuperar o arquivo {marcFileName}.mrc, acesse o aplicativo Data export (Exportação de dados)."
+    "exportInstancesInMARC.complete": "A exportação foi concluída. O arquivo {csvFileName}.csv baixado contém o UUID do registro selecionado. Para recuperar o arquivo {marcFileName}.mrc, acesse o aplicativo de Exportação de dados."
 }
