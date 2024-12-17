@@ -8,6 +8,7 @@
 * React v19: refactor away from default props for functional components. Refs UIIN-2890.
 * User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
 * React 19: refactor away from react-dom/test-utils. Refs UIIN-2888.
+* Add call number browse settings. Refs UIIN-3116.
 
 ## [12.0.7] (IN PROGRESS)
 
