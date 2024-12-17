@@ -839,7 +839,7 @@
     "actions.menuSection.sortBy.date": "Datum",
     "moveItems.modal.message.hasLinkedPOLsOrHoldings": "This holdings is linked to a purchase order line. Moving this holdings to a new instance will move any other holdings and items that are linked to this purchase order line to the new instance as well. The purchase order line will also be linked to the new instance. Do you want to continue?",
     "hasLinkedLocalOrderLine.modal.heading": "Linked order line",
-    "hasLinkedLocalOrderLine.modal.message": "This holding or item is referenced by a local purchase order line, it's affiliation cannot be changed at this time.",
+    "hasLinkedLocalOrderLine.modal.message": "Na tento holding nebo tuto jednotku se odkazuje řádek místní nákupní objednávky, jeho příslušnost nelze v tuto chvíli změnit.",
     "permission.settings.material-types": "Nastavení (Katalog): Vytváření, úpravy, mazání typů materiálů",
     "permission.settings.loan-types": "Nastavení (Katalog): Vytváření, úpravy, mazání typů výpůjček",
     "permission.instance.set-records-for-deletion.execute": "Katalog: Nastavit záznamy pro smazání",
