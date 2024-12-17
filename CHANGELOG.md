@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [12.0.7] (IN PROGRESS)
+## [12.0.7](https://github.com/folio-org/ui-inventory/tree/v12.0.7) (2024-12-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.6...v12.0.7)
 
 * Handle `null` `typeIds` in `browse/config/instance-classification` response. Fixes UIIN-3161.
 * Add `limit=1000` to `subject-sources` request to fetch more subject sources. Fixes UIIN-3163.
