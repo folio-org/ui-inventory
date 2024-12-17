@@ -9,6 +9,7 @@
 * User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
 * React 19: refactor away from react-dom/test-utils. Refs UIIN-2888.
 * Add call number browse settings. Refs UIIN-3116.
+* Display holdings names in `Consortial holdings` accordion for user without inventory permissions in member tenants. Fixes UIIN-3159
 
 ## [12.0.7](https://github.com/folio-org/ui-inventory/tree/v12.0.7) (2024-12-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.6...v12.0.7)
