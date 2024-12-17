@@ -712,6 +712,7 @@
   "permission.settings.instance-formats": "Settings (Inventory): Create, edit, delete formats",
   "permission.settings.electronic-access-relationships": "Settings (Inventory): Create, edit, delete URL relationships",
   "permission.settings.holdings-types": "Settings (Inventory): Create, edit, delete holdings types",
+  "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse",
   "permission.settings.classification-browse": "Settings (Inventory): Configure classification browse",
   "permission.settings.classification-types": "Settings (Inventory): Create, edit, delete classification identifier types",
   "permission.settings.identifier-types": "Settings (Inventory): Create, edit, delete resource identifier types",
