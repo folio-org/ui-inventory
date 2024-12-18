@@ -1,5 +1,7 @@
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
 
+import { DataContext } from '../../../../contexts';
 import { LimitedHolding } from '../LimitedHolding';
 
 const LimitedHoldingsList = ({
@@ -9,12 +11,15 @@ const LimitedHoldingsList = ({
   userTenantPermissions,
   pathToAccordionsState,
 }) => {
+  const { locationsById } = useContext(DataContext);
+
   return holdings.map((holding, i) => (
     <LimitedHolding
       key={`${holding.id}_${i}`}
       instance={instance}
       holding={holding}
       tenantId={tenantId}
+      locationName={locationsById[holding.permanentLocationId].name}
       userTenantPermissions={userTenantPermissions}
       pathToAccordionsState={pathToAccordionsState}
     />

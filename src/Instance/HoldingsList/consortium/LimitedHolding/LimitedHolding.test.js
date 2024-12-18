@@ -37,6 +37,7 @@ const renderLimitedHolding = () => {
         instance={{ id: 'instanceId' }}
         holding={holdingsWithLimitedInfo}
         tenantId="college"
+        locationName="Location 1"
         userTenantPermissions={userTenantLimitedPermissions}
         pathToAccordionsState={[]}
       />
@@ -51,7 +52,7 @@ describe('LimitedHolding', () => {
     renderLimitedHolding();
 
     expect(screen.getByRole('button', {
-      name: /holdings: > prefix callnumber copynumber/i
+      name: /holdings: Location 1 > prefix callnumber copynumber/i
     })).toBeInTheDocument();
   });
 

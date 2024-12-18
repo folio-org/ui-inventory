@@ -30,6 +30,7 @@ const LimitedHolding = ({
   instance,
   holding,
   tenantId,
+  locationName,
   userTenantPermissions,
   pathToAccordionsState,
 }) => {
@@ -56,7 +57,7 @@ const LimitedHolding = ({
 
   const accordionLabel = (
     <HoldingAccordionLabel
-      location=" "
+      location={locationName}
       holding={holding}
     />
   );
@@ -105,6 +106,7 @@ LimitedHolding.propTypes = {
   instance: PropTypes.object.isRequired,
   holding: PropTypes.object.isRequired,
   tenantId: PropTypes.string.isRequired,
+  locationName: PropTypes.string.isRequired,
   userTenantPermissions: PropTypes.arrayOf(PropTypes.object).isRequired,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
