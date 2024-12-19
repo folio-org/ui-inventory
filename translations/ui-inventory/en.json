@@ -745,7 +745,7 @@
   "permission.items.mark-unavailable.execute": "Inventory: Mark items unavailable",
   "permission.items.mark-long-missing.execute": "Inventory: Mark items long missing",
   "permission.items.mark-in-process-non-requestable.execute": "Inventory: Mark items in process (non-requestable)",
-  "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
+  "permission.consortia.inventory.local.sharing-instances.execute": "Inventory: Share local instance with consortium",
   "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
   "permission.items.in-transit-report.create": "Inventory: Create and download In transit items report",
   "permission.settings.displaySettings": "Settings (Inventory): Can view and edit general settings",

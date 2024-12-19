@@ -652,8 +652,7 @@
           "ui-inventory.instance.view",
           "inventory.instances.item.post",
           "inventory-storage.instances.item.post",
-          "browse.contributors.instances.collection.get",
-          "consortia.inventory.local.sharing-instances.execute"
+          "browse.contributors.instances.collection.get"
         ],
         "visible": true
       },
