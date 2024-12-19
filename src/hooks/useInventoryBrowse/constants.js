@@ -9,16 +9,16 @@ export const FIVE_MINUTES = 5 * 60 * 1000;
 
 export const PATH_MAP = {
   [browseModeOptions.SUBJECTS]: 'browse/subjects/instances',
-  [browseModeOptions.CALL_NUMBERS]: 'browse/call-numbers/instances',
-  [browseModeOptions.DEWEY]: 'browse/call-numbers/instances',
-  [browseModeOptions.LIBRARY_OF_CONGRESS]: 'browse/call-numbers/instances',
-  [browseModeOptions.LOCAL]: 'browse/call-numbers/instances',
-  [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: 'browse/call-numbers/instances',
-  [browseModeOptions.OTHER]: 'browse/call-numbers/instances',
+  [browseModeOptions.CALL_NUMBERS]: 'browse/call-numbers/all/instances',
+  [browseModeOptions.DEWEY]: 'browse/call-numbers/dewey/instances',
+  [browseModeOptions.LIBRARY_OF_CONGRESS]: 'browse/call-numbers/lc/instances',
+  [browseModeOptions.LOCAL]: 'browse/call-numbers/instances', // not supported, option disabled
+  [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: 'browse/call-numbers/nlm/instances',
+  [browseModeOptions.OTHER]: 'browse/call-numbers/other/instances',
+  [browseModeOptions.SUPERINTENDENT]: 'browse/call-numbers/sudoc/instances',
   [browseModeOptions.CLASSIFICATION_ALL]: 'browse/classification-numbers/all/instances',
   [browseModeOptions.DEWEY_CLASSIFICATION]: 'browse/classification-numbers/dewey/instances',
   [browseModeOptions.LC_CLASSIFICATION]: 'browse/classification-numbers/lc/instances',
-  [browseModeOptions.SUPERINTENDENT]: 'browse/call-numbers/instances',
   [browseModeOptions.CONTRIBUTORS]: 'browse/contributors/instances',
 };
 
