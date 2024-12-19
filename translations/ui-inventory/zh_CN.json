@@ -853,5 +853,15 @@
     "permission.consortia.inventory.share.local.instance": "典藏：与联盟共享本地实例",
     "permission.consortia.inventory.update.ownership": "典藏：更新所有权",
     "permission.items.in-transit-report.create": "典藏：创建并下载转运中单件报告",
-    "exportInstancesInMARC.complete": "导出已完成。下载的{csvFileName}.csv 包含所选记录的 UUID。要检索{marcFileName}.mrc 文件，请转到数据导出应用程序。"
+    "exportInstancesInMARC.complete": "导出已完成。下载的{csvFileName}.csv 包含所选记录的 UUID。要检索{marcFileName}.mrc 文件，请转到数据导出应用程序。",
+    "callNumberBrowse": "Call number browse",
+    "settings.instanceCallNumber.all": "Call numbers (all)",
+    "settings.instanceCallNumber.dewey": "Dewey Decimal classification",
+    "settings.instanceCallNumber.lc": "Library of Congress classification",
+    "settings.instanceCallNumber.nlm": "National Library of Medicine classification",
+    "settings.instanceCallNumber.other": "Other scheme",
+    "settings.instanceCallNumber.sudoc": "Superintendent of Documents classification",
+    "settings.instanceCallNumber.termUpdated": "The call number browse type {term} was successfully updated",
+    "settings.instanceCallNumber.identifierTypesPopover": "Please note that if no call number types are selected for a browse option, this option will display all call number types.",
+    "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse"
 }
