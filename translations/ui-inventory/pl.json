@@ -853,5 +853,15 @@
     "permission.consortia.inventory.share.local.instance": "Katalogowanie: udostępnianie instancji lokalnej konsorcjum",
     "permission.consortia.inventory.update.ownership": "Katalogowanie: aktualizacja własności",
     "permission.items.in-transit-report.create": "Katalogowanie:  tworzenie i pobieranie raportów egzemplarzy w drodze",
-    "exportInstancesInMARC.complete": "Eksport został ukończony. Pobrany plik {csvFileName}.csv zawiera UUID wybranego rekordu. Aby pobrać {marcFileName}.mrc plik przejdź do aplikacji Eksport Danych."
+    "exportInstancesInMARC.complete": "Eksport został ukończony. Pobrany plik {csvFileName}.csv zawiera UUID wybranego rekordu. Aby pobrać {marcFileName}.mrc plik przejdź do aplikacji Eksport Danych.",
+    "callNumberBrowse": "Call number browse",
+    "settings.instanceCallNumber.all": "Call numbers (all)",
+    "settings.instanceCallNumber.dewey": "Dewey Decimal classification",
+    "settings.instanceCallNumber.lc": "Library of Congress classification",
+    "settings.instanceCallNumber.nlm": "National Library of Medicine classification",
+    "settings.instanceCallNumber.other": "Other scheme",
+    "settings.instanceCallNumber.sudoc": "Superintendent of Documents classification",
+    "settings.instanceCallNumber.termUpdated": "The call number browse type {term} was successfully updated",
+    "settings.instanceCallNumber.identifierTypesPopover": "Please note that if no call number types are selected for a browse option, this option will display all call number types.",
+    "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse"
 }

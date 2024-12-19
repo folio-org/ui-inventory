@@ -853,5 +853,15 @@
     "permission.consortia.inventory.share.local.instance": "Inventory: Share local instance with consortium",
     "permission.consortia.inventory.update.ownership": "Inventory: Update ownership",
     "permission.items.in-transit-report.create": "Inventory: Create and download In transit items report",
-    "exportInstancesInMARC.complete": "De export is voltooid. Het gedownloade {csvFileName}.csv-bestand bevat de UUID van het geselecteerde Record. Om het {marcFileName}.mrc-bestand op te halen, ga naar de Data export-app."
+    "exportInstancesInMARC.complete": "De export is voltooid. Het gedownloade {csvFileName}.csv-bestand bevat de UUID van het geselecteerde Record. Om het {marcFileName}.mrc-bestand op te halen, ga naar de Data export-app.",
+    "callNumberBrowse": "Call number browse",
+    "settings.instanceCallNumber.all": "Call numbers (all)",
+    "settings.instanceCallNumber.dewey": "Dewey Decimal classification",
+    "settings.instanceCallNumber.lc": "Library of Congress classification",
+    "settings.instanceCallNumber.nlm": "National Library of Medicine classification",
+    "settings.instanceCallNumber.other": "Other scheme",
+    "settings.instanceCallNumber.sudoc": "Superintendent of Documents classification",
+    "settings.instanceCallNumber.termUpdated": "The call number browse type {term} was successfully updated",
+    "settings.instanceCallNumber.identifierTypesPopover": "Please note that if no call number types are selected for a browse option, this option will display all call number types.",
+    "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse"
 }
