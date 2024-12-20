@@ -24,16 +24,16 @@ export const PATH_MAP = {
 
 export const INITIAL_SEARCH_PARAMS_MAP = {
   [browseModeOptions.SUBJECTS]: 'value',
-  [browseModeOptions.CALL_NUMBERS]: 'callNumber',
-  [browseModeOptions.DEWEY]: 'typedCallNumber',
-  [browseModeOptions.LIBRARY_OF_CONGRESS]: 'typedCallNumber',
-  [browseModeOptions.LOCAL]: 'typedCallNumber',
-  [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: 'typedCallNumber',
-  [browseModeOptions.OTHER]: 'typedCallNumber',
+  [browseModeOptions.CALL_NUMBERS]: 'fullCallNumber',
+  [browseModeOptions.DEWEY]: 'fullCallNumber',
+  [browseModeOptions.LIBRARY_OF_CONGRESS]: 'fullCallNumber',
+  [browseModeOptions.LOCAL]: 'fullCallNumber',
+  [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: 'fullCallNumber',
+  [browseModeOptions.OTHER]: 'fullCallNumber',
   [browseModeOptions.CLASSIFICATION_ALL]: 'number',
   [browseModeOptions.DEWEY_CLASSIFICATION]: 'number',
   [browseModeOptions.LC_CLASSIFICATION]: 'number',
-  [browseModeOptions.SUPERINTENDENT]: 'typedCallNumber',
+  [browseModeOptions.SUPERINTENDENT]: 'fullCallNumber',
   [browseModeOptions.CONTRIBUTORS]: 'name',
 };
 
