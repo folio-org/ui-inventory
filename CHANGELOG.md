@@ -11,6 +11,7 @@
 * Add call number browse settings. Refs UIIN-3116.
 * Remove the ability to share local instance when `Inventory: View, create instances` permission is assigned. Fixes UIIN-3166.
 * Display holdings names in `Consortial holdings` accordion for user without inventory permissions in member tenants. Fixes UIIN-3159
+* Add "linked-data 1.0" interface to "optionalOkapiInterfaces". Refs UIIN-3166.
 
 ## [12.0.7](https://github.com/folio-org/ui-inventory/tree/v12.0.7) (2024-12-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.6...v12.0.7)
