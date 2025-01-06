@@ -18,7 +18,7 @@ import {
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
-import { parseHttpError, switchAffiliation } from '../../utils';
+import { parseHttpError } from '../../utils';
 import {
   useItem,
   useItemMutation,
@@ -49,18 +49,16 @@ const EditItem = ({
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
       search: location.search,
-      state: { tenantTo: stripes.okapi.tenant },
+      state: {
+        tenantTo: stripes.okapi.tenant,
+        initialTenantId: location?.state?.initialTenantId,
+      },
     });
   }, [location.search, instanceId, holdingId, itemId]);
 
-  const onCancel = useCallback(async () => {
-    await switchAffiliation(stripes, location?.state?.tenantFrom, goBack);
-  }, [stripes, location?.state?.tenantFrom, goBack]);
-
-
-  const onSuccess = useCallback(async () => {
+  const onSuccess = useCallback(() => {
     if (!keepEditing.current) {
-      await switchAffiliation(stripes, location?.state?.tenantFrom, goBack);
+      goBack();
     } else {
       refetchItem();
     }
@@ -72,7 +70,7 @@ const EditItem = ({
         values={{ hrid: item.hrid }}
       />,
     });
-  }, [switchAffiliation, stripes, location, goBack, refetchItem, callout, item]);
+  }, [goBack, refetchItem, callout, item]);
 
   const onError = async error => {
     const parsedError = await parseHttpError(error.response);
@@ -129,7 +127,7 @@ const EditItem = ({
         key={holding.id}
         initialValues={item}
         onSubmit={onSubmit}
-        onCancel={onCancel}
+        onCancel={goBack}
         okapi={stripes.okapi}
         instance={instance}
         holdingsRecord={holding}
