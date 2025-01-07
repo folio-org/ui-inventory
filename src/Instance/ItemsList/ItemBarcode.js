@@ -52,7 +52,7 @@ const ItemBarcode = ({
       search,
       state: {
         tenantTo: tenantId,
-        tenantFrom: stripes.okapi.tenant,
+        initialTenantId: stripes.okapi.tenant,
       },
     });
 

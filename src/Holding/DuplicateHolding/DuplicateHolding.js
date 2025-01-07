@@ -28,6 +28,7 @@ const DuplicateHolding = ({
     state: {
       backPathname: locationState,
       tenantFrom,
+      initialTenantId,
     } = {},
   },
   referenceTables,
@@ -72,12 +73,13 @@ const DuplicateHolding = ({
     history.push({
       pathname: locationState?.backPathname ?? `/inventory/view/${instanceId}`,
       search,
+      state: { initialTenantId },
     });
   }, [search, instanceId]);
 
   const onCancel = useCallback(async () => {
-    await switchAffiliation(stripes, tenantFrom, goBack);
-  }, [stripes, tenantFrom, goBack]);
+    await switchAffiliation(stripes, initialTenantId, goBack);
+  }, [stripes, initialTenantId, goBack]);
 
   const onSubmit = useCallback(holdingValues => (
     mutateHolding(holdingValues)
