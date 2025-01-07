@@ -132,6 +132,7 @@ const defaultProps = {
       tenantFrom: 'testTenantFromId',
     }
   },
+  initialTenantId: 'initialTenantId',
 };
 
 const queryClient = new QueryClient();
@@ -246,7 +247,7 @@ describe('ViewHoldingsRecord actions', () => {
         search: defaultProps.location.search,
         state: {
           backPathname: defaultProps.location.pathname,
-          tenantFrom: 'testTenantFromId',
+          initialTenantId: 'initialTenantId',
         },
       };
       renderViewHoldingsRecord();
@@ -274,7 +275,8 @@ describe('ViewHoldingsRecord actions', () => {
         search: defaultProps.location.search,
         state: {
           backPathname: defaultProps.location.pathname,
-          tenantFrom: 'testTenantFromId',
+          tenantFrom: 'diku',
+          initialTenantId: 'initialTenantId',
         },
       };
 

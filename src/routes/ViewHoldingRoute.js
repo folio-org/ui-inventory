@@ -25,6 +25,7 @@ const ViewHoldingRoute = () => {
       id={instanceId}
       isInstanceShared={instance?.shared}
       tenantTo={state?.tenantTo || okapi.tenant}
+      initialTenantId={state?.initialTenantId || okapi.tenant}
       referenceTables={referenceTables}
       holdingsrecordid={holdingsrecordid}
       onUpdateOwnership={updateOwnership}
