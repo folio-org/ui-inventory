@@ -283,7 +283,6 @@ describe('ItemView', () => {
     });
 
     it('should display the information icons', () => {
-      expect(screen.getAllByTestId('info-icon-effective-call-number')[0]).toBeDefined();
       expect(screen.getAllByTestId('info-icon-shelving-order')[0]).toBeDefined();
     });
 

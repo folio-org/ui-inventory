@@ -1143,11 +1143,6 @@ const ItemView = props => {
                     label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
                     value={effectiveCallNumber(item)}
                   />
-                  <InfoPopover
-                    iconSize="medium"
-                    content={<FormattedMessage id="ui-inventory.info.effectiveCallNumber" />}
-                    buttonProps={{ 'data-testid': 'info-icon-effective-call-number' }}
-                  />
                 </Layout>
               </Col>
               <Col xs={7}>
