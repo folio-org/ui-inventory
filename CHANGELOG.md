@@ -11,6 +11,7 @@
 * Add call number browse settings. Refs UIIN-3116.
 * Add "linked-data 1.0" interface to "optionalOkapiInterfaces". Refs UIIN-3166.
 * Fix infinite loading animation after cancel edit/duplicate or 'Save & Close' consortial holdings/items. Fixes UIIN-3167.
+* Remove hover-over text next to "Effective call number" on the Item record detail view. Refs UIIN-3131.
 
 ## [12.0.8](https://github.com/folio-org/ui-inventory/tree/v12.0.8) (2024-12-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.7...v12.0.8)
