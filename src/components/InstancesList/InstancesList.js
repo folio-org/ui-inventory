@@ -28,6 +28,7 @@ import {
   withNamespace,
   checkIfUserInCentralTenant,
   TitleManager,
+  getUserTenantsPermissions,
 } from '@folio/stripes/core';
 import {
   SearchAndSort,
@@ -83,6 +84,7 @@ import {
   replaceFilter,
   batchQueryIntoSmaller,
   getSortOptions,
+  hasMemberTenantPermission,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -213,6 +215,7 @@ class InstancesList extends React.Component {
       searchAndSortKey: 0,
       segmentsSortBy: this.getInitialSegmentsSortBy(),
       searchInProgress: false,
+      userTenantPermissions: [],
     };
   }
 
@@ -222,6 +225,7 @@ class InstancesList extends React.Component {
       location: _location,
       getParams,
       data,
+      stripes,
     } = this.props;
 
     const params = getParams();
@@ -259,6 +263,10 @@ class InstancesList extends React.Component {
 
     if (isSortingUpdated || isStaffSuppressFilterChanged) {
       this.redirectToSearchParams(searchParams);
+    }
+
+    if (isUserInConsortiumMode(stripes)) {
+      this.getCurrentTenantPermissions();
     }
   }
 
@@ -1190,6 +1198,15 @@ class InstancesList extends React.Component {
     };
   }
 
+  getCurrentTenantPermissions = () => {
+    const {
+      stripes,
+      stripes: { user: { user: { tenants } } },
+    } = this.props;
+
+    getUserTenantsPermissions(stripes, tenants).then(userTenantPermissions => this.setState({ userTenantPermissions }));
+  }
+
   findAndOpenItem = async (instance) => {
     const {
       parentResources,
@@ -1212,6 +1229,17 @@ class InstancesList extends React.Component {
     }
 
     const tenantItemBelongsTo = instance?.items?.[0]?.tenantId || stripes.okapi.tenant;
+
+    // if a user is not affiliated with the item's member tenant then item details cannot be open
+    if (isUserInConsortiumMode(stripes)) {
+      const tenants = stripes.user.user.tenants || [];
+      const isUserAffiliatedWithMemberTenant = tenants.find(tenant => tenant?.id === tenantItemBelongsTo);
+      const canMemberTenantViewItems = hasMemberTenantPermission('ui-inventory.instance.view', tenantItemBelongsTo, this.state.userTenantPermissions);
+
+      if (isEmpty(isUserAffiliatedWithMemberTenant) || !canMemberTenantViewItems) {
+        return instance;
+      }
+    }
 
     itemsByQuery.reset();
     const items = await itemsByQuery.GET({
