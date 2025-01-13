@@ -250,7 +250,7 @@ class ViewHoldingsRecord extends React.Component {
       stripes,
       location,
     } = this.props;
-    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
+    const tenantFrom = location?.state?.initialTenantId || stripes.okapi.tenant;
 
     await switchAffiliation(stripes, tenantFrom, this.goToInstanceView);
   }
@@ -264,17 +264,15 @@ class ViewHoldingsRecord extends React.Component {
       location,
       id,
       holdingsrecordid,
-      stripes,
+      initialTenantId,
     } = this.props;
-
-    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     history.push({
       pathname: `/inventory/edit/${id}/${holdingsrecordid}`,
       search: location.search,
       state: {
         backPathname: location.pathname,
-        tenantFrom,
+        initialTenantId,
       },
     });
   }
@@ -288,9 +286,10 @@ class ViewHoldingsRecord extends React.Component {
       id,
       holdingsrecordid,
       stripes,
+      initialTenantId,
     } = this.props;
 
-    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
+    const tenantFrom = stripes.okapi.tenant;
 
     history.push({
       pathname: `/inventory/copy/${id}/${holdingsrecordid}`,
@@ -298,6 +297,7 @@ class ViewHoldingsRecord extends React.Component {
       state: {
         backPathname: location.pathname,
         tenantFrom,
+        initialTenantId,
       },
     });
   }
@@ -641,10 +641,8 @@ class ViewHoldingsRecord extends React.Component {
       referenceTables,
       goTo,
       stripes,
-      location,
     } = this.props;
     const { instance } = this.state;
-    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
     if (this.isAwaitingResource()) return <LoadingView />;
 
@@ -957,9 +955,7 @@ class ViewHoldingsRecord extends React.Component {
                     updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
                   })}
                   dismissible
-                  onClose={async () => {
-                    await switchAffiliation(stripes, tenantFrom, this.onClose);
-                  }}
+                  onClose={this.onClose}
                   actionMenu={this.getPaneHeaderActionMenu}
                 >
                   <Row center="xs">
@@ -1390,6 +1386,7 @@ ViewHoldingsRecord.propTypes = {
   goTo: PropTypes.func.isRequired,
   isInstanceShared: PropTypes.bool,
   onUpdateOwnership: PropTypes.func,
+  initialTenantId: PropTypes.string,
 };
 
 export default flowRight(

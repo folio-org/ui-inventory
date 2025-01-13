@@ -26,6 +26,7 @@ const ItemRoute = props => {
           {...props}
           isInstanceShared={instance?.shared}
           tenantTo={state?.tenantTo || okapi.tenant}
+          initialTenantId={state?.initialTenantId || okapi.tenant}
           referenceTables={data}
         />
       )}
@@ -39,7 +40,6 @@ ItemRoute.propTypes = {
   location: PropTypes.object,
   resources: PropTypes.object,
   stripes: PropTypes.object,
-  tenantFrom: PropTypes.string,
   history: PropTypes.object,
 };
 

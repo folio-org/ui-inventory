@@ -82,7 +82,10 @@ const DuplicateItem = ({
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
       search: location.search,
-      state: { tenantTo: stripes.okapi.tenant },
+      state: {
+        tenantTo: stripes.okapi.tenant,
+        initialTenantId: location?.state?.initialTenantId,
+      },
     });
   }, [location.search, instanceId, holdingId, itemId]);
 
