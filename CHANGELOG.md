@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [12.0.9] (IN PROGRESS)
+## [12.0.9](https://github.com/folio-org/ui-inventory/tree/v12.0.9) (2025-01-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.8...v12.0.9)
 
 * Fix infinite loading animation after cancel edit/duplicate or 'Save & Close' consortial holdings/items. Fixes UIIN-3167.
 
