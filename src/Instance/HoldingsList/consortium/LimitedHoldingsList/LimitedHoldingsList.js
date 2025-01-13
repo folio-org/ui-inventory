@@ -19,7 +19,7 @@ const LimitedHoldingsList = ({
       instance={instance}
       holding={holding}
       tenantId={tenantId}
-      locationName={locationsById[holding.permanentLocationId].name}
+      locationName={locationsById[holding.permanentLocationId]?.name}
       userTenantPermissions={userTenantPermissions}
       pathToAccordionsState={pathToAccordionsState}
     />
