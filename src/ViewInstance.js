@@ -1218,7 +1218,6 @@ class ViewInstance extends React.Component {
                   onSelect={this.selectInstance}
                   onClose={this.toggleFindInstancePlugin}
                   withTrigger={false}
-                  suppressSharedFacet
                 />
               )
             }

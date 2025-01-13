@@ -3,6 +3,7 @@
 ## [12.0.10] (IN PROGRESS)
 
 * Fix '"location name" is undefined' error when trying to open instance details on ECS. Fixes UIIN-3196.
+* Display `Shared` facet when user opens "Move holdings/items to another instance" modal. Refs UIIN-3198.
 
 ## [12.0.9](https://github.com/folio-org/ui-inventory/tree/v12.0.9) (2025-01-13)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.8...v12.0.9)
