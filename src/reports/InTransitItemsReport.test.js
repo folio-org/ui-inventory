@@ -1,8 +1,8 @@
-import { exportCsv } from '@folio/stripes/util';
+import { exportToCsv } from '@folio/stripes/components';
 import InTransitItemsReport from './InTransitItemsReport';
 
-jest.mock('@folio/stripes/util', () => ({
-  exportCsv: jest.fn(),
+jest.mock('@folio/stripes/components', () => ({
+  exportToCsv: jest.fn(),
 }));
 
 describe('InTransitItemsReport', () => {
@@ -92,13 +92,13 @@ describe('InTransitItemsReport', () => {
     });
   });
   describe('toCSV', () => {
-    it('call exportCsv with the correct arguments', async () => {
+    it('call exportToCsv with the correct arguments', async () => {
       const records = [{ barcode: '123456789' }];
       const parsedRecords = [{ barcode: '123456789' }];
       report.fetchData = jest.fn(() => Promise.resolve(records));
       report.parse = jest.fn(() => parsedRecords);
       await report.toCSV();
-      expect(exportCsv).toHaveBeenCalledWith(parsedRecords, {
+      expect(exportToCsv).toHaveBeenCalledWith(parsedRecords, {
         onlyFields: report.columnsMap,
         filename: 'InTransit',
       });

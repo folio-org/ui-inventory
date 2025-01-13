@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { noop } from 'lodash';
 
-import { exportCsv } from '@folio/stripes/util';
+import { exportToCsv } from '@folio/stripes/components';
 
 import { isTestEnv } from '../utils';
 
@@ -29,7 +29,7 @@ class IdReportGenerator {
       header: false,
       filename: this.getCSVFileName(),
     };
-    const generateReport = !isTestEnv() ? exportCsv : noop;
+    const generateReport = !isTestEnv() ? exportToCsv : noop;
 
     generateReport(parsedRecords, fileTitle);
   }

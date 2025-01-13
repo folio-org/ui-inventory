@@ -1,4 +1,4 @@
-import { exportCsv } from '@folio/stripes/util';
+import { exportToCsv } from '@folio/stripes/components';
 
 const columns = [
   'barcode',
@@ -92,7 +92,7 @@ class InTransitItemsReport {
     const records = await this.fetchData();
     const parsedRecords = this.parse(records);
 
-    exportCsv(parsedRecords, { onlyFields, filename: 'InTransit' });
+    exportToCsv(parsedRecords, { onlyFields, filename: 'InTransit' });
 
     return parsedRecords;
   }
