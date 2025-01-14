@@ -3,7 +3,7 @@ import { browseModeOptions } from '@folio/stripes-inventory-components';
 // [pageNumber, direction, anchor] - E.g. [1, 'prev', 'Fizz Buzz'];
 export const INIT_PAGE_CONFIG = [0, null, null];
 
-export const regExp = /^((callNumber|subject|name|itemEffectiveShelvingOrder) [<|>])/i;
+export const regExp = /^((callNumber|subject|name|fullCallNumber) [<|>])/i;
 export const PRECEDING_RECORDS_COUNT = 5;
 export const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -39,13 +39,13 @@ export const INITIAL_SEARCH_PARAMS_MAP = {
 
 export const PAGINATION_SEARCH_PARAMS_MAP = {
   [browseModeOptions.SUBJECTS]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.SUBJECTS],
-  [browseModeOptions.CALL_NUMBERS]: 'itemEffectiveShelvingOrder',
-  [browseModeOptions.DEWEY]: 'itemEffectiveShelvingOrder',
-  [browseModeOptions.LIBRARY_OF_CONGRESS]: 'itemEffectiveShelvingOrder',
-  [browseModeOptions.LOCAL]: 'itemEffectiveShelvingOrder',
-  [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: 'itemEffectiveShelvingOrder',
-  [browseModeOptions.OTHER]: 'itemEffectiveShelvingOrder',
-  [browseModeOptions.SUPERINTENDENT]: 'itemEffectiveShelvingOrder',
+  [browseModeOptions.CALL_NUMBERS]: 'fullCallNumber',
+  [browseModeOptions.DEWEY]: 'fullCallNumber',
+  [browseModeOptions.LIBRARY_OF_CONGRESS]: 'fullCallNumber',
+  [browseModeOptions.LOCAL]: 'fullCallNumber',
+  [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: 'fullCallNumber',
+  [browseModeOptions.OTHER]: 'fullCallNumber',
+  [browseModeOptions.SUPERINTENDENT]: 'fullCallNumber',
   [browseModeOptions.CLASSIFICATION_ALL]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.CLASSIFICATION_ALL],
   [browseModeOptions.DEWEY_CLASSIFICATION]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.DEWEY_CLASSIFICATION],
   [browseModeOptions.LC_CLASSIFICATION]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.LC_CLASSIFICATION],

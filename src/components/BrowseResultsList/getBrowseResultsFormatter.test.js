@@ -119,11 +119,9 @@ describe('getBrowseResultsFormatter', () => {
       // Anchor row
       expect(screen.getByText(anchorRecord.fullCallNumber).tagName.toLowerCase()).toBe('strong');
       expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
-      expect(screen.getByText(anchorRecord.instance.title).tagName.toLowerCase()).toBe('strong');
       // Default row
       expect(screen.getByText(nonAnchorRecord.fullCallNumber).tagName.toLowerCase()).not.toBe('strong');
       expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
-      expect(screen.getByText(nonAnchorRecord.instance.title).tagName.toLowerCase()).not.toBe('strong');
     });
 
     it('should render \'Missed match item\' row', () => {

@@ -11,7 +11,6 @@ import {
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
-import { instance } from '../../../test/fixtures/instance';
 import {
   renderWithIntl,
   translationsProperties,
@@ -37,21 +36,16 @@ const defaultProps = {
   browseData: [
     {
       fullCallNumber: 'Aaa',
-      shelfKey: 'Aa 1',
       isAnchor: true,
       totalRecords: 0,
     },
     {
       fullCallNumber: 'A 1958 A 8050',
-      shelfKey: '41958 A 48050',
       totalRecords: 1,
-      instance,
     },
     {
       fullCallNumber: 'ABBA',
-      shelfKey: '41918 A 64243',
       totalRecords: 2,
-      instance,
     },
   ],
   isEmptyMessage: 'Empty Message',

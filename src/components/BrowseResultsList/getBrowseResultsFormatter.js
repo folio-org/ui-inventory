@@ -112,7 +112,6 @@ const getBrowseResultsFormatter = ({
   const commonTargetRecordArgs = [browseOption, filters, namespace, data];
 
   return {
-    title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
     subject: r => {
       if (!r?.totalRecords && r?.isAnchor) {
         return <MissedMatchItem query={r?.value} />;
@@ -138,7 +137,7 @@ const getBrowseResultsFormatter = ({
       return typeName || <NoValue />;
     },
     callNumber: r => {
-      if (r?.instance || r?.totalRecords) {
+      if (r?.totalRecords) {
         return getTargetRecord(r?.fullCallNumber, r, ...commonTargetRecordArgs);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;

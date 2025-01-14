@@ -14,13 +14,9 @@ import {
   MCLPagingTypes,
   MultiColumnList,
 } from '@folio/stripes/components';
-import {
-  useItemToView,
-} from '@folio/stripes-acq-components';
+import { useItemToView } from '@folio/stripes-acq-components';
 
-import {
-  BROWSE_RESULTS_COUNT,
-} from '../../constants';
+import { BROWSE_RESULTS_COUNT } from '../../constants';
 import { DataContext } from '../../contexts';
 import {
   COLUMNS_MAPPING,

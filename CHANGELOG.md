@@ -10,7 +10,7 @@
 * React 19: refactor away from react-dom/test-utils. Refs UIIN-2888.
 * Add call number browse settings. Refs UIIN-3116.
 * Remove the ability to share local instance when `Inventory: View, create instances` permission is assigned. Fixes UIIN-3166.
-* *BREAKING* Use `browse` `1.5` interface that provides new Call Number Browse endpoints.
+* *BREAKING* Use `browse` `1.5` interface that provides new Call Number Browse endpoints. Refs UIIN-3162.
 
 ## [12.0.7](https://github.com/folio-org/ui-inventory/tree/v12.0.7) (2024-12-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.6...v12.0.7)
