@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Overlaybron bibliografisch record",
     "copycat.overlayJobProfileToBeUsed": "Selecteer het profiel dat moet worden gebruikt voor de overlay van de huidige gegevens",
     "effectiveLocationHoldings": "Effectieve locatie voor holdings",
-    "info.effectiveCallNumber": "Dit veld bevat het etiketnummer van het item, dat ofwel overgenomen is uit het holdingrecord, of het bijgewerkte etiketnummer op het itemrecord is. Tijdens het bladeren door etiketnummers wordt in dit veld gezocht.",
     "info.shelvingOrder": "Dit veld is de genormaliseerde vorm van het etiketnummer die bepaalt hoe het etiketnummer wordt gesorteerd tijdens het bladeren.",
     "markAsHeader": "Markeren als",
     "newMARCRecord": "Nieuw bibliografisch MARC-record",

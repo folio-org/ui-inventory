@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Sobreposição de registro bibliográfico fonte",
     "copycat.overlayJobProfileToBeUsed": "Selecione o perfil a ser usado para sobrepor os dados atuais",
     "effectiveLocationHoldings": "Localização efetiva da coleção",
-    "info.effectiveCallNumber": "Este campo contém o número de chamada do item, que é herdado do registro de coleção ou é o número de chamada atualizado no registro do item. Ao navegar pelos números de chamada, este campo será pesquisado.",
     "info.shelvingOrder": "Este campo é a forma normalizada do número de chamada que determina como o número de chamada é classificado durante a navegação.",
     "markAsHeader": "Marcar como",
     "newMARCRecord": "Novo registro bibliográfico MARC",
