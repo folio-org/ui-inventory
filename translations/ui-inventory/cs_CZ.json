@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Překrýt zdroj bibliografického záznamu",
     "copycat.overlayJobProfileToBeUsed": "Vybrat profil, který se má použít k překrytí aktuálních dat",
     "effectiveLocationHoldings": "Efektivní lokace pro holdingy",
-    "info.effectiveCallNumber": "Toto pole obsahuje signaturu jednotky, která je buď zděděna ze záznamu holdingu, nebo je aktualizovanou signaturou záznamu jednotky. Při procházení signatur se bude vyhledávat v tomto poli.",
     "info.shelvingOrder": "Toto pole je normalizovaná forma signatury, která určuje, jak je signatura při procházení seřazena.",
     "markAsHeader": "Označit jako",
     "newMARCRecord": "Nový MARC bibliografický záznam",

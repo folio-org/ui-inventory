@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Overlay source bibliographic record",
     "copycat.overlayJobProfileToBeUsed": "Select the profile to be used to overlay the current data",
     "effectiveLocationHoldings": "Effective location for holdings",
-    "info.effectiveCallNumber": "このフィールドには、所蔵レコードから継承された資料の請求番号、または資料コードの更新された請求番号が含まれます。請求番号を参照するときに、このフィールドが検索されます。",
     "info.shelvingOrder": "This field is the normalized form of the call number which determines how the call number is sorted while browsing.",
     "markAsHeader": "マークする",
     "newMARCRecord": "New MARC bibliographic record",
