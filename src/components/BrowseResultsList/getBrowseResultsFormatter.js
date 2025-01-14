@@ -137,10 +137,12 @@ const getBrowseResultsFormatter = ({
       return typeName || <NoValue />;
     },
     callNumber: r => {
+      const fullCallNumber = [r?.callNumberPrefix, r?.callNumber, r?.callNumberSuffix].filter(Boolean).join(' ');
+
       if (r?.totalRecords) {
-        return getTargetRecord(r?.fullCallNumber, r, ...commonTargetRecordArgs);
+        return getTargetRecord(fullCallNumber, r, ...commonTargetRecordArgs);
       }
-      return <MissedMatchItem query={r.fullCallNumber} />;
+      return <MissedMatchItem query={fullCallNumber} />;
     },
     classificationNumber: r => {
       if (r?.totalRecords) {
