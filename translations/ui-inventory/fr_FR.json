@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Écraser la notice bibliographique source",
     "copycat.overlayJobProfileToBeUsed": "Select the profile to be used to overlay the current data",
     "effectiveLocationHoldings": "Emplacement effectif pour la localisation",
-    "info.effectiveCallNumber": "Ce champ contient la cote de l'exemplaire, qui est soit hérité de la notice de localisations, soit la cote mise à jour de la notice de l'exemplaire. En parcourant les cotes, ce champ sera parcouru.",
     "info.shelvingOrder": "Ce champ est la forme normalisée de la cote qui détermine la manière dont la cote sera triée lors de la navigation.",
     "markAsHeader": "Mark as",
     "newMARCRecord": "New MARC bibliographic record",
