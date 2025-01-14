@@ -9,6 +9,15 @@
 * User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
 * React 19: refactor away from react-dom/test-utils. Refs UIIN-2888.
 * Add call number browse settings. Refs UIIN-3116.
+* Add "linked-data 1.0" interface to "optionalOkapiInterfaces". Refs UIIN-3166.
+* Fix infinite loading animation after cancel edit/duplicate or 'Save & Close' consortial holdings/items. Fixes UIIN-3167.
+* Remove hover-over text next to "Effective call number" on the Item record detail view. Refs UIIN-3131.
+* Change import of `exportToCsv` from `stripes-util` to `stripes-components`. Refs UIIN-3025.
+
+## [12.0.8](https://github.com/folio-org/ui-inventory/tree/v12.0.8) (2024-12-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.7...v12.0.8)
+
+* Display holdings names in `Consortial holdings` accordion for user without inventory permissions in member tenants. Fixes UIIN-3159.
 * Remove the ability to share local instance when `Inventory: View, create instances` permission is assigned. Fixes UIIN-3166.
 * *BREAKING* Use `browse` `1.5` interface that provides new Call Number Browse endpoints. Refs UIIN-3162.
 

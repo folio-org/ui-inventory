@@ -144,6 +144,7 @@ const ItemView = props => {
     },
     goTo,
     isInstanceShared,
+    initialTenantId,
   } = props;
 
   const ky = useOkapiKy();
@@ -176,13 +177,16 @@ const ItemView = props => {
   const onClickEditItem = e => {
     if (e) e.preventDefault();
 
-    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
+    const tenantFrom = stripes.okapi.tenant;
     const { id, holdingsrecordid, itemid } = match.params;
 
     history.push({
       pathname: `/inventory/edit/${id}/${holdingsrecordid}/${itemid}`,
       search: location.search,
-      state: { tenantFrom }
+      state: {
+        tenantFrom,
+        initialTenantId,
+      }
     });
   };
 
@@ -200,7 +204,7 @@ const ItemView = props => {
   };
 
   const onCloseViewItem = async () => {
-    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
+    const tenantFrom = location?.state?.initialTenantId || stripes.okapi.tenant;
 
     await switchAffiliation(stripes, tenantFrom, () => goBack(tenantFrom));
   };
@@ -212,12 +216,15 @@ const ItemView = props => {
 
   const onCopy = () => {
     const { itemid, id, holdingsrecordid } = match.params;
-    const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
+    const tenantFrom = stripes.okapi.tenant;
 
     history.push({
       pathname: `/inventory/copy/${id}/${holdingsrecordid}/${itemid}`,
       search: location.search,
-      state: { tenantFrom },
+      state: {
+        tenantFrom,
+        initialTenantId,
+      },
     });
   };
 
@@ -1136,11 +1143,6 @@ const ItemView = props => {
                     label={<FormattedMessage id="ui-inventory.effectiveCallNumber" />}
                     value={effectiveCallNumber(item)}
                   />
-                  <InfoPopover
-                    iconSize="medium"
-                    content={<FormattedMessage id="ui-inventory.info.effectiveCallNumber" />}
-                    buttonProps={{ 'data-testid': 'info-icon-effective-call-number' }}
-                  />
                 </Layout>
               </Col>
               <Col xs={7}>
@@ -1938,6 +1940,7 @@ ItemView.propTypes = {
   match: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   isInstanceShared: PropTypes.bool,
+  initialTenantId: PropTypes.string,
 };
 
 export default flowRight(

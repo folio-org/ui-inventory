@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Bibliographischen Quelldatensatz überlagern",
     "copycat.overlayJobProfileToBeUsed": "Profil auswählen, das zur Überlagerung der aktuellen Daten verwendet werden soll",
     "effectiveLocationHoldings": "Tatsächlicher Standort des Bestands",
-    "info.effectiveCallNumber": "Dieses Feld enthält die Signatur des Exemplars, die entweder aus dem Bestandsdatensatz geerbt wird oder die aktualisierte Signatur des Exempardatensatzes ist. Beim browsen nach Signaturen wird dieses Feld durchsucht.",
     "info.shelvingOrder": "Dieses Feld ist die normalisierte Form der Signatur, die bestimmt, wie die Signatur beim browsen sortiert wird.",
     "markAsHeader": "Markieren als",
     "newMARCRecord": "Neuer bibliographischer MARC-Datensatz",
@@ -850,7 +849,6 @@
     "permission.items.mark-unavailable.execute": "Katalog: Exemplare als nicht verfügbar markieren",
     "permission.items.mark-long-missing.execute": "Katalog: Exemplare als lange vermisst markieren",
     "permission.items.mark-in-process-non-requestable.execute": "Katalog: Exemplare als in Bearbeitung markieren (nicht bestellbar)",
-    "permission.consortia.inventory.share.local.instance": "Katalog: Lokale Instanz mit dem Konsortium teilen",
     "permission.consortia.inventory.update.ownership": "Katalog: Eigentümerschaft aktualisieren",
     "permission.items.in-transit-report.create": "Katalog: Bericht über Exemplare in Transport erstellen und herunterladen",
     "exportInstancesInMARC.complete": "Der Export ist abgeschlossen. Die heruntergeladene {csvFileName}.csv-Datei enthält die UUIDs der ausgewählten Datensätze. Um die {marcFileName}.mrc-Datei abzurufen, gehen Sie bitte zur App Datenexport.",
@@ -863,5 +861,6 @@
     "settings.instanceCallNumber.sudoc": "Superintendent of Documents classification",
     "settings.instanceCallNumber.termUpdated": "The call number browse type {term} was successfully updated",
     "settings.instanceCallNumber.identifierTypesPopover": "Please note that if no call number types are selected for a browse option, this option will display all call number types.",
-    "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse"
+    "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse",
+    "permission.consortia.inventory.local.sharing-instances.execute": "Inventory: Share local instance with consortium"
 }

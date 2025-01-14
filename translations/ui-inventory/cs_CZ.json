@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Překrýt zdroj bibliografického záznamu",
     "copycat.overlayJobProfileToBeUsed": "Vybrat profil, který se má použít k překrytí aktuálních dat",
     "effectiveLocationHoldings": "Efektivní lokace pro holdingy",
-    "info.effectiveCallNumber": "Toto pole obsahuje signaturu jednotky, která je buď zděděna ze záznamu holdingu, nebo je aktualizovanou signaturou záznamu jednotky. Při procházení signatur se bude vyhledávat v tomto poli.",
     "info.shelvingOrder": "Toto pole je normalizovaná forma signatury, která určuje, jak je signatura při procházení seřazena.",
     "markAsHeader": "Označit jako",
     "newMARCRecord": "Nový MARC bibliografický záznam",
@@ -850,7 +849,6 @@
     "permission.items.mark-unavailable.execute": "Katalog: Označení jednotek jako nedostupné",
     "permission.items.mark-long-missing.execute": "Katalog: Označení jednotek, které dlouho chybí",
     "permission.items.mark-in-process-non-requestable.execute": "Katalog: Označení jednotek v procesu (nevyžádané)",
-    "permission.consortia.inventory.share.local.instance": "Katalog: Sdílet místní titul s konsorciem",
     "permission.consortia.inventory.update.ownership": "Katalog: Aktualizace vlastnictví",
     "permission.items.in-transit-report.create": "Katalog: Vytvořit a stáhnout výstup Přepravované jednotky",
     "exportInstancesInMARC.complete": "The export is complete. The downloaded {csvFileName}.csv contains selected record's UUID. To retrieve the {marcFileName}.mrc file, please go to the Data export app.",
@@ -863,5 +861,6 @@
     "settings.instanceCallNumber.sudoc": "Superintendent of Documents classification",
     "settings.instanceCallNumber.termUpdated": "The call number browse type {term} was successfully updated",
     "settings.instanceCallNumber.identifierTypesPopover": "Please note that if no call number types are selected for a browse option, this option will display all call number types.",
-    "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse"
+    "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse",
+    "permission.consortia.inventory.local.sharing-instances.execute": "Inventory: Share local instance with consortium"
 }

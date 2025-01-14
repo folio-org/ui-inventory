@@ -56,6 +56,7 @@ export const navigateToHoldingsViewPage = (history, location, instance, holding,
     state: {
       tenantTo,
       tenantFrom,
+      initialTenantId: tenantFrom,
     },
   });
 };
