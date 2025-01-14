@@ -15,6 +15,7 @@
 * Change import of `exportToCsv` from `stripes-util` to `stripes-components`. Refs UIIN-3025.
 * Display `Shared` facet when user opens "Move holdings/items to another instance" modal. Refs UIIN-3198.
 * ECS - Allow 'Move holdings/items to another instance' if instance is shared. Refs UIIN-3188.
+* Fix '"location name" is undefined' error when trying to open instance details on ECS. Fixes UIIN-3196.
 
 ## [12.0.8](https://github.com/folio-org/ui-inventory/tree/v12.0.8) (2024-12-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.7...v12.0.8)
