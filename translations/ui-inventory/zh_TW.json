@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "覆蓋來源書目紀錄",
     "copycat.overlayJobProfileToBeUsed": "選擇要用於覆蓋目前資料的設定檔",
     "effectiveLocationHoldings": "館藏有效館藏地",
-    "info.effectiveCallNumber": "此欄位包含館藏索書號，該索書號可以繼承自館藏紀錄，也可以是館藏紀錄上更新的索書號。瀏覽索書號時，將搜尋該欄位。",
     "info.shelvingOrder": "這個欄位是索書號的標準化格式，決定了瀏覽時索書號的排序方式。",
     "markAsHeader": "標記為",
     "newMARCRecord": "新 MARC 書目紀錄",

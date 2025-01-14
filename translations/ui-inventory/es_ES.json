@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Superponer registro bibliográfico de origen",
     "copycat.overlayJobProfileToBeUsed": "Seleccione el perfil que se utilizará para superponer los datos actuales",
     "effectiveLocationHoldings": "Localización efectiva de las existéncias",
-    "info.effectiveCallNumber": "Este campo contiene la signatura del artículo, que se hereda del registro de Holdings o es la signatura actualizada en el registro del artículo. Al consultar las signaturas, se buscará en este campo.",
     "info.shelvingOrder": "Este campo es la forma normalizada del número de llamada que determina cómo se ordena el número de llamada durante la navegación.",
     "markAsHeader": "Marcar como",
     "newMARCRecord": "Nuevo MARC Bib Record",

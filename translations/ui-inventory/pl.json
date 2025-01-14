@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Nadpisz źródłowy rekord bibliograficzny",
     "copycat.overlayJobProfileToBeUsed": "Wybierz profil zadania, który będzie używany do nadpisania bieżących danych",
     "effectiveLocationHoldings": "Aktualna lokalizacja dla zasobu",
-    "info.effectiveCallNumber": "To pole zawiera sygnaturę egzemplarza, która albo jest pobrana z rekordu zasobu albo jest zaktualizowaną sygnaturą w rekordzie egzemplarza. Podczas przeglądania sygnatur to pole będzie przeszukane.",
     "info.shelvingOrder": "Pole to zawiera znormalizowaną formą sygnatury, która określa sposób sortowania sygnatury podczas przeglądania.",
     "markAsHeader": "Oznacz jako",
     "newMARCRecord": "Nowy rekord bibliograficzny (MARC)",
