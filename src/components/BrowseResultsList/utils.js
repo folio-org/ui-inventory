@@ -7,6 +7,7 @@ import {
   browseClassificationIndexToId,
   FACETS,
   queryIndexes,
+  segments,
 } from '@folio/stripes-inventory-components';
 
 export const isRowPreventsClick = (row, browseOption) => {
@@ -21,7 +22,6 @@ export const isRowPreventsClick = (row, browseOption) => {
   const isItemHasNoRecords = row.totalRecords === 0;
 
   return isItemHasNoRecords || (
-    (browseOption === browseModeOptions.CALL_NUMBERS && !row.shelfKey) ||
     (browseOption === browseModeOptions.CONTRIBUTORS && !row.contributorNameTypeId) ||
     (browseOption === browseModeOptions.SUBJECTS && !row.totalRecords)
   );
@@ -97,6 +97,12 @@ const getClassificationQuery = (qindex, data, row) => {
   return query;
 };
 
+export const getFullCallNumber = (row) => {
+  const fullCallNumber = [row.callNumberPrefix, row.callNumber, row.callNumberSuffix].filter(Boolean).join(' ');
+
+  return fullCallNumber;
+};
+
 export const getSearchParams = (row, qindex, allFilters, data) => {
   const filters = getExtraFilters(row, qindex, allFilters);
   const classificationQuery = getClassificationQuery(qindex, data, row);
@@ -107,40 +113,49 @@ export const getSearchParams = (row, qindex, allFilters, data) => {
     ...filters,
   };
 
+  const fullCallNumber = getFullCallNumber(row);
+
   const optionsMap = {
     [browseModeOptions.CALL_NUMBERS]: {
-      qindex: queryIndexes.CALL_NUMBER,
-      query: row.shelfKey,
+      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
+      query: fullCallNumber,
+      segment: segments.items,
       ...filters,
     },
     [browseModeOptions.DEWEY]: {
-      qindex: queryIndexes.CALL_NUMBER,
-      query: row.shelfKey,
+      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
+      query: fullCallNumber,
+      segment: segments.items,
       ...filters,
     },
     [browseModeOptions.LIBRARY_OF_CONGRESS]: {
-      qindex: queryIndexes.CALL_NUMBER,
-      query: row.shelfKey,
+      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
+      query: fullCallNumber,
+      segment: segments.items,
       ...filters,
     },
     [browseModeOptions.LOCAL]: {
-      qindex: queryIndexes.CALL_NUMBER,
-      query: row.shelfKey,
+      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
+      query: fullCallNumber,
+      segment: segments.items,
       ...filters,
     },
     [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: {
-      qindex: queryIndexes.CALL_NUMBER,
-      query: row.shelfKey,
+      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
+      query: fullCallNumber,
+      segment: segments.items,
       ...filters,
     },
     [browseModeOptions.OTHER]: {
-      qindex: queryIndexes.CALL_NUMBER,
-      query: row.shelfKey,
+      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
+      query: fullCallNumber,
+      segment: segments.items,
       ...filters,
     },
     [browseModeOptions.SUPERINTENDENT]: {
-      qindex: queryIndexes.CALL_NUMBER,
-      query: row.shelfKey,
+      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
+      query: fullCallNumber,
+      segment: segments.items,
       ...filters,
     },
     [browseModeOptions.CLASSIFICATION_ALL]: classificationOption,
