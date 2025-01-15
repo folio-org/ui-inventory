@@ -87,11 +87,13 @@ describe('getBrowseResultsFormatter', () => {
     const missedMatchRecord = {
       isAnchor: true,
       fullCallNumber: 'bla bla',
+      callNumber: 'bla bla',
       totalRecords: 0,
     };
     const contentData = [
       {
         fullCallNumber: 'A 1958 A 8050',
+        callNumber: 'A 1958 A 8050',
         shelfKey: '41958 A 48050',
         isAnchor: true,
         totalRecords: 1,
@@ -99,6 +101,7 @@ describe('getBrowseResultsFormatter', () => {
       },
       {
         fullCallNumber: 'AAA',
+        callNumber: 'AAA',
         shelfKey: '123456',
         totalRecords: 2,
         instance: { id: 'ce9dd893-c812-49d5-8973-d55d018894c4', title: 'Test title 2' },
@@ -117,17 +120,17 @@ describe('getBrowseResultsFormatter', () => {
       renderCallNumberList();
 
       // Anchor row
-      expect(screen.getByText(anchorRecord.fullCallNumber).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText(anchorRecord.callNumber).tagName.toLowerCase()).toBe('strong');
       expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
       // Default row
-      expect(screen.getByText(nonAnchorRecord.fullCallNumber).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText(nonAnchorRecord.callNumber).tagName.toLowerCase()).not.toBe('strong');
       expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
     });
 
     it('should render \'Missed match item\' row', () => {
       renderCallNumberList({ contentData: [missedMatchRecord] });
 
-      expect(screen.getByText(missedMatchRecord.fullCallNumber)).toBeInTheDocument();
+      expect(screen.getByText(missedMatchRecord.callNumber)).toBeInTheDocument();
       expect(screen.getByText(missedMatchText)).toBeInTheDocument();
     });
 
@@ -136,7 +139,7 @@ describe('getBrowseResultsFormatter', () => {
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
-      await act(async () => fireEvent.click(screen.getByText(anchorRecord.fullCallNumber)));
+      await act(async () => fireEvent.click(screen.getByText(anchorRecord.callNumber)));
 
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
     });
