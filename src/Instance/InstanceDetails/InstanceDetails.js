@@ -8,7 +8,6 @@ import React, {
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { uniqueId } from 'lodash';
 
 import {
   AppIcon,
@@ -212,7 +211,7 @@ const InstanceDetails = forwardRef(({
 
             {isConsortialHoldingsVisible && (
               <ConsortialHoldings
-                key={uniqueId(instance?.id)}
+                key={instance?.id}
                 instance={instance}
                 prevInstanceId={prevInstanceId.current}
                 updatePrevInstanceId={updatePrevInstanceId}
