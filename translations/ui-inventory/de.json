@@ -708,7 +708,6 @@
     "copycat.overlaySourceBib": "Bibliographischen Quelldatensatz überlagern",
     "copycat.overlayJobProfileToBeUsed": "Profil auswählen, das zur Überlagerung der aktuellen Daten verwendet werden soll",
     "effectiveLocationHoldings": "Tatsächlicher Standort des Bestands",
-    "info.effectiveCallNumber": "Dieses Feld enthält die Signatur des Exemplars, die entweder aus dem Bestandsdatensatz geerbt wird oder die aktualisierte Signatur des Exempardatensatzes ist. Beim browsen nach Signaturen wird dieses Feld durchsucht.",
     "info.shelvingOrder": "Dieses Feld ist die normalisierte Form der Signatur, die bestimmt, wie die Signatur beim browsen sortiert wird.",
     "markAsHeader": "Markieren als",
     "newMARCRecord": "Neuer bibliographischer MARC-Datensatz",
