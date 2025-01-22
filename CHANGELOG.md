@@ -12,6 +12,7 @@
 * Add "linked-data 1.0" interface to "optionalOkapiInterfaces". Refs UIIN-3166.
 * Remove hover-over text next to "Effective call number" on the Item record detail view. Refs UIIN-3131.
 * Change import of `exportToCsv` from `stripes-util` to `stripes-components`. Refs UIIN-3025.
+* Sort holdings by location name and call number. Refs UIIN-3207.
 
 ## [12.0.10](https://github.com/folio-org/ui-inventory/tree/v12.0.10) (2025-01-20)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.9...v12.0.10)
