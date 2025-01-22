@@ -13,6 +13,7 @@
 * Remove hover-over text next to "Effective call number" on the Item record detail view. Refs UIIN-3131.
 * Change import of `exportToCsv` from `stripes-util` to `stripes-components`. Refs UIIN-3025.
 * ECS: Disable opening item details if a user is not affiliated with item's member tenant. Fixes UIIN-3187.
+* Display failure message during `Update Ownership` action when Item contains Local reference data. Fixes UIIN-3195.
 
 ## [12.0.10](https://github.com/folio-org/ui-inventory/tree/v12.0.10) (2025-01-20)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.9...v12.0.10)
