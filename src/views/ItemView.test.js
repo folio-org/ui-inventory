@@ -398,7 +398,7 @@ describe('ItemView', () => {
             const confirmationModal = screen.getByText('Update ownership of items');
             fireEvent.click(within(confirmationModal).getByText('confirm'));
 
-            await waitFor(() => expect(screen.queryByText('Item ownership could not be updated because it contains local-specific reference data.')).toBeDefined());
+            await waitFor(() => expect(screen.queryByText('Item ownership could not be updated because the record contains local-specific reference data.')).toBeDefined());
           });
         });
 
