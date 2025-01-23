@@ -445,7 +445,7 @@
   "updateOwnership.items.modal.heading": "Update ownership of items",
   "updateOwnership.items.modal.message": "Would you like to update ownership of Item <strong>{itemHrid}</strong> from <strong>{currentTenant}</strong> to <strong>{targetTenant}</strong>?",
   "updateOwnership.item.message.success": "Ownership of item <strong>{itemHrid}</strong> has been successfully updated to <strong>{targetTenantName}</strong>",
-  "updateOwnership.items.message.error": "Item ownership could not be updated because it contains local-specific reference data.",
+  "updateOwnership.items.message.error": "Item ownership could not be updated because the record contains local-specific reference data.",
   "consortialHoldings": "Consortial holdings",
   "instanceData": "Administrative data",
   "instanceHrid": "Instance HRID",
