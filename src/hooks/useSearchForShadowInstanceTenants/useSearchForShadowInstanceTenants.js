@@ -16,7 +16,7 @@ const useSearchForShadowInstanceTenants = ({ instanceId } = {}) => {
 
   const { isLoading, data = {} } = useQuery({
     queryKey: [namespace, consortium, instanceId],
-    queryFn: () => ky.get('search/call-numbers/facets',
+    queryFn: () => ky.get('search/instances/facets',
       {
         searchParams: {
           facet: 'holdings.tenantId',
