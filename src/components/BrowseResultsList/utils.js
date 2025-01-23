@@ -115,49 +115,21 @@ export const getSearchParams = (row, qindex, allFilters, data) => {
 
   const fullCallNumber = getFullCallNumber(row);
 
+  const callNumberOption = {
+    qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
+    query: fullCallNumber,
+    segment: segments.items,
+    ...filters,
+  };
+
   const optionsMap = {
-    [browseModeOptions.CALL_NUMBERS]: {
-      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
-      query: fullCallNumber,
-      segment: segments.items,
-      ...filters,
-    },
-    [browseModeOptions.DEWEY]: {
-      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
-      query: fullCallNumber,
-      segment: segments.items,
-      ...filters,
-    },
-    [browseModeOptions.LIBRARY_OF_CONGRESS]: {
-      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
-      query: fullCallNumber,
-      segment: segments.items,
-      ...filters,
-    },
-    [browseModeOptions.LOCAL]: {
-      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
-      query: fullCallNumber,
-      segment: segments.items,
-      ...filters,
-    },
-    [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: {
-      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
-      query: fullCallNumber,
-      segment: segments.items,
-      ...filters,
-    },
-    [browseModeOptions.OTHER]: {
-      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
-      query: fullCallNumber,
-      segment: segments.items,
-      ...filters,
-    },
-    [browseModeOptions.SUPERINTENDENT]: {
-      qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
-      query: fullCallNumber,
-      segment: segments.items,
-      ...filters,
-    },
+    [browseModeOptions.CALL_NUMBERS]: callNumberOption,
+    [browseModeOptions.DEWEY]: callNumberOption,
+    [browseModeOptions.LIBRARY_OF_CONGRESS]: callNumberOption,
+    [browseModeOptions.LOCAL]: callNumberOption,
+    [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: callNumberOption,
+    [browseModeOptions.OTHER]: callNumberOption,
+    [browseModeOptions.SUPERINTENDENT]: callNumberOption,
     [browseModeOptions.CLASSIFICATION_ALL]: classificationOption,
     [browseModeOptions.DEWEY_CLASSIFICATION]: classificationOption,
     [browseModeOptions.LC_CLASSIFICATION]: classificationOption,
