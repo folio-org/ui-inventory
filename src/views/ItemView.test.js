@@ -376,7 +376,7 @@ describe('ItemView', () => {
           expect(screen.queryByText('Linked order line')).not.toBeInTheDocument();
         });
 
-        describe('when an error was occured', () => {
+        describe('when error was occured due to local-specific reference data', () => {
           it('should show an error message', async () => {
             useHoldingMutation.mockClear().mockReturnValue({ mutateHolding: mockMutate });
             useUpdateOwnership.mockClear().mockReturnValue({

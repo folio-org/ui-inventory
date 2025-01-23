@@ -540,15 +540,28 @@ const ItemView = props => {
     goBack();
   };
 
+  const resetFormAndCloseModal = () => {
+    setTargetTenant({});
+    setUpdateOwnershipData({});
+    setIsConfirmUpdateOwnershipModalOpen(false);
+  };
+
   const showErrorMessage = () => {
     calloutContext.sendCallout({
       type: 'error',
       message: <FormattedMessage id="ui-inventory.communicationProblem" />,
     });
 
-    setTargetTenant({});
-    setUpdateOwnershipData({});
-    setIsConfirmUpdateOwnershipModalOpen(false);
+    resetFormAndCloseModal();
+  };
+
+  const showReferenceDataError = () => {
+    calloutContext.sendCallout({
+      type: 'error',
+      message: <FormattedMessage id="ui-inventory.updateOwnership.items.message.error" />,
+    });
+
+    resetFormAndCloseModal();
   };
 
   const createNewHoldingForlocation = async (itemId, targetLocation, targetTenantId) => {
@@ -590,8 +603,12 @@ const ItemView = props => {
           targetTenantId: tenantId,
         });
         showSuccessMessageAndGoBack(item.hrid);
-      } catch (e) {
-        showErrorMessage();
+      } catch (error) {
+        if (error.response.status === 400) {
+          showReferenceDataError();
+        } else {
+          showErrorMessage();
+        }
       }
     }
   };
