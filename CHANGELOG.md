@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
+
+* Detail view of created Instance record is not loaded after saving. Fixes UIIN-3194.
+
 ## [12.0.11](https://github.com/folio-org/ui-inventory/tree/v12.0.11) (2025-01-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.10...v12.0.11)
 
@@ -19,6 +24,7 @@
 
 ## [12.0.8](https://github.com/folio-org/ui-inventory/tree/v12.0.8) (2024-12-24)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.7...v12.0.8)
+
 * Display holdings names in `Consortial holdings` accordion for user without inventory permissions in member tenants. Fixes UIIN-3159.
 * Remove the ability to share local instance when `Inventory: View, create instances` permission is assigned. Fixes UIIN-3166.
 
