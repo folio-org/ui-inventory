@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [12.0.11](https://github.com/folio-org/ui-inventory/tree/v12.0.11) (2025-01-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.10...v12.0.11)
+
+* Display failure message during `Update Ownership` action when Item contains Local reference data. Fixes UIIN-3195.
+
 ## [12.0.10](https://github.com/folio-org/ui-inventory/tree/v12.0.10) (2025-01-20)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.9...v12.0.10)
 
