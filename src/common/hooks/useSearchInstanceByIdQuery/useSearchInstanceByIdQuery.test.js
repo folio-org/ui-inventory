@@ -4,7 +4,7 @@ import {
 } from 'react-query';
 import {
   renderHook,
-  act,
+  waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -23,23 +23,23 @@ const wrapper = ({ children }) => (
 const instanceId = 'instanceId';
 
 describe('useSearchInstanceByIdQuery', () => {
-  it('should fetch instance', async () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should fetch instance successfully', async () => {
     useOkapiKy.mockClear().mockReturnValue({
-      get: () => ({
-        json: () => ({
-          instances: [{
-            id: instanceId,
-          }]
+      get: jest.fn(() => ({
+        json: jest.fn().mockResolvedValue({
+          totalRecords: 1,
+          instances: [{ id: instanceId }],
         }),
-      }),
+      })),
     });
 
     const { result } = renderHook(() => useSearchInstanceByIdQuery(instanceId), { wrapper });
 
-    await act(() => {
-      return !result.current.isLoading;
-    });
-
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
     expect(result.current.instance.id).toBe(instanceId);
   });
 });

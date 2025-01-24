@@ -15,6 +15,7 @@
 * ECS: Disable opening item details if a user is not affiliated with item's member tenant. Fixes UIIN-3187.
 * Display failure message during `Update Ownership` action when Item contains Local reference data. Fixes UIIN-3195.
 * Correctly depend on `inflected`. Refs UIIN-3203.
+* Detail view of created Instance record is not loaded after saving. Fixes UIIN-3194.
 
 ## [12.0.10](https://github.com/folio-org/ui-inventory/tree/v12.0.10) (2025-01-20)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.9...v12.0.10)
