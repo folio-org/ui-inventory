@@ -211,7 +211,6 @@ const InstanceDetails = forwardRef(({
 
             {isConsortialHoldingsVisible && (
               <ConsortialHoldings
-                key={instance?.id}
                 instance={instance}
                 prevInstanceId={prevInstanceId.current}
                 updatePrevInstanceId={updatePrevInstanceId}
