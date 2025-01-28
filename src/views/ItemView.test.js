@@ -376,10 +376,42 @@ describe('ItemView', () => {
           expect(screen.queryByText('Linked order line')).not.toBeInTheDocument();
         });
 
-        describe('when an error was occured', () => {
+        describe('when error was occured due to local-specific reference data', () => {
           it('should show an error message', async () => {
             useHoldingMutation.mockClear().mockReturnValue({ mutateHolding: mockMutate });
-            useUpdateOwnership.mockClear().mockReturnValue({ updateOwnership: jest.fn().mockRejectedValue() });
+            useUpdateOwnership.mockClear().mockReturnValue({
+              updateOwnership: jest.fn().mockRejectedValue({
+                response: {
+                  status: 400,
+                }
+              })
+            });
+            checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
+
+            renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+            const updateOwnershipBtn = screen.getByText('Update ownership');
+            fireEvent.click(updateOwnershipBtn);
+
+            act(() => UpdateItemOwnershipModal.mock.calls[0][0].handleSubmit('university', { id: 'locationId' }, 'holdingId'));
+
+            const confirmationModal = screen.getByText('Update ownership of items');
+            fireEvent.click(within(confirmationModal).getByText('confirm'));
+
+            await waitFor(() => expect(screen.queryByText('Item ownership could not be updated because the record contains local-specific reference data.')).toBeDefined());
+          });
+        });
+
+        describe('when error was occured', () => {
+          it('should show an error message', async () => {
+            useHoldingMutation.mockClear().mockReturnValue({ mutateHolding: mockMutate });
+            useUpdateOwnership.mockClear().mockReturnValue({
+              updateOwnership: jest.fn().mockRejectedValue({
+                response: {
+                  status: 500,
+                },
+              })
+            });
             checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
 
             renderWithIntl(<ItemViewSetup />, translationsProperties);
