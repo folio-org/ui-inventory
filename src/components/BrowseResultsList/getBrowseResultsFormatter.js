@@ -113,6 +113,7 @@ const getBrowseResultsFormatter = ({
   const commonTargetRecordArgs = [browseOption, filters, namespace, data];
 
   return {
+    title: r => getFullMatchRecord(r.instanceTitle, r.isAnchor),
     subject: r => {
       if (!r?.totalRecords && r?.isAnchor) {
         return <MissedMatchItem query={r?.value} />;
