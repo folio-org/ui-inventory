@@ -74,7 +74,7 @@ const MemberTenantHoldings = ({
   return (
     <Accordion
       className={css.memberTenantHoldings}
-      id={memberTenantId}
+      id={`${memberTenantId}.${instance?.id}`}
       label={name}
     >
       <div className={css.memberTenantHoldings}>

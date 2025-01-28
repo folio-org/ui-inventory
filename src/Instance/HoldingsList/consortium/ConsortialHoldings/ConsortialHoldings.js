@@ -41,7 +41,7 @@ const ConsortialHoldings = ({
       updateStatus({});
       updatePrevInstanceId(instanceId);
     }
-  }, [instanceId]);
+  }, []);
 
   useEffect(() => {
     if (typeof isAllExpanded === 'boolean') {
@@ -91,7 +91,7 @@ const ConsortialHoldings = ({
         onRegisterAccordion={onRegisterNewAcc}
       >
         <Accordion
-          id="consortialHoldings"
+          id={`consortialHoldings.${instance?.id}`}
           label={<FormattedMessage id="ui-inventory.consortialHoldings" />}
           displayWhenClosed={renderExpandAllButton}
           displayWhenOpen={renderExpandAllButton}
