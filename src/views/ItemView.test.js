@@ -296,6 +296,41 @@ describe('ItemView', () => {
         expect(mockPush).toHaveBeenCalled();
       });
     });
+
+    describe('Version history component', () => {
+      let versionHistoryButton;
+
+      beforeEach(() => {
+        const { container } = renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+        versionHistoryButton = container.querySelector('#version-history-btn');
+      });
+
+      it('should render version history button', () => {
+        expect(versionHistoryButton).toBeInTheDocument();
+      });
+
+      describe('when click the button', () => {
+        it('should render version history pane', () => {
+          fireEvent.click(versionHistoryButton);
+
+          expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
+        });
+      });
+
+      describe('when click the close button', () => {
+        it('should hide the pane', () => {
+          fireEvent.click(versionHistoryButton);
+
+          expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
+
+          const closeButton = screen.getByRole('button', { name: /close version history/i });
+          fireEvent.click(closeButton);
+
+          expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();
+        });
+      });
+    });
   });
 
   describe('action menu', () => {

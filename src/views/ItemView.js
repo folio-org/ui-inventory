@@ -52,6 +52,7 @@ import {
   MenuSection,
   NoValue,
   TextLink,
+  PaneMenu,
 } from '@folio/stripes/components';
 
 import {
@@ -69,6 +70,7 @@ import {
   useOkapiKy,
 } from '@folio/stripes/core';
 
+import { VersionHistoryButton } from '@folio/stripes-acq-components';
 import { requestsStatusString } from '../Instance/ViewRequests/utils';
 
 import ModalContent from '../components/ModalContent';
@@ -117,6 +119,7 @@ import {
   useHoldingMutation,
   useUpdateOwnership,
 } from '../hooks';
+import VersionHistory from './VersionHistory';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -161,12 +164,20 @@ const ItemView = props => {
   const [updateOwnershipData, setUpdateOwnershipData] = useState({});
   const [tenants, setTenants] = useState([]);
   const [targetTenant, setTargetTenant] = useState({});
+  const [isVersionHistoryOpen, setIsSetVersionHistoryOpen] = useState(false);
 
   const intl = useIntl();
   const calloutContext = useContext(CalloutContext);
   const accordionStatusRef = useRef();
+  const paneTitleRef = useRef();
   const { mutateHolding } = useHoldingMutation(targetTenant?.id);
   const { updateOwnership } = useUpdateOwnership(UPDATE_OWNERSHIP_API.ITEMS);
+
+  useEffect(() => {
+    if (paneTitleRef.current) {
+      paneTitleRef.current.focus();
+    }
+  }, [isVersionHistoryOpen]);
 
   useEffect(() => {
     if (checkIfUserInMemberTenant(stripes)) {
@@ -621,6 +632,10 @@ const ItemView = props => {
   const temporaryHoldingsLocation = locationsById[holdingsRecord?.temporaryLocationId];
   const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
+  const openVersionHistory = useCallback(() => {
+    setIsSetVersionHistoryOpen(true);
+  }, []);
+
   const refLookup = (referenceTable, id) => {
     const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
 
@@ -984,7 +999,8 @@ const ItemView = props => {
       <Paneset isRoot>
         <Pane
           data-test-item-view-page
-          defaultWidth="100%"
+          defaultWidth="fill"
+          id="item-view-pane"
           appIcon={(
             <AppIcon
               app="inventory"
@@ -1014,6 +1030,11 @@ const ItemView = props => {
           dismissible
           onClose={onCloseViewItem}
           actionMenu={getActionMenu}
+          lastMenu={(
+            <PaneMenu>
+              <VersionHistoryButton onClick={openVersionHistory} />
+            </PaneMenu>
+          )}
         >
           <UpdateItemOwnershipModal
             isOpen={isUpdateOwnershipModalOpen}
@@ -1732,6 +1753,12 @@ const ItemView = props => {
             </AccordionSet>
           </AccordionStatus>
         </Pane>
+        {isVersionHistoryOpen && (
+          <VersionHistory
+            onClose={() => setIsSetVersionHistoryOpen(false)}
+            paneTitleRef={paneTitleRef}
+          />
+        )}
       </Paneset>
     </HasCommand>
   );
