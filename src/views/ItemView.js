@@ -119,7 +119,7 @@ import {
   useHoldingMutation,
   useUpdateOwnership,
 } from '../hooks';
-import VersionHistory from './VersionHistory/VersionHistory';
+import { VersionHistory } from './VersionHistory';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -1030,7 +1030,11 @@ const ItemView = props => {
           dismissible
           onClose={onCloseViewItem}
           actionMenu={getActionMenu}
-          lastMenu={<PaneMenu><VersionHistoryButton onClick={openVersionHistory} /></PaneMenu>}
+          lastMenu={(
+            <PaneMenu>
+              <VersionHistoryButton onClick={openVersionHistory} />
+            </PaneMenu>
+          )}
         >
           <UpdateItemOwnershipModal
             isOpen={isUpdateOwnershipModalOpen}
