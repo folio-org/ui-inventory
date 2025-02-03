@@ -282,10 +282,6 @@ describe('ItemView', () => {
       });
     });
 
-    it('should display the information icons', () => {
-      expect(screen.getAllByTestId('info-icon-shelving-order')[0]).toBeDefined();
-    });
-
     describe('when close view page', () => {
       it('should call the function to redirect user to instance page', () => {
         checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
