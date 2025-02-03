@@ -119,7 +119,7 @@ import {
   useHoldingMutation,
   useUpdateOwnership,
 } from '../hooks';
-import VersionHistory from './VersionHistory';
+import { VersionHistory } from './VersionHistory';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
