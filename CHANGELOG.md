@@ -15,6 +15,7 @@
 * ECS: Disable opening item details if a user is not affiliated with item's member tenant. Fixes UIIN-3187.
 * Correctly depend on `inflected`. Refs UIIN-3203.
 * Decrease the amount of rerenders in `ConsortialHoldings` component. Fixes UIIN-3196.
+* Add Version history button and Version history pane to details view of Holdings. Refs UIIN-3171.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
