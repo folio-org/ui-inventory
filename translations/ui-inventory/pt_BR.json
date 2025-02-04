@@ -862,5 +862,6 @@
     "settings.instanceCallNumber.termUpdated": "O tipo de pesquisa do número de chamada {term} foi atualizado com sucesso",
     "settings.instanceCallNumber.identifierTypesPopover": "Observe que, se nenhum tipo de número de chamada for selecionado para uma opção de pesquisa, essa opção exibirá todos os tipos de número de chamada.",
     "permission.settings.call-number-browse": "Configurações (Inventário): Configurar a pesquisa de número de chamada",
-    "permission.consortia.inventory.local.sharing-instances.execute": "Inventário: Compartilhar a instância local com o consórcio"
+    "permission.consortia.inventory.local.sharing-instances.execute": "Inventário: Compartilhar a instância local com o consórcio",
+    "updateOwnership.items.message.error": "A propriedade do item não pôde ser atualizada porque o registro contém dados de referência específicos do local."
 }
