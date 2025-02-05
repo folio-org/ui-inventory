@@ -879,5 +879,7 @@
   "settings.section.displaySettings": "Display settings",
   "settings.displaySettings.defaultSort": "Default sort",
 
-  "instance.linked.id": "Linked instance ID - {id}"
+  "instance.linked.id": "Linked instance ID - {id}",
+
+  "versionHistory.paneTitle": "Version history"
 }
