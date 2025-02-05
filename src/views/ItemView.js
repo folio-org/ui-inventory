@@ -52,6 +52,7 @@ import {
   MenuSection,
   NoValue,
   TextLink,
+  PaneMenu,
 } from '@folio/stripes/components';
 
 import {
@@ -70,7 +71,6 @@ import {
 } from '@folio/stripes/core';
 
 import { VersionHistoryButton } from '@folio/stripes-acq-components';
-import { PaneMenu } from '@folio/stripes-components';
 import { requestsStatusString } from '../Instance/ViewRequests/utils';
 
 import ModalContent from '../components/ModalContent';
