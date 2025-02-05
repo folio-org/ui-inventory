@@ -46,6 +46,7 @@ import SubjectSourcesSettings from '../SubjectSourcesSettings';
 import SubjectTypesSettings from '../SubjectTypesSettings';
 import DisplaySettings from '../DisplaySettings';
 import CallNumberBrowseSettings from '../CallNumberBrowseSettings';
+import NumberGeneratorSettings from '../NumberGeneratorSettings';
 import {
   flattenCentralTenantPermissions,
   isUserInConsortiumMode,
@@ -281,6 +282,12 @@ const InventorySettings = (props) => {
             label: <FormattedMessage id="ui-inventory.callNumberTypes" />,
             component: CallNumberTypes,
             perm: addPerm('ui-inventory.settings.call-number-types'),
+          },
+          {
+            component: NumberGeneratorSettings,
+            label: <FormattedMessage id="ui-inventory.numberGenerator.options" />,
+            route: 'numberGeneratorOptions',
+            perm: 'ui-inventory.settings.manage-number-generator-options',
           },
         ]
       },
