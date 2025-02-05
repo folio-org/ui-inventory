@@ -1,27 +1,34 @@
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 
-import { Pane } from '@folio/stripes/components';
+import {
+  VersionHistoryPane,
+  VersionViewContextProvider,
+} from '@folio/stripes-acq-components';
 
-const VersionHistory = ({ onClose, paneTitleRef }) => {
+const VersionHistory = ({ onClose }) => {
   return (
-    <Pane
-      id="version-history-pane"
-      defaultWidth="20%"
-      onClose={onClose}
-      paneTitle={<FormattedMessage id="ui-inventory.versionHistory.paneTitle" />}
-      dismissible
-      paneTitleRef={paneTitleRef}
+    <VersionViewContextProvider
+      snapshotPath=""
+      versions={[]}
+      versionId={null}
     >
-      {/* TODO: Create here the list of version history cards in scope of https://folio-org.atlassian.net/browse/UIIN-3175 */}
-      <span>Versions</span>
-    </Pane>
+      <VersionHistoryPane
+        currentVersion={null}
+        id="inventory"
+        isLoading={false}
+        onClose={onClose}
+        onSelectVersion={() => {}}
+        snapshotPath=""
+        labelsMap={{}}
+        versions={[]}
+        hiddenFields={[]}
+      />
+    </VersionViewContextProvider>
   );
 };
 
 VersionHistory.propTypes = {
   onClose: PropTypes.func,
-  paneTitleRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
 

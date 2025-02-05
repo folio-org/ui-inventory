@@ -169,15 +169,8 @@ const ItemView = props => {
   const intl = useIntl();
   const calloutContext = useContext(CalloutContext);
   const accordionStatusRef = useRef();
-  const paneTitleRef = useRef();
   const { mutateHolding } = useHoldingMutation(targetTenant?.id);
   const { updateOwnership } = useUpdateOwnership(UPDATE_OWNERSHIP_API.ITEMS);
-
-  useEffect(() => {
-    if (paneTitleRef.current) {
-      paneTitleRef.current.focus();
-    }
-  }, [isVersionHistoryOpen]);
 
   useEffect(() => {
     if (checkIfUserInMemberTenant(stripes)) {
@@ -1756,7 +1749,6 @@ const ItemView = props => {
         {isVersionHistoryOpen && (
           <VersionHistory
             onClose={() => setIsSetVersionHistoryOpen(false)}
-            paneTitleRef={paneTitleRef}
           />
         )}
       </Paneset>
