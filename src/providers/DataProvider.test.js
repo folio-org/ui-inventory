@@ -5,11 +5,15 @@ import { resources } from '../../test/fixtures/DataProviders';
 
 import DataProvider from './DataProvider';
 import { DataContext } from '../contexts';
-import { useClassificationBrowseConfig } from '../hooks';
+import {
+  useCallNumberBrowseConfig,
+  useClassificationBrowseConfig,
+} from '../hooks';
 
 jest.mock('../hooks', () => ({
   ...jest.requireActual('../hooks'),
   useClassificationBrowseConfig: jest.fn(),
+  useCallNumberBrowseConfig: jest.fn(),
 }));
 
 const commonData = {
@@ -63,6 +67,17 @@ useClassificationBrowseConfig.mockReturnValue({
   isLoading: false,
 });
 
+const callNumberBrowseConfig = [{
+  id: 'dewey',
+  shelvingAlgorithm: 'dewey',
+  typeIds: ['dewey-id', 'lc-id'],
+}];
+
+useCallNumberBrowseConfig.mockReturnValue({
+  callNumberBrowseConfig,
+  isCallNumberConfigLoading: false,
+});
+
 const mockPassedData = jest.fn();
 
 const Children = () => (
@@ -84,6 +99,7 @@ describe('DataProvider', () => {
     expect(mockPassedData).toHaveBeenCalledWith({
       ...commonData,
       classificationBrowseConfig,
+      callNumberBrowseConfig,
       ...Object.keys(resources).reduce((acc, name) => ({ ...acc, [name]: resources[name].records }), {}),
       identifierTypesById: {
         'identifierTypes-1': {
