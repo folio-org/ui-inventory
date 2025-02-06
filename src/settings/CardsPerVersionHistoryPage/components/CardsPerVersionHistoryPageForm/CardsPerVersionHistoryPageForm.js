@@ -3,6 +3,7 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import { Field } from 'react-final-form';
+import PropTypes from 'prop-types';
 
 import stripesFinalForm from '@folio/stripes/final-form';
 import {
@@ -17,11 +18,17 @@ import {
 
 import css from './CardsPerVersionHistoryPageForm.css';
 
+const propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+  pristine: PropTypes.bool,
+  submitting: PropTypes.bool,
+};
+
 const CardsPerVersionHistoryPageForm = ({
   handleSubmit,
   pristine,
   submitting,
-  values,
   onCancel
 }) => {
   const intl = useIntl();
@@ -88,6 +95,8 @@ const CardsPerVersionHistoryPageForm = ({
     </form>
   );
 };
+
+CardsPerVersionHistoryPageForm.propTypes = propTypes;
 
 export default stripesFinalForm({
   navigationCheck: true,
