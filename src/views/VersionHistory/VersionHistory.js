@@ -1,26 +1,34 @@
 import PropTypes from 'prop-types';
 
-import { Pane } from '@folio/stripes/components';
+import {
+  VersionHistoryPane,
+  VersionViewContextProvider,
+} from '@folio/stripes-acq-components';
 
-
-const VersionHistory = ({ onClose, paneTitleRef }) => {
+const VersionHistory = ({ onClose }) => {
   return (
-    <Pane
-      id="version-history-pane"
-      defaultWidth="20%"
-      onClose={onClose}
-      paneTitle="Version history"
-      dismissible
-      paneTitleRef={paneTitleRef}
+    <VersionViewContextProvider
+      snapshotPath=""
+      versions={[]}
+      versionId={null}
     >
-      <span>Versions</span>
-    </Pane>
+      <VersionHistoryPane
+        currentVersion={null}
+        id="inventory"
+        isLoading={false}
+        onClose={onClose}
+        onSelectVersion={() => {}}
+        snapshotPath=""
+        labelsMap={{}}
+        versions={[]}
+        hiddenFields={[]}
+      />
+    </VersionViewContextProvider>
   );
 };
 
 VersionHistory.propTypes = {
   onClose: PropTypes.func,
-  paneTitleRef: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
 };
 
 

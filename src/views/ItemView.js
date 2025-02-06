@@ -52,6 +52,7 @@ import {
   MenuSection,
   NoValue,
   TextLink,
+  PaneMenu,
 } from '@folio/stripes/components';
 
 import {
@@ -70,7 +71,6 @@ import {
 } from '@folio/stripes/core';
 
 import { VersionHistoryButton } from '@folio/stripes-acq-components';
-import { PaneMenu } from '@folio/stripes-components';
 import { requestsStatusString } from '../Instance/ViewRequests/utils';
 
 import ModalContent from '../components/ModalContent';
@@ -119,7 +119,7 @@ import {
   useHoldingMutation,
   useUpdateOwnership,
 } from '../hooks';
-import VersionHistory from './VersionHistory/VersionHistory';
+import { VersionHistory } from './VersionHistory';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -1030,7 +1030,11 @@ const ItemView = props => {
           dismissible
           onClose={onCloseViewItem}
           actionMenu={getActionMenu}
-          lastMenu={<PaneMenu><VersionHistoryButton onClick={openVersionHistory} /></PaneMenu>}
+          lastMenu={(
+            <PaneMenu>
+              <VersionHistoryButton onClick={openVersionHistory} />
+            </PaneMenu>
+          )}
         >
           <UpdateItemOwnershipModal
             isOpen={isUpdateOwnershipModalOpen}
@@ -1752,7 +1756,6 @@ const ItemView = props => {
         {isVersionHistoryOpen && (
           <VersionHistory
             onClose={() => setIsSetVersionHistoryOpen(false)}
-            paneTitleRef={paneTitleRef}
           />
         )}
       </Paneset>
