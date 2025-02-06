@@ -19,6 +19,7 @@
 * Remove hover-over text next to "Shelving order" on the Item record detail view. Refs UIIN-3210.
 * CI: Switch to centralized/shared workflow from https://github.com/folio-org/.github. Fixes UIIN-3218.
 * Add Version history button and Version history pane to details view of Item. Refs UIIN-3172.
+* Add Version history button and Version history pane to details view of Holdings. Refs UIIN-3171.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
