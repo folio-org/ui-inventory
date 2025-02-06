@@ -40,7 +40,7 @@ export const useInstanceHoldingsQuery = (instanceId, options = {}) => {
 
   const searchParams = {
     limit: LIMIT,
-    query: `instanceId==${instanceId}`,
+    query: `instanceId==${instanceId} sortBy effectiveLocation.name callNumberPrefix callNumber callNumberSuffix`,
   };
 
   const [namespace] = useNamespace({ key: 'fetch-holding-by-instance-id' });
