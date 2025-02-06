@@ -14,9 +14,8 @@ const NumberGeneratorSettings = () => {
   const stripes = useStripes();
   const ConnectedConfigManager = useMemo(() => stripes.connect(ConfigManager), [stripes]);
 
-  const beforeSave = (data) => data[NUMBER_GENERATOR_SETTINGS_KEY] || '';
-
-  const getInitialValues = (items) => (items?.[0]?.value || '');
+  const beforeSave = (data) => data || '';
+  const getInitialValues = (settings) => (settings?.[0]?.value || '');
 
   return (
     <ConnectedConfigManager
