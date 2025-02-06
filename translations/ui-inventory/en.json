@@ -876,6 +876,9 @@
   "shortcut.editMARC.noPermission": "You do not have permission to edit the record.",
 
   "settings.heading.general": "General",
+  "settings.heading.versionHistory": "Version history",
+  "settings.section.cardsPerPage": "Cards per page",
+  "settings.versionHistory.versionHistoryCardsPerPage": "Cards to display per page on Version history",
   "settings.section.displaySettings": "Display settings",
   "settings.displaySettings.defaultSort": "Default sort",
 
