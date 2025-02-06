@@ -106,7 +106,7 @@ class ViewInstance extends React.Component {
       fetch: true,
       throwErrors: false,
       params: {
-        query: 'instanceId==:{id}',
+        query: 'instanceId==:{id} sortBy effectiveLocation.name callNumberPrefix callNumber callNumberSuffix',
         limit: '1000',
       },
       tenant: '!{tenantId}',
