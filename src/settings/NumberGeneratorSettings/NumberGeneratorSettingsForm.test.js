@@ -20,7 +20,7 @@ const renderComponent = () => renderWithIntl(
 );
 
 describe('NumberGeneratorSettingsForm', () => {
-  it('should render the component with initial values', () => {
+  it('should render the component with all elements', () => {
     renderComponent();
 
     expect(screen.getByText('Number generator options')).toBeInTheDocument();
