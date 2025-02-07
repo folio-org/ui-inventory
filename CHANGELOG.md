@@ -17,6 +17,7 @@
 * Decrease the amount of rerenders in `ConsortialHoldings` component. Fixes UIIN-3196.
 * Sort holdings by location name and call number. Refs UIIN-3207.
 * Remove hover-over text next to "Shelving order" on the Item record detail view. Refs UIIN-3210.
+* CI: Switch to centralized/shared workflow from https://github.com/folio-org/.github. Fixes UIIN-3218.
 * Add settings options for using number gernerator for item barcode, accession number and call number. Refs UIIN-2557.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
