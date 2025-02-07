@@ -103,6 +103,14 @@ export const getFullCallNumber = (row) => {
   return fullCallNumber;
 };
 
+/**
+ * Constructs a query string for browsing call numbers based on the provided parameters.
+ *
+ * @param {string} qindex - The query index indicating the type of browse (e.g., callNumbers, dewey, lc).
+ * @param {Object} data - The data object containing configuration for call number browsing.
+ * @param {Object} row - The row object containing details of the item being browsed.
+ * @returns {string} - The constructed query string for browsing call numbers.
+ */
 const getCallNumberQuery = (qindex, data, row) => {
   const fullCallNumber = getFullCallNumber(row);
 
