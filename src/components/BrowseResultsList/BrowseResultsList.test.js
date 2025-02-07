@@ -90,6 +90,12 @@ const mockContext = {
       ],
     },
   ],
+  callNumberBrowseConfig: [
+    {
+      id: 'dewey',
+      typeIds: ['dewey-id', 'lc-id'],
+    },
+  ],
   subjectSources: [{ id: 'sourceId', name: 'sourceName' }],
   subjectTypes: [{ id: 'typeId', name: 'typeName' }],
 };

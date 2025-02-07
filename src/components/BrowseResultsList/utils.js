@@ -5,9 +5,9 @@ import {
   browseClassificationOptions,
   browseModeOptions,
   browseClassificationIndexToId,
+  browseCallNumberIndexToId,
   FACETS,
   queryIndexes,
-  segments,
 } from '@folio/stripes-inventory-components';
 
 export const isRowPreventsClick = (row, browseOption) => {
@@ -103,9 +103,45 @@ export const getFullCallNumber = (row) => {
   return fullCallNumber;
 };
 
+/**
+ * Constructs a query string for browsing call numbers based on the provided parameters.
+ *
+ * @param {string} qindex - The query index indicating the type of browse (e.g., callNumbers, dewey, lc).
+ * @param {Object} data - The data object containing configuration for call number browsing.
+ * @param {Object} row - The row object containing details of the item being browsed.
+ * @returns {string} - The constructed query string for browsing call numbers.
+ */
+const getCallNumberQuery = (qindex, data, row) => {
+  const fullCallNumber = getFullCallNumber(row);
+
+  const isCallNumberBrowse = Object.values(browseCallNumberOptions).includes(qindex);
+
+  if (!isCallNumberBrowse) {
+    return '';
+  }
+
+  let query = `itemNormalizedCallNumbers="${fullCallNumber}"`;
+
+  const callNumberBrowseConfigId = browseCallNumberIndexToId[qindex];
+
+  const callNumberBrowseTypes = data?.callNumberBrowseConfig
+    .find(config => config.id === callNumberBrowseConfigId)?.typeIds;
+
+  const callNumberBrowseTypesQuery = callNumberBrowseTypes
+    ?.map(typeId => `item.effectiveCallNumberComponents.typeId=="${typeId}"`)
+    .join(' or ');
+
+  if (callNumberBrowseTypesQuery) {
+    query += ` and (${callNumberBrowseTypesQuery})`;
+  }
+
+  return query;
+};
+
 export const getSearchParams = (row, qindex, allFilters, data) => {
   const filters = getExtraFilters(row, qindex, allFilters);
   const classificationQuery = getClassificationQuery(qindex, data, row);
+  const callNumberQuery = getCallNumberQuery(qindex, data, row);
 
   const classificationOption = {
     qindex: queryIndexes.QUERY_SEARCH,
@@ -113,12 +149,9 @@ export const getSearchParams = (row, qindex, allFilters, data) => {
     ...filters,
   };
 
-  const fullCallNumber = getFullCallNumber(row);
-
   const callNumberOption = {
-    qindex: queryIndexes.ITEM_NORMALIZED_CALL_NUMBERS,
-    query: fullCallNumber,
-    segment: segments.items,
+    qindex: queryIndexes.QUERY_SEARCH,
+    query: callNumberQuery,
     ...filters,
   };
 
