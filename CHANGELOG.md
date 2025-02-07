@@ -16,6 +16,7 @@
 * Correctly depend on `inflected`. Refs UIIN-3203.
 * Decrease the amount of rerenders in `ConsortialHoldings` component. Fixes UIIN-3196.
 * Sort holdings by location name and call number. Refs UIIN-3207.
+* Display actual instance state (shared or local) when user is using "Drag and drop" to move inventory records. Fixes UIIN-3185.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
