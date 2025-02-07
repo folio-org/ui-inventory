@@ -973,7 +973,7 @@ class ViewHoldingsRecord extends React.Component {
                       <PaneMenu>
                         <VersionHistoryButton onClick={this.openVersionHistory} />
                       </PaneMenu>
-                  )}
+                    )}
                   >
                     <Row center="xs">
                       <Col sm={6}>
