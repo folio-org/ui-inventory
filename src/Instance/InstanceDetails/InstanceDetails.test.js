@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { act } from 'react';
 import '../../../test/jest/__mock__';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  screen,
+  fireEvent,
+  within,
+} from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { DataContext } from '../../contexts';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
@@ -204,6 +209,42 @@ describe('InstanceDetails', () => {
       renderInstanceDetails();
 
       expect(screen.queryByRole('button', { name: 'Consortial holdings' })).not.toBeInTheDocument();
+    });
+  });
+
+  describe('Version history component', () => {
+    let versionHistoryButton;
+
+    beforeEach(async () => {
+      await act(async () => { renderInstanceDetails(); });
+
+      versionHistoryButton = screen.getByRole('button', { name: /version history/i });
+    });
+
+    it('should render version history button', async () => {
+      expect(versionHistoryButton).toBeInTheDocument();
+    });
+
+    describe('when click the button', () => {
+      it('should render version history pane', async () => {
+        await act(() => userEvent.click(versionHistoryButton));
+
+        expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
+      });
+    });
+
+    describe('when click the close button', () => {
+      it('should hide the pane', async () => {
+        await act(() => userEvent.click(versionHistoryButton));
+
+        const versionHistoryPane = await screen.findByRole('region', { name: /version history/i });
+        expect(versionHistoryPane).toBeInTheDocument();
+
+        const closeButton = await within(versionHistoryPane).findByRole('button', { name: /close/i });
+        await act(() => userEvent.click(closeButton));
+
+        expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();
+      });
     });
   });
 });
