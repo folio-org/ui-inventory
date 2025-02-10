@@ -3,9 +3,14 @@ import '../../../test/jest/__mock__';
 import { act, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
+import queryString from 'query-string';
 
 import { MultiColumnList } from '@folio/stripes-components';
-import { browseModeOptions } from '@folio/stripes-inventory-components';
+import {
+  browseCallNumberOptions,
+  browseModeOptions,
+  queryIndexes,
+} from '@folio/stripes-inventory-components';
 
 import {
   renderWithIntl,
@@ -45,6 +50,13 @@ const data = {
         'id-lc',
         'id-lc-local',
       ],
+    },
+  ],
+  callNumberBrowseConfig: [
+    {
+      id: 'dewey',
+      shelvingAlgorithm: 'dewey',
+      typeIds: ['dewey-id', 'lc-id'],
     },
   ],
   subjectSources: [{ id: 'sourceId1', name: 'sourceName1' }, { id: 'sourceId2', name: 'sourceName2' }],
@@ -87,21 +99,21 @@ describe('getBrowseResultsFormatter', () => {
     const missedMatchRecord = {
       isAnchor: true,
       fullCallNumber: 'bla bla',
+      callNumber: 'bla bla',
       totalRecords: 0,
     };
     const contentData = [
       {
-        fullCallNumber: 'A 1958 A 8050',
-        shelfKey: '41958 A 48050',
+        fullCallNumber: 'CALL',
         isAnchor: true,
-        totalRecords: 1,
-        instance: { id: 'ce9dd893-c812-49d5-8973-d55d018894c4', title: 'Test title' },
+        totalRecords: 0,
       },
       {
-        fullCallNumber: 'AAA',
-        shelfKey: '123456',
+        fullCallNumber: 'CALL SUF',
+        callNumber: 'CALL',
+        callNumberPrefix: 'PRE',
+        callNumberSuffix: 'SUF',
         totalRecords: 2,
-        instance: { id: 'ce9dd893-c812-49d5-8973-d55d018894c4', title: 'Test title 2' },
       },
     ];
     const [anchorRecord, nonAnchorRecord] = contentData;
@@ -117,30 +129,47 @@ describe('getBrowseResultsFormatter', () => {
       renderCallNumberList();
 
       // Anchor row
-      expect(screen.getByText(anchorRecord.fullCallNumber).tagName.toLowerCase()).toBe('strong');
-      expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
-      expect(screen.getByText(anchorRecord.instance.title).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText('would be here').tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText('CALL').tagName.toLowerCase()).not.toBe('strong');
       // Default row
-      expect(screen.getByText(nonAnchorRecord.fullCallNumber).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText('PRE CALL SUF').tagName.toLowerCase()).not.toBe('strong');
       expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
-      expect(screen.getByText(nonAnchorRecord.instance.title).tagName.toLowerCase()).not.toBe('strong');
     });
 
     it('should render \'Missed match item\' row', () => {
       renderCallNumberList({ contentData: [missedMatchRecord] });
 
-      expect(screen.getByText(missedMatchRecord.fullCallNumber)).toBeInTheDocument();
+      expect(screen.getByText(missedMatchRecord.callNumber)).toBeInTheDocument();
       expect(screen.getByText(missedMatchText)).toBeInTheDocument();
     });
 
-    it('should navigate to instance "Search" page when target column was clicked', async () => {
+    it('should not navigate to any page when anchor is clicked', async () => {
       renderCallNumberList();
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
       await act(async () => fireEvent.click(screen.getByText(anchorRecord.fullCallNumber)));
 
-      expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
+      expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
+    });
+
+    describe('when call number title is clicked', () => {
+      it('should navigate to the instance "Search" page', async () => {
+        const { getByText } = renderCallNumberList({
+          formatter: getBrowseResultsFormatter({
+            data,
+            browseOption: browseCallNumberOptions.DEWEY,
+          }),
+        });
+
+        const query = queryString.stringify({
+          selectedBrowseResult: true,
+          qindex: queryIndexes.QUERY_SEARCH,
+          query: 'itemNormalizedCallNumbers="PRE CALL SUF" and (item.effectiveCallNumberComponents.typeId=="dewey-id" or item.effectiveCallNumberComponents.typeId=="lc-id")',
+        });
+
+        expect(getByText('PRE CALL SUF').href).toContain(`${INVENTORY_ROUTE}?${query}`);
+      });
     });
   });
 
