@@ -3,76 +3,128 @@ import {
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 
+import { useStripes } from '@folio/stripes/core';
+
 import useInstance from './useInstance';
 
 import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
 import useInstanceQuery from './useInstanceQuery';
 
+jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
+  useStripes: jest.fn().mockReturnValue({
+    hasInterface: () => false,
+    okapi: { tenant: 'tenantId' },
+    user: {},
+  }),
+}));
+
 jest.mock('./useSearchInstanceByIdQuery', () => jest.fn());
 jest.mock('./useInstanceQuery', () => jest.fn());
+
+const TENANT_ID = 'tenantId';
+const INSTANCE_ID_1 = 123;
+const INSTANCE_ID_2 = 456;
+const INSTANCE_NAME_1 = 'Test';
+const INSTANCE_NAME_2 = 'Test 2';
+const mockUseSearchInstanceByIdQuery = (shared = false) => {
+  useSearchInstanceByIdQuery.mockReturnValue({
+    instance: { shared, tenantId: TENANT_ID },
+    isLoading: false,
+  });
+};
+
+const mockUseInstanceQuery = (instance = {}) => {
+  useInstanceQuery.mockReturnValueOnce({
+    instance,
+    isLoading: false,
+    isFetching: false,
+    isError: false,
+    error: null,
+  });
+};
 
 describe('useInstance', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
 
-    useSearchInstanceByIdQuery.mockReturnValue({
-      instance: {
-        shared: false,
-        tenantId: 'tenantId',
-      },
+  it('should fetch instance data and return the instance and loading status', async () => {
+    mockUseSearchInstanceByIdQuery();
+    mockUseInstanceQuery({ id: INSTANCE_ID_1, name: INSTANCE_NAME_1 });
+
+    const { result } = renderHook(() => useInstance(INSTANCE_ID_1));
+
+    const expectedInstance = {
+      id: INSTANCE_ID_1,
+      name: INSTANCE_NAME_1,
+      shared: false,
+      tenantId: TENANT_ID,
+    };
+
+    await waitFor(() => expect(result.current.isLoading).toBe(false));
+
+    expect(result.current).toEqual({
+      instance: expectedInstance,
       isLoading: false,
+      isFetching: false,
+      refetch: expect.any(Function),
+      isError: false,
+      error: null,
     });
   });
 
-  it('fetch instance data and return the instance and loading status', async () => {
-    useInstanceQuery.mockReturnValueOnce({
-      instance: {
-        id: 123,
-        name: 'Test',
-      },
-      isLoading: false,
-    });
-    const { result } = renderHook(() => useInstance(123));
+  it('should re-fetch instance data if id changes', async () => {
+    mockUseSearchInstanceByIdQuery();
+    mockUseInstanceQuery({ id: INSTANCE_ID_1, name: INSTANCE_NAME_1 });
+    mockUseInstanceQuery({ id: INSTANCE_ID_2, name: INSTANCE_NAME_2 });
 
-    const expectedInstance = { id: 123, name: 'Test', shared: false, tenantId: 'tenantId' };
-
-    await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-      expect(result.current.instance).toEqual(expectedInstance);
-    });
-  });
-  it('re-fetch instance data if id changes', async () => {
-    useInstanceQuery.mockReturnValueOnce({
-      instance: {
-        id: 123,
-        name: 'Test',
-      },
-      isLoading: false,
-    }).mockReturnValueOnce({
-      instance: {
-        id: 456,
-        name: 'Test 2',
-      },
-      isLoading: false,
-    });
     const { result, rerender } = renderHook(({ id }) => useInstance(id), {
-      initialProps: { id: 123 },
+      initialProps: { id: INSTANCE_ID_1 },
     });
 
-    const expectedInstance = { id: 123, name: 'Test', shared: false, tenantId: 'tenantId' };
-
     await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-      expect(result.current.instance).toEqual(expectedInstance);
+      expect(result.current.instance).toEqual({
+        id: INSTANCE_ID_1,
+        name: INSTANCE_NAME_1,
+        shared: false,
+        tenantId: TENANT_ID,
+      });
     });
 
-    rerender({ id: 456 });
-
-    const expectedInstanceAfterRerender = { id: 456, name: 'Test 2', shared: false, tenantId: 'tenantId' };
+    rerender({ id: INSTANCE_ID_2 });
 
     await waitFor(() => {
-      expect(result.current.isLoading).toBe(false);
-      expect(result.current.instance).toEqual(expectedInstanceAfterRerender);
+      expect(result.current.instance).toEqual({
+        id: INSTANCE_ID_2,
+        name: INSTANCE_NAME_2,
+        shared: false,
+        tenantId: TENANT_ID,
+      });
+    });
+  });
+
+  it('should correctly handle consortium mode', async () => {
+    const CENTRAL_TENANT_ID = 'centralTenant';
+
+    useStripes.mockReturnValue({
+      hasInterface: () => true,
+      okapi: { tenant: TENANT_ID },
+      user: { user: { consortium: { centralTenantId: CENTRAL_TENANT_ID } } },
+    });
+
+    mockUseSearchInstanceByIdQuery(true);
+    mockUseInstanceQuery({ id: INSTANCE_ID_1, name: INSTANCE_NAME_1 });
+
+    const { result } = renderHook(() => useInstance(INSTANCE_ID_1));
+
+    await waitFor(() => {
+      expect(result.current.instance).toEqual({
+        id: INSTANCE_ID_1,
+        name: INSTANCE_NAME_1,
+        shared: true,
+        tenantId: CENTRAL_TENANT_ID,
+      });
     });
   });
 });

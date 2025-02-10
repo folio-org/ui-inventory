@@ -282,10 +282,6 @@ describe('ItemView', () => {
       });
     });
 
-    it('should display the information icons', () => {
-      expect(screen.getAllByTestId('info-icon-shelving-order')[0]).toBeDefined();
-    });
-
     describe('when close view page', () => {
       it('should call the function to redirect user to instance page', () => {
         checkIfUserInCentralTenant.mockClear().mockReturnValue(false);
@@ -398,7 +394,7 @@ describe('ItemView', () => {
             const confirmationModal = screen.getByText('Update ownership of items');
             fireEvent.click(within(confirmationModal).getByText('confirm'));
 
-            await waitFor(() => expect(screen.queryByText('Item ownership could not be updated because it contains local-specific reference data.')).toBeDefined());
+            await waitFor(() => expect(screen.queryByText('Item ownership could not be updated because the record contains local-specific reference data.')).toBeDefined());
           });
         });
 

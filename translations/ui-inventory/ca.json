@@ -862,5 +862,6 @@
     "settings.instanceCallNumber.termUpdated": "The call number browse type {term} was successfully updated",
     "settings.instanceCallNumber.identifierTypesPopover": "Please note that if no call number types are selected for a browse option, this option will display all call number types.",
     "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse",
-    "permission.consortia.inventory.local.sharing-instances.execute": "Inventory: Share local instance with consortium"
+    "permission.consortia.inventory.local.sharing-instances.execute": "Inventory: Share local instance with consortium",
+    "updateOwnership.items.message.error": "Item ownership could not be updated because the record contains local-specific reference data."
 }

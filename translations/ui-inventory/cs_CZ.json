@@ -853,14 +853,15 @@
     "permission.items.in-transit-report.create": "Katalog: Vytvořit a stáhnout výstup Přepravované jednotky",
     "exportInstancesInMARC.complete": "The export is complete. The downloaded {csvFileName}.csv contains selected record's UUID. To retrieve the {marcFileName}.mrc file, please go to the Data export app.",
     "callNumberBrowse": "Call number browse",
-    "settings.instanceCallNumber.all": "Call numbers (all)",
-    "settings.instanceCallNumber.dewey": "Dewey Decimal classification",
-    "settings.instanceCallNumber.lc": "Library of Congress classification",
-    "settings.instanceCallNumber.nlm": "National Library of Medicine classification",
+    "settings.instanceCallNumber.all": "Signatury (všechny)",
+    "settings.instanceCallNumber.dewey": "Deweyho desítková klasifikace",
+    "settings.instanceCallNumber.lc": "Klasifikace Kongresové knihovny",
+    "settings.instanceCallNumber.nlm": "Klasifikace Národní lékařské knihovny",
     "settings.instanceCallNumber.other": "Other scheme",
     "settings.instanceCallNumber.sudoc": "Superintendent of Documents classification",
     "settings.instanceCallNumber.termUpdated": "The call number browse type {term} was successfully updated",
     "settings.instanceCallNumber.identifierTypesPopover": "Please note that if no call number types are selected for a browse option, this option will display all call number types.",
     "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse",
-    "permission.consortia.inventory.local.sharing-instances.execute": "Inventory: Share local instance with consortium"
+    "permission.consortia.inventory.local.sharing-instances.execute": "Katalog: Sdílet místní titul s konsorciem",
+    "updateOwnership.items.message.error": "Item ownership could not be updated because the record contains local-specific reference data."
 }

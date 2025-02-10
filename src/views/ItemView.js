@@ -47,7 +47,6 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
-  InfoPopover,
   Layout,
   MenuSection,
   NoValue,
@@ -1271,11 +1270,6 @@ const ItemView = props => {
                       <KeyValue
                         label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
                         value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
-                      />
-                      <InfoPopover
-                        iconSize="medium"
-                        content={<FormattedMessage id="ui-inventory.info.shelvingOrder" />}
-                        buttonProps={{ 'data-testid': 'info-icon-shelving-order' }}
                       />
                     </Layout>
                   </Col>

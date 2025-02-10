@@ -8,18 +8,28 @@ import { useStripes } from '@folio/stripes/core';
 import useSearchInstanceByIdQuery from './useSearchInstanceByIdQuery';
 import useInstanceQuery from './useInstanceQuery';
 
+import { isUserInConsortiumMode } from '../../utils';
+
 const useInstance = (id) => {
   const stripes = useStripes();
-  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
+  const isUserInConsortium = isUserInConsortiumMode(stripes);
 
+  let isShared = false;
+  let instanceTenantId = stripes?.okapi.tenant;
+
+  // search instance by id (only in consortium mode) to get information about tenant and shared status
   const {
     refetch: refetchSearch,
     isLoading: isSearchInstanceByIdLoading,
     instance: _instance,
-  } = useSearchInstanceByIdQuery(id);
+  } = useSearchInstanceByIdQuery(id, { enabled: Boolean(isUserInConsortium) });
 
-  const isShared = _instance?.shared;
-  const instanceTenantId = isShared ? centralTenantId : _instance?.tenantId;
+  if (isUserInConsortium) {
+    const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
+
+    isShared = _instance?.shared;
+    instanceTenantId = isShared ? centralTenantId : _instance?.tenantId;
+  }
 
   const {
     refetch: refetchInstance,
@@ -47,7 +57,11 @@ const useInstance = (id) => {
     [isSearchInstanceByIdLoading, isInstanceLoading],
   );
   const refetch = useCallback(() => {
-    refetchSearch().then(() => refetchInstance());
+    if (isUserInConsortium) {
+      refetchSearch().then(refetchInstance);
+    } else {
+      refetchInstance();
+    }
   });
 
   return {
