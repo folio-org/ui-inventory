@@ -571,12 +571,12 @@
         "visible": true
       },
       {
-        "permissionName": "mod-settings.global.read.ui-inventory.number-generator-settings",
+        "permissionName": "mod-settings.global.read.ui-inventory.number-generator-settings.manage",
         "displayName": "Settings (Inventory): Read the settings in the 'Number generator' section",
         "visible": false
       },
       {
-        "permissionName": "mod-settings.global.write.ui-inventory.number-generator-settings",
+        "permissionName": "mod-settings.global.write.ui-inventory.number-generator-settings.manage",
         "displayName": "Settings (Inventory): Write the settings in the 'Number generator' section",
         "visible": false
       },
@@ -588,8 +588,8 @@
           "mod-settings.entries.collection.get",
           "mod-settings.entries.item.post",
           "mod-settings.entries.item.put",
-          "mod-settings.global.read.ui-inventory.number-generator-settings",
-          "mod-settings.global.write.ui-inventory.number-generator-settings"
+          "mod-settings.global.read.ui-inventory.number-generator-settings.manage",
+          "mod-settings.global.write.ui-inventory.number-generator-settings.manage"
         ],
         "visible": true
       },

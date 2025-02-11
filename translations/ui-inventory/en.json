@@ -744,6 +744,7 @@
   "permission.settings.single-record-import": "Settings (Inventory): Configure single-record import",
   "permission.settings.holdings-note-types": "Settings (Inventory): Create, edit, delete holdings note types",
   "permission.settings.item-note-types": "Settings (Inventory): Create, edit, delete item note types",
+  "permission.settings.manage-number-generator-options": "Settings (Inventory): Manage number generator options",
   "permission.settings.hrid-handling": "Settings (Inventory): Create, edit and delete HRID handling",
   "permission.instance.view": "Inventory: View instances, holdings, and items",
   "permission.instance.create": "Inventory: View, create instances",
