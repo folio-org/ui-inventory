@@ -90,7 +90,7 @@ describe('CardsPerVersionHistoryPage', () => {
       expect(screen.queryByText('LoadingPane')).not.toBeInTheDocument();
       expect(mockSendCallout).toHaveBeenCalledWith({
         type: 'error',
-        message: 'Failed to load Cards per page setting',
+        message: 'Failed to load Version history cards per page settings',
       });
     });
   });
