@@ -36,7 +36,38 @@ export const COLUMNS_MAPPING = {
 export const COLUMNS_WIDTHS = {
   [browseModeOptions.CALL_NUMBERS]: {
     callNumber: '15%',
-    title: '40%',
+    title: '70%',
+    numberOfTitles: '15%',
+  },
+  [browseModeOptions.DEWEY]: {
+    callNumber: '15%',
+    title: '70%',
+    numberOfTitles: '15%',
+  },
+  [browseModeOptions.LIBRARY_OF_CONGRESS]: {
+    callNumber: '15%',
+    title: '70%',
+    numberOfTitles: '15%',
+  },
+  [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: {
+    callNumber: '15%',
+    title: '70%',
+    numberOfTitles: '15%',
+  },
+  [browseModeOptions.LOCAL]: {
+    callNumber: '15%',
+    title: '70%',
+    numberOfTitles: '15%',
+  },
+  [browseModeOptions.OTHER]: {
+    callNumber: '15%',
+    title: '70%',
+    numberOfTitles: '15%',
+  },
+  [browseModeOptions.SUPERINTENDENT]: {
+    callNumber: '15%',
+    title: '70%',
+    numberOfTitles: '15%',
   },
   [browseModeOptions.CLASSIFICATION_ALL]: {
     classificationNumber: '50%',
