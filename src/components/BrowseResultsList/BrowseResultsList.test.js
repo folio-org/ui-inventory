@@ -11,7 +11,6 @@ import {
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
-import { instance } from '../../../test/fixtures/instance';
 import {
   renderWithIntl,
   translationsProperties,
@@ -37,21 +36,19 @@ const defaultProps = {
   browseData: [
     {
       fullCallNumber: 'Aaa',
-      shelfKey: 'Aa 1',
+      callNumber: 'Aaa',
       isAnchor: true,
       totalRecords: 0,
     },
     {
       fullCallNumber: 'A 1958 A 8050',
-      shelfKey: '41958 A 48050',
+      callNumber: 'A 1958 A 8050',
       totalRecords: 1,
-      instance,
     },
     {
       fullCallNumber: 'ABBA',
-      shelfKey: '41918 A 64243',
+      callNumber: 'ABBA',
       totalRecords: 2,
-      instance,
     },
   ],
   isEmptyMessage: 'Empty Message',
@@ -91,6 +88,12 @@ const mockContext = {
         'id-lc',
         'id-lc-local',
       ],
+    },
+  ],
+  callNumberBrowseConfig: [
+    {
+      id: 'dewey',
+      typeIds: ['dewey-id', 'lc-id'],
     },
   ],
   subjectSources: [{ id: 'sourceId', name: 'sourceName' }],
@@ -133,13 +136,13 @@ describe('BrowseResultsList', () => {
   it('should render browse data', () => {
     renderBrowseResultsList();
 
-    expect(screen.getByText(defaultProps.browseData[1].fullCallNumber)).toBeInTheDocument();
+    expect(screen.getByText(defaultProps.browseData[1].callNumber)).toBeInTheDocument();
   });
 
   it('should navigate to instance Search page and show related instances', async () => {
     renderBrowseResultsList();
 
-    await act(async () => fireEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber)));
+    await act(async () => fireEvent.click(screen.getByText(defaultProps.browseData[2].callNumber)));
 
     const { pathname, search } = history.location;
 
@@ -180,7 +183,7 @@ describe('BrowseResultsList', () => {
           },
         });
 
-        fireEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber));
+        fireEvent.click(screen.getByText(defaultProps.browseData[2].callNumber));
 
         expect(history.location.search).toContain('?filters=shared.true%2Cshared.false%2CtenantId.college');
       });

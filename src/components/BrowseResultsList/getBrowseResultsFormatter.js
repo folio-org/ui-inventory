@@ -15,6 +15,7 @@ import {
   INVENTORY_ROUTE,
 } from '../../constants';
 import {
+  getFullCallNumber,
   getSearchParams,
   isRowPreventsClick,
 } from './utils';
@@ -112,7 +113,7 @@ const getBrowseResultsFormatter = ({
   const commonTargetRecordArgs = [browseOption, filters, namespace, data];
 
   return {
-    title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
+    title: r => getFullMatchRecord(r.instanceTitle, r.isAnchor),
     subject: r => {
       if (!r?.totalRecords && r?.isAnchor) {
         return <MissedMatchItem query={r?.value} />;
@@ -138,8 +139,10 @@ const getBrowseResultsFormatter = ({
       return typeName || <NoValue />;
     },
     callNumber: r => {
-      if (r?.instance || r?.totalRecords) {
-        return getTargetRecord(r?.fullCallNumber, r, ...commonTargetRecordArgs);
+      const fullCallNumber = getFullCallNumber(r);
+
+      if (r?.totalRecords) {
+        return getTargetRecord(fullCallNumber, r, ...commonTargetRecordArgs);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;
     },
