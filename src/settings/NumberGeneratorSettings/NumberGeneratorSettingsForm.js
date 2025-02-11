@@ -96,7 +96,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${CALL_NUMBER_SETTING}Holdings${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setManually" values={{ number: 'call number' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setManually" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.callNumber" /> }} />}
                     name={`${CALL_NUMBER_SETTING}Holdings`}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD}
@@ -104,7 +104,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${CALL_NUMBER_SETTING}Holdings${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_BOTH)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGeneratorOrManually" values={{ number: 'call number' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGeneratorOrManually" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.callNumber" /> }} />}
                     name={`${CALL_NUMBER_SETTING}Holdings`}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_BOTH}
@@ -112,7 +112,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${CALL_NUMBER_SETTING}Holdings${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_GENERATOR)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGenerator" values={{ number: 'call number' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGenerator" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.callNumber" /> }} />}
                     name={`${CALL_NUMBER_SETTING}Holdings`}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
@@ -130,7 +130,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${BARCODE_SETTING}${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setManually" values={{ number: 'barcode' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setManually" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.barcode" /> }} />}
                     name={BARCODE_SETTING}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD}
@@ -138,7 +138,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${BARCODE_SETTING}${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_BOTH)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGeneratorOrManually" values={{ number: 'barcode' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGeneratorOrManually" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.barcode" /> }} />}
                     name={BARCODE_SETTING}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_BOTH}
@@ -146,7 +146,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${BARCODE_SETTING}${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_GENERATOR)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGenerator" values={{ number: 'barcode' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGenerator" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.barcode" /> }} />}
                     name={BARCODE_SETTING}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
@@ -161,7 +161,7 @@ const NumberGeneratorSettingsForm = ({
                     component={RadioButton}
                     disabled={disableGeneratorOffOption}
                     id={`${ACCESSION_NUMBER_SETTING}${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setManually" values={{ number: 'accession number' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setManually" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.accessionNumber" /> }} />}
                     name={ACCESSION_NUMBER_SETTING}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD}
@@ -169,7 +169,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${ACCESSION_NUMBER_SETTING}${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_BOTH)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGeneratorOrManually" values={{ number: 'accession number' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGeneratorOrManually" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.accessionNumber" /> }} />}
                     name={ACCESSION_NUMBER_SETTING}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_BOTH}
@@ -177,7 +177,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${ACCESSION_NUMBER_SETTING}${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_GENERATOR)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGenerator" values={{ number: 'accession number' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGenerator" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.accessionNumber" /> }} />}
                     name={ACCESSION_NUMBER_SETTING}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
@@ -192,7 +192,7 @@ const NumberGeneratorSettingsForm = ({
                     component={RadioButton}
                     disabled={disableGeneratorOffOption}
                     id={`${CALL_NUMBER_SETTING}${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setManually" values={{ number: 'call number' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setManually" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.callNumber" /> }} />}
                     name={CALL_NUMBER_SETTING}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD}
@@ -200,7 +200,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${CALL_NUMBER_SETTING}${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_BOTH)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGeneratorOrManually" values={{ number: 'call number' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGeneratorOrManually" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.callNumber" /> }} />}
                     name={CALL_NUMBER_SETTING}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_BOTH}
@@ -208,7 +208,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={RadioButton}
                     id={`${CALL_NUMBER_SETTING}${upperFirst(NUMBER_GENERATOR_OPTIONS.USE_GENERATOR)}`}
-                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGenerator" values={{ number: 'call number' }} />}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.setGenerator" values={{ number: <FormattedMessage id="ui-inventory.numberGenerator.callNumber" /> }} />}
                     name={CALL_NUMBER_SETTING}
                     type="radio"
                     value={NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}

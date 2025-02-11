@@ -571,6 +571,16 @@
         "visible": true
       },
       {
+        "permissionName": "mod-settings.global.read.ui-inventory.number-generator-settings",
+        "displayName": "Settings (Inventory): Read the settings in the 'Number generator' section",
+        "visible": false
+      },
+      {
+        "permissionName": "mod-settings.global.write.ui-inventory.number-generator-settings",
+        "displayName": "Settings (Inventory): Write the settings in the 'Number generator' section",
+        "visible": false
+      },
+      {
         "permissionName": "ui-inventory.settings.manage-number-generator-options",
         "displayName": "Settings (Inventory): Manage number generator options",
         "subPermissions": [
