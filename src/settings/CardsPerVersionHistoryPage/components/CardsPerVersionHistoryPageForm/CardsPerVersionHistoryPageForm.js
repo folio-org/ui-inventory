@@ -20,7 +20,6 @@ import css from './CardsPerVersionHistoryPageForm.css';
 
 const propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
   pristine: PropTypes.bool,
   submitting: PropTypes.bool,
 };
@@ -29,7 +28,6 @@ const CardsPerVersionHistoryPageForm = ({
   handleSubmit,
   pristine,
   submitting,
-  onCancel
 }) => {
   const intl = useIntl();
 
@@ -44,8 +42,6 @@ const CardsPerVersionHistoryPageForm = ({
     return (
       <PaneHeader
         {...paneHeaderProps}
-        dismissible
-        onClose={onCancel}
         paneTitle={intl.formatMessage({ id: 'ui-inventory.settings.section.cardsPerPage' })}
       />
     );

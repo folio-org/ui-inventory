@@ -1,19 +1,62 @@
-import { Paneset } from '@folio/stripes/components';
+import { useCallback } from 'react';
+import { useIntl } from 'react-intl';
+
+import { useCallout } from '@folio/stripes/core';
+import { LoadingPane, Paneset } from '@folio/stripes/components';
 
 import { CardsPerVersionHistoryPageForm } from './components';
+import { useAuditSettings } from '../../hooks';
+import {
+  INVENTORY_AUDIT_GROUP,
+  VERSION_HISTORY_PAGE_SIZE_SETTING,
+} from '../../constants';
 
 export const CardsPerVersionHistoryPage = () => {
+  const intl = useIntl();
+  const callout = useCallout();
+  const {
+    settings,
+    updateSetting,
+    isSettingsLoading,
+    isError,
+  } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+
+  const setting = settings?.find(_setting => _setting.key === VERSION_HISTORY_PAGE_SIZE_SETTING);
+
   const initialValues = {
-    cardsPerPage: 25,
+    cardsPerPage: setting?.value,
   };
+
+  const handleSubmit = useCallback(({ cardsPerPage }) => {
+    // destructure the setting object to keep other values
+    return updateSetting({
+      body: {
+        ...setting,
+        value: parseInt(cardsPerPage, 10),
+      },
+      settingKey: VERSION_HISTORY_PAGE_SIZE_SETTING,
+    });
+  }, [setting, updateSetting]);
+
+  if (isError) {
+    callout.sendCallout({
+      type: 'error',
+      message: intl.formatMessage({ id: 'ui-inventory.settings.versionHistory.versionHistoryCardsPerPage.loadError' }),
+    });
+
+    return null;
+  }
 
   return (
     <Paneset id="cardsPerPage">
-      <CardsPerVersionHistoryPageForm
-        onSubmit={() => {}}
-        onCancel={() => {}}
-        initialValues={initialValues}
-      />
+      {isSettingsLoading ? (
+        <LoadingPane />
+      ) : (
+        <CardsPerVersionHistoryPageForm
+          onSubmit={handleSubmit}
+          initialValues={initialValues}
+        />
+      )}
     </Paneset>
   );
 };
