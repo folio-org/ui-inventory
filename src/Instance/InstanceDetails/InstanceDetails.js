@@ -188,6 +188,9 @@ const InstanceDetails = forwardRef(({
               <MessageBanner show={Boolean(instance.discoverySuppress && instance.staffSuppress)} type="warning">
                 <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscoveryAndStaffSuppressed" />
               </MessageBanner>
+              <MessageBanner show={Boolean(instance.deleted && instance.discoverySuppress && instance.staffSuppress)} type="warning">
+                <FormattedMessage id="ui-inventory.warning.instance.setForDeletionAndSuppressedFromDiscoveryAndStaffSuppressed" />
+              </MessageBanner>
             </Col>
             <Col data-test-expand-all xs={2}>
               <ExpandAllButton onToggle={onToggle} />
