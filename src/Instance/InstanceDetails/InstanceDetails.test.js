@@ -35,6 +35,7 @@ const instance = {
   notes: [],
   staffSuppress: false,
   discoverySuppress: false,
+  deleted: false,
   shared: false,
 };
 
@@ -142,6 +143,19 @@ describe('InstanceDetails', () => {
     renderInstanceDetails({ instance: bothSuppressedInstance });
 
     expect(screen.getByText('Warning: Instance is marked suppressed from discovery and staff suppressed')).toBeInTheDocument();
+  });
+  it('should show a correct Warning message banner when set for deletion, staff and discovery suppressed', () => {
+    const deletedAndBothSuppressedInstance = {
+      ...instance,
+      staffSuppress: true,
+      discoverySuppress: true,
+      deleted: true,
+    };
+    renderInstanceDetails({ instance: deletedAndBothSuppressedInstance });
+
+    const warningBanner = screen.getByText('Warning:', { exact: false });
+
+    expect(warningBanner.textContent).toEqual('Warning: Instance is set for deletion, suppressed from discovery, and staff suppressed');
   });
 
   it('expands and collapses the accordion sections', () => {
