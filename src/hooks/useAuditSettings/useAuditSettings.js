@@ -15,7 +15,7 @@ export const useAuditSettings = ({ group } = {}) => {
 
   const path = `audit/config/groups/${group}/settings`;
 
-  const { data, isFetching, isError, refetch } = useQuery(
+  const { data, isLoading, isError, refetch } = useQuery(
     [namespace, group],
     () => ky.get(path).json(),
   );
@@ -35,7 +35,7 @@ export const useAuditSettings = ({ group } = {}) => {
   return {
     settings: data?.settings,
     updateSetting,
-    isSettingsLoading: isFetching,
+    isSettingsLoading: isLoading,
     isError,
   };
 };

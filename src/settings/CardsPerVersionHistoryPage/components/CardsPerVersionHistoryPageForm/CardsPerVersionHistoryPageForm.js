@@ -84,6 +84,7 @@ const CardsPerVersionHistoryPageForm = ({
               label={intl.formatMessage({ id: 'ui-inventory.settings.versionHistory.versionHistoryCardsPerPage' })}
               component={Select}
               dataOptions={dataOptions}
+              parse={v => parseInt(v, 10)}
             />
           </Col>
         </Row>

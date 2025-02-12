@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useIntl } from 'react-intl';
 
-import { useCallout } from '@folio/stripes/core';
+import { TitleManager, useCallout } from '@folio/stripes/core';
 import { LoadingPane, Paneset } from '@folio/stripes/components';
 
 import { CardsPerVersionHistoryPageForm } from './components';
@@ -32,7 +32,7 @@ export const CardsPerVersionHistoryPage = () => {
     return updateSetting({
       body: {
         ...setting,
-        value: parseInt(cardsPerPage, 10),
+        value: cardsPerPage,
       },
       settingKey: VERSION_HISTORY_PAGE_SIZE_SETTING,
     });
@@ -48,15 +48,19 @@ export const CardsPerVersionHistoryPage = () => {
   }
 
   return (
-    <Paneset id="cardsPerPage">
-      {isSettingsLoading ? (
-        <LoadingPane />
-      ) : (
-        <CardsPerVersionHistoryPageForm
-          onSubmit={handleSubmit}
-          initialValues={initialValues}
-        />
-      )}
-    </Paneset>
+    <TitleManager
+      record={intl.formatMessage({ id: 'ui-inventory.settings.section.cardsPerPage' })}
+    >
+      <Paneset id="cardsPerPage">
+        {isSettingsLoading ? (
+          <LoadingPane />
+        ) : (
+          <CardsPerVersionHistoryPageForm
+            onSubmit={handleSubmit}
+            initialValues={initialValues}
+          />
+        )}
+      </Paneset>
+    </TitleManager>
   );
 };
