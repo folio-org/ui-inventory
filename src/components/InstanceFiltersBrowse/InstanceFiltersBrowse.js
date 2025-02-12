@@ -39,7 +39,7 @@ const InstanceFiltersBrowse = props => {
     [FACETS.CONTRIBUTORS_HELD_BY]: false,
     [FACETS.SUBJECTS_SHARED]: false,
     [FACETS.SUBJECTS_HELD_BY]: false,
-    [FACETS.EFFECTIVE_LOCATION]: false,
+    [FACETS.CALL_NUMBERS_EFFECTIVE_LOCATION]: false,
     [FACETS.NAME_TYPE]: false,
     [FACETS.SUBJECT_SOURCE]: false,
     [FACETS.SUBJECT_TYPE]: false,
@@ -91,7 +91,7 @@ const InstanceFiltersBrowse = props => {
           {renderSharedFacet(FACETS.SHARED)}
           {renderHeldByFacet(FACETS.CALL_NUMBERS_HELD_BY)}
           <EffectiveLocationFacet
-            name={FACETS.EFFECTIVE_LOCATION}
+            name={FACETS.CALL_NUMBERS_EFFECTIVE_LOCATION}
             accordionsStatus={accordionsStatus}
             facetOptions={facetOptions}
             separator={isConsortiaEnv(stripes)}

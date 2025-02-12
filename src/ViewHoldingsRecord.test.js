@@ -12,6 +12,7 @@ import {
   waitFor,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import { checkIfUserInMemberTenant } from '@folio/stripes/core';
 import { FindLocation } from '@folio/stripes-acq-components';
@@ -571,6 +572,42 @@ describe('ViewHoldingsRecord actions', () => {
         fireEvent.click(cancelButton);
 
         expect(container.querySelector('#update-ownership-modal')).not.toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Version history component', () => {
+    let versionHistoryButton;
+
+    beforeEach(async () => {
+      await act(async () => { renderViewHoldingsRecord(); });
+
+      versionHistoryButton = screen.getByRole('button', { name: /version history/i });
+    });
+
+    it('should render version history button', async () => {
+      expect(versionHistoryButton).toBeInTheDocument();
+    });
+
+    describe('when click the button', () => {
+      it('should render version history pane', async () => {
+        await userEvent.click(versionHistoryButton);
+
+        expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
+      });
+    });
+
+    describe('when click the close button', () => {
+      it('should hide the pane', async () => {
+        await userEvent.click(versionHistoryButton);
+
+        const versionHistoryPane = await screen.findByRole('region', { name: /version history/i });
+        expect(versionHistoryPane).toBeInTheDocument();
+
+        const closeButton = await within(versionHistoryPane).findByRole('button', { name: /close/i });
+        await userEvent.click(closeButton);
+
+        expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();
       });
     });
   });
