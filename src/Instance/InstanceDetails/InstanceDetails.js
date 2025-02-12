@@ -26,7 +26,7 @@ import {
   Row,
   MessageBanner,
   PaneCloseLink,
-  Paneset,
+  Layout,
 } from '@folio/stripes/components';
 import { VersionHistoryButton } from '@folio/stripes-acq-components';
 
@@ -206,16 +206,18 @@ const InstanceDetails = forwardRef(({
 
         <AccordionStatus ref={ref}>
           <Row>
-            <Col xs={10}>
-              {warningBanners.map(({ condition, messageId }) => (
-                <MessageBanner key={messageId} show={Boolean(condition)} type="warning">
-                  <FormattedMessage id={messageId} />
-                </MessageBanner>
-              ))}
-            </Col>
-            <Col data-test-expand-all xs={2}>
-              <ExpandAllButton onToggle={onToggle} />
-            </Col>
+            <Layout className="display-flex full flex-align-items-center justify-end">
+              <Col xs={10}>
+                {warningBanners.map(({ condition, messageId }) => (
+                  <MessageBanner key={messageId} show={Boolean(condition)} type="warning">
+                    <FormattedMessage id={messageId} />
+                  </MessageBanner>
+                ))}
+              </Col>
+              <Col data-test-expand-all xs={2}>
+                <ExpandAllButton onToggle={onToggle} />
+              </Col>
+            </Layout>
           </Row>
 
           <InstanceTitle
