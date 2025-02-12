@@ -165,7 +165,7 @@ const InstanceDetails = forwardRef(({
   };
 
   return (
-    <>
+    <Paneset>
       <Pane
         {...rest}
         data-test-instance-details
@@ -323,7 +323,7 @@ const InstanceDetails = forwardRef(({
           onClose={setHelperApp}
         />
       }
-    </>
+    </Paneset>
   );
 });
 
