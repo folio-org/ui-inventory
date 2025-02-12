@@ -26,7 +26,9 @@ import {
   Row,
   MessageBanner,
   PaneCloseLink,
+  Paneset,
 } from '@folio/stripes/components';
+import { VersionHistoryButton } from '@folio/stripes-acq-components';
 
 import { InstanceTitle } from './InstanceTitle';
 import { InstanceAdministrativeView } from './InstanceAdministrativeView';
@@ -42,6 +44,7 @@ import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
 import { InstanceAcquisition } from './InstanceAcquisition';
 import HelperApp from '../../components/HelperApp';
+import { VersionHistory } from '../../views/VersionHistory';
 
 import { DataContext } from '../../contexts';
 import { ConsortialHoldings } from '../HoldingsList/consortium/ConsortialHoldings';
@@ -92,11 +95,13 @@ const InstanceDetails = forwardRef(({
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
   const [isAllExpanded, setIsAllExpanded] = useState();
+  const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
 
   const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
   const tags = instance?.tags?.tagList;
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
   const isConsortialHoldingsVisible = instance?.shared || isInstanceShadowCopy(instance?.source);
+  const isUserInConsortium = isUserInConsortiumMode(stripes);
 
   const detailsLastMenu = useMemo(() => {
     return (
@@ -112,6 +117,7 @@ const InstanceDetails = forwardRef(({
             />
           )
         }
+        <VersionHistoryButton onClick={() => setIsVersionHistoryOpen(true)} />
       </PaneMenu>
     );
   }, [tagsEnabled, tags, intl]);
@@ -122,32 +128,35 @@ const InstanceDetails = forwardRef(({
 
   const getEntity = () => instance;
 
-  const renderPaneTitle = () => {
-    const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
+  const paneTitle = useMemo(
+    () => {
+      const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
 
-    return (
-      <FormattedMessage
-        id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
-        values={{
+      return intl.formatMessage(
+        { id: `ui-inventory.${isUserInConsortium ? 'consortia.' : ''}instanceRecordTitle` },
+        {
           isShared: isInstanceShared,
           title: instance?.title,
           publisherAndDate: getPublishingInfo(instance),
-        }}
-      />
-    );
-  };
-
-  const renderPaneSubtitle = () => {
-    return (
-      <FormattedMessage
-        id="ui-inventory.instanceRecordSubtitle"
-        values={{
-          hrid: instance?.hrid,
-          updatedDate: getDate(instance?.metadata?.updatedDate),
-        }}
-      />
-    );
-  };
+        }
+      );
+    },
+    [isShared, instance?.source, isUserInConsortium],
+  );
+  const paneSubTitle = useMemo(
+    () => {
+      return (
+        <FormattedMessage
+          id="ui-inventory.instanceRecordSubtitle"
+          values={{
+            hrid: instance?.hrid,
+            updatedDate: getDate(instance?.metadata?.updatedDate),
+          }}
+        />
+      );
+    },
+    [instance?.hrid, instance?.metadata?.updatedDate],
+  );
 
   const onToggle = newState => {
     const isExpanded = Object.values(newState)[0];
@@ -180,14 +189,14 @@ const InstanceDetails = forwardRef(({
         {...rest}
         data-test-instance-details
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
-        paneTitle={renderPaneTitle()}
-        paneSub={renderPaneSubtitle()}
+        paneTitle={paneTitle}
+        paneSub={paneSubTitle}
         actionMenu={actionMenu}
         firstMenu={(
           <PaneCloseLink
             autoFocus={location.state?.isClosingFocused}
             onClick={onClose}
-            aria-label={intl.formatMessage({ id: 'stripes-components.closeItem' }, { item: renderPaneTitle() })}
+            aria-label={intl.formatMessage({ id: 'stripes-components.closeItem' }, { item: paneTitle })}
           />
         )}
         lastMenu={detailsLastMenu}
@@ -316,6 +325,11 @@ const InstanceDetails = forwardRef(({
           </AccordionSet>
         </AccordionStatus>
       </Pane>
+      {isVersionHistoryOpen && (
+        <VersionHistory
+          onClose={() => setIsVersionHistoryOpen(false)}
+        />
+      )}
       { helperApp &&
         <HelperApp
           getEntity={getEntity}

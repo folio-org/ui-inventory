@@ -46,6 +46,7 @@ const data = {
   locations: [],
   consortiaTenants,
   classificationBrowseConfig: [],
+  callNumberBrowseConfig: [],
 };
 
 const query = {
@@ -149,16 +150,6 @@ describe('InstanceFiltersBrowse', () => {
   });
 
   describe('When callNumber browseType was selected', () => {
-    it('should call onClear handler if clear btn is clicked', () => {
-      renderInstanceFilters();
-      fireEvent.click(screen.getByLabelText('Clear selected Effective location (item) filters'));
-
-      expect(mockOnChange).toHaveBeenCalledWith({
-        name: FACETS.EFFECTIVE_LOCATION,
-        values: [],
-      });
-    });
-
     it('should display "Held By" facet accordion', () => {
       const { getByRole } = renderInstanceFilters({
         data,

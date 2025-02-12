@@ -8,6 +8,7 @@ import {
   fireEvent,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../test/jest/__mock__';
@@ -290,6 +291,41 @@ describe('ItemView', () => {
         fireEvent.click(document.querySelector('[aria-label="Close "]'));
 
         expect(mockPush).toHaveBeenCalled();
+      });
+    });
+
+    describe('Version history component', () => {
+      let versionHistoryButton;
+
+      beforeEach(() => {
+        const { container } = renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+        versionHistoryButton = container.querySelector('#version-history-btn');
+      });
+
+      it('should render version history button', () => {
+        expect(versionHistoryButton).toBeInTheDocument();
+      });
+
+      describe('when click the button', () => {
+        it('should render version history pane', async () => {
+          await userEvent.click(versionHistoryButton);
+          expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
+        });
+      });
+
+      describe('when click the close button', () => {
+        it('should hide the pane', async () => {
+          await userEvent.click(versionHistoryButton);
+
+          const versionHistoryPane = await screen.findByRole('region', { name: /version history/i });
+          expect(versionHistoryPane).toBeInTheDocument();
+
+          const closeButton = await within(versionHistoryPane).findByRole('button', { name: /close/i });
+          await userEvent.click(closeButton);
+
+          expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();
+        });
       });
     });
   });
