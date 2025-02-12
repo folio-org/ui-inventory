@@ -155,6 +155,25 @@ const InstanceDetails = forwardRef(({
     setIsAllExpanded(isExpanded);
   };
 
+  const warningBanners = [
+    {
+      condition: !instance.deleted && instance.staffSuppress && !instance.discoverySuppress,
+      messageId: 'ui-inventory.warning.instance.staffSuppressed',
+    },
+    {
+      condition: !instance.deleted && instance.discoverySuppress && !instance.staffSuppress,
+      messageId: 'ui-inventory.warning.instance.suppressedFromDiscovery',
+    },
+    {
+      condition: !instance.deleted && instance.discoverySuppress && instance.staffSuppress,
+      messageId: 'ui-inventory.warning.instance.suppressedFromDiscoveryAndStaffSuppressed',
+    },
+    {
+      condition: instance.deleted && instance.discoverySuppress && instance.staffSuppress,
+      messageId: 'ui-inventory.warning.instance.setForDeletionAndSuppressedFromDiscoveryAndStaffSuppressed',
+    },
+  ];
+
   return (
     <>
       <Pane
@@ -179,18 +198,11 @@ const InstanceDetails = forwardRef(({
         <AccordionStatus ref={ref}>
           <Row>
             <Col xs={10}>
-              <MessageBanner show={Boolean(instance.staffSuppress && !instance.discoverySuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.staffSuppressed" />
-              </MessageBanner>
-              <MessageBanner show={Boolean(instance.discoverySuppress && !instance.staffSuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscovery" />
-              </MessageBanner>
-              <MessageBanner show={Boolean(instance.discoverySuppress && instance.staffSuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscoveryAndStaffSuppressed" />
-              </MessageBanner>
-              <MessageBanner show={Boolean(instance.deleted && instance.discoverySuppress && instance.staffSuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.setForDeletionAndSuppressedFromDiscoveryAndStaffSuppressed" />
-              </MessageBanner>
+              {warningBanners.map(({ condition, messageId }) => (
+                <MessageBanner key={messageId} show={Boolean(condition)} type="warning">
+                  <FormattedMessage id={messageId} />
+                </MessageBanner>
+              ))}
             </Col>
             <Col data-test-expand-all xs={2}>
               <ExpandAllButton onToggle={onToggle} />
