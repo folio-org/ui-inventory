@@ -161,6 +161,7 @@ describe('InstanceDetails', () => {
     const warningBanner = screen.getByText('Warning:', { exact: false });
 
     expect(warningBanner.textContent).toEqual('Warning: Instance is set for deletion, suppressed from discovery, and staff suppressed');
+    expect(screen.getByText('Set for deletion')).toBeInTheDocument();
   });
 
   it('expands and collapses the accordion sections', () => {
