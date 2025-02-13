@@ -75,7 +75,7 @@ describe('CardsPerVersionHistoryPageForm', () => {
 
         expect(mockOnSubmit).toHaveBeenCalledTimes(1);
         expect(mockOnSubmit.mock.calls[0][0]).toEqual(expect.objectContaining({
-          cardsPerPage: '50',
+          cardsPerPage: 50,
         }));
       });
     });

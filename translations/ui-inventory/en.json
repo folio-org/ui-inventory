@@ -879,6 +879,7 @@
   "settings.heading.versionHistory": "Version history",
   "settings.section.cardsPerPage": "Cards per page",
   "settings.versionHistory.versionHistoryCardsPerPage": "Cards to display per page on Version history",
+  "settings.versionHistory.versionHistoryCardsPerPage.loadError": "Failed to load Version history cards per page settings",
   "settings.section.displaySettings": "Display settings",
   "settings.displaySettings.defaultSort": "Default sort",
 
