@@ -19,42 +19,50 @@ const renderComponent = () => renderWithIntl(
   </MemoryRouter>, translationsProperties
 );
 
-describe('NumberGeneratorSettingsForm', () => {
-  it('should render the component with all elements', () => {
-    renderComponent();
+beforeEach(() => {
+  renderComponent();
+});
 
+describe('Rendering NumberGeneratorSettingsForm', () => {
+  it('should show headline and info text', () => {
     expect(screen.getByText('Number generator options')).toBeInTheDocument();
     expect(screen.getByText('Fields which are usually filled using a numeric sequence can use the number generator. When the generator is switched on the field can either be fixed to prevent manual update, or made fully editable. When switched off, the field must be filled manually.')).toBeInTheDocument();
+  });
 
+  it('should show all call number radio buttons', () => {
     expect(screen.getAllByText('Number generator off: The call number can be filled manually only.')).toHaveLength(2);
     expect(screen.getAllByText('Number generator on, editable: The call number can be filled using the generator and be edited, or filled manually.')).toHaveLength(2);
     expect(screen.getAllByText('Number generator on, fixed: The call number can be filled using the generator only.')).toHaveLength(2);
+  });
 
+  it('should show all barcode radio buttons', () => {
     expect(screen.getByText('Number generator off: The barcode can be filled manually only.')).toBeInTheDocument();
     expect(screen.getByText('Number generator on, editable: The barcode can be filled using the generator and be edited, or filled manually.')).toBeInTheDocument();
     expect(screen.getByText('Number generator on, fixed: The barcode can be filled using the generator only.')).toBeInTheDocument();
+  });
 
+  it('should show all accession number radio buttons', () => {
     expect(screen.getByText('Number generator off: The accession number can be filled manually only.')).toBeInTheDocument();
     expect(screen.getByText('Number generator on, editable: The accession number can be filled using the generator and be edited, or filled manually.')).toBeInTheDocument();
     expect(screen.getByText('Number generator on, fixed: The accession number can be filled using the generator only.')).toBeInTheDocument();
+  });
 
+  it('should show checkbox for using the same number', () => {
     expect(screen.getByText('Use the same generated number for accession number and call number')).toBeInTheDocument();
+  });
+
+  it('should show save and collaps all buttons', () => {
     expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
     expect(screen.getByRole('button', { name: 'Collapse all' })).toBeInTheDocument();
   });
+});
 
-  it('should disable useSharedNumber-checkbox and show warning if clicking callNumber or accessionNumber to use manually', async () => {
-    renderComponent();
-
+describe('Clicking manually use of callNumber or accessionNumber', () => {
+  it('should disable useSharedNumber-checkbox and show warning', async () => {
     const callNumberUseManually = document.getElementById('callNumberUseTextField');
     const callNumberUseBoth = document.getElementById('callNumberUseBoth');
     const accessionNumberUseManually = document.getElementById('accessionNumberUseTextField');
     const useSharedNumberCheckbox = document.getElementById('useSharedNumber');
-
-    expect(callNumberUseManually).toBeInTheDocument();
-    expect(callNumberUseBoth).toBeInTheDocument();
-    expect(accessionNumberUseManually).toBeInTheDocument();
-    expect(useSharedNumberCheckbox).toBeInTheDocument();
 
     await userEvent.click(callNumberUseManually);
     expect(useSharedNumberCheckbox).toHaveAttribute('disabled');
@@ -66,17 +74,13 @@ describe('NumberGeneratorSettingsForm', () => {
     expect(useSharedNumberCheckbox).toHaveAttribute('disabled');
     expect(screen.getByText('Warning: The checkbox has been disabled because the accession number and/or the call number have been set to manual completion.')).toBeInTheDocument();
   });
+});
 
-  it('should disable callNumber or accessionNumber to use manually if clicking useSharedNumber-checkbox', async () => {
-    renderComponent();
-
+describe('Clicking useSharedNumber-checkbox', () => {
+  it('should disable manually use of callNumber and accessionNumber', async () => {
     const callNumberUseManually = document.getElementById('callNumberUseTextField');
     const accessionNumberUseManually = document.getElementById('accessionNumberUseTextField');
     const useSharedNumberCheckbox = document.getElementById('useSharedNumber');
-
-    expect(callNumberUseManually).toBeInTheDocument();
-    expect(accessionNumberUseManually).toBeInTheDocument();
-    expect(useSharedNumberCheckbox).toBeInTheDocument();
 
     await userEvent.click(useSharedNumberCheckbox);
     expect(callNumberUseManually).toHaveAttribute('disabled');
