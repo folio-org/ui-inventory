@@ -207,6 +207,7 @@ class InstanceForm extends React.Component {
     history: PropTypes.object.isRequired,
     id: PropTypes.string,
     httpError: PropTypes.object,
+    form: PropTypes.object.isRequired,
   };
 
   static defaultProps = {
@@ -222,6 +223,7 @@ class InstanceForm extends React.Component {
 
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
+    this.state = { isInstanceSetForDeletion: false };
   }
 
   getPaneTitle() {
@@ -360,6 +362,26 @@ class InstanceForm extends React.Component {
 
     return blockedFields.includes(fieldName);
   };
+
+  onSetForDeletionFieldChange = () => {
+    const {
+      form: { batch, change },
+    } = this.props;
+
+    if (!this.state.isInstanceSetForDeletion) {
+      batch(() => {
+        change('deleted', true);
+        change('discoverySuppress', true);
+        change('staffSuppress', true);
+      });
+
+      this.setState({ isInstanceSetForDeletion: true });
+    } else {
+      change('deleted', false);
+
+      this.setState({ isInstanceSetForDeletion: false });
+    }
+  }
 
   render() {
     const {
@@ -512,12 +534,22 @@ class InstanceForm extends React.Component {
                       <Row>
                         <Col sm={3}>
                           <Field
+                            label={<FormattedMessage id="ui-inventory.setForDeletion" />}
+                            name="deleted"
+                            component={Checkbox}
+                            type="checkbox"
+                            disabled={this.isFieldBlocked('deleted')}
+                            onChange={() => this.onSetForDeletionFieldChange()}
+                          />
+                        </Col>
+                        <Col sm={3}>
+                          <Field
                             label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
                             name="discoverySuppress"
                             id="input_discovery_suppress"
                             component={Checkbox}
                             type="checkbox"
-                            disabled={this.isFieldBlocked('discoverySuppress')}
+                            disabled={this.isFieldBlocked('discoverySuppress') || this.state.isInstanceSetForDeletion}
                           />
                         </Col>
                         <Col sm={3}>
@@ -527,7 +559,7 @@ class InstanceForm extends React.Component {
                             id="input_staff_suppress"
                             component={Checkbox}
                             type="checkbox"
-                            disabled={this.isFieldBlocked('staffSuppress')}
+                            disabled={this.isFieldBlocked('staffSuppress') || this.state.isInstanceSetForDeletion}
                           />
                         </Col>
                         <Col sm={3}>
