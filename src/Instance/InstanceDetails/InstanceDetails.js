@@ -209,7 +209,7 @@ const InstanceDetails = forwardRef(({
             <Layout className="display-flex full flex-align-items-center justify-end">
               <Col xs={10}>
                 {warningBanners.map(({ condition, messageId }) => (
-                  <MessageBanner key={messageId} show={Boolean(condition)} type="warning">
+                  <MessageBanner marginTop0 key={messageId} show={Boolean(condition)} type="warning">
                     <FormattedMessage id={messageId} />
                   </MessageBanner>
                 ))}
