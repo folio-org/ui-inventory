@@ -57,7 +57,7 @@
       "browse": "1.5",
       "circulation": "9.0 10.0 11.0 12.0 13.0 14.0",
       "classification-types": "1.1",
-      "configuration": "2.0",
+      "settings": "1.0",
       "contributor-name-types": "1.2",
       "contributor-types": "2.0",
       "data-export": "5.0",
@@ -550,9 +550,9 @@
         "displayName": "Settings (Inventory): Edit fast add settings",
         "subPermissions": [
           "inventory-storage.instance-statuses.collection.get",
-          "configuration.entries.collection.get",
-          "configuration.entries.item.post",
-          "configuration.entries.item.put",
+          "mod-settings.entries.collection.get",
+          "mod-settings.entries.item.post",
+          "mod-settings.entries.item.put",
           "settings.inventory.enabled"
         ],
         "visible": true
@@ -561,7 +561,7 @@
         "permissionName": "ui-inventory.settings.hrid-handling",
         "displayName": "Settings (Inventory): Create, edit and delete HRID handling",
         "subPermissions": [
-          "configuration.entries.collection.get",
+          "mod-settings.entries.collection.get",
           "inventory-storage.hrid-settings.item.get",
           "inventory-storage.hrid-settings.item.put",
           "settings.inventory.enabled",
@@ -583,7 +583,7 @@
           "circulation.loans.collection.get",
           "circulation.loans.collection.get",
           "circulation.requests.collection.get",
-          "configuration.entries.collection.get",
+          "mod-settings.entries.collection.get",
           "inventory.config.instances.blocked-fields.get",
           "inventory.instances.collection.get",
           "inventory.instances.item.get",
@@ -873,7 +873,7 @@
           "inventory-storage.item-note-types.collection.get",
           "inventory-storage.item-note-types.item.get",
           "inventory-storage.hrid-settings.item.get",
-          "configuration.entries.collection.get"
+          "mod-settings.entries.collection.get"
         ],
         "visible": true
       },
