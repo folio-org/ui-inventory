@@ -96,14 +96,9 @@ const InventorySettings = (props) => {
             component: DisplaySettings,
             perm: 'ui-inventory.settings.displaySettings',
           },
-        ],
-      },
-      {
-        label: <FormattedMessage id="ui-inventory.settings.heading.versionHistory" />,
-        pages: [
           {
             route: 'cardsPerPage',
-            label: <FormattedMessage id="ui-inventory.settings.section.cardsPerPage" />,
+            label: <FormattedMessage id="ui-inventory.settings.section.versionHistory" />,
             component: CardsPerVersionHistoryPage,
             perm: 'ui-inventory.settings.displaySettings',
           },
