@@ -226,6 +226,14 @@ class InstanceForm extends React.Component {
     this.state = { isInstanceSetForDeletion: false };
   }
 
+  componentDidMount() {
+    const { initialValues } = this.props;
+
+    if (initialValues?.deleted) {
+      this.setState({ isInstanceSetForDeletion: true });
+    }
+  }
+
   getPaneTitle() {
     const {
       initialValues,

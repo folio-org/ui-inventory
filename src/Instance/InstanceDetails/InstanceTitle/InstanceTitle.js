@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import {
   AppIcon,
@@ -12,6 +13,8 @@ import {
   Headline,
 } from '@folio/stripes/components';
 
+import css from './InstanceTitle.css';
+
 const InstanceTitle = ({
   instance = {},
   instanceTypes = [],
@@ -20,13 +23,17 @@ const InstanceTitle = ({
     return instanceTypes.find(instanceType => instanceType.id === instance.instanceTypeId)?.name;
   }, [instance, instanceTypes]);
 
+  const layoutClassNames = classNames(
+    'display-flex flex-align-items-center padding-bottom-gutter flex-wrap--wrap',
+    css.hasBorderTop,
+    css.hasPaddings,
+  );
+
   return (
     <>
-      <hr />
-
       <Row>
         <Col xs={12}>
-          <Layout className="display-flex flex-align-items-center padding-bottom-gutter flex-wrap--wrap">
+          <Layout className={layoutClassNames}>
             <Layout className="margin-end-gutter display-flex flex-align-items-center">
               <AppIcon
                 app="inventory"

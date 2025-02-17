@@ -8,6 +8,7 @@ import React, {
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import {
   AppIcon,
@@ -57,6 +58,8 @@ import {
   isInstanceShadowCopy,
   isUserInConsortiumMode,
 } from '../../utils';
+
+import css from './InstanceDetails.css';
 
 const accordions = {
   administrative: 'acc01',
@@ -183,6 +186,11 @@ const InstanceDetails = forwardRef(({
     },
   ];
 
+  const warningBannersClassNames = classNames(
+    'display-flex full flex-align-items-center justify-end',
+    css.hasMarginBottom,
+  );
+
   return (
     <>
       <Pane
@@ -206,7 +214,7 @@ const InstanceDetails = forwardRef(({
 
         <AccordionStatus ref={ref}>
           <Row>
-            <Layout className="display-flex full flex-align-items-center justify-end">
+            <Layout className={warningBannersClassNames}>
               <Col xs={10}>
                 {warningBanners.map(({ condition, messageId }) => (
                   <MessageBanner marginTop0 key={messageId} show={Boolean(condition)} type="warning">
