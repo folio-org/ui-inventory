@@ -177,9 +177,9 @@ class ViewInstance extends React.Component {
     configs: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries',
+      path: 'settings/entries',
       params: {
-        query: '(module==SETTINGS and configName==TLR)',
+        query: '(scope==settings and key==TLR)',
       },
       tenant: '!{tenantId}',
       throwErrors: false,

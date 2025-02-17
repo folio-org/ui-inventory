@@ -123,7 +123,7 @@ class ViewHoldingsRecord extends React.Component {
     tagSettings: {
       type: 'okapi',
       records: 'configs',
-      path: 'configurations/entries?query=(module==TAGS and configName==tags_enabled)',
+      path: 'settings/entries?query=(scope==tags and key==tags_enabled)',
     },
     marcRecordId: {},
     marcRecord: {
