@@ -165,7 +165,7 @@ describe('getBrowseResultsFormatter', () => {
         const query = queryString.stringify({
           selectedBrowseResult: true,
           qindex: queryIndexes.QUERY_SEARCH,
-          query: 'itemNormalizedCallNumbers="PRE CALL SUF" and (item.effectiveCallNumberComponents.typeId=="dewey-id" or item.effectiveCallNumberComponents.typeId=="lc-id")',
+          query: 'itemFullCallNumbers="PRE CALL SUF" and (item.effectiveCallNumberComponents.typeId=="dewey-id" or item.effectiveCallNumberComponents.typeId=="lc-id")',
         });
 
         expect(getByText('PRE CALL SUF').href).toContain(`${INVENTORY_ROUTE}?${query}`);
