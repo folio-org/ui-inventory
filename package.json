@@ -994,7 +994,7 @@
           "audit.config.groups.collection.get",
           "audit.config.groups.settings.audit.inventory.collection.get",
           "audit.config.groups.settings.item.put",
-          "audit.config.groups.settings.audit.inventory.item.put"
+          "audit.config.groups.settings.audit.inventory.records.page.size.item.put"
         ],
         "visible": true
       }
