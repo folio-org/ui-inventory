@@ -224,15 +224,7 @@ class InstanceForm extends React.Component {
 
     this.cViewMetaData = this.props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
-    this.state = { isInstanceSetForDeletion: false };
-  }
-
-  componentDidMount() {
-    const { initialValues } = this.props;
-
-    if (initialValues?.deleted) {
-      this.setState({ isInstanceSetForDeletion: true });
-    }
+    this.state = { isInstanceSetForDeletion: Boolean(props.initialValues?.deleted) };
   }
 
   getPaneTitle() {

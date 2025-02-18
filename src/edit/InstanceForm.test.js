@@ -137,7 +137,7 @@ const renderInstanceForm = (props = {}) => renderWithIntl(
 
 const checkFieldInTheDocument = ({ role, fieldName }) => {
   expect(screen.getByRole(role, { name: fieldName })).toBeInTheDocument();
-}
+};
 
 describe('InstanceForm', () => {
   afterEach(() => {
@@ -243,13 +243,13 @@ describe('InstanceForm', () => {
         { role: 'checkbox', fieldName: /suppress from discovery/i },
         { role: 'checkbox', fieldName: /staff suppress/i },
         { role: 'checkbox', fieldName: /previously held/i },
-        { role: 'textbox', fieldName: /instance hrid/i  },
-        { role: 'textbox', fieldName: "Source"  },
-        { role: 'textbox', fieldName: /cataloged date/i  },
-        { role: 'combobox', fieldName: /instance status term/i  },
-        { role: 'combobox', fieldName: /mode of issuance/i  },
-        { role: 'button', fieldName: /add statistical code/i  },
-        { role: 'button', fieldName: /add administrative note/i  },
+        { role: 'textbox', fieldName: /instance hrid/i },
+        { role: 'textbox', fieldName: 'Source' },
+        { role: 'textbox', fieldName: /cataloged date/i },
+        { role: 'combobox', fieldName: /instance status term/i },
+        { role: 'combobox', fieldName: /mode of issuance/i },
+        { role: 'button', fieldName: /add statistical code/i },
+        { role: 'button', fieldName: /add administrative note/i },
       ].forEach(checkFieldInTheDocument);
     });
 
