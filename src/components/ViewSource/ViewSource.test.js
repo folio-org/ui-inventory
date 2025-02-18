@@ -230,4 +230,18 @@ describe('ViewSource', () => {
       });
     });
   });
+
+  describe('when clicking on the version history icon', () => {
+    beforeEach(async () => {
+      await act(async () => {
+        await renderWithIntl(getViewSource(), []);
+      });
+    });
+
+    it('should open the version history pane', () => {
+      fireEvent.click(screen.getByLabelText('stripes-acq-components.versionHistory.pane.header'));
+
+      expect(screen.getByText('stripes-acq-components.versionHistory.pane.sub')).toBeInTheDocument();
+    });
+  });
 });
