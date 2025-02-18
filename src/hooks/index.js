@@ -18,3 +18,4 @@ export * from './useQuickExport';
 export * from '@folio/stripes-inventory-components/lib/queries/useInstanceDateTypes';
 export * from './useCallNumberTypesQuery';
 export * from './useAuditSettings';
+export * from './useCallNumberBrowseConfig';

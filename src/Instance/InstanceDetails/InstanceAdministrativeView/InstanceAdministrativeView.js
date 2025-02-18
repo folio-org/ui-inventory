@@ -92,14 +92,20 @@ const InstanceAdministrativeView = ({
       {instance.metadata && <ViewMetaData metadata={instance.metadata} />}
       <Row>
         {
+          instance.deleted &&
+          <Col xs={3}>
+            <WarningMessage id="ui-inventory.setForDeletion" />
+          </Col>
+        }
+        {
           instance.discoverySuppress &&
-          <Col xs={5}>
+          <Col xs={3}>
             <WarningMessage id="ui-inventory.discoverySuppressed" />
           </Col>
         }
         {
           instance.staffSuppress &&
-          <Col xs={4}>
+          <Col xs={3}>
             <WarningMessage id="ui-inventory.staffSuppressed" />
           </Col>
         }
@@ -111,7 +117,7 @@ const InstanceAdministrativeView = ({
         }
       </Row>
 
-      {(instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br />}
+      {(instance.deleted || instance.discoverySuppress || instance.staffSuppress || instance.previouslyHeld) && <br />}
 
       <Row>
         <Col xs={3}>
