@@ -105,6 +105,10 @@ const mockStripesCore = {
 
   useNamespace: () => ['@folio/inventory'],
 
+  useCallout: jest.fn().mockReturnValue({
+    sendCallout: jest.fn(),
+  }),
+
   TitleManager: ({ children }) => <>{children}</>,
 
   checkIfUserInMemberTenant: jest.fn(() => true),
