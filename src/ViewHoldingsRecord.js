@@ -33,6 +33,8 @@ import {
   collapseAllSections,
   expandAllSections,
   Callout,
+  PaneMenu,
+  Paneset,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -47,7 +49,10 @@ import {
   checkIfUserInCentralTenant,
   checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
-import { FindLocation } from '@folio/stripes-acq-components';
+import {
+  FindLocation,
+  VersionHistoryButton,
+} from '@folio/stripes-acq-components';
 
 import {
   areAllFieldsEmpty,
@@ -76,6 +81,7 @@ import {
 import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 import HoldingBoundWith from './Holding/ViewHolding/HoldingBoundWith';
+import { VersionHistory } from './views/VersionHistory';
 
 import css from './View.css';
 
@@ -152,6 +158,7 @@ class ViewHoldingsRecord extends React.Component {
       isUpdateOwnershipModalOpen: false,
       updateOwnershipData: {},
       tenants: [],
+      isVersionHistoryOpen: false,
     };
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
@@ -369,6 +376,10 @@ class ViewHoldingsRecord extends React.Component {
 
   openLinkedOrderLineModal = () => {
     this.setState({ hasLinkedLocalOrderLineModal: true });
+  }
+
+  openVersionHistory = () => {
+    this.setState({ isVersionHistoryOpen: true });
   }
 
   callUpdateOwnership = () => {
@@ -932,51 +943,57 @@ class ViewHoldingsRecord extends React.Component {
                 isWithinScope={checkScope}
                 scope={document.body}
               >
-                <Pane
-                  id="ui-inventory.holdingsRecordView"
-                  defaultWidth={this.props.paneWidth}
-                  appIcon={<AppIcon app="inventory" iconKey="holdings" />}
-                  paneTitle={intl.formatMessage({
-                    id: 'ui-inventory.holdingsPaneTitle',
-                  }, {
-                    location:
+                <Paneset isRoot>
+                  <Pane
+                    id="view-holdings-record-pane"
+                    defaultWidth="fill"
+                    appIcon={<AppIcon app="inventory" iconKey="holdings" />}
+                    paneTitle={intl.formatMessage({
+                      id: 'ui-inventory.holdingsPaneTitle',
+                    }, {
+                      location:
                       holdingsEffectiveLocation?.isActive ?
                         holdingsEffectiveLocation?.name :
                         intl.formatMessage(
                           { id: 'ui-inventory.inactive.paneTitle' },
                           { location: holdingsEffectiveLocation?.name }
                         ),
-                    callNumber: holdingsRecord?.callNumber,
-                  })}
-                  paneSub={intl.formatMessage({
-                    id: 'ui-inventory.instanceRecordSubtitle',
-                  }, {
-                    hrid: holdingsRecord?.hrid,
-                    updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
-                  })}
-                  dismissible
-                  onClose={this.onClose}
-                  actionMenu={this.getPaneHeaderActionMenu}
-                >
-                  <Row center="xs">
-                    <Col sm={6}>
-                      <FormattedMessage id="ui-inventory.instance" />
-                      <Link to={`/inventory/view/${instance?.id}`}>
-                        {instance?.title}
-                      </Link>
-                      {(instance?.publication && instance?.publication.length > 0) &&
-                      <span>
-                        <em>. </em>
-                        <em>
-                          {instance?.publication[0].publisher}
-                          {instance?.publication[0].dateOfPublication ? `, ${instance?.publication[0].dateOfPublication}` : ''}
-                        </em>
-                      </span>
+                      callNumber: holdingsRecord?.callNumber,
+                    })}
+                    paneSub={intl.formatMessage({
+                      id: 'ui-inventory.instanceRecordSubtitle',
+                    }, {
+                      hrid: holdingsRecord?.hrid,
+                      updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
+                    })}
+                    dismissible
+                    onClose={this.onClose}
+                    actionMenu={this.getPaneHeaderActionMenu}
+                    lastMenu={(
+                      <PaneMenu>
+                        <VersionHistoryButton onClick={this.openVersionHistory} />
+                      </PaneMenu>
+                    )}
+                  >
+                    <Row center="xs">
+                      <Col sm={6}>
+                        <FormattedMessage id="ui-inventory.instance" />
+                        <Link to={`/inventory/view/${instance?.id}`}>
+                          {instance?.title}
+                        </Link>
+                        {(instance?.publication && instance?.publication.length > 0) &&
+                        <span>
+                          <em>. </em>
+                          <em>
+                            {instance?.publication[0].publisher}
+                            {instance?.publication[0].dateOfPublication ? `, ${instance?.publication[0].dateOfPublication}` : ''}
+                          </em>
+                        </span>
                         }
-                    </Col>
-                  </Row>
-                  <hr />
-                  {
+                      </Col>
+                    </Row>
+                    <hr />
+                    {
                     itemCount === 0 &&
                     <>
                       <Row>
@@ -993,141 +1010,141 @@ class ViewHoldingsRecord extends React.Component {
                       <br />
                     </>
                   }
-                  <AccordionStatus ref={this.accordionStatusRef}>
-                    <Row className={css.rowMarginBottom}>
-                      <Col xs={2}>
-                        {
+                    <AccordionStatus ref={this.accordionStatusRef}>
+                      <Row className={css.rowMarginBottom}>
+                        <Col xs={2}>
+                          {
                           itemCount === 0 && effectiveLocationDisplay
                         }
-                      </Col>
-                      <Col xs={8}>
-                        <Row center="xs" middle="xs">
-                          <Col>
-                            <MessageBanner show={Boolean(holdingsRecord.discoverySuppress)} type="warning">
-                              <FormattedMessage id="ui-inventory.warning.holdingsRecord.suppressedFromDiscovery" />
-                            </MessageBanner>
-                          </Col>
-                        </Row>
-                      </Col>
-                      <Col data-test-expand-all xs={2}>
-                        <Row end="xs">
-                          <Col>
-                            <ExpandAllButton />
-                          </Col>
-                        </Row>
-                      </Col>
-                    </Row>
-                    <AccordionSet initialStatus={initialAccordionsState}>
-                      <Accordion
-                        id="acc01"
-                        label={<FormattedMessage id="ui-inventory.administrativeData" />}
-                      >
-                        <this.cViewMetaData metadata={holdingsRecord.metadata} />
-                        <Row>
-                          <Col xs={12}>
-                            {holdingsRecord.discoverySuppress && <WarningMessage id="ui-inventory.discoverySuppressed" />}
-                          </Col>
-                        </Row>
-                        <br />
-                        <Row>
-                          <Col
-                            smOffset={0}
-                            sm={2}
-                          >
-                            <KeyValue label={<FormattedMessage id="ui-inventory.holdingsHrid" />}>
-                              {checkIfElementIsEmpty(administrativeData.holdingsHrid)}
-                              {Boolean(administrativeData.holdingsHrid) && <ClipCopy text={administrativeData.holdingsHrid} />}
-                            </KeyValue>
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.holdingsSourceLabel" />}
-                              value={checkIfElementIsEmpty(holdingsSourceName)}
-                            />
-                          </Col>
-                          <Col>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.formerHoldingsId" />}
-                              value={checkIfElementIsEmpty(formerHoldingsIdValue)}
-                            />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.holdingsType" />}
-                              value={checkIfElementIsEmpty(administrativeData.holdingsType)}
-                            />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col xs={12}>
-                            <MultiColumnList
-                              id="list-statistical-codes"
-                              contentData={statisticalCodeIdsContent}
-                              visibleColumns={['Statistical code type', 'Statistical code name']}
-                              columnMapping={{
-                                'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
-                                'Statistical code name': intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
-                              }}
-                              columnWidths={{ 'Statistical code type': '16%' }}
-                              formatter={{
-                                'Statistical code type':
+                        </Col>
+                        <Col xs={8}>
+                          <Row center="xs" middle="xs">
+                            <Col>
+                              <MessageBanner show={Boolean(holdingsRecord.discoverySuppress)} type="warning">
+                                <FormattedMessage id="ui-inventory.warning.holdingsRecord.suppressedFromDiscovery" />
+                              </MessageBanner>
+                            </Col>
+                          </Row>
+                        </Col>
+                        <Col data-test-expand-all xs={2}>
+                          <Row end="xs">
+                            <Col>
+                              <ExpandAllButton />
+                            </Col>
+                          </Row>
+                        </Col>
+                      </Row>
+                      <AccordionSet initialStatus={initialAccordionsState}>
+                        <Accordion
+                          id="acc01"
+                          label={<FormattedMessage id="ui-inventory.administrativeData" />}
+                        >
+                          <this.cViewMetaData metadata={holdingsRecord.metadata} />
+                          <Row>
+                            <Col xs={12}>
+                              {holdingsRecord.discoverySuppress && <WarningMessage id="ui-inventory.discoverySuppressed" />}
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                            <Col
+                              smOffset={0}
+                              sm={2}
+                            >
+                              <KeyValue label={<FormattedMessage id="ui-inventory.holdingsHrid" />}>
+                                {checkIfElementIsEmpty(administrativeData.holdingsHrid)}
+                                {Boolean(administrativeData.holdingsHrid) && <ClipCopy text={administrativeData.holdingsHrid} />}
+                              </KeyValue>
+                            </Col>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.holdingsSourceLabel" />}
+                                value={checkIfElementIsEmpty(holdingsSourceName)}
+                              />
+                            </Col>
+                            <Col>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.formerHoldingsId" />}
+                                value={checkIfElementIsEmpty(formerHoldingsIdValue)}
+                              />
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.holdingsType" />}
+                                value={checkIfElementIsEmpty(administrativeData.holdingsType)}
+                              />
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col xs={12}>
+                              <MultiColumnList
+                                id="list-statistical-codes"
+                                contentData={statisticalCodeIdsContent}
+                                visibleColumns={['Statistical code type', 'Statistical code name']}
+                                columnMapping={{
+                                  'Statistical code type': intl.formatMessage({ id: 'ui-inventory.statisticalCodeType' }),
+                                  'Statistical code name': intl.formatMessage({ id: 'ui-inventory.statisticalCodeName' }),
+                                }}
+                                columnWidths={{ 'Statistical code type': '16%' }}
+                                formatter={{
+                                  'Statistical code type':
                                     x => this.refLookup(referenceTables.statisticalCodeTypes,
                                       this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).statisticalCodeTypeId).name || noValue,
-                                'Statistical code name':
+                                  'Statistical code name':
                                     x => this.refLookup(referenceTables.statisticalCodes, get(x, ['codeId'])).name || noValue,
-                              }}
-                              ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
-                              containerRef={ref => { this.resultsList = ref; }}
-                            />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col xs={12}>
-                            <AdministrativeNoteList administrativeNotes={holdingsRecord.administrativeNotes} />
-                          </Col>
-                        </Row>
-                      </Accordion>
+                                }}
+                                ariaLabel={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
+                                containerRef={ref => { this.resultsList = ref; }}
+                              />
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col xs={12}>
+                              <AdministrativeNoteList administrativeNotes={holdingsRecord.administrativeNotes} />
+                            </Col>
+                          </Row>
+                        </Accordion>
 
-                      <Accordion
-                        id="acc02"
-                        label={<FormattedMessage id="ui-inventory.location" />}
-                      >
-                        <Row>
-                          <Col smOffset={0} sm={4}>
-                            <strong>
-                              <FormattedMessage id="ui-inventory.holdingsLocation" />
-                            </strong>
-                          </Col>
-                        </Row>
-                        <br />
-                        <Row>
-                          <Col
-                            smOffset={0}
-                            sm={4}
-                          >
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.permanent" />}
-                              value={checkIfElementIsEmpty(locationAccordion.permanent?.name)}
-                              subValue={(!locationAccordion.permanent?.isActive) &&
+                        <Accordion
+                          id="acc02"
+                          label={<FormattedMessage id="ui-inventory.location" />}
+                        >
+                          <Row>
+                            <Col smOffset={0} sm={4}>
+                              <strong>
+                                <FormattedMessage id="ui-inventory.holdingsLocation" />
+                              </strong>
+                            </Col>
+                          </Row>
+                          <br />
+                          <Row>
+                            <Col
+                              smOffset={0}
+                              sm={4}
+                            >
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.permanent" />}
+                                value={checkIfElementIsEmpty(locationAccordion.permanent?.name)}
+                                subValue={(!locationAccordion.permanent?.isActive) &&
                                 <FormattedMessage id="ui-inventory.inactive" />
                               }
-                            />
-                          </Col>
-                          <Col sm={4}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.temporary" />}
-                              value={checkIfElementIsEmpty(locationAccordion.temporary?.name)}
-                              subValue={(locationAccordion.temporary &&
+                              />
+                            </Col>
+                            <Col sm={4}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.temporary" />}
+                                value={checkIfElementIsEmpty(locationAccordion.temporary?.name)}
+                                subValue={(locationAccordion.temporary &&
                                 !locationAccordion.temporary?.isActive) &&
                                 <FormattedMessage id="ui-inventory.inactive" />
                               }
-                              data-test-id="temporary-location"
-                            />
-                          </Col>
-                        </Row>
-                        {
+                                data-test-id="temporary-location"
+                              />
+                            </Col>
+                          </Row>
+                          {
                           itemCount === 0 &&
                           <Row>
                             <Col sm={4}>
@@ -1135,184 +1152,190 @@ class ViewHoldingsRecord extends React.Component {
                             </Col>
                           </Row>
                         }
-                        <Row>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
-                              value={checkIfElementIsEmpty(locationAccordion.shelvingOrder)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.shelvingTitle" />}
-                              value={checkIfElementIsEmpty(locationAccordion.shelvingTitle)}
-                            />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col
-                            smOffset={0}
-                            sm={4}
-                          >
-                            <strong>
-                              <FormattedMessage id="ui-inventory.holdingsCallNumber" />
-                            </strong>
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.copyNumber" />}
-                              value={checkIfElementIsEmpty(locationAccordion.copyNumber)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.callNumberType" />}
-                              value={checkIfElementIsEmpty(locationAccordion.callNumberType)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
-                              value={checkIfElementIsEmpty(locationAccordion.callNumberPrefix)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.callNumber" />}
-                              value={checkIfElementIsEmpty(locationAccordion.callNumber)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
-                              value={checkIfElementIsEmpty(locationAccordion.callNumberSuffix)}
-                            />
-                          </Col>
-                        </Row>
-                      </Accordion>
-
-                      <Accordion
-                        id="acc03"
-                        label={<FormattedMessage id="ui-inventory.holdingsDetails" />}
-                      >
-                        <KeyValue
-                          label={<FormattedMessage id="ui-inventory.numberOfItems" />}
-                          value={checkIfElementIsEmpty(holdingsDetails.numberOfItems)}
-                        />
-                        {holdingsDetailsTables(intl).map(item => (
-                          <Row key={item.id}>
-                            <MultiColumnList
-                              id={item.id}
-                              contentData={item.contentData}
-                              visibleColumns={item.visibleColumns}
-                              columnMapping={item.columnMapping}
-                              columnWidths={item.columnWidths}
-                              formatter={item.formatter}
-                              ariaLabel={item.ariaLabel}
-                              containerRef={ref => { this.resultsList = ref; }}
-                            />
+                          <Row>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
+                                value={checkIfElementIsEmpty(locationAccordion.shelvingOrder)}
+                              />
+                            </Col>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.shelvingTitle" />}
+                                value={checkIfElementIsEmpty(locationAccordion.shelvingTitle)}
+                              />
+                            </Col>
                           </Row>
-                        ))}
-                        <Row>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.illPolicy" />}
-                              value={checkIfElementIsEmpty(holdingsDetails.illPolicy)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.digitizationPolicy" />}
-                              value={checkIfElementIsEmpty(holdingsDetails.digitizationPolicy)}
-                            />
-                          </Col>
-                          <Col sm={2}>
-                            <KeyValue
-                              label={<FormattedMessage id="ui-inventory.retentionPolicy" />}
-                              value={checkIfElementIsEmpty(holdingsDetails.retentionPolicy)}
-                            />
-                          </Col>
-                        </Row>
-                      </Accordion>
+                          <Row>
+                            <Col
+                              smOffset={0}
+                              sm={4}
+                            >
+                              <strong>
+                                <FormattedMessage id="ui-inventory.holdingsCallNumber" />
+                              </strong>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.copyNumber" />}
+                                value={checkIfElementIsEmpty(locationAccordion.copyNumber)}
+                              />
+                            </Col>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.callNumberType" />}
+                                value={checkIfElementIsEmpty(locationAccordion.callNumberType)}
+                              />
+                            </Col>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
+                                value={checkIfElementIsEmpty(locationAccordion.callNumberPrefix)}
+                              />
+                            </Col>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.callNumber" />}
+                                value={checkIfElementIsEmpty(locationAccordion.callNumber)}
+                              />
+                            </Col>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
+                                value={checkIfElementIsEmpty(locationAccordion.callNumberSuffix)}
+                              />
+                            </Col>
+                          </Row>
+                        </Accordion>
 
-                      {tagsEnabled && (
+                        <Accordion
+                          id="acc03"
+                          label={<FormattedMessage id="ui-inventory.holdingsDetails" />}
+                        >
+                          <KeyValue
+                            label={<FormattedMessage id="ui-inventory.numberOfItems" />}
+                            value={checkIfElementIsEmpty(holdingsDetails.numberOfItems)}
+                          />
+                          {holdingsDetailsTables(intl).map(item => (
+                            <Row key={item.id}>
+                              <MultiColumnList
+                                id={item.id}
+                                contentData={item.contentData}
+                                visibleColumns={item.visibleColumns}
+                                columnMapping={item.columnMapping}
+                                columnWidths={item.columnWidths}
+                                formatter={item.formatter}
+                                ariaLabel={item.ariaLabel}
+                                containerRef={ref => { this.resultsList = ref; }}
+                              />
+                            </Row>
+                          ))}
+                          <Row>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.illPolicy" />}
+                                value={checkIfElementIsEmpty(holdingsDetails.illPolicy)}
+                              />
+                            </Col>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.digitizationPolicy" />}
+                                value={checkIfElementIsEmpty(holdingsDetails.digitizationPolicy)}
+                              />
+                            </Col>
+                            <Col sm={2}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.retentionPolicy" />}
+                                value={checkIfElementIsEmpty(holdingsDetails.retentionPolicy)}
+                              />
+                            </Col>
+                          </Row>
+                        </Accordion>
+
+                        {tagsEnabled && (
                         <TagsAccordion
                           link={`holdings-storage/holdings/${holdingsRecord.id}`}
                           entityTagsPath="tags"
                           hasOptimisticLocking
                         />
-                      )}
+                        )}
 
-                      <Accordion
-                        id="acc04"
-                        label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
-                      >
-                        {layoutNotes(holdingsNotes)}
-                      </Accordion>
+                        <Accordion
+                          id="acc04"
+                          label={<FormattedMessage id="ui-inventory.holdingsNotes" />}
+                        >
+                          {layoutNotes(holdingsNotes)}
+                        </Accordion>
 
-                      <Accordion
-                        id="acc05"
-                        label={<FormattedMessage id="ui-inventory.electronicAccess" />}
-                      >
-                        <MultiColumnList
-                          id="holding-list-electronic-access"
-                          contentData={checkIfArrayIsEmpty(electronicAccess)}
-                          visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
-                          columnMapping={{
-                            'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
-                            'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
-                            'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
-                            'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
-                            'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
-                          }}
-                          columnWidths={{
-                            'URL relationship': '16%',
-                            'URI': '16%',
-                            'Link text': '16%',
-                            'Materials specified': '16%',
-                            'URL public note': '32%',
-                          }}
-                          formatter={{
-                            'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name || noValue,
-                            'URI': x => {
-                              const uri = x?.uri;
+                        <Accordion
+                          id="acc05"
+                          label={<FormattedMessage id="ui-inventory.electronicAccess" />}
+                        >
+                          <MultiColumnList
+                            id="holding-list-electronic-access"
+                            contentData={checkIfArrayIsEmpty(electronicAccess)}
+                            visibleColumns={['URL relationship', 'URI', 'Link text', 'Materials specified', 'URL public note']}
+                            columnMapping={{
+                              'URL relationship': intl.formatMessage({ id: 'ui-inventory.URLrelationship' }),
+                              'URI': intl.formatMessage({ id: 'ui-inventory.uri' }),
+                              'Link text': intl.formatMessage({ id: 'ui-inventory.linkText' }),
+                              'Materials specified': intl.formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+                              'URL public note': intl.formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+                            }}
+                            columnWidths={{
+                              'URL relationship': '16%',
+                              'URI': '16%',
+                              'Link text': '16%',
+                              'Materials specified': '16%',
+                              'URL public note': '32%',
+                            }}
+                            formatter={{
+                              'URL relationship': x => this.refLookup(referenceTables.electronicAccessRelationships, get(x, ['relationshipId'])).name || noValue,
+                              'URI': x => {
+                                const uri = x?.uri;
 
-                              return uri
-                                ? (
-                                  <a
-                                    href={uri}
-                                    rel="noreferrer noopener"
-                                    target="_blank"
-                                    style={wrappingCell}
-                                  >
-                                    {uri}
-                                  </a>
-                                )
-                                : noValue;
-                            },
-                            'Link text': x => get(x, ['linkText']) || noValue,
-                            'Materials specified': x => get(x, ['materialsSpecification']) || noValue,
-                            'URL public note': x => get(x, ['publicNote']) || noValue,
-                          }}
-                          ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
-                          containerRef={ref => { this.resultsList = ref; }}
+                                return uri
+                                  ? (
+                                    <a
+                                      href={uri}
+                                      rel="noreferrer noopener"
+                                      target="_blank"
+                                      style={wrappingCell}
+                                    >
+                                      {uri}
+                                    </a>
+                                  )
+                                  : noValue;
+                              },
+                              'Link text': x => get(x, ['linkText']) || noValue,
+                              'Materials specified': x => get(x, ['materialsSpecification']) || noValue,
+                              'URL public note': x => get(x, ['publicNote']) || noValue,
+                            }}
+                            ariaLabel={intl.formatMessage({ id: 'ui-inventory.electronicAccess' })}
+                            containerRef={ref => { this.resultsList = ref; }}
+                          />
+                        </Accordion>
+
+                        <HoldingAcquisitions
+                          holding={holdingsRecord}
+                          withSummary={this.props.stripes.hasInterface('orders.holding-summary')}
                         />
-                      </Accordion>
 
-                      <HoldingAcquisitions
-                        holding={holdingsRecord}
-                        withSummary={this.props.stripes.hasInterface('orders.holding-summary')}
-                      />
+                        <HoldingReceivingHistory holding={holdingsRecord} />
 
-                      <HoldingReceivingHistory holding={holdingsRecord} />
+                        <HoldingBoundWith boundWithParts={boundWithParts.records} />
 
-                      <HoldingBoundWith boundWithParts={boundWithParts.records} />
-
-                    </AccordionSet>
-                  </AccordionStatus>
-                </Pane>
+                      </AccordionSet>
+                    </AccordionStatus>
+                  </Pane>
+                  {this.state.isVersionHistoryOpen && (
+                    <VersionHistory
+                      onClose={() => this.setState({ isVersionHistoryOpen: false })}
+                    />
+                  )}
+                </Paneset>
               </HasCommand>
             </div>
           </div>
@@ -1357,7 +1380,6 @@ ViewHoldingsRecord.propTypes = {
   history: PropTypes.object.isRequired,
   id: PropTypes.string.isRequired,
   holdingsrecordid: PropTypes.string.isRequired,
-  paneWidth: PropTypes.string,
   referenceTables: PropTypes.object.isRequired,
   mutator: PropTypes.shape({
     instances1: PropTypes.shape({

@@ -47,6 +47,7 @@ import SubjectTypesSettings from '../SubjectTypesSettings';
 import DisplaySettings from '../DisplaySettings';
 import CardsPerVersionHistoryPage from '../CardsPerVersionHistoryPage';
 import CallNumberBrowseSettings from '../CallNumberBrowseSettings';
+import NumberGeneratorSettings from '../NumberGeneratorSettings';
 import {
   flattenCentralTenantPermissions,
   isUserInConsortiumMode,
@@ -99,6 +100,17 @@ const InventorySettings = (props) => {
           {
             route: 'cardsPerPage',
             label: <FormattedMessage id="ui-inventory.settings.section.versionHistory" />,
+            component: CardsPerVersionHistoryPage,
+            perm: 'ui-inventory.settings.displaySettings',
+          },
+        ],
+      },
+      {
+        label: <FormattedMessage id="ui-inventory.settings.heading.versionHistory" />,
+        pages: [
+          {
+            route: 'cardsPerPage',
+            label: <FormattedMessage id="ui-inventory.settings.section.cardsPerPage" />,
             component: CardsPerVersionHistoryPage,
             perm: 'ui-inventory.settings.displaySettings',
           },
@@ -288,6 +300,12 @@ const InventorySettings = (props) => {
             label: <FormattedMessage id="ui-inventory.callNumberTypes" />,
             component: CallNumberTypes,
             perm: addPerm('ui-inventory.settings.call-number-types'),
+          },
+          {
+            component: NumberGeneratorSettings,
+            label: <FormattedMessage id="ui-inventory.numberGenerator.options" />,
+            route: 'numberGeneratorOptions',
+            perm: 'ui-inventory.settings.manage-number-generator-options',
           },
         ]
       },

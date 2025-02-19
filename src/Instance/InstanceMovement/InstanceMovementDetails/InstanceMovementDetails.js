@@ -56,6 +56,7 @@ const InstanceMovementDetails = ({
       onClose={closeInstance}
       actionMenu={getActionMenu}
       data-test-instance-movement-details={instance.id}
+      isShared={instance.shared}
       id={id}
     >
       <Droppable
