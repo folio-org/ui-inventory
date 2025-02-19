@@ -32,6 +32,7 @@ import {
   PrintPopup,
   getHeaders,
 } from '@folio/stripes-marc-components';
+import { VersionHistoryButton } from '@folio/stripes-acq-components';
 
 import { VersionHistory } from '../../views/VersionHistory';
 import ActionItem from '../ActionItem';
@@ -48,7 +49,6 @@ import MARC_TYPES from './marcTypes';
 import { INSTANCE_RECORD_TYPE } from '../../constants';
 
 import styles from './ViewSource.css';
-import { VersionHistoryButton } from '@folio/stripes-acq-components';
 
 const ViewSource = ({
   mutator,
