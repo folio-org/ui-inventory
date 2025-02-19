@@ -53,6 +53,7 @@
     ],
     "okapiInterfaces": {
       "alternative-title-types": "1.0",
+      "audit-config": "1.0",
       "call-number-types": "1.0",
       "browse": "1.5",
       "circulation": "9.0 10.0 11.0 12.0 13.0 14.0",
@@ -1013,7 +1014,11 @@
           "mod-settings.entries.item.post",
           "mod-settings.entries.item.put",
           "mod-settings.global.read.ui-inventory.display-settings.manage",
-          "mod-settings.global.write.ui-inventory.display-settings.manage"
+          "mod-settings.global.write.ui-inventory.display-settings.manage",
+          "audit.config.groups.collection.get",
+          "audit.config.groups.settings.audit.inventory.collection.get",
+          "audit.config.groups.settings.item.put",
+          "audit.config.groups.settings.audit.inventory.records.page.size.item.put"
         ],
         "visible": true
       }
