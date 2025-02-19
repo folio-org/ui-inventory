@@ -68,6 +68,7 @@
   "confirm": "Confirm",
   "update": "Update",
   "edit": "Edit",
+  "instanceForm": "Instance form",
   "newInstance": "New instance",
   "editInstance": "Edit instance",
   "editInstance.title": "Edit instance • {title}",
