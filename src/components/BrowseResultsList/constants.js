@@ -37,37 +37,37 @@ export const COLUMNS_WIDTHS = {
   [browseModeOptions.CALL_NUMBERS]: {
     callNumber: '15%',
     title: '70%',
-    numberOfTitles: '15%',
+    numberOfTitles: '14%',
   },
   [browseModeOptions.DEWEY]: {
     callNumber: '15%',
     title: '70%',
-    numberOfTitles: '15%',
+    numberOfTitles: '14%',
   },
   [browseModeOptions.LIBRARY_OF_CONGRESS]: {
     callNumber: '15%',
     title: '70%',
-    numberOfTitles: '15%',
+    numberOfTitles: '14%',
   },
   [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: {
     callNumber: '15%',
     title: '70%',
-    numberOfTitles: '15%',
+    numberOfTitles: '14%',
   },
   [browseModeOptions.LOCAL]: {
     callNumber: '15%',
     title: '70%',
-    numberOfTitles: '15%',
+    numberOfTitles: '14%',
   },
   [browseModeOptions.OTHER]: {
     callNumber: '15%',
     title: '70%',
-    numberOfTitles: '15%',
+    numberOfTitles: '14%',
   },
   [browseModeOptions.SUPERINTENDENT]: {
     callNumber: '15%',
     title: '70%',
-    numberOfTitles: '15%',
+    numberOfTitles: '14%',
   },
   [browseModeOptions.CLASSIFICATION_ALL]: {
     classificationNumber: '50%',
