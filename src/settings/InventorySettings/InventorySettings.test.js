@@ -11,13 +11,25 @@ import {
 } from '../../../test/jest/helpers';
 
 import InventorySettings from './InventorySettings';
-
+import { useAuditSettings } from '../../hooks';
 import * as utils from '../../utils';
 
 jest.mock('@folio/stripes/smart-components', () => ({
   ...jest.requireActual('@folio/stripes/smart-components'),
   Settings: jest.fn(() => <div>Settings</div>),
 }));
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useAuditSettings: jest.fn().mockReturnValue({
+    settings: [{
+      key: 'enabled',
+      value: true,
+    }],
+    isSettingsLoading: false,
+  }),
+}));
+
 const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 
 const renderInventorySettings = (props = {}) => renderWithIntl(
@@ -26,6 +38,10 @@ const renderInventorySettings = (props = {}) => renderWithIntl(
 );
 
 describe('InventorySettings', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe('when consortium data is not loaded', () => {
     beforeEach(() => {
       spyOnIsUserInConsortiumMode.mockReturnValue(true);
@@ -98,6 +114,34 @@ describe('InventorySettings', () => {
       };
 
       expect(Settings).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
+    });
+  });
+
+  describe('when version history is disabled', () => {
+    beforeEach(async () => {
+      useAuditSettings.mockClear().mockReturnValue({
+        settings: [{
+          key: 'enabled',
+          value: false,
+        }],
+        isSettingsLoading: false,
+      });
+
+      renderInventorySettings();
+    });
+
+    it('should not show the version history setting', () => {
+      const sectionsProp = Settings.mock.calls[0][0].sections;
+
+      expect(sectionsProp).not.toEqual(expect.arrayContaining([
+        expect.objectContaining({
+          pages: expect.arrayContaining([
+            expect.objectContaining({
+              route: 'cardsPerPage',
+            })
+          ])
+        })
+      ]));
     });
   });
 });
