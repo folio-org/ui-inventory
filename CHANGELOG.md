@@ -29,6 +29,7 @@
 * *BREAKING* Create Inventory settings to configure number of cards in version history. Refs UIIN-3213.
 * Add ‘Set for deletion’ checkbox field to Instance Edit view. Refs UIIN-3190.
 * MARC Bib > View Source > Display Version History pane with an empty Version History component. Refs UIIN-3235.
+* Instance: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3176.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
