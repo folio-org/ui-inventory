@@ -37,7 +37,7 @@ import { VersionHistoryButton } from '@folio/stripes-acq-components';
 import { VersionHistory } from '../../views/VersionHistory';
 import ActionItem from '../ActionItem';
 import { useGoBack } from '../../common/hooks';
-import { useQuickExport } from '../../hooks';
+import { useAuditSettings, useQuickExport } from '../../hooks';
 import { IdReportGenerator } from '../../reports';
 import {
   isUserInConsortiumMode,
@@ -46,7 +46,7 @@ import {
   flattenCentralTenantPermissions,
 } from '../../utils';
 import MARC_TYPES from './marcTypes';
-import { INSTANCE_RECORD_TYPE } from '../../constants';
+import { INSTANCE_RECORD_TYPE, INVENTORY_AUDIT_GROUP, VERSION_HISTORY_ENABLED_SETTING } from '../../constants';
 
 import styles from './ViewSource.css';
 
@@ -208,9 +208,15 @@ const ViewSource = ({
     );
   }, []);
 
+  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+
+  const isVersionHistoryEnabled = settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
+
+  const showVersionHistoryButton = marcType === MARC_TYPES.BIB && isVersionHistoryEnabled;
+
   const lastMenu = (
     <PaneMenu>
-      <VersionHistoryButton onClick={() => setIsVersionHistoryOpen(true)} />
+      {showVersionHistoryButton && <VersionHistoryButton onClick={() => setIsVersionHistoryOpen(true)} />}
     </PaneMenu>
   );
 
