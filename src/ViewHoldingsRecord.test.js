@@ -602,7 +602,7 @@ describe('ViewHoldingsRecord actions', () => {
         expect(screen.getByRole('button', { name: /version history/i })).toBeDisabled();
       });
 
-      it('should render version history pane', async () => {
+      it('should render version history pane', () => {
         expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
       });
     });
