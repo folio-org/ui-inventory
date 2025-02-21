@@ -179,7 +179,7 @@
         "displayName": "Settings (Inventory): Module is enabled.",
         "subPermissions": [
           "settings.enabled",
-          "audit.config.groups.collection.get",
+          "audit.config.groups.settings.audit.inventory.collection.get",
           "perms.users.get"
         ],
         "visible": false
