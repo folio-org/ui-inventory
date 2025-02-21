@@ -57,7 +57,7 @@ const mockReferenceData = {
 
 const queryClient = new QueryClient();
 
-const actionMenu = jest.fn(() => <span>Action menu</span>);
+const actionMenu = jest.fn(() => <button type="button">Action menu</button>);
 const onClose = jest.fn();
 const tagsEnabled = true;
 
