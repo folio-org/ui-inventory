@@ -8,6 +8,7 @@ import React, {
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import {
   AppIcon,
@@ -26,7 +27,7 @@ import {
   Row,
   MessageBanner,
   PaneCloseLink,
-  Paneset,
+  Layout,
 } from '@folio/stripes/components';
 import { VersionHistoryButton } from '@folio/stripes-acq-components';
 
@@ -57,6 +58,8 @@ import {
   isInstanceShadowCopy,
   isUserInConsortiumMode,
 } from '../../utils';
+
+import css from './InstanceDetails.css';
 
 const accordions = {
   administrative: 'acc01',
@@ -164,6 +167,30 @@ const InstanceDetails = forwardRef(({
     setIsAllExpanded(isExpanded);
   };
 
+  const warningBanners = [
+    {
+      condition: !instance.deleted && instance.staffSuppress && !instance.discoverySuppress,
+      messageId: 'ui-inventory.warning.instance.staffSuppressed',
+    },
+    {
+      condition: !instance.deleted && instance.discoverySuppress && !instance.staffSuppress,
+      messageId: 'ui-inventory.warning.instance.suppressedFromDiscovery',
+    },
+    {
+      condition: !instance.deleted && instance.discoverySuppress && instance.staffSuppress,
+      messageId: 'ui-inventory.warning.instance.suppressedFromDiscoveryAndStaffSuppressed',
+    },
+    {
+      condition: instance.deleted && instance.discoverySuppress && instance.staffSuppress,
+      messageId: 'ui-inventory.warning.instance.setForDeletionAndSuppressedFromDiscoveryAndStaffSuppressed',
+    },
+  ];
+
+  const warningBannersClassNames = classNames(
+    'display-flex full flex-align-items-center justify-end',
+    css.hasMarginBottom,
+  );
+
   return (
     <>
       <Pane
@@ -187,20 +214,18 @@ const InstanceDetails = forwardRef(({
 
         <AccordionStatus ref={ref}>
           <Row>
-            <Col xs={10}>
-              <MessageBanner show={Boolean(instance.staffSuppress && !instance.discoverySuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.staffSuppressed" />
-              </MessageBanner>
-              <MessageBanner show={Boolean(instance.discoverySuppress && !instance.staffSuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscovery" />
-              </MessageBanner>
-              <MessageBanner show={Boolean(instance.discoverySuppress && instance.staffSuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscoveryAndStaffSuppressed" />
-              </MessageBanner>
-            </Col>
-            <Col data-test-expand-all xs={2}>
-              <ExpandAllButton onToggle={onToggle} />
-            </Col>
+            <Layout className={warningBannersClassNames}>
+              <Col xs={10}>
+                {warningBanners.map(({ condition, messageId }) => (
+                  <MessageBanner marginTop0 key={messageId} show={Boolean(condition)} type="warning">
+                    <FormattedMessage id={messageId} />
+                  </MessageBanner>
+                ))}
+              </Col>
+              <Col data-test-expand-all xs={2}>
+                <ExpandAllButton onToggle={onToggle} />
+              </Col>
+            </Layout>
           </Row>
 
           <InstanceTitle

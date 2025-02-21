@@ -45,11 +45,15 @@ import ClassificationBrowseSettings from '../ClassificationBrowseSettings';
 import SubjectSourcesSettings from '../SubjectSourcesSettings';
 import SubjectTypesSettings from '../SubjectTypesSettings';
 import DisplaySettings from '../DisplaySettings';
+import CardsPerVersionHistoryPage from '../CardsPerVersionHistoryPage';
 import CallNumberBrowseSettings from '../CallNumberBrowseSettings';
+import NumberGeneratorSettings from '../NumberGeneratorSettings';
 import {
   flattenCentralTenantPermissions,
   isUserInConsortiumMode,
 } from '../../utils';
+import { useAuditSettings } from '../../hooks';
+import { INVENTORY_AUDIT_GROUP, VERSION_HISTORY_ENABLED_SETTING } from '../../constants';
 
 const InventorySettings = (props) => {
   const stripes = useStripes();
@@ -74,6 +78,10 @@ const InventorySettings = (props) => {
     enabled: Boolean(isUserInMemberTenant) && Boolean(centralTenantId),
   });
 
+  const { settings, isSettingsLoading } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+
+  const isVersionHistoryEnabled = settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
+
   const addPerm = permission => {
     return stripes.hasPerm(permission) ? permission : 'ui-inventory.settings.list.view';
   };
@@ -95,6 +103,12 @@ const InventorySettings = (props) => {
             component: DisplaySettings,
             perm: 'ui-inventory.settings.displaySettings',
           },
+          ...(isVersionHistoryEnabled ? [{
+            route: 'cardsPerPage',
+            label: <FormattedMessage id="ui-inventory.settings.section.versionHistory" />,
+            component: CardsPerVersionHistoryPage,
+            perm: 'ui-inventory.settings.displaySettings',
+          }] : []),
         ],
       },
       {
@@ -282,6 +296,12 @@ const InventorySettings = (props) => {
             component: CallNumberTypes,
             perm: addPerm('ui-inventory.settings.call-number-types'),
           },
+          {
+            component: NumberGeneratorSettings,
+            label: <FormattedMessage id="ui-inventory.numberGenerator.options" />,
+            route: 'numberGeneratorOptions',
+            perm: 'ui-inventory.settings.manage-number-generator-options',
+          },
         ]
       },
     ];
@@ -303,7 +323,10 @@ const InventorySettings = (props) => {
     return _sections;
   };
 
-  if (isUserInConsortiumMode(stripes) && (!centralTenantId || (isUserInMemberTenant && !isCentralTenantPermissionsFetched))) {
+  const isLoading = isSettingsLoading ||
+    (isUserInConsortiumMode(stripes) && (!centralTenantId || (isUserInMemberTenant && !isCentralTenantPermissionsFetched)));
+
+  if (isLoading) {
     return <LoadingPane defaultWidth="15%" />;
   }
 
