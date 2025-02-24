@@ -279,3 +279,7 @@ export const UPDATE_OWNERSHIP_API = {
   HOLDINGS: 'inventory/holdings/update-ownership',
   ITEMS: 'inventory/items/update-ownership',
 };
+
+export const INVENTORY_AUDIT_GROUP = 'audit.inventory';
+export const VERSION_HISTORY_PAGE_SIZE_SETTING = 'records.page.size';
+export const VERSION_HISTORY_ENABLED_SETTING = 'enabled';

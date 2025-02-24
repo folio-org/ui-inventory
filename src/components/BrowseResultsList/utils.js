@@ -120,7 +120,7 @@ const getCallNumberQuery = (qindex, data, row) => {
     return '';
   }
 
-  let query = `itemNormalizedCallNumbers="${fullCallNumber}"`;
+  let query = `itemFullCallNumbers="${fullCallNumber}"`;
 
   const callNumberBrowseConfigId = browseCallNumberIndexToId[qindex];
 

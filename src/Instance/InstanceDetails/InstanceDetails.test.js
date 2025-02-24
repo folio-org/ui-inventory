@@ -57,7 +57,7 @@ const mockReferenceData = {
 
 const queryClient = new QueryClient();
 
-const actionMenu = jest.fn();
+const actionMenu = jest.fn(() => <button type="button">Action menu</button>);
 const onClose = jest.fn();
 const tagsEnabled = true;
 
@@ -241,10 +241,24 @@ describe('InstanceDetails', () => {
     });
 
     describe('when click the button', () => {
-      it('should render version history pane', async () => {
+      beforeEach(async () => {
         await act(() => userEvent.click(versionHistoryButton));
+      });
 
+      it('should render version history pane', () => {
         expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
+      });
+
+      it('should hide action menu', () => {
+        expect(screen.queryByText('Action menu')).not.toBeInTheDocument();
+      });
+
+      it('should disable tags button', () => {
+        expect(screen.getByRole('button', { name: /show tags/i })).toBeDisabled();
+      });
+
+      it('should disable version history button', () => {
+        expect(screen.getByRole('button', { name: /version history/i })).toBeDisabled();
       });
     });
 
