@@ -117,13 +117,17 @@ const InstanceDetails = forwardRef(({
               onClick={() => setHelperApp('tags')}
               badgeCount={tags?.length}
               ariaLabel={intl.formatMessage({ id: 'ui-inventory.showTags' })}
+              disabled={isVersionHistoryOpen}
             />
           )
         }
-        <VersionHistoryButton onClick={() => setIsVersionHistoryOpen(true)} />
+        <VersionHistoryButton
+          disabled={isVersionHistoryOpen}
+          onClick={() => setIsVersionHistoryOpen(true)}
+        />
       </PaneMenu>
     );
-  }, [tagsEnabled, tags, intl]);
+  }, [tagsEnabled, tags, intl, isVersionHistoryOpen]);
 
   const updatePrevInstanceId = id => {
     prevInstanceId.current = id;
@@ -199,7 +203,7 @@ const InstanceDetails = forwardRef(({
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
         paneTitle={paneTitle}
         paneSub={paneSubTitle}
-        actionMenu={actionMenu}
+        actionMenu={!isVersionHistoryOpen ? actionMenu : null}
         firstMenu={(
           <PaneCloseLink
             autoFocus={location.state?.isClosingFocused}
