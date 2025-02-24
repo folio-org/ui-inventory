@@ -72,6 +72,7 @@ import {
   emptyList,
   noValue,
   holdingsStatementTypes,
+  SOURCE_VALUES,
 } from './constants';
 import {
   WarningMessage,
@@ -652,6 +653,7 @@ class ViewHoldingsRecord extends React.Component {
       referenceTables,
       goTo,
       stripes,
+      isVersionHistoryEnabled,
     } = this.props;
     const { instance } = this.state;
 
@@ -971,7 +973,9 @@ class ViewHoldingsRecord extends React.Component {
                     actionMenu={this.getPaneHeaderActionMenu}
                     lastMenu={(
                       <PaneMenu>
-                        <VersionHistoryButton onClick={this.openVersionHistory} />
+                        {holdingsSourceName === SOURCE_VALUES.FOLIO && isVersionHistoryEnabled && (
+                          <VersionHistoryButton onClick={this.openVersionHistory} />
+                        )}
                       </PaneMenu>
                     )}
                   >
@@ -1406,6 +1410,7 @@ ViewHoldingsRecord.propTypes = {
     query: PropTypes.object.isRequired,
   }),
   goTo: PropTypes.func.isRequired,
+  isVersionHistoryEnabled: PropTypes.bool.isRequired,
   isInstanceShared: PropTypes.bool,
   onUpdateOwnership: PropTypes.func,
   initialTenantId: PropTypes.string,
