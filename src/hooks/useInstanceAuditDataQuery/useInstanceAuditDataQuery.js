@@ -13,7 +13,12 @@ const useInstanceAuditDataQuery = (instanceId) => {
 
   const { isLoading, data = {} } = useQuery({
     queryKey: [namespace, instanceId],
-    queryFn: () => ky.get(`audit-data/inventory/instance/${instanceId}`, { searchParams: { limit: LIMIT_MAX } }).json(),
+    queryFn: () => ky.get(`audit-data/inventory/instance/${instanceId}`, {
+      searchParams: {
+        limit: LIMIT_MAX,
+        offset: 0,
+      }
+    }).json(),
     enabled: Boolean(instanceId),
   });
 
