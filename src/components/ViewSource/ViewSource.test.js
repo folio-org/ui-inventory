@@ -17,7 +17,10 @@ import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
 import ViewSource from './ViewSource';
 import useGoBack from '../../common/hooks/useGoBack';
-import { useQuickExport } from '../../hooks';
+import {
+  useAuditSettings,
+  useQuickExport,
+} from '../../hooks';
 import { CONSORTIUM_PREFIX } from '../../constants';
 import MARC_TYPES from './marcTypes';
 
@@ -32,6 +35,13 @@ jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useQuickExport: jest.fn().mockReturnValue({
     exportRecords: jest.fn(),
+  }),
+  useAuditSettings: jest.fn().mockReturnValue({
+    settings: [{
+      key: 'enabled',
+      value: true,
+    }],
+    isSettingsLoading: false,
   }),
 }));
 
@@ -228,6 +238,40 @@ describe('ViewSource', () => {
           recordType: 'INSTANCE',
         });
       });
+    });
+  });
+
+  describe('when clicking on the version history icon', () => {
+    beforeEach(async () => {
+      await act(async () => {
+        await renderWithIntl(getViewSource(), []);
+      });
+    });
+
+    it('should open the version history pane', () => {
+      fireEvent.click(screen.getByLabelText('stripes-acq-components.versionHistory.pane.header'));
+
+      expect(screen.getByText('stripes-acq-components.versionHistory.pane.sub')).toBeInTheDocument();
+    });
+  });
+
+  describe('when version history is disabled', () => {
+    beforeEach(async () => {
+      useAuditSettings.mockClear().mockReturnValue({
+        settings: [{
+          key: 'enabled',
+          value: false,
+        }],
+        isSettingsLoading: false,
+      });
+
+      await act(async () => {
+        await renderWithIntl(getViewSource(), []);
+      });
+    });
+
+    it('should not show the version history button', () => {
+      expect(screen.queryByLabelText('stripes-acq-components.versionHistory.pane.header')).not.toBeInTheDocument();
     });
   });
 });
