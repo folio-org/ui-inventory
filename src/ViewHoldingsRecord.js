@@ -81,7 +81,7 @@ import {
 import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 import HoldingBoundWith from './Holding/ViewHolding/HoldingBoundWith';
-import HoldingVersionHistory from './Holding/HoldingVersionHistory';
+import { HoldingVersionHistory } from './Holding/HoldingVersionHistory';
 
 import css from './View.css';
 
