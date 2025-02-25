@@ -1,1 +1,1 @@
-export { default } from './HoldingVersionHistory';
+export { default as HoldingVersionHistory } from './HoldingVersionHistory';

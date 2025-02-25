@@ -163,7 +163,6 @@ class ViewHoldingsRecord extends React.Component {
     this.cViewMetaData = props.stripes.connect(ViewMetaData);
     this.accordionStatusRef = createRef();
     this.calloutRef = createRef();
-    this.paneTitleRef = createRef();
   }
 
   componentDidMount() {
@@ -196,7 +195,7 @@ class ViewHoldingsRecord extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const wasHoldingsRecordsPending = prevProps.resources.holdingsRecords?.isPending;
     const isHoldingsRecordsPending = this.props.resources.holdingsRecords?.isPending;
     const hasHoldingsRecordsLoaded = this.props.resources.holdingsRecords?.hasLoaded;
@@ -204,12 +203,6 @@ class ViewHoldingsRecord extends React.Component {
     if (wasHoldingsRecordsPending !== isHoldingsRecordsPending && hasHoldingsRecordsLoaded) {
       if (this.isMARCSource() && !this.state.marcRecord) {
         this.getMARCRecord();
-      }
-    }
-
-    if (prevState.isVersionHistoryOpen !== this.state.isVersionHistoryOpen) {
-      if (this.paneTitleRef.current) {
-        this.paneTitleRef.current.focus();
       }
     }
   }
