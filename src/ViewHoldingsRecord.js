@@ -81,7 +81,7 @@ import {
 import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 import HoldingBoundWith from './Holding/ViewHolding/HoldingBoundWith';
-import { VersionHistory } from './views/VersionHistory';
+import HoldingVersionHistory from './Holding/HoldingVersionHistory';
 
 import css from './View.css';
 
@@ -1337,7 +1337,8 @@ class ViewHoldingsRecord extends React.Component {
                     </AccordionStatus>
                   </Pane>
                   {this.state.isVersionHistoryOpen && (
-                    <VersionHistory
+                    <HoldingVersionHistory
+                      holdingId={holdingsRecord.id}
                       onClose={() => this.setState({ isVersionHistoryOpen: false })}
                     />
                   )}
