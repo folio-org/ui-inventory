@@ -11,4 +11,7 @@ export const ACCESSION_NUMBER_SETTING = 'accessionNumber';
 export const BARCODE_SETTING = 'barcode';
 export const CALL_NUMBER_SETTING = 'callNumber';
 
+export const SERVICE_INTERACTION_API = '/settings/service-interaction';
+export const SERVICE_INTERACTION_NUMBER_GENERATOR_SEQUENCES_API = '/settings/service-interaction/numberGeneratorSequences/';
+
 export const USE_SHARED_NUMBER = 'useSharedNumber';

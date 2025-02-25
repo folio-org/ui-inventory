@@ -27,6 +27,7 @@ describe('Rendering NumberGeneratorSettingsForm', () => {
   it('should show headline and info text', () => {
     expect(screen.getByText('Number generator options')).toBeInTheDocument();
     expect(screen.getByText('Fields which are usually filled using a numeric sequence can use the number generator. When the generator is switched on the field can either be fixed to prevent manual update, or made fully editable. When switched off, the field must be filled manually.')).toBeInTheDocument();
+    expect(screen.getByText('ui-orders.settings.numberGenerator.infoAdditional')).toBeInTheDocument();
   });
 
   it('should show all call number radio buttons', () => {
