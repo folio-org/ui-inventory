@@ -32,6 +32,7 @@
 * MARC Bib - Hide version history icon and settings if audit log feature is disabled. Refs UIIN-3237.
 * Instance: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3176.
 * Holdings: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3177.
+* Item: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3178.
 * Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
