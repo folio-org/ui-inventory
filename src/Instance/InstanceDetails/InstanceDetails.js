@@ -8,6 +8,7 @@ import React, {
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
 import {
   AppIcon,
@@ -26,7 +27,9 @@ import {
   Row,
   MessageBanner,
   PaneCloseLink,
+  Layout,
 } from '@folio/stripes/components';
+import { VersionHistoryButton } from '@folio/stripes-acq-components';
 
 import { InstanceTitle } from './InstanceTitle';
 import { InstanceAdministrativeView } from './InstanceAdministrativeView';
@@ -42,6 +45,7 @@ import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
 import { InstanceAcquisition } from './InstanceAcquisition';
 import HelperApp from '../../components/HelperApp';
+import { VersionHistory } from '../../views/VersionHistory';
 
 import { DataContext } from '../../contexts';
 import { ConsortialHoldings } from '../HoldingsList/consortium/ConsortialHoldings';
@@ -54,6 +58,8 @@ import {
   isInstanceShadowCopy,
   isUserInConsortiumMode,
 } from '../../utils';
+
+import css from './InstanceDetails.css';
 
 const accordions = {
   administrative: 'acc01',
@@ -92,11 +98,13 @@ const InstanceDetails = forwardRef(({
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
   const [helperApp, setHelperApp] = useState();
   const [isAllExpanded, setIsAllExpanded] = useState();
+  const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
 
   const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
   const tags = instance?.tags?.tagList;
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
   const isConsortialHoldingsVisible = instance?.shared || isInstanceShadowCopy(instance?.source);
+  const isUserInConsortium = isUserInConsortiumMode(stripes);
 
   const detailsLastMenu = useMemo(() => {
     return (
@@ -109,12 +117,17 @@ const InstanceDetails = forwardRef(({
               onClick={() => setHelperApp('tags')}
               badgeCount={tags?.length}
               ariaLabel={intl.formatMessage({ id: 'ui-inventory.showTags' })}
+              disabled={isVersionHistoryOpen}
             />
           )
         }
+        <VersionHistoryButton
+          disabled={isVersionHistoryOpen}
+          onClick={() => setIsVersionHistoryOpen(true)}
+        />
       </PaneMenu>
     );
-  }, [tagsEnabled, tags, intl]);
+  }, [tagsEnabled, tags, intl, isVersionHistoryOpen]);
 
   const updatePrevInstanceId = id => {
     prevInstanceId.current = id;
@@ -122,32 +135,35 @@ const InstanceDetails = forwardRef(({
 
   const getEntity = () => instance;
 
-  const renderPaneTitle = () => {
-    const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
+  const paneTitle = useMemo(
+    () => {
+      const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
 
-    return (
-      <FormattedMessage
-        id={`ui-inventory.${isUserInConsortiumMode(stripes) ? 'consortia.' : ''}instanceRecordTitle`}
-        values={{
+      return intl.formatMessage(
+        { id: `ui-inventory.${isUserInConsortium ? 'consortia.' : ''}instanceRecordTitle` },
+        {
           isShared: isInstanceShared,
           title: instance?.title,
           publisherAndDate: getPublishingInfo(instance),
-        }}
-      />
-    );
-  };
-
-  const renderPaneSubtitle = () => {
-    return (
-      <FormattedMessage
-        id="ui-inventory.instanceRecordSubtitle"
-        values={{
-          hrid: instance?.hrid,
-          updatedDate: getDate(instance?.metadata?.updatedDate),
-        }}
-      />
-    );
-  };
+        }
+      );
+    },
+    [isShared, instance?.source, isUserInConsortium],
+  );
+  const paneSubTitle = useMemo(
+    () => {
+      return (
+        <FormattedMessage
+          id="ui-inventory.instanceRecordSubtitle"
+          values={{
+            hrid: instance?.hrid,
+            updatedDate: getDate(instance?.metadata?.updatedDate),
+          }}
+        />
+      );
+    },
+    [instance?.hrid, instance?.metadata?.updatedDate],
+  );
 
   const onToggle = newState => {
     const isExpanded = Object.values(newState)[0];
@@ -155,20 +171,44 @@ const InstanceDetails = forwardRef(({
     setIsAllExpanded(isExpanded);
   };
 
+  const warningBanners = [
+    {
+      condition: !instance.deleted && instance.staffSuppress && !instance.discoverySuppress,
+      messageId: 'ui-inventory.warning.instance.staffSuppressed',
+    },
+    {
+      condition: !instance.deleted && instance.discoverySuppress && !instance.staffSuppress,
+      messageId: 'ui-inventory.warning.instance.suppressedFromDiscovery',
+    },
+    {
+      condition: !instance.deleted && instance.discoverySuppress && instance.staffSuppress,
+      messageId: 'ui-inventory.warning.instance.suppressedFromDiscoveryAndStaffSuppressed',
+    },
+    {
+      condition: instance.deleted && instance.discoverySuppress && instance.staffSuppress,
+      messageId: 'ui-inventory.warning.instance.setForDeletionAndSuppressedFromDiscoveryAndStaffSuppressed',
+    },
+  ];
+
+  const warningBannersClassNames = classNames(
+    'display-flex full flex-align-items-center justify-end',
+    css.hasMarginBottom,
+  );
+
   return (
     <>
       <Pane
         {...rest}
         data-test-instance-details
         appIcon={<AppIcon app="inventory" iconKey="instance" />}
-        paneTitle={renderPaneTitle()}
-        paneSub={renderPaneSubtitle()}
-        actionMenu={actionMenu}
+        paneTitle={paneTitle}
+        paneSub={paneSubTitle}
+        actionMenu={!isVersionHistoryOpen ? actionMenu : null}
         firstMenu={(
           <PaneCloseLink
             autoFocus={location.state?.isClosingFocused}
             onClick={onClose}
-            aria-label={intl.formatMessage({ id: 'stripes-components.closeItem' }, { item: renderPaneTitle() })}
+            aria-label={intl.formatMessage({ id: 'stripes-components.closeItem' }, { item: paneTitle })}
           />
         )}
         lastMenu={detailsLastMenu}
@@ -178,20 +218,18 @@ const InstanceDetails = forwardRef(({
 
         <AccordionStatus ref={ref}>
           <Row>
-            <Col xs={10}>
-              <MessageBanner show={Boolean(instance.staffSuppress && !instance.discoverySuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.staffSuppressed" />
-              </MessageBanner>
-              <MessageBanner show={Boolean(instance.discoverySuppress && !instance.staffSuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscovery" />
-              </MessageBanner>
-              <MessageBanner show={Boolean(instance.discoverySuppress && instance.staffSuppress)} type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.suppressedFromDiscoveryAndStaffSuppressed" />
-              </MessageBanner>
-            </Col>
-            <Col data-test-expand-all xs={2}>
-              <ExpandAllButton onToggle={onToggle} />
-            </Col>
+            <Layout className={warningBannersClassNames}>
+              <Col xs={10}>
+                {warningBanners.map(({ condition, messageId }) => (
+                  <MessageBanner marginTop0 key={messageId} show={Boolean(condition)} type="warning">
+                    <FormattedMessage id={messageId} />
+                  </MessageBanner>
+                ))}
+              </Col>
+              <Col data-test-expand-all xs={2}>
+                <ExpandAllButton onToggle={onToggle} />
+              </Col>
+            </Layout>
           </Row>
 
           <InstanceTitle
@@ -301,6 +339,11 @@ const InstanceDetails = forwardRef(({
           </AccordionSet>
         </AccordionStatus>
       </Pane>
+      {isVersionHistoryOpen && (
+        <VersionHistory
+          onClose={() => setIsVersionHistoryOpen(false)}
+        />
+      )}
       { helperApp &&
         <HelperApp
           getEntity={getEntity}

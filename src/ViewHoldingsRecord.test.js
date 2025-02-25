@@ -590,9 +590,19 @@ describe('ViewHoldingsRecord actions', () => {
     });
 
     describe('when click the button', () => {
-      it('should render version history pane', async () => {
+      beforeEach(async () => {
         await userEvent.click(versionHistoryButton);
+      });
 
+      it('should hide action menu', () => {
+        expect(screen.queryByText('Actions')).not.toBeInTheDocument();
+      });
+
+      it('should disable version history button', () => {
+        expect(screen.getByRole('button', { name: /version history/i })).toBeDisabled();
+      });
+
+      it('should render version history pane', () => {
         expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
       });
     });
@@ -601,9 +611,10 @@ describe('ViewHoldingsRecord actions', () => {
       it('should hide the pane', async () => {
         await userEvent.click(versionHistoryButton);
 
-        expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
+        const versionHistoryPane = await screen.findByRole('region', { name: /version history/i });
+        expect(versionHistoryPane).toBeInTheDocument();
 
-        const closeButton = screen.getByRole('button', { name: /close version history/i });
+        const closeButton = await within(versionHistoryPane).findByRole('button', { name: /close/i });
         await userEvent.click(closeButton);
 
         expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();

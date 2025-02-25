@@ -81,7 +81,7 @@ import {
 import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 import HoldingBoundWith from './Holding/ViewHolding/HoldingBoundWith';
-import { VersionHistory } from './views/VersionHistory';
+import HoldingVersionHistory from './Holding/HoldingVersionHistory';
 
 import css from './View.css';
 
@@ -660,7 +660,10 @@ class ViewHoldingsRecord extends React.Component {
       goTo,
       stripes,
     } = this.props;
-    const { instance } = this.state;
+    const {
+      instance,
+      isVersionHistoryOpen,
+    } = this.state;
 
     if (this.isAwaitingResource()) return <LoadingView />;
 
@@ -975,10 +978,13 @@ class ViewHoldingsRecord extends React.Component {
                     })}
                     dismissible
                     onClose={this.onClose}
-                    actionMenu={this.getPaneHeaderActionMenu}
+                    actionMenu={(params) => !isVersionHistoryOpen && this.getPaneHeaderActionMenu(params)}
                     lastMenu={(
                       <PaneMenu>
-                        <VersionHistoryButton onClick={this.openVersionHistory} />
+                        <VersionHistoryButton
+                          onClick={this.openVersionHistory}
+                          disabled={isVersionHistoryOpen}
+                        />
                       </PaneMenu>
                     )}
                   >
@@ -1338,9 +1344,9 @@ class ViewHoldingsRecord extends React.Component {
                     </AccordionStatus>
                   </Pane>
                   {this.state.isVersionHistoryOpen && (
-                    <VersionHistory
+                    <HoldingVersionHistory
+                      holdingId={holdingsRecord.id}
                       onClose={() => this.setState({ isVersionHistoryOpen: false })}
-                      paneTitleRef={this.paneTitleRef}
                     />
                   )}
                 </Paneset>

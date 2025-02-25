@@ -15,6 +15,25 @@
 * ECS: Disable opening item details if a user is not affiliated with item's member tenant. Fixes UIIN-3187.
 * Correctly depend on `inflected`. Refs UIIN-3203.
 * Decrease the amount of rerenders in `ConsortialHoldings` component. Fixes UIIN-3196.
+* Sort holdings by location name and call number. Refs UIIN-3207.
+* Remove hover-over text next to "Shelving order" on the Item record detail view. Refs UIIN-3210.
+* CI: Switch to centralized/shared workflow from https://github.com/folio-org/.github. Fixes UIIN-3218.
+* Set correct widths for Call number browse results columns. Fixes UIIN-3229.
+* Display actual instance state (shared or local) when user is using "Drag and drop" to move inventory records. Fixes UIIN-3185.
+* Add Version history button and Version history pane to details view of Item. Refs UIIN-3172.
+* Add Version history button and Version history pane to details view of Holdings. Refs UIIN-3171.
+* Add Version history button and Version history pane to details view of Instance. Refs UIIN-3170.
+* Add new ‘Set for deletion’ flag to display on 3rd pane Instance view. Refs UIIN-3191.
+* Add settings options for using number gernerator for item barcode, accession number and call number. Refs UIIN-2557.
+* Change itemNormalizedCallNumbers to itemFullCallNumbers in getCallNumberQuery. Refs UIIN-3234.
+* *BREAKING* Create Inventory settings to configure number of cards in version history. Refs UIIN-3213.
+* Add ‘Set for deletion’ checkbox field to Instance Edit view. Refs UIIN-3190.
+* MARC Bib > View Source > Display Version History pane with an empty Version History component. Refs UIIN-3235.
+* MARC Bib - Hide version history icon and settings if audit log feature is disabled. Refs UIIN-3237.
+* Instance: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3176.
+* Holdings: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3177.
+* Item: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3178.
+* Holdings: Display all versions in View history second pane. Refs UIIN-3174.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
@@ -43,6 +62,8 @@
 
 * Display holdings names in `Consortial holdings` accordion for user without inventory permissions in member tenants. Fixes UIIN-3159.
 * Remove the ability to share local instance when `Inventory: View, create instances` permission is assigned. Fixes UIIN-3166.
+* *BREAKING* Use `browse` `1.5` interface that provides new Call Number Browse endpoints. Refs UIIN-3162.
+* Add `getCallNumberQuery` function to build a query string based on the call number and its type. Refs UIIN-3205.
 
 ## [12.0.7](https://github.com/folio-org/ui-inventory/tree/v12.0.7) (2024-12-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.6...v12.0.7)

@@ -18,6 +18,8 @@ import {
   LoadingView,
   HasCommand,
   checkScope,
+  Paneset,
+  PaneMenu,
 } from '@folio/stripes/components';
 import {
   useCallout,
@@ -30,10 +32,12 @@ import {
   PrintPopup,
   getHeaders,
 } from '@folio/stripes-marc-components';
+import { VersionHistoryButton } from '@folio/stripes-acq-components';
 
+import { VersionHistory } from '../../views/VersionHistory';
 import ActionItem from '../ActionItem';
 import { useGoBack } from '../../common/hooks';
-import { useQuickExport } from '../../hooks';
+import { useAuditSettings, useQuickExport } from '../../hooks';
 import { IdReportGenerator } from '../../reports';
 import {
   isUserInConsortiumMode,
@@ -42,7 +46,7 @@ import {
   flattenCentralTenantPermissions,
 } from '../../utils';
 import MARC_TYPES from './marcTypes';
-import { INSTANCE_RECORD_TYPE } from '../../constants';
+import { INSTANCE_RECORD_TYPE, INVENTORY_AUDIT_GROUP, VERSION_HISTORY_ENABLED_SETTING } from '../../constants';
 
 import styles from './ViewSource.css';
 
@@ -61,6 +65,7 @@ const ViewSource = ({
   const history = useHistory();
   const callout = useCallout();
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
+  const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
   const { exportRecords } = useQuickExport();
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
@@ -203,6 +208,18 @@ const ViewSource = ({
     );
   }, []);
 
+  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+
+  const isVersionHistoryEnabled = settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
+
+  const showVersionHistoryButton = marcType === MARC_TYPES.BIB && isVersionHistoryEnabled;
+
+  const lastMenu = (
+    <PaneMenu>
+      {showVersionHistoryButton && <VersionHistoryButton onClick={() => setIsVersionHistoryOpen(true)} />}
+    </PaneMenu>
+  );
+
   if (isMarcLoading || isInstanceLoading) return <LoadingView />;
 
   if (!(marc && instance)) return null;
@@ -231,13 +248,16 @@ const ViewSource = ({
       isWithinScope={checkScope}
       scope={document.body}
     >
-      <div className={styles.viewSource}>
+      <Paneset id="view-source-paneset">
         <MarcView
           paneTitle={paneTitle}
           marcTitle={marcTitle}
           marc={marc}
           onClose={goBack}
           actionMenu={actionMenu}
+          lastMenu={lastMenu}
+          paneWidth="fill"
+          wrapperClass={styles.viewSource}
         />
         {isPrintAvailable && isShownPrintPopup && (
           <PrintPopup
@@ -247,7 +267,12 @@ const ViewSource = ({
             onAfterPrint={closePrintPopup}
           />
         )}
-      </div>
+        {isVersionHistoryOpen && (
+          <VersionHistory
+            onClose={() => setIsVersionHistoryOpen(false)}
+          />
+        )}
+      </Paneset>
     </HasCommand>
   );
 };
