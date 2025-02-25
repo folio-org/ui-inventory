@@ -1,6 +1,9 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import {
+  screen,
+  within,
+} from '@folio/jest-config-stripes/testing-library/react';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import NumberGeneratorSettingsForm from './NumberGeneratorSettingsForm';
@@ -14,9 +17,10 @@ const onSubmitMock = jest.fn();
 const renderComponent = () => renderWithIntl(
   <MemoryRouter>
     <NumberGeneratorSettingsForm
-      onSubmit={onSubmitMock}
+      onSubmit={(values) => onSubmitMock(values)}
     />
-  </MemoryRouter>, translationsProperties
+  </MemoryRouter>,
+  translationsProperties
 );
 
 beforeEach(() => {
@@ -29,22 +33,21 @@ describe('Rendering NumberGeneratorSettingsForm', () => {
     expect(screen.getByText('Fields which are usually filled using a numeric sequence can use the number generator. When the generator is switched on the field can either be fixed to prevent manual update, or made fully editable. When switched off, the field must be filled manually.')).toBeInTheDocument();
   });
 
-  it('should show all call number radio buttons', () => {
-    expect(screen.getAllByText('Number generator off: The call number can be filled manually only.')).toHaveLength(2);
-    expect(screen.getAllByText('Number generator on, editable: The call number can be filled using the generator and be edited, or filled manually.')).toHaveLength(2);
-    expect(screen.getAllByText('Number generator on, fixed: The call number can be filled using the generator only.')).toHaveLength(2);
+  it('should show accordions for "holdings" and "items"', () => {
+    expect(screen.getByRole('region', { name: 'Holdings' })).toBeInTheDocument();
+    expect(screen.getByRole('region', { name: 'Items' })).toBeInTheDocument();
   });
 
-  it('should show all barcode radio buttons', () => {
-    expect(screen.getByText('Number generator off: The barcode can be filled manually only.')).toBeInTheDocument();
-    expect(screen.getByText('Number generator on, editable: The barcode can be filled using the generator and be edited, or filled manually.')).toBeInTheDocument();
-    expect(screen.getByText('Number generator on, fixed: The barcode can be filled using the generator only.')).toBeInTheDocument();
+  it('should show all input form fields in "holdings" accordion', () => {
+    const holdingsAccordion = screen.getByRole('region', { name: 'Holdings' });
+    expect(within(holdingsAccordion).getByRole('combobox', { name: 'Call number' })).toBeInTheDocument();
   });
 
-  it('should show all accession number radio buttons', () => {
-    expect(screen.getByText('Number generator off: The accession number can be filled manually only.')).toBeInTheDocument();
-    expect(screen.getByText('Number generator on, editable: The accession number can be filled using the generator and be edited, or filled manually.')).toBeInTheDocument();
-    expect(screen.getByText('Number generator on, fixed: The accession number can be filled using the generator only.')).toBeInTheDocument();
+  it('should show all input form fields in "items" accordion', () => {
+    const itemsAccordion = screen.getByRole('region', { name: 'Items' });
+    expect(within(itemsAccordion).getByRole('combobox', { name: 'Barcode' })).toBeInTheDocument();
+    expect(within(itemsAccordion).getByRole('combobox', { name: 'Accession number' })).toBeInTheDocument();
+    expect(within(itemsAccordion).getByRole('combobox', { name: 'Call number' })).toBeInTheDocument();
   });
 
   it('should show checkbox for using the same number', () => {
@@ -57,33 +60,39 @@ describe('Rendering NumberGeneratorSettingsForm', () => {
   });
 });
 
-describe('Clicking manually use of callNumber or accessionNumber', () => {
+describe('Clicking `off` option of accessionNumber', () => {
   it('should disable useSharedNumber-checkbox and show warning', async () => {
-    const callNumberUseManually = document.getElementById('callNumberUseTextField');
-    const callNumberUseBoth = document.getElementById('callNumberUseBoth');
-    const accessionNumberUseManually = document.getElementById('accessionNumberUseTextField');
-    const useSharedNumberCheckbox = document.getElementById('useSharedNumber');
+    const useEqualNumberCheckbox = screen.getByRole('checkbox', { name: 'Use the same generated number for accession number and call number' });
+    const itemsAccordion = screen.getByRole('region', { name: 'Items' });
+    const accessionNumberSelect = within(itemsAccordion).getByRole('combobox', { name: 'Accession number' });
 
-    await userEvent.click(callNumberUseManually);
-    expect(useSharedNumberCheckbox).toHaveAttribute('disabled');
+    expect(accessionNumberSelect).toBeInTheDocument();
+    expect(useEqualNumberCheckbox).toBeEnabled();
 
-    await userEvent.click(callNumberUseBoth);
-    expect(useSharedNumberCheckbox).not.toHaveAttribute('disabled');
+    await userEvent.selectOptions(accessionNumberSelect, ['off']);
 
-    await userEvent.click(accessionNumberUseManually);
-    expect(useSharedNumberCheckbox).toHaveAttribute('disabled');
+    expect(useEqualNumberCheckbox).toBeDisabled();
     expect(screen.getByText('Warning: The checkbox has been disabled because the accession number and/or the call number have been set to manual completion.')).toBeInTheDocument();
   });
 });
 
 describe('Clicking useSharedNumber-checkbox', () => {
-  it('should disable manually use of callNumber and accessionNumber', async () => {
-    const callNumberUseManually = document.getElementById('callNumberUseTextField');
-    const accessionNumberUseManually = document.getElementById('accessionNumberUseTextField');
-    const useSharedNumberCheckbox = document.getElementById('useSharedNumber');
+  it('should disable `off` option of callNumber and accessionNumber', async () => {
+    const itemsAccordion = screen.getByRole('region', { name: 'Items' });
+    expect(within(itemsAccordion).getByRole('combobox', { name: 'Accession number' })).toBeInTheDocument();
+    expect(within(itemsAccordion).getByRole('combobox', { name: 'Call number' })).toBeInTheDocument();
+    const accessionNumberSelect = within(itemsAccordion).getByRole('combobox', { name: 'Accession number' });
+    const accessionNumberSelectOff = within(accessionNumberSelect).getByRole('option', { name: 'Off' });
+    const callNumberSelect = within(itemsAccordion).getByRole('combobox', { name: 'Call number' });
+    const callNumberSelectOff = within(callNumberSelect).getByRole('option', { name: 'Off' });
 
-    await userEvent.click(useSharedNumberCheckbox);
-    expect(callNumberUseManually).toHaveAttribute('disabled');
-    expect(accessionNumberUseManually).toHaveAttribute('disabled');
+    expect(accessionNumberSelectOff).toBeEnabled();
+    expect(callNumberSelectOff).toBeEnabled();
+
+    const useEqualNumberCheckbox = screen.getByRole('checkbox', { name: 'Use the same generated number for accession number and call number' });
+
+    await userEvent.click(useEqualNumberCheckbox);
+    expect(accessionNumberSelectOff).toBeDisabled();
+    expect(callNumberSelectOff).toBeDisabled();
   });
 });
