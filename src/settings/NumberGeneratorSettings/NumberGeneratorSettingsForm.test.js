@@ -1,10 +1,10 @@
 import { MemoryRouter } from 'react-router-dom';
 
 import {
+  fireEvent,
   screen,
   within,
 } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 
 import NumberGeneratorSettingsForm from './NumberGeneratorSettingsForm';
 import {
@@ -69,7 +69,23 @@ describe('Clicking `off` option of accessionNumber', () => {
     expect(accessionNumberSelect).toBeInTheDocument();
     expect(useEqualNumberCheckbox).toBeEnabled();
 
-    await userEvent.selectOptions(accessionNumberSelect, ['off']);
+    fireEvent.change(accessionNumberSelect, { target: { value: 'off' } });
+
+    expect(useEqualNumberCheckbox).toBeDisabled();
+    expect(screen.getByText('Warning: The checkbox has been disabled because the accession number and/or the call number have been set to manual completion.')).toBeInTheDocument();
+  });
+});
+
+describe('Clicking `off` option of callNumber', () => {
+  it('should disable useSharedNumber-checkbox and show warning', async () => {
+    const useEqualNumberCheckbox = screen.getByRole('checkbox', { name: 'Use the same generated number for accession number and call number' });
+    const itemsAccordion = screen.getByRole('region', { name: 'Items' });
+    const callNumberSelect = within(itemsAccordion).getByRole('combobox', { name: 'Call number' });
+
+    expect(callNumberSelect).toBeInTheDocument();
+    expect(useEqualNumberCheckbox).toBeEnabled();
+
+    fireEvent.change(callNumberSelect, { target: { value: 'off' } });
 
     expect(useEqualNumberCheckbox).toBeDisabled();
     expect(screen.getByText('Warning: The checkbox has been disabled because the accession number and/or the call number have been set to manual completion.')).toBeInTheDocument();
@@ -91,7 +107,8 @@ describe('Clicking useSharedNumber-checkbox', () => {
 
     const useEqualNumberCheckbox = screen.getByRole('checkbox', { name: 'Use the same generated number for accession number and call number' });
 
-    await userEvent.click(useEqualNumberCheckbox);
+    fireEvent.click(useEqualNumberCheckbox);
+
     expect(accessionNumberSelectOff).toBeDisabled();
     expect(callNumberSelectOff).toBeDisabled();
   });
