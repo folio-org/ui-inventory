@@ -118,7 +118,7 @@ import {
   useHoldingMutation,
   useUpdateOwnership,
 } from '../hooks';
-import { VersionHistory } from './VersionHistory';
+import { ItemVersionHistory } from '../Item/ItemVersionHistory';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -1744,8 +1744,10 @@ const ItemView = props => {
           </AccordionStatus>
         </Pane>
         {isVersionHistoryOpen && (
-          <VersionHistory
+          <ItemVersionHistory
+            itemId={item.id}
             onClose={() => setIsSetVersionHistoryOpen(false)}
+            circulationHistory={circulationHistory}
           />
         )}
       </Paneset>
