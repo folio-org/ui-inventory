@@ -258,6 +258,7 @@ const ViewSource = ({
           lastMenu={lastMenu}
           paneWidth="fill"
           wrapperClass={styles.viewSource}
+          isPaneset={false}
         />
         {isPrintAvailable && isShownPrintPopup && (
           <PrintPopup
