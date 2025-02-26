@@ -143,7 +143,7 @@ describe('InstanceFiltersBrowse', () => {
 
       expect(getByRole('heading', { name: 'Shared' })).toBeInTheDocument();
       expect(mockOnChange).toHaveBeenCalledWith({
-        name: FACETS.SHARED,
+        name: FACETS.CALL_NUMBERS_SHARED,
         values: [],
       });
     });
