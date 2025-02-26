@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import noop from 'lodash/noop';
 
+import { NumberGeneratorModalButton } from '@folio/service-interaction';
+
 import {
   Paneset,
   Pane,
@@ -100,6 +102,7 @@ class HoldingsForm extends React.Component {
     location: PropTypes.shape({
       state: PropTypes.string.isRequired,
     }).isRequired,
+    numberGeneratorData: PropTypes.object,
     referenceTables: PropTypes.object.isRequired,
     resources: PropTypes.shape({
       holdingsBlockedFields: PropTypes.shape({
@@ -221,6 +224,8 @@ class HoldingsForm extends React.Component {
 
   render() {
     const {
+      form: { change },
+      numberGeneratorData,
       onCancel,
       initialValues,
       instance,
@@ -581,8 +586,23 @@ class HoldingsForm extends React.Component {
                           fullWidth
                           format={v => v?.trim()}
                           formatOnBlur
-                          disabled={this.isFieldBlocked('callNumber')}
+                          disabled={this.isFieldBlocked('callNumber') || numberGeneratorData?.callNumberHoldings === 'useGenerator'}
                         />
+                        {(
+                          numberGeneratorData?.callNumberHoldings === 'useGenerator' ||
+                          numberGeneratorData?.callNumberHoldings === 'useBoth'
+                        ) &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            callback={(generated) => change('callNumber', generated)}
+                            id="inventoryCallNumber"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            generator="inventory_callNumber"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.callNumberGenerator" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field

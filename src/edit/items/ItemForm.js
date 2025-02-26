@@ -13,6 +13,7 @@ import {
 import { OnChange } from 'react-final-form-listeners';
 import { withRouter } from 'react-router';
 
+import { NumberGeneratorModalButton } from '@folio/service-interaction';
 import {
   Paneset,
   Pane,
@@ -251,6 +252,8 @@ class ItemForm extends React.Component {
 
   render() {
     const {
+      form: { change },
+      numberGeneratorData,
       onCancel,
       initialValues,
       instance,
@@ -491,6 +494,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
+                          disabled={numberGeneratorData?.barcode === 'useGenerator'}
                           label={<FormattedMessage id="ui-inventory.barcode" />}
                           name="barcode"
                           id="additem_barcode"
@@ -499,15 +503,46 @@ class ItemForm extends React.Component {
                           autoFocus
                           fullWidth
                         />
+                        {(
+                          numberGeneratorData?.barcode === 'useGenerator' ||
+                          numberGeneratorData?.barcode === 'useBoth'
+                        ) &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />}
+                            callback={(generated) => change('barcode', generated)}
+                            id="inventoryBarcode"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />}
+                            generator="inventory_itemBarcode"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field
+                          disabled={numberGeneratorData?.accessionNumber === 'useGenerator'}
                           label={<FormattedMessage id="ui-inventory.accessionNumber" />}
                           name="accessionNumber"
                           id="additem_accessionnumber"
                           component={TextField}
                           fullWidth
                         />
+                        {(
+                          numberGeneratorData?.accessionNumber === 'useGenerator' ||
+                          numberGeneratorData?.accessionNumber === 'useBoth'
+                        ) &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
+                            callback={(generated) => change('accessionNumber', generated)}
+                            id="inventoryAccessionNumber"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
+                            generator="inventory_accessionNumber"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field
@@ -607,11 +642,27 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumber"
                           id="additem_callnumber"
                           component={TextArea}
+                          disabled={numberGeneratorData?.callNumber === 'useGenerator'}
                           format={v => v?.trim()}
                           formatOnBlur
                           rows={1}
                           fullWidth
                         />
+                        {(
+                          numberGeneratorData?.callNumber === 'useGenerator' ||
+                          numberGeneratorData?.callNumber === 'useBoth'
+                        ) &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            callback={(generated) => change('itemLevelCallNumber', generated)}
+                            id="inventoryCallNumber"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            generator="inventory_callNumber"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field
@@ -927,6 +978,7 @@ ItemForm.propTypes = {
   initialValues: PropTypes.object,
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object,
+  numberGeneratorData: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
   setKeepEditing: PropTypes.func,

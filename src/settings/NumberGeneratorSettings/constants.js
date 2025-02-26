@@ -11,4 +11,6 @@ export const ACCESSION_NUMBER_SETTING = 'accessionNumber';
 export const BARCODE_SETTING = 'barcode';
 export const CALL_NUMBER_SETTING = 'callNumber';
 
+export const MOD_SETTINGS_API = 'settings/entries';
+
 export const USE_SHARED_NUMBER = 'useSharedNumber';

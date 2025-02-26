@@ -1046,6 +1046,7 @@
     "@babel/preset-react": "^7.9.0",
     "@folio/eslint-config-stripes": "^7.0.0",
     "@folio/jest-config-stripes": "^2.0.0",
+    "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^9.2.2",
     "@folio/stripes-cli": "^3.2.0",
     "@folio/stripes-components": "^12.2.2",
@@ -1094,6 +1095,7 @@
     "use-session-storage-state": "^18.2.0"
   },
   "peerDependencies": {
+    "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^9.2.2",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^1.1.0",
