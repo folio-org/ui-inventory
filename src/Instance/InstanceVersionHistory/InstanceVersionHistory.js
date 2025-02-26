@@ -1,4 +1,8 @@
-import { useContext } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -15,8 +19,28 @@ const InstanceVersionHistory = ({
   onClose,
 }) => {
   const { formatMessage } = useIntl();
-  const { data, isLoading } = useInstanceAuditDataQuery(instanceId);
+  const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
+  const {
+    data,
+    totalRecords,
+    isLoading,
+  } = useInstanceAuditDataQuery(instanceId, lastVersionEventTs);
+  // const [versions, setVersions] = useState([]);
+  const [isLoadedMoreVisible, setIsLoadedMoreVisible] = useState(true);
   const referenceData = useContext(DataContext);
+
+  // display more cards if loaded more
+  // useEffect(() => {
+  //   if (data?.length) {
+  //     setVersions(prevState => [...prevState, ...data]);
+  //   }
+  // }, [data]);
+
+  // useEffect(() => {
+  //   setIsLoadedMoreVisible(Boolean(versions.length !== 0 && versions.length < totalRecords));
+  // }, [versions, totalRecords]);
+
+  // useEffect(() => () => setVersions([]), []);
 
   const fieldLabelsMap = {
     administrativeNotes: formatMessage({ id: 'ui-inventory.administrativeNotes' }),
@@ -86,9 +110,11 @@ const InstanceVersionHistory = ({
 
   return (
     <AuditLogPane
-      onClose={onClose}
-      isLoading={isLoading}
       versions={data}
+      onClose={onClose}
+      isLoadedMoreVisible={isLoadedMoreVisible}
+      onLoadMoreData={setLastVersionEventTs}
+      isLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
     />

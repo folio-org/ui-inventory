@@ -5,18 +5,16 @@ import {
   useOkapiKy,
 } from '@folio/stripes/core';
 
-import { LIMIT_MAX } from '@folio/stripes-inventory-components';
-
-const useInstanceAuditDataQuery = (instanceId) => {
+const useInstanceAuditDataQuery = (instanceId, eventTs) => {
   const ky = useOkapiKy();
   const [namespace] = useNamespace({ key: 'instance-audit-data' });
 
+  // eventTs param is used to load more data
   const { isLoading, data = {} } = useQuery({
-    queryKey: [namespace, instanceId],
+    queryKey: [namespace, instanceId, eventTs],
     queryFn: () => ky.get(`audit-data/inventory/instance/${instanceId}`, {
       searchParams: {
-        limit: LIMIT_MAX,
-        offset: 0,
+        ...(eventTs && { eventTs })
       }
     }).json(),
     enabled: Boolean(instanceId),
@@ -24,6 +22,7 @@ const useInstanceAuditDataQuery = (instanceId) => {
 
   return {
     data: data?.inventoryAuditItems || [],
+    totalRecords: data?.totalRecords,
     isLoading,
   };
 };
