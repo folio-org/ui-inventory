@@ -33,6 +33,7 @@
 * Instance: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3176.
 * Holdings: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3177.
 * Item: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3178.
+* Use the name CALL_NUMBERS_SHARED for the Shared facet instead of SHARED. Fixes UIIN-3254.
 * Adapt settings options for using number gernerator. Refs UIIN-2556.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
