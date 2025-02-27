@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { lowerFirst, upperFirst } from 'lodash';
 
 import {
   Accordion,
