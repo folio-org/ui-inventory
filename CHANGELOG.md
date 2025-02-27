@@ -36,6 +36,7 @@
 * Use the name CALL_NUMBERS_SHARED for the Shared facet instead of SHARED. Fixes UIIN-3254.
 * Adapt settings options for using number gernerator. Refs UIIN-2556.
 * Hide version history icon and settings if audit log feature is disabled. Refs UIIN-3231.
+* Update Inventory: Set records for deletion permission's effect on ‘Set for deletion’ checkbox in Instance Edit view. Refs UIIN-3260.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)

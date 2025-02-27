@@ -542,7 +542,8 @@ class InstanceForm extends React.Component {
                                 name="deleted"
                                 component={Checkbox}
                                 type="checkbox"
-                                disabled={this.isFieldBlocked('deleted')}
+                                disabled={this.isFieldBlocked('deleted')
+                                  || !this.props.stripes.hasPerm('ui-inventory.instance.set-records-for-deletion.execute')}
                                 onChange={() => this.onSetForDeletionFieldChange()}
                               />
                             </Col>
