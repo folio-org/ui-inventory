@@ -10,7 +10,8 @@ import {
 import { useOkapiKy } from '@folio/stripes/core';
 
 import {
-  NUMBER_GENERATOR_OPTIONS,
+  NUMBER_GENERATOR_OPTIONS_OFF,
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
   NUMBER_GENERATOR_SETTINGS_KEY,
   NUMBER_GENERATOR_SETTINGS_SCOPE,
 } from '../../../settings/NumberGeneratorSettings/constants';
@@ -24,9 +25,9 @@ const wrapper = ({ children }) => (
 );
 
 const NUMBER_GENERATOR = {
-  barcode: NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD,
-  accessionNumber: NUMBER_GENERATOR_OPTIONS.USE_BOTH,
-  callNumber: NUMBER_GENERATOR_OPTIONS.USE_BOTH,
+  barcode: NUMBER_GENERATOR_OPTIONS_OFF,
+  accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  callNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
   callNumberHoldings: '',
   useSharedNumber: false,
 };

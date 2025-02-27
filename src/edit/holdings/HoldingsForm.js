@@ -36,7 +36,10 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
-import { NUMBER_GENERATOR_OPTIONS } from '../../settings/NumberGeneratorSettings/constants';
+import {
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+} from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
@@ -299,7 +302,9 @@ class HoldingsForm extends React.Component {
 
     const holdingsPageType = initialValues.id ? 'edit' : 'create';
 
-    const showNumberGeneratorForCallNumber = numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR || numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS.USE_BOTH;
+    const showNumberGeneratorForCallNumber =
+      numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+      numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
 
     const shortcuts = [
       {
@@ -589,7 +594,7 @@ class HoldingsForm extends React.Component {
                           fullWidth
                           format={v => v?.trim()}
                           formatOnBlur
-                          disabled={this.isFieldBlocked('callNumber') || numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
+                          disabled={this.isFieldBlocked('callNumber') || numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
                         />
                         {showNumberGeneratorForCallNumber &&
                           <NumberGeneratorModalButton

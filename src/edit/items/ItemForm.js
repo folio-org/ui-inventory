@@ -50,7 +50,8 @@ import {
   ACCESSION_NUMBER_SETTING,
   BARCODE_SETTING,
   CALL_NUMBER_SETTING,
-  NUMBER_GENERATOR_OPTIONS,
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
 } from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
@@ -375,9 +376,15 @@ class ItemForm extends React.Component {
       },
     ];
 
-    const showNumberGeneratorForAccessionNumber = numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR || numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_BOTH;
-    const showNumberGeneratorForBarcode = numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR || numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_BOTH;
-    const showNumberGeneratorForCallNumber = numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR || numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_BOTH;
+    const showNumberGeneratorForAccessionNumber =
+      numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+      numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
+    const showNumberGeneratorForBarcode =
+      numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+      numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
+    const showNumberGeneratorForCallNumber =
+      numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+      numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
 
     const renderSharedNumberGenerator = () => {
       return (
@@ -525,7 +532,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
-                          disabled={numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
+                          disabled={numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
                           label={<FormattedMessage id="ui-inventory.barcode" />}
                           name="barcode"
                           id="additem_barcode"
@@ -549,7 +556,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
-                          disabled={numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
+                          disabled={numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
                           label={<FormattedMessage id="ui-inventory.accessionNumber" />}
                           name="accessionNumber"
                           id="additem_accessionnumber"
@@ -669,7 +676,7 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumber"
                           id="additem_callnumber"
                           component={TextArea}
-                          disabled={numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
+                          disabled={numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
                           format={v => v?.trim()}
                           formatOnBlur
                           rows={1}

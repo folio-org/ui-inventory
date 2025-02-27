@@ -11,7 +11,11 @@ import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { StripesContext } from '@folio/stripes/core';
 
 
-import { NUMBER_GENERATOR_OPTIONS } from '../../settings/NumberGeneratorSettings/constants';
+import {
+  NUMBER_GENERATOR_OPTIONS_OFF,
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+} from '../../settings/NumberGeneratorSettings/constants';
 import {
   renderWithIntl,
   translationsProperties,
@@ -153,13 +157,13 @@ describe('ItemForm', () => {
     });
   });
 
-  describe('Render ItemsForm with number generator settings "useGenerator"', () => {
+  describe('Render ItemsForm with number generator settings "onNotEditable"', () => {
     it('should render number generate buttons and disable their fields', () => {
       const { getByRole } = renderItemForm({
         numberGeneratorData: {
-          accessionNumber: NUMBER_GENERATOR_OPTIONS.USE_GENERATOR,
-          barcode: NUMBER_GENERATOR_OPTIONS.USE_GENERATOR,
-          callNumber: NUMBER_GENERATOR_OPTIONS.USE_GENERATOR,
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          barcode: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          callNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
           callNumberHoldings: '',
           useSharedNumber: false,
         }
@@ -176,13 +180,13 @@ describe('ItemForm', () => {
     });
   });
 
-  describe('Render ItemsForm with number generator settings "useBoth"', () => {
+  describe('Render ItemsForm with number generator settings "onEditable"', () => {
     it('should render number generate buttons and enable their fields', () => {
       const { getByRole } = renderItemForm({
         numberGeneratorData: {
-          accessionNumber: NUMBER_GENERATOR_OPTIONS.USE_BOTH,
-          barcode: NUMBER_GENERATOR_OPTIONS.USE_BOTH,
-          callNumber: NUMBER_GENERATOR_OPTIONS.USE_BOTH,
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          barcode: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          callNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
           callNumberHoldings: '',
           useSharedNumber: false,
         }
@@ -199,13 +203,13 @@ describe('ItemForm', () => {
     });
   });
 
-  describe('Render ItemsForm with number generator settings "useTextField"', () => {
+  describe('Render ItemsForm with number generator settings "off"', () => {
     it('should render number generate buttons and enable their fields', () => {
       const { queryByRole, getByRole } = renderItemForm({
         numberGeneratorData: {
-          accessionNumber: NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD,
-          barcode: NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD,
-          callNumber: NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD,
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_OFF,
+          barcode: NUMBER_GENERATOR_OPTIONS_OFF,
+          callNumber: NUMBER_GENERATOR_OPTIONS_OFF,
           callNumberHoldings: '',
           useSharedNumber: false,
         }
@@ -226,9 +230,9 @@ describe('ItemForm', () => {
     it('should render renderSharedNumberGenerator', () => {
       const { getAllByRole, queryByRole } = renderItemForm({
         numberGeneratorData: {
-          accessionNumber: NUMBER_GENERATOR_OPTIONS.USE_GENERATOR,
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
           barcode: '',
-          callNumber: NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD,
+          callNumber: NUMBER_GENERATOR_OPTIONS_OFF,
           callNumberHoldings: '',
           useSharedNumber: true,
         }
