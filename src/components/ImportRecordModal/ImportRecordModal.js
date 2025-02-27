@@ -14,9 +14,8 @@ import { Loading, Modal, Select, TextField, ModalFooter, Button } from '@folio/s
 import { buildQueryByIds } from '../../utils';
 
 // upper limit of how many job profiles may be retrieved for a given target.
-// a limit clause is necessary because a query like 
-// `query=id==A or id==B or ... Z` will only retrieve 10 (the default limit) 
-// even when more than 10 ids are specified.
+// a limit clause is required to return anything other than the default number
+// of records.
 //
 // 60 is not an arbitrary number; it's a back-of-the-envelope calculation
 // intended to make sure we stay under the query-string's length-limit.
