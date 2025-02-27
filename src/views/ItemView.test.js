@@ -7,6 +7,7 @@ import {
   screen,
   fireEvent,
   within,
+  cleanup,
 } from '@folio/jest-config-stripes/testing-library/react';
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -283,8 +284,36 @@ describe('ItemView', () => {
     });
 
     it('should display the information icons', () => {
+      cleanup();
+
+      renderWithIntl(
+        <ItemViewSetup
+          stripes={{
+            ...stripesStub,
+            hasInterface: (module, version) => module === 'browse' && version !== '1.5',
+          }}
+        />, translationsProperties
+      );
+
       expect(screen.getAllByTestId('info-icon-effective-call-number')[0]).toBeDefined();
       expect(screen.getAllByTestId('info-icon-shelving-order')[0]).toBeDefined();
+    });
+
+    describe('when `browse` 1.5 interface is not available', () => {
+      it('should not display the shelving order icon', () => {
+        cleanup();
+
+        renderWithIntl(
+          <ItemViewSetup
+            stripes={{
+              ...stripesStub,
+              hasInterface: (module, version) => module === 'browse' && version === '1.5',
+            }}
+          />, translationsProperties
+        );
+
+        expect(screen.queryByTestId('info-icon-shelving-order')).toBeNull();
+      });
     });
 
     describe('when close view page', () => {

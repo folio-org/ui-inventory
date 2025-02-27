@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [12.0.13] (IN PROGRESS)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v12.0.13)
+
+* Use the new call number browse functionality only if 1.5 `browse` interface is available, otherwise the old one. Refs UIIN-3228.
+
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
 

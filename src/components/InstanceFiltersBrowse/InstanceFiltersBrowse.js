@@ -35,9 +35,20 @@ const InstanceFiltersBrowse = props => {
   const stripes = useStripes();
   const qindex = query.qindex;
 
+  const hasBrowseInterface = stripes.hasInterface('browse', '1.5');
+
   const initialAccordionStates = useMemo(() => ({
-    [FACETS.SHARED]: false,
-    [FACETS.CALL_NUMBERS_HELD_BY]: false,
+    ...(hasBrowseInterface
+      ? ({
+        [FACETS.CALL_NUMBERS_SHARED]: false,
+        [FACETS._CALL_NUMBERS_HELD_BY]: false,
+        [FACETS.CALL_NUMBERS_EFFECTIVE_LOCATION]: false,
+      })
+      : ({
+        [FACETS.SHARED]: false,
+        [FACETS.CALL_NUMBERS_HELD_BY]: false,
+        [FACETS.EFFECTIVE_LOCATION]: false,
+      })),
     [FACETS.CLASSIFICATION_SHARED]: false,
     [FACETS.CONTRIBUTORS_SHARED]: false,
     [FACETS.CONTRIBUTORS_HELD_BY]: false,
@@ -47,7 +58,7 @@ const InstanceFiltersBrowse = props => {
     [FACETS.NAME_TYPE]: false,
     [FACETS.SUBJECT_SOURCE]: false,
     [FACETS.SUBJECT_TYPE]: false,
-  }), []);
+  }), [hasBrowseInterface]);
 
   const activeFilters = useMemo(() => omit(query || {}, ['qindex', 'query']), [query]);
 
@@ -100,10 +111,20 @@ const InstanceFiltersBrowse = props => {
       )}
       {Object.values(browseCallNumberOptions).includes(qindex) && (
         <>
-          {renderSharedFacet(FACETS.SHARED)}
-          {renderHeldByFacet(FACETS.CALL_NUMBERS_HELD_BY)}
+          {renderSharedFacet(
+            hasBrowseInterface
+              ? FACETS.CALL_NUMBERS_SHARED
+              : FACETS.SHARED
+          )}
+          {renderHeldByFacet(
+            hasBrowseInterface
+              ? FACETS._CALL_NUMBERS_HELD_BY
+              : FACETS.CALL_NUMBERS_HELD_BY
+          )}
           <EffectiveLocationFacet
-            name={FACETS.EFFECTIVE_LOCATION}
+            name={hasBrowseInterface
+              ? FACETS.CALL_NUMBERS_EFFECTIVE_LOCATION
+              : FACETS.EFFECTIVE_LOCATION}
             facetOptions={facetOptions}
             separator={isConsortiaEnv(stripes)}
             activeFilters={activeFilters}

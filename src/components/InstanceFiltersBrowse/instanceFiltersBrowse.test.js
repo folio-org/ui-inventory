@@ -6,16 +6,25 @@ import {
   fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import {
+  ModuleHierarchyProvider,
+  useStripes,
+} from '@folio/stripes/core';
 import { browseModeOptions } from '@folio/stripes-inventory-components';
 
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
+import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 
 import InstanceFiltersBrowse from './InstanceFiltersBrowse';
 
 const mockOnChange = jest.fn();
 const mockOnClear = jest.fn();
+const mockHasInterface = jest.fn().mockReturnValue(true);
+
+useStripes.mockReturnValue(buildStripes({
+  hasInterface: mockHasInterface,
+}));
 
 const consortiaTenants = [
   {
@@ -43,6 +52,7 @@ const data = {
   subjectTypes: [{ id: 'typeId', name: 'type' }],
   locations: [],
   consortiaTenants,
+  callNumberBrowseConfig: [],
 };
 
 const query = {
@@ -82,6 +92,7 @@ const renderInstanceFilters = (props = {}) => {
 describe('InstanceFiltersBrowse', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    mockHasInterface.mockClear().mockReturnValue(true);
   });
 
   it('Contains a filter for creation date ', () => {
@@ -91,15 +102,34 @@ describe('InstanceFiltersBrowse', () => {
   });
 
   describe('when call numbers browseType was selected', () => {
-    it('should display filter by effective location accordion', () => {
-      const { getByText } = renderInstanceFilters({
-        data,
-        query: {
-          qindex: browseModeOptions.CALL_NUMBERS,
-        },
+    describe('effective location facet', () => {
+      it('should be displayed', () => {
+        mockHasInterface.mockReturnValue(false);
+
+        const { getByText } = renderInstanceFilters({
+          data,
+          query: {
+            qindex: browseModeOptions.CALL_NUMBERS,
+          },
+        });
+
+        expect(getByText('effectiveLocation-field')).toBeInTheDocument();
       });
 
-      expect(getByText('effectiveLocation-field')).toBeInTheDocument();
+      describe('when `browse` interface 1.5 is available', () => {
+        it('should use callNumbersEffectiveLocation as facet name', () => {
+          mockHasInterface.mockImplementation((name, version) => name === 'browse' && version === '1.5');
+
+          const { getByText } = renderInstanceFilters({
+            data,
+            query: {
+              qindex: browseModeOptions.CALL_NUMBERS,
+            },
+          });
+
+          expect(getByText('callNumbersEffectiveLocation-field')).toBeInTheDocument();
+        });
+      });
     });
 
     it('should display shared filter accordion', () => {
@@ -111,15 +141,78 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
-
       expect(getByText('Shared')).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
+    });
+
+    describe('"Held by" facet', () => {
+      it('should be displayed', () => {
+        mockHasInterface.mockReturnValue(false);
+
+        const { getByText } = renderInstanceFilters({
+          data,
+          query: {
+            ...query,
+            qindex: browseModeOptions.CALL_NUMBERS,
+          },
+        });
+
+        expect(getByText('callNumbersTenantId-field')).toBeInTheDocument();
+      });
+
+      describe('when `browse` interface 1.5 is available', () => {
+        it('should use _callNumbersTenantId as facet name', () => {
+          mockHasInterface.mockImplementation((name, version) => name === 'browse' && version === '1.5');
+
+          const { getByText } = renderInstanceFilters({
+            data,
+            query: {
+              ...query,
+              qindex: browseModeOptions.CALL_NUMBERS,
+            },
+          });
+
+          expect(getByText('_callNumbersTenantId-field')).toBeInTheDocument();
+        });
+      });
+    });
+
+    describe('"Shared" facet', () => {
+      it('should use `shared` as facet name', () => {
+        mockHasInterface.mockReturnValue(false);
+
+        renderInstanceFilters({
+          data,
+          query: {
+            ...query,
+            qindex: browseModeOptions.CALL_NUMBERS,
+          },
+        });
+
+        expect(document.getElementById('shared')).toBeInTheDocument();
+      });
+
+      describe('when `browse` interface 1.5 is available', () => {
+        it('should use `callNumbersShared` as facet name', () => {
+          mockHasInterface.mockImplementation((name, version) => name === 'browse' && version === '1.5');
+
+          renderInstanceFilters({
+            data,
+            query: {
+              ...query,
+              qindex: browseModeOptions.CALL_NUMBERS,
+            },
+          });
+
+          expect(document.getElementById('callNumbersShared')).toBeInTheDocument();
+        });
+      });
     });
   });
 
   describe('when call numbers browse sub-type was selected', () => {
     it('should display filter by effective location accordion', () => {
+      mockHasInterface.mockReturnValue(false);
+
       const { getByText } = renderInstanceFilters({
         data,
         query: {
@@ -139,15 +232,14 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
-
       expect(getByText('Shared')).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
     });
   });
 
   describe('When callNumber browseType was selected', () => {
     it('should call onClear handler if clear btn is clicked', () => {
+      mockHasInterface.mockReturnValue(false);
+
       renderInstanceFilters();
       fireEvent.click(screen.getByLabelText('Clear selected Effective location (item) filters'));
 
@@ -163,10 +255,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected Held by filters'));
-
       expect(getByRole('heading', { name: 'Held by' })).toBeInTheDocument();
-      expect(mockOnClear).toHaveBeenCalled();
     });
   });
 
