@@ -13,6 +13,7 @@ import {
 import { OnChange } from 'react-final-form-listeners';
 import { withRouter } from 'react-router';
 
+import { NumberGeneratorModalButton } from '@folio/service-interaction';
 import {
   Paneset,
   Pane,
@@ -45,6 +46,13 @@ import {
 } from '@folio/stripes/smart-components';
 import { effectiveCallNumber } from '@folio/stripes/util';
 
+import {
+  ACCESSION_NUMBER_SETTING,
+  BARCODE_SETTING,
+  CALL_NUMBER_SETTING,
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+} from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
@@ -251,6 +259,8 @@ class ItemForm extends React.Component {
 
   render() {
     const {
+      form: { change },
+      numberGeneratorData,
       onCancel,
       initialValues,
       instance,
@@ -365,6 +375,37 @@ class ItemForm extends React.Component {
         handler: handleKeyCommand(() => history.push('/inventory')),
       },
     ];
+
+    const showNumberGeneratorForAccessionNumber =
+      numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+      numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
+    const showNumberGeneratorForBarcode =
+      numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+      numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
+    const showNumberGeneratorForCallNumber =
+      numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+      numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
+
+    const renderSharedNumberGenerator = () => {
+      return (
+        <NumberGeneratorModalButton
+          buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />}
+          callback={(generated) => {
+            change('accessionNumber', generated);
+            change('itemLevelCallNumber', generated);
+          }}
+          generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />}
+          generator="inventory_accessionNumber"
+          id="inventoryAccessionNumberAndCallNumber"
+          modalProps={{
+            label: <FormattedMessage id="ui-inventory.numberGenerator.accessionAndCallNumberGenerator" />
+          }}
+          renderTop={() => (
+            <p><FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumberWarning" /></p>
+          )}
+        />
+      );
+    };
 
     return (
       <form
@@ -491,6 +532,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
+                          disabled={numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
                           label={<FormattedMessage id="ui-inventory.barcode" />}
                           name="barcode"
                           id="additem_barcode"
@@ -499,15 +541,42 @@ class ItemForm extends React.Component {
                           autoFocus
                           fullWidth
                         />
+                        {showNumberGeneratorForBarcode &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />}
+                            callback={(generated) => change('barcode', generated)}
+                            id="inventoryBarcode"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />}
+                            generator="inventory_itemBarcode"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field
+                          disabled={numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
                           label={<FormattedMessage id="ui-inventory.accessionNumber" />}
                           name="accessionNumber"
                           id="additem_accessionnumber"
                           component={TextField}
                           fullWidth
                         />
+                        {numberGeneratorData?.useSharedNumber ?
+                          renderSharedNumberGenerator() :
+                          showNumberGeneratorForAccessionNumber &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
+                            callback={(generated) => change('accessionNumber', generated)}
+                            id="inventoryAccessionNumber"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
+                            generator="inventory_accessionNumber"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field
@@ -607,11 +676,26 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumber"
                           id="additem_callnumber"
                           component={TextArea}
+                          disabled={numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
                           format={v => v?.trim()}
                           formatOnBlur
                           rows={1}
                           fullWidth
                         />
+                        {numberGeneratorData?.useSharedNumber ?
+                          renderSharedNumberGenerator() :
+                          showNumberGeneratorForCallNumber &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            callback={(generated) => change('itemLevelCallNumber', generated)}
+                            id="inventoryCallNumber"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            generator="inventory_callNumber"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field
@@ -927,6 +1011,7 @@ ItemForm.propTypes = {
   initialValues: PropTypes.object,
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object,
+  numberGeneratorData: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
   setKeepEditing: PropTypes.func,

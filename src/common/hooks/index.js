@@ -12,4 +12,5 @@ export { default as useAllowedJobProfiles } from './useAllowedJobProfiles';
 
 export * from './useConfirmationModal';
 export * from './useMoveItemsMutation';
+export * from './useNumberGeneratorOptions';
 export default {};

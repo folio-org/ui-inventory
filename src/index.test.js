@@ -6,6 +6,10 @@ import { EVENTS } from './constants';
 
 jest.mock('./storage');
 
+jest.mock('@folio/service-interaction', () => ({
+  NumberGeneratorModalButton: () => <div>NumberGeneratorModalButton</div>
+}));
+
 const searchTermsExpectations = () => {
   expect(removeItem).toHaveBeenNthCalledWith(1, '@folio/inventory/search.instances.lastSearch');
   expect(removeItem).toHaveBeenNthCalledWith(2, '@folio/inventory/search.holdings.lastSearch');

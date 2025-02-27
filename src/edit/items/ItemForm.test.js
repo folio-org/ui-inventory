@@ -10,6 +10,12 @@ import '../../../test/jest/__mock__';
 import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { StripesContext } from '@folio/stripes/core';
 
+
+import {
+  NUMBER_GENERATOR_OPTIONS_OFF,
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+} from '../../settings/NumberGeneratorSettings/constants';
 import {
   renderWithIntl,
   translationsProperties,
@@ -148,6 +154,93 @@ describe('ItemForm', () => {
       fireEvent.click(getByRole('button', { name: 'Save & keep editing' }));
 
       expect(mockSetKeepEditing).toHaveBeenCalledWith(true);
+    });
+  });
+
+  describe('Render ItemsForm with number generator settings "onNotEditable"', () => {
+    it('should render number generate buttons and disable their fields', () => {
+      const { getByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          barcode: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          callNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          callNumberHoldings: '',
+          useSharedNumber: false,
+        }
+      });
+
+      expect(getByRole('button', { name: 'Generate accession number' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Accession number' })).toBeDisabled();
+
+      expect(getByRole('button', { name: 'Generate barcode' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Barcode' })).toBeDisabled();
+
+      expect(getByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Call number' })).toBeDisabled();
+    });
+  });
+
+  describe('Render ItemsForm with number generator settings "onEditable"', () => {
+    it('should render number generate buttons and enable their fields', () => {
+      const { getByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          barcode: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          callNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          callNumberHoldings: '',
+          useSharedNumber: false,
+        }
+      });
+
+      expect(getByRole('button', { name: 'Generate accession number' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Accession number' })).toBeEnabled();
+
+      expect(getByRole('button', { name: 'Generate barcode' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Barcode' })).toBeEnabled();
+
+      expect(getByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Call number' })).toBeEnabled();
+    });
+  });
+
+  describe('Render ItemsForm with number generator settings "off"', () => {
+    it('should render number generate buttons and enable their fields', () => {
+      const { queryByRole, getByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_OFF,
+          barcode: NUMBER_GENERATOR_OPTIONS_OFF,
+          callNumber: NUMBER_GENERATOR_OPTIONS_OFF,
+          callNumberHoldings: '',
+          useSharedNumber: false,
+        }
+      });
+
+      expect(queryByRole('button', { name: 'Generate accession number' })).not.toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Accession number' })).toBeEnabled();
+
+      expect(queryByRole('button', { name: 'Generate barcode' })).not.toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Barcode' })).toBeEnabled();
+
+      expect(queryByRole('button', { name: 'Generate call number' })).not.toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Call number' })).toBeEnabled();
+    });
+  });
+
+  describe('Render ItemsForm with number generator settings "useSharedNumber" true', () => {
+    it('should render renderSharedNumberGenerator', () => {
+      const { getAllByRole, queryByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          barcode: '',
+          callNumber: NUMBER_GENERATOR_OPTIONS_OFF,
+          callNumberHoldings: '',
+          useSharedNumber: true,
+        }
+      });
+
+      expect(getAllByRole('button', { name: 'Generate accession and call numbers' })).toHaveLength(2);
+      expect(queryByRole('button', { name: 'Generate accession number' })).not.toBeInTheDocument();
+      expect(queryByRole('button', { name: 'Generate call number' })).not.toBeInTheDocument();
     });
   });
 });

@@ -12,7 +12,10 @@ import {
 } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
-import { useInstance } from '../../common/hooks';
+import {
+  useInstance,
+  useNumberGeneratorOptions,
+} from '../../common/hooks';
 import { useCallout } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
 import { switchAffiliation } from '../../utils';
@@ -27,6 +30,7 @@ const CreateHolding = ({
 }) => {
   const callout = useCallout();
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
   const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
@@ -68,6 +72,7 @@ const CreateHolding = ({
       form={instance.id}
       id={instance.id}
       initialValues={initialValues}
+      numberGeneratorData={numberGeneratorData}
       onSubmit={onSubmit}
       onCancel={onCancel}
       okapi={stripes.okapi}
