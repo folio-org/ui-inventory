@@ -604,7 +604,7 @@ class HoldingsForm extends React.Component {
                             generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
                             generator="inventory_callNumber"
                             modalProps={{
-                              label: <FormattedMessage id="ui-inventory.numberGenerator.callNumberGenerator" />
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />
                             }}
                           />
                         }
