@@ -290,7 +290,7 @@ describe('InstanceDetails', () => {
   });
 
   describe('when version history is disabled', () => {
-    beforeEach(async () => {
+    it('should not show the version history button', async () => {
       useAuditSettings.mockClear().mockReturnValue({
         settings: [{
           key: 'enabled',
@@ -300,9 +300,7 @@ describe('InstanceDetails', () => {
       });
 
       await act(async () => { renderInstanceDetails(); });
-    });
 
-    it('should not show the version history button', () => {
       expect(screen.queryByRole('button', { name: /version history/i })).not.toBeInTheDocument();
     });
   });
