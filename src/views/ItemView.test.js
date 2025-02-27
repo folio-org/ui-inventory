@@ -20,7 +20,11 @@ import {
 } from '@folio/stripes/core';
 import { renderWithIntl, translationsProperties } from '../../test/jest/helpers';
 
-import { useHoldingMutation, useUpdateOwnership } from '../hooks';
+import {
+  useHoldingMutation,
+  useUpdateOwnership,
+  useAuditSettings,
+} from '../hooks';
 import { UpdateItemOwnershipModal } from '../components';
 import ItemView from './ItemView';
 
@@ -37,6 +41,13 @@ jest.mock('../hooks', () => ({
   ...jest.requireActual('../hooks'),
   useHoldingMutation: jest.fn().mockReturnValue({ mutateHolding: jest.fn().mockResolvedValue({}) }),
   useUpdateOwnership: jest.fn().mockReturnValue({ updateOwnership: jest.fn() }),
+  useAuditSettings: jest.fn().mockReturnValue({
+    settings: [{
+      key: 'enabled',
+      value: true,
+    }],
+    isSettingsLoading: false,
+  }),
 }));
 
 const mockMutate = jest.fn().mockResolvedValue({ json: () => ({ id: 'testId' }) });
@@ -150,6 +161,7 @@ const defaultProps = {
       records: [
         {
           id: 1,
+          source: 'FOLIO',
         }
       ],
     },
@@ -338,6 +350,22 @@ describe('ItemView', () => {
 
         expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();
       });
+    });
+  });
+
+  describe('when version history is disabled', () => {
+    it('should not show the version history button', () => {
+      useAuditSettings.mockClear().mockReturnValue({
+        settings: [{
+          key: 'enabled',
+          value: false,
+        }],
+        isSettingsLoading: false,
+      });
+
+      renderWithIntl(<ItemViewSetup />, translationsProperties);
+
+      expect(screen.queryByRole('button', { name: /version history/i })).not.toBeInTheDocument();
     });
   });
 
