@@ -15,6 +15,7 @@ import querystring from 'query-string';
 import {
   TitleManager,
   useNamespace,
+  useStripes,
 } from '@folio/stripes/core';
 import {
   PersistedPaneset,
@@ -34,7 +35,10 @@ import {
   BrowseResultsPane,
   SearchModeNavigation,
 } from '../../components';
-import { browseInstanceIndexes } from '../../filterConfig';
+import {
+  _browseInstanceIndexes,
+  browseInstanceIndexes,
+} from '../../filterConfig';
 import {
   useBrowseValidation,
   useInventoryBrowse,
@@ -48,6 +52,7 @@ const BrowseInventory = () => {
   const location = useLocation();
   const intl = useIntl();
   const [namespace] = useNamespace();
+  const stripes = useStripes();
   const resetFacetStates = useResetFacetStates(namespace);
   const {
     getLastSearch,
@@ -119,7 +124,11 @@ const BrowseInventory = () => {
   const searchableIndexesPlaceholder = intl.formatMessage({ id: 'ui-inventory.browse.searchableIndexesPlaceholder' });
   const isResetButtonDisabled = !location.search && !searchQuery;
 
-  const searchableOptions = browseInstanceIndexes.map((searchableIndex) => {
+  const browseIndexes = stripes.hasInterface('browse', '1.5')
+    ? _browseInstanceIndexes
+    : browseInstanceIndexes;
+
+  const searchableOptions = browseIndexes.map((searchableIndex) => {
     if (searchableIndex.subIndexes) {
       return (
         <optgroup

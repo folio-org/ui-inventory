@@ -9,7 +9,10 @@ import {
   useLocation,
 } from 'react-router-dom';
 
-import { useNamespace } from '@folio/stripes/core';
+import {
+  useNamespace,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   MCLPagingTypes,
   MultiColumnList,
@@ -53,6 +56,7 @@ const BrowseResultsList = ({
   filters,
 }) => {
   const [namespace] = useNamespace();
+  const stripes = useStripes();
   const data = useContext(DataContext);
   const { search } = useLocation();
   const {
@@ -65,12 +69,12 @@ const BrowseResultsList = ({
   const listId = `browse-results-list-${browseOption}`;
 
   const isSelected = useCallback(({ item, rowIndex }) => {
-    if (isRowPreventsClick(item, browseOption)) return false;
+    if (isRowPreventsClick(item, browseOption, stripes)) return false;
 
     const itemIndex = itemToView?.selector && getItemToViewIndex(itemToView.selector);
 
     return itemIndex === rowIndex;
-  }, [browseOption, itemToView]);
+  }, [browseOption, itemToView, stripes]);
 
   return (
     <MultiColumnList
@@ -78,7 +82,7 @@ const BrowseResultsList = ({
       id={listId}
       totalCount={totalRecords}
       contentData={browseData}
-      formatter={getBrowseResultsFormatter({ data, browseOption, filters, namespace })}
+      formatter={getBrowseResultsFormatter({ data, browseOption, filters, namespace, stripes })}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
       isSelected={isSelected}

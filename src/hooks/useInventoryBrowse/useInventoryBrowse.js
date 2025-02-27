@@ -8,6 +8,7 @@ import noop from 'lodash/noop';
 import {
   useNamespace,
   useOkapiKy,
+  useStripes,
 } from '@folio/stripes/core';
 import {
   buildFilterQuery,
@@ -23,25 +24,29 @@ import {
 } from '../../constants';
 import {
   INITIAL_SEARCH_PARAMS_MAP,
+  _INITIAL_SEARCH_PARAMS_MAP,
   PAGINATION_SEARCH_PARAMS_MAP,
+  _PAGINATION_SEARCH_PARAMS_MAP,
   PATH_MAP,
+  _PATH_MAP,
   PRECEDING_RECORDS_COUNT,
   regExp,
+  _regExp,
 } from './constants';
 
 const isPrevious = (direction) => direction === PAGE_DIRECTIONS.prev;
 
-const getInitialPageQuery = (query, qindex) => {
-  return regExp.test(query)
+const getInitialPageQuery = (regex, initialSearchParams) => (query, qindex) => {
+  return regex.test(query)
     ? query
     : [
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}>="${query.replace(/"/g, '\\"')}"`,
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}<"${query.replace(/"/g, '\\"')}"`
+      `${initialSearchParams[qindex]}>="${query.replace(/"/g, '\\"')}"`,
+      `${initialSearchParams[qindex]}<"${query.replace(/"/g, '\\"')}"`
     ].join(' or ');
 };
 
-const getUpdatedPageQuery = (direction, anchor) => (_query, qindex) => {
-  const param = PAGINATION_SEARCH_PARAMS_MAP[qindex];
+const getUpdatedPageQuery = (direction, anchor, paginationSearchParams) => (_query, qindex) => {
+  const param = paginationSearchParams[qindex];
 
   return `${param} ${isPrevious(direction) ? '<' : '>'} "${anchor.replace(/"/g, '\\"')}"`;
 };
@@ -52,9 +57,22 @@ const useInventoryBrowse = ({
   options = {},
 }) => {
   const ky = useOkapiKy();
+  const stripes = useStripes();
   const [namespace] = useNamespace();
   const prevSearchIndex = useRef();
   const { pageConfig = [], setPageConfig = noop } = pageParams;
+
+  let regex = regExp;
+  let endpoints = PATH_MAP;
+  let initialSearchParams = INITIAL_SEARCH_PARAMS_MAP;
+  let paginationSearchParams = PAGINATION_SEARCH_PARAMS_MAP;
+
+  if (stripes.hasInterface('browse', '1.5')) {
+    regex = _regExp;
+    endpoints = _PATH_MAP;
+    initialSearchParams = _INITIAL_SEARCH_PARAMS_MAP;
+    paginationSearchParams = _PAGINATION_SEARCH_PARAMS_MAP;
+  }
 
   const normalizedFilters = {
     ...Object.entries(filters).reduce((acc, [key, value]) => ({
@@ -73,13 +91,13 @@ const useInventoryBrowse = ({
   const shouldAddCallNumberType = filters.query && INDEXES_WITH_CALL_NUMBER_TYPE_PARAM.includes(filters.qindex);
 
   const baseSearchParams = {
-    highlightMatch: !!searchQuery && !regExp.test(searchQuery),
+    highlightMatch: !!searchQuery && !regex.test(searchQuery),
     limit: BROWSE_RESULTS_COUNT,
     precedingRecordsCount: PRECEDING_RECORDS_COUNT,
     ...(shouldAddCallNumberType && { callNumberType: qindex }),
   };
 
-  const path = PATH_MAP[qindex];
+  const path = endpoints[qindex];
   const hasFilters = getFiltersCount(otherFilters) > 0;
   const hasSearchParameters = getFiltersCount(filters) > 0;
 
@@ -101,7 +119,9 @@ const useInventoryBrowse = ({
           qindex,
           ...otherFilters,
         },
-        pageNumber === 0 ? getInitialPageQuery : getUpdatedPageQuery(direction, anchor),
+        pageNumber === 0
+          ? getInitialPageQuery(regex, initialSearchParams)
+          : getUpdatedPageQuery(direction, anchor, paginationSearchParams),
         undefined,
         false,
       );
