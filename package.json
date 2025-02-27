@@ -1052,6 +1052,7 @@
     "@folio/stripes-components": "^12.2.2",
     "@folio/stripes-connect": "^9.2.0",
     "@folio/stripes-core": "^10.2.1",
+    "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^1.1.0",
     "@folio/stripes-smart-components": "^9.2.1",
@@ -1097,6 +1098,7 @@
   "peerDependencies": {
     "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^9.2.2",
+    "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^1.1.0",
     "react": "^18.2.0",

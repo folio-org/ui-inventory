@@ -46,6 +46,12 @@ import {
 } from '@folio/stripes/smart-components';
 import { effectiveCallNumber } from '@folio/stripes/util';
 
+import {
+  ACCESSION_NUMBER_SETTING,
+  BARCODE_SETTING,
+  CALL_NUMBER_SETTING,
+  NUMBER_GENERATOR_OPTIONS,
+} from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
@@ -369,6 +375,31 @@ class ItemForm extends React.Component {
       },
     ];
 
+    const showNumberGeneratorForAccessionNumber = numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR || numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_BOTH;
+    const showNumberGeneratorForBarcode = numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR || numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_BOTH;
+    const showNumberGeneratorForCallNumber = numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR || numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_BOTH;
+
+    const renderSharedNumberGenerator = () => {
+      return (
+        <NumberGeneratorModalButton
+          buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />}
+          callback={(generated) => {
+            change('accessionNumber', generated);
+            change('itemLevelCallNumber', generated);
+          }}
+          generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />}
+          generator="inventory_accessionNumber"
+          id="inventoryAccessionNumberAndCallNumber"
+          modalProps={{
+            label: <FormattedMessage id="ui-inventory.numberGenerator.accessionAndCallNumberGenerator" />
+          }}
+          renderTop={() => (
+            <p><FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumberWarning" /></p>
+          )}
+        />
+      );
+    };
+
     return (
       <form
         data-test-item-page-type={initialValues.id ? 'edit' : 'create'}
@@ -494,7 +525,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
-                          disabled={numberGeneratorData?.barcode === 'useGenerator'}
+                          disabled={numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
                           label={<FormattedMessage id="ui-inventory.barcode" />}
                           name="barcode"
                           id="additem_barcode"
@@ -503,10 +534,7 @@ class ItemForm extends React.Component {
                           autoFocus
                           fullWidth
                         />
-                        {(
-                          numberGeneratorData?.barcode === 'useGenerator' ||
-                          numberGeneratorData?.barcode === 'useBoth'
-                        ) &&
+                        {showNumberGeneratorForBarcode &&
                           <NumberGeneratorModalButton
                             buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />}
                             callback={(generated) => change('barcode', generated)}
@@ -521,17 +549,16 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
-                          disabled={numberGeneratorData?.accessionNumber === 'useGenerator'}
+                          disabled={numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
                           label={<FormattedMessage id="ui-inventory.accessionNumber" />}
                           name="accessionNumber"
                           id="additem_accessionnumber"
                           component={TextField}
                           fullWidth
                         />
-                        {(
-                          numberGeneratorData?.accessionNumber === 'useGenerator' ||
-                          numberGeneratorData?.accessionNumber === 'useBoth'
-                        ) &&
+                        {numberGeneratorData?.useSharedNumber ?
+                          renderSharedNumberGenerator() :
+                          showNumberGeneratorForAccessionNumber &&
                           <NumberGeneratorModalButton
                             buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
                             callback={(generated) => change('accessionNumber', generated)}
@@ -642,16 +669,15 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumber"
                           id="additem_callnumber"
                           component={TextArea}
-                          disabled={numberGeneratorData?.callNumber === 'useGenerator'}
+                          disabled={numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
                           format={v => v?.trim()}
                           formatOnBlur
                           rows={1}
                           fullWidth
                         />
-                        {(
-                          numberGeneratorData?.callNumber === 'useGenerator' ||
-                          numberGeneratorData?.callNumber === 'useBoth'
-                        ) &&
+                        {numberGeneratorData?.useSharedNumber ?
+                          renderSharedNumberGenerator() :
+                          showNumberGeneratorForCallNumber &&
                           <NumberGeneratorModalButton
                             buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
                             callback={(generated) => change('itemLevelCallNumber', generated)}

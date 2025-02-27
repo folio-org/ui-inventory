@@ -36,6 +36,7 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
+import { NUMBER_GENERATOR_OPTIONS } from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
@@ -297,6 +298,8 @@ class HoldingsForm extends React.Component {
     ) : [];
 
     const holdingsPageType = initialValues.id ? 'edit' : 'create';
+
+    const showNumberGeneratorForCallNumber = numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR || numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS.USE_BOTH;
 
     const shortcuts = [
       {
@@ -586,12 +589,9 @@ class HoldingsForm extends React.Component {
                           fullWidth
                           format={v => v?.trim()}
                           formatOnBlur
-                          disabled={this.isFieldBlocked('callNumber') || numberGeneratorData?.callNumberHoldings === 'useGenerator'}
+                          disabled={this.isFieldBlocked('callNumber') || numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS.USE_GENERATOR}
                         />
-                        {(
-                          numberGeneratorData?.callNumberHoldings === 'useGenerator' ||
-                          numberGeneratorData?.callNumberHoldings === 'useBoth'
-                        ) &&
+                        {showNumberGeneratorForCallNumber &&
                           <NumberGeneratorModalButton
                             buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
                             callback={(generated) => change('callNumber', generated)}

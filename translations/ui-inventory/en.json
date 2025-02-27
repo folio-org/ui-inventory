@@ -361,6 +361,8 @@
   "numberGenerator.accessionNumber": "Accession number",
   "numberGenerator.callNumber": "Call number",
   "numberGenerator.generateAccessionNumber": "Generate accession number",
+  "numberGenerator.generateAccessionAndCallNumber": "Generate accession and call numbers",
+  "numberGenerator.generateAccessionAndCallNumberWarning": "Both accession number and call number will be filled from this action, using a sequence from the Inventory: Accession number generator.",
   "numberGenerator.generateBarcode": "Generate barcode",
   "numberGenerator.generateCallNumber": "Generate call number",
   "numberGenerator.setManually": "Number generator off: The {number} can be filled manually only.",

@@ -10,6 +10,8 @@ import '../../../test/jest/__mock__';
 
 import { StripesContext } from '@folio/stripes/core';
 
+import { NUMBER_GENERATOR_OPTIONS } from '../../settings/NumberGeneratorSettings/constants';
+
 import {
   renderWithIntl,
   translationsProperties,
@@ -186,6 +188,57 @@ describe('HoldingsForm', () => {
       fireEvent.click(getByRole('button', { name: 'Save & keep editing' }));
 
       expect(mockSetKeepEditing).toHaveBeenCalledWith(true);
+    });
+  });
+
+  describe('Render HoldingsForm with number generator settings "useGenerator"', () => {
+    it('should render generate call number button and disable call number field', () => {
+      const { getByRole } = renderHoldingsForm({
+        numberGeneratorData: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: '',
+          callNumberHoldings: NUMBER_GENERATOR_OPTIONS.USE_GENERATOR,
+          useSharedNumber: false,
+        }
+      });
+
+      expect(getByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Call number' })).toBeDisabled();
+    });
+  });
+
+  describe('Render HoldingsForm with number generator settings "useBoth"', () => {
+    it('should render generate call number button and enable call number field', () => {
+      const { getByRole } = renderHoldingsForm({
+        numberGeneratorData: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: '',
+          callNumberHoldings: NUMBER_GENERATOR_OPTIONS.USE_BOTH,
+          useSharedNumber: true,
+        }
+      });
+
+      expect(getByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Call number' })).toBeEnabled();
+    });
+  });
+
+  describe('Render HoldingsForm with number generator settings "useTextField"', () => {
+    it('should not render Generate call number button and enable call number field', () => {
+      const { queryByRole, getByRole } = renderHoldingsForm({
+        numberGeneratorData: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: '',
+          callNumberHoldings: NUMBER_GENERATOR_OPTIONS.USE_TEXT_FIELD,
+          useSharedNumber: true,
+        }
+      });
+
+      expect(queryByRole('button', { name: 'Generate call number' })).not.toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Call number' })).toBeEnabled();
     });
   });
 });
