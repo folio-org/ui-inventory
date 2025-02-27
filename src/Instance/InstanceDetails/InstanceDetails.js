@@ -139,7 +139,7 @@ const InstanceDetails = forwardRef(({
         )}
       </PaneMenu>
     );
-  }, [tagsEnabled, tags, intl, isVersionHistoryOpen]);
+  }, [tagsEnabled, tags, intl, isVersionHistoryOpen, showVersionHistoryButton]);
 
   const updatePrevInstanceId = id => {
     prevInstanceId.current = id;

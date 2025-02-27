@@ -45,6 +45,7 @@ import {
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
+  VERSION_HISTORY_ENABLED_SETTING,
 } from './constants';
 import { removeItem } from './storage';
 
@@ -1122,4 +1123,8 @@ export const omitCurrentAndCentralTenants = (stripes) => {
   const centralTenantId = stripes.user?.user?.consortium?.centralTenantId;
 
   return tenants?.filter(tenant => tenant.id !== currentTenantId && tenant.id !== centralTenantId);
+};
+
+export const getIsVersionHistoryEnabled = settings => {
+  return settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
 };

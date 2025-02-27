@@ -16,8 +16,8 @@ import ViewHoldingsRecord from '../ViewHoldingsRecord';
 import {
   INVENTORY_AUDIT_GROUP,
   UPDATE_OWNERSHIP_API,
-  VERSION_HISTORY_ENABLED_SETTING,
 } from '../constants';
+import { getIsVersionHistoryEnabled } from '../utils';
 
 const ViewHoldingRoute = () => {
   const { id: instanceId, holdingsrecordid } = useParams();
@@ -28,7 +28,7 @@ const ViewHoldingRoute = () => {
   const { updateOwnership } = useUpdateOwnership(UPDATE_OWNERSHIP_API.HOLDINGS);
 
   const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
-  const isVersionHistoryEnabled = settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
+  const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
   return (
     <ViewHoldingsRecord

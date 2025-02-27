@@ -50,10 +50,11 @@ import CallNumberBrowseSettings from '../CallNumberBrowseSettings';
 import NumberGeneratorSettings from '../NumberGeneratorSettings';
 import {
   flattenCentralTenantPermissions,
+  getIsVersionHistoryEnabled,
   isUserInConsortiumMode,
 } from '../../utils';
 import { useAuditSettings } from '../../hooks';
-import { INVENTORY_AUDIT_GROUP, VERSION_HISTORY_ENABLED_SETTING } from '../../constants';
+import { INVENTORY_AUDIT_GROUP } from '../../constants';
 
 const InventorySettings = (props) => {
   const stripes = useStripes();
@@ -80,7 +81,7 @@ const InventorySettings = (props) => {
 
   const { settings, isSettingsLoading } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
 
-  const isVersionHistoryEnabled = settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
+  const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
   const addPerm = permission => {
     return stripes.hasPerm(permission) ? permission : 'ui-inventory.settings.list.view';

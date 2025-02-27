@@ -90,6 +90,7 @@ import {
   switchAffiliation,
   isInstanceShadowCopy,
   omitCurrentAndCentralTenants,
+  getIsVersionHistoryEnabled,
 } from '../utils';
 import withLocation from '../withLocation';
 import {
@@ -104,7 +105,6 @@ import {
   ITEM_ACCORDION_LABELS,
   UPDATE_OWNERSHIP_API,
   INVENTORY_AUDIT_GROUP,
-  VERSION_HISTORY_ENABLED_SETTING,
   SOURCE_VALUES,
 } from '../constants';
 import ItemStatus from './ItemStatus';
@@ -176,7 +176,7 @@ const ItemView = props => {
   const { updateOwnership } = useUpdateOwnership(UPDATE_OWNERSHIP_API.ITEMS);
 
   const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
-  const isVersionHistoryEnabled = settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
+  const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
   useEffect(() => {
     if (checkIfUserInMemberTenant(stripes)) {
