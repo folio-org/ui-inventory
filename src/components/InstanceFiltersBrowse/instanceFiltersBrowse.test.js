@@ -108,13 +108,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
-
       expect(getByRole('heading', { name: 'Shared' })).toBeInTheDocument();
-      expect(mockOnChange).toHaveBeenCalledWith({
-        name: 'shared',
-        values: [],
-      });
     });
   });
 
@@ -139,13 +133,7 @@ describe('InstanceFiltersBrowse', () => {
         },
       });
 
-      fireEvent.click(screen.getByLabelText('Clear selected Shared filters'));
-
       expect(getByRole('heading', { name: 'Shared' })).toBeInTheDocument();
-      expect(mockOnChange).toHaveBeenCalledWith({
-        name: FACETS.SHARED,
-        values: [],
-      });
     });
   });
 

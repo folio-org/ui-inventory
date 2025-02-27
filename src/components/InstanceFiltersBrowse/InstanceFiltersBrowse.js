@@ -32,7 +32,7 @@ const InstanceFiltersBrowse = props => {
   const qindex = query.qindex;
 
   const initialFacetStates = {
-    [FACETS.SHARED]: false,
+    [FACETS.CALL_NUMBERS_SHARED]: false,
     [FACETS.CALL_NUMBERS_HELD_BY]: false,
     [FACETS.CLASSIFICATION_SHARED]: false,
     [FACETS.CONTRIBUTORS_SHARED]: false,
@@ -88,7 +88,7 @@ const InstanceFiltersBrowse = props => {
       )}
       {Object.values(browseCallNumberOptions).includes(qindex) && (
         <>
-          {renderSharedFacet(FACETS.SHARED)}
+          {renderSharedFacet(FACETS.CALL_NUMBERS_SHARED)}
           {renderHeldByFacet(FACETS.CALL_NUMBERS_HELD_BY)}
           <EffectiveLocationFacet
             name={FACETS.CALL_NUMBERS_EFFECTIVE_LOCATION}

@@ -59,7 +59,7 @@ const getExtraFilters = (row, qindex, allFilters) => {
 
     extraFacets.push(`${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`);
   } else if (Object.values(browseCallNumberOptions).includes(qindex)) {
-    sharedFacetName = FACETS.SHARED;
+    sharedFacetName = FACETS.CALL_NUMBERS_SHARED;
     heldByFacetName = FACETS.CALL_NUMBERS_HELD_BY;
   } else if (Object.values(browseClassificationOptions).includes(qindex)) {
     sharedFacetName = FACETS.CLASSIFICATION_SHARED;
