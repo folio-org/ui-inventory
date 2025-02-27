@@ -655,7 +655,10 @@ class ViewHoldingsRecord extends React.Component {
       stripes,
       isVersionHistoryEnabled,
     } = this.props;
-    const { instance } = this.state;
+    const {
+      instance,
+      isVersionHistoryOpen,
+    } = this.state;
 
     if (this.isAwaitingResource()) return <LoadingView />;
 
@@ -970,11 +973,14 @@ class ViewHoldingsRecord extends React.Component {
                     })}
                     dismissible
                     onClose={this.onClose}
-                    actionMenu={this.getPaneHeaderActionMenu}
+                    actionMenu={(params) => !isVersionHistoryOpen && this.getPaneHeaderActionMenu(params)}
                     lastMenu={(
                       <PaneMenu>
                         {holdingsSourceName === SOURCE_VALUES.FOLIO && isVersionHistoryEnabled && (
-                          <VersionHistoryButton onClick={this.openVersionHistory} />
+                          <VersionHistoryButton
+                            disabled={isVersionHistoryOpen}
+                            onClick={this.openVersionHistory}
+                          />
                         )}
                       </PaneMenu>
                     )}

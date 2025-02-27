@@ -305,39 +305,50 @@ describe('ItemView', () => {
         expect(mockPush).toHaveBeenCalled();
       });
     });
+  });
 
-    describe('Version history component', () => {
-      let versionHistoryButton;
+  describe('Version history component', () => {
+    let versionHistoryButton;
 
-      beforeEach(() => {
-        const { container } = renderWithIntl(<ItemViewSetup />, translationsProperties);
+    beforeEach(() => {
+      const { container } = renderWithIntl(<ItemViewSetup />, translationsProperties);
 
-        versionHistoryButton = container.querySelector('#version-history-btn');
+      versionHistoryButton = container.querySelector('#version-history-btn');
+    });
+
+    it('should render version history button', () => {
+      expect(versionHistoryButton).toBeInTheDocument();
+    });
+
+    describe('when click the button', () => {
+      beforeEach(async () => {
+        await userEvent.click(versionHistoryButton);
       });
 
-      it('should render version history button', () => {
-        expect(versionHistoryButton).toBeInTheDocument();
+      it('should hide action menu', () => {
+        expect(screen.queryByText('Actions')).not.toBeInTheDocument();
       });
 
-      describe('when click the button', () => {
-        it('should render version history pane', async () => {
-          await userEvent.click(versionHistoryButton);
-          expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
-        });
+      it('should disable version history button', () => {
+        expect(screen.getByRole('button', { name: /version history/i })).toBeDisabled();
       });
 
-      describe('when click the close button', () => {
-        it('should hide the pane', async () => {
-          await userEvent.click(versionHistoryButton);
+      it('should render version history pane', () => {
+        expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
+      });
+    });
 
-          const versionHistoryPane = await screen.findByRole('region', { name: /version history/i });
-          expect(versionHistoryPane).toBeInTheDocument();
+    describe('when click the close button', () => {
+      it('should hide the pane', async () => {
+        await userEvent.click(versionHistoryButton);
 
-          const closeButton = await within(versionHistoryPane).findByRole('button', { name: /close/i });
-          await userEvent.click(closeButton);
+        const versionHistoryPane = await screen.findByRole('region', { name: /version history/i });
+        expect(versionHistoryPane).toBeInTheDocument();
 
-          expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();
-        });
+        const closeButton = await within(versionHistoryPane).findByRole('button', { name: /close/i });
+        await userEvent.click(closeButton);
+
+        expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();
       });
     });
   });

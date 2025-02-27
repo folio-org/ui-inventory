@@ -589,9 +589,19 @@ describe('ViewHoldingsRecord actions', () => {
     });
 
     describe('when click the button', () => {
-      it('should render version history pane', async () => {
+      beforeEach(async () => {
         await userEvent.click(versionHistoryButton);
+      });
 
+      it('should hide action menu', () => {
+        expect(screen.queryByText('Actions')).not.toBeInTheDocument();
+      });
+
+      it('should disable version history button', () => {
+        expect(screen.getByRole('button', { name: /version history/i })).toBeDisabled();
+      });
+
+      it('should render version history pane', () => {
         expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
       });
     });

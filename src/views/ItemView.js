@@ -1030,10 +1030,15 @@ const ItemView = props => {
           )}
           dismissible
           onClose={onCloseViewItem}
-          actionMenu={getActionMenu}
+          actionMenu={(params) => !isVersionHistoryOpen && getActionMenu(params)}
           lastMenu={(
             <PaneMenu>
-              {showVersionHistoryButton && <VersionHistoryButton onClick={openVersionHistory} />}
+              {showVersionHistoryButton && (
+               <VersionHistoryButton
+                  onClick={openVersionHistory}
+                  disabled={isVersionHistoryOpen}
+                />
+              )}
             </PaneMenu>
           )}
         >
