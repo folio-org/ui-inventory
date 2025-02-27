@@ -10,6 +10,7 @@ import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 import { DataContext } from '../../contexts';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
+import { useAuditSettings } from '../../hooks';
 import InstanceDetails from './InstanceDetails';
 
 jest.mock('../../components/ViewSource/ViewSource', () => jest.fn().mockReturnValue('ViewSource'));
@@ -25,6 +26,17 @@ jest.mock('../InstanceDetails/InstanceTitleData/InstanceTitleData', () => jest.f
 jest.mock('../HoldingsList/consortium/ConsortialHoldings', () => ({
   ...jest.requireActual('../HoldingsList/consortium/ConsortialHoldings'),
   ConsortialHoldings: () => <button type="button">Consortial holdings</button>,
+}));
+
+jest.mock('../../hooks', () => ({
+  ...jest.requireActual('../../hooks'),
+  useAuditSettings: jest.fn().mockReturnValue({
+    settings: [{
+      key: 'enabled',
+      value: true,
+    }],
+    isSettingsLoading: false,
+  }),
 }));
 
 const instance = {
@@ -274,6 +286,22 @@ describe('InstanceDetails', () => {
 
         expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();
       });
+    });
+  });
+
+  describe('when version history is disabled', () => {
+    it('should not show the version history button', async () => {
+      useAuditSettings.mockClear().mockReturnValue({
+        settings: [{
+          key: 'enabled',
+          value: false,
+        }],
+        isSettingsLoading: false,
+      });
+
+      await act(async () => { renderInstanceDetails(); });
+
+      expect(screen.queryByRole('button', { name: /version history/i })).not.toBeInTheDocument();
     });
   });
 });
