@@ -39,6 +39,8 @@
 * Provide ids _and `length` param_ when retrieving job profiles. Refs UIIN-3257.
 * Move ‘Set for deletion’ checkbox field to 4th space in top row of Instance Edit view. Refs UIIN-3259.
 * Update Inventory: Set records for deletion permission's effect on ‘Set for deletion’ checkbox in Instance Edit view. Refs UIIN-3260.
+* *BREAKING* Migrate stripes dependencies to their Sunflower versions. Refs UIIN-3223.
+* *BREAKING* Migrate `react-intl` to v7. Refs UIIN-3224.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
