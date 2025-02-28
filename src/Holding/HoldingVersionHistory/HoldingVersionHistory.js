@@ -1,18 +1,51 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { AuditLogPane } from '@folio/stripes-acq-components';
+import { AuditLogPane } from '@folio/stripes/components';
 
-import { useHoldingAuditDataQuery } from '../../hooks';
+import {
+  useHoldingAuditDataQuery,
+  useVersionHistory,
+} from '../../hooks';
 import { DataContext } from '../../contexts';
-import { createVersionHistoryFieldFormatter } from '../../utils';
+
+export const createFieldFormatter = referenceData => ({
+  discoverySuppress: value => value.toString(),
+  holdingsTypeId: value => referenceData.holdingsTypes?.find(type => type.id === value)?.name,
+  statisticalCodeIds: value => {
+    const statisticalCode = referenceData.statisticalCodes?.find(code => code.id === value);
+
+    return `${statisticalCode.statisticalCodeType.name}: ${statisticalCode.code} - ${statisticalCode.name}`;
+  },
+  callNumberTypeId: value => referenceData.callNumberTypes?.find(type => type.id === value)?.name,
+  permanentLocationId: value => referenceData.locationsById[value]?.name,
+  temporaryLocationId: value => referenceData.locationsById[value]?.name,
+  effectiveLocationId: value => referenceData.locationsById[value]?.name,
+  illPolicyId: value => referenceData.illPolicies.find(policy => policy.id === value)?.name,
+  staffOnly: value => value.toString(),
+  holdingsNoteTypeId: value => referenceData.holdingsNoteTypes?.find(noteType => noteType.id === value)?.name,
+  relationshipId: value => referenceData.electronicAccessRelationships?.find(noteType => noteType.id === value)?.name,
+  publicDisplay: value => value.toString(),
+});
 
 const HoldingVersionHistory = ({ onClose, holdingId }) => {
   const { formatMessage } = useIntl();
   const referenceData = useContext(DataContext);
 
-  const { data, isLoading } = useHoldingAuditDataQuery(holdingId);
+  const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
+
+  const {
+    data,
+    totalRecords,
+    isLoading,
+  } = useHoldingAuditDataQuery(holdingId, lastVersionEventTs);
+
+  const {
+    actionsMap,
+    isLoadedMoreVisible,
+    versionsToDisplay,
+  } = useVersionHistory(data, totalRecords);
 
   const fieldLabelsMap = {
     discoverySuppress: formatMessage({ id: 'ui-inventory.discoverySuppressed' }),
@@ -47,15 +80,22 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
     entries: formatMessage({ id: 'ui-inventory.receivingHistory' }),
   };
 
-  const fieldFormatter = createVersionHistoryFieldFormatter(referenceData);
+  const fieldFormatter = createFieldFormatter(referenceData);
+
+  const handleLoadMore = lastEventTs => {
+    setLastVersionEventTs(lastEventTs);
+  };
 
   return (
     <AuditLogPane
-      versions={data}
-      isLoading={isLoading}
+      versions={versionsToDisplay}
       onClose={onClose}
+      isLoadedMoreVisible={isLoadedMoreVisible}
+      handleLoadMore={handleLoadMore}
+      isLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
+      actionsMap={actionsMap}
     />
   );
 };
