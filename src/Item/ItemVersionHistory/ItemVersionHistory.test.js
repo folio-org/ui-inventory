@@ -12,8 +12,8 @@ import {
 import { DataContext } from '../../contexts';
 import ItemVersionHistory, { createFieldFormatter } from './ItemVersionHistory';
 
-jest.mock('@folio/stripes-acq-components', () => ({
-  ...jest.requireActual('@folio/stripes-acq-components'),
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
   AuditLogPane: () => <div>Version history</div>,
 }));
 
