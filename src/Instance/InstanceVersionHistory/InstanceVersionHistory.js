@@ -1,46 +1,45 @@
 import {
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { NoValue } from '@folio/stripes/components';
-import { AuditLogPane } from '@folio/stripes-acq-components';
+import {
+  AuditLogPane,
+  NoValue,
+} from '@folio/stripes/components';
 
 import { DataContext } from '../../contexts';
+import {
+  useInstanceAuditDataQuery,
+  useVersionHistory,
+} from '../../hooks';
 
-import { useInstanceAuditDataQuery } from '../../hooks';
 import { getDateWithTime } from '../../utils';
 
 const InstanceVersionHistory = ({
   instanceId,
   onClose,
 }) => {
-  const { formatMessage } = useIntl();
+  const intl = useIntl();
+  const { formatMessage } = intl;
+
+  const referenceData = useContext(DataContext);
+
   const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
+
   const {
     data,
     totalRecords,
     isLoading,
   } = useInstanceAuditDataQuery(instanceId, lastVersionEventTs);
-  // const [versions, setVersions] = useState([]);
-  const [isLoadedMoreVisible, setIsLoadedMoreVisible] = useState(true);
-  const referenceData = useContext(DataContext);
 
-  // display more cards if loaded more
-  // useEffect(() => {
-  //   if (data?.length) {
-  //     setVersions(prevState => [...prevState, ...data]);
-  //   }
-  // }, [data]);
-
-  // useEffect(() => {
-  //   setIsLoadedMoreVisible(Boolean(versions.length !== 0 && versions.length < totalRecords));
-  // }, [versions, totalRecords]);
-
-  // useEffect(() => () => setVersions([]), []);
+  const {
+    actionsMap,
+    isLoadedMoreVisible,
+    versionsToDisplay,
+  } = useVersionHistory(data, totalRecords);
 
   const fieldLabelsMap = {
     administrativeNotes: formatMessage({ id: 'ui-inventory.administrativeNotes' }),
@@ -107,16 +106,20 @@ const InstanceVersionHistory = ({
     uri: value => value || <NoValue />,
   };
 
+  const handleLoadMore = lastEventTs => {
+    setLastVersionEventTs(lastEventTs);
+  };
 
   return (
     <AuditLogPane
-      versions={data}
+      versions={versionsToDisplay}
       onClose={onClose}
       isLoadedMoreVisible={isLoadedMoreVisible}
-      onLoadMoreData={setLastVersionEventTs}
+      handleLoadMore={handleLoadMore}
       isLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
+      actionsMap={actionsMap}
     />
   );
 };
