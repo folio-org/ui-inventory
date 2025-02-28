@@ -16,7 +16,6 @@ import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 
 import {
   BROWSE_INVENTORY_ROUTE,
@@ -96,9 +95,7 @@ describe('getBrowseResultsFormatter', () => {
     const formatter = getBrowseResultsFormatter({
       data,
       browseOption: browseModeOptions.CALL_NUMBERS,
-      stripes: buildStripes({
-        hasInterface: () => true,
-      }),
+      isNewCallNumberBrowseAvailable: false,
     });
     const missedMatchRecord = {
       isAnchor: true,
@@ -133,9 +130,7 @@ describe('getBrowseResultsFormatter', () => {
       const newFormatter = getBrowseResultsFormatter({
         data,
         browseOption: browseModeOptions.CALL_NUMBERS,
-        stripes: buildStripes({
-          hasInterface: () => false,
-        }),
+        isNewCallNumberBrowseAvailable: false,
       });
 
       renderCallNumberList({
@@ -163,9 +158,7 @@ describe('getBrowseResultsFormatter', () => {
       const newFormatter = getBrowseResultsFormatter({
         data,
         browseOption: browseModeOptions.CALL_NUMBERS,
-        stripes: buildStripes({
-          hasInterface: () => false,
-        }),
+        isNewCallNumberBrowseAvailable: false,
       });
 
       renderCallNumberList({
@@ -183,9 +176,7 @@ describe('getBrowseResultsFormatter', () => {
       const _formatter = getBrowseResultsFormatter({
         data,
         browseOption: browseModeOptions.CALL_NUMBERS,
-        stripes: buildStripes({
-          hasInterface: (name, version) => name === 'browse' && version === '1.5',
-        }),
+        isNewCallNumberBrowseAvailable: true,
       });
       const _missedMatchRecord = {
         isAnchor: true,
@@ -250,9 +241,7 @@ describe('getBrowseResultsFormatter', () => {
             formatter: getBrowseResultsFormatter({
               data,
               browseOption: browseCallNumberOptions.DEWEY,
-              stripes: buildStripes({
-                hasInterface: (name, version) => name === 'browse' && version === '1.5',
-              }),
+              isNewCallNumberBrowseAvailable: true,
             }),
           });
 
@@ -276,7 +265,7 @@ describe('getBrowseResultsFormatter', () => {
     const formatter = getBrowseResultsFormatter({
       data,
       browseOption: browseModeOptions.CONTRIBUTORS,
-      stripes: buildStripes(),
+      isNewCallNumberBrowseAvailable: false,
     });
     const missedMatchRecord = {
       isAnchor: true,
@@ -369,7 +358,7 @@ describe('getBrowseResultsFormatter', () => {
     const formatter = getBrowseResultsFormatter({
       data,
       browseOption: browseModeOptions.SUBJECTS,
-      stripes: buildStripes(),
+      isNewCallNumberBrowseAvailable: false,
     });
     const missedMatchRecord = {
       isAnchor: true,
@@ -443,7 +432,7 @@ describe('getBrowseResultsFormatter', () => {
         query: classificationNumber,
       },
       data,
-      stripes: buildStripes(),
+      isNewCallNumberBrowseAvailable: false,
     });
     const missedMatchRecord = {
       classificationNumber: 'foo',

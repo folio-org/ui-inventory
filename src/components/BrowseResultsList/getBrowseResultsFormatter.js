@@ -39,11 +39,11 @@ const getTargetRecord = (
   filters,
   namespace,
   data,
-  stripes,
+  isNewCallNumberBrowseAvailable,
 ) => {
   const record = getFullMatchRecord(item, row.isAnchor);
-  const searchParams = getSearchParams(row, browseOption, filters, data, stripes);
-  const isNotClickable = isRowPreventsClick(row, browseOption, stripes);
+  const searchParams = getSearchParams(row, browseOption, filters, data, isNewCallNumberBrowseAvailable);
+  const isNotClickable = isRowPreventsClick(row, browseOption, isNewCallNumberBrowseAvailable);
 
   if (isNotClickable) return record;
 
@@ -116,14 +116,13 @@ const getBrowseResultsFormatter = ({
   browseOption,
   filters,
   namespace,
-  stripes,
+  isNewCallNumberBrowseAvailable,
 }) => {
-  const commonTargetRecordArgs = [browseOption, filters, namespace, data, stripes];
-  const hasBrowseInterface = stripes.hasInterface('browse', '1.5');
+  const commonTargetRecordArgs = [browseOption, filters, namespace, data, isNewCallNumberBrowseAvailable];
 
   return {
     title: r => {
-      const instanceTitle = hasBrowseInterface
+      const instanceTitle = isNewCallNumberBrowseAvailable
         ? r.instanceTitle
         : r.instance?.title;
 
@@ -154,12 +153,12 @@ const getBrowseResultsFormatter = ({
       return typeName || <NoValue />;
     },
     callNumber: r => {
-      if (hasBrowseInterface && r?.totalRecords) {
+      if (isNewCallNumberBrowseAvailable && r?.totalRecords) {
         const fullCallNumber = getFullCallNumber(r);
         return getTargetRecord(fullCallNumber, r, ...commonTargetRecordArgs);
       }
 
-      if (!hasBrowseInterface && (r?.instance || r?.totalRecords)) {
+      if (!isNewCallNumberBrowseAvailable && (r?.instance || r?.totalRecords)) {
         return getTargetRecord(r?.fullCallNumber, r, ...commonTargetRecordArgs);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;

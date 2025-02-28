@@ -24,14 +24,14 @@ import {
 } from '../../constants';
 import {
   INITIAL_SEARCH_PARAMS_MAP,
-  _INITIAL_SEARCH_PARAMS_MAP,
+  NEW_INITIAL_SEARCH_PARAMS_MAP,
   PAGINATION_SEARCH_PARAMS_MAP,
-  _PAGINATION_SEARCH_PARAMS_MAP,
+  NEW_PAGINATION_SEARCH_PARAMS_MAP,
   PATH_MAP,
-  _PATH_MAP,
+  NEW_PATH_MAP,
   PRECEDING_RECORDS_COUNT,
   regExp,
-  _regExp,
+  newRegExp,
 } from './constants';
 
 const isPrevious = (direction) => direction === PAGE_DIRECTIONS.prev;
@@ -68,10 +68,10 @@ const useInventoryBrowse = ({
   let paginationSearchParams = PAGINATION_SEARCH_PARAMS_MAP;
 
   if (stripes.hasInterface('browse', '1.5')) {
-    regex = _regExp;
-    endpoints = _PATH_MAP;
-    initialSearchParams = _INITIAL_SEARCH_PARAMS_MAP;
-    paginationSearchParams = _PAGINATION_SEARCH_PARAMS_MAP;
+    regex = newRegExp;
+    endpoints = NEW_PATH_MAP;
+    initialSearchParams = NEW_INITIAL_SEARCH_PARAMS_MAP;
+    paginationSearchParams = NEW_PAGINATION_SEARCH_PARAMS_MAP;
   }
 
   const normalizedFilters = {

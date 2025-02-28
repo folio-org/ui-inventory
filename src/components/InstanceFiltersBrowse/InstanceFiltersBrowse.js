@@ -35,13 +35,13 @@ const InstanceFiltersBrowse = props => {
   const stripes = useStripes();
   const qindex = query.qindex;
 
-  const hasBrowseInterface = stripes.hasInterface('browse', '1.5');
+  const isNewCallNumberBrowseAvailable = stripes.hasInterface('browse', '1.5');
 
   const initialAccordionStates = useMemo(() => ({
-    ...(hasBrowseInterface
+    ...(isNewCallNumberBrowseAvailable
       ? ({
         [FACETS.CALL_NUMBERS_SHARED]: false,
-        [FACETS._CALL_NUMBERS_HELD_BY]: false,
+        [FACETS.NEW_CALL_NUMBERS_HELD_BY]: false,
         [FACETS.CALL_NUMBERS_EFFECTIVE_LOCATION]: false,
       })
       : ({
@@ -58,7 +58,7 @@ const InstanceFiltersBrowse = props => {
     [FACETS.NAME_TYPE]: false,
     [FACETS.SUBJECT_SOURCE]: false,
     [FACETS.SUBJECT_TYPE]: false,
-  }), [hasBrowseInterface]);
+  }), [isNewCallNumberBrowseAvailable]);
 
   const activeFilters = useMemo(() => omit(query || {}, ['qindex', 'query']), [query]);
 
@@ -112,17 +112,17 @@ const InstanceFiltersBrowse = props => {
       {Object.values(browseCallNumberOptions).includes(qindex) && (
         <>
           {renderSharedFacet(
-            hasBrowseInterface
+            isNewCallNumberBrowseAvailable
               ? FACETS.CALL_NUMBERS_SHARED
               : FACETS.SHARED
           )}
           {renderHeldByFacet(
-            hasBrowseInterface
-              ? FACETS._CALL_NUMBERS_HELD_BY
+            isNewCallNumberBrowseAvailable
+              ? FACETS.NEW_CALL_NUMBERS_HELD_BY
               : FACETS.CALL_NUMBERS_HELD_BY
           )}
           <EffectiveLocationFacet
-            name={hasBrowseInterface
+            name={isNewCallNumberBrowseAvailable
               ? FACETS.CALL_NUMBERS_EFFECTIVE_LOCATION
               : FACETS.EFFECTIVE_LOCATION}
             facetOptions={facetOptions}

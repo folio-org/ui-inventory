@@ -160,7 +160,7 @@ describe('InstanceFiltersBrowse', () => {
       });
 
       describe('when `browse` interface 1.5 is available', () => {
-        it('should use _callNumbersTenantId as facet name', () => {
+        it('should use newCallNumbersTenantId as facet name', () => {
           mockHasInterface.mockImplementation((name, version) => name === 'browse' && version === '1.5');
 
           const { getByText } = renderInstanceFilters({
@@ -171,7 +171,7 @@ describe('InstanceFiltersBrowse', () => {
             },
           });
 
-          expect(getByText('_callNumbersTenantId-field')).toBeInTheDocument();
+          expect(getByText('newCallNumbersTenantId-field')).toBeInTheDocument();
         });
       });
     });

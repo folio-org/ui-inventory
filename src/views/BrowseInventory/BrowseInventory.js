@@ -36,7 +36,7 @@ import {
   SearchModeNavigation,
 } from '../../components';
 import {
-  _browseInstanceIndexes,
+  newBrowseInstanceIndexes,
   browseInstanceIndexes,
 } from '../../filterConfig';
 import {
@@ -125,7 +125,7 @@ const BrowseInventory = () => {
   const isResetButtonDisabled = !location.search && !searchQuery;
 
   const browseIndexes = stripes.hasInterface('browse', '1.5')
-    ? _browseInstanceIndexes
+    ? newBrowseInstanceIndexes
     : browseInstanceIndexes;
 
   const searchableOptions = browseIndexes.map((searchableIndex) => {

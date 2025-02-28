@@ -4,7 +4,11 @@ import { browseModeOptions } from '@folio/stripes-inventory-components';
 export const INIT_PAGE_CONFIG = [0, null, null];
 
 export const regExp = /^((callNumber|subject|name|itemEffectiveShelvingOrder) [<|>])/i;
-export const _regExp = /^((callNumber|subject|name|fullCallNumber) [<|>])/i;
+
+// `newRegExp` is used to ensure compatibility with the new `browse` 1.5 interface,
+// which has different requirements for matching call numbers.
+// The `regExp` is the original regular expression that is used if `browse` 1.5 interface is not available.
+export const newRegExp = /^((callNumber|subject|name|fullCallNumber) [<|>])/i;
 export const PRECEDING_RECORDS_COUNT = 5;
 export const FIVE_MINUTES = 5 * 60 * 1000;
 
@@ -23,7 +27,10 @@ export const PATH_MAP = {
   [browseModeOptions.CONTRIBUTORS]: 'browse/contributors/instances',
 };
 
-export const _PATH_MAP = {
+// The `NEW_PATH_MAP` is used for the new call number `browse` 1.5 interface,
+// which includes different paths for call numbers.
+// The `PATH_MAP` is the original set of paths that is used if `browse` 1.5 interface is not available.
+export const NEW_PATH_MAP = {
   ...PATH_MAP,
   [browseModeOptions.CALL_NUMBERS]: 'browse/call-numbers/all/instances',
   [browseModeOptions.DEWEY]: 'browse/call-numbers/dewey/instances',
@@ -49,7 +56,10 @@ export const INITIAL_SEARCH_PARAMS_MAP = {
   [browseModeOptions.CONTRIBUTORS]: 'name',
 };
 
-export const _INITIAL_SEARCH_PARAMS_MAP = {
+// The `NEW_INITIAL_SEARCH_PARAMS_MAP` is used for the new call number `browse` 1.5 interface,
+// which includes different search params for call numbers.
+// The `INITIAL_SEARCH_PARAMS_MAP` is the original set of paths that is used if `browse` 1.5 interface is not available.
+export const NEW_INITIAL_SEARCH_PARAMS_MAP = {
   ...INITIAL_SEARCH_PARAMS_MAP,
   [browseModeOptions.CALL_NUMBERS]: 'fullCallNumber',
   [browseModeOptions.DEWEY]: 'fullCallNumber',
@@ -75,7 +85,10 @@ export const PAGINATION_SEARCH_PARAMS_MAP = {
   [browseModeOptions.CONTRIBUTORS]: INITIAL_SEARCH_PARAMS_MAP[browseModeOptions.CONTRIBUTORS],
 };
 
-export const _PAGINATION_SEARCH_PARAMS_MAP = {
+// The `NEW_PAGINATION_SEARCH_PARAMS_MAP` is used for the new call number `browse` 1.5 interface,
+// which includes different search params for call numbers.
+// The `PAGINATION_SEARCH_PARAMS_MAP` is the original set of paths that is used if `browse` 1.5 interface is not available.
+export const NEW_PAGINATION_SEARCH_PARAMS_MAP = {
   ...PAGINATION_SEARCH_PARAMS_MAP,
   [browseModeOptions.CALL_NUMBERS]: 'fullCallNumber',
   [browseModeOptions.DEWEY]: 'fullCallNumber',

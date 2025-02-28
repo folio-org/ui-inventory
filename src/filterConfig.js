@@ -24,7 +24,10 @@ export const browseInstanceIndexes = [
   { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
 
-export const _browseInstanceIndexes = [
+// The `newBrowseInstanceIndexes` is used for the new call number `browse` 1.5 interface,
+// this set of indexes contains additional sub-indexes such as `other` and `superintendent`.
+// The `browseInstanceIndexes` is the original set that is used if `browse` 1.5 interface is not available.
+export const newBrowseInstanceIndexes = [
   {
     label: 'ui-inventory.browse.callNumbers',
     queryTemplate: '%{query.query}',

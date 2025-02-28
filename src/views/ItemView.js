@@ -1886,6 +1886,7 @@ ItemView.manifest = Object.freeze({
 
 ItemView.propTypes = {
   stripes: PropTypes.shape({
+    hasInterface: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
     okapi: PropTypes.shape({
       tenant: PropTypes.string,

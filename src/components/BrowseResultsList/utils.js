@@ -10,7 +10,7 @@ import {
   queryIndexes,
 } from '@folio/stripes-inventory-components';
 
-export const isRowPreventsClick = (row, browseOption, stripes) => {
+export const isRowPreventsClick = (row, browseOption, isNewCallNumberBrowseAvailable) => {
   /**
    * there is a special case when contributors and subject search can return shared records even with "Shared - No" in facets
    * in this case there will be a non-anchor item with 0 total results. we need to show it as item with 0 results
@@ -22,7 +22,7 @@ export const isRowPreventsClick = (row, browseOption, stripes) => {
   const isItemHasNoRecords = row.totalRecords === 0;
 
   return isItemHasNoRecords || (
-    (browseOption === browseModeOptions.CALL_NUMBERS && !stripes.hasInterface('browse', '1.5') && !row.shelfKey) ||
+    (browseOption === browseModeOptions.CALL_NUMBERS && !isNewCallNumberBrowseAvailable && !row.shelfKey) ||
     (browseOption === browseModeOptions.CONTRIBUTORS && !row.contributorNameTypeId) ||
     (browseOption === browseModeOptions.SUBJECTS && !row.totalRecords)
   );
@@ -32,7 +32,7 @@ const facetsToString = (filters, facetNameInBrowse, facetNameInSearch) => {
   return filters[facetNameInBrowse]?.map(value => `${facetNameInSearch}.${value}`).join(',');
 };
 
-const getExtraFilters = (row, qindex, allFilters, stripes) => {
+const getExtraFilters = (row, qindex, allFilters, isNewCallNumberBrowseAvailable) => {
   const filtersOnly = omit(allFilters, 'qindex', 'query');
   const extraFacets = [];
 
@@ -60,11 +60,11 @@ const getExtraFilters = (row, qindex, allFilters, stripes) => {
 
     extraFacets.push(`${FACETS.SEARCH_CONTRIBUTORS}.${row.contributorNameTypeId}`);
   } else if (Object.values(browseCallNumberOptions).includes(qindex)) {
-    sharedFacetName = stripes?.hasInterface('browse', '1.5')
+    sharedFacetName = isNewCallNumberBrowseAvailable
       ? FACETS.CALL_NUMBERS_SHARED
       : FACETS.SHARED;
-    heldByFacetName = stripes?.hasInterface('browse', '1.5')
-      ? FACETS._CALL_NUMBERS_HELD_BY
+    heldByFacetName = isNewCallNumberBrowseAvailable
+      ? FACETS.NEW_CALL_NUMBERS_HELD_BY
       : FACETS.CALL_NUMBERS_HELD_BY;
   } else if (Object.values(browseClassificationOptions).includes(qindex)) {
     sharedFacetName = FACETS.CLASSIFICATION_SHARED;
@@ -143,8 +143,8 @@ const getCallNumberQuery = (qindex, data, row) => {
   return query;
 };
 
-export const getSearchParams = (row, qindex, allFilters, data, stripes) => {
-  const filters = getExtraFilters(row, qindex, allFilters, stripes);
+export const getSearchParams = (row, qindex, allFilters, data, isNewCallNumberBrowseAvailable) => {
+  const filters = getExtraFilters(row, qindex, allFilters, isNewCallNumberBrowseAvailable);
   const classificationQuery = getClassificationQuery(qindex, data, row);
   const callNumberQuery = getCallNumberQuery(qindex, data, row);
 
@@ -154,7 +154,7 @@ export const getSearchParams = (row, qindex, allFilters, data, stripes) => {
     ...filters,
   };
 
-  const callNumberOption = stripes?.hasInterface('browse', '1.5')
+  const callNumberOption = isNewCallNumberBrowseAvailable
     ? ({
       qindex: queryIndexes.QUERY_SEARCH,
       query: callNumberQuery,
