@@ -538,16 +538,6 @@ class InstanceForm extends React.Component {
                           <Row>
                             <Col sm={3}>
                               <Field
-                                label={<FormattedMessage id="ui-inventory.setForDeletion" />}
-                                name="deleted"
-                                component={Checkbox}
-                                type="checkbox"
-                                disabled={this.isFieldBlocked('deleted')}
-                                onChange={() => this.onSetForDeletionFieldChange()}
-                              />
-                            </Col>
-                            <Col sm={3}>
-                              <Field
                                 label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
                                 name="discoverySuppress"
                                 id="input_discovery_suppress"
@@ -574,6 +564,16 @@ class InstanceForm extends React.Component {
                                 component={Checkbox}
                                 type="checkbox"
                                 disabled={this.isFieldBlocked('previouslyHeld')}
+                              />
+                            </Col>
+                            <Col sm={3}>
+                              <Field
+                                label={<FormattedMessage id="ui-inventory.setForDeletion" />}
+                                name="deleted"
+                                component={Checkbox}
+                                type="checkbox"
+                                disabled={this.isFieldBlocked('deleted')}
+                                onChange={() => this.onSetForDeletionFieldChange()}
                               />
                             </Col>
                           </Row>
