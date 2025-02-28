@@ -1123,3 +1123,34 @@ export const omitCurrentAndCentralTenants = (stripes) => {
 
   return tenants?.filter(tenant => tenant.id !== currentTenantId && tenant.id !== centralTenantId);
 };
+
+export const createVersionHistoryFieldFormatter = (referenceData, circulationHistory) => ({
+  discoverySuppress: value => value.toString(),
+  typeId: value => referenceData.callNumberTypes?.find(type => type.id === value)?.name,
+  itemLevelCallNumberTypeId: value => referenceData.callNumberTypes?.find(type => type.id === value)?.name,
+  itemDamagedStatusId: value => referenceData.itemDamagedStatuses?.find(type => type.id === value)?.name,
+  permanentLocationId: value => referenceData.locationsById[value]?.name,
+  temporaryLocationId: value => referenceData.locationsById[value]?.name,
+  effectiveLocationId: value => referenceData.locationsById[value]?.name,
+  permanentLoanTypeId: value => referenceData.loanTypes?.find(type => type.id === value)?.name,
+  temporaryLoanTypeId: value => referenceData.loanTypes?.find(type => type.id === value)?.name,
+  materialTypeId: value => referenceData.materialTypes?.find(type => type.id === value)?.name,
+  statisticalCodeIds: value => {
+    const statisticalCode = referenceData.statisticalCodes?.find(code => code.id === value);
+
+    return `${statisticalCode.statisticalCodeType.name}: ${statisticalCode.code} - ${statisticalCode.name}`;
+  },
+  relationshipId: value => referenceData.electronicAccessRelationships?.find(type => type.id === value)?.name,
+  staffOnly: value => value.toString(),
+  itemNoteTypeId: value => referenceData.itemNoteTypes?.find(type => type.id === value)?.name,
+  date: value => getDateWithTime(value),
+  servicePointId: () => circulationHistory.servicePointName,
+  staffMemberId: () => circulationHistory.source,
+  dateTime: value => getDateWithTime(value),
+  source: value => `${value.personal.lastName}, ${value.personal.firstName}`,
+  holdingsTypeId: value => referenceData.holdingsTypes?.find(type => type.id === value)?.name,
+  callNumberTypeId: value => referenceData.callNumberTypes?.find(type => type.id === value)?.name,
+  illPolicyId: value => referenceData.illPolicies.find(policy => policy.id === value)?.name,
+  holdingsNoteTypeId: value => referenceData.holdingsNoteTypes?.find(noteType => noteType.id === value)?.name,
+  publicDisplay: value => value.toString(),
+});

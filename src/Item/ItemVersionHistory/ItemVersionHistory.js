@@ -6,33 +6,7 @@ import { AuditLogPane } from '@folio/stripes-acq-components';
 
 import { useItemAuditDataQuery } from '../../hooks';
 import { DataContext } from '../../contexts';
-import { getDateWithTime } from '../../utils';
-
-export const createFieldFormatter = (referenceData, circulationHistory) => ({
-  discoverySuppress: value => value.toString(),
-  typeId: value => referenceData.callNumberTypes?.find(type => type.id === value)?.name,
-  itemLevelCallNumberTypeId: value => referenceData.callNumberTypes?.find(type => type.id === value)?.name,
-  itemDamagedStatusId: value => referenceData.itemDamagedStatuses?.find(type => type.id === value)?.name,
-  permanentLocationId: value => referenceData.locationsById[value]?.name,
-  temporaryLocationId: value => referenceData.locationsById[value]?.name,
-  effectiveLocationId: value => referenceData.locationsById[value]?.name,
-  permanentLoanTypeId: value => referenceData.loanTypes?.find(type => type.id === value)?.name,
-  temporaryLoanTypeId: value => referenceData.loanTypes?.find(type => type.id === value)?.name,
-  materialTypeId: value => referenceData.materialTypes?.find(type => type.id === value)?.name,
-  statisticalCodeIds: value => {
-    const statisticalCode = referenceData.statisticalCodes?.find(code => code.id === value);
-
-    return `${statisticalCode.statisticalCodeType.name}: ${statisticalCode.code} - ${statisticalCode.name}`;
-  },
-  relationshipId: value => referenceData.electronicAccessRelationships?.find(type => type.id === value)?.name,
-  staffOnly: value => value.toString(),
-  itemNoteTypeId: value => referenceData.itemNoteTypes?.find(type => type.id === value)?.name,
-  date: value => getDateWithTime(value),
-  servicePointId: () => circulationHistory.servicePointName,
-  staffMemberId: () => circulationHistory.source,
-  dateTime: value => getDateWithTime(value),
-  source: value => `${value.personal.lastName}, ${value.personal.firstName}`,
-});
+import { createVersionHistoryFieldFormatter } from '../../utils';
 
 const ItemVersionHistory = ({
   onClose,
@@ -89,7 +63,7 @@ const ItemVersionHistory = ({
     date: formatMessage({ id: 'ui-inventory.date' }),
   };
 
-  const fieldFormatter = createFieldFormatter(referenceData, circulationHistory);
+  const fieldFormatter = createVersionHistoryFieldFormatter(referenceData, circulationHistory);
 
   return (
     <AuditLogPane
