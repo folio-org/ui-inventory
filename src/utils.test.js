@@ -506,6 +506,7 @@ describe('getIsVersionHistoryEnabled', () => {
 
     expect(getIsVersionHistoryEnabled(settings)).toBe(false);
   });
+});
 
 describe('createVersionHistoryFieldFormatter', () => {
   const date = '2024-02-26T12:00:00Z';
