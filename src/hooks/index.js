@@ -14,6 +14,8 @@ export { default as useClassificationIdentifierTypes } from './useClassification
 export { default as useClassificationBrowseConfig } from './useClassificationBrowseConfig';
 export { default as useUpdateOwnership } from './useUpdateOwnership';
 export { default as useLocalStorageItems } from './useLocalStorageItems';
+export { default as useHoldingAuditDataQuery } from './useHoldingAuditDataQuery';
+export { default as useVersionHistory } from './useVersionHistory';
 export * from './useQuickExport';
 export * from '@folio/stripes-inventory-components/lib/queries/useInstanceDateTypes';
 export * from './useCallNumberTypesQuery';
