@@ -1,10 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { AuditLogPane } from '@folio/stripes-acq-components';
+import { AuditLogPane } from '@folio/stripes/components';
 
-import { useItemAuditDataQuery } from '../../hooks';
+import {
+  useItemAuditDataQuery,
+  useVersionHistory,
+} from '../../hooks';
 import { DataContext } from '../../contexts';
 import { getDateWithTime } from '../../utils';
 
@@ -42,7 +45,19 @@ const ItemVersionHistory = ({
   const { formatMessage } = useIntl();
   const referenceData = useContext(DataContext);
 
-  const { data, isLoading } = useItemAuditDataQuery(itemId);
+  const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
+
+  const {
+    data,
+    totalRecords,
+    isLoading,
+  } = useItemAuditDataQuery(itemId, lastVersionEventTs);
+
+  const {
+    actionsMap,
+    isLoadedMoreVisible,
+    versionsToDisplay,
+  } = useVersionHistory(data, totalRecords);
 
   const fieldLabelsMap = {
     discoverySuppress: formatMessage({ id: 'ui-inventory.discoverySuppress' }),
@@ -91,13 +106,20 @@ const ItemVersionHistory = ({
 
   const fieldFormatter = createFieldFormatter(referenceData, circulationHistory);
 
+  const handleLoadMore = lastEventTs => {
+    setLastVersionEventTs(lastEventTs);
+  };
+
   return (
     <AuditLogPane
-      versions={data}
-      isLoading={isLoading}
+      versions={versionsToDisplay}
       onClose={onClose}
+      isLoadedMoreVisible={isLoadedMoreVisible}
+      handleLoadMore={handleLoadMore}
+      isLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
+      actionsMap={actionsMap}
     />
   );
 };
