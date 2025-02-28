@@ -6,6 +6,7 @@ import { AuditLogPane } from '@folio/stripes-acq-components';
 
 import { useHoldingAuditDataQuery } from '../../hooks';
 import { DataContext } from '../../contexts';
+import { createVersionHistoryFieldFormatter } from '../../utils';
 
 const HoldingVersionHistory = ({ onClose, holdingId }) => {
   const { formatMessage } = useIntl();
@@ -46,24 +47,7 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
     entries: formatMessage({ id: 'ui-inventory.receivingHistory' }),
   };
 
-  const fieldFormatter = {
-    discoverySuppress: value => value.toString(),
-    holdingsTypeId: value => referenceData.holdingsTypes?.find(type => type.id === value)?.name,
-    statisticalCodeIds: value => {
-      const statisticalCode = referenceData.statisticalCodes?.find(code => code.id === value);
-
-      return `${statisticalCode.statisticalCodeType.name}: ${statisticalCode.code} - ${statisticalCode.name}`;
-    },
-    callNumberTypeId: value => referenceData.callNumberTypes?.find(type => type.id === value)?.name,
-    permanentLocationId: value => referenceData.locationsById[value]?.name,
-    temporaryLocationId: value => referenceData.locationsById[value]?.name,
-    effectiveLocationId: value => referenceData.locationsById[value]?.name,
-    illPolicyId: value => referenceData.illPolicies.find(policy => policy.id === value)?.name,
-    staffOnly: value => value.toString(),
-    holdingsNoteTypeId: value => referenceData.holdingsNoteTypes?.find(noteType => noteType.id === value)?.name,
-    relationshipId: value => referenceData.electronicAccessRelationships?.find(noteType => noteType.id === value)?.name,
-    publicDisplay: value => value.toString(),
-  };
+  const fieldFormatter = createVersionHistoryFieldFormatter(referenceData);
 
   return (
     <AuditLogPane
