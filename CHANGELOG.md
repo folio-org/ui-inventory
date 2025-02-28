@@ -37,6 +37,8 @@
 * Adapt settings options for using number gernerator. Refs UIIN-2556.
 * Hide version history icon and settings if audit log feature is disabled. Refs UIIN-3231.
 * Provide ids _and `length` param_ when retrieving job profiles. Refs UIIN-3257.
+* Move ‘Set for deletion’ checkbox field to 4th space in top row of Instance Edit view. Refs UIIN-3259.
+* Update Inventory: Set records for deletion permission's effect on ‘Set for deletion’ checkbox in Instance Edit view. Refs UIIN-3260.
 * *BREAKING* Migrate stripes dependencies to their Sunflower versions. Refs UIIN-3223.
 * *BREAKING* Migrate `react-intl` to v7. Refs UIIN-3224.
 
