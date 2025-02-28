@@ -198,6 +198,7 @@ class InstanceForm extends React.Component {
       connect: PropTypes.func.isRequired,
       locale: PropTypes.string.isRequired,
       logger: PropTypes.object.isRequired,
+      hasPerm: PropTypes.func.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       instanceBlockedFields: PropTypes.shape({
@@ -572,7 +573,8 @@ class InstanceForm extends React.Component {
                                 name="deleted"
                                 component={Checkbox}
                                 type="checkbox"
-                                disabled={this.isFieldBlocked('deleted')}
+                                disabled={this.isFieldBlocked('deleted')
+                                  || !this.props.stripes.hasPerm('ui-inventory.instance.set-records-for-deletion.execute')}
                                 onChange={() => this.onSetForDeletionFieldChange()}
                               />
                             </Col>
