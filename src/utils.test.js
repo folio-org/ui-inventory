@@ -22,11 +22,13 @@ import {
   checkIfCentralOrderingIsActive,
   omitCurrentAndCentralTenants,
   marshalInstance,
+  getIsVersionHistoryEnabled,
   createVersionHistoryFieldFormatter,
 } from './utils';
 import {
   CONTENT_TYPE_HEADER,
   OKAPI_TOKEN_HEADER,
+  VERSION_HISTORY_ENABLED_SETTING,
 } from './constants';
 
 describe('validateRequiredField', () => {
@@ -489,6 +491,20 @@ describe('hasMemberTenantPermission', () => {
         [{ permissionNames: [{ permissionName: 'bar' }], tenantId: 'tenant' }]
       )).toBe(false);
     });
+  });
+});
+
+describe('getIsVersionHistoryEnabled', () => {
+  it('should return true when version history setting is enabled', () => {
+    const settings = [{ key: VERSION_HISTORY_ENABLED_SETTING, value: true }];
+
+    expect(getIsVersionHistoryEnabled(settings)).toBe(true);
+  });
+
+  it('should return false when version history setting is disabled', () => {
+    const settings = [{ key: VERSION_HISTORY_ENABLED_SETTING, value: false }];
+
+    expect(getIsVersionHistoryEnabled(settings)).toBe(false);
   });
 });
 

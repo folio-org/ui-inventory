@@ -44,9 +44,10 @@ import {
   handleKeyCommand,
   redirectToMarcEditPage,
   flattenCentralTenantPermissions,
+  getIsVersionHistoryEnabled,
 } from '../../utils';
 import MARC_TYPES from './marcTypes';
-import { INSTANCE_RECORD_TYPE, INVENTORY_AUDIT_GROUP, VERSION_HISTORY_ENABLED_SETTING } from '../../constants';
+import { INSTANCE_RECORD_TYPE, INVENTORY_AUDIT_GROUP } from '../../constants';
 
 import styles from './ViewSource.css';
 
@@ -210,7 +211,7 @@ const ViewSource = ({
 
   const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
 
-  const isVersionHistoryEnabled = settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
+  const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
   const showVersionHistoryButton = marcType === MARC_TYPES.BIB && isVersionHistoryEnabled;
 
@@ -258,6 +259,7 @@ const ViewSource = ({
           lastMenu={lastMenu}
           paneWidth="fill"
           wrapperClass={styles.viewSource}
+          isPaneset={false}
         />
         {isPrintAvailable && isShownPrintPopup && (
           <PrintPopup

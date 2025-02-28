@@ -157,13 +157,13 @@ describe('BrowseResultsList', () => {
   });
 
   describe.each([
-    { searchOption: browseCallNumberOptions.CALL_NUMBERS, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
-    { searchOption: browseCallNumberOptions.DEWEY, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
-    { searchOption: browseCallNumberOptions.LIBRARY_OF_CONGRESS, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
-    { searchOption: browseCallNumberOptions.LOCAL, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
-    { searchOption: browseCallNumberOptions.NATIONAL_LIBRARY_OF_MEDICINE, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
-    { searchOption: browseCallNumberOptions.OTHER, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
-    { searchOption: browseCallNumberOptions.SUPERINTENDENT, shared: FACETS.SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.CALL_NUMBERS, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.DEWEY, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.LIBRARY_OF_CONGRESS, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.LOCAL, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.NATIONAL_LIBRARY_OF_MEDICINE, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.OTHER, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
+    { searchOption: browseCallNumberOptions.SUPERINTENDENT, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.CALL_NUMBERS_HELD_BY },
   ])('when the search option is $searchOption and the Shared and/or HeldBy facets are selected', ({ searchOption, shared, heldBy }) => {
     describe('and the user clicks on a record in the list', () => {
       it('should be navigated to the Search lookup with those filters', async () => {
