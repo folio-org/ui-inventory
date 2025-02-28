@@ -3,9 +3,14 @@ import '../../../test/jest/__mock__';
 import { act, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
+import queryString from 'query-string';
 
 import { MultiColumnList } from '@folio/stripes-components';
-import { browseModeOptions } from '@folio/stripes-inventory-components';
+import {
+  browseCallNumberOptions,
+  browseModeOptions,
+  queryIndexes,
+} from '@folio/stripes-inventory-components';
 
 import {
   renderWithIntl,
@@ -47,6 +52,13 @@ const data = {
       ],
     },
   ],
+  callNumberBrowseConfig: [
+    {
+      id: 'dewey',
+      shelvingAlgorithm: 'dewey',
+      typeIds: ['dewey-id', 'lc-id'],
+    },
+  ],
   subjectSources: [{ id: 'sourceId1', name: 'sourceName1' }, { id: 'sourceId2', name: 'sourceName2' }],
   subjectTypes: [{ id: 'typeId1', name: 'typeName1' }, { id: 'typeId2', name: 'typeName2' }],
 };
@@ -83,6 +95,7 @@ describe('getBrowseResultsFormatter', () => {
     const formatter = getBrowseResultsFormatter({
       data,
       browseOption: browseModeOptions.CALL_NUMBERS,
+      isNewCallNumberBrowseAvailable: false,
     });
     const missedMatchRecord = {
       isAnchor: true,
@@ -114,7 +127,15 @@ describe('getBrowseResultsFormatter', () => {
     });
 
     it('should render call number\'s rows', () => {
-      renderCallNumberList();
+      const newFormatter = getBrowseResultsFormatter({
+        data,
+        browseOption: browseModeOptions.CALL_NUMBERS,
+        isNewCallNumberBrowseAvailable: false,
+      });
+
+      renderCallNumberList({
+        formatter: newFormatter,
+      });
 
       // Anchor row
       expect(screen.getByText(anchorRecord.fullCallNumber).tagName.toLowerCase()).toBe('strong');
@@ -134,13 +155,105 @@ describe('getBrowseResultsFormatter', () => {
     });
 
     it('should navigate to instance "Search" page when target column was clicked', async () => {
-      renderCallNumberList();
+      const newFormatter = getBrowseResultsFormatter({
+        data,
+        browseOption: browseModeOptions.CALL_NUMBERS,
+        isNewCallNumberBrowseAvailable: false,
+      });
+
+      renderCallNumberList({
+        formatter: newFormatter,
+      });
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
       await act(async () => fireEvent.click(screen.getByText(anchorRecord.fullCallNumber)));
 
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
+    });
+
+    describe('when `browse` 1.5 interface is available', () => {
+      const _formatter = getBrowseResultsFormatter({
+        data,
+        browseOption: browseModeOptions.CALL_NUMBERS,
+        isNewCallNumberBrowseAvailable: true,
+      });
+      const _missedMatchRecord = {
+        isAnchor: true,
+        fullCallNumber: 'bla bla',
+        callNumber: 'bla bla',
+        totalRecords: 0,
+      };
+      const _contentData = [
+        {
+          fullCallNumber: 'CALL',
+          isAnchor: true,
+          totalRecords: 0,
+        },
+        {
+          fullCallNumber: 'CALL SUF',
+          callNumber: 'CALL',
+          callNumberPrefix: 'PRE',
+          callNumberSuffix: 'SUF',
+          totalRecords: 2,
+        },
+      ];
+      const [_anchorRecord, _nonAnchorRecord] = _contentData;
+
+      const _renderCallNumberList = (params = {}) => renderComponent({
+        visibleColumns: VISIBLE_COLUMNS_MAP[browseModeOptions.CALL_NUMBERS],
+        contentData: _contentData,
+        formatter: _formatter,
+        ...params,
+      });
+
+      it('should render call number\'s rows', () => {
+        _renderCallNumberList();
+
+        // Anchor row
+        expect(screen.getByText('would be here').tagName.toLowerCase()).toBe('strong');
+        expect(screen.getByText('CALL').tagName.toLowerCase()).not.toBe('strong');
+        // Default row
+        expect(screen.getByText('PRE CALL SUF').tagName.toLowerCase()).not.toBe('strong');
+        expect(screen.getByText(_nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
+      });
+
+      it('should render \'Missed match item\' row', () => {
+        _renderCallNumberList({ contentData: [_missedMatchRecord] });
+
+        expect(screen.getByText(_missedMatchRecord.callNumber)).toBeInTheDocument();
+        expect(screen.getByText(missedMatchText)).toBeInTheDocument();
+      });
+
+      it('should not navigate to any page when anchor is clicked', async () => {
+        _renderCallNumberList();
+
+        expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
+
+        await act(async () => fireEvent.click(screen.getByText(_anchorRecord.fullCallNumber)));
+
+        expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
+      });
+
+      describe('when call number title is clicked', () => {
+        it('should navigate to the instance "Search" page', async () => {
+          const { getByText } = _renderCallNumberList({
+            formatter: getBrowseResultsFormatter({
+              data,
+              browseOption: browseCallNumberOptions.DEWEY,
+              isNewCallNumberBrowseAvailable: true,
+            }),
+          });
+
+          const query = queryString.stringify({
+            selectedBrowseResult: true,
+            qindex: queryIndexes.QUERY_SEARCH,
+            query: 'itemFullCallNumbers="PRE CALL SUF" and (item.effectiveCallNumberComponents.typeId=="dewey-id" or item.effectiveCallNumberComponents.typeId=="lc-id")',
+          });
+
+          expect(getByText('PRE CALL SUF').href).toContain(`${INVENTORY_ROUTE}?${query}`);
+        });
+      });
     });
   });
 
@@ -152,6 +265,7 @@ describe('getBrowseResultsFormatter', () => {
     const formatter = getBrowseResultsFormatter({
       data,
       browseOption: browseModeOptions.CONTRIBUTORS,
+      isNewCallNumberBrowseAvailable: false,
     });
     const missedMatchRecord = {
       isAnchor: true,
@@ -244,6 +358,7 @@ describe('getBrowseResultsFormatter', () => {
     const formatter = getBrowseResultsFormatter({
       data,
       browseOption: browseModeOptions.SUBJECTS,
+      isNewCallNumberBrowseAvailable: false,
     });
     const missedMatchRecord = {
       isAnchor: true,
@@ -317,6 +432,7 @@ describe('getBrowseResultsFormatter', () => {
         query: classificationNumber,
       },
       data,
+      isNewCallNumberBrowseAvailable: false,
     });
     const missedMatchRecord = {
       classificationNumber: 'foo',

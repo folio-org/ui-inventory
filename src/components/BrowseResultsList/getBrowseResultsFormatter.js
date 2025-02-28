@@ -16,6 +16,7 @@ import {
   INVENTORY_ROUTE,
 } from '../../constants';
 import {
+  getFullCallNumber,
   getSearchParams,
   isRowPreventsClick,
 } from './utils';
@@ -38,10 +39,11 @@ const getTargetRecord = (
   filters,
   namespace,
   data,
+  isNewCallNumberBrowseAvailable,
 ) => {
   const record = getFullMatchRecord(item, row.isAnchor);
-  const searchParams = getSearchParams(row, browseOption, filters, data);
-  const isNotClickable = isRowPreventsClick(row, browseOption);
+  const searchParams = getSearchParams(row, browseOption, filters, data, isNewCallNumberBrowseAvailable);
+  const isNotClickable = isRowPreventsClick(row, browseOption, isNewCallNumberBrowseAvailable);
 
   if (isNotClickable) return record;
 
@@ -114,11 +116,18 @@ const getBrowseResultsFormatter = ({
   browseOption,
   filters,
   namespace,
+  isNewCallNumberBrowseAvailable,
 }) => {
-  const commonTargetRecordArgs = [browseOption, filters, namespace, data];
+  const commonTargetRecordArgs = [browseOption, filters, namespace, data, isNewCallNumberBrowseAvailable];
 
   return {
-    title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
+    title: r => {
+      const instanceTitle = isNewCallNumberBrowseAvailable
+        ? r.instanceTitle
+        : r.instance?.title;
+
+      return getFullMatchRecord(instanceTitle, r.isAnchor);
+    },
     subject: r => {
       if (!r?.totalRecords && r?.isAnchor) {
         return <MissedMatchItem query={r?.value} />;
@@ -144,7 +153,12 @@ const getBrowseResultsFormatter = ({
       return typeName || <NoValue />;
     },
     callNumber: r => {
-      if (r?.instance || r?.totalRecords) {
+      if (isNewCallNumberBrowseAvailable && r?.totalRecords) {
+        const fullCallNumber = getFullCallNumber(r);
+        return getTargetRecord(fullCallNumber, r, ...commonTargetRecordArgs);
+      }
+
+      if (!isNewCallNumberBrowseAvailable && (r?.instance || r?.totalRecords)) {
         return getTargetRecord(r?.fullCallNumber, r, ...commonTargetRecordArgs);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;

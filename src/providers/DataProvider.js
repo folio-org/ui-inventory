@@ -5,7 +5,10 @@ import keyBy from 'lodash/keyBy';
 import { stripesConnect } from '@folio/stripes/core';
 import { useCommonData } from '@folio/stripes-inventory-components';
 
-import { useClassificationBrowseConfig } from '../hooks';
+import {
+  useCallNumberBrowseConfig,
+  useClassificationBrowseConfig,
+} from '../hooks';
 import { DataContext } from '../contexts';
 
 // Provider which loads dictionary data used in various places in ui-inventory.
@@ -18,9 +21,12 @@ const DataProvider = ({
 
   const { commonData, isCommonDataLoading } = useCommonData();
   const { classificationBrowseConfig, isLoading: isBrowseConfigLoading } = useClassificationBrowseConfig();
+  const { callNumberBrowseConfig, isCallNumberConfigLoading } = useCallNumberBrowseConfig();
+
+  const areOtherDataLoading = isCommonDataLoading || isBrowseConfigLoading || isCallNumberConfigLoading;
 
   const isLoading = useMemo(() => {
-    if (isCommonDataLoading || isBrowseConfigLoading) {
+    if (areOtherDataLoading) {
       return true;
     }
     // eslint-disable-next-line guard-for-in
@@ -33,7 +39,7 @@ const DataProvider = ({
     }
 
     return false;
-  }, [resources, manifest, isCommonDataLoading, isBrowseConfigLoading]);
+  }, [resources, manifest, areOtherDataLoading]);
 
   const data = useMemo(() => {
     const loadedData = {
@@ -57,6 +63,7 @@ const DataProvider = ({
     loadedData.holdingsSourcesByName = keyBy(commonData.holdingsSources, 'name');
     loadedData.instanceRelationshipTypesById = keyBy(instanceRelationshipTypes, 'id');
     loadedData.classificationBrowseConfig = classificationBrowseConfig;
+    loadedData.callNumberBrowseConfig = callNumberBrowseConfig;
 
     return loadedData;
   }, [
@@ -64,6 +71,7 @@ const DataProvider = ({
     manifest,
     commonData,
     classificationBrowseConfig,
+    callNumberBrowseConfig,
   ]);
 
   if (isLoading) {

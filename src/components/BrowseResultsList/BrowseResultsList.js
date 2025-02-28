@@ -9,7 +9,10 @@ import {
   useLocation,
 } from 'react-router-dom';
 
-import { useNamespace } from '@folio/stripes/core';
+import {
+  useNamespace,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   MCLPagingTypes,
   MultiColumnList,
@@ -53,6 +56,7 @@ const BrowseResultsList = ({
   filters,
 }) => {
   const [namespace] = useNamespace();
+  const stripes = useStripes();
   const data = useContext(DataContext);
   const { search } = useLocation();
   const {
@@ -63,14 +67,15 @@ const BrowseResultsList = ({
 
   const browseOption = queryString.parse(search).qindex;
   const listId = `browse-results-list-${browseOption}`;
+  const isNewCallNumberBrowseAvailable = stripes.hasInterface('browse', '1.5');
 
   const isSelected = useCallback(({ item, rowIndex }) => {
-    if (isRowPreventsClick(item, browseOption)) return false;
+    if (isRowPreventsClick(item, browseOption, isNewCallNumberBrowseAvailable)) return false;
 
     const itemIndex = itemToView?.selector && getItemToViewIndex(itemToView.selector);
 
     return itemIndex === rowIndex;
-  }, [browseOption, itemToView]);
+  }, [browseOption, itemToView, isNewCallNumberBrowseAvailable]);
 
   return (
     <MultiColumnList
@@ -78,7 +83,7 @@ const BrowseResultsList = ({
       id={listId}
       totalCount={totalRecords}
       contentData={browseData}
-      formatter={getBrowseResultsFormatter({ data, browseOption, filters, namespace })}
+      formatter={getBrowseResultsFormatter({ data, browseOption, filters, namespace, isNewCallNumberBrowseAvailable })}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
       isSelected={isSelected}

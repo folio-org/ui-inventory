@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "12.0.12",
+  "version": "12.0.13",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -104,7 +104,8 @@
       "orders-storage.settings": "1.0",
       "organizations.organizations": "1.0",
       "pieces": "3.0",
-      "titles": "1.2"
+      "titles": "1.2",
+      "browse": "1.5"
     },
     "permissionSets": [
       {
@@ -262,6 +263,18 @@
           "inventory-storage.holdings-types.item.put",
           "settings.inventory.enabled",
           "users.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.call-number-browse",
+        "displayName": "Settings (Inventory): Configure call number browse",
+        "subPermissions": [
+          "settings.inventory.enabled",
+          "inventory-storage.call-number-types.collection.get",
+          "browse.config.collection.get",
+          "browse.config.item.put",
+          "perms.users.get"
         ],
         "visible": true
       },
