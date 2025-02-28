@@ -90,6 +90,7 @@ import {
   switchAffiliation,
   isInstanceShadowCopy,
   omitCurrentAndCentralTenants,
+  getIsVersionHistoryEnabled,
 } from '../utils';
 import withLocation from '../withLocation';
 import {
@@ -103,6 +104,8 @@ import {
   ITEM_ACCORDIONS,
   ITEM_ACCORDION_LABELS,
   UPDATE_OWNERSHIP_API,
+  INVENTORY_AUDIT_GROUP,
+  SOURCE_VALUES,
 } from '../constants';
 import ItemStatus from './ItemStatus';
 import {
@@ -115,6 +118,7 @@ import {
   UpdateItemOwnershipModal,
 } from '../components';
 import {
+  useAuditSettings,
   useHoldingMutation,
   useUpdateOwnership,
 } from '../hooks';
@@ -170,6 +174,9 @@ const ItemView = props => {
   const accordionStatusRef = useRef();
   const { mutateHolding } = useHoldingMutation(targetTenant?.id);
   const { updateOwnership } = useUpdateOwnership(UPDATE_OWNERSHIP_API.ITEMS);
+
+  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+  const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
   useEffect(() => {
     if (checkIfUserInMemberTenant(stripes)) {
@@ -624,6 +631,8 @@ const ItemView = props => {
   const temporaryHoldingsLocation = locationsById[holdingsRecord?.temporaryLocationId];
   const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
+  const showVersionHistoryButton = instance?.source === SOURCE_VALUES.FOLIO && isVersionHistoryEnabled;
+
   const openVersionHistory = useCallback(() => {
     setIsSetVersionHistoryOpen(true);
   }, []);
@@ -1021,10 +1030,15 @@ const ItemView = props => {
           )}
           dismissible
           onClose={onCloseViewItem}
-          actionMenu={getActionMenu}
+          actionMenu={(params) => !isVersionHistoryOpen && getActionMenu(params)}
           lastMenu={(
             <PaneMenu>
-              <VersionHistoryButton onClick={openVersionHistory} />
+              {showVersionHistoryButton && (
+               <VersionHistoryButton
+                  onClick={openVersionHistory}
+                  disabled={isVersionHistoryOpen}
+                />
+              )}
             </PaneMenu>
           )}
         >

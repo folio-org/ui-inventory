@@ -31,6 +31,16 @@
 * MARC Bib > View Source > Display Version History pane with an empty Version History component. Refs UIIN-3235.
 * MARC Bib - Hide version history icon and settings if audit log feature is disabled. Refs UIIN-3237.
 * Instance: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3176.
+* Holdings: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3177.
+* Item: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3178.
+* Use the name CALL_NUMBERS_SHARED for the Shared facet instead of SHARED. Fixes UIIN-3254.
+* Adapt settings options for using number gernerator. Refs UIIN-2556.
+* Hide version history icon and settings if audit log feature is disabled. Refs UIIN-3231.
+* Provide ids _and `length` param_ when retrieving job profiles. Refs UIIN-3257.
+* Move ‘Set for deletion’ checkbox field to 4th space in top row of Instance Edit view. Refs UIIN-3259.
+* Update Inventory: Set records for deletion permission's effect on ‘Set for deletion’ checkbox in Instance Edit view. Refs UIIN-3260.
+* *BREAKING* Migrate stripes dependencies to their Sunflower versions. Refs UIIN-3223.
+* *BREAKING* Migrate `react-intl` to v7. Refs UIIN-3224.
 * Instance: Display all versions in View history fourth pane. Refs UIIN-3173.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)

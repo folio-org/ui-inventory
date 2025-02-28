@@ -134,6 +134,21 @@ const defaultProps = {
     }
   },
   initialTenantId: 'initialTenantId',
+  isVersionHistoryEnabled: true,
+};
+
+const resourcesFolioProp = {
+  ...defaultProps.resources,
+  holdingsRecords: {
+    records: [
+      {
+        sourceId: 'FOLIO',
+        temporaryLocationId: 'inactiveLocation',
+        id: 'holdingId',
+        _version: 1,
+      }
+    ],
+  },
 };
 
 const queryClient = new QueryClient();
@@ -368,28 +383,12 @@ describe('ViewHoldingsRecord actions', () => {
   });
 
   describe('when source is FOLIO', () => {
-    const resourcesProp = {
-      ...defaultProps.resources,
-      resources: {
-        holdingsRecords: {
-          records: [
-            {
-              sourceId: 'FOLIO',
-              temporaryLocationId: 'inactiveLocation',
-              id: 'holdingId',
-              _version: 1,
-            }
-          ],
-        },
-      },
-    };
-
     describe('and user has FOLIO record permissions', () => {
       const assignedPerms = [permissions.FOLIO_CREATE];
 
       it('should render the action menu', () => {
         const { queryByText } = renderViewHoldingsRecord({
-          resources: resourcesProp,
+          resources: resourcesFolioProp,
           stripes: {
             ...buildStripes({
               hasPerm: (perm) => assignedPerms.includes(perm),
@@ -404,7 +403,7 @@ describe('ViewHoldingsRecord actions', () => {
     describe('and user does not have FOLIO record permissions', () => {
       it('should not render the action menu', () => {
         const { queryByText } = renderViewHoldingsRecord({
-          resources: resourcesProp,
+          resources: resourcesFolioProp,
           stripes: {
             ...buildStripes({
               hasPerm: () => false,
@@ -580,7 +579,7 @@ describe('ViewHoldingsRecord actions', () => {
     let versionHistoryButton;
 
     beforeEach(async () => {
-      await act(async () => { renderViewHoldingsRecord(); });
+      await act(async () => { renderViewHoldingsRecord({ resources: resourcesFolioProp }); });
 
       versionHistoryButton = screen.getByRole('button', { name: /version history/i });
     });
@@ -590,9 +589,19 @@ describe('ViewHoldingsRecord actions', () => {
     });
 
     describe('when click the button', () => {
-      it('should render version history pane', async () => {
+      beforeEach(async () => {
         await userEvent.click(versionHistoryButton);
+      });
 
+      it('should hide action menu', () => {
+        expect(screen.queryByText('Actions')).not.toBeInTheDocument();
+      });
+
+      it('should disable version history button', () => {
+        expect(screen.getByRole('button', { name: /version history/i })).toBeDisabled();
+      });
+
+      it('should render version history pane', () => {
         expect(screen.getByRole('region', { name: /version history/i })).toBeInTheDocument();
       });
     });
@@ -609,6 +618,17 @@ describe('ViewHoldingsRecord actions', () => {
 
         expect(screen.queryByRole('region', { name: /version history/i })).not.toBeInTheDocument();
       });
+    });
+  });
+
+  describe('when version history is disabled', () => {
+    it('should not show the version history button', () => {
+      renderViewHoldingsRecord({
+        isVersionHistoryEnabled: false,
+        resources: resourcesFolioProp,
+      });
+
+      expect(screen.queryByRole('button', { name: /version history/i })).not.toBeInTheDocument();
     });
   });
 });
