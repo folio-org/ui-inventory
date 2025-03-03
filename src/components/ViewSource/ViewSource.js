@@ -34,10 +34,13 @@ import {
 } from '@folio/stripes-marc-components';
 import { VersionHistoryButton } from '@folio/stripes-acq-components';
 
-import { VersionHistory } from '../../views/VersionHistory';
+import { MarcVersionHistory } from '../MarcVersionHistory';
 import ActionItem from '../ActionItem';
 import { useGoBack } from '../../common/hooks';
-import { useAuditSettings, useQuickExport } from '../../hooks';
+import {
+  useAuditSettings,
+  useQuickExport,
+} from '../../hooks';
 import { IdReportGenerator } from '../../reports';
 import {
   isUserInConsortiumMode,
@@ -47,7 +50,10 @@ import {
   getIsVersionHistoryEnabled,
 } from '../../utils';
 import MARC_TYPES from './marcTypes';
-import { INSTANCE_RECORD_TYPE, INVENTORY_AUDIT_GROUP } from '../../constants';
+import {
+  INSTANCE_RECORD_TYPE,
+  INVENTORY_AUDIT_GROUP,
+} from '../../constants';
 
 import styles from './ViewSource.css';
 
@@ -270,7 +276,8 @@ const ViewSource = ({
           />
         )}
         {isVersionHistoryOpen && (
-          <VersionHistory
+          <MarcVersionHistory
+            id={marc.matchedId}
             onClose={() => setIsVersionHistoryOpen(false)}
           />
         )}
