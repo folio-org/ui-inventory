@@ -5,8 +5,8 @@
  */
 export const getActionLabel = formatMessage => {
   return {
-    ADDED: formatMessage({ id: 'stripes-acq-components.audit-log.action.added' }),
-    MODIFIED: formatMessage({ id: 'stripes-acq-components.audit-log.action.edited' }),
-    REMOVED: formatMessage({ id: 'stripes-acq-components.audit-log.action.removed' }),
+    ADDED: formatMessage({ id: 'ui-inventory.versionHistory.action.added' }),
+    MODIFIED: formatMessage({ id: 'ui-inventory.versionHistory.action.edited' }),
+    REMOVED: formatMessage({ id: 'ui-inventory.versionHistory.action.removed' }),
   };
 };

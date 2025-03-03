@@ -18,6 +18,30 @@ import {
 
 import { getDateWithTime } from '../../utils';
 
+const getFieldFormatter = (referenceData) => ({
+  alternativeTitleTypeId: value => referenceData.alternativeTitleTypes?.find(type => type.id === value)?.name,
+  classificationTypeId: value => referenceData.classificationTypes?.find(type => type.id === value)?.name,
+  contributorNameTypeId: value => referenceData.contributorNameTypes?.find(contributor => contributor.id === value)?.name,
+  contributorTypeId: value => referenceData.contributorTypes?.find(contributor => contributor.id === value)?.name,
+  contributorTypeText: value => value || <NoValue />,
+  dateTypeId: value => referenceData.instanceDateTypes?.find(type => type.id === value)?.name,
+  identifierTypeId: value => referenceData.identifierTypes?.find(type => type.id === value)?.name,
+  instanceFormatIds: value => referenceData.instanceFormats?.find(format => format.id === value)?.name,
+  instanceNoteTypeId: value => referenceData.instanceNoteTypes?.find(note => note.id === value)?.name,
+  instanceTypeId: value => referenceData.instanceTypes?.find(type => type.id === value)?.name,
+  modeOfIssuanceId: value => referenceData.modesOfIssuance?.find(mode => mode.id === value)?.name,
+  natureOfContentTermIds: value => referenceData.natureOfContentTerms?.find(term => term.id === value)?.name,
+  primary: value => value.toString(),
+  relationshipId: value => referenceData.electronicAccessRelationships?.find(rel => rel.id === value)?.name,
+  sourceId: value => referenceData.subjectSources?.find(source => source.id === value)?.name,
+  staffOnly: value => value.toString(),
+  statisticalCodeIds: value => referenceData.statisticalCodes?.find(code => code.id === value)?.name,
+  statusId: value => referenceData.instanceStatuses?.find(status => status.id === value)?.name,
+  statusUpdatedDate: value => getDateWithTime(value),
+  typeId: value => referenceData.subjectTypes?.find(type => type.id === value)?.name,
+  uri: value => value || <NoValue />,
+});
+
 const InstanceVersionHistory = ({
   instanceId,
   onClose,
@@ -82,29 +106,7 @@ const InstanceVersionHistory = ({
     tagList: formatMessage({ id: 'stripes-smart-components.tags' }),
     title: formatMessage({ id: 'ui-inventory.instances.columns.title' }),
   };
-  const fieldFormatter = {
-    alternativeTitleTypeId: value => referenceData.alternativeTitleTypes?.find(type => type.id === value)?.name,
-    classificationTypeId: value => referenceData.classificationTypes?.find(type => type.id === value)?.name,
-    contributorNameTypeId: value => referenceData.contributorNameTypes?.find(contributor => contributor.id === value)?.name,
-    contributorTypeId: value => referenceData.contributorTypes?.find(contributor => contributor.id === value)?.name,
-    contributorTypeText: value => value || <NoValue />,
-    dateTypeId: value => referenceData.instanceDateTypes?.find(type => type.id === value)?.name,
-    identifierTypeId: value => referenceData.identifierTypes?.find(type => type.id === value)?.name,
-    instanceFormatIds: value => referenceData.instanceFormats?.find(format => format.id === value)?.name,
-    instanceNoteTypeId: value => referenceData.instanceNoteTypes?.find(note => note.id === value)?.name,
-    instanceTypeId: value => referenceData.instanceTypes?.find(type => type.id === value)?.name,
-    modeOfIssuanceId: value => referenceData.modesOfIssuance?.find(mode => mode.id === value)?.name,
-    natureOfContentTermIds: value => referenceData.natureOfContentTerms?.find(term => term.id === value)?.name,
-    primary: value => value.toString(),
-    relationshipId: value => referenceData.electronicAccessRelationships?.find(rel => rel.id === value)?.name,
-    sourceId: value => referenceData.subjectSources?.find(source => source.id === value)?.name,
-    staffOnly: value => value.toString(),
-    statisticalCodeIds: value => referenceData.statisticalCodes?.find(code => code.id === value)?.name,
-    statusId: value => referenceData.instanceStatuses?.find(status => status.id === value)?.name,
-    statusUpdatedDate: value => getDateWithTime(value),
-    typeId: value => referenceData.subjectTypes?.find(type => type.id === value)?.name,
-    uri: value => value || <NoValue />,
-  };
+  const fieldFormatter = getFieldFormatter(referenceData);
 
   const handleLoadMore = lastEventTs => {
     setLastVersionEventTs(lastEventTs);
