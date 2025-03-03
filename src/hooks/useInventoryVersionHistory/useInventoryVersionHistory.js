@@ -27,7 +27,7 @@ export const versionsFormatter = (usersMap, intl) => (diffArray) => {
     return user ? `${user.personal.lastName}, ${user.personal.firstName}` : null;
   };
   const getSourceLink = (userId) => {
-    return userId ? <Link to={`/users/preview/${userId}`}>{getUserName(userId, usersMap)}</Link> : anonymousUserLabel;
+    return userId ? <Link to={`/users/preview/${userId}`}>{getUserName(userId)}</Link> : anonymousUserLabel;
   };
 
   return diffArray

@@ -13,6 +13,10 @@ import { renderWithIntl, translationsProperties } from '../../../test/jest/helpe
 import { useAuditSettings } from '../../hooks';
 import InstanceDetails from './InstanceDetails';
 
+jest.mock('@folio/stripes-components', () => ({
+  ...jest.requireActual('@folio/stripes-components'),
+  useVersionHistory: () => ({ versions: [], isLoadedMoreVisible: true }),
+}));
 jest.mock('../../components/ViewSource/ViewSource', () => jest.fn().mockReturnValue('ViewSource'));
 jest.mock('../InstanceDetails/InstanceTitle/InstanceTitle', () => jest.fn().mockReturnValue('InstanceTitle'));
 jest.mock('../InstanceDetails/InstanceContributorsView/InstanceContributorsView', () => jest.fn().mockReturnValue('InstanceContributorsView'));

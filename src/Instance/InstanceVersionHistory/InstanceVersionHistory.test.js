@@ -15,6 +15,7 @@ import { DataContext } from '../../contexts';
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useInstanceAuditDataQuery: () => jest.fn(),
+  useInventoryVersionHistory: () => ({ versions: [], isLoadedMoreVisible: true }),
 }));
 
 const queryClient = new QueryClient();
