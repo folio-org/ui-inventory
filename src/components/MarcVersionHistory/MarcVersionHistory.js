@@ -2,6 +2,7 @@ import {
   useMemo,
   useState,
 } from 'react';
+import PropTypes from 'prop-types';
 
 import { AuditLogPane } from '@folio/stripes/components';
 
@@ -57,7 +58,12 @@ const transformVersion = (version) => {
   };
 };
 
-export const MarcVersionHistory = ({ onClose, id }) => {
+const propTypes = {
+  onClose: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+};
+
+const MarcVersionHistory = ({ onClose, id }) => {
   const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
 
   const {
@@ -89,3 +95,7 @@ export const MarcVersionHistory = ({ onClose, id }) => {
     />
   );
 };
+
+MarcVersionHistory.propTypes = propTypes;
+
+export { MarcVersionHistory };
