@@ -15,8 +15,8 @@ import {
   useUsersBatch,
 } from '@folio/stripes-acq-components';
 
-import { getChangedFieldsList } from './getChangedFieldsList';
-import { getActionLabel } from './getActionLabel';
+import { getChangedFieldsList } from '../useInventoryVersionHistory/getChangedFieldsList';
+import { getActionLabel } from '../useInventoryVersionHistory/getActionLabel';
 
 const useVersionHistory = (data, totalRecords) => {
   const intl = useIntl();

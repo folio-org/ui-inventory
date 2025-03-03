@@ -13,7 +13,7 @@ import {
 import { DataContext } from '../../contexts';
 import {
   useInstanceAuditDataQuery,
-  useVersionHistory,
+  useInventoryVersionHistory,
 } from '../../hooks';
 
 import { getDateWithTime } from '../../utils';
@@ -58,12 +58,11 @@ const InstanceVersionHistory = ({
     totalRecords,
     isLoading,
   } = useInstanceAuditDataQuery(instanceId, lastVersionEventTs);
-
   const {
     actionsMap,
+    versions,
     isLoadedMoreVisible,
-    versionsToDisplay,
-  } = useVersionHistory(data, totalRecords);
+  } = useInventoryVersionHistory({ data, totalRecords });
 
   const fieldLabelsMap = {
     administrativeNotes: formatMessage({ id: 'ui-inventory.administrativeNotes' }),
@@ -114,7 +113,7 @@ const InstanceVersionHistory = ({
 
   return (
     <AuditLogPane
-      versions={versionsToDisplay}
+      versions={versions}
       onClose={onClose}
       isLoadedMoreVisible={isLoadedMoreVisible}
       handleLoadMore={handleLoadMore}
