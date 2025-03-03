@@ -302,8 +302,8 @@ class HoldingsForm extends React.Component {
 
     const holdingsPageType = initialValues.id ? 'edit' : 'create';
 
-    const showNumberGeneratorForCallNumber =
-      numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+    const isCallNumberHoldingsDisabled = numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE;
+    const showNumberGeneratorForCallNumber = isCallNumberHoldingsDisabled ||
       numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
 
     const shortcuts = [
@@ -594,7 +594,7 @@ class HoldingsForm extends React.Component {
                           fullWidth
                           format={v => v?.trim()}
                           formatOnBlur
-                          disabled={this.isFieldBlocked('callNumber') || numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
+                          disabled={this.isFieldBlocked('callNumber') || isCallNumberHoldingsDisabled}
                         />
                         {showNumberGeneratorForCallNumber &&
                           <NumberGeneratorModalButton

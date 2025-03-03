@@ -376,14 +376,15 @@ class ItemForm extends React.Component {
       },
     ];
 
-    const showNumberGeneratorForAccessionNumber =
-      numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+    const isBarcodeDisabled = numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE;
+    const isAccessionNumberDisabled = numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE;
+    const isCallNumberDisabled = numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE;
+
+    const showNumberGeneratorForAccessionNumber = isAccessionNumberDisabled ||
       numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
-    const showNumberGeneratorForBarcode =
-      numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+    const showNumberGeneratorForBarcode = isBarcodeDisabled ||
       numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
-    const showNumberGeneratorForCallNumber =
-      numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE ||
+    const showNumberGeneratorForCallNumber = isCallNumberDisabled ||
       numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
 
     const renderSharedNumberGenerator = () => {
@@ -532,7 +533,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
-                          disabled={numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
+                          disabled={isBarcodeDisabled}
                           label={<FormattedMessage id="ui-inventory.barcode" />}
                           name="barcode"
                           id="additem_barcode"
@@ -556,7 +557,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
-                          disabled={numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
+                          disabled={isAccessionNumberDisabled}
                           label={<FormattedMessage id="ui-inventory.accessionNumber" />}
                           name="accessionNumber"
                           id="additem_accessionnumber"
@@ -676,7 +677,7 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumber"
                           id="additem_callnumber"
                           component={TextArea}
-                          disabled={numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE}
+                          disabled={isCallNumberDisabled}
                           format={v => v?.trim()}
                           formatOnBlur
                           rows={1}
