@@ -19,4 +19,13 @@ jest.mock('@folio/stripes-inventory-components', () => ({
   HoldingsRecordFilters: jest.fn(() => <div>HoldingsRecordFilters</div>),
   ItemFilters: jest.fn(() => <div>ItemFilters</div>),
   buildSearchQuery: jest.fn(),
+  browseCallNumberIndexToId: {
+    callNumbers: 'all',
+    dewey: 'dewey',
+    lc: 'lc',
+    local: 'local',
+    nlm: 'nlm',
+    other: 'other',
+    sudoc: 'sudoc',
+  }
 }));
