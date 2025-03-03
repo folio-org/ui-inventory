@@ -45,6 +45,7 @@ import ClassificationBrowseSettings from '../ClassificationBrowseSettings';
 import SubjectSourcesSettings from '../SubjectSourcesSettings';
 import SubjectTypesSettings from '../SubjectTypesSettings';
 import DisplaySettings from '../DisplaySettings';
+import CallNumberBrowseSettings from '../CallNumberBrowseSettings';
 import {
   flattenCentralTenantPermissions,
   isUserInConsortiumMode,
@@ -78,10 +79,11 @@ const InventorySettings = (props) => {
   };
 
   const getSections = (_centralTenantPermissions) => {
-    const canUserViewClassificationBrowse = isUserInConsortiumMode(stripes)
-      ? checkIfUserInCentralTenant(stripes)
-        || flattenCentralTenantPermissions(_centralTenantPermissions).has('ui-inventory.settings.classification-browse')
-      : true;
+    const hasPermission = (perm) => {
+      return isUserInConsortiumMode(stripes)
+        ? checkIfUserInCentralTenant(stripes) || flattenCentralTenantPermissions(_centralTenantPermissions).has(perm)
+        : true;
+    };
 
     const _sections = [
       {
@@ -104,7 +106,7 @@ const InventorySettings = (props) => {
             component: AlternativeTitleTypesSettings,
             perm: addPerm('ui-inventory.settings.alternative-title-types'),
           },
-          ...(canUserViewClassificationBrowse ? [{
+          ...(hasPermission('ui-inventory.settings.classification-browse') ? [{
             route: 'classificationBrowse',
             label: <FormattedMessage id="ui-inventory.classificationBrowse" />,
             component: ClassificationBrowseSettings,
@@ -268,6 +270,12 @@ const InventorySettings = (props) => {
       {
         label: <FormattedMessage id="ui-inventory.holdingsItems" />,
         pages: [
+          ...(hasPermission('ui-inventory.settings.call-number-browse') ? [{
+            route: 'callNumberBrowse',
+            label: <FormattedMessage id="ui-inventory.callNumberBrowse" />,
+            component: CallNumberBrowseSettings,
+            perm: 'ui-inventory.settings.call-number-browse',
+          }] : []),
           {
             route: 'callNumberTypes',
             label: <FormattedMessage id="ui-inventory.callNumberTypes" />,

@@ -23,3 +23,32 @@ export const browseInstanceIndexes = [
   { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
   { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
 ];
+
+// The `newBrowseInstanceIndexes` is used for the new call number `browse` 1.5 interface,
+// this set of indexes contains additional sub-indexes such as `other` and `superintendent`.
+// The `browseInstanceIndexes` is the original set that is used if `browse` 1.5 interface is not available.
+export const newBrowseInstanceIndexes = [
+  {
+    label: 'ui-inventory.browse.callNumbers',
+    queryTemplate: '%{query.query}',
+    subIndexes: [
+      { label: 'ui-inventory.browse.callNumbersAll', value: browseModeOptions.CALL_NUMBERS },
+      { label: 'ui-inventory.browse.dewey', value: browseModeOptions.DEWEY },
+      { label: 'ui-inventory.browse.libOfCongress', value: browseModeOptions.LIBRARY_OF_CONGRESS },
+      { label: 'ui-inventory.browse.natLibOfMed', value: browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE },
+      { label: 'ui-inventory.browse.other', value: browseModeOptions.OTHER },
+      { label: 'ui-inventory.browse.superintendent', value: browseModeOptions.SUPERINTENDENT },
+    ],
+  },
+  {
+    label: 'ui-inventory.browse.classification',
+    queryTemplate: '%{query.query}',
+    subIndexes: [
+      { label: 'ui-inventory.browse.classification.all', value: browseModeOptions.CLASSIFICATION_ALL },
+      { label: 'ui-inventory.browse.classification.dewey', value: browseModeOptions.DEWEY_CLASSIFICATION },
+      { label: 'ui-inventory.browse.classification.lc', value: browseModeOptions.LC_CLASSIFICATION },
+    ],
+  },
+  { label: 'ui-inventory.browse.contributors', value: `${browseModeOptions.CONTRIBUTORS}`, queryTemplate: '%{query.query}' },
+  { label: 'ui-inventory.browse.subjects', value: `${browseModeOptions.SUBJECTS}`, queryTemplate: '%{query.query}' },
+];

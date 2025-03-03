@@ -1277,11 +1277,13 @@ const ItemView = props => {
                         label={<FormattedMessage id="ui-inventory.shelvingOrder" />}
                         value={checkIfElementIsEmpty(itemData.effectiveShelvingOrder)}
                       />
-                      <InfoPopover
-                        iconSize="medium"
-                        content={<FormattedMessage id="ui-inventory.info.shelvingOrder" />}
-                        buttonProps={{ 'data-testid': 'info-icon-shelving-order' }}
-                      />
+                      {!stripes.hasInterface('browse', '1.5') && (
+                        <InfoPopover
+                          iconSize="medium"
+                          content={<FormattedMessage id="ui-inventory.info.shelvingOrder" />}
+                          buttonProps={{ 'data-testid': 'info-icon-shelving-order' }}
+                        />
+                      )}
                     </Layout>
                   </Col>
                 </Row>
@@ -1884,6 +1886,7 @@ ItemView.manifest = Object.freeze({
 
 ItemView.propTypes = {
   stripes: PropTypes.shape({
+    hasInterface: PropTypes.func.isRequired,
     hasPerm: PropTypes.func.isRequired,
     okapi: PropTypes.shape({
       tenant: PropTypes.string,

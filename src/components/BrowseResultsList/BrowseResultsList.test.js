@@ -3,15 +3,18 @@ import '../../../test/jest/__mock__';
 import flow from 'lodash/flow';
 import queryString from 'query-string';
 import { act, cleanup, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import { useStripes } from '@folio/stripes/core';
 import {
   FACETS,
   browseModeOptions,
   browseCallNumberOptions,
+  queryIndexes,
 } from '@folio/stripes-inventory-components';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 
 import { instance } from '../../../test/fixtures/instance';
+import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 import {
   renderWithIntl,
   translationsProperties,
@@ -32,6 +35,12 @@ let history = createMemoryHistory({
     search: 'qindex=callNumbers&query=A',
   }],
 });
+
+const mockHasInterface = jest.fn().mockReturnValue(false);
+
+useStripes.mockReturnValue(buildStripes({
+  hasInterface: mockHasInterface,
+}));
 
 const defaultProps = {
   browseData: [
@@ -93,6 +102,12 @@ const mockContext = {
       ],
     },
   ],
+  callNumberBrowseConfig: [
+    {
+      id: 'dewey',
+      typeIds: ['dewey-id', 'lc-id'],
+    },
+  ],
   subjectSources: [{ id: 'sourceId', name: 'sourceName' }],
   subjectTypes: [{ id: 'typeId', name: 'typeName' }],
 };
@@ -130,6 +145,17 @@ const renderBrowseResultsList = (props = {}) => renderWithIntl(
 );
 
 describe('BrowseResultsList', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    history = createMemoryHistory({
+      initialEntries: [{
+        pathname: BROWSE_INVENTORY_ROUTE,
+        search: 'qindex=callNumbers&query=A',
+      }],
+    });
+    mockHasInterface.mockClear().mockReturnValue(false);
+  });
+
   it('should render browse data', () => {
     renderBrowseResultsList();
 
@@ -183,6 +209,93 @@ describe('BrowseResultsList', () => {
         fireEvent.click(screen.getByText(defaultProps.browseData[2].fullCallNumber));
 
         expect(history.location.search).toContain('?filters=shared.true%2Cshared.false%2CtenantId.college');
+      });
+    });
+  });
+
+  describe('call numbers with available `browse` 1.5 interface', () => {
+    const newBrowseData = [
+      {
+        fullCallNumber: 'Aaa',
+        callNumber: 'Aaa',
+        isAnchor: true,
+        totalRecords: 0,
+      },
+      {
+        fullCallNumber: 'A 1958 A 8050',
+        callNumber: 'A 1958 A 8050',
+        totalRecords: 1,
+      },
+      {
+        fullCallNumber: 'ABBA',
+        callNumber: 'ABBA',
+        totalRecords: 2,
+      },
+    ];
+
+    beforeEach(() => {
+      mockHasInterface.mockImplementation((name, version) => name === 'browse' && version === '1.5');
+    });
+
+    it('should render browse data', () => {
+      renderBrowseResultsList({
+        browseData: newBrowseData,
+      });
+
+      expect(screen.getByText(newBrowseData[1].callNumber)).toBeInTheDocument();
+    });
+
+    it('should navigate to instance Search page and show related instances', async () => {
+      renderBrowseResultsList({
+        browseData: newBrowseData,
+      });
+
+      await act(async () => fireEvent.click(screen.getByText(newBrowseData[2].callNumber)));
+
+      const { pathname, search } = history.location;
+
+      expect(pathname).toEqual(INVENTORY_ROUTE);
+      expect(search).toEqual(
+        flow(
+          getSearchParams,
+          queryString.stringify,
+          expect.stringContaining
+        )(newBrowseData[2], queryIndexes.QUERY_SEARCH)
+      );
+    });
+
+    describe.each([
+      { searchOption: browseCallNumberOptions.CALL_NUMBERS, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.NEW_CALL_NUMBERS_HELD_BY },
+      { searchOption: browseCallNumberOptions.DEWEY, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.NEW_CALL_NUMBERS_HELD_BY },
+      { searchOption: browseCallNumberOptions.LIBRARY_OF_CONGRESS, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.NEW_CALL_NUMBERS_HELD_BY },
+      { searchOption: browseCallNumberOptions.LOCAL, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.NEW_CALL_NUMBERS_HELD_BY },
+      { searchOption: browseCallNumberOptions.NATIONAL_LIBRARY_OF_MEDICINE, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.NEW_CALL_NUMBERS_HELD_BY },
+      { searchOption: browseCallNumberOptions.OTHER, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.NEW_CALL_NUMBERS_HELD_BY },
+      { searchOption: browseCallNumberOptions.SUPERINTENDENT, shared: FACETS.CALL_NUMBERS_SHARED, heldBy: FACETS.NEW_CALL_NUMBERS_HELD_BY },
+    ])('when the search option is $searchOption and the Shared and/or HeldBy facets are selected', ({ searchOption, shared, heldBy }) => {
+      describe('and the user clicks on a record in the list', () => {
+        it('should be navigated to the Search lookup with those filters', async () => {
+          history = createMemoryHistory({
+            initialEntries: [{
+              pathname: BROWSE_INVENTORY_ROUTE,
+              search: `${heldBy}=college&qindex=${searchOption}&query=a&${shared}=true&${shared}=false`,
+            }],
+          });
+
+          renderBrowseResultsList({
+            filters: {
+              qindex: searchOption,
+              query: 'a',
+              [shared]: ['true', 'false'],
+              [heldBy]: ['college'],
+            },
+            browseData: newBrowseData,
+          });
+
+          fireEvent.click(screen.getByText(newBrowseData[2].callNumber));
+
+          expect(history.location.search).toContain('?filters=shared.true%2Cshared.false%2CtenantId.college');
+        });
       });
     });
   });
