@@ -53,6 +53,7 @@
     ],
     "okapiInterfaces": {
       "alternative-title-types": "1.0",
+      "audit-data": "1.0",
       "audit-config": "1.0",
       "call-number-types": "1.0",
       "browse": "1.5",
@@ -681,7 +682,8 @@
           "browse.config.collection.get",
           "mod-settings.entries.collection.get",
           "mod-settings.global.read.ui-inventory.display-settings.manage",
-          "inventory-storage.instance-date-types.collection.get"
+          "inventory-storage.instance-date-types.collection.get",
+          "audit.inventory.instance.collection.get"
         ],
         "visible": true
       },
