@@ -20,7 +20,7 @@ import { getActionLabel } from './getActionLabel';
 
 const useVersionHistory = (data, totalRecords) => {
   const intl = useIntl();
-  const anonymousUserLabel = intl.formatMessage({ id: 'stripes-components.versionHistory.anonymousUser' });
+  const anonymousUserLabel = intl.formatMessage({ id: 'ui-inventory.versionHistory.anonymousUser' });
 
   const [versions, setVersions] = useState([]);
   const [usersId, setUsersId] = useState([]);

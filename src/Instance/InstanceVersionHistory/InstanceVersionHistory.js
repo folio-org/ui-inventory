@@ -18,7 +18,7 @@ import {
 
 import { getDateWithTime } from '../../utils';
 
-const getFieldFormatter = (referenceData) => ({
+export const getFieldFormatter = (referenceData) => ({
   alternativeTitleTypeId: value => referenceData.alternativeTitleTypes?.find(type => type.id === value)?.name,
   classificationTypeId: value => referenceData.classificationTypes?.find(type => type.id === value)?.name,
   contributorNameTypeId: value => referenceData.contributorNameTypes?.find(contributor => contributor.id === value)?.name,
