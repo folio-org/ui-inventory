@@ -9,6 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
+import { useNumberGeneratorOptions } from '../../common/hooks';
 import {
   useInstanceQuery,
   useHolding,
@@ -36,6 +37,7 @@ const CreateItem = ({
 
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId, { tenantId: tenantTo });
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId, { tenantId: tenantTo });
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();
 
@@ -83,6 +85,7 @@ const CreateItem = ({
       id={holding.id}
       key={holding.id}
       initialValues={initialValues}
+      numberGeneratorData={numberGeneratorData}
       onSubmit={onSubmit}
       onCancel={onCancel}
       okapi={stripes.okapi}

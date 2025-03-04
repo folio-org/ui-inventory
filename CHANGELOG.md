@@ -42,6 +42,7 @@
 * *BREAKING* Migrate stripes dependencies to their Sunflower versions. Refs UIIN-3223.
 * *BREAKING* Migrate `react-intl` to v7. Refs UIIN-3224.
 * Upgrade `browse` to `2.0`. Refs UIIN-3262.
+* *BREAKING* Use "number generator" for barcode, accession number and call number. Refs UIIN-2546.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)

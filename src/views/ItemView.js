@@ -1034,7 +1034,7 @@ const ItemView = props => {
           lastMenu={(
             <PaneMenu>
               {showVersionHistoryButton && (
-               <VersionHistoryButton
+                <VersionHistoryButton
                   onClick={openVersionHistory}
                   disabled={isVersionHistoryOpen}
                 />

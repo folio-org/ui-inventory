@@ -11,6 +11,12 @@ import '../../../test/jest/__mock__';
 import { StripesContext } from '@folio/stripes/core';
 
 import {
+  NUMBER_GENERATOR_OPTIONS_OFF,
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+} from '../../settings/NumberGeneratorSettings/constants';
+
+import {
   renderWithIntl,
   translationsProperties,
   stripesStub,
@@ -186,6 +192,57 @@ describe('HoldingsForm', () => {
       fireEvent.click(getByRole('button', { name: 'Save & keep editing' }));
 
       expect(mockSetKeepEditing).toHaveBeenCalledWith(true);
+    });
+  });
+
+  describe('Render HoldingsForm with number generator settings "onNotEditable"', () => {
+    it('should render generate call number button and disable call number field', () => {
+      const { getByRole } = renderHoldingsForm({
+        numberGeneratorData: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: '',
+          callNumberHoldings: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          useSharedNumber: false,
+        }
+      });
+
+      expect(getByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Call number' })).toBeDisabled();
+    });
+  });
+
+  describe('Render HoldingsForm with number generator settings "onEditable"', () => {
+    it('should render generate call number button and enable call number field', () => {
+      const { getByRole } = renderHoldingsForm({
+        numberGeneratorData: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: '',
+          callNumberHoldings: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          useSharedNumber: true,
+        }
+      });
+
+      expect(getByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Call number' })).toBeEnabled();
+    });
+  });
+
+  describe('Render HoldingsForm with number generator settings "off"', () => {
+    it('should not render Generate call number button and enable call number field', () => {
+      const { queryByRole, getByRole } = renderHoldingsForm({
+        numberGeneratorData: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: '',
+          callNumberHoldings: NUMBER_GENERATOR_OPTIONS_OFF,
+          useSharedNumber: true,
+        }
+      });
+
+      expect(queryByRole('button', { name: 'Generate call number' })).not.toBeInTheDocument();
+      expect(getByRole('textbox', { name: 'Call number' })).toBeEnabled();
     });
   });
 });
