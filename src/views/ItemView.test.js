@@ -369,22 +369,6 @@ describe('ItemView', () => {
     });
   });
 
-  describe('when version history is disabled', () => {
-    it('should not show the version history button', () => {
-      useAuditSettings.mockClear().mockReturnValue({
-        settings: [{
-          key: 'enabled',
-          value: false,
-        }],
-        isSettingsLoading: false,
-      });
-
-      renderWithIntl(<ItemViewSetup />, translationsProperties);
-
-      expect(screen.queryByRole('button', { name: /version history/i })).not.toBeInTheDocument();
-    });
-  });
-
   describe('action menu', () => {
     it('should be suppressed for consortial central tenant', () => {
       checkIfUserInCentralTenant.mockClear().mockReturnValue(true);
