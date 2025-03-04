@@ -15,7 +15,7 @@ import InstanceDetails from './InstanceDetails';
 
 jest.mock('@folio/stripes-components', () => ({
   ...jest.requireActual('@folio/stripes-components'),
-  useVersionHistory: () => ({ versions: [], isLoadedMoreVisible: true }),
+  useVersionHistory: () => ({ versions: [], isLoadMoreVisible: true }),
 }));
 jest.mock('../../components/ViewSource/ViewSource', () => jest.fn().mockReturnValue('ViewSource'));
 jest.mock('../InstanceDetails/InstanceTitle/InstanceTitle', () => jest.fn().mockReturnValue('InstanceTitle'));

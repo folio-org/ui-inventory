@@ -27,14 +27,14 @@ jest.mock('@folio/stripes-components', () => ({
 describe('useInventoryVersionHistory', () => {
   beforeEach(() => {
     useUsersBatch.mockReturnValue({ users: [] });
-    useVersionHistory.mockReturnValue({ versions: [], isLoadedMoreVisible: true });
+    useVersionHistory.mockReturnValue({ versions: [], isLoadMoreVisible: true });
   });
 
   it('should initialize with default values', () => {
     const { result } = renderHook(() => useInventoryVersionHistory({ data: [], totalRecords: 10 }), { wrapper: MemoryRouter });
 
     expect(result.current.actionsMap).toBeDefined();
-    expect(result.current.isLoadedMoreVisible).toBe(true);
+    expect(result.current.isLoadMoreVisible).toBe(true);
     expect(result.current.versions).toEqual([]);
   });
 
