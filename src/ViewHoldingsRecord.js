@@ -72,7 +72,6 @@ import {
   emptyList,
   noValue,
   holdingsStatementTypes,
-  SOURCE_VALUES,
 } from './constants';
 import {
   WarningMessage,
