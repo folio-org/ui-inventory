@@ -55,15 +55,12 @@ import {
 } from './utils';
 import {
   getDate,
+  getIsVersionHistoryEnabled,
   isInstanceShadowCopy,
   isUserInConsortiumMode,
 } from '../../utils';
 import { useAuditSettings } from '../../hooks';
-import {
-  INVENTORY_AUDIT_GROUP,
-  SOURCE_VALUES,
-  VERSION_HISTORY_ENABLED_SETTING,
-} from '../../constants';
+import { INVENTORY_AUDIT_GROUP } from '../../constants';
 
 import css from './InstanceDetails.css';
 
@@ -107,8 +104,7 @@ const InstanceDetails = forwardRef(({
   const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
 
   const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
-  const isVersionHistoryEnabled = settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
-  const showVersionHistoryButton = instance?.source === SOURCE_VALUES.FOLIO && isVersionHistoryEnabled;
+  const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
   const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
   const tags = instance?.tags?.tagList;
@@ -131,7 +127,7 @@ const InstanceDetails = forwardRef(({
             />
           )
         }
-        {showVersionHistoryButton && (
+        {isVersionHistoryEnabled && (
           <VersionHistoryButton
             disabled={isVersionHistoryOpen}
             onClick={() => setIsVersionHistoryOpen(true)}
@@ -139,7 +135,7 @@ const InstanceDetails = forwardRef(({
         )}
       </PaneMenu>
     );
-  }, [tagsEnabled, tags, intl, isVersionHistoryOpen, showVersionHistoryButton]);
+  }, [tagsEnabled, tags, intl, isVersionHistoryOpen, isVersionHistoryEnabled]);
 
   const updatePrevInstanceId = id => {
     prevInstanceId.current = id;

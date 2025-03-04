@@ -105,7 +105,6 @@ import {
   ITEM_ACCORDION_LABELS,
   UPDATE_OWNERSHIP_API,
   INVENTORY_AUDIT_GROUP,
-  SOURCE_VALUES,
 } from '../constants';
 import ItemStatus from './ItemStatus';
 import {
@@ -631,8 +630,6 @@ const ItemView = props => {
   const temporaryHoldingsLocation = locationsById[holdingsRecord?.temporaryLocationId];
   const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
-  const showVersionHistoryButton = instance?.source === SOURCE_VALUES.FOLIO && isVersionHistoryEnabled;
-
   const openVersionHistory = useCallback(() => {
     setIsSetVersionHistoryOpen(true);
   }, []);
@@ -1033,7 +1030,7 @@ const ItemView = props => {
           actionMenu={getActionMenu}
           lastMenu={(
             <PaneMenu>
-              {showVersionHistoryButton && <VersionHistoryButton onClick={openVersionHistory} />}
+              {isVersionHistoryEnabled && <VersionHistoryButton onClick={openVersionHistory} />}
             </PaneMenu>
           )}
         >
