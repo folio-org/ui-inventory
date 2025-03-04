@@ -79,7 +79,7 @@ const useInventoryVersionHistory = ({
 
   const {
     versions,
-    isLoadedMoreVisible,
+    isLoadMoreVisible,
   } = useVersionHistory({ data, totalRecords, versionsFormatter: versionsFormatter(usersMap, intl) });
 
   const actionsMap = { ...getActionLabel(intl.formatMessage) };
@@ -87,7 +87,7 @@ const useInventoryVersionHistory = ({
   return {
     actionsMap,
     versions,
-    isLoadedMoreVisible,
+    isLoadMoreVisible,
   };
 };
 

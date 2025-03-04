@@ -61,7 +61,7 @@ const InstanceVersionHistory = ({
   const {
     actionsMap,
     versions,
-    isLoadedMoreVisible,
+    isLoadMoreVisible,
   } = useInventoryVersionHistory({ data, totalRecords });
 
   const fieldLabelsMap = {
@@ -115,7 +115,7 @@ const InstanceVersionHistory = ({
     <AuditLogPane
       versions={versions}
       onClose={onClose}
-      isLoadedMoreVisible={isLoadedMoreVisible}
+      isLoadMoreVisible={isLoadMoreVisible}
       handleLoadMore={handleLoadMore}
       isLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
