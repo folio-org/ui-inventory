@@ -13,6 +13,15 @@ import { Loading, Modal, Select, TextField, ModalFooter, Button } from '@folio/s
 
 import { buildQueryByIds } from '../../utils';
 
+// upper limit of how many job profiles may be retrieved for a given target.
+// a limit clause is required to return anything other than the default number
+// of records.
+//
+// 60 is not an arbitrary number; it's a back-of-the-envelope calculation
+// intended to make sure we stay under the query-string's length-limit.
+// see also stripes-core/src/queries/useChunkedCQLFetch.js
+const COPYCAT_PROFILE_LIMIT = 60;
+
 const ImportRecordModal = ({
   isOpen,
   currentExternalIdentifier, // eslint-disable-line no-unused-vars
@@ -57,6 +66,7 @@ const ImportRecordModal = ({
       mutator.jobProfiles.GET({
         params: {
           query: `${buildQueryByIds(allowedJobProfileIds)} sortBy name`,
+          limit: COPYCAT_PROFILE_LIMIT,
         }
       }).then(response => {
         const optionsForSelect = response.jobProfiles?.map(profile => ({

@@ -630,6 +630,8 @@ const ItemView = props => {
   const temporaryHoldingsLocation = locationsById[holdingsRecord?.temporaryLocationId];
   const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
+  const showVersionHistoryButton = instance?.source === SOURCE_VALUES.FOLIO && isVersionHistoryEnabled;
+
   const openVersionHistory = useCallback(() => {
     setIsSetVersionHistoryOpen(true);
   }, []);
@@ -1027,10 +1029,15 @@ const ItemView = props => {
           )}
           dismissible
           onClose={onCloseViewItem}
-          actionMenu={getActionMenu}
+          actionMenu={(params) => !isVersionHistoryOpen && getActionMenu(params)}
           lastMenu={(
             <PaneMenu>
-              {isVersionHistoryEnabled && <VersionHistoryButton onClick={openVersionHistory} />}
+              {isVersionHistoryEnabled && (
+               <VersionHistoryButton
+                  onClick={openVersionHistory}
+                  disabled={isVersionHistoryOpen}
+                />
+              )}
             </PaneMenu>
           )}
         >

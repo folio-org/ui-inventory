@@ -198,6 +198,7 @@ class InstanceForm extends React.Component {
       connect: PropTypes.func.isRequired,
       locale: PropTypes.string.isRequired,
       logger: PropTypes.object.isRequired,
+      hasPerm: PropTypes.func.isRequired,
     }).isRequired,
     resources: PropTypes.shape({
       instanceBlockedFields: PropTypes.shape({
@@ -538,16 +539,6 @@ class InstanceForm extends React.Component {
                           <Row>
                             <Col sm={3}>
                               <Field
-                                label={<FormattedMessage id="ui-inventory.setForDeletion" />}
-                                name="deleted"
-                                component={Checkbox}
-                                type="checkbox"
-                                disabled={this.isFieldBlocked('deleted')}
-                                onChange={() => this.onSetForDeletionFieldChange()}
-                              />
-                            </Col>
-                            <Col sm={3}>
-                              <Field
                                 label={<FormattedMessage id="ui-inventory.discoverySuppress" />}
                                 name="discoverySuppress"
                                 id="input_discovery_suppress"
@@ -574,6 +565,17 @@ class InstanceForm extends React.Component {
                                 component={Checkbox}
                                 type="checkbox"
                                 disabled={this.isFieldBlocked('previouslyHeld')}
+                              />
+                            </Col>
+                            <Col sm={3}>
+                              <Field
+                                label={<FormattedMessage id="ui-inventory.setForDeletion" />}
+                                name="deleted"
+                                component={Checkbox}
+                                type="checkbox"
+                                disabled={this.isFieldBlocked('deleted')
+                                  || !this.props.stripes.hasPerm('ui-inventory.instance.set-records-for-deletion.execute')}
+                                onChange={() => this.onSetForDeletionFieldChange()}
                               />
                             </Col>
                           </Row>
