@@ -31,10 +31,10 @@ import {
   MarcView,
   PrintPopup,
   getHeaders,
+  MarcVersionHistory,
 } from '@folio/stripes-marc-components';
 import { VersionHistoryButton } from '@folio/stripes-acq-components';
 
-import { MarcVersionHistory } from '../MarcVersionHistory';
 import ActionItem from '../ActionItem';
 import { useGoBack } from '../../common/hooks';
 import {
@@ -279,6 +279,7 @@ const ViewSource = ({
           <MarcVersionHistory
             id={marc.matchedId}
             onClose={() => setIsVersionHistoryOpen(false)}
+            marcType="bib"
           />
         )}
       </Paneset>
