@@ -5,10 +5,6 @@ import { render, screen } from '@folio/jest-config-stripes/testing-library/react
 
 import DuplicateItemRoute from './DuplicateItemRoute';
 
-jest.mock('@folio/service-interaction', () => ({
-  NumberGeneratorModalButton: () => <div>NumberGeneratorModalButton</div>
-}));
-
 jest.mock('../Item', () => ({
   ...jest.requireActual('../Item'),
   DuplicateItem: jest.fn().mockReturnValue('DuplicateItem')

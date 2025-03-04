@@ -5,10 +5,6 @@ import { render, screen } from '@folio/jest-config-stripes/testing-library/react
 
 import EditItemRoute from './EditItemRoute';
 
-jest.mock('@folio/service-interaction', () => ({
-  NumberGeneratorModalButton: () => <div>NumberGeneratorModalButton</div>
-}));
-
 jest.mock('../Item', () => ({
   ...jest.requireActual('../Item'),
   EditItem: jest.fn().mockReturnValue('EditItem')
