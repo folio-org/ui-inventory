@@ -977,7 +977,10 @@ class ViewHoldingsRecord extends React.Component {
                     lastMenu={(
                       <PaneMenu>
                         {isVersionHistoryEnabled && (
-                          <VersionHistoryButton onClick={this.openVersionHistory} />
+                          <VersionHistoryButton
+                            disabled={isVersionHistoryOpen}
+                            onClick={this.openVersionHistory}
+                          />
                         )}
                       </PaneMenu>
                     )}
