@@ -12,6 +12,7 @@ import {
   ErrorModal,
 } from '@folio/stripes/components';
 
+import { useNumberGeneratorOptions } from '../../common/hooks';
 import {
   useInstanceQuery,
   useHolding,
@@ -38,6 +39,7 @@ const EditItem = ({
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
   const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
   const { isFetching: isItemLoading, item, refetch: refetchItem } = useItem(itemId);
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();
 
@@ -126,6 +128,7 @@ const EditItem = ({
         id={holding.id}
         key={holding.id}
         initialValues={item}
+        numberGeneratorData={numberGeneratorData}
         onSubmit={onSubmit}
         onCancel={goBack}
         okapi={stripes.okapi}
