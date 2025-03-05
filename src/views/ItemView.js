@@ -116,12 +116,12 @@ import {
   ActionItem,
   UpdateItemOwnershipModal,
 } from '../components';
+import { ItemVersionHistory } from '../Item/ItemVersionHistory';
 import {
   useAuditSettings,
   useHoldingMutation,
   useUpdateOwnership,
 } from '../hooks';
-import { VersionHistory } from './VersionHistory';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -1223,8 +1223,8 @@ const ItemView = props => {
                   </Col>
                   <Col xs={2}>
                     <KeyValue label={<FormattedMessage id="ui-inventory.itemBarcode" />}>
-                      {checkIfElementIsEmpty(administrativeData.barcode)}
-                      {Boolean(administrativeData.barcode) && <ClipCopy text={administrativeData.barcode} />}
+                      {checkIfElementIsEmpty(item.barcode)}
+                      {Boolean(item.barcode) && <ClipCopy text={item.barcode} />}
                     </KeyValue>
                   </Col>
                   <Col xs={2}>
@@ -1752,8 +1752,10 @@ const ItemView = props => {
           </AccordionStatus>
         </Pane>
         {isVersionHistoryOpen && (
-          <VersionHistory
+          <ItemVersionHistory
+            itemId={item.id}
             onClose={() => setIsSetVersionHistoryOpen(false)}
+            circulationHistory={circulationHistory}
           />
         )}
       </Paneset>

@@ -44,11 +44,12 @@ import { InstanceClassificationView } from './InstanceClassificationView';
 import { InstanceRelationshipView } from './InstanceRelationshipView';
 import { InstanceNewHolding } from './InstanceNewHolding';
 import { InstanceAcquisition } from './InstanceAcquisition';
-import HelperApp from '../../components/HelperApp';
-import { VersionHistory } from '../../views/VersionHistory';
 
+import HelperApp from '../../components/HelperApp';
 import { DataContext } from '../../contexts';
 import { ConsortialHoldings } from '../HoldingsList/consortium/ConsortialHoldings';
+import { InstanceVersionHistory } from '../InstanceVersionHistory';
+
 import {
   getAccordionState,
   getPublishingInfo,
@@ -348,7 +349,8 @@ const InstanceDetails = forwardRef(({
         </AccordionStatus>
       </Pane>
       {isVersionHistoryOpen && (
-        <VersionHistory
+        <InstanceVersionHistory
+          instanceId={instance?.id}
           onClose={() => setIsVersionHistoryOpen(false)}
         />
       )}
