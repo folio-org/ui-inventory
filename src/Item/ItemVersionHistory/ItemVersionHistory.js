@@ -4,11 +4,12 @@ import PropTypes from 'prop-types';
 
 import { AuditLogPane } from '@folio/stripes/components';
 
+import { DataContext } from '../../contexts';
 import {
   useItemAuditDataQuery,
-  useVersionHistory,
+  useInventoryVersionHistory,
 } from '../../hooks';
-import { DataContext } from '../../contexts';
+
 import { getDateWithTime } from '../../utils';
 
 export const createFieldFormatter = (referenceData, circulationHistory) => ({
@@ -52,27 +53,29 @@ const ItemVersionHistory = ({
     totalRecords,
     isLoading,
   } = useItemAuditDataQuery(itemId, lastVersionEventTs);
-
   const {
     actionsMap,
-    isLoadedMoreVisible,
-    versionsToDisplay,
-  } = useVersionHistory(data, totalRecords);
+    versions,
+    isLoadMoreVisible,
+  } = useInventoryVersionHistory({ data, totalRecords });
 
   const fieldLabelsMap = {
-    discoverySuppress: formatMessage({ id: 'ui-inventory.discoverySuppress' }),
-    callNumber: formatMessage({ id: 'ui-inventory.effectiveCallNumber' }),
-    prefix: formatMessage({ id: 'ui-inventory.callNumberPrefix' }),
-    suffix: formatMessage({ id: 'ui-inventory.callNumberSuffix' }),
-    typeId: formatMessage({ id: 'ui-inventory.callNumberType' }),
     accessionNumber: formatMessage({ id: 'ui-inventory.accessionNumber' }),
-    barcode : formatMessage({ id: 'ui-inventory.itemBarcode' }),
+    administrativeNotes: formatMessage({ id: 'ui-inventory.administrativeNotes' }),
+    barcode: formatMessage({ id: 'ui-inventory.itemBarcode' }),
+    callNumber: formatMessage({ id: 'ui-inventory.effectiveCallNumber' }),
+    circulationNotes: formatMessage({ id: 'ui-inventory.circulationHistory' }),
     chronology: formatMessage({ id: 'ui-inventory.chronology' }),
     copyNumber: formatMessage({ id: 'ui-inventory.copyNumber' }),
+    date: formatMessage({ id: 'ui-inventory.date' }),
+    dateTime: formatMessage({ id: 'ui-inventory.checkInDate' }),
     descriptionOfPieces: formatMessage({ id: 'ui-inventory.descriptionOfPieces' }),
+    discoverySuppress: formatMessage({ id: 'ui-inventory.discoverySuppress' }),
     displaySummary: formatMessage({ id: 'ui-inventory.displaySummary' }),
     effectiveLocationId: formatMessage({ id: 'ui-inventory.effectiveLocation' }),
+    electronicAccess: formatMessage({ id: 'ui-inventory.electronicAccess' }),
     enumeration: formatMessage({ id: 'ui-inventory.enumeration' }),
+    formerIds: formatMessage({ id: 'ui-inventory.formerId' }),
     itemDamagedStatusDate: formatMessage({ id: 'ui-inventory.itemDamagedStatusDate' }),
     itemDamagedStatusId: formatMessage({ id: 'ui-inventory.itemDamagedStatus' }),
     itemIdentifier: formatMessage({ id: 'ui-inventory.itemIdentifier' }),
@@ -83,25 +86,22 @@ const ItemVersionHistory = ({
     materialTypeId: formatMessage({ id: 'ui-inventory.materialType' }),
     missingPieces: formatMessage({ id: 'ui-inventory.missingPieces' }),
     missingPiecesDate: formatMessage({ id: 'ui-inventory.date' }),
+    name: formatMessage({ id: 'ui-inventory.item.availability.itemStatus' }),
+    notes: formatMessage({ id: 'ui-inventory.itemNotes' }),
     numberOfMissingPieces: formatMessage({ id: 'ui-inventory.numberOfMissingPieces' }),
     numberOfPieces: formatMessage({ id: 'ui-inventory.numberOfPieces' }),
     permanentLoanTypeId: formatMessage({ id: 'ui-inventory.permanentLoantype' }),
     permanentLocationId: formatMessage({ id: 'ui-inventory.permanentLocation' }),
-    temporaryLoanTypeId: formatMessage({ id: 'ui-inventory.temporaryLoantype' }),
-    temporaryLocationId: formatMessage({ id: 'ui-inventory.temporaryLocation' }),
-    volume: formatMessage({ id: 'ui-inventory.volume' }),
-    administrativeNotes: formatMessage({ id: 'ui-inventory.administrativeNotes' }),
-    circulationNotes: formatMessage({ id: 'ui-inventory.circulationHistory' }),
-    electronicAccess: formatMessage({ id: 'ui-inventory.electronicAccess' }),
-    formerIds: formatMessage({ id: 'ui-inventory.formerId' }),
-    notes: formatMessage({ id: 'ui-inventory.itemNotes' }),
-    statisticalCodeIds: formatMessage({ id: 'ui-inventory.statisticalCodes' }),
-    yearCaption: formatMessage({ id: 'ui-inventory.yearCaption' }),
-    dateTime: formatMessage({ id: 'ui-inventory.checkInDate' }),
+    prefix: formatMessage({ id: 'ui-inventory.callNumberPrefix' }),
     servicePointId: formatMessage({ id: 'ui-inventory.servicePoint' }),
     staffMemberId: formatMessage({ id: 'ui-inventory.source' }),
-    name: formatMessage({ id: 'ui-inventory.item.availability.itemStatus' }),
-    date: formatMessage({ id: 'ui-inventory.date' }),
+    statisticalCodeIds: formatMessage({ id: 'ui-inventory.statisticalCodes' }),
+    suffix: formatMessage({ id: 'ui-inventory.callNumberSuffix' }),
+    temporaryLoanTypeId: formatMessage({ id: 'ui-inventory.temporaryLoantype' }),
+    temporaryLocationId: formatMessage({ id: 'ui-inventory.temporaryLocation' }),
+    typeId: formatMessage({ id: 'ui-inventory.callNumberType' }),
+    volume: formatMessage({ id: 'ui-inventory.volume' }),
+    yearCaption: formatMessage({ id: 'ui-inventory.yearCaption' }),
   };
 
   const fieldFormatter = createFieldFormatter(referenceData, circulationHistory);
@@ -112,9 +112,9 @@ const ItemVersionHistory = ({
 
   return (
     <AuditLogPane
-      versions={versionsToDisplay}
+      versions={versions}
       onClose={onClose}
-      isLoadedMoreVisible={isLoadedMoreVisible}
+      isLoadedMoreVisible={isLoadMoreVisible}
       handleLoadMore={handleLoadMore}
       isLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}

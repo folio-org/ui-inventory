@@ -117,12 +117,12 @@ import {
   ActionItem,
   UpdateItemOwnershipModal,
 } from '../components';
+import { ItemVersionHistory } from '../Item/ItemVersionHistory';
 import {
   useAuditSettings,
   useHoldingMutation,
   useUpdateOwnership,
 } from '../hooks';
-import { ItemVersionHistory } from '../Item/ItemVersionHistory';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 

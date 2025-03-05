@@ -17,7 +17,6 @@ export { default as useClassificationBrowseConfig } from './useClassificationBro
 export { default as useUpdateOwnership } from './useUpdateOwnership';
 export { default as useLocalStorageItems } from './useLocalStorageItems';
 export { default as useItemAuditDataQuery } from './useItemAuditDataQuery';
-export { default as useVersionHistory } from './useVersionHistory';
 export { default as useInventoryVersionHistory } from './useInventoryVersionHistory';
 export * from './useQuickExport';
 export * from '@folio/stripes-inventory-components/lib/queries/useInstanceDateTypes';

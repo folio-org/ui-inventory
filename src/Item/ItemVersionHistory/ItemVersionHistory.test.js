@@ -1,16 +1,18 @@
+import { act } from 'react';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
 
-import { DataContext } from '../../contexts';
 import ItemVersionHistory, { createFieldFormatter } from './ItemVersionHistory';
+import { DataContext } from '../../contexts';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -24,6 +26,7 @@ jest.mock('../../utils', () => ({
 jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useItemAuditDataQuery: jest.fn().mockReturnValue({ data: [{}], isLoading: false }),
+  useInventoryVersionHistory: () => ({ versions: [], isLoadMoreVisible: true }),
 }));
 
 const queryClient = new QueryClient();
@@ -63,6 +66,12 @@ const renderItemVersionHistory = () => {
 };
 
 describe('ItemVersionHistory', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = await act(async () => renderItemVersionHistory());
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render View history pane', () => {
     renderItemVersionHistory();
 
