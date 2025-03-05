@@ -72,7 +72,6 @@ import {
   emptyList,
   noValue,
   holdingsStatementTypes,
-  SOURCE_VALUES,
 } from './constants';
 import {
   WarningMessage,
@@ -82,7 +81,7 @@ import {
 import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 import HoldingBoundWith from './Holding/ViewHolding/HoldingBoundWith';
-import { VersionHistory } from './views/VersionHistory';
+import { HoldingVersionHistory } from './Holding/HoldingVersionHistory';
 
 import css from './View.css';
 
@@ -976,7 +975,7 @@ class ViewHoldingsRecord extends React.Component {
                     actionMenu={(params) => !isVersionHistoryOpen && this.getPaneHeaderActionMenu(params)}
                     lastMenu={(
                       <PaneMenu>
-                        {holdingsSourceName === SOURCE_VALUES.FOLIO && isVersionHistoryEnabled && (
+                        {isVersionHistoryEnabled && (
                           <VersionHistoryButton
                             disabled={isVersionHistoryOpen}
                             onClick={this.openVersionHistory}
@@ -1341,7 +1340,8 @@ class ViewHoldingsRecord extends React.Component {
                     </AccordionStatus>
                   </Pane>
                   {this.state.isVersionHistoryOpen && (
-                    <VersionHistory
+                    <HoldingVersionHistory
+                      holdingId={holdingsRecord.id}
                       onClose={() => this.setState({ isVersionHistoryOpen: false })}
                     />
                   )}

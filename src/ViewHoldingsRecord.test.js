@@ -41,6 +41,11 @@ jest.mock('@folio/stripes-acq-components', () => ({
   FindLocation: jest.fn(() => <span>FindLocation</span>),
 }));
 
+jest.mock('@folio/stripes-components', () => ({
+  ...jest.requireActual('@folio/stripes-components'),
+  useVersionHistory: () => ({ versions: [], isLoadMoreVisible: true }),
+}));
+
 jest.mock('./withLocation', () => jest.fn(c => c));
 
 jest.mock('./common', () => ({

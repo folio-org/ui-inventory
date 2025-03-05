@@ -9,6 +9,7 @@ import { LoadingView, ErrorModal } from '@folio/stripes/components';
 import {
   useHolding,
   useInstanceQuery,
+  useNumberGeneratorOptions,
 } from '../../common/hooks';
 import {
   useCallout,
@@ -43,6 +44,7 @@ const EditHolding = ({
   const { totalRecords: itemCount, isLoading: isItemsLoading } = useHoldingItemsQuery(holdingId, {
     searchParams: { limit: 1 },
   });
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
 
   const setKeepEditing = useCallback((value) => {
     keepEditing.current = value;
@@ -99,6 +101,7 @@ const EditHolding = ({
       <HoldingsForm
         httpError={httpError}
         location={location}
+        numberGeneratorData={numberGeneratorData}
         initialValues={holding}
         onSubmit={onSubmit}
         onCancel={goBack}
