@@ -28,6 +28,11 @@ import {
 import { UpdateItemOwnershipModal } from '../components';
 import ItemView from './ItemView';
 
+jest.mock('@folio/stripes-components', () => ({
+  ...jest.requireActual('@folio/stripes-components'),
+  useVersionHistory: () => ({ versions: [], isLoadMoreVisible: true }),
+}));
+
 jest.mock('../Item/ViewItem/ItemAcquisition', () => ({
   ItemAcquisition: jest.fn(() => 'ItemAcquisition'),
 }));

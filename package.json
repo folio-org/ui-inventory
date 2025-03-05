@@ -685,6 +685,8 @@
           "mod-settings.global.read.ui-inventory.display-settings.manage",
           "inventory-storage.instance-date-types.collection.get",
           "audit.inventory.instance.collection.get",
+          "audit.inventory.holdings.collection.get",
+          "audit.inventory.item.collection.get",
           "audit.marc.bib.collection.get"
         ],
         "visible": true
