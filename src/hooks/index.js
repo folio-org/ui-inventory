@@ -6,6 +6,7 @@ export { default as useHoldingItemsQuery } from './useHoldingItemsQuery';
 export { default as useHoldingMutation } from './useHoldingMutation';
 export { default as useHoldingsFromStorage } from './useHoldingsFromStorage';
 export { default as useInstanceAuditDataQuery } from './useInstanceAuditDataQuery';
+export { default as useHoldingAuditDataQuery } from './useHoldingAuditDataQuery';
 export { default as useInstanceMutation } from './useInstanceMutation';
 export { default as useHoldingsQueryByHrids } from './useHoldingsQueryByHrids';
 export { default as useInventoryBrowse } from './useInventoryBrowse';
