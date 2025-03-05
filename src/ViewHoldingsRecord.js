@@ -72,7 +72,6 @@ import {
   emptyList,
   noValue,
   holdingsStatementTypes,
-  SOURCE_VALUES,
 } from './constants';
 import {
   WarningMessage,
@@ -976,7 +975,7 @@ class ViewHoldingsRecord extends React.Component {
                     actionMenu={(params) => !isVersionHistoryOpen && this.getPaneHeaderActionMenu(params)}
                     lastMenu={(
                       <PaneMenu>
-                        {holdingsSourceName === SOURCE_VALUES.FOLIO && isVersionHistoryEnabled && (
+                        {isVersionHistoryEnabled && (
                           <VersionHistoryButton
                             disabled={isVersionHistoryOpen}
                             onClick={this.openVersionHistory}

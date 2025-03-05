@@ -3,17 +3,19 @@ import {
   QueryClientProvider,
 } from 'react-query';
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
+import { act } from 'react';
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
 
 import { DataContext } from '../../contexts';
-import HoldingVersionHistory, { createFieldFormatter } from './HoldingVersionHistory';
+import HoldingVersionHistory, { getFieldFormatter } from './HoldingVersionHistory';
 
-jest.mock('@folio/stripes-acq-components', () => ({
-  ...jest.requireActual('@folio/stripes-acq-components'),
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
   AuditLogPane: () => <div>Version history</div>,
 }));
 
@@ -52,6 +54,12 @@ const renderHoldingVersionHistory = () => {
 };
 
 describe('HoldingVersionHistory', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = await act(async () => renderHoldingVersionHistory());
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render View history pane', () => {
     renderHoldingVersionHistory();
 
@@ -59,8 +67,8 @@ describe('HoldingVersionHistory', () => {
   });
 });
 
-describe('createVersionHistoryFieldFormatter', () => {
-  const fieldFormatter = createFieldFormatter(mockReferenceData);
+describe('field formatter', () => {
+  const fieldFormatter = getFieldFormatter(mockReferenceData);
 
   it('should format discoverySuppress field correctly', () => {
     expect(fieldFormatter.discoverySuppress(true)).toBe('true');

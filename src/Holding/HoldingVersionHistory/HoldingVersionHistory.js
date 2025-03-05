@@ -1,4 +1,7 @@
-import { useContext, useState } from 'react';
+import {
+  useContext,
+  useState,
+} from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -6,11 +9,11 @@ import { AuditLogPane } from '@folio/stripes/components';
 
 import {
   useHoldingAuditDataQuery,
-  useVersionHistory,
+  useInventoryVersionHistory,
 } from '../../hooks';
 import { DataContext } from '../../contexts';
 
-export const createFieldFormatter = referenceData => ({
+export const getFieldFormatter = referenceData => ({
   discoverySuppress: value => value.toString(),
   holdingsTypeId: value => referenceData.holdingsTypes?.find(type => type.id === value)?.name,
   statisticalCodeIds: value => {
@@ -43,9 +46,9 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
 
   const {
     actionsMap,
+    versions,
     isLoadedMoreVisible,
-    versionsToDisplay,
-  } = useVersionHistory(data, totalRecords);
+  } = useInventoryVersionHistory({ data, totalRecords });
 
   const fieldLabelsMap = {
     discoverySuppress: formatMessage({ id: 'ui-inventory.discoverySuppressed' }),
@@ -80,7 +83,7 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
     entries: formatMessage({ id: 'ui-inventory.receivingHistory' }),
   };
 
-  const fieldFormatter = createFieldFormatter(referenceData);
+  const fieldFormatter = getFieldFormatter(referenceData);
 
   const handleLoadMore = lastEventTs => {
     setLastVersionEventTs(lastEventTs);
@@ -88,7 +91,7 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
 
   return (
     <AuditLogPane
-      versions={versionsToDisplay}
+      versions={versions}
       onClose={onClose}
       isLoadedMoreVisible={isLoadedMoreVisible}
       handleLoadMore={handleLoadMore}
