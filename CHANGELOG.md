@@ -45,6 +45,7 @@
 * *BREAKING* Use "number generator" for barcode, accession number and call number. Refs UIIN-2546.
 * *BREAKING* Instance: Display all versions in View history fourth pane. Refs UIIN-3173.
 * *BREAKING* MARC bib > View Source > Display Version History. Refs UIIN-3261.
+* "Copy barcode" icon is displayed next to item with no barcode. Fixes UIIN-3141.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)

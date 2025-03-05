@@ -1226,8 +1226,8 @@ const ItemView = props => {
                   </Col>
                   <Col xs={2}>
                     <KeyValue label={<FormattedMessage id="ui-inventory.itemBarcode" />}>
-                      {checkIfElementIsEmpty(administrativeData.barcode)}
-                      {Boolean(administrativeData.barcode) && <ClipCopy text={administrativeData.barcode} />}
+                      {checkIfElementIsEmpty(item.barcode)}
+                      {Boolean(item.barcode) && <ClipCopy text={item.barcode} />}
                     </KeyValue>
                   </Col>
                   <Col xs={2}>
