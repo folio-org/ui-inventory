@@ -51,7 +51,6 @@ const validateAssignPrefixMaxLength = value => validateFieldLength(value, ASSIGN
 
 const composeValidators = (...validators) => value => validators.reduce((error, validator) => error || validator(value), undefined);
 
-@stripesConnect
 class HRIDHandlingSettings extends Component {
   static manifest = Object.freeze({
     hridSettings: {
@@ -289,4 +288,4 @@ class HRIDHandlingSettings extends Component {
   }
 }
 
-export default HRIDHandlingSettings;
+export default stripesConnect(HRIDHandlingSettings);
