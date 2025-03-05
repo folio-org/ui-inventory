@@ -4,6 +4,8 @@ import { FormattedMessage } from 'react-intl';
 import { Field } from 'react-final-form';
 import noop from 'lodash/noop';
 
+import { NumberGeneratorModalButton } from '@folio/service-interaction';
+
 import {
   Paneset,
   Pane,
@@ -34,6 +36,10 @@ import { ViewMetaData } from '@folio/stripes/smart-components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
 
+import {
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+} from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { handleKeyCommand, validateOptionalField } from '../../utils';
@@ -100,6 +106,7 @@ class HoldingsForm extends React.Component {
     location: PropTypes.shape({
       state: PropTypes.string.isRequired,
     }).isRequired,
+    numberGeneratorData: PropTypes.object,
     referenceTables: PropTypes.object.isRequired,
     resources: PropTypes.shape({
       holdingsBlockedFields: PropTypes.shape({
@@ -221,6 +228,8 @@ class HoldingsForm extends React.Component {
 
   render() {
     const {
+      form: { change },
+      numberGeneratorData,
       onCancel,
       initialValues,
       instance,
@@ -292,6 +301,10 @@ class HoldingsForm extends React.Component {
     ) : [];
 
     const holdingsPageType = initialValues.id ? 'edit' : 'create';
+
+    const isCallNumberHoldingsDisabled = numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE;
+    const showNumberGeneratorForCallNumber = isCallNumberHoldingsDisabled ||
+      numberGeneratorData?.callNumberHoldings === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
 
     const shortcuts = [
       {
@@ -581,8 +594,20 @@ class HoldingsForm extends React.Component {
                           fullWidth
                           format={v => v?.trim()}
                           formatOnBlur
-                          disabled={this.isFieldBlocked('callNumber')}
+                          disabled={this.isFieldBlocked('callNumber') || isCallNumberHoldingsDisabled}
                         />
+                        {showNumberGeneratorForCallNumber &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            callback={(generated) => change('callNumber', generated)}
+                            id="inventoryCallNumber"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            generator="inventory_callNumber"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field

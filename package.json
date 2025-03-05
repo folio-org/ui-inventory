@@ -1046,11 +1046,13 @@
     "@babel/preset-react": "^7.9.0",
     "@folio/eslint-config-stripes": "^8.0.0",
     "@folio/jest-config-stripes": "^3.0.0",
+    "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^10.0.0",
     "@folio/stripes-cli": "^4.0.0",
     "@folio/stripes-components": "^13.0.0",
     "@folio/stripes-connect": "^10.0.0",
     "@folio/stripes-core": "^11.0.0",
+    "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^2.0.0",
     "@folio/stripes-smart-components": "^10.0.0",
@@ -1094,7 +1096,9 @@
     "use-session-storage-state": "^18.2.0"
   },
   "peerDependencies": {
+    "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^10.0.0",
+    "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^2.0.0",
     "react": "^18.2.0",
