@@ -1,8 +1,11 @@
+import { act } from 'react';
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
+
 import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { runAxeTest } from '@folio/stripes-testing';
 
 import {
   renderWithIntl,
@@ -57,6 +60,12 @@ const renderInstanceVersionHistory = () => {
 };
 
 describe('InstanceVersionHistory', () => {
+  it('should be rendered with no axe errors', async () => {
+    const { container } = await act(async () => renderInstanceVersionHistory());
+
+    await runAxeTest({ rootNode: container });
+  });
+
   it('should render View history pane', () => {
     renderInstanceVersionHistory();
 
