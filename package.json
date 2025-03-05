@@ -53,7 +53,7 @@
     ],
     "okapiInterfaces": {
       "alternative-title-types": "1.0",
-      "audit-data": "1.0",
+      "audit-inventory": "1.0",
       "audit-config": "1.0",
       "call-number-types": "1.0",
       "browse": "2.0",
