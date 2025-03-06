@@ -14,11 +14,12 @@ import {
   formatDateTime,
   useUsersBatch,
 } from '@folio/stripes-acq-components';
+import { useStripes } from '@folio/stripes/core';
 
 import { getChangedFieldsList } from './getChangedFieldsList';
 import { getActionLabel } from './getActionLabel';
 
-export const versionsFormatter = (usersMap, intl) => (diffArray) => {
+export const versionsFormatter = (usersMap, intl, canViewUser) => (diffArray) => {
   const anonymousUserLabel = intl.formatMessage({ id: 'ui-inventory.versionHistory.anonymousUser' });
 
   const getUserName = (userId) => {
@@ -26,8 +27,15 @@ export const versionsFormatter = (usersMap, intl) => (diffArray) => {
 
     return user ? `${user.personal.lastName}, ${user.personal.firstName}` : null;
   };
+
   const getSourceLink = (userId) => {
-    return userId ? <Link to={`/users/preview/${userId}`}>{getUserName(userId)}</Link> : anonymousUserLabel;
+    if (userId && canViewUser) {
+      return <Link to={`/users/preview/${userId}`}>{getUserName(userId)}</Link>;
+    } else if (userId) {
+      return getUserName(userId);
+    } else {
+      return anonymousUserLabel;
+    }
   };
 
   return diffArray
@@ -46,12 +54,15 @@ const useInventoryVersionHistory = ({
   data,
   totalRecords,
 }) => {
+  const stripes = useStripes();
   const intl = useIntl();
 
   const [usersId, setUsersId] = useState([]);
   const [usersMap, setUsersMap] = useState({});
 
   const { users } = useUsersBatch(usersId);
+
+  const canViewUser = stripes.hasPerm('users.collection.get');
 
   // cleanup when component unmounts
   useEffect(() => () => {
@@ -80,7 +91,11 @@ const useInventoryVersionHistory = ({
   const {
     versions,
     isLoadMoreVisible,
-  } = useVersionHistory({ data, totalRecords, versionsFormatter: versionsFormatter(usersMap, intl) });
+  } = useVersionHistory({
+    data,
+    totalRecords,
+    versionsFormatter: versionsFormatter(usersMap, intl, canViewUser),
+  });
 
   const actionsMap = { ...getActionLabel(intl.formatMessage) };
 
