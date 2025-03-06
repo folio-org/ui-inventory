@@ -17,6 +17,7 @@ import {
 
 import { getChangedFieldsList } from './getChangedFieldsList';
 import { getActionLabel } from './getActionLabel';
+import { ACTIONS } from './constants';
 
 export const versionsFormatter = (usersMap, intl) => (diffArray) => {
   const anonymousUserLabel = intl.formatMessage({ id: 'ui-inventory.versionHistory.anonymousUser' });
@@ -31,8 +32,8 @@ export const versionsFormatter = (usersMap, intl) => (diffArray) => {
   };
 
   return diffArray
-    .filter(({ action }) => action !== 'CREATE')
-    .map(({ eventDate, eventTs, userId, eventId, diff }) => ({
+    .map(({ action, eventDate, eventTs, userId, eventId, diff }) => ({
+      isOriginal: action === ACTIONS.CREATE,
       eventDate: formatDateTime(eventDate, intl),
       source: getSourceLink(userId),
       userName: getUserName(userId) || anonymousUserLabel,
