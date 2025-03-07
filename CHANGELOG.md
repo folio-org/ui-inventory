@@ -44,6 +44,12 @@
 * Upgrade `browse` to `2.0`. Refs UIIN-3262.
 * *BREAKING* Use "number generator" for barcode, accession number and call number. Refs UIIN-2546.
 * *BREAKING* Instance: Display all versions in View history fourth pane. Refs UIIN-3173.
+* *BREAKING* MARC bib > View Source > Display Version History. Refs UIIN-3261.
+* "Copy barcode" icon is displayed next to item with no barcode. Fixes UIIN-3141.
+* *BREAKING* Holdings: Display all versions in View history second pane. Refs UIIN-3174.
+* *BREAKING* Item: Display all versions in View history second pane. Refs UIIN-3175.
+* Replace annotations for compatibility with esbuild-loader. Refs UIIN-3271.
+* Make user name hyperlink in version history inactive if user does not have permissions. Refs UIIN-3269.
 * Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)

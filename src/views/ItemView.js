@@ -105,7 +105,6 @@ import {
   ITEM_ACCORDION_LABELS,
   UPDATE_OWNERSHIP_API,
   INVENTORY_AUDIT_GROUP,
-  SOURCE_VALUES,
 } from '../constants';
 import ItemStatus from './ItemStatus';
 import {
@@ -117,12 +116,12 @@ import {
   ActionItem,
   UpdateItemOwnershipModal,
 } from '../components';
+import { ItemVersionHistory } from '../Item/ItemVersionHistory';
 import {
   useAuditSettings,
   useHoldingMutation,
   useUpdateOwnership,
 } from '../hooks';
-import { VersionHistory } from './VersionHistory';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -631,8 +630,6 @@ const ItemView = props => {
   const temporaryHoldingsLocation = locationsById[holdingsRecord?.temporaryLocationId];
   const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
 
-  const showVersionHistoryButton = instance?.source === SOURCE_VALUES.FOLIO && isVersionHistoryEnabled;
-
   const openVersionHistory = useCallback(() => {
     setIsSetVersionHistoryOpen(true);
   }, []);
@@ -1033,7 +1030,7 @@ const ItemView = props => {
           actionMenu={(params) => !isVersionHistoryOpen && getActionMenu(params)}
           lastMenu={(
             <PaneMenu>
-              {showVersionHistoryButton && (
+              {isVersionHistoryEnabled && (
                 <VersionHistoryButton
                   onClick={openVersionHistory}
                   disabled={isVersionHistoryOpen}
@@ -1226,8 +1223,8 @@ const ItemView = props => {
                   </Col>
                   <Col xs={2}>
                     <KeyValue label={<FormattedMessage id="ui-inventory.itemBarcode" />}>
-                      {checkIfElementIsEmpty(administrativeData.barcode)}
-                      {Boolean(administrativeData.barcode) && <ClipCopy text={administrativeData.barcode} />}
+                      {checkIfElementIsEmpty(item.barcode)}
+                      {Boolean(item.barcode) && <ClipCopy text={item.barcode} />}
                     </KeyValue>
                   </Col>
                   <Col xs={2}>
@@ -1755,8 +1752,10 @@ const ItemView = props => {
           </AccordionStatus>
         </Pane>
         {isVersionHistoryOpen && (
-          <VersionHistory
+          <ItemVersionHistory
+            itemId={item.id}
             onClose={() => setIsSetVersionHistoryOpen(false)}
+            circulationHistory={circulationHistory}
           />
         )}
       </Paneset>
