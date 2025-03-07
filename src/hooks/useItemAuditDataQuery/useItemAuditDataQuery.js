@@ -18,6 +18,7 @@ const useItemAuditDataQuery = (itemId, eventTs) => {
       }
     }).json(),
     enabled: Boolean(itemId),
+    cacheTime: 0,
   });
 
   return {
