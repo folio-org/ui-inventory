@@ -251,7 +251,7 @@ describe('ViewSource', () => {
     it('should open the version history pane', () => {
       fireEvent.click(screen.getByLabelText('stripes-acq-components.versionHistory.pane.header'));
 
-      expect(screen.getByText('stripes-components.versionHistory.pane.sub')).toBeInTheDocument();
+      expect(screen.getByText('stripes-components.auditLog.pane.sub')).toBeInTheDocument();
     });
   });
 

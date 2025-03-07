@@ -18,6 +18,7 @@ const useHoldingAuditDataQuery = (holdingId, eventTs) => {
       }
     }).json(),
     enabled: Boolean(holdingId),
+    cacheTime: 0,
   });
 
   return {
