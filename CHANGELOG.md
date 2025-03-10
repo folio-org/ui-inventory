@@ -50,6 +50,7 @@
 * *BREAKING* Item: Display all versions in View history second pane. Refs UIIN-3175.
 * Replace annotations for compatibility with esbuild-loader. Refs UIIN-3271.
 * Make user name hyperlink in version history inactive if user does not have permissions. Refs UIIN-3269.
+* Display Original version card of the audit log with no field changes. Refs UIIN-3270.
 * Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)

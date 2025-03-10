@@ -69,18 +69,5 @@ describe('useInventoryVersionHistory', () => {
       expect(formattedData).toHaveLength(1);
       expect(formattedData[0].userName).toBe('ui-inventory.versionHistory.anonymousUser');
     });
-
-    it('should filter out CREATE actions', () => {
-      const mockData = [
-        { eventDate: '2024-03-01', eventTs: 12345, userId: '1', eventId: 'evt1', diff: [], action: 'CREATE' },
-        { eventDate: '2024-03-02', eventTs: 12346, userId: '2', eventId: 'evt2', diff: [], action: 'DELETE' },
-      ];
-
-      const formatVersions = versionsFormatter(mockUsersMap, mockIntl);
-      const formattedData = formatVersions(mockData);
-
-      expect(formattedData).toHaveLength(1);
-      expect(formattedData[0].userName).toBe('Smith, Jane');
-    });
   });
 });

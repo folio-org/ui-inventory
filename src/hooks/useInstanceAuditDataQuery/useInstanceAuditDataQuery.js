@@ -14,10 +14,11 @@ const useInstanceAuditDataQuery = (instanceId, eventTs) => {
     queryKey: [namespace, instanceId, eventTs],
     queryFn: () => ky.get(`audit-data/inventory/instance/${instanceId}`, {
       searchParams: {
-        ...(eventTs && { eventTs })
+        ...(eventTs && { eventTs }),
       }
     }).json(),
     enabled: Boolean(instanceId),
+    cacheTime: 0,
   });
 
   return {

@@ -114,7 +114,7 @@ const ItemVersionHistory = ({
     <AuditLogPane
       versions={versions}
       onClose={onClose}
-      isLoadedMoreVisible={isLoadMoreVisible}
+      isLoadMoreVisible={isLoadMoreVisible}
       handleLoadMore={handleLoadMore}
       isLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
