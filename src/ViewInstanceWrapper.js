@@ -53,7 +53,7 @@ const ViewInstanceWrapper = (props) => {
     <ViewInstance
       {...props}
       isShared={isShared}
-      tenantId={tenantId}
+      tenantId={stripes.okapi.tenant}
       centralTenantId={centralTenantId}
       consortiumId={consortiumId}
       refetchInstance={refetch}
