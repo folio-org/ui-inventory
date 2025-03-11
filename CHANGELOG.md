@@ -51,6 +51,7 @@
 * Replace annotations for compatibility with esbuild-loader. Refs UIIN-3271.
 * Make user name hyperlink in version history inactive if user does not have permissions. Refs UIIN-3269.
 * Display Original version card of the audit log with no field changes. Refs UIIN-3270.
+* Change heading of modal generate accession and call number. Refs UIIN-3274.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)

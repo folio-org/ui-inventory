@@ -399,7 +399,7 @@ class ItemForm extends React.Component {
           generator="inventory_accessionNumber"
           id="inventoryAccessionNumberAndCallNumber"
           modalProps={{
-            label: <FormattedMessage id="ui-inventory.numberGenerator.accessionAndCallNumberGenerator" />
+            label: <FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />
           }}
           renderTop={() => (
             <p><FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumberWarning" /></p>
