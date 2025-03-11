@@ -880,5 +880,14 @@
     "instanceForm": "Formularz instancji",
     "numberGenerator.options.off": "Wyłączone",
     "numberGenerator.options.onEditable": "Włączone, pole edytowalne",
-    "numberGenerator.options.onNotEditable": "Włączone, pole nieedytowalne"
+    "numberGenerator.options.onNotEditable": "Włączone, pole nieedytowalne",
+    "numberGenerator.generateAccessionNumber": "Wygeneruj numer dowodu wpływu",
+    "numberGenerator.generateAccessionAndCallNumber": "Wygeneruj dowód wpływu i sygnaturę",
+    "numberGenerator.generateAccessionAndCallNumberWarning": "Zarówno numer dowodu wpływu jak i sygnatura zostaną wypełnione na podstawie tej akcji, używając sekwencji z Katalogowania: Generator numeru dowodu wpływu.",
+    "numberGenerator.generateBarcode": "Wygeneruj kod kreskowy",
+    "numberGenerator.generateCallNumber": "Wygeneruj sygnaturę",
+    "versionHistory.action.added": "Dodany",
+    "versionHistory.action.edited": "Edytowany",
+    "versionHistory.action.removed": "Usunięty",
+    "versionHistory.anonymousUser": "Użytkownik anonimowy"
 }

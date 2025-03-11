@@ -880,5 +880,14 @@
     "instanceForm": "Formulário de instância",
     "numberGenerator.options.off": "Desligado",
     "numberGenerator.options.onEditable": "Ligado, campo editável",
-    "numberGenerator.options.onNotEditable": "Ligado, campo não editável"
+    "numberGenerator.options.onNotEditable": "Ligado, campo não editável",
+    "numberGenerator.generateAccessionNumber": "Gerar número de acesso",
+    "numberGenerator.generateAccessionAndCallNumber": "Gerar números de acesso e de chamada",
+    "numberGenerator.generateAccessionAndCallNumberWarning": "Tanto o número de acesso quanto o número de chamada serão preenchidos a partir desta ação, usando uma sequência do Inventário: Gerador de números de acesso.",
+    "numberGenerator.generateBarcode": "Gerar código de barras",
+    "numberGenerator.generateCallNumber": "Gerar número de chamada",
+    "versionHistory.action.added": "Adicionado",
+    "versionHistory.action.edited": "Editado",
+    "versionHistory.action.removed": "Removido",
+    "versionHistory.anonymousUser": "Usuário anônimo"
 }

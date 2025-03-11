@@ -880,5 +880,14 @@
     "instanceForm": "Instance form",
     "numberGenerator.options.off": "Off",
     "numberGenerator.options.onEditable": "On, field editable",
-    "numberGenerator.options.onNotEditable": "On, field not editable"
+    "numberGenerator.options.onNotEditable": "On, field not editable",
+    "numberGenerator.generateAccessionNumber": "Generate accession number",
+    "numberGenerator.generateAccessionAndCallNumber": "Generate accession and call numbers",
+    "numberGenerator.generateAccessionAndCallNumberWarning": "Both accession number and call number will be filled from this action, using a sequence from the Inventory: Accession number generator.",
+    "numberGenerator.generateBarcode": "Generate barcode",
+    "numberGenerator.generateCallNumber": "Generate call number",
+    "versionHistory.action.added": "Added",
+    "versionHistory.action.edited": "Edited",
+    "versionHistory.action.removed": "Removed",
+    "versionHistory.anonymousUser": "Anonymous user"
 }
