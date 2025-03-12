@@ -288,6 +288,7 @@ describe('ViewSource', () => {
       expect(useAuditSettings).toHaveBeenCalledWith({
         tenantId: 'tenant-id',
         group: 'audit.inventory',
+        enabled: true,
       });
     });
   });
