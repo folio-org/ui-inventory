@@ -80,6 +80,7 @@ const ViewSource = ({
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
   const isHoldingsRecord = marcType === MARC_TYPES.HOLDINGS;
+  const isBibRecord = marcType === MARC_TYPES.BIB;
 
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
   const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
@@ -218,7 +219,7 @@ const ViewSource = ({
     );
   }, []);
 
-  const { settings } = useAuditSettings({ tenantId, group: INVENTORY_AUDIT_GROUP });
+  const { settings } = useAuditSettings({ tenantId, group: INVENTORY_AUDIT_GROUP, enabled: isBibRecord });
 
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
