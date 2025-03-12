@@ -215,7 +215,7 @@ const ViewSource = ({
     );
   }, []);
 
-  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+  const { settings } = useAuditSettings({ tenantId, group: INVENTORY_AUDIT_GROUP });
 
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
