@@ -220,6 +220,7 @@ describe('ViewSource', () => {
 
     describe('when clicking on Edit', () => {
       it('should redirect to marc edit page', () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         fireEvent.click(screen.getByRole('button', { name: 'Edit MARC bibliographic record' }));
 
         expect(mockPush).toHaveBeenLastCalledWith({
@@ -231,6 +232,7 @@ describe('ViewSource', () => {
 
     describe('when clicking on Export', () => {
       it('should start record export', () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
 
         expect(mockExportRecords).toHaveBeenLastCalledWith({
@@ -252,6 +254,12 @@ describe('ViewSource', () => {
       fireEvent.click(screen.getByLabelText('stripes-acq-components.versionHistory.pane.header'));
 
       expect(screen.getByText('stripes-components.auditLog.pane.sub')).toBeInTheDocument();
+    });
+
+    it('should disable Actions button', () => {
+      fireEvent.click(document.getElementById('version-history-btn'));
+
+      expect(screen.getByTestId('actions-dropdown')).toBeDisabled();
     });
   });
 
@@ -280,6 +288,7 @@ describe('ViewSource', () => {
       expect(useAuditSettings).toHaveBeenCalledWith({
         tenantId: 'tenant-id',
         group: 'audit.inventory',
+        enabled: true,
       });
     });
   });
