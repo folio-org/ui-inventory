@@ -266,12 +266,21 @@ describe('ViewSource', () => {
       });
 
       await act(async () => {
-        await renderWithIntl(getViewSource(), []);
+        await renderWithIntl(getViewSource({
+          tenantId: 'tenant-id',
+        }), []);
       });
     });
 
     it('should not show the version history button', () => {
       expect(screen.queryByLabelText('stripes-acq-components.versionHistory.pane.header')).not.toBeInTheDocument();
+    });
+
+    it('should be called with tenantId', () => {
+      expect(useAuditSettings).toHaveBeenCalledWith({
+        tenantId: 'tenant-id',
+        group: 'audit.inventory',
+      });
     });
   });
 });

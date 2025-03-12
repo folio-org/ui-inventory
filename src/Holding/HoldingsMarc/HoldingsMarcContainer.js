@@ -12,6 +12,7 @@ const HoldingsMarcContainer = ({
   holdingsrecordid,
 }) => {
   const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
+  const tenantId = instance?.tenantId;
 
   return (
     <ViewSource
@@ -21,6 +22,7 @@ const HoldingsMarcContainer = ({
       isInstanceLoading={isInstanceLoading}
       holdingsRecordId={holdingsrecordid}
       marcType={MARC_TYPES.HOLDINGS}
+      tenantId={tenantId}
     />
   );
 };
