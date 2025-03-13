@@ -53,7 +53,7 @@ export const CardsPerVersionHistoryPage = () => {
 
   return (
     <TitleManager
-      record={intl.formatMessage({ id: 'ui-inventory.settings.section.cardsPerPage' })}
+      record={intl.formatMessage({ id: 'ui-inventory.settings.section.versionHistory' })}
     >
       <Paneset id="cardsPerPage">
         {isSettingsLoading ? (
