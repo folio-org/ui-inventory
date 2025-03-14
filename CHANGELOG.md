@@ -1,9 +1,5 @@
 # Change history for ui-inventory
 
-## [13.0.1] (IN PROGRESS)
-
-* Add default value for number of versions counter on "Version history" pane. Fixes UIIN-3283.
-
 ## [13.0.0] (IN PROGRESS)
 
 * ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
@@ -57,7 +53,8 @@
 * Display Original version card of the audit log with no field changes. Refs UIIN-3270.
 * Change heading of modal generate accession and call number. Refs UIIN-3274.
 * ViewSource - add tenantId to useAuditSettings. Refs UIIN-3266.
-* Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217..
+* Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
+* Add default value for number of versions counter on "Version history" pane. Fixes UIIN-3283.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
