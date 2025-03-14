@@ -120,6 +120,7 @@ const ItemVersionHistory = ({
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
       actionsMap={actionsMap}
+      totalVersions={totalRecords ?? 0}
     />
   );
 };

@@ -121,6 +121,7 @@ const InstanceVersionHistory = ({
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
       actionsMap={actionsMap}
+      totalVersions={totalRecords ?? 0}
     />
   );
 };
