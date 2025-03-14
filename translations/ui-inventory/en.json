@@ -366,6 +366,7 @@
   "numberGenerator.generateBarcode": "Generate barcode",
   "numberGenerator.generateCallNumber": "Generate call number",
   "numberGenerator.info": "Fields which are usually filled using a numeric sequence can use the number generator. When the generator is switched on the field can either be fixed to prevent manual update, or made fully editable. When switched off, the field must be filled manually.",
+  "numberGenerator.infoAdditional": "Additional number generator settings are available under {serviceInteractionLink}. At {numberGeneratorSequencesLink} sequences can be defined by selecting the appropriate generator via the drop-down menu.",
   "numberGenerator.options": "Number generator options",
   "numberGenerator.options.off": "Off",
   "numberGenerator.options.onEditable": "On, field editable",
