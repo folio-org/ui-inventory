@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [13.0.1] (IN PROGRESS)
+
+* Use `stripes.okapi.tenant` in order to get persistent id between pages. Fixes UIIN-3251.
+
 ## [13.0.0] (IN PROGRESS)
 
 * ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
