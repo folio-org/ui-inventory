@@ -1,4 +1,8 @@
-import { useContext, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -47,6 +51,7 @@ const ItemVersionHistory = ({
   const referenceData = useContext(DataContext);
 
   const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
+  const [totalVersions, setTotalVersions] = useState(0);
 
   const {
     data,
@@ -106,6 +111,13 @@ const ItemVersionHistory = ({
 
   const fieldFormatter = createFieldFormatter(referenceData, circulationHistory);
 
+  useEffect(() => {
+    // totalRecords always returns undefined while loading, and we need to display the total number of versions.
+    if (totalRecords) {
+      setTotalVersions(totalRecords);
+    }
+  }, [totalRecords]);
+
   const handleLoadMore = lastEventTs => {
     setLastVersionEventTs(lastEventTs);
   };
@@ -120,7 +132,7 @@ const ItemVersionHistory = ({
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
       actionsMap={actionsMap}
-      totalVersions={totalRecords ?? 0}
+      totalVersions={totalVersions}
     />
   );
 };
