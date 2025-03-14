@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [12.0.14](https://github.com/folio-org/ui-inventory/tree/v12.0.14) (2025-03-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.13...v12.0.14)
+
+* Use `stripes.okapi.tenant` in order to get persistent id between pages. Fixes UIIN-3251.
+
 ## [12.0.13](https://github.com/folio-org/ui-inventory/tree/v12.0.13) (2025-03-04)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v12.0.13)
 
