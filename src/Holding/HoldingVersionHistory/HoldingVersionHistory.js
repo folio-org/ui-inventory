@@ -1,6 +1,5 @@
 import {
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
@@ -11,6 +10,7 @@ import { AuditLogPane } from '@folio/stripes/components';
 import {
   useHoldingAuditDataQuery,
   useInventoryVersionHistory,
+  useTotalVersions,
 } from '../../hooks';
 import { DataContext } from '../../contexts';
 
@@ -38,7 +38,6 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
   const referenceData = useContext(DataContext);
 
   const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
-  const [totalVersions, setTotalVersions] = useState(0);
 
   const {
     data,
@@ -51,6 +50,8 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
     versions,
     isLoadMoreVisible,
   } = useInventoryVersionHistory({ data, totalRecords });
+
+  const [totalVersions] = useTotalVersions(totalRecords);
 
   const fieldLabelsMap = {
     discoverySuppress: formatMessage({ id: 'ui-inventory.discoverySuppressed' }),
@@ -86,13 +87,6 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
   };
 
   const fieldFormatter = getFieldFormatter(referenceData);
-
-  useEffect(() => {
-    // totalRecords always returns undefined while loading, and we need to display the total number of versions.
-    if (totalRecords) {
-      setTotalVersions(totalRecords);
-    }
-  }, [totalRecords]);
 
   const handleLoadMore = lastEventTs => {
     setLastVersionEventTs(lastEventTs);

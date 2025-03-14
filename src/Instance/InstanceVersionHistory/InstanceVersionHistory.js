@@ -1,6 +1,5 @@
 import {
   useContext,
-  useEffect,
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
@@ -15,6 +14,7 @@ import { DataContext } from '../../contexts';
 import {
   useInstanceAuditDataQuery,
   useInventoryVersionHistory,
+  useTotalVersions,
 } from '../../hooks';
 
 import { getDateWithTime } from '../../utils';
@@ -53,7 +53,6 @@ const InstanceVersionHistory = ({
   const referenceData = useContext(DataContext);
 
   const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
-  const [totalVersions, setTotalVersions] = useState(0);
 
   const {
     data,
@@ -65,6 +64,8 @@ const InstanceVersionHistory = ({
     versions,
     isLoadMoreVisible,
   } = useInventoryVersionHistory({ data, totalRecords });
+
+  const [totalVersions] = useTotalVersions(totalRecords);
 
   const fieldLabelsMap = {
     administrativeNotes: formatMessage({ id: 'ui-inventory.administrativeNotes' }),
@@ -108,13 +109,6 @@ const InstanceVersionHistory = ({
     title: formatMessage({ id: 'ui-inventory.instances.columns.title' }),
   };
   const fieldFormatter = getFieldFormatter(referenceData);
-
-  useEffect(() => {
-    // totalRecords always returns undefined while loading, and we need to display the total number of versions.
-    if (totalRecords) {
-      setTotalVersions(totalRecords);
-    }
-  }, [totalRecords]);
 
   const handleLoadMore = lastEventTs => {
     setLastVersionEventTs(lastEventTs);
