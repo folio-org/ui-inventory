@@ -687,7 +687,8 @@
           "audit.inventory.instance.collection.get",
           "audit.inventory.holdings.collection.get",
           "audit.inventory.item.collection.get",
-          "audit.marc.bib.collection.get"
+          "audit.marc.bib.collection.get",
+          "audit.config.groups.settings.collection.get"
         ],
         "visible": true
       },
@@ -1061,6 +1062,7 @@
     "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^2.0.0",
+    "@folio/service-interaction": "^4.0.0",
     "@folio/stripes-smart-components": "^10.0.0",
     "@folio/stripes-testing": "^5.0.0",
     "@folio/stripes-util": "^7.0.0",
@@ -1107,6 +1109,7 @@
     "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^2.0.0",
+    "@folio/service-interaction": "^4.0.0",
     "react": "^18.2.0",
     "react-intl": "^7.1.5",
     "react-query": "^3.6.0",

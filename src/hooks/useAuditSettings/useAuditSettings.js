@@ -9,15 +9,18 @@ import {
   useOkapiKy,
 } from '@folio/stripes/core';
 
-export const useAuditSettings = ({ group } = {}) => {
-  const ky = useOkapiKy();
+export const useAuditSettings = ({ tenantId, group, enabled = true } = {}) => {
+  const ky = useOkapiKy({ tenant: tenantId });
   const [namespace] = useNamespace({ key: 'audit-settings' });
 
   const path = `audit/config/groups/${group}/settings`;
 
   const { data, isLoading, isError, refetch } = useQuery(
-    [namespace, group],
+    [namespace, group, tenantId],
     () => ky.get(path).json(),
+    {
+      enabled,
+    },
   );
 
   const { mutateAsync } = useMutation({
