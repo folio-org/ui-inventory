@@ -1,10 +1,7 @@
 # Change history for ui-inventory
 
-## [13.0.1] (IN PROGRESS)
-
-* Use `stripes.okapi.tenant` in order to get persistent id between pages. Fixes UIIN-3251.
-
-## [13.0.0] (IN PROGRESS)
+## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
 
 * ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
 * *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
@@ -59,6 +56,7 @@
 * ViewSource - add tenantId to useAuditSettings. Refs UIIN-3266.
 * Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
 * Add default value for number of versions counter on "Version history" pane. Fixes UIIN-3283.
+* Use `stripes.okapi.tenant` in order to get persistent id between pages. Fixes UIIN-3251.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)

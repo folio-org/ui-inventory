@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "14.0.0",
+  "version": "13.0.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -1064,7 +1064,6 @@
     "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^2.0.0",
-    "@folio/service-interaction": "^4.0.0",
     "@folio/stripes-smart-components": "^10.0.0",
     "@folio/stripes-testing": "^5.0.0",
     "@folio/stripes-util": "^7.0.0",
@@ -1111,7 +1110,6 @@
     "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^2.0.0",
-    "@folio/service-interaction": "^4.0.0",
     "react": "^18.2.0",
     "react-intl": "^7.1.5",
     "react-query": "^3.6.0",
@@ -1120,7 +1118,7 @@
     "zustand": "^4.1.1"
   },
   "optionalDependencies": {
-    "@folio/plugin-create-inventory-records": "^5.0.0",
+    "@folio/plugin-create-inventory-records": "^6.0.0",
     "@folio/plugin-find-instance": "^9.0.0"
   },
   "resolutions": {
