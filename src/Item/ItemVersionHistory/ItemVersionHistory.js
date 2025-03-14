@@ -1,4 +1,7 @@
-import { useContext, useState } from 'react';
+import {
+  useContext,
+  useState,
+} from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -8,6 +11,7 @@ import { DataContext } from '../../contexts';
 import {
   useItemAuditDataQuery,
   useInventoryVersionHistory,
+  useTotalVersions,
 } from '../../hooks';
 
 import { getDateWithTime } from '../../utils';
@@ -58,6 +62,8 @@ const ItemVersionHistory = ({
     versions,
     isLoadMoreVisible,
   } = useInventoryVersionHistory({ data, totalRecords });
+
+  const [totalVersions] = useTotalVersions(totalRecords);
 
   const fieldLabelsMap = {
     accessionNumber: formatMessage({ id: 'ui-inventory.accessionNumber' }),
@@ -120,6 +126,7 @@ const ItemVersionHistory = ({
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
       actionsMap={actionsMap}
+      totalVersions={totalVersions}
     />
   );
 };
