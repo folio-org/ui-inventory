@@ -150,7 +150,8 @@
           "ui-inventory.holdings.delete",
           "browse.contributors.instances.collection.get",
           "inventory-storage.bound-with-parts.collection.get",
-          "source-storage.records.matching.collection.post"
+          "source-storage.records.matching.collection.post",
+          "users.item.get"
         ],
         "visible": true
       },
