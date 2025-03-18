@@ -27,14 +27,18 @@ export const CardsPerVersionHistoryPage = () => {
     cardsPerPage: setting?.value,
   };
 
-  const handleSubmit = useCallback(({ cardsPerPage }) => {
+  const handleSubmit = useCallback(async ({ cardsPerPage }) => {
     // destructure the setting object to keep other values
-    return updateSetting({
+    await updateSetting({
       body: {
         ...setting,
         value: cardsPerPage,
       },
       settingKey: VERSION_HISTORY_PAGE_SIZE_SETTING,
+    });
+
+    callout.sendCallout({
+      message: intl.formatMessage({ id: 'stripes-smart-components.cm.success' }),
     });
   }, [setting, updateSetting]);
 
@@ -49,7 +53,7 @@ export const CardsPerVersionHistoryPage = () => {
 
   return (
     <TitleManager
-      record={intl.formatMessage({ id: 'ui-inventory.settings.section.cardsPerPage' })}
+      record={intl.formatMessage({ id: 'ui-inventory.settings.section.versionHistory' })}
     >
       <Paneset id="cardsPerPage">
         {isSettingsLoading ? (

@@ -20,6 +20,9 @@ import {
   checkScope,
   Paneset,
   PaneMenu,
+  Dropdown,
+  DropdownButton,
+  DropdownMenu,
 } from '@folio/stripes/components';
 import {
   useCallout,
@@ -77,6 +80,7 @@ const ViewSource = ({
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
   const isHoldingsRecord = marcType === MARC_TYPES.HOLDINGS;
+  const isBibRecord = marcType === MARC_TYPES.BIB;
 
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
   const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
@@ -215,14 +219,37 @@ const ViewSource = ({
     );
   }, []);
 
-  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+  const { settings } = useAuditSettings({ tenantId, group: INVENTORY_AUDIT_GROUP, enabled: isBibRecord });
 
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
   const showVersionHistoryButton = marcType === MARC_TYPES.BIB && isVersionHistoryEnabled;
 
+  const actionsDropdown = (
+    <Dropdown
+      disabled={isVersionHistoryOpen}
+      className={styles.actionsDropdown}
+      renderTrigger={({ getTriggerProps }) => (
+        <DropdownButton
+          data-testid="actions-dropdown"
+          buttonStyle="primary"
+          marginBottom0
+          {...getTriggerProps()}
+        >
+          <FormattedMessage id="stripes-smart-components.actions" />
+        </DropdownButton>
+      )}
+      renderMenu={({ onToggle }) => (
+        <DropdownMenu>
+          {actionMenu({ onToggle })}
+        </DropdownMenu>
+      )}
+    />
+  );
+
   const lastMenu = (
     <PaneMenu>
+      {actionsDropdown}
       {showVersionHistoryButton && <VersionHistoryButton onClick={() => setIsVersionHistoryOpen(true)} />}
     </PaneMenu>
   );
@@ -261,7 +288,6 @@ const ViewSource = ({
           marcTitle={marcTitle}
           marc={marc}
           onClose={goBack}
-          actionMenu={actionMenu}
           lastMenu={lastMenu}
           paneWidth="fill"
           wrapperClass={styles.viewSource}
@@ -280,6 +306,7 @@ const ViewSource = ({
             id={marc.matchedId}
             onClose={() => setIsVersionHistoryOpen(false)}
             marcType="bib"
+            tenantId={tenantId}
           />
         )}
       </Paneset>

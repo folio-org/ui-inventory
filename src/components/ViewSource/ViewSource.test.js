@@ -220,6 +220,7 @@ describe('ViewSource', () => {
 
     describe('when clicking on Edit', () => {
       it('should redirect to marc edit page', () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         fireEvent.click(screen.getByRole('button', { name: 'Edit MARC bibliographic record' }));
 
         expect(mockPush).toHaveBeenLastCalledWith({
@@ -231,6 +232,7 @@ describe('ViewSource', () => {
 
     describe('when clicking on Export', () => {
       it('should start record export', () => {
+        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
         fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
 
         expect(mockExportRecords).toHaveBeenLastCalledWith({
@@ -253,6 +255,12 @@ describe('ViewSource', () => {
 
       expect(screen.getByText('stripes-components.auditLog.pane.sub')).toBeInTheDocument();
     });
+
+    it('should disable Actions button', () => {
+      fireEvent.click(document.getElementById('version-history-btn'));
+
+      expect(screen.getByTestId('actions-dropdown')).toBeDisabled();
+    });
   });
 
   describe('when version history is disabled', () => {
@@ -266,12 +274,22 @@ describe('ViewSource', () => {
       });
 
       await act(async () => {
-        await renderWithIntl(getViewSource(), []);
+        await renderWithIntl(getViewSource({
+          tenantId: 'tenant-id',
+        }), []);
       });
     });
 
     it('should not show the version history button', () => {
       expect(screen.queryByLabelText('stripes-acq-components.versionHistory.pane.header')).not.toBeInTheDocument();
+    });
+
+    it('should be called with tenantId', () => {
+      expect(useAuditSettings).toHaveBeenCalledWith({
+        tenantId: 'tenant-id',
+        group: 'audit.inventory',
+        enabled: true,
+      });
     });
   });
 });

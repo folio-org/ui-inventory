@@ -10,6 +10,7 @@ import { AuditLogPane } from '@folio/stripes/components';
 import {
   useHoldingAuditDataQuery,
   useInventoryVersionHistory,
+  useTotalVersions,
 } from '../../hooks';
 import { DataContext } from '../../contexts';
 
@@ -49,6 +50,8 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
     versions,
     isLoadMoreVisible,
   } = useInventoryVersionHistory({ data, totalRecords });
+
+  const [totalVersions] = useTotalVersions(totalRecords);
 
   const fieldLabelsMap = {
     discoverySuppress: formatMessage({ id: 'ui-inventory.discoverySuppressed' }),
@@ -99,6 +102,7 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
       actionsMap={actionsMap}
+      totalVersions={totalVersions}
     />
   );
 };

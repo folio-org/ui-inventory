@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "14.0.0",
+  "version": "13.0.0",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
@@ -1028,6 +1028,7 @@
           "mod-settings.global.write.ui-inventory.display-settings.manage",
           "audit.config.groups.collection.get",
           "audit.config.groups.settings.audit.inventory.collection.get",
+          "audit.config.groups.settings.collection.get",
           "audit.config.groups.settings.item.put",
           "audit.config.groups.settings.audit.inventory.records.page.size.item.put"
         ],
@@ -1118,7 +1119,7 @@
     "zustand": "^4.1.1"
   },
   "optionalDependencies": {
-    "@folio/plugin-create-inventory-records": "^5.0.0",
+    "@folio/plugin-create-inventory-records": "^6.0.0",
     "@folio/plugin-find-instance": "^9.0.0"
   },
   "resolutions": {

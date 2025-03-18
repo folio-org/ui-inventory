@@ -42,7 +42,7 @@ const CardsPerVersionHistoryPageForm = ({
     return (
       <PaneHeader
         {...paneHeaderProps}
-        paneTitle={intl.formatMessage({ id: 'ui-inventory.settings.section.cardsPerPage' })}
+        paneTitle={intl.formatMessage({ id: 'ui-inventory.settings.section.versionHistory' })}
       />
     );
   };
