@@ -63,7 +63,7 @@ const useInventoryVersionHistory = ({
 
   const { users } = useUsersBatch(usersId);
 
-  const canViewUser = stripes.hasPerm('users.collection.get');
+  const canViewUser = stripes.hasPerm('users.item.get');
 
   // cleanup when component unmounts
   useEffect(() => () => {
