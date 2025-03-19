@@ -3,6 +3,7 @@
 ## [13.0.1] (IN PROGRESS)
 
 * Missing values in the version history modal for Suppressed from discovery and Staff suppressed fields. Fixed UIIN-3277.
+* Refactor `useAuditDataQuery` hooks to use `useInfiniteQuery` to implement loading indicator to version history panes. Refs UIIN-3286.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
