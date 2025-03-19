@@ -1,9 +1,10 @@
 import { useInfiniteQuery } from 'react-query';
+import { useMemo } from 'react';
+
 import {
   useNamespace,
   useOkapiKy,
 } from '@folio/stripes/core';
-import { useMemo } from 'react';
 
 const useInstanceAuditDataQuery = (instanceId) => {
   const ky = useOkapiKy();
