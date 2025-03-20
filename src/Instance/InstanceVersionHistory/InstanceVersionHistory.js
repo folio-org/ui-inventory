@@ -65,7 +65,7 @@ const InstanceVersionHistory = ({
   const {
     actionsMap,
     versions,
-  } = useInventoryVersionHistory({ data });
+  } = useInventoryVersionHistory(data);
 
   const [totalVersions] = useTotalVersions(totalRecords);
 

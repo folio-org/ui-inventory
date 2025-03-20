@@ -31,7 +31,7 @@ describe('useInventoryVersionHistory', () => {
   });
 
   it('should initialize with default values', () => {
-    const { result } = renderHook(() => useInventoryVersionHistory({ data: [] }), { wrapper: MemoryRouter });
+    const { result } = renderHook(() => useInventoryVersionHistory([]), { wrapper: MemoryRouter });
 
     expect(result.current.actionsMap).toBeDefined();
     expect(result.current.versions).toEqual([]);
