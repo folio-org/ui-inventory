@@ -352,6 +352,7 @@ const InstanceDetails = forwardRef(({
         <InstanceVersionHistory
           instanceId={instance?.id}
           onClose={() => setIsVersionHistoryOpen(false)}
+          tenantId={instance?.tenantId}
         />
       )}
       { helperApp &&
