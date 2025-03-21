@@ -1,7 +1,4 @@
-import {
-  useContext,
-  useState,
-} from 'react';
+import { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -50,24 +47,26 @@ export const getFieldFormatter = (referenceData) => ({
 const InstanceVersionHistory = ({
   instanceId,
   onClose,
+  tenantId,
 }) => {
   const intl = useIntl();
   const { formatMessage } = intl;
 
   const referenceData = useContext(DataContext);
 
-  const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
-
   const {
     data,
     totalRecords,
     isLoading,
-  } = useInstanceAuditDataQuery(instanceId, lastVersionEventTs);
+    isLoadingMore,
+    fetchNextPage,
+    hasNextPage,
+  } = useInstanceAuditDataQuery(instanceId, tenantId);
+
   const {
     actionsMap,
     versions,
-    isLoadMoreVisible,
-  } = useInventoryVersionHistory({ data, totalRecords });
+  } = useInventoryVersionHistory(data);
 
   const [totalVersions] = useTotalVersions(totalRecords);
 
@@ -114,17 +113,14 @@ const InstanceVersionHistory = ({
   };
   const fieldFormatter = getFieldFormatter(referenceData);
 
-  const handleLoadMore = lastEventTs => {
-    setLastVersionEventTs(lastEventTs);
-  };
-
   return (
     <AuditLogPane
       versions={versions}
       onClose={onClose}
-      isLoadMoreVisible={isLoadMoreVisible}
-      handleLoadMore={handleLoadMore}
-      isLoading={isLoading}
+      isLoadMoreVisible={hasNextPage}
+      handleLoadMore={() => fetchNextPage()}
+      isLoading={isLoadingMore}
+      isInitialLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
       actionsMap={actionsMap}
@@ -136,6 +132,7 @@ const InstanceVersionHistory = ({
 InstanceVersionHistory.propTypes = {
   instanceId: PropTypes.string.isRequired,
   onClose: PropTypes.func,
+  tenantId: PropTypes.string,
 };
 
 export default InstanceVersionHistory;

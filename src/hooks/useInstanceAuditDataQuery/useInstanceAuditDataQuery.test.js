@@ -9,7 +9,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import '../../../test/jest/__mock__';
 
-import useItemAuditDataQuery from './useItemAuditDataQuery';
+import useInstanceAuditDataQuery from './useInstanceAuditDataQuery';
 
 // Mock the dependencies
 jest.mock('@folio/stripes/core', () => ({
@@ -17,7 +17,7 @@ jest.mock('@folio/stripes/core', () => ({
   useOkapiKy: jest.fn(),
 }));
 
-const mockItemId = '123';
+const mockInstanceId = '123';
 const mockAuditData = {
   totalRecords: 3,
   inventoryAuditItems: [
@@ -39,7 +39,7 @@ const wrapper = ({ children }) => (
   </QueryClientProvider>
 );
 
-describe('useItemAuditDataQuery', () => {
+describe('useInstanceAuditDataQuery', () => {
   beforeEach(() => {
     useOkapiKy.mockReturnValue({
       ...mockKy,
@@ -52,7 +52,7 @@ describe('useItemAuditDataQuery', () => {
 
   it('should fetch audit data when instanceId is provided', async () => {
     const { result } = renderHook(
-      () => useItemAuditDataQuery(mockItemId),
+      () => useInstanceAuditDataQuery(mockInstanceId),
       { wrapper }
     );
 
@@ -62,7 +62,7 @@ describe('useItemAuditDataQuery', () => {
 
     await waitFor(() => {
       expect(mockKy.get).toHaveBeenCalledWith(
-        `audit-data/inventory/item/${mockItemId}`,
+        `audit-data/inventory/instance/${mockInstanceId}`,
         expect.any(Object)
       );
       expect(result.current.data).toEqual(mockAuditData.inventoryAuditItems);
@@ -72,7 +72,7 @@ describe('useItemAuditDataQuery', () => {
 
   it('should not fetch data when instanceId is not provided', () => {
     const { result } = renderHook(
-      () => useItemAuditDataQuery(null),
+      () => useInstanceAuditDataQuery(null),
       { wrapper }
     );
 
@@ -102,7 +102,7 @@ describe('useItemAuditDataQuery', () => {
       });
 
     const { result } = renderHook(
-      () => useItemAuditDataQuery(mockItemId),
+      () => useInstanceAuditDataQuery(mockInstanceId),
       { wrapper }
     );
 
@@ -136,7 +136,7 @@ describe('useItemAuditDataQuery', () => {
       });
 
     const { result } = renderHook(
-      () => useItemAuditDataQuery(mockItemId),
+      () => useInstanceAuditDataQuery(mockInstanceId),
       { wrapper }
     );
 
