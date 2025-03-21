@@ -1,7 +1,4 @@
-import {
-  useContext,
-  useState,
-} from 'react';
+import { useContext } from 'react';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -50,18 +47,18 @@ const ItemVersionHistory = ({
   const { formatMessage } = useIntl();
   const referenceData = useContext(DataContext);
 
-  const [lastVersionEventTs, setLastVersionEventTs] = useState(null);
-
   const {
     data,
     totalRecords,
     isLoading,
-  } = useItemAuditDataQuery(itemId, lastVersionEventTs);
+    isLoadingMore,
+    fetchNextPage,
+    hasNextPage,
+  } = useItemAuditDataQuery(itemId);
   const {
     actionsMap,
     versions,
-    isLoadMoreVisible,
-  } = useInventoryVersionHistory({ data, totalRecords });
+  } = useInventoryVersionHistory(data);
 
   const [totalVersions] = useTotalVersions(totalRecords);
 
@@ -112,17 +109,14 @@ const ItemVersionHistory = ({
 
   const fieldFormatter = createFieldFormatter(referenceData, circulationHistory);
 
-  const handleLoadMore = lastEventTs => {
-    setLastVersionEventTs(lastEventTs);
-  };
-
   return (
     <AuditLogPane
       versions={versions}
       onClose={onClose}
-      isLoadMoreVisible={isLoadMoreVisible}
-      handleLoadMore={handleLoadMore}
-      isLoading={isLoading}
+      isLoadMoreVisible={hasNextPage}
+      handleLoadMore={() => fetchNextPage()}
+      isLoading={isLoadingMore}
+      isInitialLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
       actionsMap={actionsMap}

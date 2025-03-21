@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { Link } from 'react-router-dom';
@@ -9,7 +10,6 @@ import {
   uniq,
 } from 'lodash';
 
-import { useVersionHistory } from '@folio/stripes/components';
 import {
   formatDateTime,
   useUsersBatch,
@@ -51,10 +51,7 @@ export const versionsFormatter = (usersMap, intl, canViewUser) => (diffArray) =>
     }));
 };
 
-const useInventoryVersionHistory = ({
-  data,
-  totalRecords,
-}) => {
+const useInventoryVersionHistory = (data) => {
   const stripes = useStripes();
   const intl = useIntl();
 
@@ -89,21 +86,15 @@ const useInventoryVersionHistory = ({
     }));
   }, [users]);
 
-  const {
-    versions,
-    isLoadMoreVisible,
-  } = useVersionHistory({
-    data,
-    totalRecords,
-    versionsFormatter: versionsFormatter(usersMap, intl, canViewUser),
-  });
-
   const actionsMap = { ...getActionLabel(intl.formatMessage) };
+  const versions = useMemo(
+    () => versionsFormatter(usersMap, intl, canViewUser)(data),
+    [usersMap, canViewUser, data],
+  );
 
   return {
     actionsMap,
     versions,
-    isLoadMoreVisible,
   };
 };
 

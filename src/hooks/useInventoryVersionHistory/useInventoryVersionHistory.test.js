@@ -31,10 +31,9 @@ describe('useInventoryVersionHistory', () => {
   });
 
   it('should initialize with default values', () => {
-    const { result } = renderHook(() => useInventoryVersionHistory({ data: [], totalRecords: 10 }), { wrapper: MemoryRouter });
+    const { result } = renderHook(() => useInventoryVersionHistory([]), { wrapper: MemoryRouter });
 
     expect(result.current.actionsMap).toBeDefined();
-    expect(result.current.isLoadMoreVisible).toBe(true);
     expect(result.current.versions).toEqual([]);
   });
 
