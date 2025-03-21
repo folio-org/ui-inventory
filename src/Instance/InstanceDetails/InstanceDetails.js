@@ -104,7 +104,7 @@ const InstanceDetails = forwardRef(({
   const [isAllExpanded, setIsAllExpanded] = useState();
   const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
 
-  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP, tenantId: instance?.tenantId });
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
   const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
