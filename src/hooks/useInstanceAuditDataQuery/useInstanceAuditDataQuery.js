@@ -6,8 +6,8 @@ import {
   useOkapiKy,
 } from '@folio/stripes/core';
 
-const useInstanceAuditDataQuery = (instanceId) => {
-  const ky = useOkapiKy();
+const useInstanceAuditDataQuery = (instanceId, tenantId) => {
+  const ky = useOkapiKy({ tenant: tenantId });
   const [namespace] = useNamespace({ key: 'instance-audit-data' });
 
   const {
@@ -18,7 +18,7 @@ const useInstanceAuditDataQuery = (instanceId) => {
     fetchNextPage,
     ...rest
   } = useInfiniteQuery({
-    queryKey: [namespace, instanceId],
+    queryKey: [namespace, instanceId, tenantId],
     queryFn: ({ pageParam }) => ky.get(`audit-data/inventory/instance/${instanceId}`, {
       searchParams: {
         ...(pageParam && { eventTs: pageParam }),

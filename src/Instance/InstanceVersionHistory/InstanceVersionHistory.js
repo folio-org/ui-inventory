@@ -47,6 +47,7 @@ export const getFieldFormatter = (referenceData) => ({
 const InstanceVersionHistory = ({
   instanceId,
   onClose,
+  tenantId,
 }) => {
   const intl = useIntl();
   const { formatMessage } = intl;
@@ -60,7 +61,7 @@ const InstanceVersionHistory = ({
     isLoadingMore,
     fetchNextPage,
     hasNextPage,
-  } = useInstanceAuditDataQuery(instanceId);
+  } = useInstanceAuditDataQuery(instanceId, tenantId);
 
   const {
     actionsMap,
@@ -131,6 +132,7 @@ const InstanceVersionHistory = ({
 InstanceVersionHistory.propTypes = {
   instanceId: PropTypes.string.isRequired,
   onClose: PropTypes.func,
+  tenantId: PropTypes.string,
 };
 
 export default InstanceVersionHistory;
