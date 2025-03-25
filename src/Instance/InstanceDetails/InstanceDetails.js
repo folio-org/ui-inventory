@@ -157,7 +157,7 @@ const InstanceDetails = forwardRef(({
         }
       );
     },
-    [isShared, instance?.source, isUserInConsortium],
+    [isShared, instance?.source, instance?.title, isUserInConsortium],
   );
   const paneSubTitle = useMemo(
     () => {
