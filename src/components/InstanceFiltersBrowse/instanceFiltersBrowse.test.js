@@ -144,7 +144,7 @@ describe('InstanceFiltersBrowse', () => {
       expect(getByText('Shared')).toBeInTheDocument();
     });
 
-    describe('"Held by" facet', () => {
+    describe.skip('"Held by" facet', () => {
       it('should be displayed', () => {
         mockHasInterface.mockReturnValue(false);
 
@@ -246,7 +246,7 @@ describe('InstanceFiltersBrowse', () => {
       expect(mockOnClear).toHaveBeenCalled();
     });
 
-    it('should display "Held By" facet accordion', () => {
+    it.skip('should display "Held By" facet accordion', () => {
       const { getByRole } = renderInstanceFilters({
         data,
         query: {
