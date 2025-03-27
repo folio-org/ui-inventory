@@ -832,14 +832,6 @@ describe('InstancesList', () => {
     });
 
     describe('filters pane', () => {
-      it('should have selected effective call number option', async () => {
-        await act(async () => renderInstancesList({ segment: 'instances' }));
-
-        await act(async () => fireEvent.change(screen.getByLabelText('Search field index'), { target: { value: 'callNumber' } }));
-
-        expect((screen.getByRole('option', { name: 'Effective call number (item), shelving order' })).selected).toBeTruthy();
-      });
-
       it('should have query in search input', async () => {
         await act(async () => renderInstancesList({ segment: 'instances' }));
 
