@@ -6,6 +6,7 @@
 * ECS FOLIO instances: Inventory version history feature toggle/icon. Refs UIIN-3284.
 * ECS | "Version history" pane is empty for Shared FOLIO Instance when opened from Member tenant. Fixes UIIN-3280.
 * Refactor `useAuditDataQuery` hooks to use `useInfiniteQuery` to implement loading indicator to version history panes. Refs UIIN-3286.
+* Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
