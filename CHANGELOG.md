@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## [13.0.1] (IN PROGRESS)
+## [14.0.0] (IN PROGRESS)
 
 * Missing values in the version history modal for Suppressed from discovery and Staff suppressed fields. Fixed UIIN-3277.
 * ECS FOLIO instances: Inventory version history feature toggle/icon. Refs UIIN-3284.
