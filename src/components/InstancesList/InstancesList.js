@@ -1507,6 +1507,7 @@ class InstancesList extends React.Component {
             detailProps={{
               referenceTables: data,
               onCopy: this.copyInstance,
+              focusTitleOnInstanceLoad: true,
             }}
             basePath={path}
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}

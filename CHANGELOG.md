@@ -6,6 +6,7 @@
 * ECS FOLIO instances: Inventory version history feature toggle/icon. Refs UIIN-3284.
 * ECS | "Version history" pane is empty for Shared FOLIO Instance when opened from Member tenant. Fixes UIIN-3280.
 * Refactor `useAuditDataQuery` hooks to use `useInfiniteQuery` to implement loading indicator to version history panes. Refs UIIN-3286.
+* Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
@@ -63,7 +64,16 @@
 * ViewSource - add tenantId to useAuditSettings. Refs UIIN-3266.
 * Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
 * Add default value for number of versions counter on "Version history" pane. Fixes UIIN-3283.
+
+## [12.0.14](https://github.com/folio-org/ui-inventory/tree/v12.0.14) (2025-03-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.13...v12.0.14)
+
 * Use `stripes.okapi.tenant` in order to get persistent id between pages. Fixes UIIN-3251.
+
+## [12.0.13](https://github.com/folio-org/ui-inventory/tree/v12.0.13) (2025-03-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v12.0.13)
+
+* Call Number Browse refactor - backport to Ramsons. Refs UIIN-3228.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
