@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [13.0.1](https://github.com/folio-org/ui-inventory/tree/v13.0.1) (2025-04-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.0...v13.0.1)
+
+* Update instance header after overlaying source bibliographic record process. Fixes UIIN-3282.
+
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
 
