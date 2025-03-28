@@ -237,6 +237,7 @@ class ViewInstance extends React.Component {
 
     this.calloutRef = createRef();
     this.accordionStatusRef = createRef();
+    this.paneTitleRef = createRef();
   }
 
   componentDidMount() {
@@ -256,6 +257,10 @@ class ViewInstance extends React.Component {
 
     if (isUserInConsortiumMode(stripes)) {
       this.getCurrentTenantPermissions();
+    }
+
+    if (selectedInstance?.id && this.props.focusTitleOnInstanceLoad) {
+      this.paneTitleRef.current?.focus();
     }
   }
 
@@ -281,6 +286,10 @@ class ViewInstance extends React.Component {
     if ((isMARCSourceRecord || isLinkedDataSourceRecord) && (isViewingAnotherRecord || recordSourceWasChanged)) {
       this.getMARCRecord();
       this.checkCanBeOpenedInLinkedData();
+    }
+
+    if (isViewingAnotherRecord && this.props.focusTitleOnInstanceLoad) {
+      this.paneTitleRef.current?.focus();
     }
 
     // component got updated after a new record was created
@@ -1137,6 +1146,7 @@ class ViewInstance extends React.Component {
         userTenantPermissions={this.state.userTenantPermissions}
         isShared={isShared}
         mutateInstance={mutateInstance}
+        paneTitleRef={this.paneTitleRef}
       >
         {
           (!holdingsrecordid && !itemid) ?
@@ -1390,6 +1400,7 @@ ViewInstance.propTypes = {
   isError: PropTypes.bool,
   error: PropTypes.object,
   mutateInstance: PropTypes.func,
+  focusTitleOnInstanceLoad: PropTypes.bool,
 };
 
 export default flowRight(
