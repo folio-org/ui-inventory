@@ -316,16 +316,16 @@ class ViewInstance extends React.Component {
   getMARCRecord = () => {
     const {
       mutator,
-      stripes,
       isShared,
       centralTenantId,
       tenantId,
+      okapi,
     } = this.props;
     mutator.marcRecord.GET({
       headers: {
         [OKAPI_TENANT_HEADER]: isShared ? centralTenantId : tenantId,
         [CONTENT_TYPE_HEADER]: 'application/json',
-        ...(stripes.okapi.token && { [OKAPI_TOKEN_HEADER]: stripes.okapi.token }),
+        ...(okapi.token && { [OKAPI_TOKEN_HEADER]: okapi.token }),
       },
     })
       .then(data => this.setState({ marcRecord: data }))
@@ -1385,6 +1385,7 @@ ViewInstance.propTypes = {
   }).isRequired,
   tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
+  tenantId: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   isError: PropTypes.bool,
   error: PropTypes.object,
