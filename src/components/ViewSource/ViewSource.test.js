@@ -13,6 +13,7 @@ import {
 
 import '../../../test/jest/__mock__';
 
+import { MarcVersionHistory } from '@folio/stripes-marc-components';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
 import ViewSource from './ViewSource';
@@ -20,6 +21,7 @@ import useGoBack from '../../common/hooks/useGoBack';
 import {
   useAuditSettings,
   useQuickExport,
+  useSharedInstancesQuery,
 } from '../../hooks';
 import { CONSORTIUM_PREFIX } from '../../constants';
 import MARC_TYPES from './marcTypes';
@@ -43,6 +45,7 @@ jest.mock('../../hooks', () => ({
     }],
     isSettingsLoading: false,
   }),
+  useSharedInstancesQuery: jest.fn(),
 }));
 
 const mutator = {
@@ -81,6 +84,11 @@ describe('ViewSource', () => {
       push: mockPush,
     });
     useGoBack.mockReturnValue(mockGoBack);
+
+    useSharedInstancesQuery.mockReturnValue({
+      sharedInstances: [],
+      isLoadingSharedInstances: false,
+    });
   });
 
   afterEach(() => {
@@ -253,13 +261,28 @@ describe('ViewSource', () => {
     it('should open the version history pane', () => {
       fireEvent.click(screen.getByLabelText('stripes-acq-components.versionHistory.pane.header'));
 
-      expect(screen.getByText('stripes-components.auditLog.pane.sub')).toBeInTheDocument();
+      expect(screen.getByText('MarcVersionHistory')).toBeInTheDocument();
     });
 
     it('should disable Actions button', () => {
       fireEvent.click(document.getElementById('version-history-btn'));
 
       expect(screen.getByTestId('actions-dropdown')).toBeDisabled();
+    });
+
+    describe('when the record has been shared from the local one', () => {
+      it('should pass the `isSharedFromLocalRecord` as true to the `MarcVersionHistory`', () => {
+        useSharedInstancesQuery.mockReturnValue({
+          sharedInstances: [{}],
+          isLoadingSharedInstances: false,
+        });
+
+        fireEvent.click(document.getElementById('version-history-btn'));
+
+        expect(MarcVersionHistory).toHaveBeenCalledWith(expect.objectContaining({
+          isSharedFromLocalRecord: true,
+        }), {});
+      });
     });
   });
 

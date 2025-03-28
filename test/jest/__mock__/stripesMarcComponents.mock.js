@@ -11,4 +11,5 @@ jest.mock('@folio/stripes-marc-components', () => ({
       {lastMenu}
     </>
   )),
+  MarcVersionHistory: jest.fn(() => <div>MarcVersionHistory</div>),
 }));

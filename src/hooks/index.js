@@ -24,3 +24,4 @@ export * from '@folio/stripes-inventory-components/lib/queries/useInstanceDateTy
 export * from './useCallNumberTypesQuery';
 export * from './useAuditSettings';
 export * from './useCallNumberBrowseConfig';
+export * from './useSharedInstancesQuery';
