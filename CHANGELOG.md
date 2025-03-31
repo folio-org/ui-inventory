@@ -8,6 +8,7 @@
 * Refactor `useAuditDataQuery` hooks to use `useInfiniteQuery` to implement loading indicator to version history panes. Refs UIIN-3286.
 * Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
 * Update instance header after overlaying source bibliographic record process. Fixes UIIN-3282.
+* Add `useSharedInstancesQuery` hook to determine if an instance is shared from a local one to display "Shared" in the version history original card. Fixes UIIN-3279.
 * Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
