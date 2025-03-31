@@ -43,6 +43,7 @@ import { useGoBack } from '../../common/hooks';
 import {
   useAuditSettings,
   useQuickExport,
+  useSharedInstancesQuery,
 } from '../../hooks';
 import { IdReportGenerator } from '../../reports';
 import {
@@ -76,11 +77,15 @@ const ViewSource = ({
   const callout = useCallout();
   const [isShownPrintPopup, setIsShownPrintPopup] = useState(false);
   const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
+
   const { exportRecords } = useQuickExport();
+  const { sharedInstances } = useSharedInstancesQuery({ searchParams: { instanceIdentifier: instanceId } });
+
   const openPrintPopup = () => setIsShownPrintPopup(true);
   const closePrintPopup = () => setIsShownPrintPopup(false);
   const isHoldingsRecord = marcType === MARC_TYPES.HOLDINGS;
   const isBibRecord = marcType === MARC_TYPES.BIB;
+  const isSharedFromLocalRecord = !!sharedInstances?.[0];
 
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
   const isPrintBibAvailable = !isHoldingsRecord && stripes.hasPerm('ui-quick-marc.quick-marc-editor.view');
@@ -307,6 +312,7 @@ const ViewSource = ({
             onClose={() => setIsVersionHistoryOpen(false)}
             marcType="bib"
             tenantId={tenantId}
+            isSharedFromLocalRecord={isSharedFromLocalRecord}
           />
         )}
       </Paneset>
