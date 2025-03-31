@@ -5,6 +5,7 @@
 
 * Update instance header after overlaying source bibliographic record process. Fixes UIIN-3282.
 * Missing values in the version history modal for Suppressed from discovery and Staff suppressed fields. Fixed UIIN-3277.
+* Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
@@ -62,7 +63,16 @@
 * ViewSource - add tenantId to useAuditSettings. Refs UIIN-3266.
 * Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
 * Add default value for number of versions counter on "Version history" pane. Fixes UIIN-3283.
+
+## [12.0.14](https://github.com/folio-org/ui-inventory/tree/v12.0.14) (2025-03-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.13...v12.0.14)
+
 * Use `stripes.okapi.tenant` in order to get persistent id between pages. Fixes UIIN-3251.
+
+## [12.0.13](https://github.com/folio-org/ui-inventory/tree/v12.0.13) (2025-03-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v12.0.13)
+
+* Call Number Browse refactor - backport to Ramsons. Refs UIIN-3228.
 
 ## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
