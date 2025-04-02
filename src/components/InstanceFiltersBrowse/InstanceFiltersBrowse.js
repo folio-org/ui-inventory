@@ -10,7 +10,6 @@ import {
 import { AccordionSet } from '@folio/stripes/components';
 import {
   FACETS,
-  HeldByFacet,
   browseModeOptions,
   browseCallNumberOptions,
   browseClassificationOptions,
@@ -88,18 +87,18 @@ const InstanceFiltersBrowse = props => {
     />
   );
 
-  const renderHeldByFacet = (name) => (
-    <HeldByFacet
-      name={name}
-      activeFilters={activeFilters}
-      facetOptions={facetOptions}
-      getIsLoading={getIsLoading}
-      onChange={onChange}
-      onClear={onClear}
-      onFetch={onInputFocusAndMoreClick}
-      onSearch={onFacetOptionSearch}
-    />
-  );
+  // const renderHeldByFacet = (name) => (
+  //   <HeldByFacet
+  //     name={name}
+  //     activeFilters={activeFilters}
+  //     facetOptions={facetOptions}
+  //     getIsLoading={getIsLoading}
+  //     onChange={onChange}
+  //     onClear={onClear}
+  //     onFetch={onInputFocusAndMoreClick}
+  //     onSearch={onFacetOptionSearch}
+  //   />
+  // );
 
   return (
     <AccordionSet
@@ -115,11 +114,6 @@ const InstanceFiltersBrowse = props => {
             isNewCallNumberBrowseAvailable
               ? FACETS.CALL_NUMBERS_SHARED
               : FACETS.SHARED
-          )}
-          {renderHeldByFacet(
-            isNewCallNumberBrowseAvailable
-              ? FACETS.NEW_CALL_NUMBERS_HELD_BY
-              : FACETS.CALL_NUMBERS_HELD_BY
           )}
           <EffectiveLocationFacet
             name={isNewCallNumberBrowseAvailable
