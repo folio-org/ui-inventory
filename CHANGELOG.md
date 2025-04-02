@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [12.0.15] (IN PROGRESS)
+## [12.0.15](https://github.com/folio-org/ui-inventory/tree/v12.0.15) (2025-04-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.14...v12.0.15)
 
 * Ramsons CSP - Call number browse | Remove held by facet for ECS. Refs UIIN-3299.
 
