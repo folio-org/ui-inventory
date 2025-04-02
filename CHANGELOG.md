@@ -68,6 +68,11 @@
 * Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
 * Add default value for number of versions counter on "Version history" pane. Fixes UIIN-3283.
 
+## [12.0.15](https://github.com/folio-org/ui-inventory/tree/v12.0.15) (2025-04-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.14...v12.0.15)
+
+* Ramsons CSP - Call number browse | Remove held by facet for ECS. Refs UIIN-3299.
+
 ## [12.0.14](https://github.com/folio-org/ui-inventory/tree/v12.0.14) (2025-03-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.13...v12.0.14)
 
