@@ -60,7 +60,7 @@ import {
   isInstanceShadowCopy,
   isUserInConsortiumMode,
 } from '../../utils';
-import { useAuditSettings } from '../../hooks';
+import { useAuditSettings, useSharedInstancesQuery } from '../../hooks';
 import { INVENTORY_AUDIT_GROUP } from '../../constants';
 
 import css from './InstanceDetails.css';
@@ -106,6 +106,8 @@ const InstanceDetails = forwardRef(({
 
   const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP, tenantId: instance?.tenantId });
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
+
+  const { sharedInstances } = useSharedInstancesQuery({ searchParams: { instanceIdentifier: instance?.id } });
 
   const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
   const tags = instance?.tags?.tagList;
@@ -353,6 +355,7 @@ const InstanceDetails = forwardRef(({
           instanceId={instance?.id}
           onClose={() => setIsVersionHistoryOpen(false)}
           tenantId={instance?.tenantId}
+          isSharedFromLocalRecord={!!sharedInstances?.[0]}
         />
       )}
       { helperApp &&
