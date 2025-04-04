@@ -18,7 +18,6 @@ import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   filterConfig,
   queryIndexes,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   buildSearchQuery,
   SORT_OPTIONS,
   segments,
@@ -200,47 +199,6 @@ describe('InstancesList', () => {
       jest.clearAllMocks();
     });
 
-    describe('when staffSuppress filter is not present', () => {
-      it('should replace history with selected facet value', async () => {
-        jest.spyOn(history, 'replace');
-
-        await act(async () => renderInstancesList({ segment: 'instances' }));
-
-        expect(history.replace).toHaveBeenLastCalledWith({
-          pathname: '/',
-          search: 'filters=staffSuppress.false&sort=contributors',
-          state: undefined,
-        });
-      });
-    });
-
-    describe('when a user does not have Staff Suppress permissions', () => {
-      describe('and staffSuppress.true filter is present', () => {
-        it('should replace history with selected facet value', async () => {
-          jest.spyOn(history, 'replace');
-
-          act(() => history.push({
-            pathname: '/',
-            search: 'filters=staffSuppress.true',
-          }));
-          await act(async () => renderInstancesList({
-            segment: 'instances',
-            stripes: {
-              hasPerm: () => false,
-              hasInterface: () => true,
-              user: { user: { tenants: [] } },
-            },
-          }));
-
-          expect(history.replace).toHaveBeenLastCalledWith({
-            pathname: '/',
-            search: 'filters=staffSuppress.false&sort=contributors',
-            state: undefined,
-          });
-        });
-      });
-    });
-
     describe('when switching segment (Instance/Holdings/Item)', () => {
       it('should unsubscribe from reset event', async () => {
         await act(async () => renderInstancesList());
@@ -251,54 +209,12 @@ describe('InstancesList', () => {
       });
     });
 
-    describe('when switching to Holdings tab', () => {
-      const mockSetItem = jest.fn();
-
-      beforeEach(() => {
-        global.Storage.prototype.setItem = mockSetItem;
-      });
-
-      afterEach(() => {
-        global.Storage.prototype.setItem.mockReset();
-      });
-
-      it('should clear USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY', async () => {
-        await act(async () => renderInstancesList({ segment: 'instances' }));
-
-        const search = '?segment=instances&sort=title';
-        act(() => { history.push({ search }); });
-        await act(async () => fireEvent.click(screen.getByRole('button', { name: /^holdings$/i })));
-
-        expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
-      });
-
-      describe('when staffSuppress filter is not present', () => {
-        it('should replace history with selected facet value', async () => {
-          jest.spyOn(history, 'replace');
-
-          const { rerender } = await act(async () => renderInstancesList({ segment: 'instances' }));
-
-          act(() => history.push({
-            pathname: '/',
-            search: 'segment=holdings',
-          }));
-          rerender(getInstancesListTree({ segment: 'holdings' }));
-
-          await waitFor(() => expect(history.replace).toHaveBeenCalledWith({
-            pathname: '/',
-            search: 'segment=holdings&sort=contributors&filters=staffSuppress.false',
-            state: undefined,
-          }));
-        });
-      });
-    });
-
     describe('when the component is mounted', () => {
       describe('and sort parameter does not match the one selected in Settings', () => {
         it('should not be replaced', async () => {
           jest.spyOn(history, 'replace');
 
-          act(() => history.push('/inventory?filters=staffSuppress.false&sort=title'));
+          act(() => history.push('/inventory?sort=title'));
 
           await act(async () => renderInstancesList({
             segment: 'instances',
@@ -323,7 +239,7 @@ describe('InstancesList', () => {
         it('should call history.replace with the default sort parameter', async () => {
           jest.spyOn(history, 'replace');
 
-          act(() => history.push('/inventory?filters=staffSuppress.false'));
+          act(() => history.push('/inventory'));
 
           await act(async () => renderInstancesList({
             data: {
@@ -446,15 +362,6 @@ describe('InstancesList', () => {
     });
 
     describe('when user clicks Reset all', () => {
-      const mockSetItem = jest.fn();
-      beforeEach(() => {
-        global.Storage.prototype.setItem = mockSetItem;
-      });
-
-      afterEach(() => {
-        global.Storage.prototype.setItem.mockReset();
-      });
-
       it('should move focus to query input', async () => {
         await act(async () => renderInstancesList({
           segment: 'instances',
@@ -465,18 +372,6 @@ describe('InstancesList', () => {
         fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
 
         expect(screen.getByRole('textbox', { name: 'Search' })).toHaveFocus();
-      });
-
-      it('should clear "user touched staff suppress" session storage flag', async () => {
-        await act(async () => renderInstancesList({
-          segment: 'instances',
-        }));
-
-        fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'test' } });
-        fireEvent.click(screen.getAllByRole('button', { name: 'Search' })[1]);
-        fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
-
-        expect(mockSetItem).toHaveBeenCalledWith(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
       });
 
       it('should publish the reset event', async () => {
@@ -490,7 +385,7 @@ describe('InstancesList', () => {
       it('should call history.replace to add the default sort query parameter from inventory settings', async () => {
         jest.spyOn(history, 'replace');
 
-        act(() => history.push('/inventory?filters=staffSuppress.false&sort=contributors'));
+        act(() => history.push('/inventory?filters=staffSuppress.true&sort=contributors'));
 
         await act(async () => renderInstancesList({
           segment: 'instances',
@@ -511,7 +406,7 @@ describe('InstancesList', () => {
 
         expect(history.replace).toHaveBeenLastCalledWith({
           pathname: '/',
-          search: 'filters=staffSuppress.false&sort=relevance',
+          search: 'sort=relevance',
           state: undefined,
         });
       });
@@ -628,14 +523,14 @@ describe('InstancesList', () => {
 
         describe('when canceling a record', () => {
           it('should remove the "layer" parameter and focus on the search field', async () => {
-            act(() => history.push('/inventory?filters=staffSuppress.false&layer=foo'));
+            act(() => history.push('/inventory?layer=foo'));
 
             jest.spyOn(history, 'push');
 
             const { getByRole } = await act(async () => renderInstancesList({ segment: 'instances' }));
             act(() => SearchAndSort.mock.calls[0][0].onCloseNewRecord());
 
-            expect(history.push).toHaveBeenCalledWith('/?filters=staffSuppress.false&sort=contributors');
+            expect(history.push).toHaveBeenCalledWith('/?sort=contributors');
             await waitFor(() => expect(getByRole('textbox', { name: /search/i })).toHaveFocus());
           });
         });
@@ -662,7 +557,7 @@ describe('InstancesList', () => {
 
             expect(history.push).toHaveBeenCalledWith({
               pathname: '/inventory/view/fast-add-record-id',
-              search: '?filters=staffSuppress.false&sort=contributors',
+              search: '?sort=contributors',
             });
           });
         });
@@ -702,7 +597,7 @@ describe('InstancesList', () => {
 
           fireEvent.click(button);
 
-          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bibliographic?filters=staffSuppress.false&sort=contributors');
+          expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bibliographic?sort=contributors');
         });
       });
 
