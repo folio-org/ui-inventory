@@ -10,6 +10,8 @@
 * Update instance header after overlaying source bibliographic record process. Fixes UIIN-3282.
 * Add `useSharedInstancesQuery` hook to determine if an instance is shared from a local one to display "Shared" in the version history original card. Fixes UIIN-3279.
 * Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
+* Call number browse | Remove held by facet for ECS. Refs UIIN-3301.
+* Display "Shared" label for promoted to be shared FOLIO records. Fixes UIIN-3300.
 * Remove default Staff suppress facet settings. Refs UIIN-3302.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
