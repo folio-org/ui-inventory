@@ -6,7 +6,6 @@ import {
 } from '@folio/stripes-inventory-components';
 
 import buildStripes from '../../test/jest/__mock__/stripesCore.mock';
-import { applyDefaultStaffSuppressFilter } from './buildManifestObject';
 
 jest.unmock('@folio/stripes-inventory-components');
 
@@ -31,37 +30,17 @@ const getBuildQueryArgs = ({
 
 describe('buildSearchQuery', () => {
   describe('build query for inventory search', () => {
-    describe('when query is empty and filters only contain staff suppress', () => {
-      describe('when user did not touch staff suppress', () => {
-        it('should return empty query and filters', () => {
-          const queryParams = {
-            qindex: queryIndexes.SUBJECT,
-            query: '',
-            filters: 'staffSuppress.false',
-          };
+    describe('when query is empty', () => {
+      it('should return empty query and filters', () => {
+        const queryParams = {
+          qindex: queryIndexes.SUBJECT,
+          query: '',
+          filters: '',
+        };
 
-          const cql = buildSearchQuery(applyDefaultStaffSuppressFilter)(...getBuildQueryArgs({ queryParams }));
+        const cql = buildSearchQuery()(...getBuildQueryArgs({ queryParams }));
 
-          expect(cql).toEqual(null);
-        });
-      });
-
-      describe('when user did not touch staff suppress', () => {
-        beforeEach(() => {
-          global.Storage.prototype.getItem = jest.fn().mockReturnValue('true');
-        });
-
-        it('should return empty query and filters', () => {
-          const queryParams = {
-            qindex: queryIndexes.SUBJECT,
-            query: '',
-            filters: 'staffSuppress.false',
-          };
-
-          const cql = buildSearchQuery(applyDefaultStaffSuppressFilter)(...getBuildQueryArgs({ queryParams }));
-
-          expect(cql).toEqual('(staffSuppress=="false") sortby title');
-        });
+        expect(cql).toEqual(null);
       });
     });
   });
