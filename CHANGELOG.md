@@ -12,6 +12,7 @@
 * Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
 * Call number browse | Remove held by facet for ECS. Refs UIIN-3301.
 * Display "Shared" label for promoted to be shared FOLIO records. Fixes UIIN-3300.
+* Use central tenant id in useUsersBatch to retrieve all users. Fixes UIIN-3321.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
