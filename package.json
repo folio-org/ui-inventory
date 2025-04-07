@@ -17,7 +17,7 @@
     "handlerName": "eventHandler",
     "displayName": "ui-inventory.meta.title",
     "route": "/inventory",
-    "home": "/inventory?filters=staffSuppress.false",
+    "home": "/inventory",
     "queryResource": "query",
     "icons": [
       {

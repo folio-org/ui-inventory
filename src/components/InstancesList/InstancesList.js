@@ -47,11 +47,9 @@ import {
 } from '@folio/stripes/components';
 import {
   advancedSearchQueryBuilder,
-  FACETS,
   queryIndexes,
   advancedSearchIndexes,
   segments,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   OKAPI_TENANT_HEADER,
   getCurrentFilters,
   buildSearchQuery,
@@ -100,7 +98,6 @@ import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
 import SelectedRecordsModal from '../SelectedRecordsModal';
 import ImportRecordModal from '../ImportRecordModal';
-import { applyDefaultStaffSuppressFilter } from '../../routes/buildManifestObject';
 import {
   getItem,
   setItem,
@@ -243,8 +240,6 @@ class InstancesList extends React.Component {
       }
     });
 
-    window.addEventListener('beforeunload', this.handleBeforeUnload);
-
     if (params.selectedBrowseResult === 'true') {
       this.paneTitleRef.current.focus();
     }
@@ -253,7 +248,6 @@ class InstancesList extends React.Component {
 
     const searchParams = new URLSearchParams(_location.search);
 
-    const isStaffSuppressFilterChanged = this.applyDefaultStaffSuppressFilter(searchParams);
     let isSortingUpdated = false;
 
     if (!params.sort) {
@@ -261,7 +255,7 @@ class InstancesList extends React.Component {
       searchParams.set('sort', defaultSort);
     }
 
-    if (isSortingUpdated || isStaffSuppressFilterChanged) {
+    if (isSortingUpdated) {
       this.redirectToSearchParams(searchParams);
     }
 
@@ -298,12 +292,7 @@ class InstancesList extends React.Component {
 
     const searchParams = new URLSearchParams(location.search);
 
-    let isStaffSuppressFilterChanged = false;
     let isSortingUpdated = false;
-
-    if (prevProps.segment !== this.props.segment) {
-      isStaffSuppressFilterChanged = this.applyDefaultStaffSuppressFilter(searchParams);
-    }
 
     // `sort` is missing after reset button is hit
     if (!sortBy) {
@@ -311,7 +300,7 @@ class InstancesList extends React.Component {
       searchParams.set('sort', data.displaySettings.defaultSort);
     }
 
-    if (isSortingUpdated || isStaffSuppressFilterChanged) {
+    if (isSortingUpdated) {
       this.redirectToSearchParams(searchParams);
     }
 
@@ -338,10 +327,6 @@ class InstancesList extends React.Component {
     authorityId: '',
   };
 
-  handleBeforeUnload = () => {
-    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
-  }
-
   redirectToSearchParams = (searchParams) => {
     const {
       history,
@@ -353,38 +338,6 @@ class InstancesList extends React.Component {
       search: searchParams.toString(),
       state: location.state,
     });
-  }
-
-  applyDefaultStaffSuppressFilter = (searchParams) => {
-    if (JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY))) {
-      return false;
-    }
-
-    const filters = searchParams.get('filters');
-
-    const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
-    const staffSuppressTrue = `${FACETS.STAFF_SUPPRESS}.true`;
-
-    if (!filters?.includes(FACETS.STAFF_SUPPRESS)) {
-      const newFiltersValue = addFilter(filters, staffSuppressFalse);
-
-      searchParams.set('filters', newFiltersValue);
-
-      return true;
-    }
-
-    const isStaffSuppressFilterAvailable = this.props.stripes.hasPerm('ui-inventory.instance.staff-suppressed-records.view');
-    const isStaffSuppressTrueSelected = filters.includes(`${FACETS.STAFF_SUPPRESS}.true`);
-
-    if (!isStaffSuppressFilterAvailable && isStaffSuppressTrueSelected) {
-      const newFiltersValue = replaceFilter(filters, staffSuppressTrue, staffSuppressFalse);
-
-      searchParams.set('filters', newFiltersValue);
-
-      return true;
-    }
-
-    return false;
   }
 
   getInstanceIdFromLocation = (location) => {
@@ -562,7 +515,6 @@ class InstancesList extends React.Component {
 
     this.refocusOnInputSearch(segment);
     this.setState({ selectedRows: {} });
-    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     unsubscribeFromReset();
   }
 
@@ -696,7 +648,7 @@ class InstancesList extends React.Component {
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
         const endpointPath = `${stripes.okapi.url}/search/instances/ids`;
-        const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
+        const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
 
         let items = [];
 
@@ -757,7 +709,7 @@ class InstancesList extends React.Component {
     if (!isTestEnv()) {
       const { data } = this.props;
 
-      const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
+      const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
       const fileName = `SearchInstanceCQLQuery${moment().format()}.cql`;
 
       saveAs(new Blob([query], { type: 'text/plain;charset=utf-8;' }), fileName);
@@ -1143,7 +1095,6 @@ class InstancesList extends React.Component {
     });
 
     this.inputRef.current.focus();
-    sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
     publishOnReset();
   }
 

@@ -5,6 +5,7 @@
 * Add `useSharedInstancesQuery` hook to determine if an instance is shared from a local one to display "Shared" in the version history original card. Fixes UIIN-3279.
 * Display "Shared" label for promoted to be shared FOLIO records. Fixes UIIN-3300.
 * Call number browse | Remove held by facet for ECS. Refs UIIN-3301.
+* Remove default Staff suppress facet settings. Refs UIIN-3302.
 
 ## [13.0.1](https://github.com/folio-org/ui-inventory/tree/v13.0.1) (2025-04-04)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.0...v13.0.1)
