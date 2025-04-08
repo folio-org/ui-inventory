@@ -92,7 +92,7 @@ const InstanceFiltersBrowse = props => {
             name={FACETS.CALL_NUMBERS_EFFECTIVE_LOCATION}
             accordionsStatus={accordionsStatus}
             facetOptions={facetOptions}
-            separator={isConsortiaEnv(stripes)}
+            separator={checkIfUserInMemberTenant(stripes)}
             activeFilters={activeFilters}
             onChange={onChange}
             onToggle={onToggleAccordion}
