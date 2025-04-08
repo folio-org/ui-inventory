@@ -244,6 +244,7 @@ class ViewInstance extends React.Component {
     const {
       selectedInstance,
       stripes,
+      isCentralTenantPermissionsLoading,
     } = this.props;
     const isMARCSourceRecord = isMARCSource(selectedInstance?.source);
     const isLinkedDataSourceRecord = isLinkedDataSource(selectedInstance?.source);
@@ -259,7 +260,7 @@ class ViewInstance extends React.Component {
       this.getCurrentTenantPermissions();
     }
 
-    if (selectedInstance?.id && this.props.focusTitleOnInstanceLoad) {
+    if (selectedInstance?.id && this.props.focusTitleOnInstanceLoad && !isCentralTenantPermissionsLoading) {
       this.paneTitleRef.current?.focus();
     }
   }
@@ -269,11 +270,15 @@ class ViewInstance extends React.Component {
       selectedInstance: prevInstance,
       resources: { configs: prevConfigs },
       match: { params: prevParams },
+      isLoading: prevIsLoading,
+      isCentralTenantPermissionsLoading: prevIsCentralTenantPermissionsLoading,
     } = prevProps;
     const {
       selectedInstance: instance,
       resources: { configs },
       match: { params },
+      isCentralTenantPermissionsLoading,
+      isLoading,
     } = this.props;
     const instanceRecordsId = instance?.id;
     const prevInstanceRecordsId = prevInstance?.id;
@@ -288,7 +293,10 @@ class ViewInstance extends React.Component {
       this.checkCanBeOpenedInLinkedData();
     }
 
-    if (isViewingAnotherRecord && this.props.focusTitleOnInstanceLoad) {
+    const wasInstanceReadyToFocus = !prevIsLoading && prevInstance && prevProps.focusTitleOnInstanceLoad && !prevIsCentralTenantPermissionsLoading;
+    const isInstanceReadyToFocus = !isLoading && instance && this.props.focusTitleOnInstanceLoad && !isCentralTenantPermissionsLoading;
+
+    if (!wasInstanceReadyToFocus && isInstanceReadyToFocus) {
       this.paneTitleRef.current?.focus();
     }
 
