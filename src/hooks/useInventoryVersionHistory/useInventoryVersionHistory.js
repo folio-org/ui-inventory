@@ -58,7 +58,9 @@ const useInventoryVersionHistory = (data) => {
   const [usersId, setUsersId] = useState([]);
   const [usersMap, setUsersMap] = useState({});
 
-  const { users } = useUsersBatch(usersId);
+  const centralTenantId = stripes.user.user.consortium?.centralTenantId;
+
+  const { users } = useUsersBatch(usersId, { tenantId: centralTenantId });
 
   const canViewUser = stripes.hasPerm('users.item.get');
 
