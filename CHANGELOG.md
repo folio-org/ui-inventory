@@ -2,18 +2,22 @@
 
 ## [14.0.0] (IN PROGRESS)
 
-* Missing values in the version history modal for Suppressed from discovery and Staff suppressed fields. Fixed UIIN-3277.
-* ECS FOLIO instances: Inventory version history feature toggle/icon. Refs UIIN-3284.
-* ECS | "Version history" pane is empty for Shared FOLIO Instance when opened from Member tenant. Fixes UIIN-3280.
-* Refactor `useAuditDataQuery` hooks to use `useInfiniteQuery` to implement loading indicator to version history panes. Refs UIIN-3286.
 * Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
-* Update instance header after overlaying source bibliographic record process. Fixes UIIN-3282.
 * Add `useSharedInstancesQuery` hook to determine if an instance is shared from a local one to display "Shared" in the version history original card. Fixes UIIN-3279.
-* Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
 * Call number browse | Remove held by facet for ECS. Refs UIIN-3301.
 * Display "Shared" label for promoted to be shared FOLIO records. Fixes UIIN-3300.
 * Remove default Staff suppress facet settings. Refs UIIN-3302.
 * Use central tenant id in useUsersBatch to retrieve all users. Fixes UIIN-3321.
+
+## [13.0.1](https://github.com/folio-org/ui-inventory/tree/v13.0.1) (2025-04-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.0...v13.0.1)
+
+* Update instance header after overlaying source bibliographic record process. Fixes UIIN-3282.
+* Missing values in the version history modal for Suppressed from discovery and Staff suppressed fields. Fixed UIIN-3277.
+* Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
+* ECS FOLIO instances: Inventory version history feature toggle/icon. Refs UIIN-3284.
+* Refactor `useAuditDataQuery` hooks to use `useInfiniteQuery` to implement loading indicator to version history panes. Refs UIIN-3286.
+* ECS | "Version history" pane is empty for Shared FOLIO Instance when opened from Member tenant. Fixes UIIN-3280.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
