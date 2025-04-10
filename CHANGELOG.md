@@ -8,6 +8,12 @@
 * Refactor `useAuditDataQuery` hooks to use `useInfiniteQuery` to implement loading indicator to version history panes. Refs UIIN-3286.
 * Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
 * Update instance header after overlaying source bibliographic record process. Fixes UIIN-3282.
+* Add `useSharedInstancesQuery` hook to determine if an instance is shared from a local one to display "Shared" in the version history original card. Fixes UIIN-3279.
+* Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
+* Call number browse | Remove held by facet for ECS. Refs UIIN-3301.
+* Display "Shared" label for promoted to be shared FOLIO records. Fixes UIIN-3300.
+* Remove default Staff suppress facet settings. Refs UIIN-3302.
+* Use central tenant id in useUsersBatch to retrieve all users. Fixes UIIN-3321.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
@@ -65,6 +71,11 @@
 * ViewSource - add tenantId to useAuditSettings. Refs UIIN-3266.
 * Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
 * Add default value for number of versions counter on "Version history" pane. Fixes UIIN-3283.
+
+## [12.0.15](https://github.com/folio-org/ui-inventory/tree/v12.0.15) (2025-04-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.14...v12.0.15)
+
+* Ramsons CSP - Call number browse | Remove held by facet for ECS. Refs UIIN-3299.
 
 ## [12.0.14](https://github.com/folio-org/ui-inventory/tree/v12.0.14) (2025-03-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.13...v12.0.14)

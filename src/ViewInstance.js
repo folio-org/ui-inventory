@@ -30,6 +30,8 @@ import {
 
 import { CENTRAL_ORDERING_SETTINGS_KEY } from '@folio/stripes-acq-components';
 
+import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
+
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
@@ -47,6 +49,7 @@ import {
 } from './utils';
 import {
   CONSORTIUM_PREFIX,
+  CONTENT_TYPE_HEADER,
   HTTP_RESPONSE_STATUS_CODES,
   indentifierTypeNames,
   INSTANCE_RECORD_TYPE,
@@ -57,6 +60,7 @@ import {
   LINKED_DATA_EDITOR_PERM,
   LINKED_DATA_ID_PREFIX,
   LINKED_DATA_RESOURCES_ROUTE,
+  OKAPI_TOKEN_HEADER,
   REQUEST_OPEN_STATUSES,
 } from './constants';
 import { DataContext } from './contexts';
@@ -158,7 +162,6 @@ class ViewInstance extends React.Component {
       path: 'source-storage/records/:{id}/formatted?idType=INSTANCE',
       accumulate: true,
       throwErrors: false,
-      tenant: '!{tenantId}',
     },
     quickExport: {
       type: 'okapi',
@@ -241,6 +244,7 @@ class ViewInstance extends React.Component {
     const {
       selectedInstance,
       stripes,
+      isCentralTenantPermissionsLoading,
     } = this.props;
     const isMARCSourceRecord = isMARCSource(selectedInstance?.source);
     const isLinkedDataSourceRecord = isLinkedDataSource(selectedInstance?.source);
@@ -256,7 +260,7 @@ class ViewInstance extends React.Component {
       this.getCurrentTenantPermissions();
     }
 
-    if (selectedInstance?.id && this.props.focusTitleOnInstanceLoad) {
+    if (selectedInstance?.id && this.props.focusTitleOnInstanceLoad && !isCentralTenantPermissionsLoading) {
       this.paneTitleRef.current?.focus();
     }
   }
@@ -266,11 +270,15 @@ class ViewInstance extends React.Component {
       selectedInstance: prevInstance,
       resources: { configs: prevConfigs },
       match: { params: prevParams },
+      isLoading: prevIsLoading,
+      isCentralTenantPermissionsLoading: prevIsCentralTenantPermissionsLoading,
     } = prevProps;
     const {
       selectedInstance: instance,
       resources: { configs },
       match: { params },
+      isCentralTenantPermissionsLoading,
+      isLoading,
     } = this.props;
     const instanceRecordsId = instance?.id;
     const prevInstanceRecordsId = prevInstance?.id;
@@ -285,7 +293,10 @@ class ViewInstance extends React.Component {
       this.checkCanBeOpenedInLinkedData();
     }
 
-    if (isViewingAnotherRecord && this.props.focusTitleOnInstanceLoad) {
+    const wasInstanceReadyToFocus = !prevIsLoading && prevInstance && prevProps.focusTitleOnInstanceLoad && !prevIsCentralTenantPermissionsLoading;
+    const isInstanceReadyToFocus = !isLoading && instance && this.props.focusTitleOnInstanceLoad && !isCentralTenantPermissionsLoading;
+
+    if (!wasInstanceReadyToFocus && isInstanceReadyToFocus) {
       this.paneTitleRef.current?.focus();
     }
 
@@ -320,8 +331,20 @@ class ViewInstance extends React.Component {
   }
 
   getMARCRecord = () => {
-    const { mutator } = this.props;
-    mutator.marcRecord.GET()
+    const {
+      mutator,
+      isShared,
+      centralTenantId,
+      tenantId,
+      okapi,
+    } = this.props;
+    mutator.marcRecord.GET({
+      headers: {
+        [OKAPI_TENANT_HEADER]: isShared ? centralTenantId : tenantId,
+        [CONTENT_TYPE_HEADER]: 'application/json',
+        ...(okapi.token && { [OKAPI_TOKEN_HEADER]: okapi.token }),
+      },
+    })
       .then(data => this.setState({ marcRecord: data }))
       .catch(error => {
         // eslint-disable-next-line no-console
@@ -1380,6 +1403,7 @@ ViewInstance.propTypes = {
   }).isRequired,
   tagsEnabled: PropTypes.bool,
   updateLocation: PropTypes.func.isRequired,
+  tenantId: PropTypes.string.isRequired,
   isLoading: PropTypes.bool,
   isError: PropTypes.bool,
   error: PropTypes.object,

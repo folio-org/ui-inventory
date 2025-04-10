@@ -26,7 +26,6 @@ import {
   NavListItem,
   NavListSection,
 } from '@folio/stripes/components';
-import { USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY } from '@folio/stripes-inventory-components';
 
 import {
   DuplicateHoldingRoute,
@@ -78,12 +77,6 @@ const InventoryRouting = (props) => {
     name: 'PREV_SUBFIELD',
     shortcut: 'Ctrl + [',
   });
-
-  useEffect(() => {
-    return () => {
-      sessionStorage.setItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY, false);
-    };
-  }, []);
 
   const focusSearchField = () => {
     const el = document.getElementById('input-inventory-search');

@@ -17,7 +17,7 @@
     "handlerName": "eventHandler",
     "displayName": "ui-inventory.meta.title",
     "route": "/inventory",
-    "home": "/inventory?filters=staffSuppress.false",
+    "home": "/inventory",
     "queryResource": "query",
     "icons": [
       {
@@ -690,7 +690,8 @@
           "audit.inventory.item.collection.get",
           "audit.marc.bib.collection.get",
           "audit.config.groups.settings.collection.get",
-          "audit.config.groups.settings.audit.inventory.collection.get"
+          "audit.config.groups.settings.audit.inventory.collection.get",
+          "consortia.sharing-instances.collection.get"
         ],
         "visible": true
       },
