@@ -456,7 +456,7 @@
   "editHoldings": "Edit",
   "updateOwnership": "Update ownership",
   "hasLinkedLocalOrderLine.modal.heading": "Linked order line",
-  "hasLinkedLocalOrderLine.modal.message": "This holding or item is referenced by a local purchase order line, it's affiliation cannot be changed at this time.",
+  "hasLinkedLocalOrderLine.modal.message": "This holding or item is referenced by a local purchase order line, its affiliation cannot be changed at this time.",
   "updateOwnership.holdings.modal.heading": "Update ownership of holdings",
   "updateOwnership.holdings.modal.message": "Would you like to update ownership of Holdings <strong>{holdingsHrid}</strong> from <strong>{currentTenant}</strong> to <strong>{targetTenant}</strong>? Please note that updating Holdings ownership will also migrate all linked Items.",
   "updateOwnership.message.success": "Ownership of Holdings <strong>{holdingsHrid}</strong> and all linked Items has been successfully updated to <strong>{targetTenant}</strong>",
