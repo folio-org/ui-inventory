@@ -1,33 +1,9 @@
 import {
-  FACETS,
-  USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY,
   buildSearchQuery,
   buildRecordsManifest,
 } from '@folio/stripes-inventory-components';
 
-import { replaceFilter } from '../utils';
-
 const INITIAL_RESULT_COUNT = 100;
-
-export const applyDefaultStaffSuppressFilter = (query, stripes) => {
-  const isUserTouchedStaffSuppress = JSON.parse(sessionStorage.getItem(USER_TOUCHED_STAFF_SUPPRESS_STORAGE_KEY));
-
-  const staffSuppressFalse = `${FACETS.STAFF_SUPPRESS}.false`;
-  const staffSuppressTrue = `${FACETS.STAFF_SUPPRESS}.true`;
-
-  if (!query.query && query.filters === staffSuppressFalse && !isUserTouchedStaffSuppress) {
-    // if query is empty and the only filter value is staffSuppress.false and search was not initiated by user action
-    // then we need to clear the query.filters here to not automatically search when Inventory search is opened
-    query.filters = undefined;
-  }
-
-  const isStaffSuppressFilterAvailable = stripes.hasPerm('ui-inventory.instance.staff-suppressed-records.view');
-  const isStaffSuppressTrueSelected = query.filters?.includes(`${FACETS.STAFF_SUPPRESS}.true`);
-
-  if (!isStaffSuppressFilterAvailable && isStaffSuppressTrueSelected) {
-    query.filters = replaceFilter(query.filters, staffSuppressTrue, staffSuppressFalse);
-  }
-};
 
 export function buildManifestObject() {
   return {
@@ -43,7 +19,7 @@ export function buildManifestObject() {
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
     requestUrlQuery: { initialValue: '' },
-    records: buildRecordsManifest(applyDefaultStaffSuppressFilter),
+    records: buildRecordsManifest(),
     recordsToExportIDs: {
       type: 'okapi',
       records: 'ids',
@@ -53,7 +29,7 @@ export function buildManifestObject() {
       throwErrors: false,
       GET: {
         params: {
-          query: buildSearchQuery(applyDefaultStaffSuppressFilter),
+          query: buildSearchQuery(),
         },
         staticFallback: { params: {} },
       },
@@ -67,7 +43,7 @@ export function buildManifestObject() {
       throwErrors: false,
       GET: {
         params: {
-          query: buildSearchQuery(applyDefaultStaffSuppressFilter),
+          query: buildSearchQuery(),
         },
         staticFallback: { params: {} },
       },

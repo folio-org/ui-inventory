@@ -1,15 +1,19 @@
 import { MemoryRouter } from 'react-router-dom';
 import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 
+import { useStripes } from '@folio/stripes/core';
 import { useVersionHistory } from '@folio/stripes-components';
 import { useUsersBatch } from '@folio/stripes-acq-components';
 
 import useInventoryVersionHistory, { versionsFormatter } from './useInventoryVersionHistory';
+import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 
 const mockIntl = {
   formatMessage: jest.fn(({ id }) => id),
-  formatDate : jest.fn(({ value }) => value),
+  formatDate: jest.fn(({ value }) => value),
 };
+
+const stripes = buildStripes();
 
 jest.mock('react-intl', () => ({
   injectIntl: (Component) => (props) => <Component {...props} intl={mockIntl} />,
@@ -28,6 +32,7 @@ describe('useInventoryVersionHistory', () => {
   beforeEach(() => {
     useUsersBatch.mockReturnValue({ users: [] });
     useVersionHistory.mockReturnValue({ versions: [], isLoadMoreVisible: true });
+    useStripes.mockReturnValue(stripes);
   });
 
   it('should initialize with default values', () => {
@@ -68,5 +73,25 @@ describe('useInventoryVersionHistory', () => {
       expect(formattedData).toHaveLength(1);
       expect(formattedData[0].userName).toBe('ui-inventory.versionHistory.anonymousUser');
     });
+  });
+
+  it('should fetch users from central tenant', () => {
+    const centralTenantId = 'central-tenant-id';
+    const data = [{ userId: 'userId1' }, { userId: 'userId2' }];
+    const usersId = ['userId1', 'userId2'];
+
+    useStripes.mockReturnValue(buildStripes({
+      user: {
+        user: {
+          consortium: {
+            centralTenantId,
+          },
+        },
+      },
+    }));
+
+    renderHook(() => useInventoryVersionHistory(data));
+
+    expect(useUsersBatch).toHaveBeenLastCalledWith(usersId, { tenantId: centralTenantId });
   });
 });
