@@ -14,6 +14,7 @@
 * Display "Shared" label for promoted to be shared FOLIO records. Fixes UIIN-3300.
 * Remove default Staff suppress facet settings. Refs UIIN-3302.
 * Use central tenant id in useUsersBatch to retrieve all users. Fixes UIIN-3321.
+* Hide `Set for deletion` action when `Set for deletion` field value is true. Refs UIIN-3317.
 
 ## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
