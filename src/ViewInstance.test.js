@@ -1084,26 +1084,10 @@ describe('ViewInstance', () => {
         });
       });
 
-      describe('when instance is suppressed from staff and discovery', () => {
+      describe('when instance is set for deletion', () => {
         it('should not see "Set record for deletion" action item', () => {
           StripesConnectedInstance.prototype.instance.mockImplementation(() => ({
             ...instance,
-            discoverySuppress: true,
-            staffSuppress: true,
-          }));
-
-          renderViewInstance();
-
-          expect(screen.queryByText('button', { name: 'Set record for deletion' })).not.toBeInTheDocument();
-        });
-      });
-
-      describe('when instance has source = "MARC" and it is marked as deleted', () => {
-        it('should not see "Set record for deletion" action item', () => {
-          StripesConnectedInstance.prototype.instance.mockImplementation(() => ({
-            ...instance,
-            discoverySuppress: true,
-            leaderRecordStatus: 'd',
             deleted: true,
           }));
 

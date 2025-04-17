@@ -55,7 +55,6 @@ import {
   INSTANCE_RECORD_TYPE,
   INSTANCE_SHARING_STATUSES,
   layers,
-  LEADER_RECORD_STATUSES,
   LINKED_DATA_CHECK_EXTERNAL_RESOURCE_FETCHABLE,
   LINKED_DATA_EDITOR_PERM,
   LINKED_DATA_ID_PREFIX,
@@ -806,13 +805,6 @@ class ViewInstance extends React.Component {
     const canMemberTenantSetForDeletion = (isShared && this.hasCentralTenantPerm(setForDeletionAndSuppressPerm)) || (!isShared && hasSetForDeletionPermission);
     const canSetForDeletion = canNonConsortialTenantSetForDeletion || canCentralTenantSetForDeletion || canMemberTenantSetForDeletion;
 
-    const isRecordSuppressed = instance?.discoverySuppress && instance?.staffSuppress;
-    const isRecordSetForDeletion = isSourceMARC
-      && instance?.discoverySuppress
-      && instance?.deleted
-      && instance?.leaderRecordStatus === LEADER_RECORD_STATUSES.DELETED;
-    const isInstanceSuppressed = isRecordSuppressed || isRecordSetForDeletion;
-
     const numberOfRequests = instanceRequests.other?.totalRecords;
     const canReorderRequests = titleLevelRequestsFeatureEnabled && hasReorderPermissions && numberOfRequests && canReorder;
     const canViewRequests = !checkIfUserInCentralTenant(stripes) && !titleLevelRequestsFeatureEnabled;
@@ -972,7 +964,7 @@ class ViewInstance extends React.Component {
                 onClickHandler={buildOnClickHandler(this.triggerQuickExport)}
               />
             )}
-            {canSetForDeletion && !isInstanceSuppressed && !isSourceLinkedData && (
+            {canSetForDeletion && !instance?.deleted && !isSourceLinkedData && (
               <ActionItem
                 id="quick-export-trigger"
                 icon="flag"
