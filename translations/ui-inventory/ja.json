@@ -837,7 +837,7 @@
     "actions.menuSection.sortBy.date": "日付",
     "moveItems.modal.message.hasLinkedPOLsOrHoldings": "This holdings is linked to a purchase order line. Moving this holdings to a new instance will move any other holdings and items that are linked to this purchase order line to the new instance as well. The purchase order line will also be linked to the new instance. Do you want to continue?",
     "hasLinkedLocalOrderLine.modal.heading": "Linked order line",
-    "hasLinkedLocalOrderLine.modal.message": "This holding or item is referenced by a local purchase order line, it's affiliation cannot be changed at this time.",
+    "hasLinkedLocalOrderLine.modal.message": "This holding or item is referenced by a local purchase order line, its affiliation cannot be changed at this time.",
     "permission.settings.material-types": "Settings (Inventory): Create, edit, delete material types",
     "permission.settings.loan-types": "Settings (Inventory): Create, edit, delete loan types",
     "permission.instance.set-records-for-deletion.execute": "Inventory: Set records for deletion",
