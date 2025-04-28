@@ -9,7 +9,7 @@ import { LIMIT_MAX } from '@folio/stripes-inventory-components';
 
 const useReceivingHistory = (holding, tenant, options = {}) => {
   const stripes = useStripes();
-  const centralTenantId = stripes.user.user.consortium.centralTenantId;
+  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
   const holdingReceivingHistory = holding.receivingHistory?.entries || [];
 
