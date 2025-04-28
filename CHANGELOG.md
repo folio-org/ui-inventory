@@ -3,7 +3,13 @@
 ## [14.0.0] (IN PROGRESS)
 
 * Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
+* Update `orders` and `order-lines` interfaces to `13.0` and `4.0` accordingly. Refs UIIN-3345.
 * Remove extra record from Central tenant after adding `Receiving history` record in local member instance. Fixes UIIN-3211.
+
+## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.3...v13.0.4)
+
+* Hide `Set for deletion` action when `Set for deletion` field value is true. Refs UIIN-3317.
 
 ## [13.0.3](https://github.com/folio-org/ui-inventory/tree/v13.0.3) (2025-04-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.1...v13.0.3)
@@ -13,7 +19,6 @@
 * Display "Shared" label for promoted to be shared FOLIO records. Fixes UIIN-3300.
 * Remove default Staff suppress facet settings. Refs UIIN-3302.
 * Use central tenant id in useUsersBatch to retrieve all users. Fixes UIIN-3321.
-* Hide `Set for deletion` action when `Set for deletion` field value is true. Refs UIIN-3317.
 
 ## [13.0.1](https://github.com/folio-org/ui-inventory/tree/v13.0.1) (2025-04-04)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.0...v13.0.1)
