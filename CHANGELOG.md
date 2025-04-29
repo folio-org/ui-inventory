@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [12.0.16](https://github.com/folio-org/ui-inventory/tree/v12.0.16) (2025-04-29)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.15...v12.0.16)
+
+* Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
+
 ## [12.0.15](https://github.com/folio-org/ui-inventory/tree/v12.0.15) (2025-04-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.14...v12.0.15)
 
