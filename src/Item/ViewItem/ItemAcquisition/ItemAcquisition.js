@@ -88,7 +88,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.vendorName" />}
-            value={vendor?.name ?? <NoValue />}
+            value={vendor?.name ? <Link to={`/organizations/view/${vendor.id}`}>{vendor.name}</Link> : <NoValue />}
           />
         </Col>
       </Row>
@@ -111,7 +111,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.vendorCode" />}
-            value={vendor?.code ?? <NoValue />}
+            value={vendor?.code ? <Link to={`/organizations/view/${vendor.id}`}>{vendor.code}</Link> : <NoValue />}
           />
         </Col>
       </Row>
