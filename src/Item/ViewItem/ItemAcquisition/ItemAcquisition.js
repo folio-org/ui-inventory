@@ -9,6 +9,7 @@ import {
   Col,
   KeyValue,
   Loading,
+  NoValue,
   Row,
 } from '@folio/stripes/components';
 
@@ -40,8 +41,25 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
     );
   }
 
-  const { orderLine, order, piece, vendor } = itemAcquisition;
+  const { orderLine, order, piece, vendor, finance, orderSetting } = itemAcquisition;
   const receiptDate = getDateWithTime(piece?.receivedDate);
+
+  const getAmountWithCurrency = (locale, currency, amount = 0) => (
+    Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount)
+  );
+
+  const totalOrderLineLocationsQuantity = orderLine?.locations?.reduce(
+    (sum, location) => sum + (location.quantity ?? 0), 0
+  );
+
+  const totalFinanceEncumbranceAmountExpended = finance?.transactions?.reduce(
+    (sum, transaction) => sum + (transaction.encumbrance?.amountExpended ?? 0), 0
+  );
+
+  const allFundCodes = orderLine?.fundDistribution?.map(fd => fd.code).filter(code => !!code).join(', ') ?? '';
+  const financeCurrency = finance?.transactions?.length ? finance?.transactions[0].currency : undefined;
+  const averageCost = totalFinanceEncumbranceAmountExpended / totalOrderLineLocationsQuantity;
+  const formattedAverageCost = financeCurrency ? getAmountWithCurrency(stripes.locale, financeCurrency, averageCost) : <NoValue />;
 
   return (
     <Accordion
@@ -62,11 +80,43 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
 
         <Col xs={4}>
           <KeyValue
+            label={<FormattedMessage id="ui-inventory.acq.acqMethod" />}
+            value={orderSetting?.value ?? <NoValue />}
+          />
+        </Col>
+
+        <Col xs={4}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.acq.vendorName" />}
+            value={vendor?.name ?? <NoValue />}
+          />
+        </Col>
+      </Row>
+
+      <Row>
+        <Col xs={4}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.acq.receiptStatus" />}
+            value={orderLine && <FormattedMessage id={`ui-inventory.acq.receiptStatus.${orderLine.receiptStatus}`} />}
+          />
+        </Col>
+
+        <Col xs={4}>
+          <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.orderStatus" />}
             value={order && <FormattedMessage id={`ui-inventory.acq.orderStatus.${order.workflowStatus}`} />}
           />
         </Col>
 
+        <Col xs={4}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.acq.vendorCode" />}
+            value={vendor?.code ?? <NoValue />}
+          />
+        </Col>
+      </Row>
+
+      <Row>
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.dateOpened" />}
@@ -76,12 +126,21 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
 
         <Col xs={4}>
           <KeyValue
-            label={<FormattedMessage id="ui-inventory.acq.receiptStatus" />}
-            value={orderLine && <FormattedMessage id={`ui-inventory.acq.receiptStatus.${orderLine.receiptStatus}`} />}
+            label={<FormattedMessage id="ui-inventory.acq.orderType" />}
+            value={order && <FormattedMessage id={`ui-inventory.acq.orderType.${order.orderType}`} />}
           />
         </Col>
 
         <Col xs={4}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.acq.averageCost" />}
+            value={formattedAverageCost}
+          />
+        </Col>
+      </Row>
+
+      <Row>
+        <Col xs={8}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.receiptDate" />}
             value={piece?.receivedDate && (
@@ -94,18 +153,13 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
 
         <Col xs={4}>
           <KeyValue
-            label={<FormattedMessage id="ui-inventory.acq.vendorCode" />}
-            value={vendor?.code}
+            label={<FormattedMessage id="ui-inventory.acq.fundCode" />}
+            value={allFundCodes ?? <NoValue />}
           />
         </Col>
+      </Row>
 
-        <Col xs={4}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.acq.orderType" />}
-            value={order && <FormattedMessage id={`ui-inventory.acq.orderType.${order.orderType}`} />}
-          />
-        </Col>
-
+      <Row>
         {
           order?.orderType === 'Ongoing' && (
             <KeyValue

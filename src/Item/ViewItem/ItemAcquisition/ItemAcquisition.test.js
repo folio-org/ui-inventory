@@ -6,7 +6,7 @@ import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 
-import { order, orderLine, vendor, resultData } from './fixtures';
+import { order, orderLine, orderSetting, vendor, resultData, finance } from './fixtures';
 import ItemAcquisition from './ItemAcquisition';
 import useItemAcquisition from './useItemAcquisition';
 
@@ -79,5 +79,39 @@ describe('ItemAcquisition', () => {
     renderItemAcquisition({ itemId: 'itemId' });
 
     expect(screen.getByText(vendor.code)).toBeInTheDocument();
+  });
+
+  it('should display fetched item acquisition data - vendor name', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+
+    expect(screen.getByText(vendor.name)).toBeInTheDocument();
+  });
+
+  it('should display fetched item acquisition data - acquisition method', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+
+    expect(screen.getByText(orderSetting.value)).toBeInTheDocument();
+  });
+
+  it('should display fetched item acquisition data - calculation and formatting of average cost', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+
+    const totalAmountExpended = finance.transactions.reduce((sum, transaction) => sum + transaction.encumbrance.amountExpended, 0);
+    const totalQuantities = orderLine.locations.reduce((sum, location) => sum + location.quantity, 0);
+    const averageCost = totalAmountExpended / totalQuantities;
+    const currency = finance.transactions[0].currency;
+    const formattedCost = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency,
+    }).format(averageCost);
+
+    expect(screen.getByText(formattedCost)).toBeInTheDocument();
+  });
+
+  it('should display fetched item acquisition data - all fund codes comma separated', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+    const codes = orderLine.fundDistribution.map(fund => fund.code).join(', ');
+
+    expect(screen.getByText(codes)).toBeInTheDocument();
   });
 });

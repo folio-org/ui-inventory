@@ -14,11 +14,8 @@ import {
 
 const useItemAcquisition = (id) => {
   const stripes = useStripes();
-
   const centralTenant = stripes.user.user?.consortium?.centralTenantId;
-
   const [activeTenant, setActiveTenant] = useState(stripes.okapi.tenant);
-
   const ky = useOkapiKy({ tenant: activeTenant });
   const namespace = useNamespace();
 
@@ -30,14 +27,30 @@ const useItemAcquisition = (id) => {
     if (!pieces.length) return {};
 
     const [piece] = pieces;
-    let orderLine;
-    let order;
-    let vendor;
+    let orderLine = {};
+    let order = {};
+    let vendor = {};
+    let finance = {};
+    let orderSetting = {};
 
     try {
       orderLine = await ky.get(`orders/order-lines/${piece.poLineId}`).json();
+
+      if (orderLine) {
+        try {
+          orderSetting = await ky.get(`orders/acquisition-methods/${orderLine.acquisitionMethod}`).json();
+        } catch {
+          orderSetting = {};
+        }
+
+        try {
+          finance = await ky.get(`finance/transactions?query=encumbrance.sourcePoLineId="${orderLine.id}"`).json();
+        } catch {
+          finance = {};
+        }
+      }
     } catch {
-      orderLine = {};
+      return {};
     }
 
     try {
@@ -57,6 +70,8 @@ const useItemAcquisition = (id) => {
       orderLine,
       piece,
       vendor,
+      finance,
+      orderSetting,
     };
   };
 
@@ -68,6 +83,8 @@ const useItemAcquisition = (id) => {
         stripes.hasInterface('order-lines') &&
         stripes.hasInterface('orders') &&
         stripes.hasInterface('organizations.organizations') &&
+        stripes.hasInterface('finance') &&
+        stripes.hasInterface('acquisition-methods') &&
         Boolean(id),
     }
   );
