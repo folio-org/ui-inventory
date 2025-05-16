@@ -699,7 +699,7 @@
     "select.createJobProfileId": "Vybrat profil úlohy pro import/vytvoření",
     "select.updateJobProfileId": "Vybrat profil úlohy pro překrytí/aktualizaci",
     "defaultJobProfile": "Výchozí",
-    "copycat.externalTarget": "Externí cíl",
+    "copycat.externalTarget": "Externí zdroj",
     "copycat.jobProfileToBeUsed": "Vybrat profil, který se má použít",
     "copycat.defaultJobProfile": "{jobProfile} (Výchozí)",
     "ariaLabel.createJobProfile": "Nastavit profil úlohy {profileIndex} pro vytvoření jako výchozí",

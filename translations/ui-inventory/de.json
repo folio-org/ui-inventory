@@ -110,7 +110,7 @@
     "addItem": "Exemplar hinzufügen",
     "viewItem": "Exemplar anzeigen",
     "itemData": "Exemplardaten",
-    "temporaryLocation": "Vorläufiger Standort",
+    "temporaryLocation": "Temporärer Standort",
     "permanentLoantype": "Dauerhafter Ausleihtyp",
     "temporaryLoantype": "Vorläufiger Ausleihtyp",
     "removeIdentifier": "Identifikator entfernen {num}",
