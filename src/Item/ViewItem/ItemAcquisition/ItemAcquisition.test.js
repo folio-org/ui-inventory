@@ -75,16 +75,22 @@ describe('ItemAcquisition', () => {
     expect(screen.getByText(`ui-inventory.acq.receiptStatus.${orderLine.receiptStatus}`)).toBeInTheDocument();
   });
 
-  it('should display fetched item acquisition data - vendor code', () => {
+  it('should display fetched item acquisition data - vendor code with link', () => {
     renderItemAcquisition({ itemId: 'itemId' });
+    const link = screen.getByRole('link', { name: 'AMAZ' });
 
     expect(screen.getByText(vendor.code)).toBeInTheDocument();
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/organizations/view/vendorId');
   });
 
-  it('should display fetched item acquisition data - vendor name', () => {
+  it('should display fetched item acquisition data - vendor name with link', () => {
     renderItemAcquisition({ itemId: 'itemId' });
+    const link = screen.getByRole('link', { name: 'Amazon' });
 
     expect(screen.getByText(vendor.name)).toBeInTheDocument();
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/organizations/view/vendorId');
   });
 
   it('should display fetched item acquisition data - acquisition method', () => {
