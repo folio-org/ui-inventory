@@ -121,3 +121,15 @@ describe('ItemAcquisition', () => {
     expect(screen.getByText(codes)).toBeInTheDocument();
   });
 });
+
+describe('ItemAcquisition without data', () => {
+  beforeEach(() => {
+    useItemAcquisition.mockClear().mockReturnValue({ });
+  });
+
+  it('should display all noValueSet components', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+
+    expect(screen.queryAllByText('stripes-components.noValue.noValueSet').length).toBe(10);
+  });
+});
