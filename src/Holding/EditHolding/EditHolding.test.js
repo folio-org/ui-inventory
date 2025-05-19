@@ -7,7 +7,7 @@ import { render, screen } from '@folio/jest-config-stripes/testing-library/react
 import { instance } from '../../../test/fixtures/instance';
 import {
   useInstanceQuery,
-  useHolding,
+  useHoldingQuery,
 } from '../../common/hooks';
 import {
   useHoldingItemsQuery,
@@ -26,7 +26,7 @@ jest.mock('../../hooks', () => ({
 jest.mock('../../common/hooks', () => ({
   ...jest.requireActual('../../common/hooks'),
   useInstanceQuery: jest.fn().mockReturnValue({ instance: {}, isLoading: false }),
-  useHolding: jest.fn().mockReturnValue({ holding: {}, isFetching: false }),
+  useHoldingQuery: jest.fn().mockReturnValue({ holding: {}, isFetching: false }),
 }));
 
 const defaultProps = {
@@ -59,7 +59,7 @@ describe('EditHolding', () => {
 
   beforeEach(() => {
     useInstanceQuery.mockClear();
-    useHolding.mockClear();
+    useHoldingQuery.mockClear();
     useHoldingItemsQuery.mockClear();
     useHoldingMutation.mockClear().mockReturnValue({ mutateHolding });
   });

@@ -15,13 +15,13 @@ import {
 import { useNumberGeneratorOptions } from '../../common/hooks';
 import {
   useInstanceQuery,
-  useHolding,
+  useHoldingQuery,
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
 import { parseHttpError } from '../../utils';
 import {
-  useItem,
+  useItemQuery,
   useItemMutation,
   useBoundWithsMutation,
 } from '../hooks';
@@ -37,8 +37,8 @@ const EditItem = ({
   const [httpError, setHttpError] = useState();
   const keepEditing = useRef(false);
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
-  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
-  const { isFetching: isItemLoading, item, refetch: refetchItem } = useItem(itemId);
+  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId);
+  const { isFetching: isItemLoading, item, refetch: refetchItem } = useItemQuery(itemId);
   const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();

@@ -26,6 +26,7 @@ import {
 import {
   FormattedTime,
   FormattedUTCDate,
+  NoValue,
 } from '@folio/stripes/components';
 import {
   segments,
@@ -325,8 +326,8 @@ export const checkIfArrayIsEmpty = array => (!isEmpty(array)
   : emptyList);
 
 export const convertArrayToBlocks = elements => (!isEmpty(elements)
-  ? elements.map((line, i) => (line ? <div key={i}>{line}</div> : noValue))
-  : noValue);
+  ? elements.map((line, i) => (line ? <div key={i}>{line}</div> : <NoValue />))
+  : <NoValue />);
 
 export const getDate = dateValue => {
   return dateValue ? (
