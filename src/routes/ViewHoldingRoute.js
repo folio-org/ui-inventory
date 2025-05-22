@@ -10,7 +10,7 @@ import { useSearchInstanceByIdQuery } from '../common';
 import { DataContext } from '../contexts';
 import {
   useAuditSettings,
-  useUpdateOwnership,
+  useUpdateOwnershipMutation,
 } from '../hooks';
 import ViewHoldingsRecord from '../ViewHoldingsRecord';
 import {
@@ -25,7 +25,7 @@ const ViewHoldingRoute = () => {
   const { okapi } = useStripes();
   const { state } = useLocation();
   const { instance } = useSearchInstanceByIdQuery(instanceId);
-  const { updateOwnership } = useUpdateOwnership(UPDATE_OWNERSHIP_API.HOLDINGS);
+  const { updateOwnership } = useUpdateOwnershipMutation(UPDATE_OWNERSHIP_API.HOLDINGS);
 
   const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);

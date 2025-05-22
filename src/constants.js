@@ -54,13 +54,13 @@ export const itemStatusesMap = {
 
 // Matching mutator names to the corresponding item statuses
 export const itemStatusMutators = {
-  IN_PROCESS: 'markAsInProcess',
-  IN_PROCESS_NON_REQUESTABLE: 'markAsInProcessNonRequestable',
-  INTELLECTUAL_ITEM: 'markAsIntellectualItem',
-  LONG_MISSING: 'markAsLongMissing',
-  RESTRICTED: 'markAsRestricted',
-  UNAVAILABLE: 'markAsUnavailable',
-  UNKNOWN: 'markAsUnknown',
+  IN_PROCESS: 'mark-in-process',
+  IN_PROCESS_NON_REQUESTABLE: 'mark-in-process-non-requestable',
+  INTELLECTUAL_ITEM: 'mark-intellectual-item',
+  LONG_MISSING: 'mark-long-missing',
+  RESTRICTED: 'mark-restricted',
+  UNAVAILABLE: 'mark-unavailable',
+  UNKNOWN: 'mark-unknown',
 };
 
 export const REQUEST_OPEN_STATUSES = {

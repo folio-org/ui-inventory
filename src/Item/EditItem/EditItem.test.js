@@ -7,9 +7,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { instance } from '../../../test/fixtures/instance';
 import {
   useInstanceQuery,
-  useHolding,
+  useHoldingQuery,
 } from '../../common/hooks';
-import { useItem, useItemMutation, useBoundWithsMutation } from '../hooks';
+import { useItemQuery, useItemMutation, useBoundWithsMutation } from '../hooks';
 import EditItem from './EditItem';
 import ItemForm from '../../edit/items/ItemForm';
 
@@ -18,11 +18,11 @@ jest.mock('../../hooks/useCallout', () => jest.fn().mockReturnValue({ sendCallou
 jest.mock('../../common/hooks', () => ({
   ...jest.requireActual('../../common/hooks'),
   useInstanceQuery: jest.fn().mockReturnValue({ instance: {}, isLoading: false }),
-  useHolding: jest.fn().mockReturnValue({ holding: {}, isFetching: false }),
+  useHoldingQuery: jest.fn().mockReturnValue({ holding: {}, isFetching: false }),
 }));
 jest.mock('../hooks', () => ({
   ...jest.requireActual('../hooks'),
-  useItem: jest.fn().mockReturnValue({ item: {}, isFetching: false }),
+  useItemQuery: jest.fn().mockReturnValue({ item: {}, isFetching: false }),
   useItemMutation: jest.fn().mockReturnValue({
     mutateItem: jest.fn()
   }),
@@ -61,8 +61,8 @@ describe('EditItem', () => {
 
   beforeEach(() => {
     useInstanceQuery.mockClear();
-    useHolding.mockClear();
-    useItem.mockClear();
+    useHoldingQuery.mockClear();
+    useItemQuery.mockClear();
     useItemMutation.mockClear().mockReturnValue({ mutateItem });
     useBoundWithsMutation.mockClear();
   });
