@@ -49,6 +49,8 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
   const getAmountWithCurrency = (currency, amount = 0) => (
     <FormattedNumber
       value={amount}
+      // eslint is wrong about the type of FormattedNumber's `style` prop
+      // eslint-disable-next-line react/style-prop-object
       style="currency"
       currency={currency}
     />
