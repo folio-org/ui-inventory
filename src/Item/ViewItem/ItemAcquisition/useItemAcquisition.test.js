@@ -10,9 +10,11 @@ import { useOkapiKy } from '@folio/stripes/core';
 import {
   order,
   orderLine,
+  orderSetting,
   vendor,
   piece,
   resultData,
+  finance,
 } from './fixtures';
 
 import useItemAcquisition from './useItemAcquisition';
@@ -22,8 +24,10 @@ const queryClient = new QueryClient();
 const kyResponseMap = {
   'orders/pieces': { pieces: [piece] },
   [`orders/order-lines/${orderLine.id}`]: orderLine,
+  [`orders/acquisition-methods/${orderLine.acquisitionMethod}`]: orderSetting,
   [`orders/composite-orders/${order.id}`]: order,
   [`organizations/organizations/${vendor.id}`]: vendor,
+  [`finance/transactions?query=encumbrance.sourcePoLineId="${orderLine.id}"`]: finance,
 };
 
 const wrapper = ({ children }) => (

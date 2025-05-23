@@ -97,9 +97,11 @@
       "users": "15.0 16.0"
     },
     "optionalOkapiInterfaces": {
+      "acquisition-methods": "1.0",
       "consortia": "1.0",
       "copycat-imports": "1.1",
       "copycat-profiles": "1.2",
+      "finance.transactions": "6.0",
       "remote-storage-mappings": "1.0 2.0",
       "acquisitions-units": "1.1",
       "orders": "13.0",
