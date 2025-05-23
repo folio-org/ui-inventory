@@ -48,8 +48,11 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
   const receiptDate = getDateWithTime(piece?.receivedDate);
 
   const getAmountWithCurrency = (currency, amount = 0) => (
-    // eslint-disable-next-line react/style-prop-object
-    <FormattedNumber value={amount} style="currency" currency={currency} />
+    <FormattedNumber
+      value={amount}
+      style="currency"
+      currency={currency}
+    />
   );
 
   const totalOrderLineLocationsQuantity = orderLine?.locations?.reduce(
