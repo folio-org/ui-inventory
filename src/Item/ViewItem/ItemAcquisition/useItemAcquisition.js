@@ -83,7 +83,7 @@ const useItemAcquisition = (id) => {
         stripes.hasInterface('order-lines') &&
         stripes.hasInterface('orders') &&
         stripes.hasInterface('organizations.organizations') &&
-        stripes.hasInterface('finance') &&
+        stripes.hasInterface('finance.transactions') &&
         stripes.hasInterface('acquisition-methods') &&
         Boolean(id),
     }

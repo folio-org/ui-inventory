@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  FormattedNumber,
+} from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import { useStripes } from '@folio/stripes/core';
@@ -44,8 +47,9 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
   const { orderLine, order, piece, vendor, finance, orderSetting } = itemAcquisition;
   const receiptDate = getDateWithTime(piece?.receivedDate);
 
-  const getAmountWithCurrency = (locale, currency, amount = 0) => (
-    Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount)
+  const getAmountWithCurrency = (currency, amount = 0) => (
+    // eslint-disable-next-line react/style-prop-object
+    <FormattedNumber value={amount} style="currency" currency={currency} />
   );
 
   const totalOrderLineLocationsQuantity = orderLine?.locations?.reduce(
@@ -57,9 +61,9 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
   );
 
   const allFundCodes = orderLine?.fundDistribution?.map(fd => fd.code).filter(code => !!code).join(', ') ?? '';
-  const financeCurrency = finance?.transactions?.length ? finance?.transactions[0].currency : undefined;
+  const financeCurrency = finance?.transactions[0]?.currency;
   const averageCost = totalFinanceEncumbranceAmountExpended / totalOrderLineLocationsQuantity;
-  const formattedAverageCost = financeCurrency ? getAmountWithCurrency(stripes.locale, financeCurrency, averageCost) : <NoValue />;
+  const formattedAverageCost = financeCurrency ? getAmountWithCurrency(financeCurrency, averageCost) : <NoValue />;
 
   return (
     <Accordion
