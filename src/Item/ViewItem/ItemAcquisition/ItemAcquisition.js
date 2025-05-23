@@ -12,7 +12,6 @@ import {
   Col,
   KeyValue,
   Loading,
-  NoValue,
   Row,
 } from '@folio/stripes/components';
 
@@ -66,7 +65,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
   const allFundCodes = orderLine?.fundDistribution?.map(fd => fd.code).filter(code => !!code).join(', ') ?? '';
   const financeCurrency = finance?.transactions[0]?.currency;
   const averageCost = totalFinanceEncumbranceAmountExpended / totalOrderLineLocationsQuantity;
-  const formattedAverageCost = financeCurrency ? getAmountWithCurrency(financeCurrency, averageCost) : <NoValue />;
+  const formattedAverageCost = financeCurrency ? getAmountWithCurrency(financeCurrency, averageCost) : '';
 
   return (
     <Accordion
@@ -88,14 +87,14 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.acqMethod" />}
-            value={orderSetting?.value ?? <NoValue />}
+            value={orderSetting?.value}
           />
         </Col>
 
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.vendorName" />}
-            value={vendor?.name ? <Link to={`/organizations/view/${vendor.id}`}>{vendor.name}</Link> : <NoValue />}
+            value={vendor?.name && <Link to={`/organizations/view/${vendor.id}`}>{vendor.name}</Link>}
           />
         </Col>
       </Row>
@@ -118,7 +117,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.vendorCode" />}
-            value={vendor?.code ? <Link to={`/organizations/view/${vendor.id}`}>{vendor.code}</Link> : <NoValue />}
+            value={vendor?.code && <Link to={`/organizations/view/${vendor.id}`}>{vendor.code}</Link>}
           />
         </Col>
       </Row>
@@ -161,7 +160,7 @@ const ItemAcquisition = ({ accordionId, itemId }) => {
         <Col xs={4}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.acq.fundCode" />}
-            value={allFundCodes ?? <NoValue />}
+            value={allFundCodes}
           />
         </Col>
       </Row>
