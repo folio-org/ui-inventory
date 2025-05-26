@@ -6,7 +6,7 @@ import { screen } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 
-import { order, orderLine, vendor, resultData } from './fixtures';
+import { order, orderLine, orderSetting, vendor, resultData } from './fixtures';
 import ItemAcquisition from './ItemAcquisition';
 import useItemAcquisition from './useItemAcquisition';
 
@@ -75,9 +75,52 @@ describe('ItemAcquisition', () => {
     expect(screen.getByText(`ui-inventory.acq.receiptStatus.${orderLine.receiptStatus}`)).toBeInTheDocument();
   });
 
-  it('should display fetched item acquisition data - vendor code', () => {
+  it('should display fetched item acquisition data - vendor code with link', () => {
     renderItemAcquisition({ itemId: 'itemId' });
+    const link = screen.getByRole('link', { name: 'AMAZ' });
 
     expect(screen.getByText(vendor.code)).toBeInTheDocument();
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/organizations/view/vendorId');
+  });
+
+  it('should display fetched item acquisition data - vendor name with link', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+    const link = screen.getByRole('link', { name: 'Amazon' });
+
+    expect(screen.getByText(vendor.name)).toBeInTheDocument();
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute('href', '/organizations/view/vendorId');
+  });
+
+  it('should display fetched item acquisition data - acquisition method', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+
+    expect(screen.getByText(orderSetting.value)).toBeInTheDocument();
+  });
+
+  it('should display fetched item acquisition data - calculation and formatting of average cost', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+
+    // sum(finance-amountExpended) / sum(orderLine-quantity)
+    expect(screen.getByText('$3.26')).toBeInTheDocument();
+  });
+
+  it('should display fetched item acquisition data - all fund codes comma separated', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+
+    expect(screen.getByText('ABC, XYZ')).toBeInTheDocument();
+  });
+});
+
+describe('ItemAcquisition without data', () => {
+  beforeEach(() => {
+    useItemAcquisition.mockClear().mockReturnValue({ });
+  });
+
+  it('should display all noValueSet components', () => {
+    renderItemAcquisition({ itemId: 'itemId' });
+
+    expect(screen.queryAllByText('stripes-components.noValue.noValueSet').length).toBe(10);
   });
 });
