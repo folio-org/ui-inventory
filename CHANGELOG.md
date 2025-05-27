@@ -7,6 +7,7 @@
 * Remove extra record from Central tenant after adding `Receiving history` record in local member instance. Fixes UIIN-3211.
 * Instance/holdings/items form - moved `form` under `Pane` component to suppress form submitting on Enter key click event. Fixes UIIN-3377.
 * Display additional order data on Inventory item record. Refs UIIN-3350.
+* Use `/search/resources/jobs` endpoints to get Instances and Holdings UUIDs. Refs UIIN-3366.
 
 ## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.3...v13.0.4)

@@ -67,7 +67,10 @@ import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
 import ViewInstanceWrapper from '../../ViewInstanceWrapper';
 import formatters from '../../referenceFormatters';
-import withLocation from '../../withLocation';
+import {
+  withLocation,
+  withUseResourcesIds,
+} from '../../hocs';
 import {
   getNextSelectedRowsState,
   parseFiltersToStr,
@@ -78,9 +81,6 @@ import {
   buildSingleItemQuery,
   isUserInConsortiumMode,
   switchAffiliation,
-  addFilter,
-  replaceFilter,
-  batchQueryIntoSmaller,
   getSortOptions,
   hasMemberTenantPermission,
 } from '../../utils';
@@ -153,6 +153,7 @@ class InstancesList extends React.Component {
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
+    getResourcesIds: PropTypes.func.isRequired,
     isRequestUrlExceededLimit: PropTypes.bool.isRequired,
     segment: PropTypes.string,
     intl: PropTypes.object,
@@ -590,56 +591,19 @@ class InstancesList extends React.Component {
     return `${endpointPath}?query=${stringify({ query })}`.length > URI_LIMIT;
   }
 
-  splitRequestToInstancesIds = async (endpointPath, query) => {
-    const { GET } = this.props.parentMutator.recordsToExportIDs;
-
-    // URI too long, need to split into several requests
-    let splitQueries = [];
-
-    let valuesPerBatch = 50;
-    const valuesPerBatchDecreasePerTry = 5;
-
-    // 50 values per batch might still exceed limit, so we need to check split queries for limit and keep trying with smaller bathes
-    // until all queries are within URI length limit
-    do {
-      splitQueries = batchQueryIntoSmaller(query, valuesPerBatch);
-
-      if (splitQueries.some(_query => this.isURIExceedsLimit(endpointPath, _query))) {
-        valuesPerBatch -= valuesPerBatchDecreasePerTry;
-      } else {
-        break;
-      }
-      // eslint-disable-next-line no-constant-condition
-    } while (true);
-
-    const requests = splitQueries.map(_query => {
-      return GET({ params: { query: _query } });
-    });
-
-    const itemBatches = await Promise.all(requests);
-
-    return itemBatches.flat();
-  }
-
   generateInstancesIdReport = async (sendCallout) => {
     const { instancesIdExportInProgress } = this.state;
     const {
       data,
-      stripes,
+      getResourcesIds,
     } = this.props;
 
     if (instancesIdExportInProgress) return;
 
     this.setState({ instancesIdExportInProgress: true }, async () => {
-      const {
-        reset,
-        GET,
-      } = this.props.parentMutator.recordsToExportIDs;
       let infoCalloutTimer;
 
       try {
-        reset();
-
         infoCalloutTimer = setTimeout(() => {
           sendCallout({
             type: 'info',
@@ -647,21 +611,13 @@ class InstancesList extends React.Component {
           });
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
-        const endpointPath = `${stripes.okapi.url}/search/instances/ids`;
         const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
-
-        let items = [];
-
-        if (this.isURIExceedsLimit(endpointPath, query)) {
-          items = await this.splitRequestToInstancesIds(endpointPath, query);
-        } else {
-          items = await GET();
-        }
-
 
         clearTimeout(infoCalloutTimer);
 
         const report = new IdReportGenerator('SearchInstanceUUIDs');
+
+        const items = await getResourcesIds(query, 'INSTANCE');
 
         if (!isEmpty(items)) {
           report.toCSV(uniqBy(items, 'id'), record => record.id);
@@ -747,20 +703,18 @@ class InstancesList extends React.Component {
   }
 
   generateHoldingsIdReport = async (sendCallout) => {
+    const {
+      data,
+      getResourcesIds,
+    } = this.props;
     const { holdingsIdExportInProgress } = this.state;
 
     if (holdingsIdExportInProgress) return;
 
     this.setState({ holdingsIdExportInProgress: true }, async () => {
-      const {
-        reset,
-        GET,
-      } = this.props.parentMutator.holdingsToExportIDs;
       let infoCalloutTimer;
 
       try {
-        reset();
-
         infoCalloutTimer = setTimeout(() => {
           sendCallout({
             type: 'info',
@@ -768,7 +722,9 @@ class InstancesList extends React.Component {
           });
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
-        const items = await GET();
+        const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
+
+        const items = await getResourcesIds(query, 'HOLDINGS');
 
         clearTimeout(infoCalloutTimer);
 
@@ -1514,4 +1470,5 @@ export default withNamespace(flowRight(
   withLocation,
   withSingleRecordImport,
   withReset,
+  withUseResourcesIds,
 )(stripesConnect(InstancesList)));

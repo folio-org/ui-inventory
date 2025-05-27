@@ -4,7 +4,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import ky from 'ky';
 import { withOkapiKy, CalloutContext } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
-import withLocation from '../../withLocation';
+import { withLocation } from '../../hocs';
 
 
 class ImportRecord extends React.Component {

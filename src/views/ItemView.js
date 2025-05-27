@@ -92,7 +92,7 @@ import {
   omitCurrentAndCentralTenants,
   getIsVersionHistoryEnabled,
 } from '../utils';
-import withLocation from '../withLocation';
+import { withLocation } from '../hocs';
 import {
   itemStatusesMap,
   itemStatusMutators,

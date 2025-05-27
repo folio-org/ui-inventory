@@ -15,7 +15,7 @@ import {
   useHoldingMutation,
 } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
-import withLocation from '../../withLocation';
+import { withLocation } from '../../hocs';
 import { switchAffiliation } from '../../utils';
 
 const DuplicateHolding = ({
