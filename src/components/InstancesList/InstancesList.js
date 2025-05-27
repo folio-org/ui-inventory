@@ -613,11 +613,11 @@ class InstancesList extends React.Component {
 
         const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
 
-        clearTimeout(infoCalloutTimer);
-
         const report = new IdReportGenerator('SearchInstanceUUIDs');
 
         const items = await getResourcesIds(query, 'INSTANCE');
+
+        clearTimeout(infoCalloutTimer);
 
         if (!isEmpty(items)) {
           report.toCSV(uniqBy(items, 'id'), record => record.id);
@@ -741,7 +741,7 @@ class InstancesList extends React.Component {
           message: <FormattedMessage id="ui-inventory.saveHoldingsUIIDS.error" />,
         });
       } finally {
-        this.setState({ instancesIdExportInProgress: false });
+        this.setState({ holdingsIdExportInProgress: false });
       }
     });
   };
