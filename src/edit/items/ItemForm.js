@@ -409,49 +409,49 @@ class ItemForm extends React.Component {
     };
 
     return (
-      <form
-        data-test-item-page-type={initialValues.id ? 'edit' : 'create'}
-        className={styles.itemForm}
-        onSubmit={handleSubmit}
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
       >
-        <HasCommand
-          commands={shortcuts}
-          isWithinScope={checkScope}
-          scope={document.body}
-        >
-          <Paneset isRoot>
-            <Pane
-              defaultWidth="100%"
-              dismissible
-              onClose={onCancel}
-              footer={this.getFooter()}
-              appIcon={<AppIcon app="inventory" iconKey="item" />}
-              paneTitle={
-                <span data-test-header-title>
-                  {instance.title}
-                  {(instance.publication && instance.publication.length > 0) &&
-                    <>
-                      &apos;, &apos;
-                      {instance.publication[0].publisher}
-                      {instance.publication[0].dateOfPublication
-                        ? `, ${instance.publication[0].dateOfPublication}`
-                        : null
-                      }
-                    </>
-                  }
-                </span>
-              }
-              paneSub={
-                <span data-test-header-sub>
-                  <FormattedMessage
-                    id="ui-inventory.holdingsTitle"
-                    values={{
-                      location: labelLocation,
-                      callNumber: labelCallNumber,
-                    }}
-                  />
-                </span>
-              }
+        <Paneset isRoot>
+          <Pane
+            defaultWidth="100%"
+            dismissible
+            onClose={onCancel}
+            footer={this.getFooter()}
+            appIcon={<AppIcon app="inventory" iconKey="item" />}
+            paneTitle={
+              <span data-test-header-title>
+                {instance.title}
+                {(instance.publication && instance.publication.length > 0) &&
+                  <>
+                    &apos;, &apos;
+                    {instance.publication[0].publisher}
+                    {instance.publication[0].dateOfPublication
+                      ? `, ${instance.publication[0].dateOfPublication}`
+                      : null
+                    }
+                  </>
+                }
+              </span>
+            }
+            paneSub={
+              <span data-test-header-sub>
+                <FormattedMessage
+                  id="ui-inventory.holdingsTitle"
+                  values={{
+                    location: labelLocation,
+                    callNumber: labelCallNumber,
+                  }}
+                />
+              </span>
+            }
+          >
+            <form
+              data-test-item-page-type={initialValues.id ? 'edit' : 'create'}
+              className={styles.itemForm}
+              onSubmit={handleSubmit}
             >
               <OptimisticLockingBanner
                 httpError={httpError}
@@ -503,7 +503,7 @@ class ItemForm extends React.Component {
                         sm={5}
                       >
                         {(item?.metadata && item?.metadata?.createdDate) &&
-                        <this.cViewMetaData metadata={item.metadata} />
+                          <this.cViewMetaData metadata={item.metadata} />
                         }
                         {/* <Field label="Material Type" name="materialType.name" id="additem_materialType" component={TextField} fullWidth /> */}
                       </Col>
@@ -881,13 +881,13 @@ class ItemForm extends React.Component {
                               aria-required="true"
                               fullWidth
                               dataOptions={
-                              [{
-                                label: placeholder,
-                                value: '',
-                                selected: !initialValues.loanType
-                              },
-                              ...loanTypeOptions
-                              ]}
+                                [{
+                                  label: placeholder,
+                                  value: '',
+                                  selected: !initialValues.loanType
+                                },
+                                ...loanTypeOptions
+                                ]}
                             />
                           )}
                         </FormattedMessage>
@@ -994,10 +994,10 @@ class ItemForm extends React.Component {
                   </Accordion>
                 </AccordionSet>
               </AccordionStatus>
-            </Pane>
-          </Paneset>
-        </HasCommand>
-      </form>
+            </form>
+          </Pane>
+        </Paneset>
+      </HasCommand>
     );
   }
 }

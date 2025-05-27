@@ -489,26 +489,26 @@ class InstanceForm extends React.Component {
     return (
       <IntlConsumer>
         {intl => (
-          <form
-            data-test-instance-page-type={initialValues.id ? 'edit' : 'create'}
-            className={styles.instanceForm}
-            aria-label={intl.formatMessage({ id: 'ui-inventory.instanceForm' })}
+          <HasCommand
+            commands={shortcuts}
+            isWithinScope={checkScope}
+            scope={document.body}
           >
-            <HasCommand
-              commands={shortcuts}
-              isWithinScope={checkScope}
-              scope={document.body}
-            >
-              <Paneset isRoot>
-                <Pane
-                  defaultWidth="100%"
-                  dismissible
-                  onClose={onCancel}
-                  footer={this.getFooter()}
-                  paneTitle={this.getPaneTitle()}
-                  paneSub={initialValues?.id ? this.getPaneSubTitle() : null}
-                  actionMenu={this.getActionMenu}
-                  id={id}
+            <Paneset isRoot>
+              <Pane
+                defaultWidth="100%"
+                dismissible
+                onClose={onCancel}
+                footer={this.getFooter()}
+                paneTitle={this.getPaneTitle()}
+                paneSub={initialValues?.id ? this.getPaneSubTitle() : null}
+                actionMenu={this.getActionMenu}
+                id={id}
+              >
+                <form
+                  data-test-instance-page-type={initialValues.id ? 'edit' : 'create'}
+                  className={styles.instanceForm}
+                  aria-label={intl.formatMessage({ id: 'ui-inventory.instanceForm' })}
                 >
                   <OptimisticLockingBanner
                     httpError={httpError}
@@ -918,10 +918,10 @@ class InstanceForm extends React.Component {
                       </AccordionSet>
                     </AccordionStatus>
                   </div>
-                </Pane>
-              </Paneset>
-            </HasCommand>
-          </form>
+                </form>
+              </Pane>
+            </Paneset>
+          </HasCommand>
         )}
       </IntlConsumer>
     );
