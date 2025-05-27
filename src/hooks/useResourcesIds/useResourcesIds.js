@@ -22,9 +22,7 @@ const useResourcesIds = () => {
   const waitForJobCompleted = async (jobId, pollingInterval) => {
     let job = null;
     do {
-      try {
-        job = await ky.get(`search/resources/jobs/${jobId}`).json();
-      } catch (e) {} // eslint-disable-line
+      job = await ky.get(`search/resources/jobs/${jobId}`).json();
 
       if (job?.status !== JOB_IN_PROGRESS_STATUS) {
         return job;
