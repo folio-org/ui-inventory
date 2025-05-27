@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## [13.0.5](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-05-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.4...v13.0.5)
+
+* Instance/holdings/items form - moved `form` under `Pane` component to suppress form submitting on Enter key click event. Fixes UIIN-3377.
+
 ## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.3...v13.0.4)
 

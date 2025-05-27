@@ -1,6 +1,6 @@
 {
   "name": "@folio/inventory",
-  "version": "13.0.4",
+  "version": "13.0.5",
   "description": "Inventory manager",
   "repository": "folio-org/ui-inventory",
   "publishConfig": {
