@@ -1,8 +1,8 @@
 import { useResourcesIds } from '../../hooks';
 
 const withUseResourcesIds = (WrappedComponent) => {
-  const WithUseResourcesIds = ({ pollingInterval, ...props }) => {
-    const { getResourcesIds } = useResourcesIds(pollingInterval);
+  const WithUseResourcesIds = (props) => {
+    const { getResourcesIds } = useResourcesIds();
 
     return <WrappedComponent getResourcesIds={getResourcesIds} {...props} />;
   };
