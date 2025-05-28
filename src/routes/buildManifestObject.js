@@ -1,7 +1,4 @@
-import {
-  buildSearchQuery,
-  buildRecordsManifest,
-} from '@folio/stripes-inventory-components';
+import { buildRecordsManifest } from '@folio/stripes-inventory-components';
 
 const INITIAL_RESULT_COUNT = 100;
 

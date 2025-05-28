@@ -585,12 +585,6 @@ class InstancesList extends React.Component {
     this.setState({ inTransitItemsExportInProgress: true }, this.generateInTransitItemReport);
   };
 
-  isURIExceedsLimit = (endpointPath, query) => {
-    const URI_LIMIT = 4000;
-
-    return `${endpointPath}?query=${stringify({ query })}`.length > URI_LIMIT;
-  }
-
   generateInstancesIdReport = async (sendCallout) => {
     const { instancesIdExportInProgress } = this.state;
     const {
