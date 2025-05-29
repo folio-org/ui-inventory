@@ -890,5 +890,9 @@
     "versionHistory.action.edited": "Upraveno",
     "versionHistory.action.removed": "Odstraněno",
     "versionHistory.anonymousUser": "Anonymní uživatel",
-    "numberGenerator.infoAdditional": "Další nastavení generátoru čísel jsou k dispozici v části {serviceInteractionLink}. Na adrese {numberGeneratorSequencesLink} lze definovat sekvence výběrem příslušného generátoru prostřednictvím rozbalovací nabídky."
+    "numberGenerator.infoAdditional": "Další nastavení generátoru čísel jsou k dispozici v části {serviceInteractionLink}. Na adrese {numberGeneratorSequencesLink} lze definovat sekvence výběrem příslušného generátoru prostřednictvím rozbalovací nabídky.",
+    "acq.vendorName": "Název organizace",
+    "acq.acqMethod": "Akviziční metoda",
+    "acq.averageCost": "Průměrné náklady",
+    "acq.fundCode": "Kód prostředku"
 }
