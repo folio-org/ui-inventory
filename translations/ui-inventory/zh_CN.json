@@ -890,5 +890,9 @@
     "versionHistory.action.edited": "已编辑",
     "versionHistory.action.removed": "已移除",
     "versionHistory.anonymousUser": "匿名用户",
-    "numberGenerator.infoAdditional": "{serviceInteractionLink}下有其他数字生成器设置。在{numberGeneratorSequencesLink}中，可以通过下拉菜单选择适当的生成器来定义序列。"
+    "numberGenerator.infoAdditional": "{serviceInteractionLink}下有其他数字生成器设置。在{numberGeneratorSequencesLink}中，可以通过下拉菜单选择适当的生成器来定义序列。",
+    "acq.vendorName": "Organization name",
+    "acq.acqMethod": "Acquisition method",
+    "acq.averageCost": "Average cost",
+    "acq.fundCode": "Fund code"
 }

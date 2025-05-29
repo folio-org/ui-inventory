@@ -890,5 +890,9 @@
     "versionHistory.action.edited": "Bewerkt",
     "versionHistory.action.removed": "Verwijderd",
     "versionHistory.anonymousUser": "Anonieme gebruiker",
-    "numberGenerator.infoAdditional": "Extra instellingen voor de nummergenerator zijn beschikbaar onder {serviceInteractionLink}. Op {numberGeneratorSequencesLink} sequenties kunnen worden gedefinieerd door de juiste generator via het vervolgkeuzemenu te selecteren."
+    "numberGenerator.infoAdditional": "Extra instellingen voor de nummergenerator zijn beschikbaar onder {serviceInteractionLink}. Op {numberGeneratorSequencesLink} sequenties kunnen worden gedefinieerd door de juiste generator via het vervolgkeuzemenu te selecteren.",
+    "acq.vendorName": "Naam Organisatie",
+    "acq.acqMethod": "Acquisitie methode",
+    "acq.averageCost": "Gemiddelde kosten",
+    "acq.fundCode": "Fondscode"
 }

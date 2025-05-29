@@ -890,5 +890,9 @@
     "versionHistory.action.edited": "تم التحرير",
     "versionHistory.action.removed": "تمت الإزالة",
     "versionHistory.anonymousUser": "مستخدم بدون تحديد هوية",
-    "numberGenerator.infoAdditional": "تتوفر إعدادات إضافية لمولد الأرقام أدنى {serviceInteractionLink}. في {numberGeneratorSequencesLink}، يمكن تحديد التسلسلات باختيار المولد المناسب من القائمة المنسدلة."
+    "numberGenerator.infoAdditional": "تتوفر إعدادات إضافية لمولد الأرقام أدنى {serviceInteractionLink}. في {numberGeneratorSequencesLink}، يمكن تحديد التسلسلات باختيار المولد المناسب من القائمة المنسدلة.",
+    "acq.vendorName": "Organization name",
+    "acq.acqMethod": "Acquisition method",
+    "acq.averageCost": "Average cost",
+    "acq.fundCode": "Fund code"
 }
