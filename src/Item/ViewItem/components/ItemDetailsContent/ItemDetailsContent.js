@@ -68,6 +68,7 @@ const ItemDetailsContent = ({
     itemData,
     enumerationData,
     condition,
+    itemNotes,
     loanAndAvailability,
     electronicAccess,
     circulationHistory,
@@ -154,6 +155,7 @@ const ItemDetailsContent = ({
           <ItemNotesSection
             referenceTables={referenceTables}
             item={item}
+            itemNotes={itemNotes}
           />
           <LoanAndAvailability
             loanAndAvailability={loanAndAvailability}

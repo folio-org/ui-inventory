@@ -8,11 +8,9 @@ import {
   values,
 } from 'lodash';
 import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 import { NoValue } from '@folio/stripes/components';
-
-import ItemNotes from '../../ViewItem/components/ItemNotes';
-import CirculationNotes from '../../ViewItem/components/CirculationNotes';
 
 import useItemOpenLoansQuery from '../useItemOpenLoansQuery';
 import useItemServicePointsQuery from '../useItemServicePointsQuery';
@@ -43,16 +41,61 @@ const useItemDetailsData = ({
   const openLoan = openLoans.loans?.[0];
 
   const layoutNotes = useCallback((noteTypes, notes) => {
-    return !isEmpty(notes) ? (
-      <ItemNotes
-        noteTypes={noteTypes}
-        notes={notes}
-      />
-    ) : [];
+    if (!isEmpty(notes)) {
+      return noteTypes
+        .filter(noteType => notes.find(note => note.itemNoteTypeId === noteType.id))
+        .map((noteType) => ({
+          staffOnly: {
+            label: <FormattedMessage id="ui-inventory.staffOnly" />,
+            value: notes.map((note, j) => {
+              if (note.itemNoteTypeId === noteType.id) {
+                return <div key={`${noteType}-${j}`}>{note.staffOnly ? 'Yes' : 'No'}</div>;
+              }
+              return null;
+            }),
+          },
+          noteType: {
+            label: noteType.name,
+            value: notes.map((note, j) => {
+              if (note.itemNoteTypeId === noteType.id) {
+                return <div key={`${note.id} - ${j}`}>{note.note || <NoValue />}</div>;
+              }
+              return null;
+            }),
+          },
+        }));
+    }
+
+    return [];
   }, []);
 
   const layoutCirculationNotes = useCallback((notes) => {
-    return !isEmpty(notes) ? <CirculationNotes notes={notes} /> : [];
+    if (!isEmpty(notes)) {
+      return ['Check out', 'Check in']
+        .filter(noteType => notes.find(note => note.noteType === noteType))
+        .map((noteType) => ({
+          staffOnly: {
+            label: <FormattedMessage id="ui-inventory.staffOnly" />,
+            value: notes.map((note, j) => {
+              if (note.noteType === noteType) {
+                return <div key={`note-staff-only-${j}`}>{note.staffOnly ? 'Yes' : 'No'}</div>;
+              }
+              return null;
+            }),
+          },
+          noteType: {
+            label: `${noteType} note`,
+            value: notes.map((note, j) => {
+              if (note.noteType === noteType) {
+                return <div key={`note-name-${j}`}>{note.note || <NoValue />}</div>;
+              }
+              return null;
+            }),
+          },
+        }));
+    }
+
+    return [];
   }, []);
 
   const itemLocation = useMemo(() => ({
@@ -158,7 +201,7 @@ const useItemDetailsData = ({
     itemData,
     enumerationData,
     condition,
-    itemNotes,
+    itemNotes: itemNotes.notes,
     loanAndAvailability,
     electronicAccess,
     circulationHistory,

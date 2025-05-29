@@ -5,26 +5,21 @@ import { Accordion } from '@folio/stripes/components';
 
 import ItemNotes from '../../components/ItemNotes/ItemNotes';
 
-const ItemNotesSection = ({
-  referenceTables,
-  item,
-}) => {
+const ItemNotesSection = ({ itemNotes }) => {
   return (
     <Accordion
       id="acc05"
       label={<FormattedMessage id="ui-inventory.itemNotes" />}
     >
       <ItemNotes
-        noteTypes={referenceTables.itemNoteTypes}
-        notes={item.notes}
+        notes={itemNotes}
       />
     </Accordion>
   );
 };
 
 ItemNotesSection.propTypes = {
-  referenceTables: PropTypes.object.isRequired,
-  item: PropTypes.object.isRequired,
+  itemNotes: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default ItemNotesSection;

@@ -10,7 +10,7 @@ import {
 
 import LoanAndAvailability from './LoanAndAvailability';
 
-jest.mock('../../components/CirculationNotes', () => ({
+jest.mock('../../components/ItemNotes', () => ({
   __esModule: true,
   default: () => <div>CirculationNotes</div>,
 }));
@@ -24,6 +24,7 @@ const mockLoanAndAvailability = {
   borrower: 'John Doe',
   loanDate: '2024-03-20T10:00:00Z',
   dueDate: '2024-04-20T10:00:00Z',
+  circulationType: [{ staffOnly: {}, noteType: {} }],
 };
 
 const mockItem = {

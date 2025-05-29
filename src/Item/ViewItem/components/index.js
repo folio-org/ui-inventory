@@ -1,4 +1,3 @@
-export { default as CirculationNotes } from './CirculationNotes';
 export { default as ItemActionMenu } from './ItemActionMenu';
 export { default as ItemDetailsContent } from './ItemDetailsContent';
 export { default as ItemModals } from './ItemModals';

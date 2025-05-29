@@ -15,13 +15,11 @@ jest.mock('../../components/ItemNotes/ItemNotes', () => ({
   default: jest.fn().mockReturnValue('ItemNotes'),
 }));
 
-const mockReferenceTables = {
-  itemNoteTypes: [],
-};
-
 const defaultProps = {
-  referenceTables: mockReferenceTables,
-  item: { notes: [] },
+  itemNotes: [{
+    staffNote: {},
+    noteType: {},
+  }],
 };
 
 const renderItemNotesSection = () => {

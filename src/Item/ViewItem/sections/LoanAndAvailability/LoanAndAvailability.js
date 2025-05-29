@@ -8,8 +8,8 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-import CirculationNotes from '../../components/CirculationNotes';
 import ItemStatus from '../../components/ItemStatus';
+import ItemNotes from '../../components/ItemNotes';
 
 import useItemOpenLoansQuery from '../../../hooks/useItemOpenLoansQuery';
 
@@ -73,9 +73,7 @@ const LoanAndAvailability = ({
           />
         </Col>
       </Row>
-      <CirculationNotes
-        notes={item.circulationNotes}
-      />
+      <ItemNotes notes={loanAndAvailability.circulationNotes} />
     </Accordion>
   );
 };
