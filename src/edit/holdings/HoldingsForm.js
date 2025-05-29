@@ -331,38 +331,38 @@ class HoldingsForm extends React.Component {
     ];
 
     return (
-      <form
-        data-test-holdings-page-type={holdingsPageType}
-        className={styles.holdingsForm}
+      <HasCommand
+        commands={shortcuts}
+        isWithinScope={checkScope}
+        scope={document.body}
       >
-        <HasCommand
-          commands={shortcuts}
-          isWithinScope={checkScope}
-          scope={document.body}
-        >
-          <Paneset isRoot>
-            <Pane
-              appIcon={<AppIcon app="inventory" iconKey="holdings" />}
-              defaultWidth="100%"
-              dismissible
-              onClose={onCancel}
-              footer={this.getFooter()}
-              paneTitle={
-                <span data-test-header-title>
-                  {instance.title}
-                </span>
-              }
-              paneSub={
-                (instance.publication && instance.publication.length > 0) ?
-                  <>
-                    {instance.publication[0].publisher}
-                    {instance.publication[0].dateOfPublication
-                      ? `, ${instance.publication[0].dateOfPublication}`
-                      : null
-                    }
-                  </>
-                  : null
-              }
+        <Paneset isRoot>
+          <Pane
+            appIcon={<AppIcon app="inventory" iconKey="holdings" />}
+            defaultWidth="100%"
+            dismissible
+            onClose={onCancel}
+            footer={this.getFooter()}
+            paneTitle={
+              <span data-test-header-title>
+                {instance.title}
+              </span>
+            }
+            paneSub={
+              (instance.publication && instance.publication.length > 0) ?
+                <>
+                  {instance.publication[0].publisher}
+                  {instance.publication[0].dateOfPublication
+                    ? `, ${instance.publication[0].dateOfPublication}`
+                    : null
+                }
+                </>
+                : null
+            }
+          >
+            <form
+              data-test-holdings-page-type={holdingsPageType}
+              className={styles.holdingsForm}
             >
               <OptimisticLockingBanner
                 httpError={httpError}
@@ -780,10 +780,10 @@ class HoldingsForm extends React.Component {
                   </Accordion>
                 </AccordionSet>
               </AccordionStatus>
-            </Pane>
-          </Paneset>
-        </HasCommand>
-      </form>
+            </form>
+          </Pane>
+        </Paneset>
+      </HasCommand>
     );
   }
 }

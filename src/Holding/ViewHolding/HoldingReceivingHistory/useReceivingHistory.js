@@ -7,9 +7,9 @@ import {
 } from '@folio/stripes/core';
 import { LIMIT_MAX } from '@folio/stripes-inventory-components';
 
-
 const useReceivingHistory = (holding, tenant, options = {}) => {
   const stripes = useStripes();
+  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
   const holdingReceivingHistory = holding.receivingHistory?.entries || [];
 
@@ -30,7 +30,9 @@ const useReceivingHistory = (holding, tenant, options = {}) => {
 
   const { data: pieces = [], isFetching } = useQuery({ queryKey, queryFn, ...options });
 
-  return { isFetching, receivingHistory: [...holdingReceivingHistory, ...pieces] };
+  const receivingHistory = tenant === centralTenantId ? pieces : [...holdingReceivingHistory, ...pieces];
+
+  return { isFetching, receivingHistory };
 };
 
 export default useReceivingHistory;

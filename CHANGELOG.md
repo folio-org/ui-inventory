@@ -3,6 +3,14 @@
 ## [14.0.0] (IN PROGRESS)
 
 * Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
+* Update `orders` and `order-lines` interfaces to `13.0` and `4.0` accordingly. Refs UIIN-3345.
+* Remove extra record from Central tenant after adding `Receiving history` record in local member instance. Fixes UIIN-3211.
+* Instance/holdings/items form - moved `form` under `Pane` component to suppress form submitting on Enter key click event. Fixes UIIN-3377.
+
+## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.3...v13.0.4)
+
+* Hide `Set for deletion` action when `Set for deletion` field value is true. Refs UIIN-3317.
 
 ## [13.0.3](https://github.com/folio-org/ui-inventory/tree/v13.0.3) (2025-04-14)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.1...v13.0.3)
