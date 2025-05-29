@@ -874,6 +874,10 @@
   "acq.orderSubscription": "Subscription",
   "acq.receiptDate": "Piece receipt date",
   "acq.vendorCode": "Organization code",
+  "acq.vendorName": "Organization name",
+  "acq.acqMethod": "Acquisition method",
+  "acq.averageCost": "Average cost",
+  "acq.fundCode": "Fund code",
 
   "boundPieces.remove.success": "Bound piece successfully removed",
   "boundPieces.remove.error": "Bound piece deletion failed",
