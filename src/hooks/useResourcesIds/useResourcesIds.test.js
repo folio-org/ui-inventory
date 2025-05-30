@@ -1,6 +1,5 @@
 import {
   renderHook,
-  act,
   waitFor,
 } from '@folio/jest-config-stripes/testing-library/react';
 import { useOkapiKy } from '@folio/stripes/core';
