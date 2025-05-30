@@ -11,13 +11,8 @@ import {
 
 import ItemNotes from './ItemNotes';
 
-const noteTypes = [
-  { id: '1', name: 'Note Type 1' },
-  { id: '2', name: 'Note Type 2' },
-];
-
 const renderItemNotes = (notes = []) => {
-  const component = <ItemNotes notes={notes} noteTypes={noteTypes} />;
+  const component = <ItemNotes notes={notes}/>;
 
   return renderWithIntl(component, translationsProperties);
 };
@@ -37,21 +32,29 @@ describe('ItemNotes', () => {
   });
 
   it('should render "Staff only" and note values when notes provided', () => {
-    const notes = [
-      {
-        itemNoteTypeId: '1',
-        staffOnly: true,
-        note: 'Test note 1',
+    const notes = [{
+      staffOnly: {
+        label: 'Staff only',
+        value: 'Yes',
       },
-      {
-        itemNoteTypeId: '1',
-        staffOnly: false,
-        note: 'Test note 2',
+      noteType: {
+        label: 'Note Type 1',
+        value: 'Test note 1',
       },
-    ];
+    }, {
+      staffOnly: {
+        label: 'Staff only',
+        value: 'No',
+      },
+      noteType: {
+        label: 'Note Type 2',
+        value: 'Test note 2',
+      },
+    }];
     renderItemNotes(notes);
 
     expect(screen.getByText('Note Type 1')).toBeInTheDocument();
+    expect(screen.getByText('Note Type 2')).toBeInTheDocument();
     expect(screen.getByText('Yes')).toBeInTheDocument();
     expect(screen.getByText('No')).toBeInTheDocument();
     expect(screen.getByText('Test note 1')).toBeInTheDocument();
@@ -59,31 +62,20 @@ describe('ItemNotes', () => {
   });
 
   it('should render NoValue component when note text is empty', () => {
-    const notes = [
-      {
-        itemNoteTypeId: '1',
-        staffOnly: true,
-        note: '',
+    const notes = [{
+      staffOnly: {
+        label: 'Staff only',
+        value: 'Yes',
       },
-    ];
+      noteType: {
+        label: 'Note Type 1',
+        value: '',
+      },
+    }];
     renderItemNotes(notes);
 
     expect(screen.getByText('Note Type 1')).toBeInTheDocument();
     expect(screen.getByText('Yes')).toBeInTheDocument();
     expect(screen.getByText('-')).toBeInTheDocument();
-  });
-
-  it('should only render note types that have associated notes', () => {
-    const notes = [
-      {
-        itemNoteTypeId: '1',
-        staffOnly: true,
-        note: 'Test note 1',
-      },
-    ];
-    renderItemNotes(notes);
-
-    expect(screen.getByText('Note Type 1')).toBeInTheDocument();
-    expect(screen.queryByText('Note Type 2')).not.toBeInTheDocument();
   });
 });
