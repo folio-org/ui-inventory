@@ -7,7 +7,7 @@ import { useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
 import {
-  useHolding,
+  useHoldingQuery,
   useInstanceQuery,
 } from '../../common/hooks';
 import {
@@ -15,7 +15,7 @@ import {
   useHoldingMutation,
 } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
-import withLocation from '../../withLocation';
+import { withLocation } from '../../hocs';
 import { switchAffiliation } from '../../utils';
 
 const DuplicateHolding = ({
@@ -36,7 +36,7 @@ const DuplicateHolding = ({
   const callout = useCallout();
   const stripes = useStripes();
   const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
-  const { holding, isLoading: isHoldingLoading } = useHolding(holdingId);
+  const { holding, isLoading: isHoldingLoading } = useHoldingQuery(holdingId);
 
   const sourceId = referenceTables.holdingsSourcesByName?.FOLIO?.id;
 

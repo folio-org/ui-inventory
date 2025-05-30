@@ -12,7 +12,7 @@ import { LoadingView } from '@folio/stripes/components';
 import { useNumberGeneratorOptions } from '../../common/hooks';
 import {
   useInstanceQuery,
-  useHolding,
+  useHoldingQuery,
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
@@ -36,7 +36,7 @@ const CreateItem = ({
   } = useHistory();
 
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId, { tenantId: tenantTo });
-  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId, { tenantId: tenantTo });
+  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId, { tenantId: tenantTo });
   const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();

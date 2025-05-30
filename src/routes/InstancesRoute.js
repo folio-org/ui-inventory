@@ -11,8 +11,10 @@ import {
   ResetProvider,
 } from '@folio/stripes-inventory-components';
 
-import withLocation from '../withLocation';
-import withLastSearchTerms from '../withLastSearchTerms';
+import {
+  withLocation,
+  withLastSearchTerms,
+} from '../hocs';
 import { InstancesView } from '../views';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';

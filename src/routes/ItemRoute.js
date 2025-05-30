@@ -5,10 +5,11 @@ import { flowRight } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import withLocation from '../withLocation';
-import { ItemView } from '../views';
+import { withLocation } from '../hocs';
+import { ViewItem } from '../Item';
 import { DataContext } from '../contexts';
 import { useSearchInstanceByIdQuery } from '../common';
+import { ItemModalsStateProvider } from '../providers';
 
 const ItemRoute = props => {
   const {
@@ -22,13 +23,15 @@ const ItemRoute = props => {
   return (
     <DataContext.Consumer>
       {data => (
-        <ItemView
-          {...props}
-          isInstanceShared={instance?.shared}
-          tenantTo={state?.tenantTo || okapi.tenant}
-          initialTenantId={state?.initialTenantId || okapi.tenant}
-          referenceTables={data}
-        />
+        <ItemModalsStateProvider>
+          <ViewItem
+            {...props}
+            isInstanceShared={instance?.shared}
+            tenantTo={state?.tenantTo || okapi.tenant}
+            initialTenantId={state?.initialTenantId || okapi.tenant}
+            referenceTables={data}
+          />
+        </ItemModalsStateProvider>
       )}
     </DataContext.Consumer>
   );

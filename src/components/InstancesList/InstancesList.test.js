@@ -42,9 +42,6 @@ const mockItemsByQuery = jest.fn().mockResolvedValue([{
   id: 'itemId',
   holdingsRecordId: 'holdingsRecordId',
 }]);
-const mockRecordsToExportIDs = jest.fn().mockResolvedValue([{
-  id: 'UUID',
-}]);
 const mockUnsubscribeFromReset = jest.fn();
 const mockPublishOnReset = jest.fn();
 
@@ -61,6 +58,22 @@ jest.mock('../../hooks', () => ({
   ...jest.requireActual('../../hooks'),
   useLastSearchTerms: () => ({
     getLastSearch: mockGetLastSearch,
+  }),
+}));
+
+const mockGetResourcesIds = jest.fn().mockResolvedValue(['id-1']);
+
+jest.mock('../../hocs', () => ({
+  ...jest.requireActual('../../hocs'),
+  withUseResourcesIds: jest.fn().mockImplementation((WrappedComponent) => {
+    const WithUseResourcesIds = (props) => (
+      <WrappedComponent
+        {...props}
+        getResourcesIds={mockGetResourcesIds}
+      />
+    );
+
+    return WithUseResourcesIds;
   }),
 }));
 
@@ -166,7 +179,6 @@ const getInstancesListTree = ({ segment = segments.instances, ...rest } = {}) =>
                 query: { update: updateMock, replace: mockQueryReplace },
                 records: { reset: mockRecordsReset },
                 itemsByQuery: { reset: noop, GET: mockItemsByQuery },
-                recordsToExportIDs: { reset: noop, GET: mockRecordsToExportIDs },
               }}
               data={{
                 ...data,
@@ -766,17 +778,15 @@ describe('InstancesList', () => {
       });
     });
 
-    describe('when too many filters had been selected and user saves Instance UUIDs', () => {
-      const generateUUID = () => new Array(36).fill('a').join('');
-
-      it('should send multiple requests for IDs', async () => {
+    describe('when exporting Instances UUIDs', () => {
+      it('should call `getResourcesIds` with correct arguments', async () => {
         const qindex = queryIndexes.QUERY_SEARCH;
-        const _query = `(item.effectiveLocaionId==(${new Array(100).fill(`"${generateUUID()}"`).join(' or ')})`;
+        const _query = 'keyword all test';
 
         buildSearchQuery.mockReturnValue(() => _query);
 
         await act(async () => renderInstancesList({
-          segment: 'items',
+          segment: 'instances',
           parentResources: {
             ...resources,
             query: {
@@ -791,7 +801,7 @@ describe('InstancesList', () => {
 
         await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Save instances UUIDs' })));
 
-        expect(mockRecordsToExportIDs).toHaveBeenCalledTimes(2);
+        expect(mockGetResourcesIds).toHaveBeenCalledWith(_query, 'INSTANCE');
       });
     });
   });
@@ -807,6 +817,33 @@ describe('InstancesList', () => {
       fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
 
       expect(screen.getByRole('button', { name: 'Save holdings UUIDs' })).toBeVisible();
+    });
+
+    describe('when exporting Holdings UUIDs', () => {
+      it('should call `getResourcesIds` with correct arguments', async () => {
+        const qindex = queryIndexes.QUERY_SEARCH;
+        const _query = 'keyword all test';
+
+        buildSearchQuery.mockReturnValue(() => _query);
+
+        await act(async () => renderInstancesList({
+          segment: 'holdings',
+          parentResources: {
+            ...resources,
+            query: {
+              ...query,
+              qindex,
+              query: _query,
+            },
+          },
+        }));
+
+        openActionMenu();
+
+        await act(async () => fireEvent.click(screen.getByRole('button', { name: 'Save holdings UUIDs' })));
+
+        expect(mockGetResourcesIds).toHaveBeenCalledWith(_query, 'HOLDINGS');
+      });
     });
   });
 

@@ -66,7 +66,7 @@ import {
   isInstanceShadowCopy,
   omitCurrentAndCentralTenants,
 } from './utils';
-import withLocation from './withLocation';
+import { withLocation } from './hocs';
 import {
   wrappingCell,
   emptyList,

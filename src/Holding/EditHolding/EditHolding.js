@@ -7,7 +7,7 @@ import { useStripes } from '@folio/stripes/core';
 import { LoadingView, ErrorModal } from '@folio/stripes/components';
 
 import {
-  useHolding,
+  useHoldingQuery,
   useInstanceQuery,
   useNumberGeneratorOptions,
 } from '../../common/hooks';
@@ -17,7 +17,7 @@ import {
   useHoldingMutation,
 } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
-import withLocation from '../../withLocation';
+import { withLocation } from '../../hocs';
 import { parseHttpError } from '../../utils';
 
 const EditHolding = ({
@@ -40,7 +40,7 @@ const EditHolding = ({
   const [httpError, setHttpError] = useState();
   const keepEditing = useRef(false);
   const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
-  const { holding, isFetching: isHoldingLoading, refetch: refetchHolding } = useHolding(holdingId);
+  const { holding, isFetching: isHoldingLoading, refetch: refetchHolding } = useHoldingQuery(holdingId);
   const { totalRecords: itemCount, isLoading: isItemsLoading } = useHoldingItemsQuery(holdingId, {
     searchParams: { limit: 1 },
   });
