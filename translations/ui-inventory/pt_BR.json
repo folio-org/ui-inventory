@@ -890,5 +890,9 @@
     "versionHistory.action.edited": "Editado",
     "versionHistory.action.removed": "Removido",
     "versionHistory.anonymousUser": "Usuário anônimo",
-    "numberGenerator.infoAdditional": "Configurações adicionais do gerador de números estão disponíveis em {serviceInteractionLink}. Em {numberGeneratorSequencesLink} as sequências podem ser definidas selecionando o gerador apropriado no menu suspenso."
+    "numberGenerator.infoAdditional": "Configurações adicionais do gerador de números estão disponíveis em {serviceInteractionLink}. Em {numberGeneratorSequencesLink} as sequências podem ser definidas selecionando o gerador apropriado no menu suspenso.",
+    "acq.vendorName": "Nome da organização",
+    "acq.acqMethod": "Método de aquisição",
+    "acq.averageCost": "Custo médio",
+    "acq.fundCode": "Código do fundo"
 }
