@@ -890,5 +890,9 @@
     "versionHistory.action.edited": "已編輯",
     "versionHistory.action.removed": "已移除",
     "versionHistory.anonymousUser": "匿名使用者",
-    "numberGenerator.infoAdditional": "Additional number generator settings are available under {serviceInteractionLink}. At {numberGeneratorSequencesLink} sequences can be defined by selecting the appropriate generator via the drop-down menu."
+    "numberGenerator.infoAdditional": "Additional number generator settings are available under {serviceInteractionLink}. At {numberGeneratorSequencesLink} sequences can be defined by selecting the appropriate generator via the drop-down menu.",
+    "acq.vendorName": "Organization name",
+    "acq.acqMethod": "Acquisition method",
+    "acq.averageCost": "Average cost",
+    "acq.fundCode": "Fund code"
 }

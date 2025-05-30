@@ -890,5 +890,9 @@
     "versionHistory.action.edited": "Edited",
     "versionHistory.action.removed": "Removed",
     "versionHistory.anonymousUser": "Anonymous user",
-    "numberGenerator.infoAdditional": "Weitere Einstellungen für Nummerngeneratoren sind unter {serviceInteractionLink} verfügbar. Unter {numberGeneratorSequencesLink} können Nummernkreise definiert werden, indem der entsprechende Generator über das Dropdown-Menü ausgewählt wird."
+    "numberGenerator.infoAdditional": "Weitere Einstellungen für Nummerngeneratoren sind unter {serviceInteractionLink} verfügbar. Unter {numberGeneratorSequencesLink} können Nummernkreise definiert werden, indem der entsprechende Generator über das Dropdown-Menü ausgewählt wird.",
+    "acq.vendorName": "Organization name",
+    "acq.acqMethod": "Acquisition method",
+    "acq.averageCost": "Average cost",
+    "acq.fundCode": "Fund code"
 }

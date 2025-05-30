@@ -17,12 +17,12 @@ import {
 
 import {
   useInstanceQuery,
-  useHolding,
+  useHoldingQuery,
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
 import {
-  useItem,
+  useItemQuery,
   useItemMutation,
 } from '../hooks';
 
@@ -41,8 +41,8 @@ const DuplicateItem = ({
   const location = useLocation();
 
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
-  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
-  const { isLoading: isItemLoading, item } = useItem(itemId);
+  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId);
+  const { isLoading: isItemLoading, item } = useItemQuery(itemId);
   const callout = useCallout();
   const stripes = useStripes();
 
