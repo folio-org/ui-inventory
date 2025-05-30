@@ -13,7 +13,7 @@ import {
 } from '@folio/stripes/components';
 
 import ItemBarcode from '../ItemsList/ItemBarcode';
-import { requestStatusFiltersString } from '../../views/ItemView';
+import { requestStatusFiltersString } from '../../Item/ViewItem/ViewItem';
 import { getDateWithTime } from '../../utils';
 
 export const ASC_DIRECTION = 'ascending';
