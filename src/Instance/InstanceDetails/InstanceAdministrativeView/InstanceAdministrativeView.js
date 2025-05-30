@@ -142,6 +142,13 @@ const InstanceAdministrativeView = ({
 
         <Col xs={3}>
           <KeyValue
+            label={<FormattedMessage id="ui-inventory.sourceUri" />}
+            value={<a href={instance.sourceUri} target="_blank" rel="noreferrer">{instance.sourceUri}</a>}
+          />
+        </Col>
+
+        <Col xs={3}>
+          <KeyValue
             label={<FormattedMessage id="ui-inventory.catalogedDate" />}
             value={checkIfElementIsEmpty(instance.catalogedDate)}
           />

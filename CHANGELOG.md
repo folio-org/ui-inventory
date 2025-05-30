@@ -9,6 +9,7 @@
 * Display additional order data on Inventory item record. Refs UIIN-3350.
 * Item -> ViewItem: refactor component. Refs UIIN-3267.
 * *BREAKING* Use `/search/resources/jobs` endpoints to get Instances and Holdings UUIDs. Refs UIIN-3366.
+* Add source URI field to instance full-record display and (disabled) to edit form. Fixes UIIN-3287.
 
 ## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.3...v13.0.4)
