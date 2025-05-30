@@ -46,7 +46,10 @@ jest.mock('@folio/stripes-components', () => ({
   useVersionHistory: () => ({ versions: [], isLoadMoreVisible: true }),
 }));
 
-jest.mock('./withLocation', () => jest.fn(c => c));
+jest.mock('./hocs', () => ({
+  ...jest.requireActual('./hocs'),
+  withLocation: jest.fn(c => c),
+}));
 
 jest.mock('./common', () => ({
   ...jest.requireActual('./common'),

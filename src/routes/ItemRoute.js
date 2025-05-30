@@ -5,7 +5,7 @@ import { flowRight } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
 
-import withLocation from '../withLocation';
+import { withLocation } from '../hocs';
 import { ViewItem } from '../Item';
 import { DataContext } from '../contexts';
 import { useSearchInstanceByIdQuery } from '../common';

@@ -27,3 +27,4 @@ export * from './useCallNumberTypesQuery';
 export * from './useAuditSettings';
 export * from './useCallNumberBrowseConfig';
 export * from './useSharedInstancesQuery';
+export * from './useResourcesIds';

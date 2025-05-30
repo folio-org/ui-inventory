@@ -1,5 +1,6 @@
 import React from 'react';
-import { useLastSearchTerms } from './hooks';
+
+import { useLastSearchTerms } from '../../hooks';
 
 const withLastSearchTerms = (WrappedComponent) => {
   const LastSearchTerms = (props) => {

@@ -34,7 +34,7 @@ import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
 import makeConnectedInstance from './ConnectedInstance';
-import withLocation from './withLocation';
+import { withLocation } from './hocs';
 import InstancePlugin from './components/InstancePlugin';
 import {
   isUserInConsortiumMode,
