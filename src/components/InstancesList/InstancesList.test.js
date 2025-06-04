@@ -1102,7 +1102,7 @@ describe('InstancesList', () => {
     openActionMenu();
 
     const checkboxes = within(document.getElementById('columns-menu-section')).getAllByText(
-      /Contributors|Date|Publishers|Relation/
+      /Contributors|Date|Publishers|Relation|Instance HRID/
     );
 
     expect(checkboxes[0]).toHaveTextContent('Contributors');
