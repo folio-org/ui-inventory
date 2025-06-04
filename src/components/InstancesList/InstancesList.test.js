@@ -1094,6 +1094,7 @@ describe('InstancesList', () => {
     expect(searchColumns[3]).toHaveTextContent('Publishers');
     expect(searchColumns[4]).toHaveTextContent('Date');
     expect(searchColumns[5]).toHaveTextContent('Relation');
+    expect(searchColumns[6]).toHaveTextContent('Instance HRID');
   });
 
   it('should render correct order of options in "Show columns" section of actions', async () => {
@@ -1101,12 +1102,13 @@ describe('InstancesList', () => {
     openActionMenu();
 
     const checkboxes = within(document.getElementById('columns-menu-section')).getAllByText(
-      /Contributors|Date|Publishers|Relation/
+      /Contributors|Date|Publishers|Relation|Instance HRID/
     );
 
     expect(checkboxes[0]).toHaveTextContent('Contributors');
     expect(checkboxes[1]).toHaveTextContent('Date');
     expect(checkboxes[2]).toHaveTextContent('Publishers');
     expect(checkboxes[3]).toHaveTextContent('Relation');
+    expect(checkboxes[4]).toHaveTextContent('Instance HRID');
   });
 });

@@ -19,6 +19,7 @@
   "instances.columns.contributorType": "Type",
   "instances.columns.relatorTerm": "Relator term",
   "instances.columns.classificationNumber": "Classification",
+  "instances.columns.instanceHRID": "Instance HRID",
   "instances.rows.select": "Select instance",
   "instances.showSelectedRecords": "Show selected records",
   "instances.selectedRecords": "Selected records",

@@ -112,6 +112,7 @@ const SEARCH_COLUMNS = {
   ...SEARCH_COLUMN_NAMES,
   SELECT: 'select',
   RELATION: 'relation',
+  HRID: 'hrid',
 };
 
 const TOGGLEABLE_COLUMNS = [
@@ -119,6 +120,7 @@ const TOGGLEABLE_COLUMNS = [
   SEARCH_COLUMNS.DATE,
   SEARCH_COLUMNS.PUBLISHERS,
   SEARCH_COLUMNS.RELATION,
+  SEARCH_COLUMNS.HRID,
 ];
 const NON_TOGGLEABLE_COLUMNS = [
   SEARCH_COLUMNS.SELECT,
@@ -130,6 +132,7 @@ const ALL_COLUMNS = Array.from(new Set([
   SEARCH_COLUMNS.PUBLISHERS,
   SEARCH_COLUMNS.DATE,
   SEARCH_COLUMNS.RELATION,
+  SEARCH_COLUMNS.HRID,
 ]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
 const SORTABLE_COLUMNS = Object.values(SORT_OPTIONS)
@@ -1022,6 +1025,7 @@ class InstancesList extends React.Component {
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
+      hrid: intl.formatMessage({ id: 'ui-inventory.instances.columns.instanceHRID' }),
     };
 
     return columnMapping;
