@@ -894,5 +894,6 @@
     "acq.vendorName": "Organization name",
     "acq.acqMethod": "Acquisition method",
     "acq.averageCost": "Average cost",
-    "acq.fundCode": "Fund code"
+    "acq.fundCode": "Fund code",
+    "sourceUri": "Instance source URI"
 }
