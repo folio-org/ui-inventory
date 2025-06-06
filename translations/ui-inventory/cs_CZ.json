@@ -894,5 +894,6 @@
     "acq.vendorName": "Název organizace",
     "acq.acqMethod": "Akviziční metoda",
     "acq.averageCost": "Průměrné náklady",
-    "acq.fundCode": "Kód prostředku"
+    "acq.fundCode": "Kód prostředku",
+    "sourceUri": "Zdroj titulu (URI)"
 }
