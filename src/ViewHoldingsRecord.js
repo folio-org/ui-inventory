@@ -415,12 +415,12 @@ class ViewHoldingsRecord extends React.Component {
       });
 
       this.goToInstanceView();
-    }).catch(() => {
+    }).catch((error) => {
       this.hideUpdateOwnershipModal();
 
       this.calloutRef.current.sendCallout({
         type: 'error',
-        message: <FormattedMessage id="ui-data-import.communicationProblem" />,
+        message: error?.message || <FormattedMessage id="ui-data-import.communicationProblem" />,
       });
     });
   }
