@@ -6,8 +6,17 @@ const useUpdateOwnershipMutation = path => {
   const ky = useOkapiKy();
 
   const { mutateAsync } = useMutation({
-    mutationFn: (body) => {
-      return ky.post(path, { json: body });
+    mutationFn: async (body) => {
+      try {
+        return await ky.post(path, { json: body });
+      } catch (error) {
+        if (error.response) {
+          const errorData = await error.response.json();
+          throw new Error(errorData.notUpdatedEntities?.[0]?.errorMessage || error.message);
+        }
+
+        throw error;
+      }
     },
   });
 
