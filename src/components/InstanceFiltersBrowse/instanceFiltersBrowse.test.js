@@ -138,7 +138,7 @@ describe('InstanceFiltersBrowse', () => {
   });
 
   describe('When callNumber browseType was selected', () => {
-    it.skip('should display "Held By" facet accordion', () => {
+    it('should display "Held By" facet accordion', () => {
       const { getByRole } = renderInstanceFilters({
         data,
         query: {
