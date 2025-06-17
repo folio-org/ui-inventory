@@ -5,14 +5,22 @@
 * Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
 * Update `orders` and `order-lines` interfaces to `13.0` and `4.0` accordingly. Refs UIIN-3345.
 * Remove extra record from Central tenant after adding `Receiving history` record in local member instance. Fixes UIIN-3211.
-* Instance/holdings/items form - moved `form` under `Pane` component to suppress form submitting on Enter key click event. Fixes UIIN-3377.
 * Display additional order data on Inventory item record. Refs UIIN-3350.
 * Item -> ViewItem: refactor component. Refs UIIN-3267.
 * *BREAKING* Use `/search/resources/jobs` endpoints to get Instances and Holdings UUIDs. Refs UIIN-3366.
 * Add source URI field to instance full-record display and (disabled) to edit form. Fixes UIIN-3287.
 * Adding HRID to the Inventory results list & show columns options. Refs UIIN-1262.
 * Display more detailed error message when updating ownership for holdings fails. Refs UIIN-3339.
+
+## [13.0.6](https://github.com/folio-org/ui-inventory/tree/v13.0.6) (2025-06-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.5...v13.0.6)
+
 * ECS | Restore Held by Facet in Call number Browse. Refs UIIN-3414.
+
+## [13.0.5](https://github.com/folio-org/ui-inventory/tree/v13.0.5) (2025-05-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.4...v13.0.5)
+
+* Instance/holdings/items form - moved `form` under `Pane` component to suppress form submitting on Enter key click event. Fixes UIIN-3377.
 
 ## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.3...v13.0.4)
