@@ -150,7 +150,13 @@ const ViewSource = ({
 
     const { okapi: { tenant, token, locale } } = stripes;
 
-    mutator.marcRecord.GET({ headers: getHeaders(tenantId ?? tenant, token, locale) })
+    // MARC Holdings doesn't support shared records yet
+    // so we should always request MARC Holdings records from a current tenant
+    const paramsForMarcSource = marcType === MARC_TYPES.HOLDINGS
+      ? null
+      : { headers: getHeaders(tenantId ?? tenant, token, locale) };
+
+    mutator.marcRecord.GET(paramsForMarcSource)
       .then((marcResponse) => {
         setMarc(marcResponse);
       })
