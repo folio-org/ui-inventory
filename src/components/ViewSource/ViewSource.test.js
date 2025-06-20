@@ -155,6 +155,19 @@ describe('ViewSource', () => {
     it('should set correct header to request', () => {
       expect(mutator.marcRecord.GET).toHaveBeenCalledWith({ headers: expect.objectContaining({ 'X-Okapi-Tenant': 'tenantId' }) });
     });
+
+    describe('when marc type is Holdings', () => {
+      beforeEach(async () => {
+        mutator.marcRecord.GET.mockClear();
+        await act(async () => {
+          await renderWithIntl(getViewSource({ tenantId: 'tenantId', marcType: MARC_TYPES.HOLDINGS }), translations);
+        });
+      });
+
+      it('should not set provided tenantId', () => {
+        expect(mutator.marcRecord.GET).not.toHaveBeenCalledWith({ headers: expect.objectContaining({ 'X-Okapi-Tenant': 'tenantId' }) });
+      });
+    });
   });
 
   describe('when Instance is shared', () => {
