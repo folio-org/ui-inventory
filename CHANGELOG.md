@@ -1,10 +1,14 @@
 # Change history for ui-inventory
 
+## [13.0.7](https://github.com/folio-org/ui-inventory/tree/v13.0.7) (2025-06-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.6...v13.0.7)
+
+* Use current tenant for MARC Holdings requests in View Source. Refs UIIN-3423.
+
 ## [13.0.6](https://github.com/folio-org/ui-inventory/tree/v13.0.6) (2025-06-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.5...v13.0.6)
 
 * ECS | Restore Held by Facet in Call number Browse. Refs UIIN-3414.
-* Use current tenant for MARC Holdings requests in View Source. Refs UIIN-3423.
 
 ## [13.0.5](https://github.com/folio-org/ui-inventory/tree/v13.0.5) (2025-05-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.4...v13.0.5)
