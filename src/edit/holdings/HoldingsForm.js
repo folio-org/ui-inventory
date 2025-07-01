@@ -53,6 +53,7 @@ import {
   HoldingsStatementForIndexesFields,
   NoteFields,
   ReceivingHistoryFields,
+  AdditionalCallNumbersFields
 } from './repeatableFields';
 import StatisticalCodeFields from '../statisticalCodeFields';
 
@@ -78,6 +79,20 @@ function validate(values) {
       errors[listProps.list] = listErrors;
     }
   });
+
+  if (values.additionalCallNumbers && values.additionalCallNumbers.length > 0) {
+    const additionalCallNumbersErrors = values.additionalCallNumbers.map(callNumber => {
+      const error = {};
+      if (!callNumber.callNumber || callNumber.callNumber.trim() === '') {
+        error.callNumber = <FormattedMessage id="ui-inventory.additionalCallNumberRequired" />;
+      }
+      return Object.keys(error).length ? error : undefined;
+    });
+
+    if (additionalCallNumbersErrors.some(error => error !== undefined)) {
+      errors.additionalCallNumbers = additionalCallNumbersErrors;
+    }
+  }
 
   return errors;
 }
@@ -623,6 +638,7 @@ class HoldingsForm extends React.Component {
                         />
                       </Col>
                     </Row>
+                    <AdditionalCallNumbersFields callNumberTypeOptions={callNumberTypeOptions} isFieldBlocked={this.isFieldBlocked} />
                   </Accordion>
                   <Accordion
                     id="accordion03"

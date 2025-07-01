@@ -729,6 +729,7 @@ class ViewHoldingsRecord extends React.Component {
       callNumberPrefix: get(holdingsRecord, ['callNumberPrefix'], '-'),
       callNumber: get(holdingsRecord, ['callNumber'], '-'),
       callNumberSuffix: get(holdingsRecord, ['callNumberSuffix'], '-'),
+      additionalCallNumbers: get(holdingsRecord, ['additionalCallNumbers'], []),
     };
 
     const effectiveLocationDisplay = (
@@ -1215,6 +1216,63 @@ class ViewHoldingsRecord extends React.Component {
                                 label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
                                 value={checkIfElementIsEmpty(locationAccordion.callNumberSuffix)}
                               />
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col xs={12}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
+                              >
+                                {locationAccordion.additionalCallNumbers.length > 0 ? (
+                                  <div>
+                                    {locationAccordion.additionalCallNumbers.map((additionalCallNumber, index) => (
+                                      <div
+                                        key={`additional-callnumber-${index}`}
+                                        style={{ marginBottom: '10px' }}
+                                      >
+                                        <Row>
+                                          <Col xs={3}>
+                                            <KeyValue
+                                              label={<FormattedMessage
+                                                id="ui-inventory.callNumberType"
+                                              />}
+                                              value={this.refLookup(referenceTables.callNumberTypes, additionalCallNumber.callNumberTypeId)?.name || '-'}
+                                            />
+                                          </Col>
+                                          <Col xs={3}>
+                                            <KeyValue
+                                              label={<FormattedMessage
+                                                id="ui-inventory.callNumberPrefix"
+                                              />}
+                                              value={additionalCallNumber.callNumberPrefix || '-'}
+                                            />
+                                          </Col>
+                                          <Col xs={3}>
+                                            <KeyValue
+                                              label={<FormattedMessage
+                                                id="ui-inventory.callNumber"
+                                              />}
+                                              value={additionalCallNumber.callNumber || '-'}
+                                            />
+                                          </Col>
+                                          <Col xs={3}>
+                                            <KeyValue
+                                              label={<FormattedMessage
+                                                id="ui-inventory.callNumberSuffix"
+                                              />}
+                                              value={additionalCallNumber.callNumberSuffix || '-'}
+                                            />
+                                          </Col>
+                                        </Row>
+                                      </div>
+                                    ))}
+                                  </div>
+                                ) : (
+                                  <FormattedMessage
+                                    id="ui-inventory.noAdditionalCallNumbers"
+                                  />
+                                )}
+                              </KeyValue>
                             </Col>
                           </Row>
                         </Accordion>
