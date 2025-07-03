@@ -1,5 +1,4 @@
 import React, {
-  useEffect,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -180,7 +179,7 @@ const InventoryRouting = (props) => {
                   component={InstanceMarcRoute}
                 />
                 <Route
-                  path={`${path}/edit/:id/instance`}
+                  path={`${path}/instance/edit/:id`}
                   component={InstanceEditRoute}
                 />
                 <Route
