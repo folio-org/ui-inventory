@@ -179,7 +179,7 @@ const useItemDetailsData = ({
         {`${staffMember.personal.lastName}, ${staffMember.personal.firstName} ${staffMember.personal.middleName || ''}`}
       </Link>
     )
-  }), [item, staffMember, servicePoints.length]);
+  }), [item, staffMember, servicePoints]);
 
   const initialAccordionsState = {
     acc01: !areAllFieldsEmpty(values(administrativeData)),
