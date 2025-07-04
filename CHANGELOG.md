@@ -16,6 +16,7 @@
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.6...v13.0.7)
 
 * Use current tenant for MARC Holdings requests in View Source. Refs UIIN-3423.
+* Display `Service point` in the `Circulation history` section in the item view page after check in action. Fixes UIIN-3417.
 
 ## [13.0.6](https://github.com/folio-org/ui-inventory/tree/v13.0.6) (2025-06-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.5...v13.0.6)
