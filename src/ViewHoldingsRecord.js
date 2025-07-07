@@ -1236,7 +1236,7 @@ class ViewHoldingsRecord extends React.Component {
                                               label={<FormattedMessage
                                                 id="ui-inventory.callNumberType"
                                               />}
-                                              value={this.refLookup(referenceTables.callNumberTypes, additionalCallNumber.callNumberTypeId)?.name || '-'}
+                                              value={checkIfElementIsEmpty(this.refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)).name}
                                             />
                                           </Col>
                                           <Col xs={3}>
@@ -1244,7 +1244,7 @@ class ViewHoldingsRecord extends React.Component {
                                               label={<FormattedMessage
                                                 id="ui-inventory.callNumberPrefix"
                                               />}
-                                              value={additionalCallNumber.callNumberPrefix || '-'}
+                                              value={checkIfElementIsEmpty(additionalCallNumber.prefix)}
                                             />
                                           </Col>
                                           <Col xs={3}>
@@ -1252,7 +1252,7 @@ class ViewHoldingsRecord extends React.Component {
                                               label={<FormattedMessage
                                                 id="ui-inventory.callNumber"
                                               />}
-                                              value={additionalCallNumber.callNumber || '-'}
+                                              value={checkIfElementIsEmpty(additionalCallNumber.callNumber)}
                                             />
                                           </Col>
                                           <Col xs={3}>
@@ -1260,7 +1260,7 @@ class ViewHoldingsRecord extends React.Component {
                                               label={<FormattedMessage
                                                 id="ui-inventory.callNumberSuffix"
                                               />}
-                                              value={additionalCallNumber.callNumberSuffix || '-'}
+                                              value={checkIfElementIsEmpty(additionalCallNumber.suffix)}
                                             />
                                           </Col>
                                         </Row>

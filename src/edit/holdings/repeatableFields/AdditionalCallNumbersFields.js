@@ -28,12 +28,12 @@ const AdditionalCallNumbersFields = ({
           {([label]) => (
             <Field
               label={<FormattedMessage id="ui-inventory.callNumberType" />}
-              name={`${name}.callNumberTypeId`}
-              id={`additem_callnumbertype_${index}`}
+              name={`${name}.typeId`}
+              id={`additem_typeId_${index}`}
               component={Select}
               fullWidth
               dataOptions={[{ label, value: '' }, ...callNumberTypeOptions]}
-              disabled={!canEdit || isFieldBlocked('callNumberTypeId')}
+              disabled={!canEdit || isFieldBlocked('typeId')}
             />
           )}
         </FormattedMessage>
@@ -41,14 +41,14 @@ const AdditionalCallNumbersFields = ({
       <Col sm={2}>
         <Field
           label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
-          name={`${name}.callNumberPrefix`}
-          id={`additem_callnumberprefix_${index}`}
+          name={`${name}.prefix`}
+          id={`additem_prefix_${index}`}
           component={TextArea}
           rows={1}
           fullWidth
           format={v => v?.trim()}
           formatOnBlur
-          disabled={!canEdit || isFieldBlocked('callNumberPrefix')}
+          disabled={!canEdit || isFieldBlocked('prefix')}
         />
       </Col>
       <Col sm={2}>
@@ -67,14 +67,14 @@ const AdditionalCallNumbersFields = ({
       <Col sm={2}>
         <Field
           label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
-          name={`${name}.callNumberSuffix`}
-          id={`additem_callnumbersuffix_${index}`}
+          name={`${name}.suffix`}
+          id={`additem_suffix_${index}`}
           component={TextArea}
           rows={1}
           fullWidth
           format={v => v?.trim()}
           formatOnBlur
-          disabled={!canEdit || isFieldBlocked('callNumberSuffix')}
+          disabled={!canEdit || isFieldBlocked('suffix')}
         />
       </Col>
       {canDelete && (
