@@ -14,6 +14,7 @@
 * Display more detailed error message when updating ownership for holdings fails. Refs UIIN-3339.
 * ECS | Restore Held by Facet in Call number Browse. Refs UIIN-3414.
 * Use current tenant for MARC Holdings requests in View Source. Refs UIIN-3423.
+* Display `Service point` in the `Circulation history` section in the item view page after check in action. Fixes UIIN-3417.
 * *BREAKING* Bump up okapiInterface version of linked-data to 2.0. Refs UIIN-3428.
 
 ## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)
