@@ -58,10 +58,10 @@ describe('AdditionalCallNumbersFields', () => {
   it('should render fields with initial values', () => {
     const initialValues = {
       additionalCallNumbers: [{
-        callNumberTypeId: '1',
-        callNumberPrefix: 'Prefix1',
+        typeId: '1',
+        prefix: 'Prefix1',
         callNumber: 'CN1',
-        callNumberSuffix: 'Suffix1'
+        suffix: 'Suffix1'
       }]
     };
 
@@ -87,10 +87,10 @@ describe('AdditionalCallNumbersFields', () => {
   it('should delete call number fields when clicking delete button', () => {
     const initialValues = {
       additionalCallNumbers: [{
-        callNumberTypeId: '1',
-        callNumberPrefix: 'Prefix1',
+        typeId: '1',
+        prefix: 'Prefix1',
         callNumber: 'CN1',
-        callNumberSuffix: 'Suffix1'
+        suffix: 'Suffix1'
       }]
     };
 
@@ -109,10 +109,10 @@ describe('AdditionalCallNumbersFields', () => {
       canEdit: false,
       initialValues: {
         additionalCallNumbers: [{
-          callNumberTypeId: '1',
-          callNumberPrefix: 'Prefix1',
+          typeId: '1',
+          prefix: 'Prefix1',
           callNumber: 'CN1',
-          callNumberSuffix: 'Suffix1'
+          suffix: 'Suffix1'
         }]
       }
     });
@@ -133,7 +133,7 @@ describe('AdditionalCallNumbersFields', () => {
       canDelete: false,
       initialValues: {
         additionalCallNumbers: [{
-          callNumberTypeId: '1',
+          typeId: '1',
           callNumber: 'CN1',
         }]
       }
@@ -149,7 +149,7 @@ describe('AdditionalCallNumbersFields', () => {
       isFieldBlocked,
       initialValues: {
         additionalCallNumbers: [{
-          callNumberTypeId: '1',
+          typeId: '1',
           callNumber: 'CN1',
         }]
       }
