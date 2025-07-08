@@ -895,5 +895,6 @@
     "acq.acqMethod": "采购方式",
     "acq.averageCost": "平均费用",
     "acq.fundCode": "经费代码",
-    "sourceUri": "实例来源URI"
+    "sourceUri": "实例来源URI",
+    "instances.columns.instanceHRID": "Instance HRID"
 }
