@@ -140,7 +140,7 @@ const ItemDetailsContent = ({
             referenceTables={referenceTables}
             refLookup={refLookup}
           />
-          <ItemData itemData={itemData} />
+          <ItemData itemData={itemData} refLookup={refLookup} referenceTables={referenceTables} />
           <EnumerationData enumerationData={enumerationData} />
           <Condition condition={condition} />
           {isTagsEnabled && (

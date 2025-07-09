@@ -7,10 +7,12 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { StripesContext } from '@folio/stripes/core';
 
-
+import arrayMutators from 'final-form-arrays';
+import stripesFinalForm from '@folio/stripes/final-form';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import {
   NUMBER_GENERATOR_OPTIONS_OFF,
   NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
@@ -50,6 +52,7 @@ const mockInstance = { id: 'instanceId' };
 const mockReferenceTables = {
   locationsById: [{ id: 'permanentLocationId' }],
   electronicAccessRelationships: [],
+
 };
 const mockStripes = {
   connect: jest.fn(),
@@ -241,6 +244,236 @@ describe('ItemForm', () => {
       expect(getAllByRole('button', { name: 'Generate accession and call numbers' })).toHaveLength(2);
       expect(queryByRole('button', { name: 'Generate accession number' })).not.toBeInTheDocument();
       expect(queryByRole('button', { name: 'Generate call number' })).not.toBeInTheDocument();
+    });
+  });
+  describe('Render additional call numbers', () => {
+    it('should render additional call numbers', () => {
+      const initialValues = {
+        ...mockInitialValues,
+        additionalCallNumbers: [{
+          callNumber: 'cn1',
+          prefix: 'prefix1',
+          suffix: 'suffix1',
+          typeId: '1',
+        }],
+      };
+      const referenceTables = {
+        ...mockReferenceTables,
+        callNumberTypes: [{ id: '1', name: 'Library of Congress classification' }],
+      };
+      const { getByText, getAllByText, queryByText } = renderItemForm({
+        initialValues,
+        referenceTables,
+      });
+
+      expect(getByText('Additional call numbers')).toBeInTheDocument();
+      expect(queryByText('No additional call numbers')).not.toBeInTheDocument();
+      expect(getByText('prefix1')).toBeInTheDocument();
+      expect(getByText('suffix1')).toBeInTheDocument();
+      expect(getByText('cn1')).toBeInTheDocument();
+      expect(getAllByText('Library of Congress classification').length).toBe(2);
+    });
+  });
+  describe('Form validation', () => {
+    it('should display hint, when no call number is added', () => {
+      const { getAllByText, getByRole } = renderItemForm();
+      fireEvent.click(getByRole('button', { name: 'Add additional call number' }));
+      fireEvent.click(getByRole('button', { name: 'Save & close' }));
+      expect(getAllByText('Please select to continue').length).toBe(3);
+    });
+  });
+
+  describe('Swap primary and additional call number', () => {
+    it('should swap primary and additional call number', async () => {
+      const mockChange = jest.fn();
+      const mockGetFieldState = jest.fn((fieldName) => {
+        const values = {
+          'itemLevelCallNumber': { value: 'itemLevelCallNumber' },
+          'itemLevelCallNumberPrefix': { value: 'itemLevelCallNumberPrefix' },
+          'itemLevelCallNumberSuffix': { value: 'itemLevelCallNumberSuffix' },
+          'itemLevelCallNumberTypeId': { value: '2' },
+          'additionalCallNumbers': {
+            value: [{
+              callNumber: 'cn1',
+              prefix: 'prefix1',
+              suffix: 'suffix1',
+              typeId: '1'
+            }]
+          }
+        };
+        return values[fieldName];
+      });
+
+      const ItemFormWithFinalForm = stripesFinalForm({
+        navigationCheck: true,
+        mutators: { ...arrayMutators }
+      })(ItemForm);
+
+      renderItemForm({
+        ...mockInitialValues,
+        form: {
+          change: mockChange,
+          getFieldState: mockGetFieldState
+        },
+        initialValues: {
+          ...mockInitialValues,
+          itemLevelCallNumber: 'itemLevelCallNumber',
+          itemLevelCallNumberPrefix: 'itemLevelCallNumberPrefix',
+          itemLevelCallNumberSuffix: 'itemLevelCallNumberSuffix',
+          itemLevelCallNumberTypeId: '2',
+          additionalCallNumbers: [{
+            callNumber: 'cn1',
+            prefix: 'prefix1',
+            suffix: 'suffix1',
+            typeId: '1'
+          }]
+        },
+        referenceTables: {
+          ...mockReferenceTables,
+          callNumberTypes: [
+            { id: '1', name: 'Library of Congress' },
+            { id: '2', name: 'Dewey' },
+          ]
+        },
+        component: ItemFormWithFinalForm
+      });
+
+      const swapButton = screen.getByRole('button', { name: /Change with primary call number/i });
+      userEvent.click(swapButton);
+
+      waitFor(() => {
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumber', 'cn1');
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'prefix1');
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberSuffix', 'suffix1');
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberTypeId', '1');
+        expect(mockChange).toHaveBeenCalledWith('additionalCallNumbers', [{
+          callNumber: 'itemLevelCallNumber',
+          prefix: 'itemLevelCallNumberPrefix',
+          suffix: 'itemLevelCallNumberSuffix',
+          typeId: '2'
+        }]);
+      });
+    });
+
+    it('should swap primary and additional call number with the correct entry in array', async () => {
+      const mockChange = jest.fn();
+      const mockGetFieldState = jest.fn((fieldName) => {
+        const values = {
+          'itemLevelCallNumber': { value: 'itemLevelCallNumber' },
+          'itemLevelCallNumberPrefix': { value: 'itemLevelCallNumberPrefix' },
+          'itemLevelCallNumberSuffix': { value: 'itemLevelCallNumberSuffix' },
+          'itemLevelCallNumberTypeId': { value: '2' },
+          'additionalCallNumbers':
+            [
+              {
+                callNumber: 'cn1',
+                prefix: 'prefix1',
+                suffix: 'suffix1',
+                typeId: '1'
+              },
+              {
+                callNumber: 'cn2',
+                prefix: 'prefix2',
+                suffix: 'suffix2',
+                typeId: '3'
+              }
+            ]
+        };
+        return values[fieldName];
+      });
+
+      const ItemFormWithFinalForm = stripesFinalForm({
+        navigationCheck: true,
+        mutators: { ...arrayMutators }
+      })(ItemForm);
+
+      renderItemForm({
+        ...mockInitialValues,
+        form: {
+          change: mockChange,
+          getFieldState: mockGetFieldState
+        },
+        initialValues: {
+          ...mockInitialValues,
+          itemLevelCallNumber: 'itemLevelCallNumber',
+          itemLevelCallNumberPrefix: 'itemLevelCallNumberPrefix',
+          itemLevelCallNumberSuffix: 'itemLevelCallNumberSuffix',
+          itemLevelCallNumberTypeId: '2',
+          additionalCallNumbers: [
+            {
+              callNumber: 'cn1',
+              prefix: 'prefix1',
+              suffix: 'suffix1',
+              typeId: '1'
+            },
+            {
+              callNumber: 'cn2',
+              prefix: 'prefix2',
+              suffix: 'suffix2',
+              typeId: '3'
+            }
+          ]
+        },
+        referenceTables: {
+          ...mockReferenceTables,
+          callNumberTypes: [
+            { id: '1', name: 'Library of Congress' },
+            { id: '2', name: 'Dewey' },
+            { id: '3', name: 'Local' }
+          ]
+        },
+        component: ItemFormWithFinalForm
+      });
+
+      const swapButtons = screen.getAllByRole('button', { name: /Change with primary call number/i });
+      userEvent.click(swapButtons[1]);
+
+      waitFor(() => {
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumber', 'cn2');
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'prefix2');
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberSuffix', 'suffix2');
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberTypeId', '3');
+
+        expect(mockChange).toHaveBeenCalledWith('additionalCallNumbers', [
+          {
+            callNumber: 'cn1',
+            prefix: 'prefix1',
+            suffix: 'suffix1',
+            typeId: '1'
+          },
+          {
+            callNumber: 'itemLevelCallNumber',
+            prefix: 'itemLevelCallNumberPrefix',
+            suffix: 'itemLevelCallNumberSuffix',
+            typeId: '2'
+          }
+        ]);
+      });
+
+      // switch back
+      userEvent.click(swapButtons[1]);
+
+      waitFor(() => {
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumber', 'itemLevelCallNumber');
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'itemLevelCallNumberPrefix');
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberSuffix', 'itemLevelCallNumberSuffix');
+        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberTypeId', '2');
+
+        expect(mockChange).toHaveBeenCalledWith('additionalCallNumbers', [
+          {
+            callNumber: 'cn1',
+            prefix: 'prefix1',
+            suffix: 'suffix1',
+            typeId: '1'
+          },
+          {
+            callNumber: 'cn2',
+            prefix: 'prefix2',
+            suffix: 'suffix2',
+            typeId: '3'
+          }
+        ]);
+      });
     });
   });
 });
