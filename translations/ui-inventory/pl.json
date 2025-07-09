@@ -895,5 +895,6 @@
     "acq.acqMethod": "Sposób nabycia",
     "acq.averageCost": "Średni koszt",
     "acq.fundCode": "Kod funduszu",
-    "sourceUri": "Instance source URI"
+    "sourceUri": "Instance source URI",
+    "instances.columns.instanceHRID": "HRID instancji"
 }
