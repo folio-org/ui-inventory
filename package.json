@@ -115,7 +115,7 @@
       "organizations.organizations": "1.0",
       "pieces": "3.0",
       "titles": "1.2",
-      "linked-data": "1.0"
+      "linked-data": "2.0"
     },
     "permissionSets": [
       {
