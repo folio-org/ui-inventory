@@ -10,6 +10,7 @@ import { getIsVersionHistoryEnabled } from '../../../utils';
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: jest.fn().mockReturnValue({ state: {} }),
+  useParams: () => ({ id: 'instanceId' }),
 }));
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),

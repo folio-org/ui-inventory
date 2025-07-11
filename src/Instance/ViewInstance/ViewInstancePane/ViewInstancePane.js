@@ -208,6 +208,7 @@ const ViewInstancePane = ({
 };
 
 ViewInstancePane.propTypes = {
+  id: PropTypes.string,
   instance: PropTypes.object,
   isShared: PropTypes.bool,
   tenantId: PropTypes.string.isRequired,

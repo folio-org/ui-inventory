@@ -61,6 +61,7 @@ InstanceNewHolding.propTypes = {
   location: PropTypes.object.isRequired,
   instance: PropTypes.object,
   tenantId: PropTypes.string,
+  isVisible: PropTypes.bool,
 };
 
 export default withRouter(InstanceNewHolding);

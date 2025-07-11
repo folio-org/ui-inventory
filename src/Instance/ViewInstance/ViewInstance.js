@@ -236,7 +236,7 @@ const ViewInstance = (props) => {
         type: 'success',
         message: <FormattedMessage id="ui-inventory.setForDeletion.toast.successful" values={{ instanceTitle: instance?.title }} />,
       });
-    } catch (err) {
+    } catch {
       setIsSetForDeletionModalOpen(false);
 
       callout.sendCallout({

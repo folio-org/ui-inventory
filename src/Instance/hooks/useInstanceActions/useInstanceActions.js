@@ -143,7 +143,7 @@ const useInstanceActions = ({
           values={{ csvFileName, marcFileName }}
         />,
       });
-    } catch (e) {
+    } catch {
       callout.sendCallout({
         type: 'error',
         message: <FormattedMessage id="ui-inventory.communicationProblem" />,

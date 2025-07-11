@@ -44,7 +44,7 @@ describe('useSharedInstancesQuery', () => {
       },
     });
 
-    const { result } = renderHook(() => useSharedInstancesQuery(), { wrapper });
+    const { result } = renderHook(() => useSharedInstancesQuery({ searchParams: { instanceIdentifier: 'id-1' } }), { wrapper });
 
     await act(() => !result.current.isLoading);
 

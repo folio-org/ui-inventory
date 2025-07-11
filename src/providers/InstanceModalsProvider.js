@@ -1,6 +1,6 @@
 import {
-  useMemo,
   useState,
+  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -17,7 +17,7 @@ const InstanceModalsProvider = ({ children }) => {
   const [isCopyrightModalOpen, setIsCopyrightModalOpen] = useState(false);
   const [isItemsMovement, setIsItemsMovement] = useState(false);
 
-  const value = {
+  const value = useMemo(() => ({
     isImportRecordModalOpen,
     isNewOrderModalOpen,
     isShareLocalInstanceModalOpen,
@@ -37,7 +37,26 @@ const InstanceModalsProvider = ({ children }) => {
     setIsFindInstancePluginOpen,
     setIsCopyrightModalOpen,
     setIsItemsMovement,
-  };
+  }), [
+    isImportRecordModalOpen,
+    isNewOrderModalOpen,
+    isShareLocalInstanceModalOpen,
+    isUnlinkAuthoritiesModalOpen,
+    isSetForDeletionModalOpen,
+    isShareButtonDisabled,
+    isFindInstancePluginOpen,
+    isCopyrightModalOpen,
+    isItemsMovement,
+    setIsImportRecordModalOpen,
+    setIsNewOrderModalOpen,
+    setIsShareLocalInstanceModalOpen,
+    setIsUnlinkAuthoritiesModalOpen,
+    setIsSetForDeletionModalOpen,
+    setIsShareButtonDisabled,
+    setIsFindInstancePluginOpen,
+    setIsCopyrightModalOpen,
+    setIsItemsMovement,
+  ]);
 
   return (
     <InstanceModalsContext.Provider value={value}>
