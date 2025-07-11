@@ -639,4 +639,99 @@ describe('ViewHoldingsRecord actions', () => {
       expect(screen.queryByRole('button', { name: /version history/i })).not.toBeInTheDocument();
     });
   });
+
+  describe('Additional Call Numbers', () => {
+    it('should display additional call numbers when present in resources', async () => {
+      const resourcesWithAdditionalCallNumbers = {
+        ...defaultProps.resources,
+        holdingsRecords: {
+          records: [{
+            ...defaultProps.resources.holdingsRecords.records[0],
+            additionalCallNumbers:
+          [{ callNumber: 'CN1' }]
+          }]
+        }
+      };
+
+      renderViewHoldingsRecord({
+        resources: resourcesWithAdditionalCallNumbers
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+        expect(screen.getByText('CN1')).toBeInTheDocument();
+      });
+    });
+
+    it('should display both "additionalCallNumbers" header and "noAdditionalCallNumbers" message when empty', async () => {
+      const resourcesWithNoAdditionalCallNumbers = {
+        ...defaultProps.resources,
+        holdingsRecords: {
+          records: [{
+            ...defaultProps.resources.holdingsRecords.records[0],
+            additionalCallNumbers: []
+          }]
+        }
+      };
+
+      renderViewHoldingsRecord({
+        resources: resourcesWithNoAdditionalCallNumbers,
+      });
+      await waitFor(() => {
+        const headerElement = screen.getByText('Additional call numbers');
+        const noCallNumbersMessage = screen.getByText('No additional call numbers');
+
+        expect(headerElement).toBeInTheDocument();
+        expect(noCallNumbersMessage).toBeInTheDocument();
+      });
+    });
+
+    it('should display multiple additional call numbers when present', async () => {
+      const resourcesWithMultipleCallNumbers = {
+        ...defaultProps.resources,
+        referenceTables: {
+          ...defaultProps.referenceTables,
+          callNumberTypes: [
+            { id: '1', name: 'Type 1' },
+            { id: '2', name: 'Type 2' }
+          ],
+        },
+        holdingsRecords: {
+          records: [{
+            ...defaultProps.resources.holdingsRecords.records[0],
+            additionalCallNumbers: [
+              { callNumber: 'CN1',
+                prefix: 'prefix1',
+                suffix: 'suffix1',
+                typeId: '1' },
+              { callNumber: 'CN2' },
+              { callNumber: 'CN3' }
+            ]
+          }]
+        }
+      };
+
+      renderViewHoldingsRecord({
+        resources: resourcesWithMultipleCallNumbers,
+        referenceTables: {
+          ...defaultProps.referenceTables,
+          callNumberTypes: [
+            { id: '1', name: 'Type 1' },
+            { id: '2', name: 'Type 2' }
+          ]
+        }
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText('CN1')).toBeInTheDocument();
+        expect(screen.getByText('prefix1')).toBeInTheDocument();
+        expect(screen.getByText('suffix1')).toBeInTheDocument();
+        expect(screen.getByText('Type 1')).toBeInTheDocument();
+        expect(screen.getByText('CN2')).toBeInTheDocument();
+        expect(screen.getByText('CN3')).toBeInTheDocument();
+      });
+    });
+  });
 });
+
+

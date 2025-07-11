@@ -44,7 +44,7 @@ const mockOnCancel = jest.fn();
 const mockInstance = {};
 const mockReferenceTables = {
   holdingsNoteTypes: [{ id: 'holdingsNoteTypeId', name: 'holdingsNoteTypeId' }],
-  callNumberTypes: [{ id: 'callNumberTypeId', name: 'callNumberTypeId' }],
+  callNumberTypes: [{ id: 'callNumberTypeId', name: 'callNumberTypeId' }, { id: 'callNumberTypeId2', name: 'callNumberTypeId2' }],
   holdingsTypes: [{ id: 'holdingsTypeId', name: 'holdingsTypeId' }],
   holdingsSources: [{ id: 'MARC', name: 'MARC' }],
   holdingsSourcesByName: { MARC: { name: 'MARC' } },
@@ -243,6 +243,77 @@ describe('HoldingsForm', () => {
 
       expect(queryByRole('button', { name: 'Generate call number' })).not.toBeInTheDocument();
       expect(getByRole('textbox', { name: 'Call number' })).toBeEnabled();
+    });
+  });
+
+  describe('Additional Call Numbers', () => {
+    it('should render with initial additional call numbers', () => {
+      const initialValues = {
+        ...mockInitialValues,
+        additionalCallNumbers: [{
+          typeId: 'callNumberTypeId2',
+          prefix: 'Prefix1',
+          callNumber: 'CN1',
+          suffix: 'Suffix1'
+        }]
+      };
+
+      const { getByDisplayValue } = renderHoldingsForm({
+        initialValues
+      });
+
+      expect(getByDisplayValue('Prefix1')).toBeInTheDocument();
+      expect(getByDisplayValue('CN1')).toBeInTheDocument();
+      expect(getByDisplayValue('Suffix1')).toBeInTheDocument();
+      expect(getByDisplayValue('callNumberTypeId2')).toBeInTheDocument();
+    });
+
+    it('should render additional call numbers section', () => {
+      const { getByText } = renderHoldingsForm();
+
+      expect(getByText('Additional call numbers')).toBeInTheDocument();
+    });
+
+    it('should render add button for additional call numbers', () => {
+      const { getByRole } = renderHoldingsForm();
+
+      expect(getByRole('button', { name: 'Add additional call number' })).toBeInTheDocument();
+    });
+
+    it('should add new additional call number fields when clicking add button', () => {
+      const { getByRole, getAllByLabelText } = renderHoldingsForm();
+
+      fireEvent.click(getByRole('button', { name: 'Add additional call number' }));
+
+      expect(getAllByLabelText('Call number type')).toHaveLength(2); // One for main call number, one for additional
+      expect(getAllByLabelText('Call number')).toHaveLength(2);
+      expect(getAllByLabelText('Call number prefix')).toHaveLength(2);
+      expect(getAllByLabelText('Call number suffix')).toHaveLength(2);
+    });
+
+    it('should remove additional call number fields when clicking delete button', () => {
+      const { getByRole, getAllByLabelText, getAllByRole } = renderHoldingsForm();
+
+      // Add a new call number field
+      fireEvent.click(getByRole('button', { name: 'Add additional call number' }));
+
+      // Click delete button
+      fireEvent.click(getAllByRole('button', { name: 'Delete' })[0]);
+
+      // Should only have the main call number fields left
+      expect(getAllByLabelText('Call number type')).toHaveLength(1);
+      expect(getAllByLabelText('Call number')).toHaveLength(1);
+      expect(getAllByLabelText('Call number prefix')).toHaveLength(1);
+      expect(getAllByLabelText('Call number suffix')).toHaveLength(1);
+    });
+  });
+  describe('form validation', () => {
+    it('should show error when call number is required but empty', async () => {
+      const { getByRole, getByText } = renderHoldingsForm();
+
+      fireEvent.click(getByRole('button', { name: 'Add additional call number' }));
+      fireEvent.click(getByRole('button', { name: 'Save & close' }));
+      expect(getByText('Please add a call number')).toBeInTheDocument();
     });
   });
 });
