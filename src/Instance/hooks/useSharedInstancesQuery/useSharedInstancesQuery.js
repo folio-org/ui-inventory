@@ -10,6 +10,7 @@ const useSharedInstancesQuery = ({ searchParams } = {}) => {
   const [namespace] = useNamespace({ key: 'sharing-instances' });
   const ky = useOkapiKy();
   const stripes = useStripes();
+  const { instanceIdentifier } = searchParams;
 
   const { id: consortiumId } = stripes.user.user.consortium || {};
 
@@ -19,7 +20,7 @@ const useSharedInstancesQuery = ({ searchParams } = {}) => {
       searchParams,
     }).json(),
     {
-      enabled: Boolean(consortiumId),
+      enabled: Boolean(consortiumId && instanceIdentifier),
     },
   );
 

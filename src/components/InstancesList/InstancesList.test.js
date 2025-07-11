@@ -377,7 +377,7 @@ describe('InstancesList', () => {
         it('should publish the reset event', async () => {
           await act(async () => renderInstancesList());
 
-          fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+          await act(() => SearchAndSort.mock.calls[0][0].onResetAll());
 
           expect(mockPublishOnReset).toHaveBeenCalled();
         });
@@ -1054,7 +1054,7 @@ describe('InstancesList', () => {
       openActionMenu();
 
       const checkboxes = within(document.getElementById('columns-menu-section')).getAllByText(
-        /Contributors|Date|Publishers|Relation/
+        /Contributors|Date|Publishers|Relation|Instance HRID/
       );
 
       expect(checkboxes[0]).toHaveTextContent('Contributors');

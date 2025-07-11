@@ -6,7 +6,10 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import { useLocation } from 'react-router-dom';
+import {
+  useLocation,
+  useParams,
+} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
@@ -63,6 +66,7 @@ const ViewInstancePane = ({
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
+  const { id: instanceId } = useParams();
   const location = useLocation();
   const tags = instance?.tags?.tagList;
 
@@ -72,7 +76,7 @@ const ViewInstancePane = ({
   const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP, tenantId: instance?.tenantId });
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
-  const { sharedInstances } = useSharedInstancesQuery({ searchParams: { instanceIdentifier: instance?.id } });
+  const { sharedInstances } = useSharedInstancesQuery({ searchParams: { instanceIdentifier: instanceId } });
   const isUserInConsortium = isUserInConsortiumMode(stripes);
 
   const paneTitle = useMemo(
@@ -185,7 +189,7 @@ const ViewInstancePane = ({
 
       {isVersionHistoryOpen && (
         <InstanceVersionHistory
-          instanceId={instance?.id}
+          instanceId={instanceId}
           onClose={() => setIsVersionHistoryOpen(false)}
           tenantId={instance?.tenantId}
           isSharedFromLocalRecord={!!sharedInstances?.[0]}
