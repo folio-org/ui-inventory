@@ -158,6 +158,19 @@ describe('ViewSource', () => {
     it('should set correct header to request', () => {
       expect(mutator.marcRecord.GET).toHaveBeenCalledWith({ headers: expect.objectContaining({ 'X-Okapi-Tenant': 'tenantId' }) });
     });
+
+    describe('when marc type is Holdings', () => {
+      beforeEach(async () => {
+        mutator.marcRecord.GET.mockClear();
+        await act(async () => {
+          await renderWithIntl(getViewSource({ tenantId: 'tenantId', marcType: MARC_TYPES.HOLDINGS }), translations);
+        });
+      });
+
+      it('should not set provided tenantId', () => {
+        expect(mutator.marcRecord.GET).not.toHaveBeenCalledWith({ headers: expect.objectContaining({ 'X-Okapi-Tenant': 'tenantId' }) });
+      });
+    });
   });
 
   describe('when Instance is shared', () => {
@@ -175,6 +188,25 @@ describe('ViewSource', () => {
 
     it('should display "shared marc bibliographic record" message', () => {
       expect(screen.getByText('Shared MARC bibliographic record')).toBeInTheDocument();
+    });
+  });
+
+  describe('when displaying a MARC Holdings record', () => {
+    beforeEach(async () => {
+      await act(async () => {
+        await renderWithIntl(getViewSource({
+          marcType: MARC_TYPES.HOLDINGS,
+          instance: {
+            title: 'Instance title',
+            source: `${CONSORTIUM_PREFIX}MARC`,
+            shared: true,
+          },
+        }), translations);
+      });
+    });
+
+    it('should display "local marc holdings record" message', () => {
+      expect(screen.getByText('Local MARC holdings record')).toBeInTheDocument();
     });
   });
 

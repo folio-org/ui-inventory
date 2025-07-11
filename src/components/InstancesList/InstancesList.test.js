@@ -1047,6 +1047,7 @@ describe('InstancesList', () => {
       expect(searchColumns[3]).toHaveTextContent('Publishers');
       expect(searchColumns[4]).toHaveTextContent('Date');
       expect(searchColumns[5]).toHaveTextContent('Relation');
+      expect(searchColumns[6]).toHaveTextContent('Instance HRID');
     });
     it('should render correct order of options in "Show columns" section of actions', async () => {
       await act(async () => renderInstancesList());
@@ -1060,6 +1061,7 @@ describe('InstancesList', () => {
       expect(checkboxes[1]).toHaveTextContent('Date');
       expect(checkboxes[2]).toHaveTextContent('Publishers');
       expect(checkboxes[3]).toHaveTextContent('Relation');
+      expect(checkboxes[4]).toHaveTextContent('Instance HRID');
     });
   });
 });

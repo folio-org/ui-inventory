@@ -293,7 +293,7 @@
     "itemIdentifier": "معرّف المادة",
     "formerId": "المعرّف السابق",
     "addFormerId": "إضافة معّرف سابق",
-    "accessionNumber": "رقم الانضمام",
+    "accessionNumber": "رقم القيد",
     "addStatisticalCode": "إضافة الرمز الإحصائي",
     "selectHoldingsType": "حدد نوع المقتنيات",
     "publicDisplay": "عرض عام",
@@ -894,5 +894,7 @@
     "acq.vendorName": "Organization name",
     "acq.acqMethod": "Acquisition method",
     "acq.averageCost": "Average cost",
-    "acq.fundCode": "Fund code"
+    "acq.fundCode": "Fund code",
+    "sourceUri": "Instance source URI",
+    "instances.columns.instanceHRID": "Instance HRID"
 }

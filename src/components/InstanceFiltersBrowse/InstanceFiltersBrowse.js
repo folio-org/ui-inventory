@@ -7,6 +7,7 @@ import {
 } from '@folio/stripes/core';
 import {
   FACETS,
+  HeldByFacet,
   browseModeOptions,
   browseCallNumberOptions,
   browseClassificationOptions,
@@ -69,16 +70,16 @@ const InstanceFiltersBrowse = props => {
     />
   );
 
-  // const renderHeldByFacet = (name) => (
-  //   <HeldByFacet
-  //     name={name}
-  //     accordionsStatus={accordionsStatus}
-  //     activeFilters={activeFilters}
-  //     facetOptions={facetOptions}
-  //     onChange={onChange}
-  //     onToggle={onToggleAccordion}
-  //   />
-  // );
+  const renderHeldByFacet = (name) => (
+    <HeldByFacet
+      name={name}
+      accordionsStatus={accordionsStatus}
+      activeFilters={activeFilters}
+      facetOptions={facetOptions}
+      onChange={onChange}
+      onToggle={onToggleAccordion}
+    />
+  );
 
   return (
     <>
@@ -88,11 +89,12 @@ const InstanceFiltersBrowse = props => {
       {Object.values(browseCallNumberOptions).includes(qindex) && (
         <>
           {renderSharedFacet(FACETS.CALL_NUMBERS_SHARED)}
+          {renderHeldByFacet(FACETS.CALL_NUMBERS_HELD_BY)}
           <EffectiveLocationFacet
             name={FACETS.CALL_NUMBERS_EFFECTIVE_LOCATION}
             accordionsStatus={accordionsStatus}
             facetOptions={facetOptions}
-            separator={checkIfUserInMemberTenant(stripes)}
+            separator={isConsortiaEnv(stripes)}
             activeFilters={activeFilters}
             onChange={onChange}
             onToggle={onToggleAccordion}

@@ -837,7 +837,7 @@
     "actions.menuSection.sortBy.date": "Datum",
     "moveItems.modal.message.hasLinkedPOLsOrHoldings": "Tento holding je propojen s řádkem nákupní objednávky. Přesunutím tohoto holdingu k novému titulu dojde ke stejnému přesunu u všech dalších jednotek a holdingů, které jsou propojeny s tímto řádkem nákupní objednávky. Řádek nákupní objednávky bude také propojen s novým titulem. Chcete pokračovat?",
     "hasLinkedLocalOrderLine.modal.heading": "Propojený řádek objednávky",
-    "hasLinkedLocalOrderLine.modal.message": "Na tento holding nebo tuto jednotku se odkazuje řádek místní nákupní objednávky, jeho příslušnost nelze v tuto chvíli změnit.",
+    "hasLinkedLocalOrderLine.modal.message": "Na tento holding nebo tuto jednotku se odkazuje lokální položka nákupní objednávky, jeho příslušnost nelze v tuto chvíli změnit.",
     "permission.settings.material-types": "Nastavení (Katalog): Vytváření, úpravy, mazání typů materiálů",
     "permission.settings.loan-types": "Nastavení (Katalog): Vytváření, úpravy, mazání typů výpůjček",
     "permission.instance.set-records-for-deletion.execute": "Katalog: Nastavit záznamy pro smazání",
@@ -894,5 +894,7 @@
     "acq.vendorName": "Název organizace",
     "acq.acqMethod": "Akviziční metoda",
     "acq.averageCost": "Průměrné náklady",
-    "acq.fundCode": "Kód prostředku"
+    "acq.fundCode": "Kód prostředku",
+    "sourceUri": "Zdroj titulu (URI)",
+    "instances.columns.instanceHRID": "HRID titulu"
 }

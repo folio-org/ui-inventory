@@ -10,6 +10,14 @@
 * Item -> ViewItem: refactor component. Refs UIIN-3267.
 * *BREAKING* Use `/search/resources/jobs` endpoints to get Instances and Holdings UUIDs. Refs UIIN-3366.
 * Add source URI field to instance full-record display and (disabled) to edit form. Fixes UIIN-3287.
+* Adding HRID to the Inventory results list & show columns options. Refs UIIN-1262.
+* Display more detailed error message when updating ownership for holdings fails. Refs UIIN-3339.
+* ECS | Restore Held by Facet in Call number Browse. Refs UIIN-3414.
+* Use current tenant for MARC Holdings requests in View Source. Refs UIIN-3423.
+* Display `Service point` in the `Circulation history` section in the item view page after check in action. Fixes UIIN-3417.
+* *BREAKING* Update for Split Search & Browse APIs. Refs UIIN-3435.
+* *BREAKING* Bump up okapiInterface version of linked-data to 2.0. Refs UIIN-3428.
+* Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
 * Instance -> ViewInstance: refactor component. Refs UIIN-3382.
 
 ## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)

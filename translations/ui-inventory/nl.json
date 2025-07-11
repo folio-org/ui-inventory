@@ -894,5 +894,7 @@
     "acq.vendorName": "Naam Organisatie",
     "acq.acqMethod": "Acquisitie methode",
     "acq.averageCost": "Gemiddelde kosten",
-    "acq.fundCode": "Fondscode"
+    "acq.fundCode": "Fondscode",
+    "sourceUri": "Bron URI van Instance",
+    "instances.columns.instanceHRID": "Instance HRID"
 }
