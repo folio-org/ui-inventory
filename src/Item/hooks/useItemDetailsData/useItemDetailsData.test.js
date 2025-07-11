@@ -143,6 +143,7 @@ describe('useItemDetailsData', () => {
       callNumberPrefix: undefined,
       callNumber: 'QA76.76',
       callNumberSuffix: undefined,
+      additionalCallNumbers: [],
       copyNumber: '1',
       numberOfPieces: undefined,
       descriptionOfPieces: undefined,

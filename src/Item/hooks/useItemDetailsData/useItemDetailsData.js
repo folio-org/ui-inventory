@@ -130,6 +130,7 @@ const useItemDetailsData = ({
     callNumberPrefix: item?.itemLevelCallNumberPrefix,
     callNumber: item?.itemLevelCallNumber,
     callNumberSuffix: item?.itemLevelCallNumberSuffix,
+    additionalCallNumbers: item?.additionalCallNumbers || [],
     copyNumber: item?.copyNumber,
     numberOfPieces: item?.numberOfPieces,
     descriptionOfPieces: item?.descriptionOfPieces,

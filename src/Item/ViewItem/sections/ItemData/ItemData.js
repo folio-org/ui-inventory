@@ -9,7 +9,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-const ItemData = ({ itemData }) => {
+const ItemData = ({ itemData, refLookup, referenceTables }) => {
   return (
     <Accordion
       id="acc02"
@@ -62,6 +62,63 @@ const ItemData = ({ itemData }) => {
             label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
             value={itemData.callNumberSuffix}
           />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
+          >
+            {itemData.additionalCallNumbers?.length > 0 ? (
+              <div>
+                {itemData.additionalCallNumbers.map((additionalCallNumber, index) => (
+                  <div
+                    key={`additional-callnumber-${index}`}
+                    style={{ marginBottom: '10px' }}
+                  >
+                    <Row>
+                      <Col xs={3}>
+                        <KeyValue
+                          label={<FormattedMessage
+                            id="ui-inventory.callNumberType"
+                          />}
+                          value={refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId).name || '-'}
+                        />
+                      </Col>
+                      <Col xs={3}>
+                        <KeyValue
+                          label={<FormattedMessage
+                            id="ui-inventory.callNumberPrefix"
+                          />}
+                          value={additionalCallNumber.prefix || '-'}
+                        />
+                      </Col>
+                      <Col xs={3}>
+                        <KeyValue
+                          label={<FormattedMessage
+                            id="ui-inventory.callNumber"
+                          />}
+                          value={additionalCallNumber.callNumber || '-'}
+                        />
+                      </Col>
+                      <Col xs={3}>
+                        <KeyValue
+                          label={<FormattedMessage
+                            id="ui-inventory.callNumberSuffix"
+                          />}
+                          value={additionalCallNumber.suffix || '-'}
+                        />
+                      </Col>
+                    </Row>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <FormattedMessage
+                id="ui-inventory.noAdditionalCallNumbers"
+              />
+            )}
+          </KeyValue>
         </Col>
       </Row>
       <Row>
