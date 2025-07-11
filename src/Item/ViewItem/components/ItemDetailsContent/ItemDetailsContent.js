@@ -60,7 +60,7 @@ const ItemDetailsContent = ({
         isActive: temporaryHoldingsLocation?.isActive,
       },
     };
-  }, [holdings]);
+  }, [holdings, referenceTables]);
 
   const {
     itemLocation,
