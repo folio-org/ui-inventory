@@ -13,7 +13,7 @@ import {
 
 import HoldingsList from '../../HoldingsList';
 import { LimitedHoldingsList } from '../LimitedHoldingsList';
-import { InstanceNewHolding } from '../../../InstanceDetails/InstanceNewHolding';
+import { InstanceNewHolding } from '../../../ViewInstance/components/InstanceDetails/InstanceNewHolding';
 import { MoveItemsContext } from '../../../MoveItemsContext';
 import useMemberTenantHoldings from '../../../../hooks/useMemberTenantHoldings';
 
@@ -83,12 +83,11 @@ const MemberTenantHoldings = ({
           : renderHoldings()
         }
       </div>
-      {!isUserInCentralTenant && canCreateHoldings && (
-        <InstanceNewHolding
-          instance={instance}
-          tenantId={memberTenantId}
-        />
-      )}
+      <InstanceNewHolding
+        instance={instance}
+        tenantId={memberTenantId}
+        isVisible={!isUserInCentralTenant && canCreateHoldings}
+      />
     </Accordion>
   );
 };

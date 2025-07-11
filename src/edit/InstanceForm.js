@@ -77,7 +77,7 @@ import {
 
 import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields';
 import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
-import { getPublishingInfo } from '../Instance/InstanceDetails/utils';
+import { getPublishingInfo } from '../Instance/ViewInstance/utils';
 import DateFields from './dateFields';
 
 import styles from './InstanceForm.css';

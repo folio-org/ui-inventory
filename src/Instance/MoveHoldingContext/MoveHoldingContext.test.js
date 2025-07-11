@@ -90,6 +90,7 @@ const renderMoveHoldingContext = () => renderWithIntl(
         <InstanceMovementDetailsContainer
           instance={leftInstance}
           onClose={onClose}
+          refetch={() => leftInstance}
           data-test-movement-from-instance-details
           id="movement-from-instance-details"
         />
@@ -97,6 +98,7 @@ const renderMoveHoldingContext = () => renderWithIntl(
         <InstanceMovementDetailsContainer
           instance={rightInstance}
           onClose={onClose}
+          refetch={() => rightInstance}
           data-test-movement-to-instance-details
           id="movement-to-instance-details"
         />

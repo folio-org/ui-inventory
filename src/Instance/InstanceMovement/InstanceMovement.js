@@ -15,6 +15,8 @@ const InstanceMovement = ({
   moveHoldings,
   instanceFrom = {},
   instanceTo = {},
+  refetchFrom,
+  refetchTo,
 }) => {
   return (
     <Paneset data-test-movement>
@@ -26,6 +28,7 @@ const InstanceMovement = ({
         <InstanceMovementDetailsContainer
           instance={instanceFrom}
           onClose={onClose}
+          refetch={refetchFrom}
           data-test-movement-from-instance-details
           id="movement-from-instance-details"
         />
@@ -33,6 +36,7 @@ const InstanceMovement = ({
         <InstanceMovementDetailsContainer
           instance={instanceTo}
           onClose={onClose}
+          refetch={refetchTo}
           data-test-movement-to-instance-details
           id="movement-to-instance-details"
         />
@@ -46,6 +50,8 @@ InstanceMovement.propTypes = {
   moveHoldings: PropTypes.func.isRequired,
   instanceFrom: PropTypes.object,
   instanceTo: PropTypes.object,
+  refetchFrom: PropTypes.func,
+  refetchTo: PropTypes.func,
 };
 
 export default InstanceMovement;

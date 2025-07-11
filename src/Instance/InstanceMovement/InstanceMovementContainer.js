@@ -35,10 +35,12 @@ const InstanceMovementContainer = ({
   const {
     instance: instanceFrom,
     isLoading: isInstanceFromLoading,
+    refetch: refetchFrom,
   } = useInstance(idFrom);
   const {
     instance: instanceTo,
     isLoading: isInstanceToLoading,
+    refetch: refetchTo,
   } = useInstance(idTo);
 
   const onClose = useCallback((closedInstance) => {
@@ -123,6 +125,8 @@ const InstanceMovementContainer = ({
     <InstanceMovement
       instanceFrom={instanceFrom}
       instanceTo={instanceTo}
+      refetchFrom={refetchFrom}
+      refetchTo={refetchTo}
       onClose={onClose}
       moveHoldings={moveHoldings}
     />

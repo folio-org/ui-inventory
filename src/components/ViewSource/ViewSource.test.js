@@ -21,8 +21,8 @@ import useGoBack from '../../common/hooks/useGoBack';
 import {
   useAuditSettings,
   useQuickExport,
-  useSharedInstancesQuery,
 } from '../../hooks';
+import { useSharedInstancesQuery } from '../../Instance/hooks';
 import { CONSORTIUM_PREFIX } from '../../constants';
 import MARC_TYPES from './marcTypes';
 
@@ -45,6 +45,9 @@ jest.mock('../../hooks', () => ({
     }],
     isSettingsLoading: false,
   }),
+}));
+jest.mock('../../Instance/hooks', () => ({
+  ...jest.requireActual('../../Instance/hooks'),
   useSharedInstancesQuery: jest.fn(),
 }));
 

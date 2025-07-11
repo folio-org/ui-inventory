@@ -60,16 +60,15 @@ import {
   withReset,
 } from '@folio/stripes-inventory-components';
 
-import { withSingleRecordImport } from '..';
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
-import ViewInstanceWrapper from '../../ViewInstanceWrapper';
 import formatters from '../../referenceFormatters';
 import {
   withLocation,
   withUseResourcesIds,
+  withSingleRecordImport,
 } from '../../hocs';
 import {
   getNextSelectedRowsState,
@@ -104,6 +103,7 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
+import ViewInstanceRoute from '../../routes/ViewInstanceRoute';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -1378,7 +1378,7 @@ class InstancesList extends React.Component {
             isCursorAtEnd
             isRequestUrlExceededLimit={isRequestUrlExceededLimit}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
-            viewRecordComponent={ViewInstanceWrapper}
+            viewRecordComponent={ViewInstanceRoute}
             editRecordComponent={InstanceForm}
             onSelectRow={this.onSelectRow}
             paneTitleRef={this.paneTitleRef}

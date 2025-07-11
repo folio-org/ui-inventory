@@ -1,6 +1,8 @@
 export { default as ActionItem } from './ActionItem';
 export { default as BoundPiecesList } from './BoundPiecesList';
 export { default as FilterNavigation } from './FilterNavigation';
+export { default as HelperApp } from './HelperApp';
+export { default as ImportRecordModal } from './ImportRecordModal';
 export { default as InstanceFiltersBrowse } from './InstanceFiltersBrowse';
 export { default as InstancePlugin } from './InstancePlugin';
 export { default as ConnectedTitle } from './ConnectedTitle';
@@ -20,4 +22,3 @@ export { default as BrowseResultsPane } from './BrowseResultsPane';
 export { default as BrowseResultsList } from './BrowseResultsList';
 export { default as BrowseInventoryFilters } from './BrowseInventoryFilters';
 export { default as MissedMatchItem } from './MissedMatchItem';
-export { default as withSingleRecordImport } from './withSingleRecordImport';

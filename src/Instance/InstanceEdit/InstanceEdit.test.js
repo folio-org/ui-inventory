@@ -16,10 +16,10 @@ import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
 import { instance } from '../../../test/fixtures';
 import useInstance from '../../common/hooks/useInstance';
-import { useInstanceMutation } from '../../hooks';
 import InstanceEdit from './InstanceEdit';
+import { useInstanceMutation } from '../hooks';
 
-jest.mock('../../hooks', () => ({
+jest.mock('../hooks', () => ({
   useInstanceMutation: jest.fn().mockReturnValue({ mutateInstance: jest.fn() }),
 }));
 

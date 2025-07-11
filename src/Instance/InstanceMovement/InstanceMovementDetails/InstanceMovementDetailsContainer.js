@@ -12,6 +12,7 @@ const InstanceMovementDetailsContainer = ({
   onClose,
   mutator,
   instance = {},
+  refetch,
   id = 'movement-instance-details',
 }) => {
   const [marc, setMarc] = useState();
@@ -26,6 +27,7 @@ const InstanceMovementDetailsContainer = ({
     <InstanceMovementDetails
       instance={instance}
       onClose={onClose}
+      refetch={refetch}
       hasMarc={Boolean(marc)}
       id={id}
     />
@@ -37,6 +39,7 @@ InstanceMovementDetailsContainer.propTypes = {
   mutator: PropTypes.object.isRequired,
   instance: PropTypes.object,
   id: PropTypes.string,
+  refetch: PropTypes.func,
 };
 
 InstanceMovementDetailsContainer.manifest = Object.freeze({
