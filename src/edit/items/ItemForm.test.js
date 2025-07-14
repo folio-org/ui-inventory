@@ -283,7 +283,7 @@ describe('ItemForm', () => {
 
   describe('Swap primary and additional call number', () => {
     it('should swap primary and additional call number', async () => {
-      const mockChange = jest.fn();
+      const mockHandleCallNumberSwap = jest.fn();
       const mockGetFieldState = jest.fn((fieldName) => {
         const values = {
           'itemLevelCallNumber': { value: 'itemLevelCallNumber' },
@@ -302,10 +302,10 @@ describe('ItemForm', () => {
         return values[fieldName];
       });
 
-      renderItemForm({
+      const { container } = renderItemForm({
         ...mockInitialValues,
+        handleCallNumberSwap: mockHandleCallNumberSwap,
         form: {
-          change: mockChange,
           getFieldState: mockGetFieldState,
           getState: () => ({
             values: {
@@ -343,17 +343,17 @@ describe('ItemForm', () => {
           ]
         },
       });
+      expect(container.querySelector('form')).toBeInTheDocument();
 
       const swapButton = screen.getByRole('button', { name: /Change with primary call number/i });
       expect(swapButton).toBeInTheDocument();
-      userEvent.click(swapButton);
-
+      await userEvent.click(swapButton);
       waitFor(() => {
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumber', 'cn1');
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'prefix1');
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberSuffix', 'suffix1');
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberTypeId', '1');
-        expect(mockChange).toHaveBeenCalledWith('additionalCallNumbers', [{
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumber', 'cn1');
+        expect(mockHandleCallNumberSwap()).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'prefix1');
+        expect(mockHandleCallNumberSwap()).toHaveBeenCalledWith('itemLevelCallNumberSuffix', 'suffix1');
+        expect(mockHandleCallNumberSwap()).toHaveBeenCalledWith('itemLevelCallNumberTypeId', '1');
+        expect(mockHandleCallNumberSwap()).toHaveBeenCalledWith('additionalCallNumbers', [{
           callNumber: 'itemLevelCallNumber',
           prefix: 'itemLevelCallNumberPrefix',
           suffix: 'itemLevelCallNumberSuffix',
@@ -361,9 +361,8 @@ describe('ItemForm', () => {
         }]);
       });
     });
-
     it('should swap primary and additional call number with the correct entry in array', async () => {
-      const mockChange = jest.fn();
+      const mockHandleCallNumberSwap = jest.fn();
       const mockGetFieldState = jest.fn((fieldName) => {
         const values = {
           'itemLevelCallNumber': { value: 'itemLevelCallNumber' },
@@ -392,7 +391,7 @@ describe('ItemForm', () => {
       renderItemForm({
         ...mockInitialValues,
         form: {
-          change: mockChange,
+          handleCallNumberSwap: mockHandleCallNumberSwap,
           getFieldState: mockGetFieldState,
           getState: () => ({
             values: {
@@ -450,12 +449,12 @@ describe('ItemForm', () => {
       userEvent.click(swapButtons[1]);
 
       waitFor(() => {
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumber', 'cn2');
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'prefix2');
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberSuffix', 'suffix2');
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberTypeId', '3');
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumber', 'cn2');
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'prefix2');
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumberSuffix', 'suffix2');
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumberTypeId', '3');
 
-        expect(mockChange).toHaveBeenCalledWith('additionalCallNumbers', [
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('additionalCallNumbers', [
           {
             callNumber: 'cn1',
             prefix: 'prefix1',
@@ -472,15 +471,15 @@ describe('ItemForm', () => {
       });
 
       // switch back
-      userEvent.click(swapButtons[1]);
+      await userEvent.click(swapButtons[1]);
 
       waitFor(() => {
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumber', 'itemLevelCallNumber');
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'itemLevelCallNumberPrefix');
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberSuffix', 'itemLevelCallNumberSuffix');
-        expect(mockChange).toHaveBeenCalledWith('itemLevelCallNumberTypeId', '2');
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumber', 'itemLevelCallNumber');
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'itemLevelCallNumberPrefix');
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumberSuffix', 'itemLevelCallNumberSuffix');
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumberTypeId', '2');
 
-        expect(mockChange).toHaveBeenCalledWith('additionalCallNumbers', [
+        expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('additionalCallNumbers', [
           {
             callNumber: 'cn1',
             prefix: 'prefix1',

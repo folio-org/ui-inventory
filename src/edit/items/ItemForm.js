@@ -1062,6 +1062,7 @@ ItemForm.propTypes = {
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
   }).isRequired,
+  handleCallNumberSwap: PropTypes.func,
   form: PropTypes.shape({
     change: PropTypes.func.isRequired,
     getFieldState: PropTypes.func,
