@@ -10,8 +10,6 @@ import '../../../test/jest/__mock__';
 import { fireEvent, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { StripesContext } from '@folio/stripes/core';
 
-import arrayMutators from 'final-form-arrays';
-import stripesFinalForm from '@folio/stripes/final-form';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import {
   NUMBER_GENERATOR_OPTIONS_OFF,
@@ -308,7 +306,21 @@ describe('ItemForm', () => {
         ...mockInitialValues,
         form: {
           change: mockChange,
-          getFieldState: mockGetFieldState
+          getFieldState: mockGetFieldState,
+          getState: () => ({
+            values: {
+              itemLevelCallNumber: 'itemLevelCallNumber',
+              itemLevelCallNumberPrefix: 'itemLevelCallNumberPrefix',
+              itemLevelCallNumberSuffix: 'itemLevelCallNumberSuffix',
+              itemLevelCallNumberTypeId: '2',
+              additionalCallNumbers: [{
+                callNumber: 'cn1',
+                prefix: 'prefix1',
+                suffix: 'suffix1',
+                typeId: '1'
+              }]
+            }
+          }),
         },
         initialValues: {
           ...mockInitialValues,
@@ -333,6 +345,7 @@ describe('ItemForm', () => {
       });
 
       const swapButton = screen.getByRole('button', { name: /Change with primary call number/i });
+      expect(swapButton).toBeInTheDocument();
       userEvent.click(swapButton);
 
       waitFor(() => {
@@ -380,7 +393,27 @@ describe('ItemForm', () => {
         ...mockInitialValues,
         form: {
           change: mockChange,
-          getFieldState: mockGetFieldState
+          getFieldState: mockGetFieldState,
+          getState: () => ({
+            values: {
+              itemLevelCallNumber: 'itemLevelCallNumber',
+              itemLevelCallNumberPrefix: 'itemLevelCallNumberPrefix',
+              itemLevelCallNumberSuffix: 'itemLevelCallNumberSuffix',
+              itemLevelCallNumberTypeId: '2',
+              additionalCallNumbers: [{
+                callNumber: 'cn1',
+                prefix: 'prefix1',
+                suffix: 'suffix1',
+                typeId: '1'
+              },
+              {
+                callNumber: 'cn2',
+                prefix: 'prefix2',
+                suffix: 'suffix2',
+                typeId: '3'
+              }]
+            }
+          }),
         },
         initialValues: {
           ...mockInitialValues,
