@@ -261,7 +261,7 @@ describe('ItemForm', () => {
         ...mockReferenceTables,
         callNumberTypes: [{ id: '1', name: 'Library of Congress classification' }],
       };
-      const { getByText, getAllByText, queryByText } = renderItemForm({
+      const { getByText, getAllByText, queryByText, getByTestId } = renderItemForm({
         initialValues,
         referenceTables,
       });
@@ -304,11 +304,6 @@ describe('ItemForm', () => {
         return values[fieldName];
       });
 
-      const ItemFormWithFinalForm = stripesFinalForm({
-        navigationCheck: true,
-        mutators: { ...arrayMutators }
-      })(ItemForm);
-
       renderItemForm({
         ...mockInitialValues,
         form: {
@@ -335,7 +330,6 @@ describe('ItemForm', () => {
             { id: '2', name: 'Dewey' },
           ]
         },
-        component: ItemFormWithFinalForm
       });
 
       const swapButton = screen.getByRole('button', { name: /Change with primary call number/i });
@@ -382,11 +376,6 @@ describe('ItemForm', () => {
         return values[fieldName];
       });
 
-      const ItemFormWithFinalForm = stripesFinalForm({
-        navigationCheck: true,
-        mutators: { ...arrayMutators }
-      })(ItemForm);
-
       renderItemForm({
         ...mockInitialValues,
         form: {
@@ -422,7 +411,6 @@ describe('ItemForm', () => {
             { id: '3', name: 'Local' }
           ]
         },
-        component: ItemFormWithFinalForm
       });
 
       const swapButtons = screen.getAllByRole('button', { name: /Change with primary call number/i });

@@ -82,7 +82,7 @@ const ItemData = ({ itemData, refLookup, referenceTables }) => {
                           label={<FormattedMessage
                             id="ui-inventory.callNumberType"
                           />}
-                          value={refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId).name || '-'}
+                          value={refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name || '-'}
                         />
                       </Col>
                       <Col xs={3}>
