@@ -261,7 +261,7 @@ describe('ItemForm', () => {
         ...mockReferenceTables,
         callNumberTypes: [{ id: '1', name: 'Library of Congress classification' }],
       };
-      const { getByText, getAllByText, queryByText, getByTestId } = renderItemForm({
+      const { getByText, getAllByText, queryByText } = renderItemForm({
         initialValues,
         referenceTables,
       });
