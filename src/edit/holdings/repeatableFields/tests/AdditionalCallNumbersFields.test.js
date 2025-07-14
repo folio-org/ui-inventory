@@ -18,6 +18,7 @@ const callNumberTypeOptions = [
 
 const defaultProps = {
   callNumberTypeOptions,
+  onSwap: jest.fn(),
   isFieldBlocked: () => false,
   canAdd: true,
   canEdit: true,
@@ -96,7 +97,7 @@ describe('AdditionalCallNumbersFields', () => {
 
     renderAdditionalCallNumbersFields({ initialValues });
 
-    const deleteButton = screen.getByText('Delete');
+    const deleteButton = screen.getByRole('button', { name: 'Delete this item' });
     fireEvent.click(deleteButton);
 
     expect(screen.queryByDisplayValue('Prefix1')).not.toBeInTheDocument();
@@ -157,5 +158,22 @@ describe('AdditionalCallNumbersFields', () => {
 
     expect(screen.getByLabelText('Call number')).toBeDisabled();
     expect(screen.getByLabelText('Call number type')).not.toBeDisabled();
+  });
+
+  it('should render swap button for each additional call number', () => {
+    renderAdditionalCallNumbersFields({
+      initialValues: {
+        additionalCallNumbers: [{
+          typeId: '1',
+          prefix: 'Prefix1',
+          callNumber: 'CN1',
+          suffix: 'Suffix1'
+        }]
+      }
+    });
+    expect(screen.getByText('CN1')).toBeInTheDocument();
+    expect(screen.getByText('Prefix1')).toBeInTheDocument();
+    expect(screen.getByText('Suffix1')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /change with primary call number/i })).toBeInTheDocument();
   });
 });

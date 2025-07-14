@@ -216,7 +216,7 @@
   "additionalCallNumbers": "Additional call numbers",
   "noAdditionalCallNumbers": "No additional call numbers",
   "addAdditionalCallNumber": "Add additional call number",
-  "additionalCallNumberRequired": "Please add a call number",
+  "swapWithPrimaryCallNumber": "Change with primary call number",
   "holdingsNotes": "Holdings notes",
   "publicNote": "Public note",
   "identifier": "Identifier",

@@ -2,7 +2,7 @@ import React from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 import {
-  FormattedMessage,
+  FormattedMessage, useIntl,
 } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -11,16 +11,19 @@ import {
   Col,
   Button,
   TextArea,
-  Select,
+  Select, IconButton,
 } from '@folio/stripes/components';
 
 const AdditionalCallNumbersFields = ({
   callNumberTypeOptions,
   isFieldBlocked,
+  onSwap,
   canAdd = true,
   canEdit = true,
   canDelete = true,
 }) => {
+  const { formatMessage } = useIntl();
+  const ariaDeleteLabel = formatMessage({ id: 'stripes-components.deleteThisItem' });
   const renderField = (name, index, fields) => (
     <Row key={index}>
       <Col sm={2}>
@@ -77,16 +80,25 @@ const AdditionalCallNumbersFields = ({
           disabled={!canEdit || isFieldBlocked('suffix')}
         />
       </Col>
-      {canDelete && (
-        <Col sm={2} style={{ paddingTop: '25px' }}>
-          <Button
-            onClick={() => fields.remove(index)}
-            buttonStyle="danger"
-          >
-            <FormattedMessage id="stripes-core.button.delete" />
-          </Button>
-        </Col>
-      )}
+      <Col xs={10} sm={3} style={{ paddingTop: '25px' }}>
+        <Button
+          onClick={() => onSwap(index)}
+          buttonStyle="default"
+          fullWidth
+        >
+          <FormattedMessage id="ui-inventory.swapWithPrimaryCallNumber" />
+        </Button>
+      </Col>
+      <Col xs={1} sm={1} style={{ paddingTop: '25px' }}>
+        <IconButton
+          icon="trash"
+          onClick={() => fields.remove(index)}
+          size="medium"
+          disabled={!canDelete}
+          name={ariaDeleteLabel}
+          aria-label={ariaDeleteLabel}
+        />
+      </Col>
     </Row>
   );
 
@@ -139,6 +151,7 @@ AdditionalCallNumbersFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
+  onSwap: PropTypes.func.isRequired,
 };
 
 export default AdditionalCallNumbersFields;

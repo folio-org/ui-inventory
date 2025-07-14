@@ -42,7 +42,7 @@ import {
 } from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
-import { handleKeyCommand, validateOptionalField } from '../../utils';
+import { handleKeyCommand, validateAdditionalCallNumbers, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
 import AdministrativeNoteFields from '../administrativeNoteFields';
@@ -80,19 +80,7 @@ function validate(values) {
     }
   });
 
-  if (values.additionalCallNumbers && values.additionalCallNumbers.length > 0) {
-    const additionalCallNumbersErrors = values.additionalCallNumbers.map(callNumber => {
-      const error = {};
-      if (!callNumber.callNumber || callNumber.callNumber.trim() === '') {
-        error.callNumber = <FormattedMessage id="ui-inventory.additionalCallNumberRequired" />;
-      }
-      return Object.keys(error).length ? error : undefined;
-    });
-
-    if (additionalCallNumbersErrors.some(error => error !== undefined)) {
-      errors.additionalCallNumbers = additionalCallNumbersErrors;
-    }
-  }
+  validateAdditionalCallNumbers(values, errors);
 
   return errors;
 }
@@ -118,6 +106,7 @@ class HoldingsForm extends React.Component {
     initialValues: PropTypes.object,
     instance: PropTypes.object,
     isMARCRecord: PropTypes.bool,
+    handleCallNumberSwap: PropTypes.func,
     location: PropTypes.shape({
       state: PropTypes.string.isRequired,
     }).isRequired,
@@ -240,6 +229,29 @@ class HoldingsForm extends React.Component {
   };
 
   onSelectLocationHandler = loc => this.selectTemporaryLocation(loc);
+
+  handleCallNumberSwap = (additionalCallNumberIndex) => {
+    const { form: { change, getFieldState } } = this.props;
+
+    const primaryCallNumber = {
+      callNumber: getFieldState('callNumber')?.value || '',
+      prefix: getFieldState('callNumberPrefix')?.value || '',
+      suffix: getFieldState('callNumberSuffix')?.value || '',
+      typeId: getFieldState('callNumberTypeId')?.value || ''
+    };
+    const additionalCallNumbers = getFieldState('additionalCallNumbers')?.value || [];
+    const additionalCallNumber = additionalCallNumbers[additionalCallNumberIndex];
+
+    change('callNumber', additionalCallNumber.callNumber);
+    change('callNumberPrefix', additionalCallNumber.prefix);
+    change('callNumberSuffix', additionalCallNumber.suffix);
+    change('callNumberTypeId', additionalCallNumber.typeId);
+
+    const updatedAdditionalCallNumbers = [...additionalCallNumbers];
+    updatedAdditionalCallNumbers[additionalCallNumberIndex] = primaryCallNumber;
+
+    change('additionalCallNumbers', updatedAdditionalCallNumbers);
+  };
 
   render() {
     const {
@@ -638,7 +650,7 @@ class HoldingsForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <AdditionalCallNumbersFields callNumberTypeOptions={callNumberTypeOptions} isFieldBlocked={this.isFieldBlocked} />
+                    <AdditionalCallNumbersFields callNumberTypeOptions={callNumberTypeOptions} isFieldBlocked={this.isFieldBlocked} onSwap={this.handleCallNumberSwap} />
                   </Accordion>
                   <Accordion
                     id="accordion03"
