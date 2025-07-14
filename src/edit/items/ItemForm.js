@@ -200,7 +200,6 @@ class ItemForm extends React.Component {
   handleCallNumberSwap = (additionalCallNumberIndex) => {
     const { form: { change, getFieldState } } = this.props;
 
-    // Get current values
     const primaryCallNumber = {
       callNumber: getFieldState('itemLevelCallNumber')?.value || '',
       prefix: getFieldState('itemLevelCallNumberPrefix')?.value || '',
@@ -210,13 +209,11 @@ class ItemForm extends React.Component {
     const additionalCallNumbers = getFieldState('additionalCallNumbers')?.value || [];
     const additionalCallNumber = additionalCallNumbers[additionalCallNumberIndex];
 
-    // Swap the values
     change('itemLevelCallNumber', additionalCallNumber.callNumber);
     change('itemLevelCallNumberPrefix', additionalCallNumber.prefix);
     change('itemLevelCallNumberSuffix', additionalCallNumber.suffix);
     change('itemLevelCallNumberTypeId', additionalCallNumber.typeId);
 
-    // Update the additional call number with the primary values
     const updatedAdditionalCallNumbers = [...additionalCallNumbers];
     updatedAdditionalCallNumbers[additionalCallNumberIndex] = primaryCallNumber;
 
