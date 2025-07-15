@@ -68,10 +68,10 @@ import {
 } from './repeatableFields';
 import StatisticalCodeFields from '../statisticalCodeFields';
 import NoteFields from '../noteFields';
+import AdditionalCallNumbersItemLevelFields from './repeatableFields/AdditionalCallNumbersItemLevelFields';
 
 import styles from './ItemForm.css';
 import { itemStatusesMap } from '../../constants';
-import AdditionalCallNumbersItemLevelFields from './repeatableFields/AdditionalCallNumbersItemLevelFields';
 
 function validate(values) {
   const errors = {};

@@ -10,7 +10,6 @@ import '../../../test/jest/__mock__';
 import { fireEvent, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { StripesContext } from '@folio/stripes/core';
 
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import {
   NUMBER_GENERATOR_OPTIONS_OFF,
   NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
@@ -347,7 +346,7 @@ describe('ItemForm', () => {
 
       const swapButton = screen.getByRole('button', { name: /Change with primary call number/i });
       expect(swapButton).toBeInTheDocument();
-      await userEvent.click(swapButton);
+      await fireEvent.click(swapButton);
       waitFor(() => {
         expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumber', 'cn1');
         expect(mockHandleCallNumberSwap()).toHaveBeenCalledWith('itemLevelCallNumberPrefix', 'prefix1');
@@ -446,7 +445,7 @@ describe('ItemForm', () => {
       });
 
       const swapButtons = screen.getAllByRole('button', { name: /Change with primary call number/i });
-      userEvent.click(swapButtons[1]);
+      fireEvent.click(swapButtons[1]);
 
       waitFor(() => {
         expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumber', 'cn2');
@@ -471,7 +470,7 @@ describe('ItemForm', () => {
       });
 
       // switch back
-      await userEvent.click(swapButtons[1]);
+      await fireEvent.click(swapButtons[1]);
 
       waitFor(() => {
         expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('itemLevelCallNumber', 'itemLevelCallNumber');

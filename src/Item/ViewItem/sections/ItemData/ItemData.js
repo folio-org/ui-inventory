@@ -71,47 +71,50 @@ const ItemData = ({ itemData, refLookup, referenceTables }) => {
           >
             {itemData.additionalCallNumbers?.length > 0 ? (
               <div>
-                {itemData.additionalCallNumbers.map((additionalCallNumber, index) => (
-                  <div
-                    key={`additional-callnumber-${index}`}
-                    style={{ marginBottom: '10px' }}
-                  >
-                    <Row>
-                      <Col xs={3}>
-                        <KeyValue
-                          label={<FormattedMessage
-                            id="ui-inventory.callNumberType"
-                          />}
-                          value={refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name || '-'}
-                        />
-                      </Col>
-                      <Col xs={3}>
-                        <KeyValue
-                          label={<FormattedMessage
-                            id="ui-inventory.callNumberPrefix"
-                          />}
-                          value={additionalCallNumber.prefix || '-'}
-                        />
-                      </Col>
-                      <Col xs={3}>
-                        <KeyValue
-                          label={<FormattedMessage
-                            id="ui-inventory.callNumber"
-                          />}
-                          value={additionalCallNumber.callNumber || '-'}
-                        />
-                      </Col>
-                      <Col xs={3}>
-                        <KeyValue
-                          label={<FormattedMessage
-                            id="ui-inventory.callNumberSuffix"
-                          />}
-                          value={additionalCallNumber.suffix || '-'}
-                        />
-                      </Col>
-                    </Row>
-                  </div>
-                ))}
+                {itemData.additionalCallNumbers.map((additionalCallNumber, index) => {
+                  const callNumberTypeName = refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name;
+                  return (
+                    <div
+                      key={`additional-callnumber-${index}`}
+                      style={{ marginBottom: '10px' }}
+                    >
+                      <Row>
+                        <Col xs={3}>
+                          <KeyValue
+                            label={<FormattedMessage
+                              id="ui-inventory.callNumberType"
+                            />}
+                            value={callNumberTypeName}
+                          />
+                        </Col>
+                        <Col xs={3}>
+                          <KeyValue
+                            label={<FormattedMessage
+                              id="ui-inventory.callNumberPrefix"
+                            />}
+                            value={additionalCallNumber.prefix}
+                          />
+                        </Col>
+                        <Col xs={3}>
+                          <KeyValue
+                            label={<FormattedMessage
+                              id="ui-inventory.callNumber"
+                            />}
+                            value={additionalCallNumber.callNumber}
+                          />
+                        </Col>
+                        <Col xs={3}>
+                          <KeyValue
+                            label={<FormattedMessage
+                              id="ui-inventory.callNumberSuffix"
+                            />}
+                            value={additionalCallNumber.suffix}
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               <FormattedMessage

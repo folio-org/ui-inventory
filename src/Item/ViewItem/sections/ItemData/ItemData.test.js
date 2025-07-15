@@ -93,6 +93,7 @@ describe('ItemData', () => {
     const noValueElements = screen.getAllByText('-');
     expect(noValueElements).toHaveLength(8);
   });
+
   describe('additional call numbers', () => {
     const referenceTables = {
       callNumberTypes: [{ id: '1', name: 'Library of Congress classification' }],
@@ -102,7 +103,6 @@ describe('ItemData', () => {
       referenceTables,
       refLookup: mockRefLookup,
     };
-
 
     it('should render additional call numbers with correct values', () => {
       const additionalCallNumbers = [{
