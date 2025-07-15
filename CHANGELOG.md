@@ -14,6 +14,7 @@
 * Display more detailed error message when updating ownership for holdings fails. Refs UIIN-3339.
 * ECS | Restore Held by Facet in Call number Browse. Refs UIIN-3414.
 * Use current tenant for MARC Holdings requests in View Source. Refs UIIN-3423.
+* Add additional call numbers to Holdings record. Refs UIIN-3327.
 
 ## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.3...v13.0.4)
