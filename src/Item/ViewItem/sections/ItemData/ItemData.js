@@ -71,11 +71,11 @@ const ItemData = ({ itemData, refLookup, referenceTables }) => {
           >
             {itemData.additionalCallNumbers?.length > 0 ? (
               <div>
-                {itemData.additionalCallNumbers.map((additionalCallNumber, index) => {
+                {itemData.additionalCallNumbers.map((additionalCallNumber) => {
                   const callNumberTypeName = refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name;
                   return (
                     <div
-                      key={`additional-callnumber-${index}`}
+                      key={additionalCallNumber.id}
                       style={{ marginBottom: '10px' }}
                     >
                       <Row>
@@ -150,6 +150,8 @@ const ItemData = ({ itemData, refLookup, referenceTables }) => {
 
 ItemData.propTypes = {
   itemData: PropTypes.object.isRequired,
+  refLookup: PropTypes.func.isRequired,
+  referenceTables: PropTypes.object.isRequired,
 };
 
 export default ItemData;

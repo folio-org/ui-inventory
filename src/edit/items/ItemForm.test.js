@@ -271,6 +271,7 @@ describe('ItemForm', () => {
       expect(getAllByText('Library of Congress classification').length).toBe(2);
     });
   });
+
   describe('Form validation', () => {
     it('should display hint, when no call number is added', () => {
       const { getAllByText, getByRole } = renderItemForm();
@@ -389,8 +390,8 @@ describe('ItemForm', () => {
 
       renderItemForm({
         ...mockInitialValues,
+        handleCallNumberSwap: mockHandleCallNumberSwap,
         form: {
-          handleCallNumberSwap: mockHandleCallNumberSwap,
           getFieldState: mockGetFieldState,
           getState: () => ({
             values: {
