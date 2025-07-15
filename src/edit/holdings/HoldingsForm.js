@@ -106,7 +106,6 @@ class HoldingsForm extends React.Component {
     initialValues: PropTypes.object,
     instance: PropTypes.object,
     isMARCRecord: PropTypes.bool,
-    handleCallNumberSwap: PropTypes.func,
     location: PropTypes.shape({
       state: PropTypes.string.isRequired,
     }).isRequired,
@@ -127,6 +126,7 @@ class HoldingsForm extends React.Component {
     }).isRequired,
     form: PropTypes.shape({
       change: PropTypes.func,
+      getFieldState: PropTypes.func
     }),
     goTo: PropTypes.func.isRequired,
     httpError: PropTypes.object,

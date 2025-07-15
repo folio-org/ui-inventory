@@ -1225,47 +1225,49 @@ class ViewHoldingsRecord extends React.Component {
                               >
                                 {locationAccordion.additionalCallNumbers.length > 0 ? (
                                   <div>
-                                    {locationAccordion.additionalCallNumbers.map((additionalCallNumber, index) => (
-                                      <div
-                                        key={`additional-callnumber-${index}`}
-                                        style={{ marginBottom: '10px' }}
-                                      >
-                                        <Row>
-                                          <Col xs={3}>
-                                            <KeyValue
-                                              label={<FormattedMessage
-                                                id="ui-inventory.callNumberType"
-                                              />}
-                                              value={checkIfElementIsEmpty(this.refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)).name}
-                                            />
-                                          </Col>
-                                          <Col xs={3}>
-                                            <KeyValue
-                                              label={<FormattedMessage
-                                                id="ui-inventory.callNumberPrefix"
-                                              />}
-                                              value={checkIfElementIsEmpty(additionalCallNumber.prefix)}
-                                            />
-                                          </Col>
-                                          <Col xs={3}>
-                                            <KeyValue
-                                              label={<FormattedMessage
-                                                id="ui-inventory.callNumber"
-                                              />}
-                                              value={checkIfElementIsEmpty(additionalCallNumber.callNumber)}
-                                            />
-                                          </Col>
-                                          <Col xs={3}>
-                                            <KeyValue
-                                              label={<FormattedMessage
-                                                id="ui-inventory.callNumberSuffix"
-                                              />}
-                                              value={checkIfElementIsEmpty(additionalCallNumber.suffix)}
-                                            />
-                                          </Col>
-                                        </Row>
-                                      </div>
-                                    ))}
+                                    {locationAccordion.additionalCallNumbers.map((additionalCallNumber) => {
+                                      const callNumberTypeName = this.refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name;
+                                      return (
+                                        <div
+                                          key={additionalCallNumber.id}
+                                          style={{ marginBottom: '10px' }}
+                                        >
+                                          <Row>
+                                            <Col xs={3}>
+                                              <KeyValue
+                                                label={<FormattedMessage
+                                                  id="ui-inventory.callNumberType"
+                                                />}
+                                                value={checkIfElementIsEmpty(callNumberTypeName)}
+                                              />
+                                            </Col>
+                                            <Col xs={3}>
+                                              <KeyValue
+                                                label={<FormattedMessage
+                                                  id="ui-inventory.callNumberPrefix"
+                                                />}
+                                                value={checkIfElementIsEmpty(additionalCallNumber.prefix)}
+                                              />
+                                            </Col>
+                                            <Col xs={3}>
+                                              <KeyValue
+                                                label={<FormattedMessage
+                                                  id="ui-inventory.callNumber"
+                                                />}
+                                                value={checkIfElementIsEmpty(additionalCallNumber.callNumber)}
+                                              />
+                                            </Col>
+                                            <Col xs={3}>
+                                              <KeyValue
+                                                label={<FormattedMessage
+                                                  id="ui-inventory.callNumberSuffix"
+                                                />}
+                                                value={checkIfElementIsEmpty(additionalCallNumber.suffix)}
+                                              />
+                                            </Col>
+                                          </Row>
+                                      </div>);
+                                    })}
                                   </div>
                                 ) : (
                                   <FormattedMessage

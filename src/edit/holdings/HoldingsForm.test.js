@@ -10,7 +10,6 @@ import '../../../test/jest/__mock__';
 
 import { StripesContext } from '@folio/stripes/core';
 
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import {
   NUMBER_GENERATOR_OPTIONS_OFF,
   NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
@@ -382,7 +381,7 @@ describe('HoldingsForm', () => {
 
       const swapButton = screen.getByRole('button', { name: /Change with primary call number/i });
       expect(swapButton).toBeInTheDocument();
-      await userEvent.click(swapButton);
+      await fireEvent.click(swapButton);
       waitFor(() => {
         expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('callNumber', 'cn1');
         expect(mockHandleCallNumberSwap()).toHaveBeenCalledWith('callNumberPrefix', 'prefix1');
@@ -481,7 +480,7 @@ describe('HoldingsForm', () => {
       });
 
       const swapButtons = screen.getAllByRole('button', { name: /Change with primary call number/i });
-      userEvent.click(swapButtons[1]);
+      fireEvent.click(swapButtons[1]);
 
       waitFor(() => {
         expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('callNumber', 'cn2');
@@ -506,7 +505,7 @@ describe('HoldingsForm', () => {
       });
 
       // switch back
-      await userEvent.click(swapButtons[1]);
+      await fireEvent.click(swapButtons[1]);
 
       waitFor(() => {
         expect(mockHandleCallNumberSwap).toHaveBeenCalledWith('callNumber', 'callNumber');
