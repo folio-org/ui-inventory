@@ -21,6 +21,7 @@
 * *BREAKING* Update for Split Search & Browse APIs. Refs UIIN-3435.
 * *BREAKING* Bump up okapiInterface version of linked-data to 2.0. Refs UIIN-3428.
 * Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
+* Effective location in FOLIO Inventory is not updated and shown as inactive. Fixes UIIN-3437.
 
 ## [13.0.6](https://github.com/folio-org/ui-inventory/tree/v13.0.6) (2025-06-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.5...v13.0.6)
