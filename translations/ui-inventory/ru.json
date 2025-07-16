@@ -895,5 +895,6 @@
     "acq.acqMethod": "Acquisition method",
     "acq.averageCost": "Average cost",
     "acq.fundCode": "Fund code",
-    "sourceUri": "Instance source URI"
+    "sourceUri": "Instance source URI",
+    "instances.columns.instanceHRID": "Instance HRID"
 }

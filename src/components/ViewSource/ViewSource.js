@@ -282,7 +282,7 @@ const ViewSource = ({
     <FormattedMessage
       id={`ui-inventory.marcSourceRecord.${marcType}`}
       values={{
-        shared: isUserInConsortiumMode(stripes) ? instance.shared : null,
+        shared: isUserInConsortiumMode(stripes) ? marcType === MARC_TYPES.BIB && instance.shared : null,
       }}
     />
   );

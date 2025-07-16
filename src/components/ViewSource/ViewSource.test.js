@@ -188,6 +188,25 @@ describe('ViewSource', () => {
     });
   });
 
+  describe('when displaying a MARC Holdings record', () => {
+    beforeEach(async () => {
+      await act(async () => {
+        await renderWithIntl(getViewSource({
+          marcType: MARC_TYPES.HOLDINGS,
+          instance: {
+            title: 'Instance title',
+            source: `${CONSORTIUM_PREFIX}MARC`,
+            shared: true,
+          },
+        }), translations);
+      });
+    });
+
+    it('should display "local marc holdings record" message', () => {
+      expect(screen.getByText('Local MARC holdings record')).toBeInTheDocument();
+    });
+  });
+
   describe('when Instance is local', () => {
     beforeEach(async () => {
       await act(async () => {
