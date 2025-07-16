@@ -2,7 +2,8 @@ import React from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 import {
-  FormattedMessage, useIntl,
+  FormattedMessage,
+  useIntl,
 } from 'react-intl';
 import PropTypes from 'prop-types';
 
@@ -11,7 +12,8 @@ import {
   Col,
   Button,
   TextArea,
-  Select, IconButton,
+  Select,
+  IconButton,
 } from '@folio/stripes/components';
 
 const AdditionalCallNumbersFields = ({
