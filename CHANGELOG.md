@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [13.0.8] (IN PROGRESS)
+## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
 
 * Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
 
