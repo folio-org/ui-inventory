@@ -12,6 +12,7 @@
 * Adding HRID to the Inventory results list & show columns options. Refs UIIN-1262.
 * Display more detailed error message when updating ownership for holdings fails. Refs UIIN-3339.
 * Remove empty lines in drop-down menus in Settings > Inventory > Number generator options. Refs UIIN-3439.
+* Add additional call numbers to Holdings record. Refs UIIN-3327.
 
 ## [13.0.7](https://github.com/folio-org/ui-inventory/tree/v13.0.7) (2025-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.6...v13.0.7)
