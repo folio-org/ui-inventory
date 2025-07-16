@@ -8,10 +8,10 @@ export { default as useHoldingMutation } from './useHoldingMutation';
 export { default as useHoldingsFromStorage } from './useHoldingsFromStorage';
 export { default as useInstanceAuditDataQuery } from './useInstanceAuditDataQuery';
 export { default as useHoldingAuditDataQuery } from './useHoldingAuditDataQuery';
-export { default as useInstanceMutation } from './useInstanceMutation';
 export { default as useHoldingsQueryByHrids } from './useHoldingsQueryByHrids';
 export { default as useInventoryBrowse } from './useInventoryBrowse';
 export { default as useLastSearchTerms } from './useLastSearchTerms';
+export { default as useMarcRecordQuery } from './useMarcRecordQuery';
 export { default as useSearchForShadowInstanceTenants } from './useSearchForShadowInstanceTenants';
 export { default as useClassificationIdentifierTypes } from './useClassificationIdentifierTypes';
 export { default as useClassificationBrowseConfig } from './useClassificationBrowseConfig';
@@ -26,5 +26,4 @@ export * from '@folio/stripes-inventory-components/lib/queries/useInstanceDateTy
 export * from './useCallNumberTypesQuery';
 export * from './useAuditSettings';
 export * from './useCallNumberBrowseConfig';
-export * from './useSharedInstancesQuery';
 export * from './useResourcesIds';

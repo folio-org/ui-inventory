@@ -40,7 +40,7 @@ const InstanceMovementDetailsActions = ({
     onToggle();
 
     history.push({
-      pathname: `/inventory/edit/${instance.id}/instance`,
+      pathname: `/inventory/instance/edit/${instance.id}`,
       search: location.search,
       state: {
         hasPrevious: true,
