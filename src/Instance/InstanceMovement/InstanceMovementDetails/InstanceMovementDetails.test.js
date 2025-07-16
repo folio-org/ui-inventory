@@ -9,12 +9,13 @@ import { renderWithIntl, translationsProperties } from '../../../../test/jest/he
 
 import InstanceMovementDetails from './InstanceMovementDetails';
 
-jest.mock('../../InstanceDetails', () => ({
-  InstanceDetails: jest.fn(({ onClose, actionMenu, children }) => (
+jest.mock('../../ViewInstance/ViewInstancePane/ViewInstancePane', () => ({
+  __esModule: true,
+  default: jest.fn(({ onClose, actionMenu, holdingsSection }) => (
     <div>
       <button type="button" onClick={onClose}>Close</button>
       {actionMenu({ onToggle: jest.fn() })}
-      {children}
+      {holdingsSection}
     </div>
   )),
 }));

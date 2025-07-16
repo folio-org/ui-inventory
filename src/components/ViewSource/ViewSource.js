@@ -43,8 +43,8 @@ import { useGoBack } from '../../common/hooks';
 import {
   useAuditSettings,
   useQuickExport,
-  useSharedInstancesQuery,
 } from '../../hooks';
+import { useSharedInstancesQuery } from '../../Instance/hooks';
 import { IdReportGenerator } from '../../reports';
 import {
   isUserInConsortiumMode,

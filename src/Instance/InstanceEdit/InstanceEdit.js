@@ -33,7 +33,7 @@ import {
 } from '../../utils';
 import useLoadSubInstances from '../../hooks/useLoadSubInstances';
 import useCallout from '../../hooks/useCallout';
-import { useInstanceMutation } from '../../hooks';
+import { useInstanceMutation } from '../hooks';
 
 import css from './InstanceEdit.css';
 

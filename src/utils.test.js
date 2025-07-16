@@ -14,7 +14,6 @@ import {
   validateNumericField,
   validateAlphaNumericField,
   switchAffiliation,
-  setRecordForDeletion,
   parseEmptyFormValue,
   redirectToMarcEditPage,
   sendCalloutOnAffiliationChange,
@@ -159,72 +158,6 @@ describe('switchAffiliation', () => {
   });
 });
 
-describe('setRecordForDeletion', () => {
-  afterEach(() => {
-    global.fetch.mockClear();
-  });
-
-  afterAll(() => {
-    delete global.fetch;
-  });
-
-  const instanceId = 'testInstanceId';
-  const tenantId = 'testTenantId';
-  const okapi = {
-    token: 'token',
-    url: 'url/test',
-  };
-
-  describe('when the request was fulfilled successfuly', () => {
-    it('should return the appropriate response', () => {
-      global.fetch = jest.fn().mockReturnValue({ ok: true });
-
-      setRecordForDeletion(okapi, instanceId, tenantId);
-
-      expect(global.fetch).toHaveBeenCalledWith(
-        `${okapi.url}/inventory/instances/${instanceId}/mark-deleted`,
-        {
-          credentials: 'include',
-          headers: expect.objectContaining({
-            [OKAPI_TENANT_HEADER]: tenantId,
-            [OKAPI_TOKEN_HEADER]: okapi.token,
-            [CONTENT_TYPE_HEADER]: 'application/json',
-          }),
-          method: 'DELETE',
-        },
-      );
-
-      expect(global.fetch.mock.results[0].value.ok).toBe(true);
-    });
-  });
-
-  describe('when the request was fulfilled with an error', () => {
-    it('should return the appropriate response', async () => {
-      global.fetch = jest.fn().mockReturnValue({ ok: false });
-
-      try {
-        await setRecordForDeletion(okapi, instanceId, tenantId);
-      } catch (error) {
-        expect(error).toBeDefined();
-        expect(error.ok).toBe(false);
-
-        expect(global.fetch).toHaveBeenCalledWith(
-          `${okapi.url}/inventory/instances/${instanceId}/mark-deleted`,
-          {
-            credentials: 'include',
-            headers: expect.objectContaining({
-              [OKAPI_TENANT_HEADER]: tenantId,
-              [OKAPI_TOKEN_HEADER]: okapi.token,
-              [CONTENT_TYPE_HEADER]: 'application/json',
-            }),
-            method: 'DELETE',
-          },
-        );
-      }
-    });
-  });
-});
-
 describe('parseEmptyFormValue', () => {
   it('should return the same value when not empty', () => {
     const value = 'test';
@@ -359,18 +292,14 @@ describe('sendCalloutOnAffiliationChange', () => {
 
 describe('checkIfCentralOrderingIsActive', () => {
   const inactiveCenralOrdering = {
-    records: [{
-      settings: [{
-        value: 'false',
-      }],
+    settings: [{
+      value: 'false',
     }],
   };
 
   const activeCenralOrdering = {
-    records: [{
-      settings: [{
-        value: 'true',
-      }],
+    settings: [{
+      value: 'true',
     }],
   };
 

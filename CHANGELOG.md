@@ -17,6 +17,7 @@
 * *BREAKING* Bump up okapiInterface version of linked-data to 2.0. Refs UIIN-3428.
 * Effective location in FOLIO Inventory is not updated and shown as inactive. Fixes 
 UIIN-3437.
+* Instance -> ViewInstance: refactor component. Refs UIIN-3382.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
