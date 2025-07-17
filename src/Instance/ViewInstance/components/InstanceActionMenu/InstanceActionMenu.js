@@ -22,7 +22,10 @@ import {
 } from '../../../hooks';
 import useReferenceData from '../../../../hooks/useReferenceData';
 
-import { isLinkedDataSource } from '../../../../utils';
+import {
+  flattenCentralTenantPermissions,
+  isLinkedDataSource,
+} from '../../../../utils';
 import { indentifierTypeNames } from '../../../../constants';
 
 const InstanceActionMenu = ({
@@ -30,7 +33,7 @@ const InstanceActionMenu = ({
   instance = {},
   marcRecord,
   isShared,
-  centralTenantPermissions,
+  centralTenantPermissions = [],
   canUseSingleRecordImport,
   canBeOpenedInLinkedData,
   titleLevelRequestsFeatureEnabled,
@@ -44,7 +47,8 @@ const InstanceActionMenu = ({
   const stripes = useStripes();
   const referenceData = useReferenceData();
 
-  const hasCentralTenantPerm = useCallback((perm) => centralTenantPermissions.has(perm), [centralTenantPermissions]);
+  const hasCentralTenantPerm = useCallback((perm) => flattenCentralTenantPermissions(centralTenantPermissions).has(perm), [centralTenantPermissions]);
+
   const isSourceLinkedData = isLinkedDataSource(instance.source);
 
   const {
@@ -75,6 +79,7 @@ const InstanceActionMenu = ({
     titleLevelRequestsFeatureEnabled,
     tenant,
     numberOfRequests,
+    hasCentralTenantPerm,
   });
 
   const {
