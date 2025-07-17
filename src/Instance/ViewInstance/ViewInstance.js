@@ -289,6 +289,7 @@ const ViewInstance = (props) => {
     >
       <ViewInstancePane
         {...props}
+        id="pane-instancedetails"
         instance={instance}
         isShared={isShared}
         tenantId={stripes.okapi.tenant}
