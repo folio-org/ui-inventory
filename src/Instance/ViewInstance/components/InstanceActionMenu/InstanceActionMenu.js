@@ -22,7 +22,10 @@ import {
 } from '../../../hooks';
 import useReferenceData from '../../../../hooks/useReferenceData';
 
-import { isLinkedDataSource } from '../../../../utils';
+import {
+  flattenCentralTenantPermissions,
+  isLinkedDataSource,
+} from '../../../../utils';
 import { indentifierTypeNames } from '../../../../constants';
 
 const InstanceActionMenu = ({
@@ -44,9 +47,8 @@ const InstanceActionMenu = ({
   const stripes = useStripes();
   const referenceData = useReferenceData();
 
-  const hasCentralTenantPerm = useCallback((permName) => {
-    return centralTenantPermissions.some(({ permissionName }) => permissionName === permName);
-  }, [centralTenantPermissions]);
+  const hasCentralTenantPerm = useCallback((perm) => flattenCentralTenantPermissions(centralTenantPermissions).has(perm), [centralTenantPermissions]);
+
   const isSourceLinkedData = isLinkedDataSource(instance.source);
 
   const {

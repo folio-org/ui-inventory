@@ -1,19 +1,13 @@
-import { useCallback } from 'react';
-
-import { useCallback } from 'react';
-
 import {
   checkIfUserInCentralTenant,
   checkIfUserInMemberTenant,
   useStripes,
-  useUserTenantPermissions,
 } from '@folio/stripes/core';
 
 import useInstanceHoldingsQuery from '../useInstanceHoldingsQuery';
 
 import {
   checkIfCentralOrderingIsActive,
-  flattenCentralTenantPermissions,
   isInstanceShadowCopy,
   isMARCSource,
 } from '../../../utils';
@@ -29,20 +23,13 @@ const useInstancePermissions = ({
   canUseSingleRecordImport,
   tenant,
   numberOfRequests,
+  hasCentralTenantPerm,
 }) => {
   const stripes = useStripes();
   const source = instance.source;
-  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
   const { totalRecords: holdigsTotalRecords } = useInstanceHoldingsQuery(instance.id, tenant);
   const { data: centralOrdering } = useCentralOrderingSettingsQuery();
-  const {
-    userPermissions: centralTenantPermissions,
-  } = useUserTenantPermissions({ tenantId: centralTenantId }, {
-    enabled: Boolean(isShared && checkIfUserInMemberTenant(stripes)),
-  });
-
-  const hasCentralTenantPerm = useCallback((perm) => flattenCentralTenantPermissions(centralTenantPermissions).has(perm), [centralTenantPermissions]);
 
   const noInstanceHoldings = holdigsTotalRecords === 0;
 

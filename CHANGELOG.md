@@ -19,12 +19,12 @@
 UIIN-3437.
 * Instance -> ViewInstance: refactor component. Refs UIIN-3382.
 * Add missing pane id to instance details pane. Fixes UIIN-3443.
+* Provide hasCentralTenantPerm arg to useInstancePermissions hook. Fixes UIIN-3444.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
 
 * Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
-* Instance -> ViewInstance: refactor component. Refs UIIN-3382.
 
 ## [13.0.7](https://github.com/folio-org/ui-inventory/tree/v13.0.7) (2025-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.6...v13.0.7)
