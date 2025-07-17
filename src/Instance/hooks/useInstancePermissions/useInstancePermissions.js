@@ -1,13 +1,17 @@
+import { useCallback } from 'react';
+
 import {
   checkIfUserInCentralTenant,
   checkIfUserInMemberTenant,
   useStripes,
+  useUserTenantPermissions,
 } from '@folio/stripes/core';
 
 import useInstanceHoldingsQuery from '../useInstanceHoldingsQuery';
 
 import {
   checkIfCentralOrderingIsActive,
+  flattenCentralTenantPermissions,
   isInstanceShadowCopy,
   isMARCSource,
 } from '../../../utils';
@@ -26,9 +30,17 @@ const useInstancePermissions = ({
 }) => {
   const stripes = useStripes();
   const source = instance.source;
+  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
   const { totalRecords: holdigsTotalRecords } = useInstanceHoldingsQuery(instance.id, tenant);
   const { data: centralOrdering } = useCentralOrderingSettingsQuery();
+  const {
+    userPermissions: centralTenantPermissions,
+  } = useUserTenantPermissions({ tenantId: centralTenantId }, {
+    enabled: Boolean(isShared && checkIfUserInMemberTenant(stripes)),
+  });
+
+  const hasCentralTenantPerm = useCallback((perm) => flattenCentralTenantPermissions(centralTenantPermissions).has(perm), [centralTenantPermissions]);
 
   const noInstanceHoldings = holdigsTotalRecords === 0;
 
@@ -44,7 +56,7 @@ const useInstancePermissions = ({
   const canCreateMARCHoldings = stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
   const canMoveHoldings = !checkIfUserInCentralTenant(stripes) && !noInstanceHoldings && stripes.hasPerm('ui-inventory.holdings.move');
   const canEditMARCRecord = checkIfUserInMemberTenant(stripes) && isShared
-    ? this.hasCentralTenantPerm(editBibRecordPerm)
+    ? hasCentralTenantPerm(editBibRecordPerm)
     : stripes.hasPerm(editBibRecordPerm);
   const canDeriveMARCRecord = stripes.hasPerm('ui-quick-marc.quick-marc-editor.derive.execute');
   const canAddMARCHoldingsRecord = !checkIfUserInCentralTenant(stripes) && stripes.hasPerm('ui-quick-marc.quick-marc-holdings-editor.create');
@@ -66,7 +78,7 @@ const useInstancePermissions = ({
   const hasSetForDeletionPermission = stripes.hasPerm(setForDeletionAndSuppressPerm);
   const canNonConsortialTenantSetForDeletion = !stripes.hasInterface('consortia') && hasSetForDeletionPermission;
   const canCentralTenantSetForDeletion = checkIfUserInCentralTenant(stripes) && hasSetForDeletionPermission;
-  const canMemberTenantSetForDeletion = (isShared && this.hasCentralTenantPerm(setForDeletionAndSuppressPerm)) || (!isShared && hasSetForDeletionPermission);
+  const canMemberTenantSetForDeletion = (isShared && hasCentralTenantPerm(setForDeletionAndSuppressPerm)) || (!isShared && hasSetForDeletionPermission);
   const canSetForDeletion = canNonConsortialTenantSetForDeletion || canCentralTenantSetForDeletion || canMemberTenantSetForDeletion;
 
   const hasReorderPermissions = canCreateRequest || stripes.hasPerm('ui-requests.edit') || stripes.hasPerm('ui-requests.all');
