@@ -19,6 +19,7 @@ import PropTypes from 'prop-types';
 
 import {
   checkIfUserInMemberTenant,
+  getUserTenantsPermissions,
   stripesConnect,
   useCallout,
   useStripes,
@@ -59,6 +60,7 @@ import {
   isInstanceShadowCopy,
   isLinkedDataSource,
   isMARCSource,
+  isUserInConsortiumMode,
 } from '../../utils';
 import {
   CONSORTIUM_PREFIX,
@@ -93,6 +95,7 @@ const ViewInstance = (props) => {
   const [canBeOpenedInLinkedData, setCanBeOpenedInLinkedData] = useState(false);
   const [isMARCSourceRecord, setIsMARCSourceRecord] = useState(false);
   const [isLinkedDataSourceRecord, setIsLinkedDataSourceRecord] = useState(false);
+  const [userTenantPermissions, setUserTenantPermissions] = useState([]);
 
   const isMarcOrLinkedDataSourceRecord = Boolean(isMARCSourceRecord || isLinkedDataSourceRecord);
 
@@ -129,6 +132,13 @@ const ViewInstance = (props) => {
       checkCanBeOpenedInLinkedData();
     }
   }, [isMarcOrLinkedDataSourceRecord, isInstanceImportSupported, instance]);
+
+  useEffect(() => {
+    if (isUserInConsortiumMode(stripes)) {
+      const { user: { user: { tenants } } } = stripes;
+      getUserTenantsPermissions(stripes, tenants).then(perms => setUserTenantPermissions(perms));
+    }
+  }, [stripes.user?.user?.tenants]);
 
   useEffect(() => {
     if (!isLoading && instance?.id && focusTitleOnInstanceLoad && !isCentralTenantPermissionsLoading) {
@@ -294,6 +304,7 @@ const ViewInstance = (props) => {
         isInstanceSharing={isInstanceSharing}
         holdingsSection={holdingsSection}
         paneTitleRef={paneTitleRef}
+        userTenantPermissions={userTenantPermissions}
       />
       <InstanceModals
         instance={instance}

@@ -30,7 +30,7 @@ const InstanceActionMenu = ({
   instance = {},
   marcRecord,
   isShared,
-  centralTenantPermissions,
+  centralTenantPermissions = [],
   canUseSingleRecordImport,
   canBeOpenedInLinkedData,
   titleLevelRequestsFeatureEnabled,
@@ -44,7 +44,9 @@ const InstanceActionMenu = ({
   const stripes = useStripes();
   const referenceData = useReferenceData();
 
-  const hasCentralTenantPerm = useCallback((perm) => centralTenantPermissions.has(perm), [centralTenantPermissions]);
+  const hasCentralTenantPerm = useCallback((permName) => {
+    return centralTenantPermissions.some(({ permissionName }) => permissionName === permName);
+  }, [centralTenantPermissions]);
   const isSourceLinkedData = isLinkedDataSource(instance.source);
 
   const {
@@ -75,6 +77,7 @@ const InstanceActionMenu = ({
     titleLevelRequestsFeatureEnabled,
     tenant,
     numberOfRequests,
+    hasCentralTenantPerm,
   });
 
   const {
