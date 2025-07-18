@@ -1,5 +1,4 @@
 import {
-  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -41,7 +40,10 @@ import { HoldingsListContainer } from '../HoldingsList';
 
 import { withSingleRecordImport } from '../../hocs';
 import { useInstance } from '../../common';
-import { useMarcRecordQuery } from '../../hooks';
+import {
+  useMarcRecordQuery,
+  useTLRSettingsQuery,
+} from '../../hooks';
 import {
   useInstanceImportSupportedQuery,
   useCirculationInstanceRequestsQuery,
@@ -68,6 +70,14 @@ import {
   LINKED_DATA_CHECK_EXTERNAL_RESOURCE_FETCHABLE,
   LINKED_DATA_EDITOR_PERM,
 } from '../../constants';
+
+const getTlrSettings = (settings) => {
+  try {
+    return JSON.parse(settings);
+  } catch {
+    return {};
+  }
+};
 
 const ViewInstance = (props) => {
   const { canUseSingleRecordImport, onCopy, focusTitleOnInstanceLoad } = props;
@@ -96,6 +106,7 @@ const ViewInstance = (props) => {
   const [isMARCSourceRecord, setIsMARCSourceRecord] = useState(false);
   const [isLinkedDataSourceRecord, setIsLinkedDataSourceRecord] = useState(false);
   const [userTenantPermissions, setUserTenantPermissions] = useState([]);
+  const [titleLevelRequestsFeatureEnabled, setTitleLevelRequestsFeatureEnabled] = useState(false);
 
   const isMarcOrLinkedDataSourceRecord = Boolean(isMARCSourceRecord || isLinkedDataSourceRecord);
 
@@ -115,7 +126,8 @@ const ViewInstance = (props) => {
   });
   const { data: isInstanceImportSupported } = useInstanceImportSupportedQuery(instance.id, { enabled: isMarcOrLinkedDataSourceRecord });
   const { data: marcRecord } = useMarcRecordQuery(instance.id, INSTANCE_RECORD_TYPE, isShared ? centralTenantId : tenantId, { enabled: isMarcOrLinkedDataSourceRecord });
-  const { data: { requests = [], totalRecords: totalRequestsRecords } } = useCirculationInstanceRequestsQuery(instance.id, tenantId);
+  const { data: { requests = [], totalRecords: totalRequestsRecords }, refetch: refetchRequests } = useCirculationInstanceRequestsQuery(instance.id, tenantId);
+  const { data: tlrSettings, isLoading: isTLRSettingsLoading } = useTLRSettingsQuery(tenantId);
 
   useEffect(() => {
     const checkCanBeOpenedInLinkedData = () => {
@@ -134,8 +146,21 @@ const ViewInstance = (props) => {
   }, [isMarcOrLinkedDataSourceRecord, isInstanceImportSupported, instance]);
 
   useEffect(() => {
+    if (!isTLRSettingsLoading) {
+      const { titleLevelRequestsFeatureEnabled: tlrEnabled } = getTlrSettings(tlrSettings?.configs[0]?.value);
+
+      setTitleLevelRequestsFeatureEnabled(Boolean(tlrEnabled));
+
+      if (tlrEnabled) {
+        refetchRequests();
+      }
+    }
+  }, [isTLRSettingsLoading, tlrSettings]);
+
+  useEffect(() => {
     if (isUserInConsortiumMode(stripes)) {
       const { user: { user: { tenants } } } = stripes;
+
       getUserTenantsPermissions(stripes, tenants).then(perms => setUserTenantPermissions(perms));
     }
   }, [stripes.user?.user?.tenants]);
@@ -206,7 +231,7 @@ const ViewInstance = (props) => {
 
   const flattenedPermissions = useMemo(() => flattenCentralTenantPermissions(centralTenantPermissions), [centralTenantPermissions]);
 
-  const renderActionMenu = useCallback(({ onToggle }) => {
+  const renderActionMenu = ({ onToggle }) => {
     return (
       <InstanceActionMenu
         onToggle={onToggle}
@@ -221,9 +246,10 @@ const ViewInstance = (props) => {
         requests={requests}
         onCopy={onCopy}
         numberOfRequests={totalRequestsRecords || 0}
+        titleLevelRequestsFeatureEnabled={titleLevelRequestsFeatureEnabled}
       />
     );
-  }, [instance, isShared, marcRecord, centralTenantPermissions, canUseSingleRecordImport, canBeOpenedInLinkedData, tenantId, requests, totalRequestsRecords]);
+  };
 
   const checkIfHasLinkedAuthorities = async () => {
     const authorityIds = getLinkedAuthorityIds(instance);

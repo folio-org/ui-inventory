@@ -15,7 +15,7 @@ const useCirculationInstanceRequestsQuery = (instanceId, tenant) => {
   const [namespace] = useNamespace({ key: 'circulation-instance-requests' });
 
 
-  const { isLoading, data = {}, isFetching } = useQuery(
+  const { isLoading, data = {}, isFetching, refetch } = useQuery(
     [namespace, instanceId],
     () => ky.get('circulation/requests', {
       searchParams: {
@@ -30,6 +30,7 @@ const useCirculationInstanceRequestsQuery = (instanceId, tenant) => {
     isLoading,
     isFetching,
     data,
+    refetch,
   });
 };
 
