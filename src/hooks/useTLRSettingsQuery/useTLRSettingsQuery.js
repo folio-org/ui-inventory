@@ -10,7 +10,7 @@ const useTLRSettingsQuery = (tenant) => {
   const [namespace] = useNamespace({ key: 'tlr-settings' });
 
   return useQuery(
-    [namespace],
+    [namespace, tenant],
     () => ky.get('configurations/entries?query=(module==SETTINGS and configName==TLR)').json(),
   );
 };

@@ -74,7 +74,7 @@ import {
 const getTlrSettings = (settings) => {
   try {
     return JSON.parse(settings);
-  } catch (error) {
+  } catch {
     return {};
   }
 };
