@@ -56,7 +56,7 @@ import {
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
-import { handleKeyCommand, validateOptionalField } from '../../utils';
+import { handleKeyCommand, validateAdditionalCallNumbers, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
@@ -99,19 +99,7 @@ function validate(values) {
     }
   });
 
-  if (values.additionalCallNumbers && values.additionalCallNumbers.length > 0) {
-    const additionalCallNumbersErrors = values.additionalCallNumbers.map(callNumber => {
-      const error = {};
-      if (!callNumber.callNumber || callNumber.callNumber.trim() === '') {
-        error.callNumber = selectToContinueMsg;
-      }
-      return Object.keys(error).length ? error : undefined;
-    });
-
-    if (additionalCallNumbersErrors.some(error => error !== undefined)) {
-      errors.additionalCallNumbers = additionalCallNumbersErrors;
-    }
-  }
+  validateAdditionalCallNumbers(values, errors);
 
   return errors;
 }
