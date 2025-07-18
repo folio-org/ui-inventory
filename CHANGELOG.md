@@ -27,6 +27,7 @@ UIIN-3437.
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
 
 * Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
+* Add additional call numbers to Item records. Refs UIIN-3328.
 
 ## [13.0.7](https://github.com/folio-org/ui-inventory/tree/v13.0.7) (2025-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.6...v13.0.7)

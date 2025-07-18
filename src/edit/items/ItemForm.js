@@ -56,7 +56,7 @@ import {
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
-import { handleKeyCommand, validateOptionalField } from '../../utils';
+import { handleKeyCommand, validateAdditionalCallNumbers, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
@@ -68,6 +68,7 @@ import {
 } from './repeatableFields';
 import StatisticalCodeFields from '../statisticalCodeFields';
 import NoteFields from '../noteFields';
+import AdditionalCallNumbersItemLevelFields from './repeatableFields/AdditionalCallNumbersItemLevelFields';
 
 import styles from './ItemForm.css';
 import { itemStatusesMap } from '../../constants';
@@ -97,6 +98,8 @@ function validate(values) {
       errors[listProps.list] = listErrors;
     }
   });
+
+  validateAdditionalCallNumbers(values, errors);
 
   return errors;
 }
@@ -180,6 +183,29 @@ class ItemForm extends React.Component {
       newState.accordions = obj;
       return newState;
     });
+  };
+
+  handleCallNumberSwap = (additionalCallNumberIndex) => {
+    const { form: { change, getFieldState } } = this.props;
+
+    const primaryCallNumber = {
+      callNumber: getFieldState('itemLevelCallNumber')?.value || '',
+      prefix: getFieldState('itemLevelCallNumberPrefix')?.value || '',
+      suffix: getFieldState('itemLevelCallNumberSuffix')?.value || '',
+      typeId: getFieldState('itemLevelCallNumberTypeId')?.value || ''
+    };
+    const additionalCallNumbers = getFieldState('additionalCallNumbers')?.value || [];
+    const additionalCallNumber = additionalCallNumbers[additionalCallNumberIndex];
+
+    change('itemLevelCallNumber', additionalCallNumber.callNumber);
+    change('itemLevelCallNumberPrefix', additionalCallNumber.prefix);
+    change('itemLevelCallNumberSuffix', additionalCallNumber.suffix);
+    change('itemLevelCallNumberTypeId', additionalCallNumber.typeId);
+
+    const updatedAdditionalCallNumbers = [...additionalCallNumbers];
+    updatedAdditionalCallNumbers[additionalCallNumberIndex] = primaryCallNumber;
+
+    change('additionalCallNumbers', updatedAdditionalCallNumbers);
   };
 
   setItemDamagedStatusDate = () => {
@@ -711,6 +737,7 @@ class ItemForm extends React.Component {
                         />
                       </Col>
                     </Row>
+                    <AdditionalCallNumbersItemLevelFields callNumberTypeOptions={callNumberTypeOptions} onSwap={this.handleCallNumberSwap} />
                     <Row>
                       <Col sm={3}>
                         <Field

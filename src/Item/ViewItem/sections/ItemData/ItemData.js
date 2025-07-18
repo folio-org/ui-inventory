@@ -9,7 +9,7 @@ import {
   Row,
 } from '@folio/stripes/components';
 
-const ItemData = ({ itemData }) => {
+const ItemData = ({ itemData, refLookup, referenceTables }) => {
   return (
     <Accordion
       id="acc02"
@@ -65,6 +65,66 @@ const ItemData = ({ itemData }) => {
         </Col>
       </Row>
       <Row>
+        <Col xs={12}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
+          >
+            {itemData.additionalCallNumbers?.length > 0 ? (
+              <div>
+                {itemData.additionalCallNumbers.map((additionalCallNumber) => {
+                  const callNumberTypeName = refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name;
+                  return (
+                    <div
+                      key={additionalCallNumber.id}
+                      style={{ marginBottom: '10px' }}
+                    >
+                      <Row>
+                        <Col xs={3}>
+                          <KeyValue
+                            label={<FormattedMessage
+                              id="ui-inventory.callNumberType"
+                            />}
+                            value={callNumberTypeName}
+                          />
+                        </Col>
+                        <Col xs={3}>
+                          <KeyValue
+                            label={<FormattedMessage
+                              id="ui-inventory.callNumberPrefix"
+                            />}
+                            value={additionalCallNumber.prefix}
+                          />
+                        </Col>
+                        <Col xs={3}>
+                          <KeyValue
+                            label={<FormattedMessage
+                              id="ui-inventory.callNumber"
+                            />}
+                            value={additionalCallNumber.callNumber}
+                          />
+                        </Col>
+                        <Col xs={3}>
+                          <KeyValue
+                            label={<FormattedMessage
+                              id="ui-inventory.callNumberSuffix"
+                            />}
+                            value={additionalCallNumber.suffix}
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <FormattedMessage
+                id="ui-inventory.noAdditionalCallNumbers"
+              />
+            )}
+          </KeyValue>
+        </Col>
+      </Row>
+      <Row>
         <Col xs={3}>
           <KeyValue
             label={<FormattedMessage id="ui-inventory.copyNumber" />}
@@ -90,6 +150,8 @@ const ItemData = ({ itemData }) => {
 
 ItemData.propTypes = {
   itemData: PropTypes.object.isRequired,
+  refLookup: PropTypes.func.isRequired,
+  referenceTables: PropTypes.object.isRequired,
 };
 
 export default ItemData;
