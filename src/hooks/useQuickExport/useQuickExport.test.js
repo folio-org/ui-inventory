@@ -27,7 +27,7 @@ describe('useQuickExport', () => {
 
     const { result } = renderHook(() => useQuickExport(), { wrapper });
 
-    result.current.exportRecords({ uuids: [] });
+    result.current.mutateAsync({ uuids: [] });
 
     waitFor(() => expect(postMock).toHaveBeenCalled());
   });
