@@ -176,6 +176,7 @@ const getBrowseResultsFormatter = ({
       }, []).filter(name => !!name).join(', ');
     },
     numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.value && !r?.isAnchor) || (r?.name && !r?.isAnchor)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+    contributors: r => r.instanceContributors?.join(' ; '),
   };
 };
 
