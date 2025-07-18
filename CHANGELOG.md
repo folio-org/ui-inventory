@@ -20,6 +20,7 @@ UIIN-3437.
 * Instance -> ViewInstance: refactor component. Refs UIIN-3382.
 * Add missing pane id to instance details pane. Fixes UIIN-3443.
 * Provide hasCentralTenantPerm arg to useInstancePermissions hook. Fixes UIIN-3444.
+* ECS | No request send when user confirms ownership update of item record. Fixes UIIN-3440.
 * "New request" button is missing from the "Actions" dropdown in the Instance details pane. Fixes UIIN-3445.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
