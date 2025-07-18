@@ -22,6 +22,7 @@ UIIN-3437.
 * Provide hasCentralTenantPerm arg to useInstancePermissions hook. Fixes UIIN-3444.
 * ECS | No request send when user confirms ownership update of item record. Fixes UIIN-3440.
 * "New request" button is missing from the "Actions" dropdown in the Instance details pane. Fixes UIIN-3445.
+* Classification browse | Add Contributors to results list. Refs UIIN-3368.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
