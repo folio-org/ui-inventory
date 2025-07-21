@@ -24,7 +24,8 @@ UIIN-3437.
 * "New request" button is missing from the "Actions" dropdown in the Instance details pane. Fixes UIIN-3445.
 * Add additional call numbers to Holdings record. Refs UIIN-3327.
 * Add additional call numbers to Item records. Refs UIIN-3328.
-* 
+* Fix hotkey handlers for Instance details. Fixes UIIN-3448.
+
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
 

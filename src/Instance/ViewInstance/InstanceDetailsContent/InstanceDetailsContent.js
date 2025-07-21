@@ -64,12 +64,12 @@ const InstanceDetailsContent = ({
   tenantId,
   userTenantPermissions,
   holdingsSection,
+  accordionStatusRef,
 }) => {
   const stripes = useStripes();
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
-  const accordionStatusRef = useRef();
   const prevInstanceId = useRef(instance?.id);
   const referenceData = useReferenceData();
 
@@ -222,6 +222,7 @@ InstanceDetailsContent.propTypes = {
   tenantId: PropTypes.string,
   userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
   holdingsSection: PropTypes.node,
+  accordionStatusRef: PropTypes.object,
 };
 
 export default InstanceDetailsContent;
