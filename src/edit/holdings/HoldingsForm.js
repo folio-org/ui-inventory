@@ -42,7 +42,7 @@ import {
 } from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
-import { handleKeyCommand, validateAdditionalCallNumbers, validateOptionalField } from '../../utils';
+import { handleCallNumberSwap, handleKeyCommand, validateAdditionalCallNumbers, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
 import AdministrativeNoteFields from '../administrativeNoteFields';
@@ -233,24 +233,18 @@ class HoldingsForm extends React.Component {
   handleCallNumberSwap = (additionalCallNumberIndex) => {
     const { form: { change, getFieldState } } = this.props;
 
-    const primaryCallNumber = {
-      callNumber: getFieldState('callNumber')?.value || '',
-      prefix: getFieldState('callNumberPrefix')?.value || '',
-      suffix: getFieldState('callNumberSuffix')?.value || '',
-      typeId: getFieldState('callNumberTypeId')?.value || ''
-    };
-    const additionalCallNumbers = getFieldState('additionalCallNumbers')?.value || [];
-    const additionalCallNumber = additionalCallNumbers[additionalCallNumberIndex];
-
-    change('callNumber', additionalCallNumber.callNumber);
-    change('callNumberPrefix', additionalCallNumber.prefix);
-    change('callNumberSuffix', additionalCallNumber.suffix);
-    change('callNumberTypeId', additionalCallNumber.typeId);
-
-    const updatedAdditionalCallNumbers = [...additionalCallNumbers];
-    updatedAdditionalCallNumbers[additionalCallNumberIndex] = primaryCallNumber;
-
-    change('additionalCallNumbers', updatedAdditionalCallNumbers);
+    handleCallNumberSwap({
+      change,
+      getFieldState,
+      fieldNames: {
+        callNumber: 'callNumber',
+        prefix: 'callNumberPrefix',
+        suffix: 'callNumberSuffix',
+        typeId: 'callNumberTypeId',
+        additionalCallNumbers: 'additionalCallNumbers',
+      },
+      additionalCallNumberIndex,
+    });
   };
 
   render() {
