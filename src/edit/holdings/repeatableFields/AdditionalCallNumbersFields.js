@@ -13,76 +13,101 @@ import {
   Button,
   TextArea,
   Select,
-  IconButton,
+  Label,
+  RepeatableField,
 } from '@folio/stripes/components';
 
 const AdditionalCallNumbersFields = ({
   callNumberTypeOptions,
-  isFieldBlocked,
   onSwap,
   canAdd = true,
   canEdit = true,
   canDelete = true,
 }) => {
   const { formatMessage } = useIntl();
-  const ariaDeleteLabel = formatMessage({ id: 'stripes-components.deleteThisItem' });
-  const renderField = (name, index, fields) => (
+  const callNumberTypeLabel = formatMessage({ id: 'ui-inventory.callNumberType' });
+  const callNumberPrefixLabel = formatMessage({ id: 'ui-inventory.callNumberPrefix' });
+  const callNumberLabel = formatMessage({ id: 'ui-inventory.callNumber' });
+  const callNumberSuffixLabel = formatMessage({ id: 'ui-inventory.callNumberSuffix' });
+
+  const headLabels = (
+    <Row>
+      <Col sm={2}>
+        <Label tagName="legend">
+          {callNumberTypeLabel}
+        </Label>
+      </Col>
+      <Col sm={2}>
+        <Label tagName="legend">
+          {callNumberPrefixLabel}
+        </Label>
+      </Col>
+      <Col sm={2}>
+        <Label tagName="legend">
+          {callNumberLabel}
+        </Label>
+      </Col>
+      <Col sm={2}>
+        <Label tagName="legend">
+          {callNumberSuffixLabel}
+        </Label>
+      </Col>
+    </Row>
+  );
+  const renderField = (name, index) => (
     <Row key={index}>
       <Col sm={2}>
         <FormattedMessage id="ui-inventory.selectCallNumberType">
           {([label]) => (
             <Field
-              label={<FormattedMessage id="ui-inventory.callNumberType" />}
               name={`${name}.typeId`}
-              id={`additem_typeId_${index}`}
+              aria-label={callNumberTypeLabel}
+              id={`additem_callnumbertype_${index}`}
               component={Select}
               fullWidth
               dataOptions={[{ label, value: '' }, ...callNumberTypeOptions]}
-              disabled={!canEdit || isFieldBlocked('typeId')}
+              disabled={!canEdit}
             />
           )}
         </FormattedMessage>
       </Col>
       <Col sm={2}>
         <Field
-          label={<FormattedMessage id="ui-inventory.callNumberPrefix" />}
           name={`${name}.prefix`}
+          aria-label={callNumberPrefixLabel}
           id={`additem_prefix_${index}`}
           component={TextArea}
           rows={1}
           fullWidth
-          format={v => v?.trim()}
           formatOnBlur
-          disabled={!canEdit || isFieldBlocked('prefix')}
+          disabled={!canEdit}
         />
       </Col>
       <Col sm={2}>
         <Field
-          label={<FormattedMessage id="ui-inventory.callNumber" />}
           name={`${name}.callNumber`}
+          aria-label={callNumberLabel}
           id={`additem_callnumber_${index}`}
           component={TextArea}
           rows={1}
           fullWidth
-          format={v => v?.trim()}
           formatOnBlur
-          disabled={!canEdit || isFieldBlocked('callNumber')}
+          disabled={!canEdit}
         />
       </Col>
       <Col sm={2}>
         <Field
-          label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
           name={`${name}.suffix`}
+          aria-label={callNumberSuffixLabel}
           id={`additem_suffix_${index}`}
           component={TextArea}
           rows={1}
           fullWidth
-          format={v => v?.trim()}
           formatOnBlur
-          disabled={!canEdit || isFieldBlocked('suffix')}
+          disabled={!canEdit}
         />
       </Col>
-      <Col xs={10} sm={3} style={{ paddingTop: '25px' }}>
+      <Col xs={10} sm={3}>
         <Button
           onClick={() => onSwap(index)}
           buttonStyle="default"
@@ -91,56 +116,21 @@ const AdditionalCallNumbersFields = ({
           <FormattedMessage id="ui-inventory.swapWithPrimaryCallNumber" />
         </Button>
       </Col>
-      <Col xs={1} sm={1} style={{ paddingTop: '25px' }}>
-        <IconButton
-          icon="trash"
-          onClick={() => fields.remove(index)}
-          size="medium"
-          disabled={!canDelete}
-          name={ariaDeleteLabel}
-          aria-label={ariaDeleteLabel}
-        />
-      </Col>
     </Row>
   );
 
   return (
-    <>
-      <Row>
-        <Col
-          smOffset={0}
-          sm={4}
-        >
-          <strong>
-            <FormattedMessage id="ui-inventory.additionalCallNumbers" />
-          </strong>
-        </Col>
-      </Row>
-      <br />
-      <Row>
-        <Col xs={12}>
-          <FieldArray name="additionalCallNumbers">
-            {({ fields }) => (
-              <>
-                {fields.map((name, index) => renderField(name, index, fields))}
-                {canAdd && (
-                <Row>
-                  <Col xs={12}>
-                    <Button
-                      onClick={() => fields.push({})}
-                      buttonStyle="default"
-                    >
-                      <FormattedMessage id="ui-inventory.addAdditionalCallNumber" />
-                    </Button>
-                  </Col>
-                </Row>
-                )}
-              </>
-            )}
-          </FieldArray>
-        </Col>
-      </Row>
-    </>
+    <FieldArray
+      name="additionalCallNumbers"
+      component={RepeatableField}
+      legend={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
+      addLabel={canAdd ? <FormattedMessage id="ui-inventory.addAdditionalCallNumber" /> : ''}
+      onAdd={fields => fields.push({ uri: '' })}
+      headLabels={headLabels}
+      renderField={renderField}
+      canAdd={canAdd}
+      canRemove={canDelete}
+    />
   );
 };
 
@@ -149,7 +139,6 @@ AdditionalCallNumbersFields.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string,
   })).isRequired,
-  isFieldBlocked: PropTypes.func.isRequired,
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,

@@ -18,7 +18,6 @@ const callNumberTypeOptions = [
 const defaultProps = {
   callNumberTypeOptions,
   onSwap: jest.fn(),
-  isFieldBlocked: () => false,
   canAdd: true,
   canEdit: true,
   canDelete: true,
@@ -140,23 +139,6 @@ describe('AdditionalCallNumbersFields', () => {
     });
 
     expect(screen.queryByText('Delete')).not.toBeInTheDocument();
-  });
-
-  it('should respect field blocking', () => {
-    const isFieldBlocked = (fieldName) => fieldName === 'callNumber';
-
-    renderAdditionalCallNumbersFields({
-      isFieldBlocked,
-      initialValues: {
-        additionalCallNumbers: [{
-          typeId: '1',
-          callNumber: 'CN1',
-        }]
-      }
-    });
-
-    expect(screen.getByLabelText('Call number')).toBeDisabled();
-    expect(screen.getByLabelText('Call number type')).not.toBeDisabled();
   });
 
   it('should render swap button for each additional call number', () => {
