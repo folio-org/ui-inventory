@@ -135,14 +135,14 @@ const useItemUpdateOwnership = ({
         });
         showSuccessMessageAndGoBack(item.hrid);
       } catch (error) {
-        if (error.response.status === 400) {
+        if (error.response?.status === 400) {
           showReferenceDataErrorCallout();
         } else {
           showCommonErrorCallout();
         }
       }
     }
-  }, [stripes, item]);
+  }, [stripes.user.user?.tenants, item, updateOwnershipData]);
 
   return {
     handleUpdateOwnership,
