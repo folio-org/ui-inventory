@@ -12,17 +12,28 @@
 * Adding HRID to the Inventory results list & show columns options. Refs UIIN-1262.
 * Display more detailed error message when updating ownership for holdings fails. Refs UIIN-3339.
 * Remove empty lines in drop-down menus in Settings > Inventory > Number generator options. Refs UIIN-3439.
+* Display `Service point` in the `Circulation history` section in the item view page after check in action. Fixes UIIN-3417.
+* *BREAKING* Update for Split Search & Browse APIs. Refs UIIN-3435.
+* *BREAKING* Bump up okapiInterface version of linked-data to 2.0. Refs UIIN-3428.
+* Effective location in FOLIO Inventory is not updated and shown as inactive. Fixes
+UIIN-3437.
+* Instance -> ViewInstance: refactor component. Refs UIIN-3382.
+* Add missing pane id to instance details pane. Fixes UIIN-3443.
+* Provide hasCentralTenantPerm arg to useInstancePermissions hook. Fixes UIIN-3444.
+* ECS | No request send when user confirms ownership update of item record. Fixes UIIN-3440.
+* "New request" button is missing from the "Actions" dropdown in the Instance details pane. Fixes UIIN-3445.
 * Add additional call numbers to Holdings record. Refs UIIN-3327.
+* Add additional call numbers to Item records. Refs UIIN-3328.
+* 
+## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
+
+* Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
 
 ## [13.0.7](https://github.com/folio-org/ui-inventory/tree/v13.0.7) (2025-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.6...v13.0.7)
 
 * Use current tenant for MARC Holdings requests in View Source. Refs UIIN-3423.
-* Display `Service point` in the `Circulation history` section in the item view page after check in action. Fixes UIIN-3417.
-* *BREAKING* Update for Split Search & Browse APIs. Refs UIIN-3435.
-* *BREAKING* Bump up okapiInterface version of linked-data to 2.0. Refs UIIN-3428.
-* Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
-* Effective location in FOLIO Inventory is not updated and shown as inactive. Fixes UIIN-3437.
 
 ## [13.0.6](https://github.com/folio-org/ui-inventory/tree/v13.0.6) (2025-06-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.5...v13.0.6)
