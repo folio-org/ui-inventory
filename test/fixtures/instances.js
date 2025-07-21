@@ -196,7 +196,12 @@ export const instances = [
     'alternativeTitles': [],
     'editions': [],
     'series': [],
-    'items': [{ tenantId: 'college' }],
+    'items': [{
+      id: 'itemId',
+      holdingsRecordId: 'holdingsRecordId',
+      instanceId: '69640328-788e-43fc-9c3c-af39e243f3b7',
+      tenantId: 'college',
+    }],
     'identifiers': [{
       'identifierTypeId': '913300b2-03ed-469a-8179-c1092c991227',
       'value': '0747-0088'
@@ -239,10 +244,10 @@ export const instances = [
     }
   },
   {
-    'id': '69640328-788e-43fc-9c3c-af39e243f300',
+    'id': '67824984-788e-43fc-9c3c-af39e243f300',
     'hrid': 'inst000000000001',
     'source': 'CONSORTIUM-MARC',
-    'title': 'ABA Journal',
+    'title': 'Testing instance',
     'alternativeTitles': [],
     'editions': [],
     'series': [],
@@ -284,7 +289,7 @@ export const instances = [
     },
     'natureOfContentTermIds': ['0abeee3d-8ad2-4b04-92ff-221b4fce1075'],
     'links': {
-      'self': 'http://folio-testing-okapi.dev.folio.org/inventory/instances/69640328-788e-43fc-9c3c-af39e243f300'
+      'self': 'http://folio-testing-okapi.dev.folio.org/inventory/instances/67824984-788e-43fc-9c3c-af39e243f300'
     }
   },
 ];

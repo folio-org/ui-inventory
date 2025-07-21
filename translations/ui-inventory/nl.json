@@ -895,5 +895,6 @@
     "acq.acqMethod": "Acquisitie methode",
     "acq.averageCost": "Gemiddelde kosten",
     "acq.fundCode": "Fondscode",
-    "sourceUri": "Instance source URI"
+    "sourceUri": "Bron URI van Instance",
+    "instances.columns.instanceHRID": "Instance HRID"
 }

@@ -21,8 +21,8 @@ import useGoBack from '../../common/hooks/useGoBack';
 import {
   useAuditSettings,
   useQuickExport,
-  useSharedInstancesQuery,
 } from '../../hooks';
+import { useSharedInstancesQuery } from '../../Instance/hooks';
 import { CONSORTIUM_PREFIX } from '../../constants';
 import MARC_TYPES from './marcTypes';
 
@@ -45,6 +45,9 @@ jest.mock('../../hooks', () => ({
     }],
     isSettingsLoading: false,
   }),
+}));
+jest.mock('../../Instance/hooks', () => ({
+  ...jest.requireActual('../../Instance/hooks'),
   useSharedInstancesQuery: jest.fn(),
 }));
 
@@ -185,6 +188,25 @@ describe('ViewSource', () => {
 
     it('should display "shared marc bibliographic record" message', () => {
       expect(screen.getByText('Shared MARC bibliographic record')).toBeInTheDocument();
+    });
+  });
+
+  describe('when displaying a MARC Holdings record', () => {
+    beforeEach(async () => {
+      await act(async () => {
+        await renderWithIntl(getViewSource({
+          marcType: MARC_TYPES.HOLDINGS,
+          instance: {
+            title: 'Instance title',
+            source: `${CONSORTIUM_PREFIX}MARC`,
+            shared: true,
+          },
+        }), translations);
+      });
+    });
+
+    it('should display "local marc holdings record" message', () => {
+      expect(screen.getByText('Local MARC holdings record')).toBeInTheDocument();
     });
   });
 

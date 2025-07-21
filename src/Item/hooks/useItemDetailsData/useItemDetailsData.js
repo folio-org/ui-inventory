@@ -130,6 +130,7 @@ const useItemDetailsData = ({
     callNumberPrefix: item?.itemLevelCallNumberPrefix,
     callNumber: item?.itemLevelCallNumber,
     callNumberSuffix: item?.itemLevelCallNumberSuffix,
+    additionalCallNumbers: item?.additionalCallNumbers || [],
     copyNumber: item?.copyNumber,
     numberOfPieces: item?.numberOfPieces,
     descriptionOfPieces: item?.descriptionOfPieces,
@@ -179,7 +180,7 @@ const useItemDetailsData = ({
         {`${staffMember.personal.lastName}, ${staffMember.personal.firstName} ${staffMember.personal.middleName || ''}`}
       </Link>
     )
-  }), [item, staffMember]);
+  }), [item, staffMember, servicePoints]);
 
   const initialAccordionsState = {
     acc01: !areAllFieldsEmpty(values(administrativeData)),
