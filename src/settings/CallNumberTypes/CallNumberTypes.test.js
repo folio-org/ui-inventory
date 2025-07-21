@@ -1,7 +1,6 @@
-import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 
-import '../../test/jest/__mock__';
+import '../../../test/jest/__mock__';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { getSourceSuppressor } from '@folio/stripes/util';
@@ -10,8 +9,9 @@ import {
   renderWithIntl,
   stripesStub,
   translationsProperties
-} from '../../test/jest/helpers';
-import { RECORD_SOURCE } from '../constants';
+} from '../../../test/jest/helpers';
+
+import { RECORD_SOURCE } from '../../constants';
 import CallNumberTypes from './CallNumberTypes';
 
 jest.mock('@folio/stripes/util');
