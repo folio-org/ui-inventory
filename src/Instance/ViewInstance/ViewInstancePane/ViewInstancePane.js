@@ -63,6 +63,7 @@ const ViewInstancePane = ({
   isInstanceSharing = false,
   holdingsSection,
   paneTitleRef,
+  accordionStatusRef,
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
@@ -184,6 +185,7 @@ const ViewInstancePane = ({
           tenantId={tenantId}
           userTenantPermissions={userTenantPermissions}
           holdingsSection={holdingsSection}
+          accordionStatusRef={accordionStatusRef}
         />
       </Pane>
 
@@ -224,6 +226,7 @@ ViewInstancePane.propTypes = {
   isInstanceSharing: PropTypes.bool,
   holdingsSection: PropTypes.node,
   paneTitleRef: PropTypes.object,
+  accordionStatusRef: PropTypes.object,
 };
 
 export default ViewInstancePane;
