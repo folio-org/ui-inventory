@@ -729,6 +729,7 @@ class ViewHoldingsRecord extends React.Component {
       callNumberPrefix: get(holdingsRecord, ['callNumberPrefix'], '-'),
       callNumber: get(holdingsRecord, ['callNumber'], '-'),
       callNumberSuffix: get(holdingsRecord, ['callNumberSuffix'], '-'),
+      additionalCallNumbers: get(holdingsRecord, ['additionalCallNumbers'], []),
     };
 
     const effectiveLocationDisplay = (
@@ -1215,6 +1216,65 @@ class ViewHoldingsRecord extends React.Component {
                                 label={<FormattedMessage id="ui-inventory.callNumberSuffix" />}
                                 value={checkIfElementIsEmpty(locationAccordion.callNumberSuffix)}
                               />
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col xs={12}>
+                              <KeyValue
+                                label={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
+                              >
+                                {locationAccordion.additionalCallNumbers.length > 0 ? (
+                                  <div>
+                                    {locationAccordion.additionalCallNumbers.map((additionalCallNumber) => {
+                                      const callNumberTypeName = this.refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name;
+                                      return (
+                                        <div
+                                          key={additionalCallNumber.id}
+                                          style={{ marginBottom: '10px' }}
+                                        >
+                                          <Row>
+                                            <Col xs={3}>
+                                              <KeyValue
+                                                label={<FormattedMessage
+                                                  id="ui-inventory.callNumberType"
+                                                />}
+                                                value={checkIfElementIsEmpty(callNumberTypeName)}
+                                              />
+                                            </Col>
+                                            <Col xs={3}>
+                                              <KeyValue
+                                                label={<FormattedMessage
+                                                  id="ui-inventory.callNumberPrefix"
+                                                />}
+                                                value={checkIfElementIsEmpty(additionalCallNumber.prefix)}
+                                              />
+                                            </Col>
+                                            <Col xs={3}>
+                                              <KeyValue
+                                                label={<FormattedMessage
+                                                  id="ui-inventory.callNumber"
+                                                />}
+                                                value={checkIfElementIsEmpty(additionalCallNumber.callNumber)}
+                                              />
+                                            </Col>
+                                            <Col xs={3}>
+                                              <KeyValue
+                                                label={<FormattedMessage
+                                                  id="ui-inventory.callNumberSuffix"
+                                                />}
+                                                value={checkIfElementIsEmpty(additionalCallNumber.suffix)}
+                                              />
+                                            </Col>
+                                          </Row>
+                                      </div>);
+                                    })}
+                                  </div>
+                                ) : (
+                                  <FormattedMessage
+                                    id="ui-inventory.noAdditionalCallNumbers"
+                                  />
+                                )}
+                              </KeyValue>
                             </Col>
                           </Row>
                         </Accordion>

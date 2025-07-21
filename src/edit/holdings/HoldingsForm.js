@@ -42,7 +42,7 @@ import {
 } from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
-import { handleKeyCommand, validateOptionalField } from '../../utils';
+import { handleCallNumberSwap, handleKeyCommand, validateAdditionalCallNumbers, validateOptionalField } from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
 import AdministrativeNoteFields from '../administrativeNoteFields';
@@ -53,6 +53,7 @@ import {
   HoldingsStatementForIndexesFields,
   NoteFields,
   ReceivingHistoryFields,
+  AdditionalCallNumbersFields
 } from './repeatableFields';
 import StatisticalCodeFields from '../statisticalCodeFields';
 
@@ -78,6 +79,8 @@ function validate(values) {
       errors[listProps.list] = listErrors;
     }
   });
+
+  validateAdditionalCallNumbers(values, errors);
 
   return errors;
 }
@@ -123,6 +126,7 @@ class HoldingsForm extends React.Component {
     }).isRequired,
     form: PropTypes.shape({
       change: PropTypes.func,
+      getFieldState: PropTypes.func
     }),
     goTo: PropTypes.func.isRequired,
     httpError: PropTypes.object,
@@ -225,6 +229,23 @@ class HoldingsForm extends React.Component {
   };
 
   onSelectLocationHandler = loc => this.selectTemporaryLocation(loc);
+
+  handleCallNumberSwap = (additionalCallNumberIndex) => {
+    const { form: { change, getFieldState } } = this.props;
+
+    handleCallNumberSwap({
+      change,
+      getFieldState,
+      fieldNames: {
+        callNumber: 'callNumber',
+        prefix: 'callNumberPrefix',
+        suffix: 'callNumberSuffix',
+        typeId: 'callNumberTypeId',
+        additionalCallNumbers: 'additionalCallNumbers',
+      },
+      additionalCallNumberIndex,
+    });
+  };
 
   render() {
     const {
@@ -623,6 +644,7 @@ class HoldingsForm extends React.Component {
                         />
                       </Col>
                     </Row>
+                    <AdditionalCallNumbersFields callNumberTypeOptions={callNumberTypeOptions} isFieldBlocked={this.isFieldBlocked} onSwap={this.handleCallNumberSwap} />
                   </Accordion>
                   <Accordion
                     id="accordion03"

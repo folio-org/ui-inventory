@@ -955,3 +955,31 @@ export function validateAdditionalCallNumbers(values, errors) {
     }
   }
 }
+
+export const handleCallNumberSwap = ({
+  change,
+  getFieldState,
+  fieldNames,
+  additionalCallNumberIndex,
+}) => {
+  const primaryCallNumber = {
+    callNumber: getFieldState(fieldNames.callNumber)?.value || '',
+    prefix: getFieldState(fieldNames.prefix)?.value || '',
+    suffix: getFieldState(fieldNames.suffix)?.value || '',
+    typeId: getFieldState(fieldNames.typeId)?.value || ''
+  };
+
+  const additionalCallNumbers = getFieldState(fieldNames.additionalCallNumbers)?.value || [];
+  const additionalCallNumber = additionalCallNumbers[additionalCallNumberIndex];
+
+  change(fieldNames.callNumber, additionalCallNumber.callNumber);
+  change(fieldNames.prefix, additionalCallNumber.prefix);
+  change(fieldNames.suffix, additionalCallNumber.suffix);
+  change(fieldNames.typeId, additionalCallNumber.typeId);
+
+  const updatedAdditionalCallNumbers = [...additionalCallNumbers];
+  updatedAdditionalCallNumbers[additionalCallNumberIndex] = primaryCallNumber;
+
+  change(fieldNames.additionalCallNumbers, updatedAdditionalCallNumbers);
+};
+
