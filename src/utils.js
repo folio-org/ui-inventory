@@ -939,3 +939,47 @@ export const omitCurrentAndCentralTenants = (stripes) => {
 export const getIsVersionHistoryEnabled = settings => {
   return settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
 };
+
+export function validateAdditionalCallNumbers(values, errors) {
+  if (values.additionalCallNumbers && values.additionalCallNumbers.length > 0) {
+    const additionalCallNumbersErrors = values.additionalCallNumbers.map(callNumber => {
+      const error = {};
+      if (!callNumber.callNumber || callNumber.callNumber.trim() === '') {
+        error.callNumber = <FormattedMessage id="ui-inventory.selectToContinue" />;
+      }
+      return Object.keys(error).length ? error : undefined;
+    });
+
+    if (additionalCallNumbersErrors.some(error => error !== undefined)) {
+      errors.additionalCallNumbers = additionalCallNumbersErrors;
+    }
+  }
+}
+
+export const handleCallNumberSwap = ({
+  change,
+  getFieldState,
+  fieldNames,
+  additionalCallNumberIndex,
+}) => {
+  const primaryCallNumber = {
+    callNumber: getFieldState(fieldNames.callNumber)?.value || '',
+    prefix: getFieldState(fieldNames.prefix)?.value || '',
+    suffix: getFieldState(fieldNames.suffix)?.value || '',
+    typeId: getFieldState(fieldNames.typeId)?.value || ''
+  };
+
+  const additionalCallNumbers = getFieldState(fieldNames.additionalCallNumbers)?.value || [];
+  const additionalCallNumber = additionalCallNumbers[additionalCallNumberIndex];
+
+  change(fieldNames.callNumber, additionalCallNumber.callNumber);
+  change(fieldNames.prefix, additionalCallNumber.prefix);
+  change(fieldNames.suffix, additionalCallNumber.suffix);
+  change(fieldNames.typeId, additionalCallNumber.typeId);
+
+  const updatedAdditionalCallNumbers = [...additionalCallNumbers];
+  updatedAdditionalCallNumbers[additionalCallNumberIndex] = primaryCallNumber;
+
+  change(fieldNames.additionalCallNumbers, updatedAdditionalCallNumbers);
+};
+

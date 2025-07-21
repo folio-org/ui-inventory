@@ -1,4 +1,4 @@
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
+import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -13,7 +13,7 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useLocation: jest.fn(),
   useHistory: jest.fn(),
-  useParams: jest.fn().mockReturnValue({ id: 'instance-id'}),
+  useParams: jest.fn().mockReturnValue({ id: 'instance-id' }),
 }));
 jest.mock('../../common', () => ({
   useInstance: jest.fn().mockReturnValue({
@@ -31,10 +31,13 @@ jest.mock('../../common', () => ({
     refetch: jest.fn(),
   }),
 }));
+jest.mock('../../hooks', () => ({
+  useMarcRecordQuery: jest.fn().mockReturnValue({ data: {} }),
+  useTLRSettingsQuery: jest.fn().mockReturnValue({ data: { configs: [{ value: { titleLevelRequestsFeatureEnabled: 'true' } }] } }),
+}));
 jest.mock('../hooks', () => ({
   useUserTenantPermissions: jest.fn().mockReturnValue({ userPermissions: [], isFetching: false, isLoading: false }),
   useInstanceImportSupportedQuery: jest.fn().mockReturnValue({ data: true }),
-  useMarcRecordQuery: jest.fn().mockReturnValue({ data: {} }),
   useCirculationInstanceRequestsQuery: jest.fn().mockReturnValue({ data: { requests: [], totalRecords: 0 } }),
   useInstanceModalsContext: jest.fn().mockReturnValue({
     isItemsMovement: false,
@@ -64,13 +67,15 @@ const renderViewInstance = () => {
 };
 
 describe('ViewInstance', () => {
-  it('should render instance view pane', () => {
-    renderViewInstance();
+  it('should render instance view pane', async () => {
+    await act(async () => renderViewInstance());
+
     expect(screen.getByText('ViewInstancePane')).toBeInTheDocument();
   });
 
-  it('should render instance modals', () => {
-    renderViewInstance();
+  it('should render instance modals', async () => {
+    await act(async () => renderViewInstance());
+
     expect(screen.getByText('InstanceModals')).toBeInTheDocument();
   });
 });

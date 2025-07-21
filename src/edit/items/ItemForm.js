@@ -56,7 +56,12 @@ import {
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
-import { handleKeyCommand, validateOptionalField } from '../../utils';
+import {
+  handleCallNumberSwap,
+  handleKeyCommand,
+  validateAdditionalCallNumbers,
+  validateOptionalField
+} from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
@@ -68,6 +73,7 @@ import {
 } from './repeatableFields';
 import StatisticalCodeFields from '../statisticalCodeFields';
 import NoteFields from '../noteFields';
+import AdditionalCallNumbersItemLevelFields from './repeatableFields/AdditionalCallNumbersItemLevelFields';
 
 import styles from './ItemForm.css';
 import { itemStatusesMap } from '../../constants';
@@ -97,6 +103,8 @@ function validate(values) {
       errors[listProps.list] = listErrors;
     }
   });
+
+  validateAdditionalCallNumbers(values, errors);
 
   return errors;
 }
@@ -179,6 +187,23 @@ class ItemForm extends React.Component {
       const newState = cloneDeep(curState);
       newState.accordions = obj;
       return newState;
+    });
+  };
+
+  handleCallNumberSwap = (additionalCallNumberIndex) => {
+    const { form: { change, getFieldState } } = this.props;
+
+    handleCallNumberSwap({
+      change,
+      getFieldState,
+      fieldNames: {
+        callNumber: 'itemLevelCallNumber',
+        prefix: 'itemLevelCallNumberPrefix',
+        suffix: 'itemLevelCallNumberSuffix',
+        typeId: 'itemLevelCallNumberTypeId',
+        additionalCallNumbers: 'additionalCallNumbers',
+      },
+      additionalCallNumberIndex,
     });
   };
 
@@ -711,6 +736,7 @@ class ItemForm extends React.Component {
                         />
                       </Col>
                     </Row>
+                    <AdditionalCallNumbersItemLevelFields callNumberTypeOptions={callNumberTypeOptions} onSwap={this.handleCallNumberSwap} />
                     <Row>
                       <Col sm={3}>
                         <Field
