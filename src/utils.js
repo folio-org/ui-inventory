@@ -939,3 +939,19 @@ export const omitCurrentAndCentralTenants = (stripes) => {
 export const getIsVersionHistoryEnabled = settings => {
   return settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
 };
+
+export function validateAdditionalCallNumbers(values, errors) {
+  if (values.additionalCallNumbers && values.additionalCallNumbers.length > 0) {
+    const additionalCallNumbersErrors = values.additionalCallNumbers.map(callNumber => {
+      const error = {};
+      if (!callNumber.callNumber || callNumber.callNumber.trim() === '') {
+        error.callNumber = <FormattedMessage id="ui-inventory.selectToContinue" />;
+      }
+      return Object.keys(error).length ? error : undefined;
+    });
+
+    if (additionalCallNumbersErrors.some(error => error !== undefined)) {
+      errors.additionalCallNumbers = additionalCallNumbersErrors;
+    }
+  }
+}
