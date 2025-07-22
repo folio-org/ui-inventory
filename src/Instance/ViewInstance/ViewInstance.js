@@ -88,6 +88,7 @@ const ViewInstance = (props) => {
   const history = useHistory();
   const location = useLocation();
   const paneTitleRef = useRef(null);
+  const accordionStatusRef = useRef();
 
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
@@ -116,7 +117,8 @@ const ViewInstance = (props) => {
   }, [instance]);
 
   const isShared = Boolean(instance.shared);
-  const tenantId = instance.tenantId ?? stripes.okapi.tenant;
+  const currentTenant = stripes.okapi.tenant;
+  const instanceTenantOwner = instance.tenantId ?? currentTenant;
 
   const {
     userPermissions: centralTenantPermissions,
@@ -125,9 +127,9 @@ const ViewInstance = (props) => {
     enabled: Boolean(isShared && checkIfUserInMemberTenant(stripes)),
   });
   const { data: isInstanceImportSupported } = useInstanceImportSupportedQuery(instance.id, { enabled: isMarcOrLinkedDataSourceRecord });
-  const { data: marcRecord } = useMarcRecordQuery(instance.id, INSTANCE_RECORD_TYPE, isShared ? centralTenantId : tenantId, { enabled: isMarcOrLinkedDataSourceRecord });
-  const { data: { requests = [], totalRecords: totalRequestsRecords }, refetch: refetchRequests } = useCirculationInstanceRequestsQuery(instance.id, tenantId);
-  const { data: tlrSettings, isLoading: isTLRSettingsLoading } = useTLRSettingsQuery(tenantId);
+  const { data: marcRecord } = useMarcRecordQuery(instance.id, INSTANCE_RECORD_TYPE, isShared ? centralTenantId : instanceTenantOwner, { enabled: isMarcOrLinkedDataSourceRecord });
+  const { data: { requests = [], totalRecords: totalRequestsRecords }, refetch: refetchRequests } = useCirculationInstanceRequestsQuery(instance.id, instanceTenantOwner);
+  const { data: tlrSettings, isLoading: isTLRSettingsLoading } = useTLRSettingsQuery(instanceTenantOwner);
 
   useEffect(() => {
     const checkCanBeOpenedInLinkedData = () => {
@@ -182,12 +184,12 @@ const ViewInstance = (props) => {
 
   const { isInstanceSharing, handleShareLocalInstance } = useInstanceSharing({
     instance,
-    tenantId,
+    tenantId: instanceTenantOwner,
     centralTenantId,
     refetchInstance: refetch,
     sendCallout: callout.sendCallout,
   });
-  const { mutateInstance: mutateEntity } = useInstanceMutation({ tenantId });
+  const { mutateInstance: mutateEntity } = useInstanceMutation({ tenantId: instanceTenantOwner });
   const { importRecord } = useImportRecord();
 
   const tenantIdForDeletion = isShared && !isInstanceShadowCopy(instance.source) ? centralTenantId : stripes.okapi.tenant;
@@ -223,6 +225,8 @@ const ViewInstance = (props) => {
     marcRecord,
     callout,
     canBeOpenedInLinkedData,
+    accordionStatusRef,
+    onCopy,
   });
 
   const mutateInstance = async (entity, { onError }) => {
@@ -242,7 +246,7 @@ const ViewInstance = (props) => {
         canUseSingleRecordImport={canUseSingleRecordImport}
         canBeOpenedInLinkedData={canBeOpenedInLinkedData}
         callout={callout}
-        tenant={tenantId}
+        tenant={instanceTenantOwner}
         requests={requests}
         onCopy={onCopy}
         numberOfRequests={totalRequestsRecords || 0}
@@ -300,7 +304,7 @@ const ViewInstance = (props) => {
       <HoldingsListContainer
         instance={instance}
         draggable={isItemsMovement}
-        tenantId={tenantId}
+        tenantId={currentTenant}
         pathToAccordionsState={['holdings']}
         droppable
       />
@@ -332,6 +336,7 @@ const ViewInstance = (props) => {
         holdingsSection={holdingsSection}
         paneTitleRef={paneTitleRef}
         userTenantPermissions={userTenantPermissions}
+        accordionStatusRef={accordionStatusRef}
       />
       <InstanceModals
         instance={instance}

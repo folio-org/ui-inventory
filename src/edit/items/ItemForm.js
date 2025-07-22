@@ -56,7 +56,12 @@ import {
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
-import { handleKeyCommand, validateAdditionalCallNumbers, validateOptionalField } from '../../utils';
+import {
+  handleCallNumberSwap,
+  handleKeyCommand,
+  validateAdditionalCallNumbers,
+  validateOptionalField
+} from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
@@ -188,24 +193,18 @@ class ItemForm extends React.Component {
   handleCallNumberSwap = (additionalCallNumberIndex) => {
     const { form: { change, getFieldState } } = this.props;
 
-    const primaryCallNumber = {
-      callNumber: getFieldState('itemLevelCallNumber')?.value || '',
-      prefix: getFieldState('itemLevelCallNumberPrefix')?.value || '',
-      suffix: getFieldState('itemLevelCallNumberSuffix')?.value || '',
-      typeId: getFieldState('itemLevelCallNumberTypeId')?.value || ''
-    };
-    const additionalCallNumbers = getFieldState('additionalCallNumbers')?.value || [];
-    const additionalCallNumber = additionalCallNumbers[additionalCallNumberIndex];
-
-    change('itemLevelCallNumber', additionalCallNumber.callNumber);
-    change('itemLevelCallNumberPrefix', additionalCallNumber.prefix);
-    change('itemLevelCallNumberSuffix', additionalCallNumber.suffix);
-    change('itemLevelCallNumberTypeId', additionalCallNumber.typeId);
-
-    const updatedAdditionalCallNumbers = [...additionalCallNumbers];
-    updatedAdditionalCallNumbers[additionalCallNumberIndex] = primaryCallNumber;
-
-    change('additionalCallNumbers', updatedAdditionalCallNumbers);
+    handleCallNumberSwap({
+      change,
+      getFieldState,
+      fieldNames: {
+        callNumber: 'itemLevelCallNumber',
+        prefix: 'itemLevelCallNumberPrefix',
+        suffix: 'itemLevelCallNumberSuffix',
+        typeId: 'itemLevelCallNumberTypeId',
+        additionalCallNumbers: 'additionalCallNumbers',
+      },
+      additionalCallNumberIndex,
+    });
   };
 
   setItemDamagedStatusDate = () => {
