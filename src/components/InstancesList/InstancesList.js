@@ -58,6 +58,7 @@ import {
   getSearchResultsFormatter,
   SEARCH_COLUMN_MAPPINGS,
   withReset,
+  getDefaultQindex,
 } from '@folio/stripes-inventory-components';
 
 import FilterNavigation from '../FilterNavigation';
@@ -1368,7 +1369,8 @@ class InstancesList extends React.Component {
             advancedSearchIndex={queryIndexes.ADVANCED_SEARCH}
             advancedSearchOptions={advancedSearchOptions}
             advancedSearchQueryBuilder={advancedSearchQueryBuilder}
-            selectedIndex={get(data.query, 'qindex')}
+            // query.qindex is empty by default when switching between segments so we need to pass some default value here
+            selectedIndex={get(data.query, 'qindex') || getDefaultQindex(segment)}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
             initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}
