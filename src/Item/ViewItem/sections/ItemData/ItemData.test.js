@@ -24,6 +24,8 @@ const defaultProps = {
   }
 };
 
+const mockRefLookup = (table, id) => table.find(item => item.id === id);
+
 const renderItemData = (props) => {
   const component = (
     <ItemData
@@ -90,5 +92,77 @@ describe('ItemData', () => {
 
     const noValueElements = screen.getAllByText('-');
     expect(noValueElements).toHaveLength(8);
+  });
+
+  describe('additional call numbers', () => {
+    const referenceTables = {
+      callNumberTypes: [{ id: '1', name: 'Library of Congress classification' }],
+    };
+
+    const commonProps = {
+      referenceTables,
+      refLookup: mockRefLookup,
+    };
+
+    it('should render additional call numbers with correct values', () => {
+      const additionalCallNumbers = [{
+        'callNumber': 'addCN1',
+        'prefix': 'addPrefix1',
+        'suffix': 'addSuffix1',
+        'typeId': '1',
+      }];
+      const props = {
+        ...commonProps,
+        itemData: {
+          ...defaultProps.itemData,
+          additionalCallNumbers
+        }
+      };
+      renderItemData(props);
+      expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+      expect(screen.queryByText('No additional call numbers')).not.toBeInTheDocument();
+      expect(screen.getByText('addCN1')).toBeInTheDocument();
+      expect(screen.getByText('addPrefix1')).toBeInTheDocument();
+      expect(screen.getByText('addSuffix1')).toBeInTheDocument();
+      expect(screen.getAllByText('Library of Congress classification')).toHaveLength(2);
+    });
+
+    it('should render an empty additional call numbers section if no additional call numbers are present', () => {
+      renderItemData();
+      expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+      expect(screen.getByText('No additional call numbers')).toBeInTheDocument();
+    });
+
+    it('should render multiple additional call numbers', () => {
+      const additionalCallNumbers = [{
+        'callNumber': 'addCN1',
+        'prefix': 'addPrefix1',
+        'suffix': 'addSuffix1',
+        'typeId': '1',
+      }, {
+        'callNumber': 'addCN2',
+        'prefix': 'addPrefix2',
+        'suffix': 'addSuffix2',
+        'typeId': '1',
+      }
+      ];
+      const props = {
+        ...commonProps,
+        itemData: {
+          ...defaultProps.itemData,
+          additionalCallNumbers
+        }
+      };
+      renderItemData(props);
+      expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+      expect(screen.queryByText('No additional call numbers')).not.toBeInTheDocument();
+      expect(screen.getByText('addCN1')).toBeInTheDocument();
+      expect(screen.getByText('addPrefix1')).toBeInTheDocument();
+      expect(screen.getByText('addSuffix1')).toBeInTheDocument();
+      expect(screen.getByText('addCN2')).toBeInTheDocument();
+      expect(screen.getByText('addPrefix2')).toBeInTheDocument();
+      expect(screen.getByText('addSuffix2')).toBeInTheDocument();
+      expect(screen.getAllByText('Library of Congress classification')).toHaveLength(3);
+    });
   });
 });

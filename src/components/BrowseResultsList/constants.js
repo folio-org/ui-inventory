@@ -10,9 +10,9 @@ export const VISIBLE_COLUMNS_MAP = {
   [browseModeOptions.LOCAL]: ['callNumber', 'title', 'numberOfTitles'],
   [browseModeOptions.NATIONAL_LIBRARY_OF_MEDICINE]: ['callNumber', 'title', 'numberOfTitles'],
   [browseModeOptions.OTHER]: ['callNumber', 'title', 'numberOfTitles'],
-  [browseModeOptions.CLASSIFICATION_ALL]: ['classificationNumber', 'numberOfTitles'],
-  [browseModeOptions.DEWEY_CLASSIFICATION]: ['classificationNumber', 'numberOfTitles'],
-  [browseModeOptions.LC_CLASSIFICATION]: ['classificationNumber', 'numberOfTitles'],
+  [browseModeOptions.CLASSIFICATION_ALL]: ['classificationNumber', 'title', 'contributors', 'numberOfTitles'],
+  [browseModeOptions.DEWEY_CLASSIFICATION]: ['classificationNumber', 'title', 'contributors', 'numberOfTitles'],
+  [browseModeOptions.LC_CLASSIFICATION]: ['classificationNumber', 'title', 'contributors', 'numberOfTitles'],
   [browseModeOptions.SUPERINTENDENT]: ['callNumber', 'title', 'numberOfTitles'],
   [browseModeOptions.CONTRIBUTORS]: ['contributor', 'contributorType', 'relatorTerm', 'numberOfTitles'],
 };
@@ -70,13 +70,22 @@ export const COLUMNS_WIDTHS = {
     numberOfTitles: '14%',
   },
   [browseModeOptions.CLASSIFICATION_ALL]: {
-    classificationNumber: '50%',
+    classificationNumber: '20%',
+    title: '35%',
+    contributors: '30%',
+    numberOfTitles: '15%',
   },
   [browseModeOptions.DEWEY_CLASSIFICATION]: {
-    classificationNumber: '50%',
+    classificationNumber: '20%',
+    title: '35%',
+    contributors: '30%',
+    numberOfTitles: '15%',
   },
   [browseModeOptions.LC_CLASSIFICATION]: {
-    classificationNumber: '50%',
+    classificationNumber: '20%',
+    title: '35%',
+    contributors: '30%',
+    numberOfTitles: '15%',
   },
   [browseModeOptions.CONTRIBUTORS]: {
     contributor: '50%',

@@ -31,7 +31,6 @@ import {
 import {
   segments,
   LIMIT_MAX,
-  OKAPI_TENANT_HEADER,
   SORT_OPTIONS,
 } from '@folio/stripes-inventory-components';
 
@@ -43,8 +42,6 @@ import {
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
   CONSORTIUM_PREFIX,
-  CONTENT_TYPE_HEADER,
-  OKAPI_TOKEN_HEADER,
   AUTHORITY_LINKED_FIELDS,
   VERSION_HISTORY_ENABLED_SETTING,
 } from './constants';
@@ -870,30 +867,6 @@ export const replaceFilter = (filters, filterToReplace, filterToReplaceWith) => 
   }, []).join(',');
 };
 
-export const setRecordForDeletion = async (okapi, id, tenantId) => {
-  const {
-    url,
-    token,
-  } = okapi;
-  const path = `${url}/inventory/instances/${id}/mark-deleted`;
-
-  const response = await fetch(path, {
-    method: 'DELETE',
-    headers: {
-      [OKAPI_TENANT_HEADER]: tenantId,
-      [CONTENT_TYPE_HEADER]: 'application/json',
-      ...(token && { [OKAPI_TOKEN_HEADER]: token }),
-    },
-    credentials: 'include',
-  });
-
-  if (!response.ok) {
-    throw response;
-  }
-
-  return response;
-};
-
 export const parseEmptyFormValue = value => value;
 
 export const redirectToMarcEditPage = (pathname, instance, location, history) => {
@@ -934,7 +907,7 @@ export const sendCalloutOnAffiliationChange = (stripes, tenantId, callout) => {
   }
 };
 
-export const checkIfCentralOrderingIsActive = centralOrdering => centralOrdering.records[0]?.settings[0]?.value === 'true';
+export const checkIfCentralOrderingIsActive = centralOrdering => centralOrdering?.settings[0]?.value === 'true';
 
 export const flattenCentralTenantPermissions = (centralTenantPermissions) => {
   // Set is used to collect unique permission names because subPermissions can duplicate
@@ -966,3 +939,47 @@ export const omitCurrentAndCentralTenants = (stripes) => {
 export const getIsVersionHistoryEnabled = settings => {
   return settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
 };
+
+export function validateAdditionalCallNumbers(values, errors) {
+  if (values.additionalCallNumbers && values.additionalCallNumbers.length > 0) {
+    const additionalCallNumbersErrors = values.additionalCallNumbers.map(callNumber => {
+      const error = {};
+      if (!callNumber.callNumber || callNumber.callNumber.trim() === '') {
+        error.callNumber = <FormattedMessage id="ui-inventory.selectToContinue" />;
+      }
+      return Object.keys(error).length ? error : undefined;
+    });
+
+    if (additionalCallNumbersErrors.some(error => error !== undefined)) {
+      errors.additionalCallNumbers = additionalCallNumbersErrors;
+    }
+  }
+}
+
+export const handleCallNumberSwap = ({
+  change,
+  getFieldState,
+  fieldNames,
+  additionalCallNumberIndex,
+}) => {
+  const primaryCallNumber = {
+    callNumber: getFieldState(fieldNames.callNumber)?.value || '',
+    prefix: getFieldState(fieldNames.prefix)?.value || '',
+    suffix: getFieldState(fieldNames.suffix)?.value || '',
+    typeId: getFieldState(fieldNames.typeId)?.value || ''
+  };
+
+  const additionalCallNumbers = getFieldState(fieldNames.additionalCallNumbers)?.value || [];
+  const additionalCallNumber = additionalCallNumbers[additionalCallNumberIndex];
+
+  change(fieldNames.callNumber, additionalCallNumber.callNumber);
+  change(fieldNames.prefix, additionalCallNumber.prefix);
+  change(fieldNames.suffix, additionalCallNumber.suffix);
+  change(fieldNames.typeId, additionalCallNumber.typeId);
+
+  const updatedAdditionalCallNumbers = [...additionalCallNumbers];
+  updatedAdditionalCallNumbers[additionalCallNumberIndex] = primaryCallNumber;
+
+  change(fieldNames.additionalCallNumbers, updatedAdditionalCallNumbers);
+};
+

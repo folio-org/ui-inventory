@@ -58,18 +58,18 @@ import {
   getSearchResultsFormatter,
   SEARCH_COLUMN_MAPPINGS,
   withReset,
+  getDefaultQindex,
 } from '@folio/stripes-inventory-components';
 
-import { withSingleRecordImport } from '..';
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
-import ViewInstanceWrapper from '../../ViewInstanceWrapper';
 import formatters from '../../referenceFormatters';
 import {
   withLocation,
   withUseResourcesIds,
+  withSingleRecordImport,
 } from '../../hocs';
 import {
   getNextSelectedRowsState,
@@ -104,6 +104,7 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
+import ViewInstanceRoute from '../../routes/ViewInstanceRoute';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
@@ -1368,7 +1369,8 @@ class InstancesList extends React.Component {
             advancedSearchIndex={queryIndexes.ADVANCED_SEARCH}
             advancedSearchOptions={advancedSearchOptions}
             advancedSearchQueryBuilder={advancedSearchQueryBuilder}
-            selectedIndex={get(data.query, 'qindex')}
+            // query.qindex is empty by default when switching between segments so we need to pass some default value here
+            selectedIndex={get(data.query, 'qindex') || getDefaultQindex(segment)}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
             initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}
@@ -1378,7 +1380,7 @@ class InstancesList extends React.Component {
             isCursorAtEnd
             isRequestUrlExceededLimit={isRequestUrlExceededLimit}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
-            viewRecordComponent={ViewInstanceWrapper}
+            viewRecordComponent={ViewInstanceRoute}
             editRecordComponent={InstanceForm}
             onSelectRow={this.onSelectRow}
             paneTitleRef={this.paneTitleRef}
