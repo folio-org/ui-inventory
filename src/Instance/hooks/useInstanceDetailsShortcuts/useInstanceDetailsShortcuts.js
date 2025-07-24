@@ -17,6 +17,8 @@ const useInstanceDetailsShortcuts = ({
   marcRecord,
   callout,
   canBeOpenedInLinkedData,
+  accordionStatusRef,
+  onCopy,
 }) => {
   const stripes = useStripes();
 
@@ -30,6 +32,7 @@ const useInstanceDetailsShortcuts = ({
     callout,
     instance,
     canBeOpenedInLinkedData,
+    onCopy,
   });
 
   return [
@@ -73,11 +76,11 @@ const useInstanceDetailsShortcuts = ({
     },
     {
       name: 'expandAllSections',
-      handler: (e) => expandAllSections(e, this.accordionStatusRef),
+      handler: (e) => expandAllSections(e, accordionStatusRef),
     },
     {
       name: 'collapseAllSections',
-      handler: (e) => collapseAllSections(e, this.accordionStatusRef),
+      handler: (e) => collapseAllSections(e, accordionStatusRef),
     },
   ];
 };

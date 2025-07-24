@@ -25,12 +25,17 @@ UIIN-3437.
 * Add additional call numbers to Holdings record. Refs UIIN-3327.
 * Add additional call numbers to Item records. Refs UIIN-3328.
 * ECS: Provide correct tenant to get member tenant holdings for instance. Fixes UIIN-3447.
+* Fix hotkey handlers for Instance details. Fixes UIIN-3448.
+* Classification browse | Add Contributors to results list. Refs UIIN-3368.
+* Open Item record detail view when exact match is found via Keyword search option in Item tab. Refs UIIN-3416.
+* Classification browse | Add Title to results list. Refs UIIN-3367.
 * CallNumberTypes component: refactor class component. Refs UIIN-3389.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
 
 * Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
+* Support interface `item-storage` `11.0`. Refs UIIN-3429.
 
 ## [13.0.7](https://github.com/folio-org/ui-inventory/tree/v13.0.7) (2025-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.6...v13.0.7)

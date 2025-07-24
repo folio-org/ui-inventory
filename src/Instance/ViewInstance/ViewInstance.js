@@ -88,6 +88,7 @@ const ViewInstance = (props) => {
   const history = useHistory();
   const location = useLocation();
   const paneTitleRef = useRef(null);
+  const accordionStatusRef = useRef();
 
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
@@ -224,6 +225,8 @@ const ViewInstance = (props) => {
     marcRecord,
     callout,
     canBeOpenedInLinkedData,
+    accordionStatusRef,
+    onCopy,
   });
 
   const mutateInstance = async (entity, { onError }) => {
@@ -333,6 +336,7 @@ const ViewInstance = (props) => {
         holdingsSection={holdingsSection}
         paneTitleRef={paneTitleRef}
         userTenantPermissions={userTenantPermissions}
+        accordionStatusRef={accordionStatusRef}
       />
       <InstanceModals
         instance={instance}
