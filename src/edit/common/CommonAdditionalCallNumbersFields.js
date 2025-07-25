@@ -127,7 +127,6 @@ const CommonAdditionalCallNumbersFields = ({
       component={RepeatableField}
       legend={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
       addLabel={canAdd ? <FormattedMessage id="ui-inventory.addAdditionalCallNumber" /> : ''}
-      onAdd={fields => fields.push({ uri: '' })}
       headLabels={headLabels}
       renderField={renderField}
       canAdd={canAdd}

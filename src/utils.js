@@ -966,7 +966,7 @@ export const handleCallNumberSwap = ({
     callNumber: getFieldState(fieldNames.callNumber)?.value || '',
     prefix: getFieldState(fieldNames.prefix)?.value || '',
     suffix: getFieldState(fieldNames.suffix)?.value || '',
-    typeId: getFieldState(fieldNames.typeId)?.value || ''
+    typeId: getFieldState(fieldNames.typeId)?.value || null,
   };
 
   const additionalCallNumbers = getFieldState(fieldNames.additionalCallNumbers)?.value || [];
