@@ -289,7 +289,15 @@ const ViewInstance = (props) => {
   const onImportRecord = async (args) => {
     setIsImportRecordModalOpen(false);
 
-    await importRecord({ instanceId: instance.id, args });
+    const onSuccess = () => {
+      refetch();
+      callout.sendCallout({
+        type: 'success',
+        message: <FormattedMessage id="ui-inventory.copycat.callout.updated" values={{ xid: instance?.id }} />,
+      });
+    };
+
+    await importRecord({ instanceId: instance.id, args }, { onSuccess });
   };
 
   const onMoveToAnotherInstance = (selectedInstance) => {
