@@ -46,7 +46,7 @@ describe('useImportRecord', () => {
           profileId: 'type-1',
           externalIdentifier: 'ext-123',
           selectedJobProfileId: 'job-456',
-          internalIdentifier: "instance-123",
+          internalIdentifier: 'instance-123',
         },
       }
     );
