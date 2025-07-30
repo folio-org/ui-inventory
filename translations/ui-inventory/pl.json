@@ -896,5 +896,9 @@
     "acq.averageCost": "Średni koszt",
     "acq.fundCode": "Kod funduszu",
     "sourceUri": "Instance source URI",
-    "instances.columns.instanceHRID": "HRID instancji"
+    "instances.columns.instanceHRID": "HRID instancji",
+    "additionalCallNumbers": "Dodatkowe sygnatury",
+    "noAdditionalCallNumbers": "Brak dodatkowych sygnatur",
+    "addAdditionalCallNumber": "Dodaj dodatkową sygnaturę",
+    "swapWithPrimaryCallNumber": "Zmień z główną sygnaturą"
 }
