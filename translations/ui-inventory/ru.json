@@ -896,5 +896,9 @@
     "acq.averageCost": "Average cost",
     "acq.fundCode": "Fund code",
     "sourceUri": "Instance source URI",
-    "instances.columns.instanceHRID": "Instance HRID"
+    "instances.columns.instanceHRID": "Instance HRID",
+    "additionalCallNumbers": "Additional call numbers",
+    "noAdditionalCallNumbers": "No additional call numbers",
+    "addAdditionalCallNumber": "Add additional call number",
+    "swapWithPrimaryCallNumber": "Change with primary call number"
 }

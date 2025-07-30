@@ -896,5 +896,9 @@
     "acq.averageCost": "Custo médio",
     "acq.fundCode": "Código do fundo",
     "sourceUri": "URI da fonte da instância",
-    "instances.columns.instanceHRID": "HRID da instância"
+    "instances.columns.instanceHRID": "HRID da instância",
+    "additionalCallNumbers": "Números de chamada adicionais",
+    "noAdditionalCallNumbers": "Nenhum número de chamada adicional",
+    "addAdditionalCallNumber": "Adicionar número de chamada adicional",
+    "swapWithPrimaryCallNumber": "Alterar com número de chamada principal"
 }
