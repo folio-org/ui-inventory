@@ -663,7 +663,7 @@ describe('ViewHoldingsRecord actions', () => {
       });
     });
 
-    it('should display "additionalCallNumbers" header when empty', async () => {
+    it('should display no header when empty', async () => {
       const resourcesWithNoAdditionalCallNumbers = {
         ...defaultProps.resources,
         holdingsRecords: {
@@ -678,9 +678,7 @@ describe('ViewHoldingsRecord actions', () => {
         resources: resourcesWithNoAdditionalCallNumbers,
       });
       await waitFor(() => {
-        const headerElement = screen.getByText('Additional call numbers');
-
-        expect(headerElement).toBeInTheDocument();
+        expect(screen.queryByText('Additional call numbers')).not.toBeInTheDocument();
       });
     });
 

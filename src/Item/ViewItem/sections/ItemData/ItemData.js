@@ -65,11 +65,11 @@ const ItemData = ({ itemData, refLookup, referenceTables }) => {
         </Col>
       </Row>
       <Row>
-        <Col xs={12}>
-          <KeyValue
-            label={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
-          >
-            {itemData.additionalCallNumbers?.length > 0 ? (
+        {itemData.additionalCallNumbers?.length > 0 ? (
+          <Col xs={12}>
+            <KeyValue
+              label={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
+            >
               <div>
                 {itemData.additionalCallNumbers.map((additionalCallNumber) => {
                   const callNumberTypeName = refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name;
@@ -116,9 +116,9 @@ const ItemData = ({ itemData, refLookup, referenceTables }) => {
                   );
                 })}
               </div>
-            ) : ''}
-          </KeyValue>
-        </Col>
+            </KeyValue>
+          </Col>
+        ) : ''}
       </Row>
       <Row>
         <Col xs={3}>

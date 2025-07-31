@@ -128,7 +128,7 @@ describe('ItemData', () => {
 
     it('should render an empty additional call numbers section if no additional call numbers are present', () => {
       renderItemData();
-      expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+      expect(screen.queryByText('Additional call numbers')).not.toBeInTheDocument();
     });
 
     it('should render multiple additional call numbers', () => {
