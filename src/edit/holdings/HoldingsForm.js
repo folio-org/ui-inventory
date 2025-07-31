@@ -644,7 +644,11 @@ class HoldingsForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <AdditionalCallNumbersFields callNumberTypeOptions={callNumberTypeOptions} isFieldBlocked={this.isFieldBlocked} onSwap={this.handleCallNumberSwap} />
+                    <Row>
+                      <Col xs={10}>
+                        <AdditionalCallNumbersFields callNumberTypeOptions={callNumberTypeOptions} isFieldBlocked={this.isFieldBlocked} onSwap={this.handleCallNumberSwap} />
+                      </Col>
+                    </Row>
                   </Accordion>
                   <Accordion
                     id="accordion03"

@@ -43,7 +43,7 @@ const CommonAdditionalCallNumbersFields = ({
           {callNumberPrefixLabel}
         </Label>
       </Col>
-      <Col sm={2}>
+      <Col sm={3}>
         <Label tagName="legend">
           {callNumberLabel}
         </Label>
@@ -109,7 +109,7 @@ const CommonAdditionalCallNumbersFields = ({
           disabled={!canEdit}
         />
       </Col>
-      <Col xs={10} sm={3}>
+      <Col sm={3}>
         <Button
           onClick={() => onSwap(index)}
           buttonStyle="default"
