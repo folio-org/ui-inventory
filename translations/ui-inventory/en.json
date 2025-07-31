@@ -214,7 +214,6 @@
   "callNumberPrefix": "Call number prefix",
   "callNumberSuffix": "Call number suffix",
   "additionalCallNumbers": "Additional call numbers",
-  "noAdditionalCallNumbers": "No additional call numbers",
   "addAdditionalCallNumber": "Add additional call number",
   "swapWithPrimaryCallNumber": "Change with primary call number",
   "holdingsNotes": "Holdings notes",
