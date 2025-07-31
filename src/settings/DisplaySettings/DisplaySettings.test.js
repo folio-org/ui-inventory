@@ -45,4 +45,14 @@ describe('DisplaySettings', () => {
     expect(getByText('Relevance')).toBeInTheDocument();
     expect(getByText('Date')).toBeInTheDocument();
   });
+
+  it('should display column options', () => {
+    const { getByRole } = renderDisplaySettings();
+
+    expect(getByRole('checkbox', { name: 'Contributors' })).toBeInTheDocument();
+    expect(getByRole('checkbox', { checked: 'Date' })).toBeInTheDocument();
+    expect(getByRole('checkbox', { checked: 'Publishers' })).toBeInTheDocument();
+    expect(getByRole('checkbox', { checked: 'Relation' })).toBeInTheDocument();
+    expect(getByRole('checkbox', { name: 'Instance HRID' })).toBeInTheDocument();
+  });
 });

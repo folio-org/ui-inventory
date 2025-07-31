@@ -30,6 +30,7 @@ UIIN-3437.
 * Open Item record detail view when exact match is found via Keyword search option in Item tab. Refs UIIN-3416.
 * Classification browse | Add Title to results list. Refs UIIN-3367.
 * CallNumberTypes component: refactor class component. Refs UIIN-3389.
+* Allow tenant to set default columns to display in Inventory results. Refs UIIN-3422.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
