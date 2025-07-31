@@ -31,6 +31,7 @@ UIIN-3437.
 * Classification browse | Add Title to results list. Refs UIIN-3367.
 * CallNumberTypes component: refactor class component. Refs UIIN-3389.
 * Fix instance overlaying issues. Fixes UIIN-3450.
+* Display order column in items table when clicking `Move items within an instance` action button. Refs UIIN-3453.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
