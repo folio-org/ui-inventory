@@ -896,5 +896,9 @@
     "acq.averageCost": "平均费用",
     "acq.fundCode": "经费代码",
     "sourceUri": "实例来源URI",
-    "instances.columns.instanceHRID": "Instance HRID"
+    "instances.columns.instanceHRID": "Instance HRID",
+    "additionalCallNumbers": "Additional call numbers",
+    "noAdditionalCallNumbers": "No additional call numbers",
+    "addAdditionalCallNumber": "Add additional call number",
+    "swapWithPrimaryCallNumber": "Change with primary call number"
 }

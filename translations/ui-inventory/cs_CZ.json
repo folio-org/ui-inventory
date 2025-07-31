@@ -896,5 +896,9 @@
     "acq.averageCost": "Průměrné náklady",
     "acq.fundCode": "Kód prostředku",
     "sourceUri": "Zdroj titulu (URI)",
-    "instances.columns.instanceHRID": "HRID titulu"
+    "instances.columns.instanceHRID": "HRID titulu",
+    "additionalCallNumbers": "Další signatury",
+    "noAdditionalCallNumbers": "Žádné další signatury",
+    "addAdditionalCallNumber": "Přidat další signaturu",
+    "swapWithPrimaryCallNumber": "Změnit pomocí primárního signatury"
 }
