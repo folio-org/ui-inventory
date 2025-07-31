@@ -69,9 +69,9 @@ const InstanceModals = ({
     onMoveToAnotherInstance(selectedInstance);
   };
 
-  const handleSubmitImportRecordModal = () => {
+  const handleSubmitImportRecordModal = args => {
     setIsImportRecordModalOpen(false);
-    onImportRecord();
+    onImportRecord(args);
   };
 
   const handleConfirmShareLocalInstance = () => {

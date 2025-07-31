@@ -40,12 +40,13 @@ describe('useImportRecord', () => {
     });
 
     expect(mockKy.post).toHaveBeenCalledWith(
-      '/inventory/import/instance-123',
+      'copycat/imports',
       {
         json: {
-          xidtype: 'type-1',
-          xid: 'ext-123',
-          jobprofileid: 'job-456',
+          profileId: 'type-1',
+          externalIdentifier: 'ext-123',
+          selectedJobProfileId: 'job-456',
+          internalIdentifier: 'instance-123',
         },
       }
     );
