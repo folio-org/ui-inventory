@@ -38,6 +38,9 @@ const stripesStub = {
   logger: { log: noop },
   locale: 'en-US',
   plugins: {},
+  okapi: {
+    tenant: 'diku',
+  },
 };
 
 const InstancesRouteSetup = ({

@@ -13,6 +13,9 @@ describe('NumberGeneratorSettings', () => {
   it('renders ConfigManager with correct props', () => {
     const mockStripes = {
       connect: jest.fn((component) => component),
+      okapi: {
+        tenant: 'diku',
+      },
     };
 
     render(

@@ -14,7 +14,7 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import { ModuleHierarchyProvider } from '@folio/stripes/core';
+import { ModuleHierarchyProvider, useStripes } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   filterConfig,
@@ -22,6 +22,7 @@ import {
   buildSearchQuery,
   SORT_OPTIONS,
   segments,
+  TOGGLEABLE_COLUMNS,
 } from '@folio/stripes-inventory-components';
 
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
@@ -29,6 +30,7 @@ import { instances as instancesFixture } from '../../../test/fixtures/instances'
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
 import * as utils from '../../utils';
+import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 
 const updateMock = jest.fn();
 const mockQueryReplace = jest.fn();
@@ -194,6 +196,9 @@ const getInstancesListTree = ({ segment = segments.instances, ...rest } = {}) =>
             storeLastSearch={mockStoreLastSearch}
             storeLastSearchOffset={mockStoreLastSearchOffset}
             storeLastSegment={noop}
+            displaySettings={{
+              defaultColumns: TOGGLEABLE_COLUMNS,
+            }}
             {...rest}
           />
         </div>
