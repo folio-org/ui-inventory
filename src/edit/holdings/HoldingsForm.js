@@ -424,7 +424,6 @@ class HoldingsForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <br />
                     <Row>
                       <Col sm={4}>
                         <Field
@@ -499,12 +498,11 @@ class HoldingsForm extends React.Component {
                   >
                     <Row>
                       <Col smOffset={0} sm={4}>
-                        <strong>
+                        <h3>
                           <FormattedMessage id="ui-inventory.holdingsLocation" />
-                        </strong>
+                        </h3>
                       </Col>
                     </Row>
-                    <br />
                     <Row>
                       <Col sm={4}>
                         <Field
@@ -560,12 +558,11 @@ class HoldingsForm extends React.Component {
                         smOffset={0}
                         sm={4}
                       >
-                        <strong>
+                        <h3>
                           <FormattedMessage id="ui-inventory.holdingsCallNumber" />
-                        </strong>
+                        </h3>
                       </Col>
                     </Row>
-                    <br />
                     <Row>
                       <Col sm={2}>
                         <Field

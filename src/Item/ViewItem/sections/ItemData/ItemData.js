@@ -116,11 +116,7 @@ const ItemData = ({ itemData, refLookup, referenceTables }) => {
                   );
                 })}
               </div>
-            ) : (
-              <FormattedMessage
-                id="ui-inventory.noAdditionalCallNumbers"
-              />
-            )}
+            ) : ''}
           </KeyValue>
         </Col>
       </Row>

@@ -120,7 +120,6 @@ describe('ItemData', () => {
       };
       renderItemData(props);
       expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
-      expect(screen.queryByText('No additional call numbers')).not.toBeInTheDocument();
       expect(screen.getByText('addCN1')).toBeInTheDocument();
       expect(screen.getByText('addPrefix1')).toBeInTheDocument();
       expect(screen.getByText('addSuffix1')).toBeInTheDocument();
@@ -130,7 +129,6 @@ describe('ItemData', () => {
     it('should render an empty additional call numbers section if no additional call numbers are present', () => {
       renderItemData();
       expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
-      expect(screen.getByText('No additional call numbers')).toBeInTheDocument();
     });
 
     it('should render multiple additional call numbers', () => {
@@ -155,7 +153,6 @@ describe('ItemData', () => {
       };
       renderItemData(props);
       expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
-      expect(screen.queryByText('No additional call numbers')).not.toBeInTheDocument();
       expect(screen.getByText('addCN1')).toBeInTheDocument();
       expect(screen.getByText('addPrefix1')).toBeInTheDocument();
       expect(screen.getByText('addSuffix1')).toBeInTheDocument();

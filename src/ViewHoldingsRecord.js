@@ -1269,11 +1269,7 @@ class ViewHoldingsRecord extends React.Component {
                                       </div>);
                                     })}
                                   </div>
-                                ) : (
-                                  <FormattedMessage
-                                    id="ui-inventory.noAdditionalCallNumbers"
-                                  />
-                                )}
+                                ) : ' '}
                               </KeyValue>
                             </Col>
                           </Row>

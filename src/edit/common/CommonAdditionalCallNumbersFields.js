@@ -1,4 +1,3 @@
-import React from 'react';
 import { FieldArray } from 'react-final-form-arrays';
 import { Field } from 'react-final-form';
 import {
@@ -85,7 +84,7 @@ const CommonAdditionalCallNumbersFields = ({
           disabled={!canEdit}
         />
       </Col>
-      <Col sm={2}>
+      <Col sm={3}>
         <Field
           name={`${fieldName}.callNumber`}
           aria-label={callNumberLabel}
@@ -122,16 +121,18 @@ const CommonAdditionalCallNumbersFields = ({
   );
 
   return (
-    <FieldArray
-      name={name}
-      component={RepeatableField}
-      legend={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
-      addLabel={canAdd ? <FormattedMessage id="ui-inventory.addAdditionalCallNumber" /> : ''}
-      headLabels={headLabels}
-      renderField={renderField}
-      canAdd={canAdd}
-      canRemove={canDelete}
-    />
+    <>
+      <h3><FormattedMessage id="ui-inventory.additionalCallNumbers" /></h3>
+      <FieldArray
+        name={name}
+        component={RepeatableField}
+        addLabel={canAdd ? <FormattedMessage id="ui-inventory.addAdditionalCallNumber" /> : ''}
+        headLabels={headLabels}
+        renderField={renderField}
+        canAdd={canAdd}
+        canRemove={canDelete}
+      />
+    </>
   );
 };
 
