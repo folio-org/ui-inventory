@@ -8,11 +8,12 @@ const useImportRecord = () => {
   const { mutateAsync, isLoading, error } = useMutation({
     mutationFn: async ({ instanceId, args }) => {
       try {
-        const kyPath = `/inventory/import/${instanceId}`;
+        const kyPath = 'copycat/imports';
         const body = {
-          xidtype: args.externalIdentifierType,
-          xid: args.externalIdentifier,
-          jobprofileid: args.selectedJobProfileId,
+          profileId: args.externalIdentifierType,
+          externalIdentifier: args.externalIdentifier,
+          internalIdentifier: instanceId,
+          selectedJobProfileId: args.selectedJobProfileId,
         };
 
         return await ky.post(kyPath, { json: body });
