@@ -72,7 +72,6 @@ import {
   withLocation,
   withUseResourcesIds,
   withSingleRecordImport,
-  withDisplaySettings,
 } from '../../hocs';
 import {
   getNextSelectedRowsState,
@@ -141,9 +140,6 @@ class InstancesList extends React.Component {
     parentMutator: PropTypes.object,
     publishOnReset: PropTypes.func.isRequired,
     disableRecordCreation: PropTypes.bool,
-    displaySettings: PropTypes.shape({
-      
-    }),
     unsubscribeFromReset: PropTypes.func.isRequired,
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
@@ -306,7 +302,7 @@ class InstancesList extends React.Component {
       parentMutator.resultOffset.replace(lastSearchOffset);
     }
 
-    if (prevProps.displaySettings !== this.props.displaySettings) {
+    if (prevProps.data.displaySettings !== this.props.data.displaySettings) {
       this.setState({
         visibleColumns: this.getInitialToggleableColumns(),
       });
@@ -397,7 +393,7 @@ class InstancesList extends React.Component {
   }
 
   getInitialToggleableColumns = () => {
-    const { defaultColumns } = this.props.displaySettings;
+    const { defaultColumns } = this.props.data.displaySettings;
 
     return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || defaultColumns || [];
   }
@@ -1470,5 +1466,4 @@ export default withNamespace(flowRight(
   withSingleRecordImport,
   withReset,
   withUseResourcesIds,
-  withDisplaySettings,
 )(stripesConnect(InstancesList)));
