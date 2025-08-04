@@ -3,7 +3,7 @@ import React, {
 } from 'react';
 import { useIntl } from 'react-intl';
 import { Field } from 'react-final-form';
-import { FieldArray } from 'react-final-form-arrays'; // TODO: check dep available
+import { FieldArray } from 'react-final-form-arrays';
 
 import { ConfigManager } from '@folio/stripes/smart-components';
 import {

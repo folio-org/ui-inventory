@@ -1,14 +1,8 @@
-import { Form } from 'react-final-form';
-import { MemoryRouter } from 'react-router-dom';
-import arrayMutators from 'final-form-arrays';
+import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
-import {
-  renderWithIntl,
-  translationsProperties,
-} from '../../../../../test/jest/helpers';
+import { renderWithIntl } from '../../../../../test/jest/helpers';
 
 import { CheckboxGroup } from './CheckboxGroup';
-import { fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 const mockFields = {
   value: ['contributors'],
