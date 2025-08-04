@@ -12,8 +12,6 @@ import {
   Col,
   CommandList,
   defaultKeyboardShortcuts,
-  Checkbox,
-  Label,
 } from '@folio/stripes/components';
 import {
   TitleManager,
@@ -27,36 +25,7 @@ import {
 } from '@folio/stripes-inventory-components';
 
 import { getSortOptions } from '../../utils';
-
-const CheckboxGroup = ({ fields, options, label }) => {
-  const handleCheck = (e, optionValue) => {
-    const optionIndex = fields.value?.findIndex(option => option === optionValue);
-
-    if (e.target.checked) {
-      fields.push(optionValue);
-    } else {
-      fields.remove(optionIndex);
-    }
-  };
-
-  return (
-    <div>
-      <Label>{label}</Label>
-      {options.map(option => (
-        <div key={option.value}>
-          <Checkbox
-            aria-label={option.label}
-            checked={fields.value?.includes?.(option.value) ?? false}
-            onChange={(e) => handleCheck(e, option.value)}
-            type="checkbox"
-            value={option.value}
-            label={option.label}
-          />
-        </div>
-      ))}
-    </div>
-  );
-};
+import { CheckboxGroup } from './components';
 
 const DisplaySettings = () => {
   const intl = useIntl();
