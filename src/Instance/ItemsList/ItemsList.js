@@ -220,7 +220,7 @@ const ItemsList = ({
   // as a sorter in '../utils'. If it's not, there won't be any errors;
   // sorting on that column simply won't work.
   const onHeaderClick = useCallback((e, { name: column }) => {
-    if (['dnd', 'order', 'select'].includes(column) || draggable) return;
+    if (['dnd', 'select'].includes(column) || draggable) return;
 
     const isChangeDirection = itemsSorting.column === column;
 
@@ -250,7 +250,7 @@ const ItemsList = ({
       columnWidths={columnWidths}
       pagingType={MCLPagingTypes.PREV_NEXT}
       totalCount={total}
-      nonInteractiveHeaders={draggable ? visibleColumns : ['order', 'loanType', 'effectiveLocation', 'materialType']}
+      nonInteractiveHeaders={draggable ? visibleColumns : ['loanType', 'effectiveLocation', 'materialType']}
       onHeaderClick={onHeaderClick}
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}
