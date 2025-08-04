@@ -1,7 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { act, fireEvent, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent, screen } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
 
@@ -72,9 +72,9 @@ describe('ItemsList', () => {
   });
 
   it('should render all the items from the response', () => {
-    const { container } = renderWithIntl(<ItemsListSetup />, translations)
+    const { container } = renderWithIntl(<ItemsListSetup />, translations);
     const amountOfItems = container.querySelectorAll('.mclRowFormatterContainer').length;
-    
+
     expect(amountOfItems).toBe(itemsFixture.length);
     expect(screen.getByText(itemsFixture[0].barcode)).toBeInTheDocument();
     expect(screen.getByText(itemsFixture[1].barcode)).toBeInTheDocument();
