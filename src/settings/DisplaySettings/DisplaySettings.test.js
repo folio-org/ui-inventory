@@ -1,6 +1,6 @@
 import { Form } from 'react-final-form';
 import { MemoryRouter } from 'react-router-dom';
-import { arrayMutators } from 'final-form-arrays';
+import arrayMutators from 'final-form-arrays';
 
 import { runAxeTest } from '@folio/stripes-testing';
 
@@ -38,21 +38,21 @@ describe('DisplaySettings', () => {
   });
 
   it('should display sort options', () => {
-    const { getByText } = renderDisplaySettings();
+    const { getByRole } = renderDisplaySettings();
 
-    expect(getByText('Title')).toBeInTheDocument();
-    expect(getByText('Contributors')).toBeInTheDocument();
-    expect(getByText('Relevance')).toBeInTheDocument();
-    expect(getByText('Date')).toBeInTheDocument();
+    expect(getByRole('option', { name: 'Title' })).toBeInTheDocument();
+    expect(getByRole('option', { name: 'Contributors' })).toBeInTheDocument();
+    expect(getByRole('option', { name: 'Relevance' })).toBeInTheDocument();
+    expect(getByRole('option', { name: 'Date' })).toBeInTheDocument();
   });
 
   it('should display column options', () => {
     const { getByRole } = renderDisplaySettings();
 
     expect(getByRole('checkbox', { name: 'Contributors' })).toBeInTheDocument();
-    expect(getByRole('checkbox', { checked: 'Date' })).toBeInTheDocument();
-    expect(getByRole('checkbox', { checked: 'Publishers' })).toBeInTheDocument();
-    expect(getByRole('checkbox', { checked: 'Relation' })).toBeInTheDocument();
+    expect(getByRole('checkbox', { name: 'Date' })).toBeInTheDocument();
+    expect(getByRole('checkbox', { name: 'Publishers' })).toBeInTheDocument();
+    expect(getByRole('checkbox', { name: 'Relation' })).toBeInTheDocument();
     expect(getByRole('checkbox', { name: 'Instance HRID' })).toBeInTheDocument();
   });
 });

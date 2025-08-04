@@ -45,7 +45,7 @@ const CheckboxGroup = ({ fields, options, label }) => {
       {options.map(option => (
         <div key={option.value}>
           <Checkbox
-            aria-label={label}
+            aria-label={option.label}
             checked={fields.value?.includes?.(option.value) ?? false}
             onChange={(e) => handleCheck(e, option.value)}
             type="checkbox"

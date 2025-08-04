@@ -133,6 +133,7 @@ const data = {
   natureOfContentTerms: [],
   displaySettings: {
     defaultSort: SORT_OPTIONS.CONTRIBUTORS,
+    defaultColumns: TOGGLEABLE_COLUMNS,
   },
   instanceDateTypes: [],
 };
@@ -196,9 +197,6 @@ const getInstancesListTree = ({ segment = segments.instances, ...rest } = {}) =>
             storeLastSearch={mockStoreLastSearch}
             storeLastSearchOffset={mockStoreLastSearchOffset}
             storeLastSegment={noop}
-            displaySettings={{
-              defaultColumns: TOGGLEABLE_COLUMNS,
-            }}
             {...rest}
           />
         </div>
