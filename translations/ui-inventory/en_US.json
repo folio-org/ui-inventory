@@ -309,7 +309,6 @@
     "fetchingMarcRecord": "Fetching MARC record",
     "viewMarcSource": "View MARC source",
     "item.barcode": "Item: barcode",
-    "item.order": "Order",
     "resourceIdentifierType": "Resource identifier type",
     "publication": "Publication",
     "placeOfPublication": "Place of publication",
