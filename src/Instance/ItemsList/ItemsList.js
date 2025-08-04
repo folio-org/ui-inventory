@@ -152,7 +152,7 @@ const visibleColumns = [
   'yearCaption',
   'materialType',
 ];
-const columnWidths = { order: "60px", select: "60px", barcode: '160px' };
+const columnWidths = { order: '60px', select: '60px', barcode: '160px' };
 const dragVisibleColumns = ['dnd', visibleColumns[0], 'select', ...visibleColumns.slice(1)];
 const rowMetadata = ['id', 'holdingsRecordId'];
 
