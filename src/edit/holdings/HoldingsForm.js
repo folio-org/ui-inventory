@@ -24,7 +24,7 @@ import {
   checkScope,
   HasCommand,
   collapseAllSections,
-  expandAllSections,
+  expandAllSections, Headline,
 } from '@folio/stripes/components';
 
 import {
@@ -498,9 +498,9 @@ class HoldingsForm extends React.Component {
                   >
                     <Row>
                       <Col smOffset={0} sm={4}>
-                        <h3>
+                        <Headline>
                           <FormattedMessage id="ui-inventory.holdingsLocation" />
-                        </h3>
+                        </Headline>
                       </Col>
                     </Row>
                     <Row>
@@ -558,9 +558,9 @@ class HoldingsForm extends React.Component {
                         smOffset={0}
                         sm={4}
                       >
-                        <h3>
+                        <Headline>
                           <FormattedMessage id="ui-inventory.holdingsCallNumber" />
-                        </h3>
+                        </Headline>
                       </Col>
                     </Row>
                     <Row>
