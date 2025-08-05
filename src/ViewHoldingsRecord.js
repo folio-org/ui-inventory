@@ -1266,7 +1266,7 @@ class ViewHoldingsRecord extends React.Component {
                                               />
                                             </Col>
                                           </Row>
-                                      </div>);
+                                        </div>);
                                     })}
                                   </div>
                                 </KeyValue>
