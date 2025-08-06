@@ -900,5 +900,6 @@
     "additionalCallNumbers": "Additional call numbers",
     "noAdditionalCallNumbers": "No additional call numbers",
     "addAdditionalCallNumber": "Add additional call number",
-    "swapWithPrimaryCallNumber": "Change with primary call number"
+    "swapWithPrimaryCallNumber": "Change with primary call number",
+    "item.order": "Order"
 }
