@@ -293,7 +293,7 @@ const ViewInstance = (props) => {
       refetch();
       callout.sendCallout({
         type: 'success',
-        message: <FormattedMessage id="ui-inventory.copycat.callout.updated" values={{ xid: instance?.id }} />,
+        message: <FormattedMessage id="ui-inventory.copycat.callout.updated" values={{ xid: args.externalIdentifier }} />,
       });
     };
 
