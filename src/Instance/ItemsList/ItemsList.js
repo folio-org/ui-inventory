@@ -50,6 +50,7 @@ const getFormatter = (
       size="small"
     />
   ),
+  'order': (item) => item?.order || noValue,
   'select': (item) => (
     <FormattedMessage id="ui-inventory.moveItems.selectItem">
       {
@@ -116,6 +117,7 @@ const getFormatter = (
 });
 const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected, selectItemsForDrag) => ({
   'dnd': '',
+  'order': intl.formatMessage({ id: 'ui-inventory.item.order' }),
   'select': (
     <span data-test-select-all-items>
       <Checkbox
@@ -138,6 +140,7 @@ const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected, select
   'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
 });
 const visibleColumns = [
+  'order',
   'barcode',
   'status',
   'copyNumber',
@@ -149,8 +152,8 @@ const visibleColumns = [
   'yearCaption',
   'materialType',
 ];
-const columnWidths = { barcode: '160px' };
-const dragVisibleColumns = ['dnd', 'select', ...visibleColumns];
+const columnWidths = { order: '60px', select: '60px', barcode: '160px' };
+const dragVisibleColumns = ['dnd', visibleColumns[0], 'select', ...visibleColumns.slice(1)];
 const rowMetadata = ['id', 'holdingsRecordId'];
 
 const ItemsList = ({
@@ -217,7 +220,7 @@ const ItemsList = ({
   // as a sorter in '../utils'. If it's not, there won't be any errors;
   // sorting on that column simply won't work.
   const onHeaderClick = useCallback((e, { name: column }) => {
-    if (['dnd', 'select'].includes(column)) return;
+    if (['dnd', 'select'].includes(column) || draggable) return;
 
     const isChangeDirection = itemsSorting.column === column;
 
@@ -228,7 +231,7 @@ const ItemsList = ({
 
     setItemsSorting(newItemsSorting);
     setSorting(`${newItemsSorting.isDesc ? '-' : ''}${newItemsSorting.column}`);
-  }, [itemsSorting]);
+  }, [itemsSorting, draggable]);
 
   if ((!draggable && isEmpty(items)) || isLoading) return null;
 
@@ -247,7 +250,7 @@ const ItemsList = ({
       columnWidths={columnWidths}
       pagingType={MCLPagingTypes.PREV_NEXT}
       totalCount={total}
-      nonInteractiveHeaders={['loanType', 'effectiveLocation', 'materialType']}
+      nonInteractiveHeaders={draggable ? visibleColumns : ['loanType', 'effectiveLocation', 'materialType']}
       onHeaderClick={onHeaderClick}
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}
