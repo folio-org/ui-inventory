@@ -896,5 +896,9 @@
     "acq.averageCost": "Gemiddelde kosten",
     "acq.fundCode": "Fondscode",
     "sourceUri": "Bron URI van Instance",
-    "instances.columns.instanceHRID": "Instance HRID"
+    "instances.columns.instanceHRID": "Instance HRID",
+    "additionalCallNumbers": "Extra Vindplaatsen",
+    "noAdditionalCallNumbers": "Geen extra Vindplaatsen",
+    "addAdditionalCallNumber": "Extra Vindplaats Toevoegen",
+    "swapWithPrimaryCallNumber": "Wijziging met Primair Vindplaatsnummer"
 }

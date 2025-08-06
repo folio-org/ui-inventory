@@ -896,5 +896,9 @@
     "acq.averageCost": "Durchschnittliche Kosten",
     "acq.fundCode": "Fondscode",
     "sourceUri": "Instanz-Quell-URI",
-    "instances.columns.instanceHRID": "Instanz HRID"
+    "instances.columns.instanceHRID": "Instanz HRID",
+    "additionalCallNumbers": "Additional call numbers",
+    "noAdditionalCallNumbers": "No additional call numbers",
+    "addAdditionalCallNumber": "Add additional call number",
+    "swapWithPrimaryCallNumber": "Change with primary call number"
 }
