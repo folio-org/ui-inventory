@@ -900,5 +900,6 @@
     "additionalCallNumbers": "Extra Vindplaatsen",
     "noAdditionalCallNumbers": "Geen extra Vindplaatsen",
     "addAdditionalCallNumber": "Extra Vindplaats Toevoegen",
-    "swapWithPrimaryCallNumber": "Wijziging met Primair Vindplaatsnummer"
+    "swapWithPrimaryCallNumber": "Wijziging met Primair Vindplaatsnummer",
+    "item.order": "Order"
 }

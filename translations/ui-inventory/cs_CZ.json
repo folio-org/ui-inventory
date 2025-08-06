@@ -900,5 +900,6 @@
     "additionalCallNumbers": "Další signatury",
     "noAdditionalCallNumbers": "Žádné další signatury",
     "addAdditionalCallNumber": "Přidat další signaturu",
-    "swapWithPrimaryCallNumber": "Změnit pomocí primárního signatury"
+    "swapWithPrimaryCallNumber": "Změnit pomocí primárního signatury",
+    "item.order": "Order"
 }
