@@ -263,6 +263,7 @@
   "barcode": "Barcode",
   "itemBarcode": "Item barcode",
   "item.barcode": "Item: barcode",
+  "item.order": "Order",
   "item.requestQueue": "Request queue",
   "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
   "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
