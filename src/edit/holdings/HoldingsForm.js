@@ -24,7 +24,7 @@ import {
   checkScope,
   HasCommand,
   collapseAllSections,
-  expandAllSections,
+  expandAllSections, Headline,
 } from '@folio/stripes/components';
 
 import {
@@ -424,7 +424,6 @@ class HoldingsForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <br />
                     <Row>
                       <Col sm={4}>
                         <Field
@@ -499,12 +498,11 @@ class HoldingsForm extends React.Component {
                   >
                     <Row>
                       <Col smOffset={0} sm={4}>
-                        <strong>
+                        <Headline>
                           <FormattedMessage id="ui-inventory.holdingsLocation" />
-                        </strong>
+                        </Headline>
                       </Col>
                     </Row>
-                    <br />
                     <Row>
                       <Col sm={4}>
                         <Field
@@ -560,12 +558,11 @@ class HoldingsForm extends React.Component {
                         smOffset={0}
                         sm={4}
                       >
-                        <strong>
+                        <Headline>
                           <FormattedMessage id="ui-inventory.holdingsCallNumber" />
-                        </strong>
+                        </Headline>
                       </Col>
                     </Row>
-                    <br />
                     <Row>
                       <Col sm={2}>
                         <Field
@@ -644,7 +641,11 @@ class HoldingsForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <AdditionalCallNumbersFields callNumberTypeOptions={callNumberTypeOptions} isFieldBlocked={this.isFieldBlocked} onSwap={this.handleCallNumberSwap} />
+                    <Row>
+                      <Col xs={10}>
+                        <AdditionalCallNumbersFields callNumberTypeOptions={callNumberTypeOptions} isFieldBlocked={this.isFieldBlocked} onSwap={this.handleCallNumberSwap} />
+                      </Col>
+                    </Row>
                   </Accordion>
                   <Accordion
                     id="accordion03"

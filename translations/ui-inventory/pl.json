@@ -900,5 +900,6 @@
     "additionalCallNumbers": "Dodatkowe sygnatury",
     "noAdditionalCallNumbers": "Brak dodatkowych sygnatur",
     "addAdditionalCallNumber": "Dodaj dodatkową sygnaturę",
-    "swapWithPrimaryCallNumber": "Zmień z główną sygnaturą"
+    "swapWithPrimaryCallNumber": "Zmień z główną sygnaturą",
+    "item.order": "Order"
 }
