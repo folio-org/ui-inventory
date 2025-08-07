@@ -1,7 +1,4 @@
-import {
-  Route,
-  Router,
-} from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 import {
@@ -22,6 +19,7 @@ import {
   buildSearchQuery,
   SORT_OPTIONS,
   segments,
+  TOGGLEABLE_COLUMNS,
 } from '@folio/stripes-inventory-components';
 
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
@@ -131,6 +129,7 @@ const data = {
   natureOfContentTerms: [],
   displaySettings: {
     defaultSort: SORT_OPTIONS.CONTRIBUTORS,
+    defaultColumns: TOGGLEABLE_COLUMNS,
   },
   instanceDateTypes: [],
 };
