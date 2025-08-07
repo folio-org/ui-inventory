@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'react-final-form-arrays';
-import { Field } from 'react-final-form';
+import { Field, useForm } from 'react-final-form';
 import {
   FormattedMessage,
   useIntl,
@@ -19,8 +19,8 @@ const LanguageFields = ({
   canAdd = true,
   canEdit = true,
   canDelete = true,
-  form,
 }) => {
+  const { getState, initialize } = useForm();
   const intl = useIntl();
   const stripes = useStripes();
 
@@ -29,9 +29,9 @@ const LanguageFields = ({
   const validLanguageCodes = useMemo(() => langOptions.map(opt => opt.value), [langOptions]);
 
   useEffect(() => {
-    const languages = form.getState().values?.languages || [];
+    const languages = getState().values?.languages || [];
     if (languages.some(lang => lang && !validLanguageCodes.includes(lang))) {
-      form.initialize(values => ({
+      initialize(values => ({
         ...values,
         languages: languages.map(lang => (lang && validLanguageCodes.includes(lang) ? lang : null)),
       }));

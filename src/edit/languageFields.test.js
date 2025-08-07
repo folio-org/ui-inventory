@@ -14,18 +14,9 @@ jest.unmock('@folio/stripes/components');
 
 const onSubmit = jest.fn();
 
-const form = {
-  getState: jest.fn().mockReturnValue({
-    values: {
-      languages: [],
-    },
-  }),
-  initialize: jest.fn(),
-};
-
 const Form = ({ handleSubmit }) => (
   <form onSubmit={handleSubmit}>
-    <LanguageFields form={form} />
+    <LanguageFields />
   </form>
 );
 

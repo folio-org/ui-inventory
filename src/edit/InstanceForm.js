@@ -824,7 +824,6 @@ class InstanceForm extends React.Component {
                             canAdd={!this.isFieldBlocked('languages')}
                             canEdit={!this.isFieldBlocked('languages')}
                             canDelete={!this.isFieldBlocked('languages')}
-                            form={this.props.form}
                           />
                           <PublicationFrequencyFields
                             canAdd={!this.isFieldBlocked('publicationFrequency')}
