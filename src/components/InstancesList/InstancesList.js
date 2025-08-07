@@ -54,13 +54,15 @@ import {
   getCurrentFilters,
   buildSearchQuery,
   SORT_OPTIONS,
-  SEARCH_COLUMN_NAMES,
+  SEARCH_COLUMNS,
+  TOGGLEABLE_COLUMNS,
   getSearchResultsFormatter,
   SEARCH_COLUMN_MAPPINGS,
   withReset,
   getDefaultQindex,
 } from '@folio/stripes-inventory-components';
 
+import ViewInstanceRoute from '../../routes/ViewInstanceRoute';
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
@@ -104,25 +106,10 @@ import {
 } from '../../storage';
 
 import css from './instances.css';
-import ViewInstanceRoute from '../../routes/ViewInstanceRoute';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-const SEARCH_COLUMNS = {
-  ...SEARCH_COLUMN_NAMES,
-  SELECT: 'select',
-  RELATION: 'relation',
-  HRID: 'hrid',
-};
-
-const TOGGLEABLE_COLUMNS = [
-  SEARCH_COLUMNS.CONTRIBUTORS,
-  SEARCH_COLUMNS.DATE,
-  SEARCH_COLUMNS.PUBLISHERS,
-  SEARCH_COLUMNS.RELATION,
-  SEARCH_COLUMNS.HRID,
-];
 const NON_TOGGLEABLE_COLUMNS = [
   SEARCH_COLUMNS.SELECT,
   SEARCH_COLUMNS.TITLE,
@@ -212,7 +199,7 @@ class InstancesList extends React.Component {
       showErrorModal: false,
       selectedRows: {},
       isSelectedRecordsModalOpened: false,
-      visibleColumns: this.getInitialToggableColumns(),
+      visibleColumns: this.getInitialToggleableColumns(),
       isImportRecordModalOpened: false,
       searchAndSortKey: 0,
       segmentsSortBy: this.getInitialSegmentsSortBy(),
@@ -314,6 +301,12 @@ class InstancesList extends React.Component {
 
       parentMutator.resultOffset.replace(lastSearchOffset);
     }
+
+    if (prevProps.data.displaySettings !== this.props.data.displaySettings) {
+      this.setState({
+        visibleColumns: this.getInitialToggleableColumns(),
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -399,8 +392,10 @@ class InstancesList extends React.Component {
     return params.get('sort');
   }
 
-  getInitialToggableColumns = () => {
-    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || TOGGLEABLE_COLUMNS;
+  getInitialToggleableColumns = () => {
+    const { defaultColumns } = this.props.data.displaySettings;
+
+    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || defaultColumns || [];
   }
 
   getInitialSegmentsSortBy = () => {
