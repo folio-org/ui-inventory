@@ -33,6 +33,7 @@ UIIN-3437.
 * Fix instance overlaying issues. Fixes UIIN-3450.
 * Display order column in items table when clicking `Move items within an instance` action button. Refs UIIN-3453.
 * Allow tenant to set default columns to display in Inventory results. Refs UIIN-3422.
+* Display default value in Language select when language is incorrect. Fixes UIIN-3451.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
