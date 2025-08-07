@@ -1,7 +1,4 @@
-import {
-  Route,
-  Router,
-} from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 import {
@@ -14,7 +11,7 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import { ModuleHierarchyProvider, useStripes } from '@folio/stripes/core';
+import { ModuleHierarchyProvider } from '@folio/stripes/core';
 import { SearchAndSort } from '@folio/stripes/smart-components';
 import {
   filterConfig,
@@ -30,7 +27,6 @@ import { instances as instancesFixture } from '../../../test/fixtures/instances'
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
 import * as utils from '../../utils';
-import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 
 const updateMock = jest.fn();
 const mockQueryReplace = jest.fn();
