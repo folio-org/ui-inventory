@@ -544,7 +544,6 @@ class ItemForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <br />
                     <Row>
                       <Col sm={2}>
                         <Field
@@ -736,7 +735,11 @@ class ItemForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <AdditionalCallNumbersItemLevelFields callNumberTypeOptions={callNumberTypeOptions} onSwap={this.handleCallNumberSwap} />
+                    <Row>
+                      <Col sm={10}>
+                        <AdditionalCallNumbersItemLevelFields callNumberTypeOptions={callNumberTypeOptions} onSwap={this.handleCallNumberSwap} />
+                      </Col>
+                    </Row>
                     <Row>
                       <Col sm={3}>
                         <Field

@@ -1219,11 +1219,11 @@ class ViewHoldingsRecord extends React.Component {
                             </Col>
                           </Row>
                           <Row>
-                            <Col xs={12}>
-                              <KeyValue
-                                label={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
-                              >
-                                {locationAccordion.additionalCallNumbers.length > 0 ? (
+                            {locationAccordion.additionalCallNumbers.length > 0 ? (
+                              <Col xs={12}>
+                                <KeyValue
+                                  label={<FormattedMessage id="ui-inventory.additionalCallNumbers" />}
+                                >
                                   <div>
                                     {locationAccordion.additionalCallNumbers.map((additionalCallNumber) => {
                                       const callNumberTypeName = this.refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name;
@@ -1266,16 +1266,12 @@ class ViewHoldingsRecord extends React.Component {
                                               />
                                             </Col>
                                           </Row>
-                                      </div>);
+                                        </div>);
                                     })}
                                   </div>
-                                ) : (
-                                  <FormattedMessage
-                                    id="ui-inventory.noAdditionalCallNumbers"
-                                  />
-                                )}
-                              </KeyValue>
-                            </Col>
+                                </KeyValue>
+                              </Col>
+                            ) : ''}
                           </Row>
                         </Accordion>
 
