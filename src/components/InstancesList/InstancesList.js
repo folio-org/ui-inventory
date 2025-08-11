@@ -395,7 +395,7 @@ class InstancesList extends React.Component {
   getInitialToggleableColumns = () => {
     const { defaultColumns } = this.props.data.displaySettings;
 
-    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || defaultColumns || [];
+    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || defaultColumns || TOGGLEABLE_COLUMNS;
   }
 
   getInitialSegmentsSortBy = () => {
