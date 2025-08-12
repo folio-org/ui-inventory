@@ -14,7 +14,7 @@ import {
 import HoldingsList from '../../HoldingsList';
 import { LimitedHoldingsList } from '../LimitedHoldingsList';
 import { InstanceNewHolding } from '../../../ViewInstance/components/InstanceDetails/InstanceNewHolding';
-import { MoveItemsContext } from '../../../MoveItemsContext';
+import { MoveItemsProvider } from '../../../../providers';
 import useMemberTenantHoldings from '../../../../hooks/useMemberTenantHoldings';
 
 import { hasMemberTenantPermission } from '../../../../utils';
@@ -46,7 +46,7 @@ const MemberTenantHoldings = ({
   const renderHoldings = () => (
     canViewHoldingsAndItems
       ? (
-        <MoveItemsContext>
+        <MoveItemsProvider>
           <HoldingsList
             holdings={holdings}
             instance={instance}
@@ -58,7 +58,7 @@ const MemberTenantHoldings = ({
             isBarcodeAsHotlink={canViewHoldingsAndItems}
             pathToAccordionsState={pathToHoldingsAccordion}
           />
-        </MoveItemsContext>
+        </MoveItemsProvider>
       )
       : (
         <LimitedHoldingsList
