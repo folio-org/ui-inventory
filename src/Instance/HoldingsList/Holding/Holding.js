@@ -1,97 +1,77 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-
-import { Checkbox } from '@folio/stripes/components';
+import { useCallback } from 'react';
+import {
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 
 import {
-  ItemsListContainer,
-  DropZone,
-} from '../../ItemsList';
+  useCallout,
+  useStripes,
+} from '@folio/stripes/core';
 
 import HoldingAccordion from './HoldingAccordion';
 
+import {
+  navigateToHoldingsViewPage,
+  navigateToItemCreatePage,
+} from '../../utils';
+import { sendCalloutOnAffiliationChange } from '../../../utils';
+import ItemsList from '../../ItemsList/ItemsList';
+import { useMoveItemsContext } from '../../../contexts';
+
 const Holding = ({
+  id,
   holding,
-  onViewHolding,
-  onAddItem,
-  holdings = [],
-  draggable = false,
-  droppable = false,
-  selectHoldingsForDrag,
-  isHoldingDragSelected,
-  isDraggable = false,
-  isItemsDroppable = true,
+  holdings,
+  instance,
   tenantId,
+  setItemsToHolding,
+  pathToAccordionsState,
+  isBarcodeAsHotlink,
+  items,
   showViewHoldingsButton,
   showAddItemButton,
-  isBarcodeAsHotlink,
-  instanceId,
-  pathToAccordionsState = [],
 }) => {
-  return (
-    <div>
-      {isDraggable &&
-        <>
-          <span data-test-select-holding>
-            <Checkbox
-              id={`select-holding-${holding.id}`}
-              checked={isHoldingDragSelected(holding)}
-              onChange={() => selectHoldingsForDrag(holding)}
-            />
-          </span>
-          {' '}
-          <FormattedMessage id="ui-inventory.moveItems.selectHolding" />
-        </>
-      }
-      <DropZone
-        isItemsDroppable={isItemsDroppable}
-        droppableId={holding.id}
-        isDropDisabled={!droppable}
-      >
-        <HoldingAccordion
-          key={`items_${holding.id}`}
-          holding={holding}
-          withMoveDropdown={draggable || isDraggable}
-          holdings={holdings}
-          onViewHolding={onViewHolding}
-          onAddItem={onAddItem}
-          tenantId={tenantId}
-          instanceId={instanceId}
-          pathToAccordionsState={pathToAccordionsState}
-          showViewHoldingsButton={showViewHoldingsButton}
-          showAddItemButton={showAddItemButton}
-        >
-          <ItemsListContainer
-            holding={holding}
-            draggable={draggable}
-            droppable={droppable}
-            tenantId={tenantId}
-            isBarcodeAsHotlink={isBarcodeAsHotlink}
-          />
-        </HoldingAccordion>
-      </DropZone>
-    </div>
-  );
-};
+  const stripes = useStripes();
+  const history = useHistory();
+  const location = useLocation();
+  const callout = useCallout();
 
-Holding.propTypes = {
-  holding: PropTypes.object.isRequired,
-  onViewHolding: PropTypes.func.isRequired,
-  onAddItem: PropTypes.func.isRequired,
-  instanceId: PropTypes.string.isRequired,
-  holdings: PropTypes.arrayOf(PropTypes.object),
-  draggable: PropTypes.bool,
-  droppable: PropTypes.bool,
-  isDraggable: PropTypes.bool,
-  selectHoldingsForDrag: PropTypes.func,
-  isHoldingDragSelected: PropTypes.func,
-  isItemsDroppable: PropTypes.bool,
-  tenantId: PropTypes.string,
-  showViewHoldingsButton: PropTypes.bool,
-  showAddItemButton: PropTypes.bool,
-  isBarcodeAsHotlink: PropTypes.bool,
-  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
+  const { isMoving } = useMoveItemsContext();
+
+  const onViewHolding = useCallback(() => {
+    navigateToHoldingsViewPage(history, location, instance, holding, tenantId, stripes.okapi.tenant);
+
+    sendCalloutOnAffiliationChange(stripes, tenantId, callout);
+  }, [location.search, instance.id, holding.id]);
+
+  const onAddItem = useCallback(() => {
+    navigateToItemCreatePage(history, location, instance, holding, tenantId, stripes.okapi.tenant);
+  }, [location.search, instance.id, holding.id]);
+
+  return (
+    <HoldingAccordion
+      withMoveDropdown={isMoving}
+      holding={holding}
+      holdings={holdings}
+      onViewHolding={onViewHolding}
+      onAddItem={onAddItem}
+      tenantId={tenantId}
+      instanceId={instance.id}
+      pathToAccordionsState={pathToAccordionsState}
+      showViewHoldingsButton={showViewHoldingsButton}
+      showAddItemButton={showAddItemButton}
+    >
+      <ItemsList
+        id={id}
+        contentData={items}
+        holding={holding}
+        tenantId={tenantId}
+        setItemsToHolding={setItemsToHolding}
+        isBarcodeAsHotlink={isBarcodeAsHotlink}
+      />
+    </HoldingAccordion>
+  );
 };
 
 export default Holding;

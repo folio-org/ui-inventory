@@ -27,6 +27,7 @@
   "instances.typeOfRelation": "Type of relation: {name}",
   "holdingsRecord.awaitingResources": "Awaiting resources",
   "resultCount": "{count, number} {count, plural, one {record found} other {records found}}",
+  "item.order": "Order",
   "item.loanAndAvailability": "Loan and availability",
   "item.availability.itemStatus": "Item status",
   "item.availability.itemStatusDate": "Item status date",

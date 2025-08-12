@@ -1,9 +1,7 @@
-import React, {
-  useCallback,
-  useContext,
-} from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import { isEmpty } from 'lodash';
 
 import {
   useStripes,
@@ -13,13 +11,13 @@ import {
   DropdownMenu,
   Dropdown,
   DropdownButton,
+  Button,
+  List,
 } from '@folio/stripes/components';
 
-import {
-  callNumberLabel
-} from '../../../../utils';
-import { DataContext } from '../../../../contexts';
-import DnDContext from '../../../DnDContext';
+import { callNumberLabel } from '../../../../utils';
+import { useMoveItemsContext } from '../../../../contexts';
+import useReferenceData from '../../../../hooks/useReferenceData';
 
 import styles from './MoveToDropdown.css';
 
@@ -29,21 +27,21 @@ export const MoveToDropdown = ({
 }) => {
   const stripes = useStripes();
 
-  const { locationsById } = useContext(DataContext);
-
+  const { locationsById } = useReferenceData();
+  const context = useMoveItemsContext();
   const {
-    instances = [],
-    selectedItemsMap,
-    allHoldings,
-    onSelect,
-  } = useContext(DnDContext);
+    moveItemsToHolding,
+    getDraggingItems,
+    setItemsState,
+  } = context;
 
-  // when moving items within an instance the array is empty
-  // when moving holdings/items to another instance the array contains two instances
-  const [moveFromInstance, moveToInstance] = instances;
-  const filteredHoldings = allHoldings
-    ? allHoldings.filter(el => el.instanceId !== holding.instanceId)
-    : holdings.filter(el => el.id !== holding.id);
+  const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
+  const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
+
+  // Get selected items within the current holding
+  const holdingSelectedItems = getDraggingItems(holding.id);
+
+  const filteredHoldings = holdings.filter(hld => hld.id !== holding.id);
   const movetoHoldings = filteredHoldings.map(item => {
     return {
       ...item,
@@ -51,12 +49,12 @@ export const MoveToDropdown = ({
       callNumber: callNumberLabel(item),
     };
   });
-  const fromSelectedMap = selectedItemsMap[holding.id] || {};
-  const selectedItems = Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
-  const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
-  const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
-  const isMovementWithinInstance = !instances.length;
-  const canMoveItemsWithinInstance = selectedItems.length && movetoHoldings.length && canMoveItems;
+
+  const isMoveToButtonEnabled = !isEmpty(holdingSelectedItems) && !isEmpty(movetoHoldings) && canMoveItems;
+
+  const getMoveToHoldingLabel = useCallback(moveToHolding => {
+    return `${moveToHolding.labelLocation} ${moveToHolding.callNumber}`;
+  }, []);
 
   const dropdownButton = useCallback(({ getTriggerProps }) => (
     <DropdownButton
@@ -68,65 +66,57 @@ export const MoveToDropdown = ({
     </DropdownButton>
   ), [holding.id]);
 
-  const createMoveToLabel = (moveToHolding) => {
-    const moveToInstanceTitle = instances.filter(instance => instance.id === moveToHolding.instanceId)[0]?.title;
-    const moveToHoldingsLabel = selectedItems.length ? `${moveToHolding.labelLocation} ${moveToHolding.callNumber}` : '';
+  const onSelect = async (item) => {
+    if (holdingSelectedItems.length > 0) {
+      const itemIds = holdingSelectedItems.map(it => it.id);
 
-    if (moveToInstanceTitle && !selectedItems.length) return moveToInstanceTitle;
-    if (isMovementWithinInstance && moveToHoldingsLabel) return moveToHoldingsLabel;
-
-    return `${moveToInstanceTitle} ${moveToHoldingsLabel}`;
+      const onSuccess = setItemsState(holding.id, item.id, holdingSelectedItems);
+      await moveItemsToHolding(holding.id, item.id, itemIds, { onSuccess });
+    } else {
+      console.log('No items selected for this holding');
+    }
   };
 
-  const dropdownMenu = useCallback(() => (
+  const getItemListFormatter = (item, i, onToggle) => {
+    return (
+      <li
+        key={i}
+        data-to-id={item.id}
+        data-item-id={holding.id}
+      >
+        <Button
+          buttonStyle="dropdownItem"
+          role="menuitem"
+          onClick={async () => {
+            await onSelect(item);
+            onToggle();
+          }}
+        >
+          {getMoveToHoldingLabel(item)}
+        </Button>
+      </li>
+    );
+  };
+
+  const dropdownMenu = ({ onToggle }) => (
     <DropdownMenu
       data-role="menu"
       data-test-move-to-dropdown
+      onToggle={onToggle}
     >
-      {
-        !isMovementWithinInstance && !selectedItems.length
-          ? canMoveHoldings && (
-            <div
-              role="button"
-              tabIndex={0}
-              className={styles.dropDownItem}
-              data-item-id={holding.id}
-              data-to-id={
-                moveFromInstance.id === holding.instanceId
-                  ? moveToInstance.id
-                  : moveFromInstance.id
-              }
-              data-is-holding
-              onClick={onSelect}
-              onKeyPress={onSelect}
-            >
-              {moveFromInstance.id === holding.instanceId
-                ? moveToInstance.title
-                : moveFromInstance.title}
-            </div>
-          )
-          : canMoveItems && movetoHoldings.map((moveToHolding, index) => (
-            <div
-              role="button"
-              tabIndex={index}
-              className={styles.dropDownItem}
-              key={moveToHolding.id}
-              data-to-id={moveToHolding.id}
-              data-item-id={holding.id}
-              onClick={onSelect}
-              onKeyPress={onSelect}
-            >
-              {createMoveToLabel(moveToHolding)}
-            </div>
-          ))}
+      <List
+        listClass={styles.customList}
+        items={movetoHoldings}
+        itemFormatter={(item, i) => getItemListFormatter(item, i, onToggle)}
+      />
     </DropdownMenu>
-  ), [holding.id, selectedItems]);
+  );
 
   return (
     <Dropdown
       renderTrigger={dropdownButton}
       renderMenu={dropdownMenu}
-      disabled={isMovementWithinInstance && !canMoveItemsWithinInstance}
+      disabled={!isMoveToButtonEnabled}
     />
   );
 };

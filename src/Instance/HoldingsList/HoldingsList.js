@@ -1,44 +1,76 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import {
+  useEffect,
+} from 'react';
+import { isEqual } from 'lodash';
 
-import { HoldingContainer } from './Holding';
+import { Loading } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
+
+import { Holding } from './Holding';
+
+import { useInstanceHoldingsQuery } from '../../providers';
+import { useMoveItemsContext } from '../../contexts';
 
 const HoldingsList = ({
   instance,
-  holdings = [],
   tenantId,
-  showViewHoldingsButton,
-  showAddItemButton,
-  isBarcodeAsHotlink,
-  pathToAccordionsState = [],
-  draggable = false,
-  droppable = false,
-}) => holdings.map(holding => (
-  <HoldingContainer
-    key={`items_${holding.id}`}
-    instance={instance}
-    holding={holding}
-    draggable={draggable}
-    droppable={droppable}
-    holdings={holdings}
-    tenantId={tenantId}
-    showViewHoldingsButton={showViewHoldingsButton}
-    showAddItemButton={showAddItemButton}
-    isBarcodeAsHotlink={isBarcodeAsHotlink}
-    pathToAccordionsState={pathToAccordionsState}
-  />
-));
+  isItemsMovement,
+  pathToAccordionsState,
+}) => {
+  const stripes = useStripes();
+  const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance.id, { tenantId });
 
-HoldingsList.propTypes = {
-  instance: PropTypes.object.isRequired,
-  holdings: PropTypes.arrayOf(PropTypes.object),
-  tenantId: PropTypes.string,
-  showViewHoldingsButton: PropTypes.bool,
-  showAddItemButton: PropTypes.bool,
-  isBarcodeAsHotlink: PropTypes.bool,
-  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
-  draggable: PropTypes.bool,
-  droppable: PropTypes.bool,
+  const canViewHoldingsAndItems = stripes.hasPerm('ui-inventory.instance.view');
+  const canCreateItem = stripes.hasPerm('ui-inventory.item.create');
+
+  const {
+    setIsMoving,
+    holdingsWithItems,
+    setHoldingsWithItems,
+  } = useMoveItemsContext();
+
+  useEffect(() => {
+    setIsMoving(isItemsMovement);
+  }, [isItemsMovement]);
+
+  useEffect(() => {
+    if (holdingsRecords?.length && !isLoading) {
+      setHoldingsWithItems(holdingsRecords.map(({ id }) => ({ id })));
+    }
+  }, [holdingsRecords, instance, setHoldingsWithItems, isLoading]);
+
+  const setItemsToHolding = (holdingId, items = []) => {
+    const holdingElements = holdingsWithItems.find(({ id }) => id === holdingId);
+
+    if (!isEqual(holdingElements?.items, items)) {
+      setHoldingsWithItems(prevHoldings => {
+        return prevHoldings.map(hldng => (hldng.id === holdingId ? { ...hldng, items } : hldng));
+      });
+    }
+  };
+
+  if (isLoading) return <Loading size="large" />;
+
+  return (
+    <>
+      {holdingsRecords.map(holding => (
+        <Holding
+          key={holding.id}
+          id={holding.id}
+          holding={holding}
+          holdings={holdingsRecords}
+          instance={instance}
+          tenantId={tenantId}
+          pathToAccordionsState={pathToAccordionsState}
+          setItemsToHolding={setItemsToHolding}
+          items={holdingsWithItems.find(hld => hld.id === holding.id)?.items || []}
+          showViewHoldingsButton={canViewHoldingsAndItems}
+          showAddItemButton={canCreateItem}
+          isBarcodeAsHotlink={canViewHoldingsAndItems}
+        />
+      ))}
+    </>
+  );
 };
 
 export default HoldingsList;
