@@ -48,12 +48,17 @@ const DisplaySettings = () => {
   const getInitialValues = ([data]) => {
     return {
       [fieldNames.DEFAULT_SORT]: data?.value[fieldNames.DEFAULT_SORT] || DEFAULT_SORT,
-      [fieldNames.DEFAULT_COLUMNS]: data?.value[fieldNames.DEFAULT_COLUMNS] || [],
+      [fieldNames.DEFAULT_COLUMNS]: data?.value[fieldNames.DEFAULT_COLUMNS] || TOGGLEABLE_COLUMNS,
     };
   };
 
   const formatPayload = (data) => {
-    return data;
+    return {
+      ...data,
+      // defaultColumns is null when all checkboxes are unchecked, so we need to add an empty array
+      // as a default value
+      [fieldNames.DEFAULT_COLUMNS]: data[fieldNames.DEFAULT_COLUMNS] || [],
+    };
   };
 
   return (
