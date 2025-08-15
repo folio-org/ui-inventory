@@ -67,6 +67,52 @@ describe('buildSearchQuery', () => {
 
         expect(cql).toEqual('((subjects.value==/string "test") and staffSuppress=="false") sortby title');
       });
+
+      describe('when query and filters are empty', () => {
+        it('should return empty query and filters', () => {
+          const queryParams = {
+            qindex: queryIndexes.SUBJECT,
+            query: '',
+            filters: '',
+          };
+          const buildQueryArgs = getBuildQueryArgs({
+            queryParams,
+            props: {
+              ...defaultProps,
+              stripes: {
+                hasPerm: () => false,
+              },
+            },
+          });
+
+          const cql = buildSearchQuery(applyDefaultStaffSuppressFilter)(...buildQueryArgs);
+
+          expect(cql).toEqual(null);
+        });
+      });
+
+      describe('when query is empty and filters value is staffSuppress.false', () => {
+        it('should return empty query and filters', () => {
+          const queryParams = {
+            qindex: queryIndexes.SUBJECT,
+            query: '',
+            filters: 'staffSuppress.false',
+          };
+          const buildQueryArgs = getBuildQueryArgs({
+            queryParams,
+            props: {
+              ...defaultProps,
+              stripes: {
+                hasPerm: () => false,
+              },
+            },
+          });
+
+          const cql = buildSearchQuery(applyDefaultStaffSuppressFilter)(...buildQueryArgs);
+
+          expect(cql).toEqual(null);
+        });
+      });
     });
   });
 });
