@@ -130,6 +130,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={Select}
                     dataOptions={dataOptionsAllEnabled}
+                    defaultValue={NUMBER_GENERATOR_OPTIONS_OFF}
                     id={`${CALL_NUMBER_SETTING}Holdings`}
                     label={<FormattedMessage id="ui-inventory.numberGenerator.callNumber" />}
                     name={`${CALL_NUMBER_SETTING}Holdings`}
@@ -146,6 +147,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={Select}
                     dataOptions={dataOptionsAllEnabled}
+                    defaultValue={NUMBER_GENERATOR_OPTIONS_OFF}
                     id={BARCODE_SETTING}
                     label={<FormattedMessage id="ui-inventory.numberGenerator.barcode" />}
                     name={BARCODE_SETTING}
@@ -157,6 +159,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={Select}
                     dataOptions={dataOptionsOffDisabled}
+                    defaultValue={NUMBER_GENERATOR_OPTIONS_OFF}
                     id={ACCESSION_NUMBER_SETTING}
                     label={<FormattedMessage id="ui-inventory.numberGenerator.accessionNumber" />}
                     name={ACCESSION_NUMBER_SETTING}
@@ -168,6 +171,7 @@ const NumberGeneratorSettingsForm = ({
                   <Field
                     component={Select}
                     dataOptions={dataOptionsOffDisabled}
+                    defaultValue={NUMBER_GENERATOR_OPTIONS_OFF}
                     id={CALL_NUMBER_SETTING}
                     label={<FormattedMessage id="ui-inventory.numberGenerator.callNumber" />}
                     name={CALL_NUMBER_SETTING}
