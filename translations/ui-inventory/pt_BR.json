@@ -898,8 +898,13 @@
     "sourceUri": "URI da fonte da instância",
     "instances.columns.instanceHRID": "HRID da instância",
     "additionalCallNumbers": "Números de chamada adicionais",
-    "noAdditionalCallNumbers": "Nenhum número de chamada adicional",
     "addAdditionalCallNumber": "Adicionar número de chamada adicional",
     "swapWithPrimaryCallNumber": "Alterar com número de chamada principal",
-    "item.order": "Ordem"
+    "item.order": "Ordem",
+    "settings.displaySettings.defaultColumns": "Colunas padrão",
+    "settings.displaySettings.defaultColumns.options.contributors": "Colaboradores",
+    "settings.displaySettings.defaultColumns.options.publishers": "Editoras",
+    "settings.displaySettings.defaultColumns.options.normalizedDate1": "Data",
+    "settings.displaySettings.defaultColumns.options.relation": "Relação",
+    "settings.displaySettings.defaultColumns.options.hrid": "HRID da instância"
 }
