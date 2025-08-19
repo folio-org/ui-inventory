@@ -131,7 +131,7 @@
     "enumerationData": "Data výčtu",
     "itemPublicNote": "Veřejná poznámka jednotky",
     "holdingsHrid": "HRID holdingů",
-    "instanceHrid": "HRID titulu",
+    "instanceHrid": "Titul (HRID)",
     "viewSource": "Zobrazit zdroj",
     "itemHrid": "HRID jednotky",
     "administrativeData": "Administrativní údaje",
@@ -896,10 +896,15 @@
     "acq.averageCost": "Průměrné náklady",
     "acq.fundCode": "Kód prostředku",
     "sourceUri": "Zdroj titulu (URI)",
-    "instances.columns.instanceHRID": "HRID titulu",
+    "instances.columns.instanceHRID": "Titul (HRID)",
     "additionalCallNumbers": "Další signatury",
-    "noAdditionalCallNumbers": "Žádné další signatury",
     "addAdditionalCallNumber": "Přidat další signaturu",
     "swapWithPrimaryCallNumber": "Změnit pomocí primárního signatury",
-    "item.order": "Order"
+    "item.order": "Objednávka",
+    "settings.displaySettings.defaultColumns": "Výchozí sloupce",
+    "settings.displaySettings.defaultColumns.options.contributors": "Autoři",
+    "settings.displaySettings.defaultColumns.options.publishers": "Vydavatelé",
+    "settings.displaySettings.defaultColumns.options.normalizedDate1": "Datum",
+    "settings.displaySettings.defaultColumns.options.relation": "Vztah",
+    "settings.displaySettings.defaultColumns.options.hrid": "Titul (HRID)"
 }
