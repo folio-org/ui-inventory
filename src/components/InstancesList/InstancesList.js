@@ -102,6 +102,7 @@ import {
   getItem,
   setItem,
 } from '../../storage';
+import { applyDefaultStaffSuppressFilter } from '../../routes/buildManifestObject';
 
 import css from './instances.css';
 
@@ -648,7 +649,7 @@ class InstancesList extends React.Component {
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
         const endpointPath = `${stripes.okapi.url}/search/instances/ids`;
-        const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
+        const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
 
         let items = [];
 
@@ -709,7 +710,7 @@ class InstancesList extends React.Component {
     if (!isTestEnv()) {
       const { data } = this.props;
 
-      const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
+      const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
       const fileName = `SearchInstanceCQLQuery${moment().format()}.cql`;
 
       saveAs(new Blob([query], { type: 'text/plain;charset=utf-8;' }), fileName);
