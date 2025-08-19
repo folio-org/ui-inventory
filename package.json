@@ -155,10 +155,7 @@
           "browse.contributors.instances.collection.get",
           "inventory-storage.bound-with-parts.collection.get",
           "source-storage.records.matching.collection.post",
-          "users.item.get",
-          "search.resources.ids.collection.get",
-          "search.resources.ids.jobs.get",
-          "search.resources.ids.jobs.post"
+          "users.item.get"
         ],
         "visible": true
       },
@@ -698,7 +695,10 @@
           "audit.marc.bib.collection.get",
           "audit.config.groups.settings.collection.get",
           "audit.config.groups.settings.audit.inventory.collection.get",
-          "consortia.sharing-instances.collection.get"
+          "consortia.sharing-instances.collection.get",
+          "search.resources.ids.collection.get",
+          "search.resources.ids.jobs.get",
+          "search.resources.ids.jobs.post"
         ],
         "visible": true
       },
