@@ -898,8 +898,13 @@
     "sourceUri": "Bron URI van Instance",
     "instances.columns.instanceHRID": "Instance HRID",
     "additionalCallNumbers": "Extra Vindplaatsen",
-    "noAdditionalCallNumbers": "Geen extra Vindplaatsen",
     "addAdditionalCallNumber": "Extra Vindplaats Toevoegen",
     "swapWithPrimaryCallNumber": "Wijziging met Primair Vindplaatsnummer",
-    "item.order": "Order"
+    "item.order": "Order",
+    "settings.displaySettings.defaultColumns": "Default columns",
+    "settings.displaySettings.defaultColumns.options.contributors": "Contributors",
+    "settings.displaySettings.defaultColumns.options.publishers": "Publishers",
+    "settings.displaySettings.defaultColumns.options.normalizedDate1": "Date",
+    "settings.displaySettings.defaultColumns.options.relation": "Relation",
+    "settings.displaySettings.defaultColumns.options.hrid": "Instance HRID"
 }
