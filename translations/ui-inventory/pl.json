@@ -898,8 +898,13 @@
     "sourceUri": "Instance source URI",
     "instances.columns.instanceHRID": "HRID instancji",
     "additionalCallNumbers": "Dodatkowe sygnatury",
-    "noAdditionalCallNumbers": "Brak dodatkowych sygnatur",
     "addAdditionalCallNumber": "Dodaj dodatkową sygnaturę",
     "swapWithPrimaryCallNumber": "Zmień z główną sygnaturą",
-    "item.order": "Order"
+    "item.order": "Order",
+    "settings.displaySettings.defaultColumns": "Default columns",
+    "settings.displaySettings.defaultColumns.options.contributors": "Contributors",
+    "settings.displaySettings.defaultColumns.options.publishers": "Publishers",
+    "settings.displaySettings.defaultColumns.options.normalizedDate1": "Date",
+    "settings.displaySettings.defaultColumns.options.relation": "Relation",
+    "settings.displaySettings.defaultColumns.options.hrid": "Instance HRID"
 }
