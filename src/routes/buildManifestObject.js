@@ -23,6 +23,8 @@ export const applyDefaultStaffSuppressFilter = (query, stripes) => {
       query.filters = addFilter(query.filters, staffSuppressFalse);
     }
   }
+
+  // query.filters = addFilter(query.filters, 'tenantId.college');
 };
 
 export function buildManifestObject() {
@@ -31,7 +33,7 @@ export function buildManifestObject() {
     query: {
       initialValue: {
         query: '',
-        filters: '',
+        filters: 'tenantId.college',
         sort: '',
         selectedBrowseResult: false,
       },

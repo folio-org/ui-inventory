@@ -85,6 +85,7 @@ import {
   switchAffiliation,
   getSortOptions,
   hasMemberTenantPermission,
+  addFilter,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -182,9 +183,9 @@ class InstancesList extends React.Component {
 
   static contextType = CalloutContext;
 
-  static manifest = Object.freeze({
-    query: {},
-  });
+  // static manifest = Object.freeze({
+  //   query: {},
+  // });
 
   constructor(props) {
     super(props);
@@ -249,7 +250,7 @@ class InstancesList extends React.Component {
     }
 
     if (isSortingUpdated) {
-      this.redirectToSearchParams(searchParams);
+      // this.redirectToSearchParams(searchParams);
     }
 
     if (isUserInConsortiumMode(stripes)) {
@@ -294,7 +295,7 @@ class InstancesList extends React.Component {
     }
 
     if (isSortingUpdated) {
-      this.redirectToSearchParams(searchParams);
+      // this.redirectToSearchParams(searchParams);
     }
 
     if (prevProps.segment !== segment) {
@@ -308,6 +309,16 @@ class InstancesList extends React.Component {
         visibleColumns: this.getInitialToggleableColumns(),
       });
     }
+
+    console.log(this.props.parentResources.query.filters);
+
+    // const { query: queryResource } = this.props.parentResources;
+    // const { query: queryMutator } = this.props.parentMutator;
+
+    // console.log('mount');
+    // queryMutator.update({
+    //   filters: addFilter(queryResource.filters, 'tenantId.college'),
+    // });
   }
 
   componentWillUnmount() {
