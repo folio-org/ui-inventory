@@ -47,6 +47,7 @@ const mockPublishOnReset = jest.fn();
 const spyOnIsUserInConsortiumMode = jest.spyOn(utils, 'isUserInConsortiumMode');
 const spyOnHasMemberTenantPermission = jest.spyOn(utils, 'hasMemberTenantPermission');
 const spyOnCheckIfUserInCentralTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInCentralTenant');
+const spyOnCheckIfUserInMemberTenant = jest.spyOn(require('@folio/stripes/core'), 'checkIfUserInMemberTenant');
 
 jest.mock('../../storage', () => ({
   ...jest.requireActual('../../storage'),
@@ -382,6 +383,7 @@ describe('InstancesList', () => {
         });
         it('should call history.replace to add the default sort query parameter from inventory settings', async () => {
           jest.spyOn(history, 'replace');
+          spyOnCheckIfUserInMemberTenant.mockReturnValue(false);
 
           act(() => history.push('/inventory?filters=staffSuppress.true&sort=contributors'));
 
@@ -514,6 +516,7 @@ describe('InstancesList', () => {
           describe('when canceling a record', () => {
             it('should remove the "layer" parameter and focus on the search field', async () => {
               act(() => history.push('/inventory?layer=foo'));
+              spyOnCheckIfUserInMemberTenant.mockReturnValue(false);
 
               jest.spyOn(history, 'push');
 
@@ -535,6 +538,7 @@ describe('InstancesList', () => {
           describe('when saving the record', () => {
             it('should redirect to new Instance record', async () => {
               jest.spyOn(history, 'push');
+              spyOnCheckIfUserInMemberTenant.mockReturnValue(false);
               await act(async () => renderInstancesList({ segment: 'instances' }));
               openActionMenu();
 
@@ -575,6 +579,7 @@ describe('InstancesList', () => {
           });
           it('should redirect to the correct layer', async () => {
             jest.spyOn(history, 'push');
+            spyOnCheckIfUserInMemberTenant.mockReturnValue(false);
             await act(async () => renderInstancesList({ segment: 'instances' }));
             openActionMenu();
 

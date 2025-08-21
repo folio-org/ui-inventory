@@ -27,6 +27,7 @@ import {
   stripesConnect,
   withNamespace,
   checkIfUserInCentralTenant,
+  checkIfUserInMemberTenant,
   TitleManager,
   getUserTenantsPermissions,
 } from '@folio/stripes/core';
@@ -60,6 +61,7 @@ import {
   SEARCH_COLUMN_MAPPINGS,
   withReset,
   getDefaultQindex,
+  FACETS,
 } from '@folio/stripes-inventory-components';
 
 import ViewInstanceRoute from '../../routes/ViewInstanceRoute';
@@ -242,16 +244,16 @@ class InstancesList extends React.Component {
 
     const searchParams = new URLSearchParams(_location.search);
 
-    let isSortingUpdated = false;
-
     if (!params.sort) {
-      isSortingUpdated = true;
       searchParams.set('sort', defaultSort);
     }
 
-    if (isSortingUpdated) {
-      // this.redirectToSearchParams(searchParams);
+    if (checkIfUserInMemberTenant(stripes)) {
+      searchParams.set('filters', addFilter(searchParams.get('filters'), `${FACETS.HELD_BY}.${stripes.okapi.tenant}`));
+      searchParams.set('_isInitial', true);
     }
+
+    this.redirectToSearchParams(searchParams);
 
     if (isUserInConsortiumMode(stripes)) {
       this.getCurrentTenantPermissions();
@@ -265,6 +267,7 @@ class InstancesList extends React.Component {
       segment,
       parentMutator,
       getLastSearchOffset,
+      stripes,
     } = this.props;
     const sortBy = this.getSortFromParams();
 
@@ -292,10 +295,15 @@ class InstancesList extends React.Component {
     if (!sortBy) {
       isSortingUpdated = true;
       searchParams.set('sort', data.displaySettings.defaultSort);
+
+      if (checkIfUserInMemberTenant(stripes)) {
+        searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+        searchParams.set('_isInitial', true);
+      }
     }
 
     if (isSortingUpdated) {
-      // this.redirectToSearchParams(searchParams);
+      this.redirectToSearchParams(searchParams);
     }
 
     if (prevProps.segment !== segment) {
@@ -309,16 +317,6 @@ class InstancesList extends React.Component {
         visibleColumns: this.getInitialToggleableColumns(),
       });
     }
-
-    console.log(this.props.parentResources.query.filters);
-
-    // const { query: queryResource } = this.props.parentResources;
-    // const { query: queryMutator } = this.props.parentMutator;
-
-    // console.log('mount');
-    // queryMutator.update({
-    //   filters: addFilter(queryResource.filters, 'tenantId.college'),
-    // });
   }
 
   componentWillUnmount() {
@@ -334,6 +332,7 @@ class InstancesList extends React.Component {
 
   extraParamsToReset = {
     selectedBrowseResult: false,
+    _isInitial: false,
     authorityId: '',
   };
 
@@ -441,7 +440,7 @@ class InstancesList extends React.Component {
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
 
-    goTo(path, { ...params, filters: filtersStr });
+    goTo(path, { ...params, _isInitial: false, filters: filtersStr });
   };
 
   onSubmitSearch = () => {
@@ -1050,6 +1049,7 @@ class InstancesList extends React.Component {
   handleResetAll = () => {
     const {
       publishOnReset,
+      stripes,
     } = this.props;
 
     this.setState({
@@ -1058,6 +1058,14 @@ class InstancesList extends React.Component {
 
     this.inputRef.current.focus();
     publishOnReset();
+
+    if (checkIfUserInMemberTenant(stripes)) {
+      const searchParams = new URLSearchParams();
+
+      searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+      searchParams.set('_isInitial', true);
+      this.redirectToSearchParams(searchParams);
+    }
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {

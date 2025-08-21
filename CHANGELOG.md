@@ -37,6 +37,7 @@ UIIN-3437.
 * Correcting the behavior of drop-down menu and checkbox in Settings > Inventory > Number generator options. Refs UIIN-3471.
 * Hide staff suppressed Instances based on existing permission for Staff suppress facet. Refs UIIN-3465.
 * Move permissions for creating export jobs to "Inventory: View instances, holdings, and items" permission. Fixes UIIN-3474.
+* ECS: Set Held by facet default to current tenant context in Inventory Search. Refs UIIN-2820.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
