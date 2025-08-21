@@ -34,7 +34,6 @@ export function buildManifestObject() {
         filters: '',
         sort: '',
         selectedBrowseResult: false,
-        _isInitial: true,
       },
     },
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
