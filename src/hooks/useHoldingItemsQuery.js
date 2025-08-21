@@ -41,7 +41,9 @@ const useHoldingItemsQuery = (
       const sortQuery = options.searchParams.sortBy;
       const sortDirection = sortQuery.startsWith('-') ? 'descending' : 'ascending';
       const sortOrder = sortQuery.replace(/^-/, '');
-      const newSortBy = sortMap[sortOrder] ? `${sortMap[sortOrder]}/sort.${sortDirection}` : sortBy;
+      const newSortBy = sortMap[sortOrder]
+        ? `${sortMap[sortOrder]}${sortOrder === 'order' ? '/number' : ''}/sort.${sortDirection}`
+        : sortBy;
 
       setSortBy(newSortBy);
     }
