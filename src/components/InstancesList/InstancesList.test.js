@@ -220,6 +220,7 @@ describe('InstancesList', () => {
           expect(mockUnsubscribeFromReset).toHaveBeenCalled();
         });
       });
+
       describe('when the component is mounted', () => {
         describe('and sort parameter does not match the one selected in Settings', () => {
           it('should not be replaced', async () => {
@@ -245,6 +246,7 @@ describe('InstancesList', () => {
             }));
           });
         });
+
         describe('and sort parameter is missing', () => {
           it('should call history.replace with the default sort parameter', async () => {
             jest.spyOn(history, 'replace');
@@ -268,6 +270,7 @@ describe('InstancesList', () => {
             }));
           });
         });
+
         describe('when query is present', () => {
           it('should display correct document title', async () => {
             await act(async () => renderInstancesList({
@@ -283,6 +286,7 @@ describe('InstancesList', () => {
             expect(screen.getByText('Inventory - test - Search')).toBeInTheDocument();
           });
         });
+
         describe('and browse result was selected', () => {
           it('should reset offset', async () => {
             mockResultOffsetReplace.mockClear();
@@ -301,6 +305,7 @@ describe('InstancesList', () => {
             expect(mockResultOffsetReplace).toHaveBeenCalledWith(0);
           });
         });
+
         describe('and browse result was not selected', () => {
           it('should replace resultOffset', async () => {
             mockResultOffsetReplace.mockClear();
@@ -313,7 +318,54 @@ describe('InstancesList', () => {
             expect(mockResultOffsetReplace).toHaveBeenCalledWith(100);
           });
         });
+
+        describe('and a user is in a member tenant', () => {
+          it('should select current tenant as a default value in Held By facet', async () => {
+            jest.spyOn(history, 'replace');
+            spyOnCheckIfUserInMemberTenant.mockReturnValue(true);
+
+            act(() => history.push('/inventory?sort=title'));
+
+            await act(async () => renderInstancesList({
+              segment: 'instances',
+              data: {
+                ...data,
+                query: {
+                  query: '',
+                },
+              },
+            }));
+
+            expect(history.replace).toHaveBeenLastCalledWith(expect.objectContaining({
+              search: expect.stringContaining('tenantId.diku&_isInitial=true'),
+            }));
+          });
+
+          describe('when a component was mounted with search parameters in the url', () => {
+            it('should not select current tenant as a default value in Held By facet', async () => {
+              jest.spyOn(history, 'replace');
+              spyOnCheckIfUserInMemberTenant.mockReturnValue(true);
+
+              act(() => history.push('/inventory?sort=title&filters=source.FOLIO'));
+
+              await act(async () => renderInstancesList({
+                segment: 'instances',
+                data: {
+                  ...data,
+                  query: {
+                    query: '',
+                  },
+                },
+              }));
+
+              expect(history.replace).toHaveBeenLastCalledWith(expect.objectContaining({
+                search: expect.stringContaining('sort=title&filters=source.FOLIO'),
+              }));
+            });
+          });
+        });
       });
+
       describe('when the component is updated', () => {
         describe('and location.search has been changed', () => {
           it('should write location.search to the session storage', async () => {
@@ -325,6 +377,7 @@ describe('InstancesList', () => {
             expect(mockStoreLastSearch).toHaveBeenCalledWith(search, 'instances');
           });
         });
+
         describe('and offset has been changed', () => {
           it('should write offset to storage', async () => {
             const offset = 100;
@@ -343,6 +396,7 @@ describe('InstancesList', () => {
             expect(mockStoreLastSearchOffset).toHaveBeenCalledWith(offset, 'instances');
           });
         });
+
         describe('and segment has been changed', () => {
           it('should apply offset from storage', async () => {
             const lastSearchOffset = 200;
@@ -362,6 +416,7 @@ describe('InstancesList', () => {
           });
         });
       });
+
       describe('when user clicks Reset all', () => {
         it('should move focus to query input', async () => {
           await act(async () => renderInstancesList({
@@ -374,6 +429,7 @@ describe('InstancesList', () => {
 
           expect(screen.getByRole('textbox', { name: 'Search' })).toHaveFocus();
         });
+
         it('should publish the reset event', async () => {
           await act(async () => renderInstancesList());
 
@@ -381,6 +437,7 @@ describe('InstancesList', () => {
 
           expect(mockPublishOnReset).toHaveBeenCalled();
         });
+
         it('should call history.replace to add the default sort query parameter from inventory settings', async () => {
           jest.spyOn(history, 'replace');
           spyOnCheckIfUserInMemberTenant.mockReturnValue(false);
@@ -411,6 +468,7 @@ describe('InstancesList', () => {
           });
         });
       });
+
       describe('when search segment is changed', () => {
         it('should clear selected rows', async () => {
           const {
@@ -426,6 +484,7 @@ describe('InstancesList', () => {
           expect(getAllByLabelText('Select instance')[0].checked).toBeFalsy();
         });
       });
+
       describe('when a user performs a search and clicks the `Next` button in the list of records', () => {
         describe('then clicks on the `Browse` lookup tab and then clicks `Search` lookup tab', () => {
           it('should avoid infinity loading by resetting the records on unmounting', async () => {
@@ -437,6 +496,7 @@ describe('InstancesList', () => {
           });
         });
       });
+
       describe('when clicking on the `Browse` tab', () => {
         it('should pass the correct search by clicking on the `Browse` tab', async () => {
           const search = '?qindex=subject&query=book';
@@ -466,6 +526,7 @@ describe('InstancesList', () => {
           expect(setItem).toHaveBeenCalledWith('@folio/inventory.instances.lastOpenRecord', 'test-id');
         });
       });
+
       it('should have proper list results size', async () => {
         await act(async () => renderInstancesList({ segment: 'instances' }));
 
@@ -480,6 +541,7 @@ describe('InstancesList', () => {
 
           expect(screen.getByText(/show columns/i)).toBeInTheDocument();
         });
+
         describe('"New record" button', () => {
           describe('for non-consortial tenant', () => {
             it('should display the default "New" menu option', async () => {
@@ -491,6 +553,7 @@ describe('InstancesList', () => {
               expect(screen.getByRole('button', { name: 'New' })).toBeInTheDocument();
             });
           });
+
           describe('for a Consortial central tenant', () => {
             it('should display "New shared record" menu option', async () => {
               spyOnIsUserInConsortiumMode.mockReturnValue(true);
@@ -502,6 +565,7 @@ describe('InstancesList', () => {
               expect(screen.getByRole('button', { name: 'New shared record' })).toBeInTheDocument();
             });
           });
+
           describe('for a Member library tenant', () => {
             it('should display "New local record" menu option', async () => {
               spyOnIsUserInConsortiumMode.mockReturnValue(true);
@@ -513,6 +577,7 @@ describe('InstancesList', () => {
               expect(screen.getByRole('button', { name: 'New local record' })).toBeInTheDocument();
             });
           });
+
           describe('when canceling a record', () => {
             it('should remove the "layer" parameter and focus on the search field', async () => {
               act(() => history.push('/inventory?layer=foo'));
@@ -528,6 +593,7 @@ describe('InstancesList', () => {
             });
           });
         });
+
         describe('"New fast add record" button', () => {
           it('should render', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
@@ -535,6 +601,7 @@ describe('InstancesList', () => {
 
             expect(screen.getByRole('button', { name: 'New fast add record' })).toBeInTheDocument();
           });
+
           describe('when saving the record', () => {
             it('should redirect to new Instance record', async () => {
               jest.spyOn(history, 'push');
@@ -553,6 +620,7 @@ describe('InstancesList', () => {
               });
             });
           });
+
           describe('when canceling the record', () => {
             it('should focus on search field', async () => {
               jest.useFakeTimers();
@@ -570,6 +638,7 @@ describe('InstancesList', () => {
             });
           });
         });
+
         describe('"New MARC bibliographic record" button', () => {
           it('should render', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
@@ -577,6 +646,7 @@ describe('InstancesList', () => {
 
             expect(screen.getByRole('button', { name: 'New MARC bibliographic record' })).toBeInTheDocument();
           });
+
           it('should redirect to the correct layer', async () => {
             jest.spyOn(history, 'push');
             spyOnCheckIfUserInMemberTenant.mockReturnValue(false);
@@ -590,6 +660,7 @@ describe('InstancesList', () => {
             expect(history.push).toHaveBeenCalledWith('/inventory/quick-marc/create-bibliographic?sort=contributors');
           });
         });
+
         describe('hiding contributors column', () => {
           it('should hide contributors column', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
@@ -598,17 +669,20 @@ describe('InstancesList', () => {
             expect(document.querySelector('#clickable-list-column-contributors')).not.toBeInTheDocument();
           });
         });
+
         describe('select sort by', () => {
           it('should render menu option', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
 
             expect(screen.getByTestId('menu-section-sort-by')).toBeInTheDocument();
           });
+
           it('should render select', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
 
             expect(screen.getByTestId('sort-by-selection')).toBeInTheDocument();
           });
+
           it('should render correct order of options', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
             openActionMenu();
@@ -622,6 +696,7 @@ describe('InstancesList', () => {
             expect(options[3]).toHaveTextContent('Relevance');
           });
         });
+
         describe('select proper sort options', () => {
           it('should select Title as default selected sort option', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
@@ -633,6 +708,7 @@ describe('InstancesList', () => {
             const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Title' });
             expect(option.selected).toBeTruthy();
           });
+
           it('should select Contributors option', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
 
@@ -643,6 +719,7 @@ describe('InstancesList', () => {
             const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Contributors' });
             expect(option.selected).toBeTruthy();
           });
+
           it('should select option value "Contributors" after column "Contributors" click', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
 
@@ -651,6 +728,7 @@ describe('InstancesList', () => {
 
             expect((screen.getByRole('option', { name: 'Contributors' })).selected).toBeTruthy();
           });
+
           it('should select Relevance selected sort option when in search query', async () => {
             await act(async () => renderInstancesList({ segment: 'instances' }));
 
@@ -661,6 +739,7 @@ describe('InstancesList', () => {
             const option = within(screen.getByTestId('menu-section-sort-by')).getByRole('option', { name: 'Relevance' });
             expect(option.selected).toBeTruthy();
           });
+
           it('should set aria-sort to none on sorted columns after query sort by Relevance', async () => {
             await act(async () => renderInstancesList({
               segment: 'instances',
@@ -676,6 +755,7 @@ describe('InstancesList', () => {
             const sortCols = document.querySelectorAll('[aria-sort="ascending"], [aria-sort="descending"]');
             expect(sortCols).toHaveLength(0);
           });
+
           it('should select Date option', async () => {
             await act(async () => renderInstancesList());
 
@@ -688,6 +768,7 @@ describe('InstancesList', () => {
           });
         });
       });
+
       describe('when clicking on the `Holdings` or `Items` segments', () => {
         it('should take default sort option from data for Holdings or Item segments', async () => {
           await act(async () => renderInstancesList({ segment: 'instances' }));
@@ -705,6 +786,7 @@ describe('InstancesList', () => {
         });
       });
     });
+
     describe('filters pane', () => {
       it('should have query in search input', async () => {
         await act(async () => renderInstancesList({ segment: 'instances' }));
@@ -714,6 +796,7 @@ describe('InstancesList', () => {
 
         expect(screen.getByRole('textbox', { name: 'Search' })).toHaveValue('search query');
       });
+
       describe('when the search option is changed', () => {
         it('should not change the URL in the onChangeIndex function', async () => {
           history.push = jest.fn();
@@ -728,6 +811,7 @@ describe('InstancesList', () => {
         });
       });
     });
+
     describe('when using advanced search', () => {
       it('should set advanced search query in search input', async () => {
         await act(async () => renderInstancesList({ segment: 'instances' }));
@@ -742,6 +826,7 @@ describe('InstancesList', () => {
         expect(screen.getAllByLabelText('Search')[0].value).toEqual('keyword containsAll test');
       });
     });
+
     describe('when exporting Instances UUIDs', () => {
       it('should call `getResourcesIds` with correct arguments', async () => {
         const qindex = queryIndexes.QUERY_SEARCH;
@@ -769,6 +854,7 @@ describe('InstancesList', () => {
       });
     });
   });
+
   describe('Holdings segment', () => {
     it('should show Save Holdings UUIDs button', async () => {
       await act(async () => renderInstancesList({ segment: 'holdings' }));
@@ -781,6 +867,7 @@ describe('InstancesList', () => {
 
       expect(screen.getByRole('button', { name: 'Save holdings UUIDs' })).toBeVisible();
     });
+
     describe('when exporting Holdings UUIDs', () => {
       it('should call `getResourcesIds` with correct arguments', async () => {
         const qindex = queryIndexes.QUERY_SEARCH;
@@ -808,6 +895,7 @@ describe('InstancesList', () => {
       });
     });
   });
+
   describe('Items segment', () => {
     describe('item view queries', () => {
       [
@@ -861,6 +949,7 @@ describe('InstancesList', () => {
         });
       });
     });
+
     describe('when there is one item found', () => {
       it.skip('should navigate to item details page', async () => {
         await act(async () => renderInstancesList({
@@ -897,6 +986,7 @@ describe('InstancesList', () => {
         })));
       });
     });
+
     describe('when dismissing a record detail view', () => {
       it('should reset selected row and focus on the search field', async () => {
         SearchAndSort.mockClear();
@@ -915,6 +1005,7 @@ describe('InstancesList', () => {
       });
     });
   });
+
   describe('Date column', () => {
     describe('when there is no delimiter', () => {
       it('should use a comma', async () => {
@@ -938,6 +1029,7 @@ describe('InstancesList', () => {
         expect(getByText('2022, 2024')).toBeVisible();
       });
     });
+
     describe('when delimiter is a comma', () => {
       it('should be displayed with a space after comma', async () => {
         const { getByText } = await act(async () => renderInstancesList({
@@ -972,6 +1064,7 @@ describe('InstancesList', () => {
         expect(getByText('2023, 2024')).toBeVisible();
       });
     });
+
     describe('when keepDelimiter is true', () => {
       it('should display the delimiter', async () => {
         const { getByText } = await act(async () => renderInstancesList({
@@ -1005,6 +1098,7 @@ describe('InstancesList', () => {
         expect(getByText('-2024')).toBeVisible();
       });
     });
+
     describe('when keepDelimiter is false', () => {
       it('should not display a delimiter', async () => {
         const { getByText } = await act(async () => renderInstancesList({
@@ -1039,6 +1133,7 @@ describe('InstancesList', () => {
       });
     });
   });
+
   describe('search columns and show columns', () => {
     it('should have correct order of search columns', async () => {
       const { getAllByRole } = await act(async () => renderInstancesList());
@@ -1053,6 +1148,7 @@ describe('InstancesList', () => {
       expect(searchColumns[5]).toHaveTextContent('Relation');
       expect(searchColumns[6]).toHaveTextContent('Instance HRID');
     });
+
     it('should render correct order of options in "Show columns" section of actions', async () => {
       await act(async () => renderInstancesList());
       openActionMenu();
