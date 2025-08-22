@@ -25,7 +25,7 @@ const useHoldingItemsQuery = (
   // sortMap contains not all item table's columns because sorting by some columns
   // is not implemented on BE yet
   const sortMap = {
-    'order': 'order',
+    'order': 'order/number',
     'barcode': 'barcode',
     'status': 'status.name',
     'copyNumber': 'copyNumber',
@@ -36,12 +36,13 @@ const useHoldingItemsQuery = (
   };
 
   useEffect(() => {
-    console.log(options)
     if (options.searchParams?.sortBy) {
       const sortQuery = options.searchParams.sortBy;
       const sortDirection = sortQuery.startsWith('-') ? 'descending' : 'ascending';
       const sortOrder = sortQuery.replace(/^-/, '');
-      const newSortBy = sortMap[sortOrder] ? `${sortMap[sortOrder]}/sort.${sortDirection}` : sortBy;
+      const newSortBy = sortMap[sortOrder]
+        ? `${sortMap[sortOrder]}/sort.${sortDirection}`
+        : sortBy;
 
       setSortBy(newSortBy);
     }

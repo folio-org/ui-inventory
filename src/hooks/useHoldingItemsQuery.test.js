@@ -82,4 +82,32 @@ describe('useHoldingItemsQuery', () => {
       );
     });
   });
+
+  describe('when sortBy param is order', () => {
+    it('should fetch items with order sortby param', async () => {
+      const limit = 5;
+      const id = items[0].holdingsRecordId;
+
+      const { result } = renderHook(() => useHoldingItemsQuery(id, {
+        searchParams: {
+          limit,
+          sortBy: 'order',
+        }
+      }), { wrapper });
+
+      await act(() => !result.current.isFetching);
+
+      expect(result.current.items).toEqual(items.slice(0, limit));
+      expect(mockGet).toHaveBeenCalledWith(
+        'inventory/items-by-holdings-id',
+        {
+          searchParams: {
+            offset: 0,
+            limit,
+            query: `holdingsRecordId==${id} sortby order/number/sort.ascending`
+          }
+        }
+      );
+    });
+  });
 });
