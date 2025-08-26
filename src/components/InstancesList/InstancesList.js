@@ -185,9 +185,9 @@ class InstancesList extends React.Component {
 
   static contextType = CalloutContext;
 
-  // static manifest = Object.freeze({
-  //   query: {},
-  // });
+  static manifest = Object.freeze({
+    query: {},
+  });
 
   constructor(props) {
     super(props);
