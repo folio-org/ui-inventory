@@ -1,20 +1,51 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { keyBy } from 'lodash';
 
 import {
   Accordion,
+  DefaultAccordionHeader,
   Row,
   Col,
+  Checkbox,
 } from '@folio/stripes/components';
 import { useLocationsQuery } from '@folio/stripes-inventory-components';
 
 import { HoldingButtonsGroup } from './HoldingButtonsGroup';
 import HoldingAccordionLabel from './HoldingAccordionLabel';
-import {
-  useHoldingItemsQuery,
-} from '../../../hooks';
+
+import { useHoldingItemsQuery } from '../../../hooks';
+
+const CustomAccordionHeader = ({
+  withMoveHoldingCheckbox = false,
+  isHoldingSelected = false,
+  onSelectHolding,
+  ...headerProps
+}) => {
+  const intl = useIntl();
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      {withMoveHoldingCheckbox && (
+        <span style={{ marginRight: '10px' }}>
+          <Checkbox
+            aria-label={intl.formatMessage({ id: 'ui-inventory.moveItems.selectHolding' })}
+            checked={isHoldingSelected}
+            onClick={e => {
+              e.stopPropagation();
+              onSelectHolding(e.target?.checked);
+            }}
+          />
+        </span>
+      )}
+      <DefaultAccordionHeader {...headerProps} />
+    </div>
+  );
+};
 
 const HoldingAccordion = ({
   children,
@@ -22,11 +53,14 @@ const HoldingAccordion = ({
   holdings,
   onViewHolding,
   onAddItem,
-  withMoveDropdown,
   tenantId,
+  isHoldingSelected,
+  onSelectHolding,
   showViewHoldingsButton,
   showAddItemButton,
   pathToAccordionsState,
+  withMoveHoldingCheckbox = false,
+  withMoveDropdown = false,
 }) => {
   const searchParams = {
     limit: 0,
@@ -43,19 +77,21 @@ const HoldingAccordion = ({
   const labelLocation = locationsById[holding.permanentLocationId];
   const labelLocationName = labelLocation?.name ?? '';
 
-  const holdingButtonsGroup = isOpen => <HoldingButtonsGroup
-    holding={holding}
-    holdings={holdings}
-    itemCount={isFetching ? null : totalRecords}
-    locationsById={locationsById}
-    onViewHolding={onViewHolding}
-    onAddItem={onAddItem}
-    withMoveDropdown={withMoveDropdown}
-    isOpen={isOpen}
-    tenantId={tenantId}
-    showViewHoldingsButton={showViewHoldingsButton}
-    showAddItemButton={showAddItemButton}
-  />;
+  const holdingButtonsGroup = isOpen => (
+    <HoldingButtonsGroup
+      holding={holding}
+      holdings={holdings}
+      itemCount={isFetching ? null : totalRecords}
+      locationsById={locationsById}
+      onViewHolding={onViewHolding}
+      onAddItem={onAddItem}
+      withMoveDropdown={withMoveDropdown}
+      isOpen={isOpen}
+      tenantId={tenantId}
+      showViewHoldingsButton={showViewHoldingsButton}
+      showAddItemButton={showAddItemButton}
+    />
+  );
 
   const location = labelLocation?.isActive ?
     labelLocationName :
@@ -73,10 +109,21 @@ const HoldingAccordion = ({
       holding={holding}
     />
   );
+  const accHeader = (headerProps) => {
+    return (
+      <CustomAccordionHeader
+        {...headerProps}
+        withMoveHoldingCheckbox={withMoveHoldingCheckbox}
+        isHoldingSelected={isHoldingSelected}
+        onSelectHolding={onSelectHolding}
+      />
+    );
+  };
 
   return (
     <Accordion
       id={accId}
+      header={accHeader}
       label={accordionLabel}
       displayWhenOpen={holdingButtonsGroup(true)}
       displayWhenClosed={holdingButtonsGroup(false)}
@@ -96,16 +143,19 @@ const HoldingAccordion = ({
 };
 
 HoldingAccordion.propTypes = {
+  children: PropTypes.oneOf([PropTypes.node, PropTypes.func]),
   holding: PropTypes.object.isRequired,
+  holdings: PropTypes.arrayOf(PropTypes.object),
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
-  holdings: PropTypes.arrayOf(PropTypes.object),
-  withMoveDropdown: PropTypes.bool,
-  children: PropTypes.object,
   tenantId: PropTypes.string,
-  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
+  isHoldingSelected: PropTypes.bool,
+  onSelectHolding: PropTypes.func,
   showViewHoldingsButton: PropTypes.bool,
   showAddItemButton: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
+  withMoveHoldingCheckbox: PropTypes.bool,
+  withMoveDropdown: PropTypes.bool,
 };
 
 export default HoldingAccordion;

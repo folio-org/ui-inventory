@@ -7,6 +7,7 @@ const ItemRow = ({
   cells,
   rowProps,
   draggable,
+  holdingId,
 }) => {
   const {
     setNodeRef,
@@ -14,7 +15,8 @@ const ItemRow = ({
     transition,
     isDragging,
   } = useSortable({
-    id: rowData.id,
+    id: `item:${rowData.id}`,
+    data: { type: 'ITEM', itemId: rowData.id, holdingId },
     disabled: !draggable,
   });
 

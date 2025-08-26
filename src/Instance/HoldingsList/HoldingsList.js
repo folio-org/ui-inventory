@@ -1,7 +1,9 @@
 import {
   useEffect,
+  useMemo,
 } from 'react';
-import { isEqual } from 'lodash';
+import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
 
 import { Loading } from '@folio/stripes/components';
 import { useStripes } from '@folio/stripes/core';
@@ -9,68 +11,76 @@ import { useStripes } from '@folio/stripes/core';
 import { Holding } from './Holding';
 
 import { useInstanceHoldingsQuery } from '../../providers';
-import { useMoveItemsContext } from '../../contexts';
+import {
+  DropZone,
+  useInventoryActions,
+  useInventoryState,
+} from '../../dnd';
 
 const HoldingsList = ({
-  instance,
+  instanceId,
   tenantId,
-  isItemsMovement,
+  holdings = [],
   pathToAccordionsState,
+  isItemsMovement = false,
+  isHoldingsMovement = false,
 }) => {
   const stripes = useStripes();
-  const { holdingsRecords, isLoading } = useInstanceHoldingsQuery(instance.id, { tenantId });
 
+  const { holdingsRecords = [], isLoading } = useInstanceHoldingsQuery(instanceId, { tenantId });
   const canViewHoldingsAndItems = stripes.hasPerm('ui-inventory.instance.view');
   const canCreateItem = stripes.hasPerm('ui-inventory.item.create');
 
-  const {
-    setIsMoving,
-    holdingsWithItems,
-    setHoldingsWithItems,
-  } = useMoveItemsContext();
+  const state = useInventoryState();
+  const actions = useInventoryActions();
 
   useEffect(() => {
-    setIsMoving(isItemsMovement);
-  }, [isItemsMovement]);
-
-  useEffect(() => {
-    if (holdingsRecords?.length && !isLoading) {
-      setHoldingsWithItems(holdingsRecords.map(({ id }) => ({ id })));
+    if (!holdings.length && holdingsRecords?.length && !isLoading) {
+      actions.setHoldings(holdingsRecords);
     }
-  }, [holdingsRecords, instance, setHoldingsWithItems, isLoading]);
+  }, [holdingsRecords, isLoading, instanceId]);
 
-  const setItemsToHolding = (holdingId, items = []) => {
-    const holdingElements = holdingsWithItems.find(({ id }) => id === holdingId);
-
-    if (!isEqual(holdingElements?.items, items)) {
-      setHoldingsWithItems(prevHoldings => {
-        return prevHoldings.map(hldng => (hldng.id === holdingId ? { ...hldng, items } : hldng));
-      });
-    }
-  };
+  const getItemsContent = holdingId => state.holdings[holdingId]?.itemIds.map(id => state.items[id]) || [];
+  const holdingsContent = useMemo(() => {
+    return holdings.length ? holdings : holdingsRecords;
+  }, [holdings, holdingsRecords]);
 
   if (isLoading) return <Loading size="large" />;
 
   return (
-    <>
-      {holdingsRecords.map(holding => (
+    <div>
+      {holdingsContent.map(holding => (
         <Holding
           key={holding.id}
           id={holding.id}
           holding={holding}
-          holdings={holdingsRecords}
-          instance={instance}
+          holdings={holdingsContent}
+          items={getItemsContent(holding.id)}
+          instanceId={instanceId}
           tenantId={tenantId}
           pathToAccordionsState={pathToAccordionsState}
-          setItemsToHolding={setItemsToHolding}
-          items={holdingsWithItems.find(hld => hld.id === holding.id)?.items || []}
           showViewHoldingsButton={canViewHoldingsAndItems}
           showAddItemButton={canCreateItem}
           isBarcodeAsHotlink={canViewHoldingsAndItems}
+          isItemsMovement={isItemsMovement}
+          isHoldingsMovement={isHoldingsMovement}
         />
       ))}
-    </>
+      {!holdingsContent.length && isHoldingsMovement && (
+        <DropZone>
+          <FormattedMessage id="ui-inventory.moveItems.instance.dropZone" />
+        </DropZone>
+      )}
+    </div>
   );
+};
+
+HoldingsList.propTypes = {
+  instanceId: PropTypes.string.isRequired,
+  tenantId: PropTypes.string.isRequired,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
+  isItemsMovement: PropTypes.bool,
+  isHoldingsMovement: PropTypes.bool,
 };
 
 export default HoldingsList;

@@ -1,7 +1,9 @@
-import { useCallback } from 'react';
+import {
+  useCallback,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { isEmpty } from 'lodash';
 
 import {
   useStripes,
@@ -16,45 +18,102 @@ import {
 } from '@folio/stripes/components';
 
 import { callNumberLabel } from '../../../../utils';
-import { useMoveItemsContext } from '../../../../contexts';
 import useReferenceData from '../../../../hooks/useReferenceData';
+import {
+  useInventoryState,
+  useSelection,
+  useMoveCommands,
+} from '../../../../dnd';
 
 import styles from './MoveToDropdown.css';
 
-export const MoveToDropdown = ({
+const MoveToDropdown = ({
   holding,
   holdings,
 }) => {
   const stripes = useStripes();
 
   const { locationsById } = useReferenceData();
-  const context = useMoveItemsContext();
+  const state = useInventoryState();
   const {
-    moveItemsToHolding,
-    getDraggingItems,
-    setItemsState,
-  } = context;
+    isHoldingDragSelected,
+    getSelectedItemsFromHolding: getDraggingItems,
+  } = useSelection();
+
+  const {
+    moveSelectedItemsToHolding,
+    moveSelectedHoldingsToInstance,
+  } = useMoveCommands();
 
   const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
   const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
 
-  // Get selected items within the current holding
-  const holdingSelectedItems = getDraggingItems(holding.id);
+  // Mode detection: 1 instance = within-instance; 2 instances = dual-pane
+  const instanceIds = useMemo(() => Object.keys(state.instances || {}), [state.instances]);
+  const isMovementWithinInstance = instanceIds.length === 1; // move within instance mode
+  const isDualPane = instanceIds.length === 2; // move between instances mode
 
-  const filteredHoldings = holdings.filter(hld => hld.id !== holding.id);
-  const movetoHoldings = filteredHoldings.map(item => {
-    return {
-      ...item,
-      labelLocation: locationsById[item.permanentLocationId]?.name ?? '',
-      callNumber: callNumberLabel(item),
-    };
-  });
+  const fromInstanceId = holding.instanceId;
 
-  const isMoveToButtonEnabled = !isEmpty(holdingSelectedItems) && !isEmpty(movetoHoldings) && canMoveItems;
+  const toInstanceId = useMemo(() => {
+    if (!isDualPane) return fromInstanceId;
 
-  const getMoveToHoldingLabel = useCallback(moveToHolding => {
-    return `${moveToHolding.labelLocation} ${moveToHolding.callNumber}`;
-  }, []);
+    return instanceIds.find(id => id !== fromInstanceId) || null;
+  }, [isDualPane, fromInstanceId, instanceIds]);
+
+  // Selection local to THIS holding
+  const selectedItemIdsHere = getDraggingItems(holding.id) || [];
+  const hasItemsSelectedHere = selectedItemIdsHere.length > 0;
+  const isHoldingSelectedHere = isHoldingDragSelected(holding.id);
+
+  const itemsCountInHolding = state.holdings?.[holding.id]?.itemIds?.length;
+  const hasAnyItemsInThisHolding = typeof itemsCountInHolding === 'number'
+    ? itemsCountInHolding > 0
+    : hasItemsSelectedHere;
+
+  // Count holdings within current instance
+  const holdingsCountInInstance =
+    state.instances?.[fromInstanceId]?.holdingIds?.length ??
+    holdings.filter(h => h.instanceId === fromInstanceId).length;
+
+  const disableInSingle = isMovementWithinInstance &&
+    (!canMoveItems || !hasAnyItemsInThisHolding || holdingsCountInInstance <= 1 || !hasItemsSelectedHere);
+
+  // Items mode (only if items in current holding are selected)
+  const itemsMode = canMoveItems && hasItemsSelectedHere;
+
+  // In single-pane, show other holdings from the same instance (excluding current)
+  // In dual-pane, show holdings from the other instance
+  const moveToHoldings = useMemo(() => {
+    if (!itemsMode) return [];
+
+    const pool = isDualPane
+      ? Object.values(state.holdings || {}).filter(h => h.instanceId === toInstanceId)
+      : holdings.filter(h => h.instanceId === fromInstanceId && h.id !== holding.id);
+
+    return pool
+      .filter(h => h.id !== holding.id)
+      .map(h => ({
+        ...h,
+        labelLocation: locationsById[h.permanentLocationId]?.name ?? '',
+        callNumber: callNumberLabel(h),
+      }));
+  }, [itemsMode, isDualPane, state.holdings, toInstanceId, holdings, fromInstanceId, holding.id, locationsById]);
+
+  // Dual-pane “instance-only” menu when:
+  // - no items/holdings selected, or
+  // - current holding is selected to move
+  const showInstanceOnly = isDualPane && (!itemsMode || isHoldingSelectedHere);
+
+  const getMoveToHoldingLabel = useCallback((targetHolding) => {
+    const instTitle = state.instances[targetHolding.instanceId]?.title || '';
+
+    const holdingLabel = [targetHolding.labelLocation, targetHolding.callNumber].filter(Boolean).join(' ');
+
+    if (isDualPane) return [instTitle, holdingLabel].filter(Boolean).join(' ');
+
+    return holdingLabel;
+  }, [state.instances, isDualPane]);
 
   const dropdownButton = useCallback(({ getTriggerProps }) => (
     <DropdownButton
@@ -66,33 +125,22 @@ export const MoveToDropdown = ({
     </DropdownButton>
   ), [holding.id]);
 
-  const onSelect = async (item) => {
-    if (holdingSelectedItems.length > 0) {
-      const itemIds = holdingSelectedItems.map(it => it.id);
-
-      const onSuccess = setItemsState(holding.id, item.id, holdingSelectedItems);
-      await moveItemsToHolding(holding.id, item.id, itemIds, { onSuccess });
-    } else {
-      console.log('No items selected for this holding');
-    }
-  };
-
-  const getItemListFormatter = (item, i, onToggle) => {
+  const getItemListFormatter = (moveToHolding, i, onToggle) => {
     return (
       <li
         key={i}
-        data-to-id={item.id}
+        data-to-id={moveToHolding.id}
         data-item-id={holding.id}
       >
         <Button
           buttonStyle="dropdownItem"
           role="menuitem"
           onClick={async () => {
-            await onSelect(item);
+            await moveSelectedItemsToHolding(holding.id, moveToHolding.id);
             onToggle();
           }}
         >
-          {getMoveToHoldingLabel(item)}
+          {getMoveToHoldingLabel(moveToHolding)}
         </Button>
       </li>
     );
@@ -104,11 +152,24 @@ export const MoveToDropdown = ({
       data-test-move-to-dropdown
       onToggle={onToggle}
     >
-      <List
-        listClass={styles.customList}
-        items={movetoHoldings}
-        itemFormatter={(item, i) => getItemListFormatter(item, i, onToggle)}
-      />
+      {isDualPane && showInstanceOnly && canMoveHoldings ? (
+        <Button
+          buttonStyle="dropdownItem"
+          role="menuitem"
+          onClick={async () => {
+            await moveSelectedHoldingsToInstance(holding.id, fromInstanceId, toInstanceId, state.instances[toInstanceId]?.hrid);
+            onToggle();
+          }}
+        >
+          {state.instances[toInstanceId]?.title}
+        </Button>
+      ) : canMoveItems && (
+        <List
+          listClass={styles.customList}
+          items={moveToHoldings}
+          itemFormatter={(item, i) => getItemListFormatter(item, i, onToggle)}
+        />
+      )}
     </DropdownMenu>
   );
 
@@ -116,7 +177,7 @@ export const MoveToDropdown = ({
     <Dropdown
       renderTrigger={dropdownButton}
       renderMenu={dropdownMenu}
-      disabled={!isMoveToButtonEnabled}
+      disabled={disableInSingle}
     />
   );
 };

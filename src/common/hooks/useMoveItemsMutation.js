@@ -1,41 +1,70 @@
-import { useOkapiKy } from '@folio/stripes/core';
-import { useMutation } from 'react-query';
+import {
+  useNamespace,
+  useOkapiKy,
+} from '@folio/stripes/core';
+import {
+  useMutation,
+  useQueryClient,
+} from 'react-query';
 import { useIntl } from 'react-intl';
 
-export const useMoveItemsMutation = ({ onError, onSuccess, ...restOptions }) => {
+const useMoveItemsMutation = ({ onError, onSuccess, onSettled, invalidateQueries = true, ...restOptions } = {}) => {
   const intl = useIntl();
   const ky = useOkapiKy();
+  const queryClient = useQueryClient();
+  const [fetchItemsPerHoldingNamespace] = useNamespace({ key: 'itemsByHoldingId' });
 
   const customOptions = {
-    onError: (_, variables, ...rest) => {
-      const error = new Error(intl.formatMessage(
+    onError: (error, variables, ...rest) => {
+      const errorMessage = intl.formatMessage(
         { id: 'ui-inventory.moveItems.instance.items.error.server' },
-        { items: variables?.itemIds?.join(', ') },
-      ));
+        { items: variables?.itemIds?.join(', ') || '' }
+      );
 
-      return onError(error, variables, ...rest);
+      if (onError) {
+        onError({ ...error, message: errorMessage }, variables, ...rest);
+      }
     },
 
-    onSuccess: (data, ...rest) => {
-      const { nonUpdatedIds } = data;
-      const hasErrors = Boolean(nonUpdatedIds?.length);
+    onSuccess: (data, variables, ...rest) => {
+      const { nonUpdatedIds } = data || {};
 
-      if (hasErrors) {
-        const error = new Error(intl.formatMessage(
+      if (nonUpdatedIds?.length) {
+        const errorMessage = intl.formatMessage(
           { id: 'ui-inventory.moveItems.instance.items.error' },
           { items: nonUpdatedIds.join(', ') }
-        ));
+        );
 
-        return onError(error, ...rest);
+        const partialError = new Error(errorMessage);
+        partialError.type = 'partial_success';
+        partialError.data = data;
+
+        if (onError) {
+          onError(partialError, variables, ...rest);
+        }
+        return;
       }
 
-      return onSuccess(data, ...rest);
+      if (onSuccess) {
+        onSuccess(data, variables, ...rest);
+      }
+    },
+
+    onSettled: (data, error, variables) => {
+      // Invalidate relevant queries to refresh data
+      if (invalidateQueries && !error) {
+        queryClient.invalidateQueries([fetchItemsPerHoldingNamespace]);
+      }
+
+      if (onSettled) {
+        onSettled(data, error, variables);
+      }
     },
   };
 
   return useMutation(
     json => ky.post('inventory/items/move', { json }),
-    { ...customOptions, ...restOptions },
+    { ...customOptions, ...restOptions }
   );
 };
 

@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import { MessageBanner } from '@folio/stripes/components';
 
 import * as RemoteStorage from '../../RemoteStorageService';
-import * as Move from '../Move';
+import { ConfirmationModal } from './ConfirmationModal';
 
-
-export const Confirmation = ({ count, ...rest }) => {
+export const ItemsConfirmation = ({ count, ...rest }) => {
   const message = (
     <MessageBanner type="warning">
       <RemoteStorage.Confirmation.Message count={count} />
@@ -15,16 +14,16 @@ export const Confirmation = ({ count, ...rest }) => {
   );
 
   return (
-    <Move.ConfirmationModal
+    <ConfirmationModal
       message={message}
       {...rest}
     />
   );
 };
 
-Confirmation.propTypes = {
-  ...Move.ConfirmationModal.propTypes,
+ItemsConfirmation.propTypes = {
+  ...ConfirmationModal.propTypes,
   count: PropTypes.number,
 };
 
-export default Confirmation;
+export default ItemsConfirmation;

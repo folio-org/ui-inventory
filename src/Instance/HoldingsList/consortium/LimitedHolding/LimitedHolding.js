@@ -38,6 +38,7 @@ const LimitedHolding = ({
   const history = useHistory();
   const location = useLocation();
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
+  const instanceId = instance.id;
 
   const pathToAccordion = [...pathToAccordionsState, holding?.id];
   const accId = pathToAccordion.join('.');
@@ -48,12 +49,12 @@ const LimitedHolding = ({
   const { totalRecords: itemCount } = useConsortiumItems(instance.id, holding.id, tenantId, { searchParams: { limit: 0 } });
 
   const onViewHolding = useCallback(() => {
-    navigateToHoldingsViewPage(history, location, instance, holding, tenantId, stripes.okapi.tenant);
-  }, [location.search, instance.id, holding.id]);
+    navigateToHoldingsViewPage(history, location, instanceId, holding, tenantId, stripes.okapi.tenant);
+  }, [location.search, instanceId, holding.id]);
 
   const onAddItem = useCallback(() => {
-    navigateToItemCreatePage(history, location, instance, holding, tenantId, stripes.okapi.tenant);
-  }, [location.search, instance.id, holding.id]);
+    navigateToItemCreatePage(history, location, instanceId, holding, tenantId, stripes.okapi.tenant);
+  }, [location.search, instanceId, holding.id]);
 
   const accordionLabel = (
     <HoldingAccordionLabel

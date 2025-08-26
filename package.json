@@ -1108,7 +1108,6 @@
     "moment": "~2.29.4",
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
-    "react-beautiful-dnd": "^13.0.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-final-form": "^6.5.6",
     "react-final-form-arrays": "^3.1.0",

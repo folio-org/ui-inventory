@@ -35,8 +35,8 @@ import {
   InstanceActionMenu,
   InstanceModals,
 } from './components';
-import { MoveItemsContext } from '../MoveItemsContext';
-import { HoldingsListContainer } from '../HoldingsList';
+import HoldingsList from '../HoldingsList/HoldingsList';
+import { DragAndDropProvider } from '../../dnd';
 
 import { withSingleRecordImport } from '../../hocs';
 import { useInstance } from '../../common';
@@ -300,15 +300,14 @@ const ViewInstance = (props) => {
   };
 
   const holdingsSection = (
-    <MoveItemsContext>
-      <HoldingsListContainer
-        instance={instance}
-        draggable={isItemsMovement}
+    <DragAndDropProvider leftInstance={instance}>
+      <HoldingsList
+        instanceId={instance?.id}
         tenantId={currentTenant}
         pathToAccordionsState={['holdings']}
-        droppable
+        isItemsMovement={isItemsMovement}
       />
-    </MoveItemsContext>
+    </DragAndDropProvider>
   );
 
   return (

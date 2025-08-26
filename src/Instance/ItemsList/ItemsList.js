@@ -4,6 +4,7 @@ import {
   useState,
   useEffect,
 } from 'react';
+import PropTypes from 'prop-types';
 import {
   FormattedMessage,
   useIntl,
@@ -28,11 +29,15 @@ import {
 import ItemRow from './ItemRow';
 import DraggableHandle from './DraggableHandle';
 import ItemBarcode from './ItemBarcode';
+import {
+  DropZone,
+  useSelection,
+  useInventoryActions,
+} from '../../dnd';
 
 import { useHoldingItemsQuery } from '../../hooks';
 import useReferenceData from '../../hooks/useReferenceData';
 import useBoundWithHoldings from '../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
-import { useMoveItemsContext } from '../../contexts';
 
 import {
   DEFAULT_ITEM_TABLE_SORTBY_FIELD,
@@ -43,27 +48,28 @@ const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
 
 const getFormatter = (
   intl,
+  holdingId,
   locationsById,
   holdingsMapById,
-  selectItemsForDrag = () => {},
+  selectItemForDrag = () => {},
   ifItemsSelected = () => {},
   isBarcodeAsHotlink,
   tenantId,
 ) => ({
   'dnd': (item) => (
-    <DraggableHandle itemId={item.id} />
+    <DraggableHandle itemId={item.id} holdingId={holdingId} />
   ),
   'order': (item) => item.order || <NoValue />,
   'select': (item) => (
     <FormattedMessage id="ui-inventory.moveItems.selectItem">
       {
         ([ariaLabel]) => (
-          <span data-test-select-item>
+          <span>
             <Checkbox
               id={`select-item-${item.id}`}
               aria-label={ariaLabel}
-              checked={ifItemsSelected([item])}
-              onChange={() => selectItemsForDrag([item])}
+              checked={ifItemsSelected([item.id])}
+              onChange={() => selectItemForDrag(item.id)}
             />
           </span>
         )
@@ -123,12 +129,12 @@ const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected = () =>
   'dnd': '',
   'order': intl.formatMessage({ id: 'ui-inventory.item.order' }),
   'select': (
-    <span data-test-select-all-items>
+    <span>
       <Checkbox
         id={`select-all-items-${holdingsRecordId}`}
         aria-label={intl.formatMessage({ id: 'ui-inventory.moveItems.selectAll' })}
-        checked={ifItemsSelected(items)}
-        onChange={(e) => selectAllItemsForDrag(items, e)}
+        checked={ifItemsSelected(items.map(({ id }) => id))}
+        onChange={(e) => selectAllItemsForDrag(holdingsRecordId, e.target?.checked)}
       />
     </span>
   ),
@@ -162,23 +168,29 @@ const dragVisibleColumns = ['dnd', visibleColumns[0], 'select', ...visibleColumn
 const rowMetadata = ['id', 'holdingsRecordId'];
 
 const ItemsList = ({
+  id,
+  instanceId,
   contentData,
   holding,
   tenantId,
-  setItemsToHolding,
   isBarcodeAsHotlink,
-  id,
+  isItemsMovement = false,
 }) => {
   const intl = useIntl();
 
+  const actions = useInventoryActions();
+
   const {
-    isMoving,
-    isLoading,
-    selectItemsForDrag,
-    isItemsDragSelected,
-    selectAllItemsForDrag,
-  } = useMoveItemsContext();
-  const { setNodeRef } = useDroppable({ id, disabled: !isMoving });
+    toggleItem: selectItemForDrag,
+    toggleAllItems: selectAllItemsForDrag,
+    isItemsDragSelected: ifItemsSelected,
+  } = useSelection();
+
+  const { setNodeRef } = useDroppable({
+    id: `holding:${id}`,
+    data: { kind: 'holding', holdingId: id },
+    disabled: !isItemsMovement,
+  });
 
   const [offset, setOffset] = useState(0);
   const [sortByQuery, setSortByQuery] = useState(DEFAULT_ITEM_TABLE_SORTBY_FIELD);
@@ -189,7 +201,7 @@ const ItemsList = ({
   };
 
   const { items, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, tenantId });
-  const { totalRecords: total } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
+  const { totalRecords: total = 0 } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
   const { boundWithHoldings: holdings } = useBoundWithHoldings(items, tenantId);
 
   const holdingsMapById = keyBy(holdings, 'id');
@@ -201,7 +213,7 @@ const ItemsList = ({
 
   useEffect(() => {
     if (items?.length && !isFetching) {
-      setItemsToHolding(holding.id, items);
+      actions.setItemsToHolding(holding.id, instanceId, items);
     }
   }, [items, isFetching]);
 
@@ -211,20 +223,21 @@ const ItemsList = ({
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
-    () => getColumnMapping(intl, holding.id, contentData, isItemsDragSelected, selectAllItemsForDrag),
-    [holding.id, contentData, isItemsDragSelected, selectAllItemsForDrag],
+    () => getColumnMapping(intl, holding.id, contentData, ifItemsSelected, selectAllItemsForDrag),
+    [holding.id, contentData, ifItemsSelected, selectAllItemsForDrag],
   );
   const formatter = useMemo(
     () => getFormatter(
       intl,
+      id,
       locationsById,
       holdingsMapById,
-      selectItemsForDrag,
-      isItemsDragSelected,
+      selectItemForDrag,
+      ifItemsSelected,
       isBarcodeAsHotlink,
       tenantId,
     ),
-    [holdingsMapById, selectItemsForDrag, isItemsDragSelected],
+    [holdingsMapById, selectItemForDrag, ifItemsSelected],
   );
   const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
     const amount = (direction === 'next') ? askAmount : -askAmount;
@@ -235,7 +248,7 @@ const ItemsList = ({
   // as a sorter in '../utils'. If it's not, there won't be any errors;
   // sorting on that column simply won't work.
   const onHeaderClick = useCallback((e, { name: column }) => {
-    if (['dnd', 'select'].includes(column) || isMoving) return;
+    if (['dnd', 'select'].includes(column) || isItemsMovement) return;
 
     const isChangeDirection = itemsSorting.column === column;
 
@@ -251,34 +264,22 @@ const ItemsList = ({
   const renderFormatter = (props) => {
     return (
       <ItemRow
-        draggable={isMoving}
+        draggable={isItemsMovement}
+        holdingId={holding.id}
         {...props}
       />
     );
   };
 
-  const renderEmptyBox = () => {
-    return !contentData.length && isMoving && (
-      <div
-        style={{
-          height: '80px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          border: '2px dashed #ccc',
-          borderRadius: '8px',
-          backgroundColor: '#f9f9f9',
-          color: '#666',
-          fontSize: '14px',
-          transition: 'all 0.2s ease-in-out',
-        }}
-      >
-        Drop items here
-      </div>
+  const renderDropToZone = () => {
+    return !contentData.length && isItemsMovement && (
+      <DropZone>
+        <FormattedMessage id="ui-inventory.moveItems.items.dropZone" />
+      </DropZone>
     );
   };
 
-  if (isLoading) {
+  if (isFetching) {
     return <Loading size="large" />;
   }
 
@@ -291,7 +292,7 @@ const ItemsList = ({
     >
       <SortableContext
         id={`sortable-context-${holding.id}`}
-        items={contentData.map(item => item.id)}
+        items={contentData.map(i => `item:${i.id}`)}
         strategy={verticalListSortingStrategy}
       >
         <MultiColumnList
@@ -300,7 +301,7 @@ const ItemsList = ({
           contentData={contentData}
           rowMetadata={rowMetadata}
           formatter={formatter}
-          visibleColumns={isMoving ? dragVisibleColumns : visibleColumns}
+          visibleColumns={isItemsMovement ? dragVisibleColumns : visibleColumns}
           columnMapping={columnMapping}
           ariaLabel={ariaLabel}
           interactive={false}
@@ -308,7 +309,7 @@ const ItemsList = ({
           columnWidths={columnWidths}
           pagingType={MCLPagingTypes.PREV_NEXT}
           totalCount={total}
-          nonInteractiveHeaders={isMoving ? visibleColumns : ['loanType', 'effectiveLocation', 'materialType']}
+          nonInteractiveHeaders={isItemsMovement ? visibleColumns : ['loanType', 'effectiveLocation', 'materialType']}
           onHeaderClick={onHeaderClick}
           sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
           sortedColumn={itemsSorting.column}
@@ -319,10 +320,20 @@ const ItemsList = ({
           pagingOffset={offset}
           loading={isFetching}
         />
-        {renderEmptyBox()}
+        {renderDropToZone()}
       </SortableContext>
     </div>
   );
+};
+
+ItemsList.propTypes = {
+  id: PropTypes.string,
+  instanceId: PropTypes.string.isRequired,
+  contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  holding: PropTypes.object.isRequired,
+  tenantId: PropTypes.string.isRequired,
+  isBarcodeAsHotlink: PropTypes.bool,
+  isItemsMovement: PropTypes.bool,
 };
 
 export default ItemsList;

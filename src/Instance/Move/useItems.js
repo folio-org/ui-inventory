@@ -1,10 +1,6 @@
-import React, {
-  useState,
-  useContext,
-} from 'react';
+import { useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { CalloutContext } from '@folio/stripes/core';
-import { noop } from 'lodash';
 import { useMoveItemsMutation } from '../../common';
 import * as RemoteStorage from '../../RemoteStorageService';
 
@@ -13,21 +9,19 @@ export const useItems = () => {
 
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
 
-  const [isMoving, setIsMoving] = useState(false);
-
-  const { mutate } = useMoveItemsMutation({
-    onMutate: () => setIsMoving(true),
-    onSettled:  () => setIsMoving(false),
-    onError: error => {
+  const { mutateAsync, isLoading } = useMoveItemsMutation({
+    onError: (error) => {
       const { message } = error;
       callout.sendCallout({ type: 'error', message });
     },
-    onSuccess: noop
-  });
+    onSuccess: (data, variables) => {
+      // Handle success - show appropriate message based on remote storage check
+      const { itemIds } = variables;
 
-  const moveItems = (fromHoldingsId, toHoldingsId, itemIds) => {
-    const onSuccess = () => {
-      if (checkFromRemoteToNonRemote({ fromHoldingsId, toHoldingsId })) {
+      if (checkFromRemoteToNonRemote({
+        fromHoldingsId: variables.fromHoldingsId,
+        toHoldingsId: variables.toHoldingsRecordId
+      })) {
         callout.sendCallout({
           timeout: 0,
           type: 'success',
@@ -43,13 +37,30 @@ export const useItems = () => {
 
         callout.sendCallout({ type: 'success', message });
       }
-    };
+    },
+  });
 
-    return mutate({ toHoldingsRecordId: toHoldingsId, itemIds }, { onSuccess });
+
+  const moveItems = async (fromHoldingsId, toHoldingsId, itemIds, externalOnSuccess) => {
+    // Call the mutation with all necessary data
+    return mutateAsync(
+      {
+        toHoldingsRecordId: toHoldingsId,
+        itemIds,
+        fromHoldingsId // Add this so we can access it in onSuccess
+      },
+      {
+        onSuccess: (data, variables) => {
+          if (externalOnSuccess) {
+            externalOnSuccess(data, variables);
+          }
+        }
+      }
+    );
   };
 
   return {
-    isMoving,
+    isMoving: isLoading,
     moveItems,
   };
 };

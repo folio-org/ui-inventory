@@ -2,12 +2,13 @@ import { useSortable } from '@dnd-kit/sortable';
 
 import { Icon } from '@folio/stripes/components';
 
-const DraggableHandle = ({ itemId }) => {
+const DraggableHandle = ({ itemId, holdingId }) => {
   const {
     attributes,
     listeners,
   } = useSortable({
-    id: itemId,
+    id: `item:${itemId}`,
+    data: { type: 'ITEM', itemId, holdingId },
   });
 
   const style = {

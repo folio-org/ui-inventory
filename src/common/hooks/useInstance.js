@@ -17,12 +17,11 @@ const useInstance = (id) => {
   let isShared = false;
   let instanceTenantId = stripes?.okapi.tenant;
 
-  // search instance by id (only in consortium mode) to get information about tenant and shared status
   const {
     refetch: refetchSearch,
     isLoading: isSearchInstanceByIdLoading,
     instance: _instance,
-  } = useSearchInstanceByIdQuery(id, { enabled: Boolean(isUserInConsortium) });
+  } = useSearchInstanceByIdQuery(id);
 
   if (isUserInConsortium) {
     const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
@@ -45,12 +44,14 @@ const useInstance = (id) => {
   );
 
   const instance = useMemo(
-    () => ({
-      ...data,
-      shared: isShared,
-      tenantId: instanceTenantId,
-    }),
-    [data, isShared, instanceTenantId],
+    () => {
+      if (!isSearchInstanceByIdLoading && !isInstanceLoading) {
+        return Object.assign(_instance, data, { shared: isShared, tenantId: instanceTenantId });
+      }
+
+      return {};
+    },
+    [isSearchInstanceByIdLoading, isInstanceLoading, _instance, data, isShared, instanceTenantId],
   );
   const isLoading = useMemo(
     () => isSearchInstanceByIdLoading || isInstanceLoading,
