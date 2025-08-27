@@ -20,7 +20,6 @@ import { itemStatuses } from '@folio/stripes-inventory-components';
 import {
   Checkbox,
   Icon,
-  Loading,
   MCLPagingTypes,
   MultiColumnList,
   NoValue,
@@ -200,7 +199,7 @@ const ItemsList = ({
     offset,
   };
 
-  const { items, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, tenantId });
+  const { items, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'items', tenantId });
   const { totalRecords: total = 0 } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
   const { boundWithHoldings: holdings } = useBoundWithHoldings(items, tenantId);
 
@@ -271,17 +270,8 @@ const ItemsList = ({
     );
   };
 
-  const renderDropToZone = () => {
-    return !contentData.length && isItemsMovement && (
-      <DropZone>
-        <FormattedMessage id="ui-inventory.moveItems.items.dropZone" />
-      </DropZone>
-    );
-  };
-
-  if (isFetching) {
-    return <Loading size="large" />;
-  }
+  const showDropZone = useMemo(() => isItemsMovement && !isFetching && !contentData.length,
+    [isItemsMovement, isFetching, contentData]);
 
   return (
     <div
@@ -295,32 +285,37 @@ const ItemsList = ({
         items={contentData.map(i => `item:${i.id}`)}
         strategy={verticalListSortingStrategy}
       >
-        <MultiColumnList
-          id={`list-items-${holding.id}`}
-          columnIdPrefix={`list-items-${holding.id}`}
-          contentData={contentData}
-          rowMetadata={rowMetadata}
-          formatter={formatter}
-          visibleColumns={isItemsMovement ? dragVisibleColumns : visibleColumns}
-          columnMapping={columnMapping}
-          ariaLabel={ariaLabel}
-          interactive={false}
-          onNeedMoreData={onNeedMoreData}
-          columnWidths={columnWidths}
-          pagingType={MCLPagingTypes.PREV_NEXT}
-          totalCount={total}
-          nonInteractiveHeaders={isItemsMovement ? visibleColumns : ['loanType', 'effectiveLocation', 'materialType']}
-          onHeaderClick={onHeaderClick}
-          sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
-          sortedColumn={itemsSorting.column}
-          rowFormatter={renderFormatter}
-          pageAmount={ITEM_TABLE_PAGE_AMOUNT}
-          pagingCanGoPrevious={pagingCanGoPrevious}
-          pagingCanGoNext={pagingCanGoNext}
-          pagingOffset={offset}
-          loading={isFetching}
-        />
-        {renderDropToZone()}
+        {showDropZone ? (
+          <DropZone>
+            <FormattedMessage id="ui-inventory.moveItems.items.dropZone" />
+          </DropZone>
+        ) : (
+          <MultiColumnList
+            id={`list-items-${holding.id}`}
+            columnIdPrefix={`list-items-${holding.id}`}
+            contentData={contentData}
+            rowMetadata={rowMetadata}
+            formatter={formatter}
+            visibleColumns={isItemsMovement ? dragVisibleColumns : visibleColumns}
+            columnMapping={columnMapping}
+            ariaLabel={ariaLabel}
+            interactive={false}
+            onNeedMoreData={onNeedMoreData}
+            columnWidths={columnWidths}
+            pagingType={MCLPagingTypes.PREV_NEXT}
+            totalCount={total}
+            nonInteractiveHeaders={isItemsMovement ? visibleColumns : ['loanType', 'effectiveLocation', 'materialType']}
+            onHeaderClick={onHeaderClick}
+            sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
+            sortedColumn={itemsSorting.column}
+            rowFormatter={renderFormatter}
+            pageAmount={ITEM_TABLE_PAGE_AMOUNT}
+            pagingCanGoPrevious={pagingCanGoPrevious}
+            pagingCanGoNext={pagingCanGoNext}
+            pagingOffset={offset}
+            loading={isFetching}
+          />
+        )}
       </SortableContext>
     </div>
   );

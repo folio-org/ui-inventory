@@ -52,8 +52,12 @@ const useMoveItemsMutation = ({ onError, onSuccess, onSettled, invalidateQueries
 
     onSettled: (data, error, variables) => {
       // Invalidate relevant queries to refresh data
+      const updatedHoldingIds = [variables.fromHoldingsId, variables.toHoldingsRecordId].filter(Boolean);
+
       if (invalidateQueries && !error) {
-        queryClient.invalidateQueries([fetchItemsPerHoldingNamespace]);
+        updatedHoldingIds.forEach(query => {
+          queryClient.invalidateQueries({ queryKey: [fetchItemsPerHoldingNamespace, 'items', query] });
+        });
       }
 
       if (onSettled) {
