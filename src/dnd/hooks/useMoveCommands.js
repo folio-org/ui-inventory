@@ -3,6 +3,7 @@ import { useIntl } from 'react-intl';
 import { uniq } from 'lodash';
 
 import { useStripes } from '@folio/stripes/core';
+import { MessageBanner } from '@folio/stripes/components';
 
 import HoldingsList from '../../Instance/HoldingsList/HoldingsList';
 
@@ -13,10 +14,16 @@ import {
 import { useSelection } from '../SelectionProvider';
 import { useInventoryAPI } from './useInventoryAPI';
 import { useConfirmBridge } from '../ConfirmationBridge';
+import useReferenceData from '../../hooks/useReferenceData';
+import { callNumberLabel } from '../../utils';
+import * as RemoteStorage from '../../RemoteStorageService';
 
 export const useMoveCommands = () => {
   const intl = useIntl();
   const stripes = useStripes();
+
+  const { locationsById } = useReferenceData();
+  const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
 
   const state = useInventoryState();
   const actions = useInventoryActions();
@@ -25,22 +32,65 @@ export const useMoveCommands = () => {
   const { confirmAndMoveItems, moveHoldings, checkPOLinkage } = useInventoryAPI();
   const { setIsMoveHoldingsModalOpen, setMoveModalMessage, setOnConfirm } = useConfirmBridge();
 
+  const openConfirmationModal = () => {
+    setIsMoveHoldingsModalOpen(true);
+  };
+
+  const setItemsConfirmationMessage = useCallback((itemsCount, fromHoldingId, toHoldingId) => {
+    const targetHolding = state.holdings[toHoldingId] || {};
+    const callNumber = callNumberLabel(targetHolding);
+    const labelLocation = targetHolding.permanentLocationId ? locationsById[targetHolding.permanentLocationId]?.name : '';
+
+    const movingMessage = intl.formatMessage(
+      { id: 'ui-inventory.moveItems.modal.message.items' },
+      {
+        count: itemsCount,
+        targetName: <b>{`${labelLocation} ${callNumber}`}</b>
+      }
+    );
+
+    const modalContent = (
+      <>
+        {movingMessage}
+        <MessageBanner
+          show={checkFromRemoteToNonRemote({ fromHoldingsId: fromHoldingId, toHoldingsId: toHoldingId })}
+          type="warning"
+        >
+          <RemoteStorage.Confirmation.Message count={itemsCount} />
+        </MessageBanner>
+      </>
+    );
+
+    setMoveModalMessage(modalContent);
+  }, [locationsById]);
+
+  const confirmItemsMove = (itemsToMove, fromHoldingId, toHoldingId) => async () => {
+    const onSuccess = () => {
+      actions.moveItems({ itemIds: itemsToMove, toHoldingId });
+      toggleAllItems(fromHoldingId, false); // clear selection after success
+    };
+
+    await confirmAndMoveItems({
+      fromHoldingId,
+      toHoldingId,
+      itemIds: itemsToMove,
+      withRemoteCheck: false,
+      onSuccess,
+    });
+  };
+
   // Move currently selected items to a target holding (may span multiple sources)
   const moveSelectedItemsToHolding = async (fromHoldingId, toHoldingId) => {
     const itemsToMove = getSelectedItemsFromHolding(fromHoldingId);
 
     if (!itemsToMove.length) return;
 
-    const onSuccess = () => {
-      actions.moveItems({ itemIds: itemsToMove, toHoldingId });
-      toggleAllItems(fromHoldingId, false); // clear selection after success
-    };
-
-    // call server for each source holding, then commit to store
-    await confirmAndMoveItems({ fromHoldingId, toHoldingId, itemIds: itemsToMove, onSuccess });
+    setItemsConfirmationMessage(itemsToMove.length, fromHoldingId, toHoldingId);
+    setOnConfirm(() => confirmItemsMove(itemsToMove, fromHoldingId, toHoldingId));
+    openConfirmationModal();
   };
 
-  const setConfirmationModalMessage = useCallback((hasLinkedPOLs, holdingsIds, holdingsCount, fromInstanceId, toInstanceId) => {
+  const setHoldingsConfirmationMessage = useCallback((hasLinkedPOLs, holdingsIds, holdingsCount, fromInstanceId, toInstanceId) => {
     let movingMessage;
     if (hasLinkedPOLs) {
       movingMessage = (
@@ -71,10 +121,6 @@ export const useMoveCommands = () => {
     setMoveModalMessage(movingMessage);
   }, [state.instances]);
 
-  const openHoldingsMoveConfirmationModal = () => {
-    setIsMoveHoldingsModalOpen(true);
-  };
-
   const confirmHoldingsMove = (toInstanceId, toInstanceHrid, finalIds) => async () => {
     const onSuccess = () => {
       for (const id of finalIds) {
@@ -95,9 +141,9 @@ export const useMoveCommands = () => {
     const { hasLinkedPOLs, poLineHoldingIds } = await checkPOLinkage(holdingIds);
     const finalIds = uniq([...holdingIds, ...poLineHoldingIds]);
 
-    setConfirmationModalMessage(hasLinkedPOLs, finalIds, finalIds.length, fromInstanceId, toInstanceId);
+    setHoldingsConfirmationMessage(hasLinkedPOLs, finalIds, finalIds.length, fromInstanceId, toInstanceId);
     setOnConfirm(() => confirmHoldingsMove(toInstanceId, toInstanceHrid, finalIds));
-    openHoldingsMoveConfirmationModal();
+    openConfirmationModal();
   };
 
   return { moveSelectedItemsToHolding, moveSelectedHoldingsToInstance };

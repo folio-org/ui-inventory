@@ -42,7 +42,7 @@ export const useInventoryAPI = () => {
     }
   }, [ky]);
 
-  const confirmAndMoveItems = useCallback(async ({ fromHoldingId, toHoldingId, itemIds, onReject, onSuccess }) => {
+  const confirmAndMoveItems = useCallback(async ({ fromHoldingId, toHoldingId, itemIds, withRemoteCheck = true, onReject, onSuccess }) => {
     if (!fromHoldingId || !toHoldingId || fromHoldingId === toHoldingId) return;
     if (!Array.isArray(itemIds) || itemIds.length === 0) return;
 
@@ -50,7 +50,7 @@ export const useInventoryAPI = () => {
       // remote→non-remote check + confirm
       const check = checkFromRemoteToNonRemote({ fromHoldingsId: fromHoldingId, toHoldingsId: toHoldingId });
 
-      if (check) await confirmation.wait();
+      if (withRemoteCheck && check) await confirmation.wait();
 
       await moveItemsApi(fromHoldingId, toHoldingId, itemIds, onSuccess);
     } catch (e) {
