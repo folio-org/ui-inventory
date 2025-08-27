@@ -27,6 +27,7 @@ import {
   stripesConnect,
   withNamespace,
   checkIfUserInCentralTenant,
+  checkIfUserInMemberTenant,
   TitleManager,
   getUserTenantsPermissions,
 } from '@folio/stripes/core';
@@ -60,6 +61,7 @@ import {
   SEARCH_COLUMN_MAPPINGS,
   withReset,
   getDefaultQindex,
+  FACETS,
 } from '@folio/stripes-inventory-components';
 
 import ViewInstanceRoute from '../../routes/ViewInstanceRoute';
@@ -85,6 +87,7 @@ import {
   switchAffiliation,
   getSortOptions,
   hasMemberTenantPermission,
+  addFilter,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -241,16 +244,16 @@ class InstancesList extends React.Component {
 
     const searchParams = new URLSearchParams(_location.search);
 
-    let isSortingUpdated = false;
-
     if (!params.sort) {
-      isSortingUpdated = true;
       searchParams.set('sort', defaultSort);
     }
 
-    if (isSortingUpdated) {
-      this.redirectToSearchParams(searchParams);
+    if (!params.query && !params.filters && checkIfUserInMemberTenant(stripes)) {
+      searchParams.set('filters', addFilter(searchParams.get('filters'), `${FACETS.HELD_BY}.${stripes.okapi.tenant}`));
+      searchParams.set('_isInitial', true);
     }
+
+    this.redirectToSearchParams(searchParams);
 
     if (isUserInConsortiumMode(stripes)) {
       this.getCurrentTenantPermissions();
@@ -264,6 +267,8 @@ class InstancesList extends React.Component {
       segment,
       parentMutator,
       getLastSearchOffset,
+      stripes,
+      getParams,
     } = this.props;
     const sortBy = this.getSortFromParams();
 
@@ -291,6 +296,13 @@ class InstancesList extends React.Component {
     if (!sortBy) {
       isSortingUpdated = true;
       searchParams.set('sort', data.displaySettings.defaultSort);
+    }
+
+    const params = getParams();
+
+    if (!params.query && !params.filters && checkIfUserInMemberTenant(stripes)) {
+      searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+      searchParams.set('_isInitial', true);
     }
 
     if (isSortingUpdated) {
@@ -323,6 +335,7 @@ class InstancesList extends React.Component {
 
   extraParamsToReset = {
     selectedBrowseResult: false,
+    _isInitial: false,
     authorityId: '',
   };
 
@@ -430,7 +443,7 @@ class InstancesList extends React.Component {
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
 
-    goTo(path, { ...params, filters: filtersStr });
+    goTo(path, { ...params, _isInitial: false, filters: filtersStr });
   };
 
   onSubmitSearch = () => {
@@ -1039,6 +1052,7 @@ class InstancesList extends React.Component {
   handleResetAll = () => {
     const {
       publishOnReset,
+      stripes,
     } = this.props;
 
     this.setState({
@@ -1047,6 +1061,14 @@ class InstancesList extends React.Component {
 
     this.inputRef.current.focus();
     publishOnReset();
+
+    if (checkIfUserInMemberTenant(stripes)) {
+      const searchParams = new URLSearchParams();
+
+      searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+      searchParams.set('_isInitial', true);
+      this.redirectToSearchParams(searchParams);
+    }
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
