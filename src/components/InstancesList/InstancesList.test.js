@@ -1,8 +1,8 @@
+import { act } from 'react';
 import { Router } from 'react-router-dom';
 import { noop } from 'lodash';
 import { createMemoryHistory } from 'history';
 import {
-  act,
   fireEvent,
   screen,
   waitFor,
@@ -33,6 +33,7 @@ const mockQueryReplace = jest.fn();
 const mockResultOffsetReplace = jest.fn();
 const mockStoreLastSearch = jest.fn();
 const mockRecordsReset = jest.fn();
+const mockRecordPost = jest.fn().mockResolvedValue({ hrid: "TestHRID" });
 const mockGetLastSearchOffset = jest.fn();
 const mockStoreLastSearchOffset = jest.fn();
 const mockGetLastSearch = jest.fn();
@@ -177,7 +178,7 @@ const getInstancesListTree = ({ segment = segments.instances, ...rest } = {}) =>
               resultOffset: { replace: mockResultOffsetReplace },
               resultCount: { replace: noop },
               query: { update: updateMock, replace: mockQueryReplace },
-              records: { reset: mockRecordsReset },
+              records: { reset: mockRecordsReset, POST: mockRecordPost },
               itemsByQuery: { reset: noop, GET: mockItemsByQuery },
             }}
             data={{
@@ -590,6 +591,23 @@ describe('InstancesList', () => {
 
               expect(history.push).toHaveBeenCalledWith('/?sort=contributors');
               await waitFor(() => expect(getByRole('textbox', { name: /search/i })).toHaveFocus());
+            });
+          });
+
+          describe('when create new instance', () => {
+            it('should show success message', async () => {
+              await act(async () => renderInstancesList({ segment: 'instances' }));
+          
+              SearchAndSort.mock.calls[0][0].onCreate({
+                discoverySuppress: false,
+                staffSuppress: false,
+                previouslyHeld: false,
+                source: "FOLIO",
+                title: "Test title",
+                instanceTypeId: "9bce18bd-45bf-4949-8fa8-63163e4b7d7f"
+              });
+
+              expect(screen.queryByText("The instance - HRID TestHRID has been successfully saved.")).toBeDefined()
             });
           });
         });
