@@ -482,7 +482,7 @@ class InstancesList extends React.Component {
         ),
       });
       this.closeNewInstance();
-  });
+    });
   }
 
   openCreateInstance = () => {
