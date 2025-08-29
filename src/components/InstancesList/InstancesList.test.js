@@ -602,12 +602,12 @@ describe('InstancesList', () => {
                 discoverySuppress: false,
                 staffSuppress: false,
                 previouslyHeld: false,
-                source: "FOLIO",
-                title: "Test title",
-                instanceTypeId: "9bce18bd-45bf-4949-8fa8-63163e4b7d7f"
+                source: 'FOLIO',
+                title: 'Test title',
+                instanceTypeId: '9bce18bd-45bf-4949-8fa8-63163e4b7d7f'
               });
 
-              expect(screen.queryByText("The instance - HRID TestHRID has been successfully saved.")).toBeDefined()
+              expect(screen.queryByText('The instance - HRID TestHRID has been successfully saved.')).toBeDefined()
             });
           });
         });
