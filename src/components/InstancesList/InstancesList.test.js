@@ -597,7 +597,7 @@ describe('InstancesList', () => {
           describe('when create new instance', () => {
             it('should show success message', async () => {
               await act(async () => renderInstancesList({ segment: 'instances' }));
-          
+
               SearchAndSort.mock.calls[0][0].onCreate({
                 discoverySuppress: false,
                 staffSuppress: false,
@@ -607,7 +607,7 @@ describe('InstancesList', () => {
                 instanceTypeId: '9bce18bd-45bf-4949-8fa8-63163e4b7d7f'
               });
 
-              expect(screen.queryByText('The instance - HRID TestHRID has been successfully saved.')).toBeDefined()
+              expect(screen.queryByText('The instance - HRID TestHRID has been successfully saved.')).toBeDefined();
             });
           });
         });
