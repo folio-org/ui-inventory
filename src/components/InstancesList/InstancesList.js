@@ -469,7 +469,20 @@ class InstancesList extends React.Component {
   };
 
   onCreate = (instance) => {
-    return this.createInstance(instance).then(() => this.closeNewInstance());
+    const { sendCallout } = this.context;
+
+    return this.createInstance(instance).then((response) => {
+      sendCallout({
+        type: 'success',
+        message: (
+          <FormattedMessage
+            id="ui-inventory.instance.successfullySaved"
+            values={{ hrid: response.hrid }}
+          />
+        ),
+      });
+      this.closeNewInstance();
+    });
   }
 
   openCreateInstance = () => {
