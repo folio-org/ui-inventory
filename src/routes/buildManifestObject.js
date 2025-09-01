@@ -40,7 +40,7 @@ export function buildManifestObject() {
     resultCount: { initialValue: INITIAL_RESULT_COUNT },
     resultOffset: { initialValue: 0 },
     requestUrlQuery: { initialValue: '' },
-    records: buildRecordsManifest(),
+    records: buildRecordsManifest(applyDefaultStaffSuppressFilter),
     recordsToExportIDs: {
       type: 'okapi',
       records: 'ids',
