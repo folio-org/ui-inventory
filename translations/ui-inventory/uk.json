@@ -360,7 +360,7 @@
     "holdingsNoteType": "Тип примітки щодо даних про фонди (холдінгси)",
     "itemNoteType": "Тип примітки для примірника",
     "formatSource": "Джерело формату",
-    "formatTerm": "Format term",
+    "formatTerm": "Термін формату",
     "formatCategory": "Категорія формату",
     "formatCode": "Код формату",
     "addNatureOfContentTerm": "Додати характер змісту",
