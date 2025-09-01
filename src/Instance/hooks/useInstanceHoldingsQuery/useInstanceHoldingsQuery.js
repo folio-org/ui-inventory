@@ -11,7 +11,7 @@ const useInstanceHoldingsQuery = (instanceId, tenant) => {
   const [namespace] = useNamespace({ key: 'instance-holdings-records' });
 
   const { isLoading, data } = useQuery(
-    [namespace, instanceId],
+    [namespace, instanceId, tenant],
     () => ky.get('holdings-storage/holdings', {
       searchParams: {
         limit: LIMIT_MAX,

@@ -246,7 +246,6 @@ const ViewInstance = (props) => {
         canUseSingleRecordImport={canUseSingleRecordImport}
         canBeOpenedInLinkedData={canBeOpenedInLinkedData}
         callout={callout}
-        tenant={instanceTenantOwner}
         requests={requests}
         onCopy={onCopy}
         numberOfRequests={totalRequestsRecords || 0}

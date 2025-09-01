@@ -38,7 +38,6 @@ const InstanceActionMenu = ({
   canBeOpenedInLinkedData,
   titleLevelRequestsFeatureEnabled,
   callout,
-  tenant,
   requests,
   numberOfRequests,
   onCopy,
@@ -77,7 +76,6 @@ const InstanceActionMenu = ({
     canUseSingleRecordImport,
     canBeOpenedInLinkedData,
     titleLevelRequestsFeatureEnabled,
-    tenant,
     numberOfRequests,
     hasCentralTenantPerm,
   });

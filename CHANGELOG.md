@@ -38,6 +38,7 @@ UIIN-3437.
 * Move permissions for creating export jobs to "Inventory: View instances, holdings, and items" permission. Fixes UIIN-3474.
 * Fix sorting for Items on Instance details page. Fixes UIIN-3478.
 * ECS: Set Held by facet default to current tenant context in Inventory Search. Refs UIIN-2820.
+* Fix "Move holdings/items" action item displaying on shared instance. Fixes UIIN-3487.
 
 ## [13.0.9](https://github.com/folio-org/ui-inventory/tree/v13.0.9) (2025-08-26)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.8...v13.0.9)
