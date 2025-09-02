@@ -38,7 +38,6 @@ const InstanceActionMenu = ({
   canBeOpenedInLinkedData,
   titleLevelRequestsFeatureEnabled,
   callout,
-  tenant,
   requests,
   numberOfRequests,
   onCopy,
@@ -77,7 +76,6 @@ const InstanceActionMenu = ({
     canUseSingleRecordImport,
     canBeOpenedInLinkedData,
     titleLevelRequestsFeatureEnabled,
-    tenant,
     numberOfRequests,
     hasCentralTenantPerm,
   });
@@ -346,7 +344,6 @@ InstanceActionMenu.propTypes = {
   canBeOpenedInLinkedData: PropTypes.bool,
   titleLevelRequestsFeatureEnabled: PropTypes.bool,
   callout: PropTypes.object.isRequired,
-  tenant: PropTypes.string,
   requests: PropTypes.arrayOf(PropTypes.object),
   numberOfRequests: PropTypes.number,
   onCopy: PropTypes.func,
