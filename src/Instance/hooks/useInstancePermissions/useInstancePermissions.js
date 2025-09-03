@@ -21,14 +21,13 @@ const useInstancePermissions = ({
   canBeOpenedInLinkedData,
   isSourceLinkedData,
   canUseSingleRecordImport,
-  tenant,
   numberOfRequests,
   hasCentralTenantPerm,
 }) => {
   const stripes = useStripes();
   const source = instance.source;
 
-  const { totalRecords: holdigsTotalRecords } = useInstanceHoldingsQuery(instance.id, tenant);
+  const { totalRecords: holdigsTotalRecords } = useInstanceHoldingsQuery(instance.id, stripes.okapi.tenant);
   const { data: centralOrdering } = useCentralOrderingSettingsQuery();
 
   const noInstanceHoldings = holdigsTotalRecords === 0;
