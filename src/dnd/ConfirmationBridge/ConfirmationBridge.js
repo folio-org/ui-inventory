@@ -12,7 +12,7 @@ import { useConfirmationModal } from '../../common';
 
 const ConfirmCtx = createContext(null);
 
-export const ConfirmationBridgeProvider = ({ children }) => {
+const ConfirmationBridgeProvider = ({ children }) => {
   const confirmation = useConfirmationModal();
 
   const [isMoveHoldingsModalOpen, setIsMoveHoldingsModalOpen] = useState(false);
@@ -60,6 +60,8 @@ export const ConfirmationBridgeProvider = ({ children }) => {
     </ConfirmCtx.Provider>
   );
 };
+
+export default ConfirmationBridgeProvider;
 
 export const useConfirmBridge = () => {
   const ctx = useContext(ConfirmCtx);

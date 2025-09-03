@@ -5,20 +5,11 @@ import {
   useEffect,
 } from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormattedMessage,
-  useIntl,
-} from 'react-intl';
+import { useIntl } from 'react-intl';
 import { keyBy } from 'lodash';
-import { useDroppable } from '@dnd-kit/core';
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
 
 import { itemStatuses } from '@folio/stripes-inventory-components';
 import {
-  Checkbox,
   Icon,
   MCLPagingTypes,
   MultiColumnList,
@@ -26,14 +17,18 @@ import {
 } from '@folio/stripes/components';
 
 import ItemRow from './ItemRow';
-import DraggableHandle from './DraggableHandle';
 import ItemBarcode from './ItemBarcode';
+import DraggableItemsList, {
+  draggableVisibleColumns,
+  getDraggableColumnMapping,
+  getDraggableFormater,
+} from './DraggableItemsList';
+
 import {
-  DropZone,
   useSelection,
   useInventoryActions,
+  useInventoryState,
 } from '../../dnd';
-
 import { useHoldingItemsQuery } from '../../hooks';
 import useReferenceData from '../../hooks/useReferenceData';
 import useBoundWithHoldings from '../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
@@ -50,31 +45,10 @@ const getFormatter = (
   holdingId,
   locationsById,
   holdingsMapById,
-  selectItemForDrag = () => {},
-  ifItemsSelected = () => {},
   isBarcodeAsHotlink,
   tenantId,
 ) => ({
-  'dnd': (item) => (
-    <DraggableHandle itemId={item.id} holdingId={holdingId} />
-  ),
   'order': (item) => item.order || <NoValue />,
-  'select': (item) => (
-    <FormattedMessage id="ui-inventory.moveItems.selectItem">
-      {
-        ([ariaLabel]) => (
-          <span>
-            <Checkbox
-              id={`select-item-${item.id}`}
-              aria-label={ariaLabel}
-              checked={ifItemsSelected([item.id])}
-              onChange={() => selectItemForDrag(item.id)}
-            />
-          </span>
-        )
-      }
-    </FormattedMessage>
-  ),
   'barcode': item => {
     return (
       item.id && (
@@ -124,19 +98,8 @@ const getFormatter = (
   'materialType': x => x.materialType?.name || <NoValue />,
 });
 
-const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected = () => {}, selectAllItemsForDrag = () => {}) => ({
-  'dnd': '',
+const getColumnMapping = (intl) => ({
   'order': intl.formatMessage({ id: 'ui-inventory.item.order' }),
-  'select': (
-    <span>
-      <Checkbox
-        id={`select-all-items-${holdingsRecordId}`}
-        aria-label={intl.formatMessage({ id: 'ui-inventory.moveItems.selectAll' })}
-        checked={ifItemsSelected(items.map(({ id }) => id))}
-        onChange={(e) => selectAllItemsForDrag(holdingsRecordId, e.target?.checked)}
-      />
-    </span>
-  ),
   'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
   'status': intl.formatMessage({ id: 'ui-inventory.status' }),
   'copyNumber': intl.formatMessage({ id: 'ui-inventory.copyNumber' }),
@@ -149,27 +112,13 @@ const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected = () =>
   'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
 });
 
-const visibleColumns = [
-  'order',
-  'barcode',
-  'status',
-  'copyNumber',
-  'loanType',
-  'effectiveLocation',
-  'enumeration',
-  'chronology',
-  'volume',
-  'yearCaption',
-  'materialType',
-];
+const visibleColumns = draggableVisibleColumns.filter(col => !['dnd', 'select'].some(it => col === it));
 const columnWidths = { order: '60px', select: '60px', barcode: '160px' };
-const dragVisibleColumns = ['dnd', visibleColumns[0], 'select', ...visibleColumns.slice(1)];
 const rowMetadata = ['id', 'holdingsRecordId'];
 
 const ItemsList = ({
   id,
   instanceId,
-  contentData,
   holding,
   tenantId,
   isBarcodeAsHotlink,
@@ -177,6 +126,7 @@ const ItemsList = ({
 }) => {
   const intl = useIntl();
 
+  const state = useInventoryState();
   const actions = useInventoryActions();
 
   const {
@@ -184,12 +134,6 @@ const ItemsList = ({
     toggleAllItems: selectAllItemsForDrag,
     isItemsDragSelected: ifItemsSelected,
   } = useSelection();
-
-  const { setNodeRef } = useDroppable({
-    id: `holding:${id}`,
-    data: { kind: 'holding', holdingId: id },
-    disabled: !isItemsMovement,
-  });
 
   const [offset, setOffset] = useState(0);
   const [sortByQuery, setSortByQuery] = useState(DEFAULT_ITEM_TABLE_SORTBY_FIELD);
@@ -203,6 +147,10 @@ const ItemsList = ({
   const { totalRecords: total = 0 } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
   const { boundWithHoldings: holdings } = useBoundWithHoldings(items, tenantId);
 
+  const contentData = useMemo(
+    () => state.holdings[holding?.id]?.itemIds.map(itemId => state.items[itemId]) || [],
+    [state.holdings, state.items],
+  );
   const holdingsMapById = keyBy(holdings, 'id');
 
   const [itemsSorting, setItemsSorting] = useState({
@@ -222,21 +170,45 @@ const ItemsList = ({
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
-    () => getColumnMapping(intl, holding.id, contentData, ifItemsSelected, selectAllItemsForDrag),
-    [holding.id, contentData, ifItemsSelected, selectAllItemsForDrag],
+    () => {
+      const draggableColMapping = getDraggableColumnMapping({
+        intl,
+        items: contentData,
+        holdingsRecordId: holding.id,
+        ifItemsSelected,
+        selectAllItemsForDrag,
+      });
+      const colMapping = getColumnMapping(intl);
+
+      return {
+        ...(isItemsMovement ? draggableColMapping : {}),
+        ...colMapping,
+      };
+    },
+    [isItemsMovement, holding.id, contentData, ifItemsSelected, selectAllItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(
-      intl,
-      id,
-      locationsById,
-      holdingsMapById,
-      selectItemForDrag,
-      ifItemsSelected,
-      isBarcodeAsHotlink,
-      tenantId,
-    ),
-    [holdingsMapById, selectItemForDrag, ifItemsSelected],
+    () => {
+      const dndFormatter = getDraggableFormater({
+        holdingId: id,
+        selectItemForDrag,
+        ifItemsSelected,
+      });
+      const f = getFormatter(
+        intl,
+        id,
+        locationsById,
+        holdingsMapById,
+        isBarcodeAsHotlink,
+        tenantId,
+      );
+
+      return {
+        ...(isItemsMovement ? dndFormatter : {}),
+        ...f,
+      };
+    },
+    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected],
   );
   const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
     const amount = (direction === 'next') ? askAmount : -askAmount;
@@ -270,61 +242,54 @@ const ItemsList = ({
     );
   };
 
-  const showDropZone = useMemo(() => isItemsMovement && !isFetching && !contentData.length,
-    [isItemsMovement, isFetching, contentData]);
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={{
-        position: 'relative',
-      }}
-    >
-      <SortableContext
-        id={`sortable-context-${holding.id}`}
-        items={contentData.map(i => `item:${i.id}`)}
-        strategy={verticalListSortingStrategy}
-      >
-        {showDropZone ? (
-          <DropZone>
-            <FormattedMessage id="ui-inventory.moveItems.items.dropZone" />
-          </DropZone>
-        ) : (
-          <MultiColumnList
-            id={`list-items-${holding.id}`}
-            columnIdPrefix={`list-items-${holding.id}`}
-            contentData={contentData}
-            rowMetadata={rowMetadata}
-            formatter={formatter}
-            visibleColumns={isItemsMovement ? dragVisibleColumns : visibleColumns}
-            columnMapping={columnMapping}
-            ariaLabel={ariaLabel}
-            interactive={false}
-            onNeedMoreData={onNeedMoreData}
-            columnWidths={columnWidths}
-            pagingType={MCLPagingTypes.PREV_NEXT}
-            totalCount={total}
-            nonInteractiveHeaders={isItemsMovement ? visibleColumns : ['loanType', 'effectiveLocation', 'materialType']}
-            onHeaderClick={onHeaderClick}
-            sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
-            sortedColumn={itemsSorting.column}
-            rowFormatter={renderFormatter}
-            pageAmount={ITEM_TABLE_PAGE_AMOUNT}
-            pagingCanGoPrevious={pagingCanGoPrevious}
-            pagingCanGoNext={pagingCanGoNext}
-            pagingOffset={offset}
-            loading={isFetching}
-          />
-        )}
-      </SortableContext>
-    </div>
+  const itemsListElement = (
+    <MultiColumnList
+      id={`list-items-${holding.id}`}
+      columnIdPrefix={`list-items-${holding.id}`}
+      contentData={contentData}
+      rowMetadata={rowMetadata}
+      formatter={formatter}
+      visibleColumns={isItemsMovement ? draggableVisibleColumns : visibleColumns}
+      columnMapping={columnMapping}
+      ariaLabel={ariaLabel}
+      interactive={false}
+      onNeedMoreData={onNeedMoreData}
+      columnWidths={columnWidths}
+      pagingType={MCLPagingTypes.PREV_NEXT}
+      totalCount={total}
+      nonInteractiveHeaders={isItemsMovement ? visibleColumns : ['loanType', 'effectiveLocation', 'materialType']}
+      onHeaderClick={onHeaderClick}
+      sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
+      sortedColumn={itemsSorting.column}
+      rowFormatter={renderFormatter}
+      pageAmount={ITEM_TABLE_PAGE_AMOUNT}
+      pagingCanGoPrevious={pagingCanGoPrevious}
+      pagingCanGoNext={pagingCanGoNext}
+      pagingOffset={offset}
+      loading={isFetching}
+    />
   );
+
+  if (isItemsMovement) {
+    return (
+      <DraggableItemsList
+        itemId={id}
+        isItemsMovement={isItemsMovement}
+        holding={holding}
+        contentData={contentData}
+        isFetching={isFetching}
+      >
+        {itemsListElement}
+      </DraggableItemsList>
+    );
+  }
+
+  return itemsListElement;
 };
 
 ItemsList.propTypes = {
   id: PropTypes.string,
   instanceId: PropTypes.string.isRequired,
-  contentData: PropTypes.arrayOf(PropTypes.object).isRequired,
   holding: PropTypes.object.isRequired,
   tenantId: PropTypes.string.isRequired,
   isBarcodeAsHotlink: PropTypes.bool,

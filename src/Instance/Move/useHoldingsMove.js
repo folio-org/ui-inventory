@@ -98,7 +98,6 @@ export const useHoldingsMove = (options = {}) => {
           onSuccess(data, variables);
         }
       },
-
       onError: (error, variables) => {
         const { holdingsRecordIds } = variables;
 
@@ -116,7 +115,6 @@ export const useHoldingsMove = (options = {}) => {
           onError(err, variables);
         }
       },
-
       onSettled: (data, error, variables) => {
         // Invalidate relevant queries to refresh data
         if (invalidateQueries) {
@@ -131,18 +129,8 @@ export const useHoldingsMove = (options = {}) => {
     }
   );
 
-  // Convenience function that matches the original moveHoldings signature
-  const moveHoldings = useCallback(async (toInstanceId, holdingsRecordIds, marcHoldingsIds = [], targetInstanceHrid = null) => {
-    return mutation.mutateAsync({
-      toInstanceId,
-      holdingsRecordIds,
-      marcHoldingsIds,
-      targetInstanceHrid
-    });
-  }, [mutation]);
-
   // Enhanced move function with better error handling
-  const moveHoldingsWithChecks = useCallback(async ({
+  const moveHoldings = useCallback(async ({
     toInstanceId,
     holdingsRecordIds,
     marcHoldingsIds = [],
@@ -172,18 +160,7 @@ export const useHoldingsMove = (options = {}) => {
   }, [mutation]);
 
   return {
-    isLoading: mutation.isLoading,
-    error: mutation.error,
-
-    // Main functions
     moveHoldings,
-    moveHoldingsWithChecks,
-
-    // Raw mutation for advanced use cases
-    mutate: mutation.mutate,
-    mutateAsync: mutation.mutateAsync,
-
-    // Mutation state
     ...mutation,
   };
 };

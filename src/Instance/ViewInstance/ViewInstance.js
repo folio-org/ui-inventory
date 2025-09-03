@@ -35,8 +35,8 @@ import {
   InstanceActionMenu,
   InstanceModals,
 } from './components';
-import HoldingsList from '../HoldingsList/HoldingsList';
-import { DragAndDropProvider } from '../../dnd';
+import DragAndDropProvider from '../../dnd/DragAndDropProvider';
+import { HoldingsList } from '../HoldingsList';
 
 import { withSingleRecordImport } from '../../hocs';
 import { useInstance } from '../../common';

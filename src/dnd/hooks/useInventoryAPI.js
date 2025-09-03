@@ -11,7 +11,7 @@ import * as RemoteStorage from '../../RemoteStorageService';
 import { useConfirmBridge } from '../ConfirmationBridge';
 import { getPOLineHoldingIds } from '../utils';
 
-export const useInventoryAPI = () => {
+const useInventoryAPI = () => {
   const ky = useOkapiKy();
 
   const { confirmation } = useConfirmBridge();
@@ -42,7 +42,7 @@ export const useInventoryAPI = () => {
     }
   }, [ky]);
 
-  const confirmAndMoveItems = useCallback(async ({ fromHoldingId, toHoldingId, itemIds, withRemoteCheck = true, onReject, onSuccess }) => {
+  const moveItems = useCallback(async ({ fromHoldingId, toHoldingId, itemIds, withRemoteCheck = true, onReject, onSuccess }) => {
     if (!fromHoldingId || !toHoldingId || fromHoldingId === toHoldingId) return;
     if (!Array.isArray(itemIds) || itemIds.length === 0) return;
 
@@ -71,10 +71,12 @@ export const useInventoryAPI = () => {
   }, []);
 
   return {
-    confirmAndMoveItems,
+    moveItems,
     moveHoldings,
     checkPOLinkage,
     isItemsMoving,
     isHoldingsMoving,
   };
 };
+
+export default useInventoryAPI;

@@ -1,1 +1,1 @@
-export * from './DndStage';
+export { default } from './DndStage';

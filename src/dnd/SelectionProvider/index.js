@@ -1,1 +1,1 @@
-export * from './SelectionProvider';
+export { default, useSelection } from './SelectionProvider';

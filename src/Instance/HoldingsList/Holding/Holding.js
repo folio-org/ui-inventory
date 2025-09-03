@@ -1,7 +1,4 @@
-import {
-  useCallback,
-  useMemo,
-} from 'react';
+import { useCallback } from 'react';
 import {
   useHistory,
   useLocation,
@@ -21,13 +18,11 @@ import {
   navigateToItemCreatePage,
 } from '../../utils';
 import { sendCalloutOnAffiliationChange } from '../../../utils';
-import { useSelection } from '../../../dnd';
 
 const Holding = ({
   id,
   holding,
   holdings,
-  items,
   instanceId,
   tenantId,
   pathToAccordionsState,
@@ -36,16 +31,17 @@ const Holding = ({
   isBarcodeAsHotlink,
   isItemsMovement = false,
   isHoldingsMovement = false,
+
+  isHoldingSelected,
+  onSelectHolding,
+  attributes,
+  listeners,
+  setActivatorNodeRef,
 }) => {
   const stripes = useStripes();
   const history = useHistory();
   const location = useLocation();
   const callout = useCallout();
-
-  const {
-    toggleHolding: selectHoldingForDrag,
-    isHoldingDragSelected,
-  } = useSelection();
 
   const onViewHolding = useCallback(() => {
     navigateToHoldingsViewPage(history, location, instanceId, holding, tenantId, stripes.okapi.tenant);
@@ -56,14 +52,6 @@ const Holding = ({
   const onAddItem = useCallback(() => {
     navigateToItemCreatePage(history, location, instanceId, holding, tenantId, stripes.okapi.tenant);
   }, [location.search, instanceId, holding.id]);
-
-  const onSelectHolding = useCallback((checked) => {
-    selectHoldingForDrag(holding.id, checked);
-  }, [selectHoldingForDrag]);
-
-  const isHoldingSelected = useMemo(() => {
-    return isHoldingDragSelected(holding.id);
-  }, [isHoldingDragSelected, holding.id]);
 
   return (
     <HoldingAccordion
@@ -80,11 +68,13 @@ const Holding = ({
       pathToAccordionsState={pathToAccordionsState}
       withMoveHoldingCheckbox={isHoldingsMovement}
       withMoveDropdown={isItemsMovement || isHoldingsMovement}
+      dragHandleAttributes={attributes}
+      dragHandleListeners={listeners}
+      ref={setActivatorNodeRef}
     >
       <ItemsList
         id={id}
         instanceId={instanceId}
-        contentData={items}
         holding={holding}
         tenantId={tenantId}
         isBarcodeAsHotlink={isBarcodeAsHotlink}
@@ -98,7 +88,6 @@ Holding.propTypes = {
   id: PropTypes.string,
   holding: PropTypes.object.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object).isRequired,
-  items: PropTypes.arrayOf(PropTypes.object).isRequired,
   instanceId: PropTypes.string.isRequired,
   tenantId: PropTypes.string.isRequired,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),

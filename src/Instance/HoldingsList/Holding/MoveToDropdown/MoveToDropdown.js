@@ -5,10 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import {
-  useStripes,
-} from '@folio/stripes/core';
-
+import { useStripes } from '@folio/stripes/core';
 import {
   DropdownMenu,
   Dropdown,
@@ -19,10 +16,10 @@ import {
 
 import { callNumberLabel } from '../../../../utils';
 import useReferenceData from '../../../../hooks/useReferenceData';
+// import useMoveCommands from '../../../../dnd/hooks/useMoveCommands'; // Temporarily removed to break cycle
 import {
   useInventoryState,
   useSelection,
-  useMoveCommands,
 } from '../../../../dnd';
 
 import styles from './MoveToDropdown.css';
@@ -36,14 +33,15 @@ const MoveToDropdown = ({
   const { locationsById } = useReferenceData();
   const state = useInventoryState();
   const {
+    toggleHolding,
     isHoldingDragSelected,
     getSelectedItemsFromHolding: getDraggingItems,
   } = useSelection();
 
-  const {
-    moveSelectedItemsToHolding,
-    moveSelectedHoldingsToInstance,
-  } = useMoveCommands();
+  // const {
+  //   moveSelectedItemsToHolding,
+  //   moveSelectedHoldingsToInstance,
+  // } = useMoveCommands();
 
   const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
   const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
@@ -63,7 +61,7 @@ const MoveToDropdown = ({
 
   // Selection local to THIS holding
   const selectedItemIdsHere = getDraggingItems(holding.id) || [];
-  const hasItemsSelectedHere = selectedItemIdsHere.length > 0;
+  const hasItemsSelectedHere = selectedItemIdsHere.size > 0;
   const isHoldingSelectedHere = isHoldingDragSelected(holding.id);
 
   const itemsCountInHolding = state.holdings?.[holding.id]?.itemIds?.length;
@@ -136,7 +134,7 @@ const MoveToDropdown = ({
           buttonStyle="dropdownItem"
           role="menuitem"
           onClick={async () => {
-            await moveSelectedItemsToHolding(holding.id, moveToHolding.id);
+            // await moveSelectedItemsToHolding(holding.id, moveToHolding.id);
             onToggle();
           }}
         >
@@ -157,8 +155,9 @@ const MoveToDropdown = ({
           buttonStyle="dropdownItem"
           role="menuitem"
           onClick={async () => {
-            await moveSelectedHoldingsToInstance(holding.id, fromInstanceId, toInstanceId, state.instances[toInstanceId]?.hrid);
+            // await moveSelectedHoldingsToInstance(holding.id, fromInstanceId, toInstanceId, state.instances[toInstanceId]?.hrid);
             onToggle();
+            console.log('Move holdings to instance:', holding.id, fromInstanceId, toInstanceId);
           }}
         >
           {state.instances[toInstanceId]?.title}

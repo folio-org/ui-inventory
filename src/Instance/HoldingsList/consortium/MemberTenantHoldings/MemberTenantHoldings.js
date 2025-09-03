@@ -11,7 +11,7 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
-import { DragAndDropProvider } from '../../../../dnd';
+import DragAndDropProvider from '../../../../dnd/DragAndDropProvider';
 import HoldingsList from '../../HoldingsList';
 import { LimitedHoldingsList } from '../LimitedHoldingsList';
 import { InstanceNewHolding } from '../../../ViewInstance/components/InstanceDetails/InstanceNewHolding';

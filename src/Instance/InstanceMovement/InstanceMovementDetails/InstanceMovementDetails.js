@@ -5,12 +5,13 @@ import { useStripes } from '@folio/stripes/core';
 
 import InstanceMovementDetailsActions from './InstanceMovementDetailsActions';
 import ViewInstancePane from '../../ViewInstance/ViewInstancePane/ViewInstancePane';
-import HoldingsList from '../../HoldingsList/HoldingsList';
+import { HoldingsList } from '../../HoldingsList';
 
 import { useInstanceMutation } from '../../hooks';
 import useMarcRecordQuery from '../../../hooks/useMarcRecordQuery';
 
 import { INSTANCE_RECORD_TYPE } from '../../../constants';
+import { useDroppable } from '@dnd-kit/core';
 
 const InstanceMovementDetails = ({
   instance = {},
@@ -20,6 +21,15 @@ const InstanceMovementDetails = ({
 }) => {
   const stripes = useStripes();
   const tenantId = instance.tenantId ?? stripes.okapi.tenant;
+
+  // const { setNodeRef } = useDroppable({
+  //   id: `instance:${instance.id}`,
+  //   data: {
+  //     kind: 'instance',
+  //     id: instance.id,
+  //     accepts: ['HOLDING'],
+  //   },
+  // });
 
   const { data: marcRecord } = useMarcRecordQuery(instance.id, INSTANCE_RECORD_TYPE, stripes.okapi.tenant,
     { enabled: instance.source === 'MARC' });
@@ -62,6 +72,7 @@ const InstanceMovementDetails = ({
 
   return (
     <ViewInstancePane
+      // ref={setNodeRef}
       id={id}
       instance={instance}
       isShared={instance.shared}

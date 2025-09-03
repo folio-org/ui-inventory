@@ -9,7 +9,7 @@ import { useInventoryState } from '../InventoryProvider';
 
 const SelectionContext = createContext(null);
 
-export const SelectionProvider = ({ children }) => {
+const SelectionProvider = ({ children }) => {
   const state = useInventoryState();
   const [selectedItems, setSelectedItems] = useState(() => new Set());
   const [selectedHoldings, setSelectedHoldings] = useState(() => new Set());
@@ -30,7 +30,7 @@ export const SelectionProvider = ({ children }) => {
   }, []);
 
   // Function to handle all items selection
-  const toggleAllItems = (holdingId, checked) => {
+  const toggleAllItems = useCallback((holdingId, checked) => {
     setSelectedItems(prev => {
       const newSelected = new Set(prev);
       const itemIds = state.holdings[holdingId]?.itemIds || [];
@@ -52,23 +52,21 @@ export const SelectionProvider = ({ children }) => {
 
       return newSelected;
     });
-  };
+  }, [state.holdings]);
 
-  const toggleHolding = (holdingId) => {
-    setSelectedHoldings(prev => {
-      const next = new Set(prev);
+  const toggleHolding = useCallback((holdingId, checked) => {
+    setSelectedHoldings(prevHoldings => {
+      const nextHoldings = new Set(prevHoldings);
 
-      if (next.has(holdingId)) {
-        next.delete(holdingId);
-        toggleAllItems(holdingId, false);
+      if (checked) {
+        nextHoldings.add(holdingId);
       } else {
-        next.add(holdingId);
-        toggleAllItems(holdingId, true);
+        nextHoldings.delete(holdingId);
       }
 
-      return next;
+      return nextHoldings;
     });
-  };
+  }, [state.holdings]);
 
   // Function to check if items are selected
   const isItemsDragSelected = useCallback((itemsId) => {
@@ -80,33 +78,19 @@ export const SelectionProvider = ({ children }) => {
     return selectedHoldings.has(holdingId);
   }, [selectedHoldings]);
 
-  // Helper function to find which holding an item belongs to
-  const getItemHoldingId = useCallback((itemId) => {
-    return state.items[itemId]?.holdingId;
-  }, [state.items]);
-
-  // Helper function to find which instance a holding belongs to
-  const getHoldingsInstanceId = useCallback((holdingId) => {
-    return state.holdings[holdingId]?.instanceId;
-  }, [state.holdings]);
-
   // Helper function to get selected items from a specific holding
   const getSelectedItemsFromHolding = useCallback((holdingId) => {
-    return [...selectedItems].filter(itemId => {
-      const itemHoldingId = getItemHoldingId(itemId);
+    const ids = state.holdings[holdingId]?.itemIds || [];
 
-      return itemHoldingId === holdingId;
-    });
-  }, [selectedItems, getItemHoldingId]);
+    return new Set(ids.filter(id => selectedItems.has(id)));
+  }, [selectedItems, state.holdings]);
 
   // Helper function to get selected holdings from a specific instance
   const getSelectedHoldingsFromInstance = useCallback((instanceId) => {
-    return [...selectedHoldings].filter(holdingId => {
-      const holdingsInstanceId = getHoldingsInstanceId(holdingId);
+    const ids = state.instances[instanceId]?.holdingIds || [];
 
-      return holdingsInstanceId === instanceId;
-    });
-  }, [selectedHoldings, getHoldingsInstanceId]);
+    return new Set(ids.filter(id => selectedHoldings.has(id)));
+  }, [selectedHoldings, state.instances]);
 
   const clear = useCallback(() => {
     setSelectedItems(new Set());
@@ -120,6 +104,7 @@ export const SelectionProvider = ({ children }) => {
     toggleHolding,
     toggleAllItems,
     setSelectedItems,
+    setSelectedHoldings,
 
     getSelectedItemsFromHolding,
     getSelectedHoldingsFromInstance,
@@ -130,6 +115,8 @@ export const SelectionProvider = ({ children }) => {
 
   return <SelectionContext.Provider value={value}>{children}</SelectionContext.Provider>;
 };
+
+export default SelectionProvider;
 
 export const useSelection = () => {
   const ctx = useContext(SelectionContext);

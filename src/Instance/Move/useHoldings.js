@@ -12,7 +12,7 @@ export const useHoldings = () => {
   const { holdingsById } = useHoldingsProvider();
   const { holdingsSourcesByName } = useContext(DataContext);
 
-  const { moveHoldingsWithChecks: newMoveHoldings, isLoading } = useHoldingsMove({
+  const { moveHoldings: move, isLoading } = useHoldingsMove({
     onSuccess: (data, variables) => {
       // Show success message
       const message = (
@@ -34,10 +34,10 @@ export const useHoldings = () => {
 
   const moveHoldings = (toInstanceId, toInstanceHrid, holdings, externalOnSuccess) => {
     const marcHoldingsIds = holdings.filter((holdingsId) => {
-      return holdingsById[holdingsId].sourceId === holdingsSourcesByName.MARC.id;
+      return holdingsById[holdingsId]?.sourceId === holdingsSourcesByName.MARC.id;
     });
 
-    return newMoveHoldings({
+    return move({
       toInstanceId,
       holdingsRecordIds: holdings,
       marcHoldingsIds,
@@ -45,7 +45,6 @@ export const useHoldings = () => {
       onSuccess: externalOnSuccess,
     });
   };
-
 
   return {
     isMoving: isLoading,

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { Paneset } from '@folio/stripes/components';
 
-import { DragAndDropProvider } from '../../dnd';
+import DragAndDropProvider from '../../dnd/DragAndDropProvider';
 import InstanceMovementDetails from './InstanceMovementDetails/InstanceMovementDetails';
 
 const InstanceMovement = ({
@@ -13,7 +13,7 @@ const InstanceMovement = ({
   refetchTo,
 }) => {
   return (
-    <Paneset data-test-movement>
+    <Paneset data-test-movement isRoot>
       <DragAndDropProvider
         leftInstance={instanceFrom}
         rightInstance={instanceTo}

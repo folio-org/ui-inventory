@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { uniq } from 'lodash';
 
@@ -6,19 +6,19 @@ import { useStripes } from '@folio/stripes/core';
 import { MessageBanner } from '@folio/stripes/components';
 
 import HoldingsList from '../../Instance/HoldingsList/HoldingsList';
-
 import {
   useInventoryActions,
   useInventoryState,
 } from '../InventoryProvider';
 import { useSelection } from '../SelectionProvider';
-import { useInventoryAPI } from './useInventoryAPI';
 import { useConfirmBridge } from '../ConfirmationBridge';
+import useInventoryAPI from './useInventoryAPI';
 import useReferenceData from '../../hooks/useReferenceData';
-import { callNumberLabel } from '../../utils';
 import * as RemoteStorage from '../../RemoteStorageService';
 
-export const useMoveCommands = () => {
+import { callNumberLabel } from '../../utils';
+
+const useMoveCommands = () => {
   const intl = useIntl();
   const stripes = useStripes();
 
@@ -29,8 +29,20 @@ export const useMoveCommands = () => {
   const actions = useInventoryActions();
 
   const { getSelectedItemsFromHolding, getSelectedHoldingsFromInstance, toggleAllItems, clear } = useSelection();
-  const { confirmAndMoveItems, moveHoldings, checkPOLinkage } = useInventoryAPI();
-  const { setIsMoveHoldingsModalOpen, setMoveModalMessage, setOnConfirm } = useConfirmBridge();
+  const { moveItems, moveHoldings, checkPOLinkage } = useInventoryAPI();
+  const { setIsMoveHoldingsModalOpen, setMoveModalMessage, setOnConfirm, setOnCancel } = useConfirmBridge();
+
+  // Detect if we're in dual-instance mode
+  const isDualInstanceMode = useMemo(() => {
+    const instanceIds = Object.keys(state.instances || {});
+    return instanceIds.length === 2;
+  }, [state.instances]);
+
+  // Detect if we're in single-instance mode
+  const isSingleInstanceMode = useMemo(() => {
+    const instanceIds = Object.keys(state.instances || {});
+    return instanceIds.length === 1;
+  }, [state.instances]);
 
   const openConfirmationModal = () => {
     setIsMoveHoldingsModalOpen(true);
@@ -70,7 +82,7 @@ export const useMoveCommands = () => {
       toggleAllItems(fromHoldingId, false); // clear selection after success
     };
 
-    await confirmAndMoveItems({
+    await moveItems({
       fromHoldingId,
       toHoldingId,
       itemIds: itemsToMove,
@@ -83,11 +95,28 @@ export const useMoveCommands = () => {
   const moveSelectedItemsToHolding = async (fromHoldingId, toHoldingId) => {
     const itemsToMove = getSelectedItemsFromHolding(fromHoldingId);
 
-    if (!itemsToMove.length) return;
+    if (!itemsToMove.size) return;
 
-    setItemsConfirmationMessage(itemsToMove.length, fromHoldingId, toHoldingId);
-    setOnConfirm(() => confirmItemsMove(itemsToMove, fromHoldingId, toHoldingId));
-    openConfirmationModal();
+    // In dual-instance mode, show confirmation modal
+    if (isDualInstanceMode) {
+      setItemsConfirmationMessage(itemsToMove.size, fromHoldingId, toHoldingId);
+      setOnConfirm(() => confirmItemsMove([...itemsToMove], fromHoldingId, toHoldingId));
+      openConfirmationModal();
+    } else {
+      // In single-instance mode, check for remote to non-remote and move directly
+      try {
+        await moveItems({
+          fromHoldingId,
+          toHoldingId,
+          itemIds: [...itemsToMove],
+          withRemoteCheck: true, // This will show the remote storage confirmation if needed
+        });
+        actions.moveItems({ itemIds: [...itemsToMove], toHoldingId });
+        toggleAllItems(fromHoldingId, false); // clear selection after success
+      } catch (error) {
+        console.error('Failed to move items:', error);
+      }
+    }
   };
 
   const setHoldingsConfirmationMessage = useCallback((hasLinkedPOLs, holdingsIds, holdingsCount, fromInstanceId, toInstanceId) => {
@@ -133,18 +162,25 @@ export const useMoveCommands = () => {
   };
 
   // Move selected holdings to a target instance
-  const moveSelectedHoldingsToInstance = async (holdingId, fromInstanceId, toInstanceId, toInstanceHrid) => {
-    const holdingsToMove = getSelectedHoldingsFromInstance(fromInstanceId) || [];
-    const holdingIds = holdingId ? [holdingId, ...holdingsToMove] : [...holdingsToMove];
-    if (!holdingIds.length) return;
+  const moveSelectedHoldingsToInstance = async (activeHoldingId, fromInstanceId, toInstanceId, toInstanceHrid) => {
+    const selectedHoldings = getSelectedHoldingsFromInstance(fromInstanceId);
+    const holdingIds = selectedHoldings.add(activeHoldingId);
 
-    const { hasLinkedPOLs, poLineHoldingIds } = await checkPOLinkage(holdingIds);
-    const finalIds = uniq([...holdingIds, ...poLineHoldingIds]);
+    if (!holdingIds.size) return;
 
-    setHoldingsConfirmationMessage(hasLinkedPOLs, finalIds, finalIds.length, fromInstanceId, toInstanceId);
-    setOnConfirm(() => confirmHoldingsMove(toInstanceId, toInstanceHrid, finalIds));
-    openConfirmationModal();
+    // In dual-instance mode, show confirmation modal
+    if (isDualInstanceMode) {
+      // Check for linked POLs first
+      const { hasLinkedPOLs, poLineHoldingIds } = await checkPOLinkage(holdingIds);
+      const finalIds = uniq([...holdingIds, ...poLineHoldingIds]);
+
+      setHoldingsConfirmationMessage(hasLinkedPOLs, finalIds, finalIds.length, fromInstanceId, toInstanceId);
+      setOnConfirm(() => confirmHoldingsMove(toInstanceId, toInstanceHrid, finalIds));
+      openConfirmationModal();
+    }
   };
 
   return { moveSelectedItemsToHolding, moveSelectedHoldingsToInstance };
 };
+
+export default useMoveCommands;

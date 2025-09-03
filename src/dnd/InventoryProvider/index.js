@@ -1,1 +1,1 @@
-export * from './InventoryProvider';
+export { default, useInventoryState, useInventoryActions } from './InventoryProvider';

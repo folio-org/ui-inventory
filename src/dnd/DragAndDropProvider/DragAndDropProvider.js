@@ -1,9 +1,9 @@
-import { InventoryProvider } from '../InventoryProvider';
-import { SelectionProvider } from '../SelectionProvider';
-import { ConfirmationBridgeProvider } from '../ConfirmationBridge';
-import { DndStage } from '../DndStage';
+import InventoryProvider from '../InventoryProvider';
+import SelectionProvider from '../SelectionProvider';
+import ConfirmationBridgeProvider from '../ConfirmationBridge';
+import DndStage from '../DndStage';
 
-export const DragAndDropProvider = ({
+const DragAndDropProvider = ({
   children,
   leftInstance,
   rightInstance,
@@ -23,3 +23,5 @@ export const DragAndDropProvider = ({
     </InventoryProvider>
   );
 };
+
+export default DragAndDropProvider;

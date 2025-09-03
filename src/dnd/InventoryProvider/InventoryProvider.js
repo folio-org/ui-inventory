@@ -107,7 +107,7 @@ const reducer = (state, action) => {
 
     case 'PREVIEW_MOVE_HOLDING': {
       if (!state.__snapshot) return state;
-      return reducer(state, { type: 'MOVE_HOLDING', payload: action.payload });
+      return reducer(state, { type: 'MOVE_HOLDINGS', payload: action.payload });
     }
 
     case 'PREVIEW_CANCEL': {
@@ -205,12 +205,29 @@ const reducer = (state, action) => {
       return next;
     }
 
+    case 'MOVE_HOLDINGS': {
+      const { holdingIds, toInstanceId, toIndex } = action.payload || {};
+      if (!Array.isArray(holdingIds) || holdingIds.length === 0 || !toInstanceId) return state;
+
+      let next = state;
+      const idx = toIndex;
+
+      holdingIds.forEach((id, k) => {
+        next = reducer(next, {
+          type: 'MOVE_HOLDING',
+          payload: { holdingId: id, toInstanceId, toIndex: typeof idx === 'number' ? idx + k : undefined },
+        });
+      });
+
+      return next;
+    }
+
     default:
       return state;
   }
 };
 
-export const InventoryProvider = ({
+const InventoryProvider = ({
   children,
   leftInstance,
   rightInstance,
@@ -237,7 +254,7 @@ export const InventoryProvider = ({
 
     previewStart: () => dispatch({ type: 'PREVIEW_START' }),
     previewMoveItems: (opts) => dispatch({ type: 'PREVIEW_MOVE_ITEMS', payload: opts }),
-    previewMoveHolding: (opts) => dispatch({ type: 'PREVIEW_MOVE_HOLDING', payload: opts }),
+    previewMoveHoldings: (opts) => dispatch({ type: 'PREVIEW_MOVE_HOLDING', payload: opts }),
     previewCancel:  () => dispatch({ type: 'PREVIEW_CANCEL' }),
     previewCommit:  () => dispatch({ type: 'PREVIEW_COMMIT' }),
 
@@ -252,6 +269,8 @@ export const InventoryProvider = ({
     </InventoryActionsContext.Provider>
   );
 };
+
+export default InventoryProvider;
 
 export const useInventoryState = () => {
   const ctx = useContext(InventoryStateContext);

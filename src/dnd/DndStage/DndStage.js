@@ -5,14 +5,13 @@ import {
   DndContext,
   DragOverlay,
 } from '@dnd-kit/core';
-import { snapCenterToCursor } from '@dnd-kit/modifiers';
 
-import { useDndHandlers } from '../hooks';
+import useDndHandlers from '../hooks/useDndHandlers';
 import { useSelection } from '../SelectionProvider';
 
-export const DndStage = ({ children }) => {
-  const { selectedItems } = useSelection();
-  const { onDragStart, onDragOver, onDragEnd, activeDragItem } = useDndHandlers();
+const DndStage = ({ children }) => {
+  const { selectedItems, selectedHoldings } = useSelection();
+  const { onDragStart, onDragOver, onDragEnd, activeDragItem, activeDragHolding } = useDndHandlers();
 
   return (
     <DndContext
@@ -22,8 +21,8 @@ export const DndStage = ({ children }) => {
       onDragEnd={onDragEnd}
     >
       {children}
-      {activeDragItem && createPortal(
-        <DragOverlay modifiers={[snapCenterToCursor]}>
+      {(activeDragItem || activeDragHolding) && createPortal(
+        <DragOverlay>
           <div style={{
             backgroundColor: '#333',
             color: 'white',
@@ -43,10 +42,17 @@ export const DndStage = ({ children }) => {
             textOverflow: 'ellipsis',
           }}
           >
-            <FormattedMessage
-              id="ui-inventory.moveItems.move.items.count"
-              values={{ count: selectedItems.size || 1 }}
-            />
+            {activeDragHolding ? (
+              <FormattedMessage
+                id="ui-inventory.moveItems.move.holdings.count"
+                values={{ count: selectedHoldings.size || 1 }}
+              />
+            ) : (
+              <FormattedMessage
+                id="ui-inventory.moveItems.move.items.count"
+                values={{ count: selectedItems.size || 1 }}
+              />
+            )}
           </div>
         </DragOverlay>,
         document.getElementById('ModuleContainer'),
@@ -54,3 +60,5 @@ export const DndStage = ({ children }) => {
     </DndContext>
   );
 };
+
+export default DndStage;

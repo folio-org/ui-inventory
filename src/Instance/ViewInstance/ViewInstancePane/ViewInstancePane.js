@@ -64,6 +64,7 @@ const ViewInstancePane = ({
   holdingsSection,
   paneTitleRef,
   accordionStatusRef,
+  ref,
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
@@ -178,15 +179,17 @@ const ViewInstancePane = ({
         defaultWidth="fill"
         paneTitleRef={paneTitleRef}
       >
-        <TitleManager record={instance.title} />
+        <div ref={ref}>
+          <TitleManager record={instance.title} />
 
-        <InstanceDetailsContent
-          instance={instance}
-          tenantId={tenantId}
-          userTenantPermissions={userTenantPermissions}
-          holdingsSection={holdingsSection}
-          accordionStatusRef={accordionStatusRef}
-        />
+          <InstanceDetailsContent
+            instance={instance}
+            tenantId={tenantId}
+            userTenantPermissions={userTenantPermissions}
+            holdingsSection={holdingsSection}
+            accordionStatusRef={accordionStatusRef}
+          />
+        </div>
       </Pane>
 
       {isVersionHistoryOpen && (

@@ -1,1 +1,1 @@
-export * from './ConfirmationBridge';
+export { default, useConfirmBridge } from './ConfirmationBridge';
