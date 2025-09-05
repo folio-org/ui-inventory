@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {
   useCallback,
   useMemo,
@@ -53,6 +54,13 @@ const DraggableHolding = ({
       {children(draggableProps)}
     </div>
   );
+};
+
+DraggableHolding.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  holding: PropTypes.object,
+  instanceId: PropTypes.string,
+  isHoldingsMovement: PropTypes.bool,
 };
 
 export default DraggableHolding;

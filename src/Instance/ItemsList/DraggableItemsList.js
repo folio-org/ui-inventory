@@ -5,6 +5,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import PropTypes from 'prop-types';
 
 import { Checkbox } from '@folio/stripes/components';
 
@@ -110,6 +111,15 @@ const DraggableItemsList = ({
       </SortableContext>
     </div>
   );
+};
+
+DraggableItemsList.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  itemId: PropTypes.string,
+  isItemsMovement: PropTypes.bool,
+  holding: PropTypes.object,
+  contentData: PropTypes.arrayOf(PropTypes.object),
+  isFetching: PropTypes.bool,
 };
 
 export default DraggableItemsList;

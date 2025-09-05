@@ -74,7 +74,7 @@ const useMoveCommands = () => {
       } else {
         actions.moveItems({ itemIds: itemsToMove, toHoldingId });
       }
-      toggleAllItems(fromHoldingId, false); // clear selection after success
+      clear();
     };
 
     await moveItems({

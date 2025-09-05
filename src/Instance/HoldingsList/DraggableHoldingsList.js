@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { useDroppable } from '@dnd-kit/core';
 import {
@@ -37,6 +38,12 @@ const DraggableHoldingsList = ({
       </SortableContext>
     </div>
   );
+};
+
+DraggableHoldingsList.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+  holdingsContent: PropTypes.arrayOf(PropTypes.object),
+  instanceId: PropTypes.string,
 };
 
 export default DraggableHoldingsList;

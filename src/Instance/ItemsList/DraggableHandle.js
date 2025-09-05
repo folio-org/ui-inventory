@@ -1,6 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 
 import { Icon } from '@folio/stripes/components';
+import PropTypes from 'prop-types';
 
 const DraggableHandle = ({ itemId, holdingId }) => {
   const {
@@ -35,6 +36,11 @@ const DraggableHandle = ({ itemId, holdingId }) => {
       />
     </div>
   );
+};
+
+DraggableHandle.propTypes = {
+  itemId: PropTypes.string.isRequired,
+  holdingId: PropTypes.string.isRequired,
 };
 
 export default DraggableHandle;
