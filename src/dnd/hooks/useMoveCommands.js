@@ -2,10 +2,8 @@ import { useCallback, useMemo } from 'react';
 import { useIntl } from 'react-intl';
 import { uniq } from 'lodash';
 
-import { useStripes } from '@folio/stripes/core';
 import { MessageBanner } from '@folio/stripes/components';
 
-import HoldingsList from '../../Instance/HoldingsList/HoldingsList';
 import {
   useInventoryActions,
   useInventoryState,
@@ -20,7 +18,6 @@ import { callNumberLabel } from '../../utils';
 
 const useMoveCommands = () => {
   const intl = useIntl();
-  const stripes = useStripes();
 
   const { locationsById } = useReferenceData();
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
@@ -30,18 +27,12 @@ const useMoveCommands = () => {
 
   const { getSelectedItemsFromHolding, getSelectedHoldingsFromInstance, toggleAllItems, clear } = useSelection();
   const { moveItems, moveHoldings, checkPOLinkage } = useInventoryAPI();
-  const { setIsMoveHoldingsModalOpen, setMoveModalMessage, setOnConfirm, setOnCancel } = useConfirmBridge();
+  const { setIsMoveHoldingsModalOpen, setMoveModalMessage, setOnConfirm } = useConfirmBridge();
 
   // Detect if we're in dual-instance mode
   const isDualInstanceMode = useMemo(() => {
     const instanceIds = Object.keys(state.instances || {});
     return instanceIds.length === 2;
-  }, [state.instances]);
-
-  // Detect if we're in single-instance mode
-  const isSingleInstanceMode = useMemo(() => {
-    const instanceIds = Object.keys(state.instances || {});
-    return instanceIds.length === 1;
   }, [state.instances]);
 
   const openConfirmationModal = () => {
@@ -122,21 +113,7 @@ const useMoveCommands = () => {
   const setHoldingsConfirmationMessage = useCallback((hasLinkedPOLs, holdingsIds, holdingsCount, fromInstanceId, toInstanceId) => {
     let movingMessage;
     if (hasLinkedPOLs) {
-      movingMessage = (
-        <>
-          { intl.formatMessage(
-            { id: 'ui-inventory.moveItems.modal.message.hasLinkedPOLsOrHoldings' },
-          )}
-          <HoldingsList
-            instanceId={fromInstanceId}
-            tenantId={stripes.okapi?.tenant}
-            holdings={Object.values(state.holdings).filter(holding => holdingsIds.some(id => id === holding.id))}
-            isItemsMovement={false}
-            isHoldingsMovement={false}
-            pathToAccordionsState={[]}
-          />
-        </>
-      );
+      movingMessage = intl.formatMessage({ id: 'ui-inventory.moveItems.modal.message.hasLinkedPOLsOrHoldings' });
     } else {
       movingMessage = intl.formatMessage(
         { id: 'ui-inventory.moveItems.modal.message.holdings' },

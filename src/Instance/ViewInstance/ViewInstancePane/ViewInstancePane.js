@@ -64,7 +64,6 @@ const ViewInstancePane = ({
   holdingsSection,
   paneTitleRef,
   accordionStatusRef,
-  ref,
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
@@ -179,7 +178,7 @@ const ViewInstancePane = ({
         defaultWidth="fill"
         paneTitleRef={paneTitleRef}
       >
-        <div ref={ref}>
+        <div>
           <TitleManager record={instance.title} />
 
           <InstanceDetailsContent

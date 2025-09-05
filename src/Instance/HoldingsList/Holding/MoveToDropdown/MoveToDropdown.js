@@ -16,7 +16,7 @@ import {
 
 import { callNumberLabel } from '../../../../utils';
 import useReferenceData from '../../../../hooks/useReferenceData';
-// import useMoveCommands from '../../../../dnd/hooks/useMoveCommands'; // Temporarily removed to break cycle
+import useMoveCommands from '../../../../dnd/hooks/useMoveCommands';
 import {
   useInventoryState,
   useSelection,
@@ -33,15 +33,14 @@ const MoveToDropdown = ({
   const { locationsById } = useReferenceData();
   const state = useInventoryState();
   const {
-    toggleHolding,
     isHoldingDragSelected,
     getSelectedItemsFromHolding: getDraggingItems,
   } = useSelection();
 
-  // const {
-  //   moveSelectedItemsToHolding,
-  //   moveSelectedHoldingsToInstance,
-  // } = useMoveCommands();
+  const {
+    moveSelectedItemsToHolding,
+    moveSelectedHoldingsToInstance,
+  } = useMoveCommands();
 
   const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
   const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
@@ -134,7 +133,7 @@ const MoveToDropdown = ({
           buttonStyle="dropdownItem"
           role="menuitem"
           onClick={async () => {
-            // await moveSelectedItemsToHolding(holding.id, moveToHolding.id);
+            await moveSelectedItemsToHolding(holding.id, moveToHolding.id);
             onToggle();
           }}
         >
@@ -155,9 +154,8 @@ const MoveToDropdown = ({
           buttonStyle="dropdownItem"
           role="menuitem"
           onClick={async () => {
-            // await moveSelectedHoldingsToInstance(holding.id, fromInstanceId, toInstanceId, state.instances[toInstanceId]?.hrid);
+            await moveSelectedHoldingsToInstance(holding.id, fromInstanceId, toInstanceId, state.instances[toInstanceId]?.hrid);
             onToggle();
-            console.log('Move holdings to instance:', holding.id, fromInstanceId, toInstanceId);
           }}
         >
           {state.instances[toInstanceId]?.title}
