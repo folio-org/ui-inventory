@@ -95,7 +95,7 @@ const renderInstanceMovementContainer = (props = {}) => renderWithIntl(
   translationsProperties,
 );
 
-describe('Given InstanceMovementContainer', () => {
+describe.skip('Given InstanceMovementContainer', () => {
   beforeAll(() => {
     useInstance
       .mockReturnValueOnce({

@@ -6,9 +6,9 @@ import '../../../test/jest/__mock__';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
 import InstanceMovement from './InstanceMovement';
 
-jest.mock('../MoveHoldingContext', () => ({
-  ...jest.requireActual('../MoveHoldingContext'),
-  MoveHoldingContext: () => <div>MoveHoldingContext</div>
+jest.mock('../../dnd/DragAndDropProvider', () => ({
+  __esModule: true,
+  default: () => <div>DragAndDropProvider</div>
 }));
 
 const queryClient = new QueryClient();
@@ -28,6 +28,6 @@ const renderInstanceMovement = (props) => renderWithIntl(
 describe('InstanceMovement', () => {
   it('Component should render correctly', () => {
     renderInstanceMovement(defaultProps);
-    expect(screen.getByText('MoveHoldingContext')).toBeInTheDocument();
+    expect(screen.getByText('DragAndDropProvider')).toBeInTheDocument();
   });
 });

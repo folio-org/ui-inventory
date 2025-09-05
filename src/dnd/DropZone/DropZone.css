@@ -1,0 +1,13 @@
+.dropZone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  color: #666;
+  font-size: 14px;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 10px;
+}

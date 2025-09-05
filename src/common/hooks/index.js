@@ -11,6 +11,6 @@ export { default as useDefaultJobProfile } from './useDefaultJobProfile';
 export { default as useAllowedJobProfiles } from './useAllowedJobProfiles';
 
 export * from './useConfirmationModal';
-export * from './useMoveItemsMutation';
+export { default as useMoveItemsMutation } from './useMoveItemsMutation';
 export * from './useNumberGeneratorOptions';
 export default {};
