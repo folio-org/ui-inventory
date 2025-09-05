@@ -4,7 +4,6 @@ import {
   useState,
   useMemo,
 } from 'react';
-import { uniq } from 'lodash';
 
 import { useSelection } from '../SelectionProvider';
 import {
@@ -14,6 +13,7 @@ import {
 import useInventoryAPI from './useInventoryAPI';
 import { useConfirmBridge } from '../ConfirmationBridge';
 import * as RemoteStorage from '../../RemoteStorageService';
+import useMoveCommands from './useMoveCommands';
 
 const DRAG_TYPES = {
   ITEM: 'ITEM',
@@ -71,11 +71,11 @@ const useDndHandlers = () => {
     getSelectedHoldingsFromInstance,
     clear,
   } = useSelection();
+  const { moveItems } = useInventoryAPI();
   const {
-    moveItems,
-    moveHoldings,
-    checkPOLinkage,
-  } = useInventoryAPI();
+    moveSelectedItemsToHolding,
+    moveSelectedHoldingsToInstance,
+  } = useMoveCommands();
 
   const fromInstanceRef = useRef(null);
   const fromHoldingRef = useRef(null);
@@ -254,11 +254,9 @@ const useDndHandlers = () => {
       // In dual-instance mode, show confirmation modal
       if (isDualInstanceMode) {
         try {
-          const { poLineHoldingIds } = await checkPOLinkage(holdingIds);
-          const finalIds = uniq([...holdingIds, ...poLineHoldingIds]);
-
-          await moveHoldings({ toInstanceId: finalTo, toInstanceHrid, holdings: finalIds });
-          clear();
+          const onSuccess = () => actions.previewCommit();
+          const onReject = () => actions.previewCancel();
+          await moveSelectedHoldingsToInstance({ holdingIds, fromInstanceId, toInstanceId: finalTo, toInstanceHrid, onSuccess, onReject });
         } catch (error) {
           console.error('Failed to move holdings:', error);
           actions.previewCancel();
@@ -296,9 +294,9 @@ const useDndHandlers = () => {
       } else {
         // In dual-instance mode, show confirmation modal
         try {
-          await moveItems({ fromHoldingId, toHoldingId: finalTo, itemIds });
-          actions.previewCommit();
-          clear();
+          const onSuccess = () => actions.previewCommit();
+          const onReject = () => actions.previewCancel();
+          await moveSelectedItemsToHolding({ fromHoldingId, toHoldingId: finalTo, itemIds, onSuccess, onReject });
         } catch (error) {
           console.error('Failed to move items:', error);
           actions.previewCancel();

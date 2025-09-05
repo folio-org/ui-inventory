@@ -133,7 +133,7 @@ const MoveToDropdown = ({
           buttonStyle="dropdownItem"
           role="menuitem"
           onClick={async () => {
-            await moveSelectedItemsToHolding(holding.id, moveToHolding.id);
+            await moveSelectedItemsToHolding({ fromHoldingId: holding.id, toHoldingId: moveToHolding.id });
             onToggle();
           }}
         >
@@ -154,7 +154,12 @@ const MoveToDropdown = ({
           buttonStyle="dropdownItem"
           role="menuitem"
           onClick={async () => {
-            await moveSelectedHoldingsToInstance(holding.id, fromInstanceId, toInstanceId, state.instances[toInstanceId]?.hrid);
+            await moveSelectedHoldingsToInstance({
+              activeHoldingId: holding.id,
+              fromInstanceId,
+              toInstanceId,
+              toInstanceHrid: state.instances[toInstanceId]?.hrid,
+            });
             onToggle();
           }}
         >

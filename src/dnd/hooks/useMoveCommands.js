@@ -27,7 +27,7 @@ const useMoveCommands = () => {
 
   const { getSelectedItemsFromHolding, getSelectedHoldingsFromInstance, toggleAllItems, clear } = useSelection();
   const { moveItems, moveHoldings, checkPOLinkage } = useInventoryAPI();
-  const { setIsMoveHoldingsModalOpen, setMoveModalMessage, setOnConfirm } = useConfirmBridge();
+  const { setIsMoveHoldingsModalOpen, setMoveModalMessage, setOnConfirm, setOnCancel } = useConfirmBridge();
 
   // Detect if we're in dual-instance mode
   const isDualInstanceMode = useMemo(() => {
@@ -67,9 +67,13 @@ const useMoveCommands = () => {
     setMoveModalMessage(modalContent);
   }, [locationsById]);
 
-  const confirmItemsMove = (itemsToMove, fromHoldingId, toHoldingId) => async () => {
+  const confirmItemsMove = (itemsToMove, fromHoldingId, toHoldingId, handleSuccess) => async () => {
     const onSuccess = () => {
-      actions.moveItems({ itemIds: itemsToMove, toHoldingId });
+      if (typeof handleSuccess === 'function') {
+        handleSuccess();
+      } else {
+        actions.moveItems({ itemIds: itemsToMove, toHoldingId });
+      }
       toggleAllItems(fromHoldingId, false); // clear selection after success
     };
 
@@ -83,15 +87,18 @@ const useMoveCommands = () => {
   };
 
   // Move currently selected items to a target holding (may span multiple sources)
-  const moveSelectedItemsToHolding = async (fromHoldingId, toHoldingId) => {
-    const itemsToMove = getSelectedItemsFromHolding(fromHoldingId);
+  const moveSelectedItemsToHolding = async ({ fromHoldingId, toHoldingId, itemIds = [], onSuccess, onReject }) => {
+    const itemsToMove = itemIds.length ? new Set(itemIds) : getSelectedItemsFromHolding(fromHoldingId);
 
     if (!itemsToMove.size) return;
 
     // In dual-instance mode, show confirmation modal
     if (isDualInstanceMode) {
       setItemsConfirmationMessage(itemsToMove.size, fromHoldingId, toHoldingId);
-      setOnConfirm(() => confirmItemsMove([...itemsToMove], fromHoldingId, toHoldingId));
+      setOnConfirm(() => confirmItemsMove([...itemsToMove], fromHoldingId, toHoldingId, onSuccess));
+      if (typeof onReject === 'function') {
+        setOnCancel(() => onReject);
+      }
       openConfirmationModal();
     } else {
       // In single-instance mode, check for remote to non-remote and move directly
@@ -127,32 +134,39 @@ const useMoveCommands = () => {
     setMoveModalMessage(movingMessage);
   }, [state.instances]);
 
-  const confirmHoldingsMove = (toInstanceId, toInstanceHrid, finalIds) => async () => {
+  const confirmHoldingsMove = (toInstanceId, toInstanceHrid, finalIds, handleSuccess) => async () => {
     const onSuccess = () => {
-      for (const id of finalIds) {
-        actions.moveHolding({ holdingId: id, toInstanceId });
-        clear();
+      if (typeof handleSuccess === 'function') {
+        handleSuccess();
+      } else {
+        for (const id of finalIds) {
+          actions.moveHolding({ holdingId: id, toInstanceId });
+        }
       }
+      clear();
     };
 
     await moveHoldings({ toInstanceId, toInstanceHrid, holdings: finalIds, onSuccess });
   };
 
   // Move selected holdings to a target instance
-  const moveSelectedHoldingsToInstance = async (activeHoldingId, fromInstanceId, toInstanceId, toInstanceHrid) => {
+  const moveSelectedHoldingsToInstance = async ({ activeHoldingId, holdingIds = [], fromInstanceId, toInstanceId, toInstanceHrid, onSuccess, onReject }) => {
     const selectedHoldings = getSelectedHoldingsFromInstance(fromInstanceId);
-    const holdingIds = selectedHoldings.add(activeHoldingId);
+    const holdingsToMove = holdingIds.length ? new Set(holdingIds) : selectedHoldings.add(activeHoldingId);
 
-    if (!holdingIds.size) return;
+    if (!holdingsToMove.size) return;
 
     // In dual-instance mode, show confirmation modal
     if (isDualInstanceMode) {
       // Check for linked POLs first
-      const { hasLinkedPOLs, poLineHoldingIds } = await checkPOLinkage(holdingIds);
-      const finalIds = uniq([...holdingIds, ...poLineHoldingIds]);
+      const { hasLinkedPOLs, poLineHoldingIds } = await checkPOLinkage(holdingsToMove);
+      const finalIds = uniq([...holdingsToMove, ...poLineHoldingIds]);
 
       setHoldingsConfirmationMessage(hasLinkedPOLs, finalIds, finalIds.length, fromInstanceId, toInstanceId);
-      setOnConfirm(() => confirmHoldingsMove(toInstanceId, toInstanceHrid, finalIds));
+      setOnConfirm(() => confirmHoldingsMove(toInstanceId, toInstanceHrid, finalIds, onSuccess));
+      if (typeof onReject === 'function') {
+        setOnCancel(() => onReject);
+      }
       openConfirmationModal();
     }
   };
