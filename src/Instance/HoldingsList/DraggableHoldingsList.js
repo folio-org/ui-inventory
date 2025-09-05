@@ -9,7 +9,7 @@ import DropZone from '../../dnd/DropZone';
 
 const DraggableHoldingsList = ({
   children,
-  holdingsContent,
+  holdingsContent = [],
   instanceId,
 }) => {
   const { setNodeRef } = useDroppable({

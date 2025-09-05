@@ -23,41 +23,38 @@ const reducer = (state, action) => {
     case 'SET_FROM_PANES': {
       const { leftInstance, rightInstance } = action.payload || {};
       const instances = {};
-      const holdings = {};
+      const holdings = { ...state.holdings };
 
       [leftInstance, rightInstance].filter(Boolean).forEach((inst) => {
         instances[inst.id] = {
           ...inst,
-          id: inst.id,
-          holdingIds: inst.holdings.map(h => h.id),
+          holdingIds: (inst.holdings || []).map(h => h.id),
         };
 
-        inst.holdings.forEach(hld => {
-          holdings[hld.id] = {
-            id: hld.id,
-            instanceId: inst.id,
-            itemIds: [],
-          };
+        (inst.holdings || []).forEach(hld => {
+          const hid = hld.id;
+          holdings[hid] = holdings[hid] || { id: hid, instanceId: inst.id, itemIds: [] };
         });
       });
 
-      return { ...state, instances, holdings };
+      return { ...state, instances, holdings, items: {} };
     }
 
     // seed/merge holdings without items
     case 'SET_HOLDINGS': {
       const { holdings: holdingsPayload } = action.payload || {};
-
-      const holdings = { ...state.holdings };
+      const holdings = { ...(state.holdings || {}) };
 
       (holdingsPayload || []).forEach((h) => {
         if (!h || !h.id) return;
+
+        const prev = holdings[h.id] || {};
         holdings[h.id] = {
-          ...(holdings[h.id] || {}),
+          ...prev,
           ...h,
           id: h.id,
-          instanceId: h.instanceId,
-          itemIds: [],
+          instanceId: h.instanceId ?? prev.instanceId,
+          itemIds: Array.isArray(prev.itemIds) ? prev.itemIds : [],
         };
       });
 
@@ -68,50 +65,40 @@ const reducer = (state, action) => {
       const { holdingId, instanceId, itemsArr } = action.payload;
       if (!holdingId || !Array.isArray(itemsArr)) return state;
 
-      const holdings = { ...state.holdings };
-      const items = { ...state.items };
+      const holdings = { ...(state.holdings || {}) };
+      const items = { ...(state.items || {}) };
 
-      holdings[holdingId] = {
-        ...holdings[holdingId],
-        itemIds: itemsArr.map(it => it.id),
-      };
+      const instId = instanceId ?? holdings[holdingId]?.instanceId ?? '';
+      const itemIds = itemsArr.map(it => it.id);
 
-      itemsArr.forEach((it) => {
-        items[it.id] = {
-          ...it,
-          id: it.id,
-          holdingId,
-          instanceId,
-        };
+      holdings[holdingId] = { ...(holdings[holdingId] || {}), itemIds };
+
+      itemsArr.forEach(it => {
+        const itemId = it.id;
+        items[itemId] = { ...it, id: itemId, holdingId, instanceId: instId };
       });
 
       return { ...state, holdings, items };
     }
 
     case 'PREVIEW_START': {
-      // snapshot only the parts we mutate
-      const snap = {
-        instances: state.instances,
-        holdings: state.holdings,
-        items: state.items,
-      };
-      // deep clone once so we can mutate freely during preview
-      return { ...state, __snapshot: structuredClone(snap) };
+      const { instances, holdings, items } = state;
+      return { ...state, __snapshot: structuredClone({ instances, holdings, items }) };
     }
 
     case 'PREVIEW_MOVE_ITEMS': {
-      // only run if we’re in preview mode
       if (!state.__snapshot) return state;
       return reducer(state, { type: 'MOVE_ITEMS', payload: action.payload });
     }
 
-    case 'PREVIEW_MOVE_HOLDING': {
+    case 'PREVIEW_MOVE_HOLDINGS': {
       if (!state.__snapshot) return state;
       return reducer(state, { type: 'MOVE_HOLDINGS', payload: action.payload });
     }
 
     case 'PREVIEW_CANCEL': {
-      return state.__snapshot ? { ...state.__snapshot, __snapshot: null } : state;
+      if (!state.__snapshot) return state;
+      return { ...state, ...state.__snapshot, __snapshot: null };
     }
 
     case 'PREVIEW_COMMIT': {
@@ -254,7 +241,7 @@ const InventoryProvider = ({
 
     previewStart: () => dispatch({ type: 'PREVIEW_START' }),
     previewMoveItems: (opts) => dispatch({ type: 'PREVIEW_MOVE_ITEMS', payload: opts }),
-    previewMoveHoldings: (opts) => dispatch({ type: 'PREVIEW_MOVE_HOLDING', payload: opts }),
+    previewMoveHoldings: (opts) => dispatch({ type: 'PREVIEW_MOVE_HOLDINGS', payload: opts }),
     previewCancel:  () => dispatch({ type: 'PREVIEW_CANCEL' }),
     previewCommit:  () => dispatch({ type: 'PREVIEW_COMMIT' }),
 

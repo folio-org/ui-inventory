@@ -42,8 +42,10 @@ const HoldingsList = ({
   }, [holdingsRecords, isLoading, instanceId, actions.setHoldings]);
 
   const holdingsContent = useMemo(() => {
-    return holdings.length ? holdings : state.instances[instanceId]?.holdingIds?.map(id => state.holdings[id]);
-  }, [holdings, holdingsRecords]);
+    const holdingsFromState = state.instances[instanceId]?.holdingIds?.map(id => state.holdings[id]);
+
+    return holdings.length ? holdings : (holdingsFromState?.length ? holdingsFromState : []);
+  }, [holdings, holdingsRecords, state.instances, state.holdings, instanceId]);
 
   const renderHolding = useCallback((holding, props = {}) => {
     return (
