@@ -248,7 +248,7 @@ class InstancesList extends React.Component {
       searchParams.set('sort', defaultSort);
     }
 
-    if (!params.query && !params.filters && checkIfUserInMemberTenant(stripes)) {
+    if (!params.query && !params.filters && stripes.user.user?.consortium && checkIfUserInMemberTenant(stripes)) {
       searchParams.set('filters', addFilter(searchParams.get('filters'), `${FACETS.HELD_BY}.${stripes.okapi.tenant}`));
       searchParams.set('_isInitial', true);
     }
@@ -300,7 +300,7 @@ class InstancesList extends React.Component {
 
     const params = getParams();
 
-    if (!params.query && !params.filters && checkIfUserInMemberTenant(stripes)) {
+    if (!params.query && !params.filters && stripes.user.user?.consortium && checkIfUserInMemberTenant(stripes)) {
       searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
       searchParams.set('_isInitial', true);
     }

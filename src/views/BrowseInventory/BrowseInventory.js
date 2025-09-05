@@ -15,10 +15,10 @@ import querystring from 'query-string';
 import {
   TitleManager,
   useNamespace,
+  checkIfUserInMemberTenant,
+  useStripes,
 } from '@folio/stripes/core';
-import {
-  PersistedPaneset,
-} from '@folio/stripes/smart-components';
+import { PersistedPaneset } from '@folio/stripes/smart-components';
 import {
   FiltersPane,
   ResetButton,
@@ -27,6 +27,10 @@ import {
   useItemToView,
   useLocationFilters,
 } from '@folio/stripes-acq-components';
+import {
+  browseCallNumberOptions,
+  FACETS,
+} from '@folio/stripes-inventory-components';
 
 import {
   BrowseInventoryFilters,
@@ -40,9 +44,13 @@ import {
   useLastSearchTerms,
 } from '../../hooks';
 import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
+
 import css from './BrowseInventory.css';
 
+const isCallNumberBrowseOption = option => Object.values(browseCallNumberOptions).includes(option);
+
 const BrowseInventory = () => {
+  const stripes = useStripes();
   const history = useHistory();
   const location = useLocation();
   const intl = useIntl();
@@ -168,6 +176,13 @@ const BrowseInventory = () => {
     clearFilters();
   }, [deleteItemToView, clearFilters, changeSearchIndex]);
 
+  useEffect(() => {
+    if (isCallNumberBrowseOption(filters.qindex) && checkIfUserInMemberTenant(stripes)) {
+      // we want to applyFilters without writing the value to the url because it will trigger a search
+      applyFilters(FACETS.CALL_NUMBERS_HELD_BY, [stripes.okapi.tenant], false);
+    }
+  }, [filters.qindex]);
+
   const onReset = useCallback(() => {
     resetAll();
     inputRef.current.focus();
@@ -230,7 +245,10 @@ const BrowseInventory = () => {
 
       <BrowseResultsPane
         browseData={data}
-        filters={filters}
+        // we can use an empty index as a check that a user hasn't performed a browse
+        // if a user only has default facet selection - then we shouldn't show the empty results message
+        // for that we can pass an empty object when qindex is empty, i.e user hasn't clicked "Search"
+        filters={withExtraFilters.qindex ? withExtraFilters : {}}
         isFetching={isFetching}
         isFiltersOpened={isFiltersOpened}
         pagination={pagination}
