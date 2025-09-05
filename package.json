@@ -64,7 +64,6 @@
       "contributor-name-types": "1.2",
       "contributor-types": "2.0",
       "data-export": "5.0",
-      "data-import-converter-storage": "1.3 1.4 1.5",
       "electronic-access-relationships": "1.0",
       "holdings-note-types": "1.0",
       "holdings-sources": "1.0",
@@ -115,7 +114,8 @@
       "organizations.organizations": "1.0",
       "pieces": "3.0",
       "titles": "1.2",
-      "linked-data": "2.0"
+      "linked-data": "2.0",
+      "data-import-converter-storage": "1.3 1.4 1.5"
     },
     "permissionSets": [
       {

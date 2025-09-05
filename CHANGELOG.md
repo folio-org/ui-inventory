@@ -41,6 +41,7 @@ UIIN-3437.
 * Show green message after creating the instance. Fixes UIIN-3446.
 * Fix "Move holdings/items" action item displaying on shared instance. Fixes UIIN-3487.
 * ECS: Set Held by facet default to current tenant context in Inventory Call number Browse. Refs UIIN-3457.
+* Make "data-import-converter-storage" dependency as optional. Refs UIIN-3488.
 * Added a permission to delete records from SRS to a "Inventory: All permissions" and "Inventory: View, create, edit, delete holdings". Fixes UIIN-3434.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
