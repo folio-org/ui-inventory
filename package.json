@@ -155,7 +155,8 @@
           "browse.contributors.instances.collection.get",
           "inventory-storage.bound-with-parts.collection.get",
           "source-storage.records.matching.collection.post",
-          "users.item.get"
+          "users.item.get",
+          "source-storage.records.delete"
         ],
         "visible": true
       },
@@ -841,7 +842,8 @@
         "displayName": "Inventory: View, create, edit, delete holdings",
         "subPermissions": [
           "ui-inventory.holdings.edit",
-          "inventory-storage.holdings.item.delete"
+          "inventory-storage.holdings.item.delete",
+          "source-storage.records.delete"
         ],
         "visible": true
       },
