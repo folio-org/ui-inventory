@@ -896,5 +896,15 @@
     "acq.averageCost": "Average cost",
     "acq.fundCode": "Fund code",
     "sourceUri": "Instance source URI",
-    "instances.columns.instanceHRID": "Instance HRID"
+    "instances.columns.instanceHRID": "Instance HRID",
+    "additionalCallNumbers": "Additional call numbers",
+    "addAdditionalCallNumber": "Add additional call number",
+    "swapWithPrimaryCallNumber": "Change with primary call number",
+    "item.order": "Order",
+    "settings.displaySettings.defaultColumns": "Default columns",
+    "settings.displaySettings.defaultColumns.options.contributors": "Contributors",
+    "settings.displaySettings.defaultColumns.options.publishers": "Publishers",
+    "settings.displaySettings.defaultColumns.options.normalizedDate1": "Date",
+    "settings.displaySettings.defaultColumns.options.relation": "Relation",
+    "settings.displaySettings.defaultColumns.options.hrid": "Instance HRID"
 }

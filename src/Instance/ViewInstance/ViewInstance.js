@@ -246,7 +246,6 @@ const ViewInstance = (props) => {
         canUseSingleRecordImport={canUseSingleRecordImport}
         canBeOpenedInLinkedData={canBeOpenedInLinkedData}
         callout={callout}
-        tenant={instanceTenantOwner}
         requests={requests}
         onCopy={onCopy}
         numberOfRequests={totalRequestsRecords || 0}
@@ -289,7 +288,15 @@ const ViewInstance = (props) => {
   const onImportRecord = async (args) => {
     setIsImportRecordModalOpen(false);
 
-    await importRecord({ instanceId: instance.id, args });
+    const onSuccess = () => {
+      refetch();
+      callout.sendCallout({
+        type: 'success',
+        message: <FormattedMessage id="ui-inventory.copycat.callout.updated" values={{ xid: args.externalIdentifier }} />,
+      });
+    };
+
+    await importRecord({ instanceId: instance.id, args }, { onSuccess });
   };
 
   const onMoveToAnotherInstance = (selectedInstance) => {

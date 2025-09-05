@@ -27,6 +27,7 @@ import {
   stripesConnect,
   withNamespace,
   checkIfUserInCentralTenant,
+  checkIfUserInMemberTenant,
   TitleManager,
   getUserTenantsPermissions,
 } from '@folio/stripes/core';
@@ -54,12 +55,16 @@ import {
   getCurrentFilters,
   buildSearchQuery,
   SORT_OPTIONS,
-  SEARCH_COLUMN_NAMES,
+  SEARCH_COLUMNS,
+  TOGGLEABLE_COLUMNS,
   getSearchResultsFormatter,
   SEARCH_COLUMN_MAPPINGS,
   withReset,
+  getDefaultQindex,
+  FACETS,
 } from '@folio/stripes-inventory-components';
 
+import ViewInstanceRoute from '../../routes/ViewInstanceRoute';
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
@@ -82,6 +87,7 @@ import {
   switchAffiliation,
   getSortOptions,
   hasMemberTenantPermission,
+  addFilter,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
@@ -101,27 +107,13 @@ import {
   getItem,
   setItem,
 } from '../../storage';
+import { applyDefaultStaffSuppressFilter } from '../../routes/buildManifestObject';
 
 import css from './instances.css';
-import ViewInstanceRoute from '../../routes/ViewInstanceRoute';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-const SEARCH_COLUMNS = {
-  ...SEARCH_COLUMN_NAMES,
-  SELECT: 'select',
-  RELATION: 'relation',
-  HRID: 'hrid',
-};
-
-const TOGGLEABLE_COLUMNS = [
-  SEARCH_COLUMNS.CONTRIBUTORS,
-  SEARCH_COLUMNS.DATE,
-  SEARCH_COLUMNS.PUBLISHERS,
-  SEARCH_COLUMNS.RELATION,
-  SEARCH_COLUMNS.HRID,
-];
 const NON_TOGGLEABLE_COLUMNS = [
   SEARCH_COLUMNS.SELECT,
   SEARCH_COLUMNS.TITLE,
@@ -211,7 +203,7 @@ class InstancesList extends React.Component {
       showErrorModal: false,
       selectedRows: {},
       isSelectedRecordsModalOpened: false,
-      visibleColumns: this.getInitialToggableColumns(),
+      visibleColumns: this.getInitialToggleableColumns(),
       isImportRecordModalOpened: false,
       searchAndSortKey: 0,
       segmentsSortBy: this.getInitialSegmentsSortBy(),
@@ -252,16 +244,16 @@ class InstancesList extends React.Component {
 
     const searchParams = new URLSearchParams(_location.search);
 
-    let isSortingUpdated = false;
-
     if (!params.sort) {
-      isSortingUpdated = true;
       searchParams.set('sort', defaultSort);
     }
 
-    if (isSortingUpdated) {
-      this.redirectToSearchParams(searchParams);
+    if (!params.query && !params.filters && stripes.user.user?.consortium && checkIfUserInMemberTenant(stripes)) {
+      searchParams.set('filters', addFilter(searchParams.get('filters'), `${FACETS.HELD_BY}.${stripes.okapi.tenant}`));
+      searchParams.set('_isInitial', true);
     }
+
+    this.redirectToSearchParams(searchParams);
 
     if (isUserInConsortiumMode(stripes)) {
       this.getCurrentTenantPermissions();
@@ -275,6 +267,8 @@ class InstancesList extends React.Component {
       segment,
       parentMutator,
       getLastSearchOffset,
+      stripes,
+      getParams,
     } = this.props;
     const sortBy = this.getSortFromParams();
 
@@ -304,6 +298,13 @@ class InstancesList extends React.Component {
       searchParams.set('sort', data.displaySettings.defaultSort);
     }
 
+    const params = getParams();
+
+    if (!params.query && !params.filters && stripes.user.user?.consortium && checkIfUserInMemberTenant(stripes)) {
+      searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+      searchParams.set('_isInitial', true);
+    }
+
     if (isSortingUpdated) {
       this.redirectToSearchParams(searchParams);
     }
@@ -312,6 +313,12 @@ class InstancesList extends React.Component {
       const lastSearchOffset = getLastSearchOffset(segment);
 
       parentMutator.resultOffset.replace(lastSearchOffset);
+    }
+
+    if (prevProps.data.displaySettings !== this.props.data.displaySettings) {
+      this.setState({
+        visibleColumns: this.getInitialToggleableColumns(),
+      });
     }
   }
 
@@ -328,6 +335,7 @@ class InstancesList extends React.Component {
 
   extraParamsToReset = {
     selectedBrowseResult: false,
+    _isInitial: false,
     authorityId: '',
   };
 
@@ -398,8 +406,10 @@ class InstancesList extends React.Component {
     return params.get('sort');
   }
 
-  getInitialToggableColumns = () => {
-    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || TOGGLEABLE_COLUMNS;
+  getInitialToggleableColumns = () => {
+    const { defaultColumns } = this.props.data.displaySettings;
+
+    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || defaultColumns || TOGGLEABLE_COLUMNS;
   }
 
   getInitialSegmentsSortBy = () => {
@@ -433,7 +443,7 @@ class InstancesList extends React.Component {
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
 
-    goTo(path, { ...params, filters: filtersStr });
+    goTo(path, { ...params, _isInitial: false, filters: filtersStr });
   };
 
   onSubmitSearch = () => {
@@ -459,7 +469,20 @@ class InstancesList extends React.Component {
   };
 
   onCreate = (instance) => {
-    return this.createInstance(instance).then(() => this.closeNewInstance());
+    const { sendCallout } = this.context;
+
+    return this.createInstance(instance).then((response) => {
+      sendCallout({
+        type: 'success',
+        message: (
+          <FormattedMessage
+            id="ui-inventory.instance.successfullySaved"
+            values={{ hrid: response.hrid }}
+          />
+        ),
+      });
+      this.closeNewInstance();
+    });
   }
 
   openCreateInstance = () => {
@@ -608,7 +631,7 @@ class InstancesList extends React.Component {
           });
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
-        const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
+        const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
 
         const report = new IdReportGenerator('SearchInstanceUUIDs');
 
@@ -662,7 +685,7 @@ class InstancesList extends React.Component {
     if (!isTestEnv()) {
       const { data } = this.props;
 
-      const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
+      const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
       const fileName = `SearchInstanceCQLQuery${moment().format()}.cql`;
 
       saveAs(new Blob([query], { type: 'text/plain;charset=utf-8;' }), fileName);
@@ -719,7 +742,7 @@ class InstancesList extends React.Component {
           });
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
-        const query = buildSearchQuery()(data.query, {}, data, { log: noop }, this.props);
+        const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
 
         const items = await getResourcesIds(query, 'HOLDINGS');
 
@@ -1042,6 +1065,7 @@ class InstancesList extends React.Component {
   handleResetAll = () => {
     const {
       publishOnReset,
+      stripes,
     } = this.props;
 
     this.setState({
@@ -1050,6 +1074,14 @@ class InstancesList extends React.Component {
 
     this.inputRef.current.focus();
     publishOnReset();
+
+    if (checkIfUserInMemberTenant(stripes)) {
+      const searchParams = new URLSearchParams();
+
+      searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+      searchParams.set('_isInitial', true);
+      this.redirectToSearchParams(searchParams);
+    }
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
@@ -1368,7 +1400,8 @@ class InstancesList extends React.Component {
             advancedSearchIndex={queryIndexes.ADVANCED_SEARCH}
             advancedSearchOptions={advancedSearchOptions}
             advancedSearchQueryBuilder={advancedSearchQueryBuilder}
-            selectedIndex={get(data.query, 'qindex')}
+            // query.qindex is empty by default when switching between segments so we need to pass some default value here
+            selectedIndex={get(data.query, 'qindex') || getDefaultQindex(segment)}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
             initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}

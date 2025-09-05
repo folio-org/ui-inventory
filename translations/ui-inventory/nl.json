@@ -896,5 +896,15 @@
     "acq.averageCost": "Gemiddelde kosten",
     "acq.fundCode": "Fondscode",
     "sourceUri": "Bron URI van Instance",
-    "instances.columns.instanceHRID": "Instance HRID"
+    "instances.columns.instanceHRID": "Instance HRID",
+    "additionalCallNumbers": "Extra Vindplaatsen",
+    "addAdditionalCallNumber": "Extra Vindplaats Toevoegen",
+    "swapWithPrimaryCallNumber": "Wijziging met Primair Vindplaatsnummer",
+    "item.order": "Bestel",
+    "settings.displaySettings.defaultColumns": "Standaard kolommen",
+    "settings.displaySettings.defaultColumns.options.contributors": "Bijdragers",
+    "settings.displaySettings.defaultColumns.options.publishers": "Uitgever",
+    "settings.displaySettings.defaultColumns.options.normalizedDate1": "Datum",
+    "settings.displaySettings.defaultColumns.options.relation": "Gerelateerd",
+    "settings.displaySettings.defaultColumns.options.hrid": "Instance HRID"
 }

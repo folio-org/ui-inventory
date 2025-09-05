@@ -264,7 +264,6 @@ describe('ItemForm', () => {
       });
 
       expect(getByText('Additional call numbers')).toBeInTheDocument();
-      expect(queryByText('No additional call numbers')).not.toBeInTheDocument();
       expect(getByText('prefix1')).toBeInTheDocument();
       expect(getByText('suffix1')).toBeInTheDocument();
       expect(getByText('cn1')).toBeInTheDocument();

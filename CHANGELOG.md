@@ -26,11 +26,38 @@ UIIN-3437.
 * Add additional call numbers to Item records. Refs UIIN-3328.
 * ECS: Provide correct tenant to get member tenant holdings for instance. Fixes UIIN-3447.
 * Fix hotkey handlers for Instance details. Fixes UIIN-3448.
+* Classification browse | Add Contributors to results list. Refs UIIN-3368.
+* Open Item record detail view when exact match is found via Keyword search option in Item tab. Refs UIIN-3416.
+* Classification browse | Add Title to results list. Refs UIIN-3367.
+* CallNumberTypes component: refactor class component. Refs UIIN-3389.
+* Fix instance overlaying issues. Fixes UIIN-3450.
+* Display order column in items table when clicking `Move items within an instance` action button. Refs UIIN-3453.
+* Allow tenant to set default columns to display in Inventory results. Refs UIIN-3422.
+* Display default value in Language select when language is incorrect. Fixes UIIN-3451.
+* Correcting the behavior of drop-down menu and checkbox in Settings > Inventory > Number generator options. Refs UIIN-3471.
+* Move permissions for creating export jobs to "Inventory: View instances, holdings, and items" permission. Fixes UIIN-3474.
+* Fix sorting for Items on Instance details page. Fixes UIIN-3478.
+* ECS: Set Held by facet default to current tenant context in Inventory Search. Refs UIIN-2820.
+* Show green message after creating the instance. Fixes UIIN-3446.
+* Fix "Move holdings/items" action item displaying on shared instance. Fixes UIIN-3487.
+* ECS: Set Held by facet default to current tenant context in Inventory Call number Browse. Refs UIIN-3457.
+* Make "data-import-converter-storage" dependency as optional. Refs UIIN-3488.
+
+## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
+
+* Fix default staff suppress facet value issues after a merge error. Refs UIIN-3465.
+
+## [13.0.9](https://github.com/folio-org/ui-inventory/tree/v13.0.9) (2025-08-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.8...v13.0.9)
+
+* Hide staff suppressed Instances based on existing permission for Staff suppress facet. Refs UIIN-3465.
 
 ## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
 
 * Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
+* Support interface `item-storage` `11.0`. Refs UIIN-3429.
 
 ## [13.0.7](https://github.com/folio-org/ui-inventory/tree/v13.0.7) (2025-06-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.6...v13.0.7)

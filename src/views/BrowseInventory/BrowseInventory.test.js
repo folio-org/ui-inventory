@@ -6,7 +6,8 @@ import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { act, screen, fireEvent, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
 import stripesAcqComponents from '@folio/stripes-acq-components';
-import { browseModeOptions } from '@folio/stripes-inventory-components';
+import { browseModeOptions, FACETS } from '@folio/stripes-inventory-components';
+import { checkIfUserInMemberTenant } from '@folio/stripes/core';
 
 import {
   renderWithIntl,
@@ -158,11 +159,59 @@ describe('BrowseInventory', () => {
     expect(screen.getByText(/SearchModeNavigation/)).toBeInTheDocument();
   });
 
-  it('should call "changeSearchIndex" when browse mode option was changed', async () => {
-    renderBrowseInventory();
+  describe('when browse mode option was changed', () => {
+    it('should call "changeSearchIndex" ', async () => {
+      renderBrowseInventory();
 
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
-    expect(changeSearchIndex).toHaveBeenCalled();
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+      expect(changeSearchIndex).toHaveBeenCalled();
+    });
+
+    describe('when the new option is one of Call Number Browse options', () => {
+      describe('and a user is in a member tenant', () => {
+        it('should apply a default value of a current tenant in Held By facet', () => {
+          renderBrowseInventory();
+
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'callNumbers' } });
+
+          waitFor(() => expect(applyFilters).toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku']));
+        });
+      });
+
+      describe('and a user is not in a member tenant', () => {
+        it('should not apply a default value of a current tenant in Held By facet', () => {
+          checkIfUserInMemberTenant.mockReturnValue(false);
+          renderBrowseInventory();
+
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'callNumbers' } });
+
+          waitFor(() => expect(applyFilters).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku']));
+        });
+      });
+    });
+
+    describe('when the new option is not one of Call Number Browse options', () => {
+      describe('and a user is in a member tenant', () => {
+        it('should not apply a default value of a current tenant in Held By facet', () => {
+          renderBrowseInventory();
+
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+
+          waitFor(() => expect(applyFilters).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku']));
+        });
+      });
+
+      describe('and a user is not in a member tenant', () => {
+        it('should not apply a default value of a current tenant in Held By facet', () => {
+          checkIfUserInMemberTenant.mockReturnValue(false);
+          renderBrowseInventory();
+
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+
+          waitFor(() => expect(applyFilters).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku']));
+        });
+      });
+    });
   });
 
   it('should call "changeSearch" when search query was changed', async () => {

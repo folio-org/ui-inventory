@@ -215,7 +215,6 @@
   "callNumberPrefix": "Call number prefix",
   "callNumberSuffix": "Call number suffix",
   "additionalCallNumbers": "Additional call numbers",
-  "noAdditionalCallNumbers": "No additional call numbers",
   "addAdditionalCallNumber": "Add additional call number",
   "swapWithPrimaryCallNumber": "Change with primary call number",
   "holdingsNotes": "Holdings notes",
@@ -265,6 +264,7 @@
   "barcode": "Barcode",
   "itemBarcode": "Item barcode",
   "item.barcode": "Item: barcode",
+  "item.order": "Order",
   "item.requestQueue": "Request queue",
   "item.successfullySaved": "The <strong>item</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
   "holdingsRecord.successfullySaved": "The <strong>holdings</strong> - HRID <strong>{hrid}</strong> has been successfully saved.",
@@ -917,6 +917,12 @@
   "settings.versionHistory.versionHistoryCardsPerPage.loadError": "Failed to load Version history cards per page settings",
   "settings.section.displaySettings": "Display settings",
   "settings.displaySettings.defaultSort": "Default sort",
+  "settings.displaySettings.defaultColumns": "Default columns",
+  "settings.displaySettings.defaultColumns.options.contributors": "Contributors",
+  "settings.displaySettings.defaultColumns.options.publishers": "Publishers",
+  "settings.displaySettings.defaultColumns.options.normalizedDate1": "Date",
+  "settings.displaySettings.defaultColumns.options.relation": "Relation",
+  "settings.displaySettings.defaultColumns.options.hrid": "Instance HRID",
 
   "instance.linked.id": "Linked instance ID - {id}"
 }

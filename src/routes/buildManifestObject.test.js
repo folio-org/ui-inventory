@@ -5,6 +5,8 @@ import {
   buildSearchQuery,
 } from '@folio/stripes-inventory-components';
 
+import { applyDefaultStaffSuppressFilter } from './buildManifestObject';
+
 import buildStripes from '../../test/jest/__mock__/stripesCore.mock';
 
 jest.unmock('@folio/stripes-inventory-components');
@@ -38,9 +40,78 @@ describe('buildSearchQuery', () => {
           filters: '',
         };
 
-        const cql = buildSearchQuery()(...getBuildQueryArgs({ queryParams }));
+        const cql = buildSearchQuery(applyDefaultStaffSuppressFilter)(...getBuildQueryArgs({ queryParams }));
 
         expect(cql).toEqual(null);
+      });
+    });
+
+    describe('when a user does not have staff suppress permissions', () => {
+      it('should apply staffSuppress.false facet', () => {
+        const queryParams = {
+          qindex: queryIndexes.SUBJECT,
+          query: 'test',
+          filters: '',
+        };
+        const buildQueryArgs = getBuildQueryArgs({
+          queryParams,
+          props: {
+            ...defaultProps,
+            stripes: {
+              hasPerm: () => false,
+            },
+          },
+        });
+
+        const cql = buildSearchQuery(applyDefaultStaffSuppressFilter)(...buildQueryArgs);
+
+        expect(cql).toEqual('((subjects.value==/string "test") and staffSuppress=="false") sortby title');
+      });
+
+      describe('when query and filters are empty', () => {
+        it('should return empty query and filters', () => {
+          const queryParams = {
+            qindex: queryIndexes.SUBJECT,
+            query: '',
+            filters: '',
+          };
+          const buildQueryArgs = getBuildQueryArgs({
+            queryParams,
+            props: {
+              ...defaultProps,
+              stripes: {
+                hasPerm: () => false,
+              },
+            },
+          });
+
+          const cql = buildSearchQuery(applyDefaultStaffSuppressFilter)(...buildQueryArgs);
+
+          expect(cql).toEqual(null);
+        });
+      });
+
+      describe('when query is empty and filters value is staffSuppress.false', () => {
+        it('should return empty query and filters', () => {
+          const queryParams = {
+            qindex: queryIndexes.SUBJECT,
+            query: '',
+            filters: 'staffSuppress.false',
+          };
+          const buildQueryArgs = getBuildQueryArgs({
+            queryParams,
+            props: {
+              ...defaultProps,
+              stripes: {
+                hasPerm: () => false,
+              },
+            },
+          });
+
+          const cql = buildSearchQuery(applyDefaultStaffSuppressFilter)(...buildQueryArgs);
+
+          expect(cql).toEqual(null);
+        });
       });
     });
   });

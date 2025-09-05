@@ -58,7 +58,7 @@ describe('Rendering NumberGeneratorSettingsForm', () => {
   });
 
   it('should show save and collaps all buttons', () => {
-    expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Collapse all' })).toBeInTheDocument();
   });
 });
@@ -68,8 +68,13 @@ describe('Clicking `off` option of accessionNumber', () => {
     const useEqualNumberCheckbox = screen.getByRole('checkbox', { name: 'Use the same generated number for accession number and call number' });
     const itemsAccordion = screen.getByRole('region', { name: 'Items' });
     const accessionNumberSelect = within(itemsAccordion).getByRole('combobox', { name: 'Accession number' });
+    const callNumberSelect = within(itemsAccordion).getByRole('combobox', { name: 'Call number' });
 
-    expect(accessionNumberSelect).toBeInTheDocument();
+    expect(useEqualNumberCheckbox).toBeDisabled();
+
+    fireEvent.change(accessionNumberSelect, { target: { value: 'onEditable' } });
+    fireEvent.change(callNumberSelect, { target: { value: 'onEditable' } });
+
     expect(useEqualNumberCheckbox).toBeEnabled();
 
     fireEvent.change(accessionNumberSelect, { target: { value: 'off' } });
@@ -83,9 +88,14 @@ describe('Clicking `off` option of callNumber', () => {
   it('should disable useSharedNumber-checkbox and show warning', async () => {
     const useEqualNumberCheckbox = screen.getByRole('checkbox', { name: 'Use the same generated number for accession number and call number' });
     const itemsAccordion = screen.getByRole('region', { name: 'Items' });
+    const accessionNumberSelect = within(itemsAccordion).getByRole('combobox', { name: 'Accession number' });
     const callNumberSelect = within(itemsAccordion).getByRole('combobox', { name: 'Call number' });
 
-    expect(callNumberSelect).toBeInTheDocument();
+    expect(useEqualNumberCheckbox).toBeDisabled();
+
+    fireEvent.change(accessionNumberSelect, { target: { value: 'onEditable' } });
+    fireEvent.change(callNumberSelect, { target: { value: 'onEditable' } });
+
     expect(useEqualNumberCheckbox).toBeEnabled();
 
     fireEvent.change(callNumberSelect, { target: { value: 'off' } });
