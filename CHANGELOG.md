@@ -42,6 +42,7 @@ UIIN-3437.
 * Fix "Move holdings/items" action item displaying on shared instance. Fixes UIIN-3487.
 * ECS: Set Held by facet default to current tenant context in Inventory Call number Browse. Refs UIIN-3457.
 * Make "data-import-converter-storage" dependency as optional. Refs UIIN-3488.
+* Change the order of items in the item list when dragging. Refs UIIN-3455.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)

@@ -96,6 +96,11 @@ const reducer = (state, action) => {
       return reducer(state, { type: 'MOVE_HOLDINGS', payload: action.payload });
     }
 
+    case 'PREVIEW_REORDER_ITEMS': {
+      if (!state.__snapshot) return state;
+      return reducer(state, { type: 'REORDER_ITEMS', payload: action.payload });
+    }
+
     case 'PREVIEW_CANCEL': {
       if (!state.__snapshot) return state;
       return { ...state, ...state.__snapshot, __snapshot: null };
@@ -103,6 +108,21 @@ const reducer = (state, action) => {
 
     case 'PREVIEW_COMMIT': {
       return state.__snapshot ? { ...state, __snapshot: null } : state;
+    }
+
+    case 'REORDER_ITEMS': {
+      const { holdingId, itemIds } = action.payload || {};
+      if (!holdingId || !Array.isArray(itemIds)) return state;
+      return {
+        ...state,
+        holdings: {
+          ...state.holdings,
+          [holdingId]: {
+            ...state.holdings[holdingId],
+            itemIds,
+          },
+        },
+      };
     }
 
     case 'MOVE_ITEM': {
@@ -238,10 +258,12 @@ const InventoryProvider = ({
     moveItem: (opts) => dispatch({ type: 'MOVE_ITEM', payload: opts }),
     moveItems: (opts) => dispatch({ type: 'MOVE_ITEMS', payload: opts }),
     moveHolding: (opts) => dispatch({ type: 'MOVE_HOLDING', payload: opts }),
+    reorderItems: (opts) => dispatch({ type: 'REORDER_ITEMS', payload: opts }),
 
     previewStart: () => dispatch({ type: 'PREVIEW_START' }),
     previewMoveItems: (opts) => dispatch({ type: 'PREVIEW_MOVE_ITEMS', payload: opts }),
     previewMoveHoldings: (opts) => dispatch({ type: 'PREVIEW_MOVE_HOLDINGS', payload: opts }),
+    previewReorderItems: (opts) => dispatch({ type: 'PREVIEW_REORDER_ITEMS', payload: opts }),
     previewCancel:  () => dispatch({ type: 'PREVIEW_CANCEL' }),
     previewCommit:  () => dispatch({ type: 'PREVIEW_COMMIT' }),
 
