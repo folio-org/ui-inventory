@@ -258,6 +258,7 @@ const useDndHandlers = () => {
           const onReject = () => actions.previewCancel();
           await moveSelectedHoldingsToInstance({ holdingIds, fromInstanceId, toInstanceId: finalTo, toInstanceHrid, onSuccess, onReject });
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error('Failed to move holdings:', error);
           actions.previewCancel();
         }
@@ -276,8 +277,60 @@ const useDndHandlers = () => {
       const fromHoldingId = fromHoldingRef.current;
       const itemIds = Array.from(draggingItemsRef.current);
 
-      if (!finalTo || finalTo === fromHoldingId || !itemIds.length) {
+      if (!finalTo || !itemIds.length) {
         actions.previewCancel();
+        return;
+      }
+
+      if (finalTo === fromHoldingId) {
+        // Handle re-ordering items within the same holding (single or multiple)
+        const currentItemIds = state.holdings[fromHoldingId]?.itemIds || [];
+        const draggedItemIds = Array.from(draggingItemsRef.current);
+
+        const overItemId = over?.id ? parseItemId(over.id) : null;
+
+        const newItemIds = [...currentItemIds];
+        const targetIndex = overItemId ? newItemIds.indexOf(overItemId) : newItemIds.length - 1;
+
+        if (targetIndex === -1) {
+          actions.previewCancel();
+          return;
+        }
+
+        // Remove all dragged items from their current positions
+        const draggedItems = [];
+        draggedItemIds.forEach(itemId => {
+          const index = newItemIds.indexOf(itemId);
+          if (index !== -1) {
+            draggedItems.push(newItemIds.splice(index, 1)[0]);
+          }
+        });
+
+        // Insert dragged items at the target position
+        if (draggedItems.length > 0) {
+          // Calculate the correct insert position
+          const insertIndex = targetIndex >= newItemIds.length ? newItemIds.length : targetIndex;
+          newItemIds.splice(insertIndex, 0, ...draggedItems);
+
+          // Check if the order actually changed
+          const orderChanged = JSON.stringify(currentItemIds) !== JSON.stringify(newItemIds);
+
+          if (orderChanged) {
+            actions.reorderItems({ holdingId: fromHoldingId, itemIds: newItemIds });
+
+            // TODO: Add API call here to persist the new order to the backend
+          }
+        }
+
+        // Clear selection and commit preview
+        clear();
+        actions.previewCommit();
+
+        // Reset drag state for items
+        setActiveDragItem(null);
+        setActiveDragHolding(null);
+        fromHoldingRef.current = null;
+        toHoldingRef.current = null;
         return;
       }
 
@@ -288,6 +341,7 @@ const useDndHandlers = () => {
           actions.previewCommit();
           clear();
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error('Failed to move items:', error);
           actions.previewCancel();
         }
@@ -298,6 +352,7 @@ const useDndHandlers = () => {
           const onReject = () => actions.previewCancel();
           await moveSelectedItemsToHolding({ fromHoldingId, toHoldingId: finalTo, itemIds, onSuccess, onReject });
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error('Failed to move items:', error);
           actions.previewCancel();
         }
