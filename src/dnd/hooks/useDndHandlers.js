@@ -258,6 +258,7 @@ const useDndHandlers = () => {
           const onReject = () => actions.previewCancel();
           await moveSelectedHoldingsToInstance({ holdingIds, fromInstanceId, toInstanceId: finalTo, toInstanceHrid, onSuccess, onReject });
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error('Failed to move holdings:', error);
           actions.previewCancel();
         }
@@ -340,6 +341,7 @@ const useDndHandlers = () => {
           actions.previewCommit();
           clear();
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error('Failed to move items:', error);
           actions.previewCancel();
         }
@@ -350,6 +352,7 @@ const useDndHandlers = () => {
           const onReject = () => actions.previewCancel();
           await moveSelectedItemsToHolding({ fromHoldingId, toHoldingId: finalTo, itemIds, onSuccess, onReject });
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error('Failed to move items:', error);
           actions.previewCancel();
         }
