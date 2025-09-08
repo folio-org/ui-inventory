@@ -313,6 +313,13 @@ class InstancesList extends React.Component {
       const lastSearchOffset = getLastSearchOffset(segment);
 
       parentMutator.resultOffset.replace(lastSearchOffset);
+
+      if (!params.query && !params.filters && stripes.user.user?.consortium && checkIfUserInMemberTenant(stripes)) {
+        searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+        searchParams.set('_isInitial', true);
+
+        this.redirectToSearchParams(searchParams);
+      }
     }
 
     if (prevProps.data.displaySettings !== this.props.data.displaySettings) {
@@ -1066,6 +1073,7 @@ class InstancesList extends React.Component {
     const {
       publishOnReset,
       stripes,
+      segment,
     } = this.props;
 
     this.setState({
@@ -1080,6 +1088,8 @@ class InstancesList extends React.Component {
 
       searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
       searchParams.set('_isInitial', true);
+      searchParams.set('segment', segment);
+
       this.redirectToSearchParams(searchParams);
     }
   }
