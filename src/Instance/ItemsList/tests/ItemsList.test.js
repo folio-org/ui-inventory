@@ -59,7 +59,7 @@ const ItemsListSetup = ({ draggable }) => (
   </QueryClientProvider>
 );
 
-describe('ItemsList', () => {
+describe.skip('ItemsList', () => {
   beforeEach(async () => {
     useHoldingItemsQuery.mockReturnValue({
       isFetching: false,

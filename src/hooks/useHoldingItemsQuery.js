@@ -20,7 +20,7 @@ const useHoldingItemsQuery = (
 ) => {
   const [sortBy, setSortBy] = useState(`${DEFAULT_ITEM_TABLE_SORTBY_FIELD}/sort.ascending`);
   const ky = useTenantKy({ tenantId: options.tenantId }).extend({ timeout: false });
-  const [namespace] = useNamespace();
+  const [namespace] = useNamespace({ key: 'itemsByHoldingId' });
 
   // sortMap contains not all item table's columns because sorting by some columns
   // is not implemented on BE yet
@@ -60,7 +60,7 @@ const useHoldingItemsQuery = (
 
   const queryKey = [namespace, options.key, holdingsRecordId, searchParams.offset, sortBy];
   const queryFn = () => ky.get('inventory/items-by-holdings-id', { searchParams }).json();
-  const { data, isLoading, isFetching } = useQuery({
+  const { data, refetch, isLoading, isFetching } = useQuery({
     queryKey,
     queryFn,
     ...omit(options, ['searchParams']),
@@ -71,6 +71,7 @@ const useHoldingItemsQuery = (
     isLoading,
     items: data?.items,
     totalRecords: data?.totalRecords,
+    refetch,
   };
 };
 

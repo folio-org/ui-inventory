@@ -1,31 +1,24 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Paneset,
-} from '@folio/stripes/components';
-import {
-  MoveHoldingContext,
-} from '../MoveHoldingContext';
+import { Paneset } from '@folio/stripes/components';
 
-import { InstanceMovementDetailsContainer } from './InstanceMovementDetails';
+import DragAndDropProvider from '../../dnd/DragAndDropProvider';
+import InstanceMovementDetails from './InstanceMovementDetails/InstanceMovementDetails';
 
 const InstanceMovement = ({
   onClose,
-  moveHoldings,
   instanceFrom = {},
   instanceTo = {},
   refetchFrom,
   refetchTo,
 }) => {
   return (
-    <Paneset data-test-movement>
-      <MoveHoldingContext
-        moveHoldings={moveHoldings}
+    <Paneset data-test-movement isRoot>
+      <DragAndDropProvider
         leftInstance={instanceFrom}
         rightInstance={instanceTo}
       >
-        <InstanceMovementDetailsContainer
+        <InstanceMovementDetails
           instance={instanceFrom}
           onClose={onClose}
           refetch={refetchFrom}
@@ -33,21 +26,20 @@ const InstanceMovement = ({
           id="movement-from-instance-details"
         />
 
-        <InstanceMovementDetailsContainer
+        <InstanceMovementDetails
           instance={instanceTo}
           onClose={onClose}
           refetch={refetchTo}
           data-test-movement-to-instance-details
           id="movement-to-instance-details"
         />
-      </MoveHoldingContext>
+      </DragAndDropProvider>
     </Paneset>
   );
 };
 
 InstanceMovement.propTypes = {
   onClose: PropTypes.func.isRequired,
-  moveHoldings: PropTypes.func.isRequired,
   instanceFrom: PropTypes.object,
   instanceTo: PropTypes.object,
   refetchFrom: PropTypes.func,

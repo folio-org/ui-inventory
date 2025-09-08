@@ -11,10 +11,10 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 
+import DragAndDropProvider from '../../../../dnd/DragAndDropProvider';
 import HoldingsList from '../../HoldingsList';
 import { LimitedHoldingsList } from '../LimitedHoldingsList';
 import { InstanceNewHolding } from '../../../ViewInstance/components/InstanceDetails/InstanceNewHolding';
-import { MoveItemsContext } from '../../../MoveItemsContext';
 import useMemberTenantHoldings from '../../../../hooks/useMemberTenantHoldings';
 
 import { hasMemberTenantPermission } from '../../../../utils';
@@ -36,7 +36,6 @@ const MemberTenantHoldings = ({
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
   const canViewHoldingsAndItems = hasMemberTenantPermission('ui-inventory.instance.view', memberTenantId, userTenantPermissions);
-  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', memberTenantId, userTenantPermissions);
   const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', memberTenantId, userTenantPermissions);
 
   const { holdings, isLoading } = useMemberTenantHoldings(instance, memberTenantId, userTenantPermissions);
@@ -46,19 +45,16 @@ const MemberTenantHoldings = ({
   const renderHoldings = () => (
     canViewHoldingsAndItems
       ? (
-        <MoveItemsContext>
+        <DragAndDropProvider>
           <HoldingsList
-            holdings={holdings}
-            instance={instance}
+            instanceId={instance.id}
             tenantId={memberTenantId}
-            draggable={false}
-            droppable={false}
-            showViewHoldingsButton={canViewHoldingsAndItems}
-            showAddItemButton={canCreateItem}
-            isBarcodeAsHotlink={canViewHoldingsAndItems}
+            holdings={holdings}
             pathToAccordionsState={pathToHoldingsAccordion}
+            isItemsMovement={false}
+            isHoldingsMovement={false}
           />
-        </MoveItemsContext>
+        </DragAndDropProvider>
       )
       : (
         <LimitedHoldingsList

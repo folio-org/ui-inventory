@@ -178,15 +178,17 @@ const ViewInstancePane = ({
         defaultWidth="fill"
         paneTitleRef={paneTitleRef}
       >
-        <TitleManager record={instance.title} />
+        <div>
+          <TitleManager record={instance.title} />
 
-        <InstanceDetailsContent
-          instance={instance}
-          tenantId={tenantId}
-          userTenantPermissions={userTenantPermissions}
-          holdingsSection={holdingsSection}
-          accordionStatusRef={accordionStatusRef}
-        />
+          <InstanceDetailsContent
+            instance={instance}
+            tenantId={tenantId}
+            userTenantPermissions={userTenantPermissions}
+            holdingsSection={holdingsSection}
+            accordionStatusRef={accordionStatusRef}
+          />
+        </div>
       </Pane>
 
       {isVersionHistoryOpen && (

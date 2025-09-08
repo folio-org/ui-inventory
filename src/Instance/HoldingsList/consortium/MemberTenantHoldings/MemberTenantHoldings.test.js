@@ -18,9 +18,9 @@ jest.mock('../LimitedHoldingsList', () => ({
   ...jest.requireActual('../LimitedHoldingsList'),
   LimitedHoldingsList: () => <>LimitedHoldingsList</>,
 }));
-jest.mock('../../../MoveItemsContext', () => ({
-  ...jest.requireActual('../../../MoveItemsContext'),
-  MoveItemsContext: ({ children }) => children,
+jest.mock('../../../../dnd/DragAndDropProvider', () => ({
+  __esModule: true,
+  default: ({ children }) => children,
 }));
 
 const mockMemberTenant = {

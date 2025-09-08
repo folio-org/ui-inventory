@@ -1,44 +1,112 @@
-import React from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+} from 'react';
 import PropTypes from 'prop-types';
 
-import { HoldingContainer } from './Holding';
+import { Loading } from '@folio/stripes/components';
+import { useStripes } from '@folio/stripes/core';
+
+import Holding from './Holding/Holding';
+import DraggableHolding from './Holding/DraggableHolding';
+import DraggableHoldingsList from './DraggableHoldingsList';
+
+import { useInstanceHoldingsQuery } from '../../providers';
+import {
+  useInventoryActions,
+  useInventoryState,
+} from '../../dnd';
 
 const HoldingsList = ({
-  instance,
-  holdings = [],
+  instanceId,
   tenantId,
-  showViewHoldingsButton,
-  showAddItemButton,
-  isBarcodeAsHotlink,
-  pathToAccordionsState = [],
-  draggable = false,
-  droppable = false,
-}) => holdings.map(holding => (
-  <HoldingContainer
-    key={`items_${holding.id}`}
-    instance={instance}
-    holding={holding}
-    draggable={draggable}
-    droppable={droppable}
-    holdings={holdings}
-    tenantId={tenantId}
-    showViewHoldingsButton={showViewHoldingsButton}
-    showAddItemButton={showAddItemButton}
-    isBarcodeAsHotlink={isBarcodeAsHotlink}
-    pathToAccordionsState={pathToAccordionsState}
-  />
-));
+  holdings = [],
+  pathToAccordionsState,
+  isItemsMovement = false,
+  isHoldingsMovement = false,
+}) => {
+  const stripes = useStripes();
+  const actions = useInventoryActions();
+  const state = useInventoryState();
+
+  const canViewHoldingsAndItems = stripes.hasPerm('ui-inventory.instance.view');
+  const canCreateItem = stripes.hasPerm('ui-inventory.item.create');
+
+  const { holdingsRecords = [], isLoading } = useInstanceHoldingsQuery(instanceId, { tenantId });
+
+  useEffect(() => {
+    if (!holdings.length && holdingsRecords?.length && !isLoading) {
+      actions.setHoldings(holdingsRecords);
+    }
+  }, [holdingsRecords, isLoading, instanceId, actions.setHoldings]);
+
+  const holdingsContent = useMemo(() => {
+    const holdingsFromState = state.instances[instanceId]?.holdingIds?.map(id => state.holdings[id]);
+
+    return holdings.length ? holdings : (holdingsFromState?.length ? holdingsFromState : []);
+  }, [holdings, holdingsRecords, state.instances, state.holdings, instanceId]);
+
+  const renderHolding = useCallback((holding, props = {}) => {
+    return (
+      <Holding
+        key={holding.id}
+        id={holding.id}
+        holding={holding}
+        holdings={holdingsContent}
+        instanceId={instanceId}
+        tenantId={tenantId}
+        pathToAccordionsState={pathToAccordionsState}
+        showViewHoldingsButton={canViewHoldingsAndItems}
+        showAddItemButton={canCreateItem}
+        isBarcodeAsHotlink={canViewHoldingsAndItems}
+        isItemsMovement={isItemsMovement}
+        isHoldingsMovement={isHoldingsMovement}
+        {...props}
+      />
+    );
+  }, [
+    holdingsContent,
+    instanceId,
+    tenantId,
+    pathToAccordionsState,
+    canViewHoldingsAndItems,
+    canCreateItem,
+    isItemsMovement,
+    isHoldingsMovement,
+  ]);
+
+  if (isLoading) return <Loading size="large" />;
+
+  if (isHoldingsMovement) {
+    return (
+      <DraggableHoldingsList
+        holdingsContent={holdingsContent}
+        instanceId={instanceId}
+      >
+        {holdingsContent.map(holding => (
+          <DraggableHolding
+            holding={holding}
+            instanceId={instanceId}
+            isHoldingsMovement={isHoldingsMovement}
+          >
+            {draggableProps => renderHolding(holding, draggableProps)}
+          </DraggableHolding>
+        ))}
+      </DraggableHoldingsList>
+    );
+  }
+
+  return holdingsContent.map(holding => renderHolding(holding));
+};
 
 HoldingsList.propTypes = {
-  instance: PropTypes.object.isRequired,
+  instanceId: PropTypes.string.isRequired,
+  tenantId: PropTypes.string.isRequired,
   holdings: PropTypes.arrayOf(PropTypes.object),
-  tenantId: PropTypes.string,
-  showViewHoldingsButton: PropTypes.bool,
-  showAddItemButton: PropTypes.bool,
-  isBarcodeAsHotlink: PropTypes.bool,
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
-  draggable: PropTypes.bool,
-  droppable: PropTypes.bool,
+  isItemsMovement: PropTypes.bool,
+  isHoldingsMovement: PropTypes.bool,
 };
 
 export default HoldingsList;
