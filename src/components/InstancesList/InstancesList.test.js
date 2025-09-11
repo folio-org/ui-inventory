@@ -468,6 +468,36 @@ describe('InstancesList', () => {
             state: undefined,
           });
         });
+
+        describe('when a user is in a member tenant', () => {
+          it('should select current tenant as a default value in Held By facet', async () => {
+            jest.spyOn(history, 'replace');
+            spyOnCheckIfUserInMemberTenant.mockReturnValue(true);
+
+            act(() => history.push('/inventory?filters=staffSuppress.true&sort=contributors'));
+
+            await act(async () => renderInstancesList({
+              segment: 'instances',
+              data: {
+                ...data,
+                query: {
+                  query: '',
+                  sort: SORT_OPTIONS.CONTRIBUTORS,
+                },
+                displaySettings: {
+                  defaultSort: SORT_OPTIONS.RELEVANCE,
+                },
+              }
+            }));
+
+            fireEvent.change(screen.getByRole('textbox', { name: 'Search' }), { target: { value: 'test' } });
+            fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+            expect(history.replace).toHaveBeenLastCalledWith(expect.objectContaining({
+              search: expect.stringContaining('tenantId.diku&_isInitial=true'),
+            }));
+          });
+        });
       });
 
       describe('when search segment is changed', () => {
@@ -483,6 +513,27 @@ describe('InstancesList', () => {
           fireEvent.click(getByText('Holdings'));
 
           expect(getAllByLabelText('Select instance')[0].checked).toBeFalsy();
+        });
+
+        describe('when a user is in a member tenant', () => {
+          it('should select current tenant as a default value in Held By facet', async () => {
+            jest.spyOn(history, 'replace');
+            spyOnCheckIfUserInMemberTenant.mockReturnValue(true);
+
+            const {
+              getAllByLabelText,
+              getByText,
+            } = await act(async () => renderInstancesList({
+              segment: 'instances',
+            }));
+
+            fireEvent.click(getAllByLabelText('Select instance')[0]);
+            fireEvent.click(getByText('Holdings'));
+
+            expect(history.replace).toHaveBeenLastCalledWith(expect.objectContaining({
+              search: expect.stringContaining('tenantId.diku&_isInitial=true'),
+            }));
+          });
         });
       });
 
