@@ -11,7 +11,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import querystring from 'query-string';
-import omit from 'lodash/omit';
+import pick from 'lodash/pick';
 
 import {
   TitleManager,
@@ -178,9 +178,14 @@ const BrowseInventory = () => {
   }, [deleteItemToView, clearFilters, changeSearchIndex]);
 
   useEffect(() => {
-    const hasFiltersApplied = Object.keys(omit(filters, ['qindex'])).length > 0;
+    const isHeldByFilterApplied = Object.keys(pick(filters, FACETS.CALL_NUMBERS_HELD_BY))?.length > 0;
+    const isQueryApplied = !!filters.query;
 
-    if (!hasFiltersApplied && isCallNumberBrowseOption(filters.qindex) && checkIfUserInMemberTenant(stripes)) {
+    if (isQueryApplied || isHeldByFilterApplied) {
+      return;
+    }
+
+    if (isCallNumberBrowseOption(filters.qindex) && checkIfUserInMemberTenant(stripes)) {
       // we want to applyFilters without writing the value to the url because it will trigger a search
       applyFilters(FACETS.CALL_NUMBERS_HELD_BY, [stripes.okapi.tenant], false);
     }
