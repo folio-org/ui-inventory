@@ -1065,6 +1065,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Instance record: Update Instance record Actions menu. Refs UIIN-1625.
 * Add ability to move MARC holdings between instances. Refs UIIN-1633.
 * Make mapped fields read-only for MARC holdings records. Refs UIIN-1639.
+* Fix disabled `Tags` dropdown after adding/removing tag for Item record. Fixes UIIN-3459.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)
