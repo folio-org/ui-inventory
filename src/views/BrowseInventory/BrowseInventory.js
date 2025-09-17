@@ -11,7 +11,6 @@ import {
   useLocation,
 } from 'react-router-dom';
 import querystring from 'query-string';
-import pick from 'lodash/pick';
 
 import {
   TitleManager,
