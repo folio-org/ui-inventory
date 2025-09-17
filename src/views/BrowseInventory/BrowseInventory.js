@@ -87,6 +87,7 @@ const BrowseInventory = () => {
     changeSearchIndex,
     searchIndex,
     clearFilters,
+    applyLocationFiltersAsync,
   ] = useLocationFilters(location, history, () => {
     setPageConfig(INIT_PAGE_CONFIG);
   },
@@ -175,21 +176,12 @@ const BrowseInventory = () => {
     */
     changeSearchIndex(e);
     clearFilters();
-  }, [deleteItemToView, clearFilters, changeSearchIndex]);
 
-  useEffect(() => {
-    const isHeldByFilterApplied = Object.keys(pick(filters, FACETS.CALL_NUMBERS_HELD_BY))?.length > 0;
-    const isQueryApplied = !!filters.query;
-
-    if (isQueryApplied || isHeldByFilterApplied) {
-      return;
-    }
-
-    if (isCallNumberBrowseOption(filters.qindex) && checkIfUserInMemberTenant(stripes)) {
+    if (isCallNumberBrowseOption(e.target.value) && checkIfUserInMemberTenant(stripes)) {
       // we want to applyFilters without writing the value to the url because it will trigger a search
-      applyFilters(FACETS.CALL_NUMBERS_HELD_BY, [stripes.okapi.tenant], false);
+      applyLocationFiltersAsync(FACETS.CALL_NUMBERS_HELD_BY, [stripes.okapi.tenant], false);
     }
-  }, [filters.qindex]);
+  }, [deleteItemToView, clearFilters, changeSearchIndex, applyLocationFiltersAsync]);
 
   const onReset = useCallback(() => {
     resetAll();
