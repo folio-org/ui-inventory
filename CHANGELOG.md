@@ -44,6 +44,7 @@ UIIN-3437.
 * Make "data-import-converter-storage" dependency as optional. Refs UIIN-3488.
 * Added a permission to delete records from SRS to a "Inventory: All permissions" and "Inventory: View, create, edit, delete holdings". Fixes UIIN-3434.
 * Change the order of items in the item list when dragging. Refs UIIN-3455.
+* Add missing permissions for instance view. Refs UIIN-3472.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
@@ -1065,6 +1066,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Instance record: Update Instance record Actions menu. Refs UIIN-1625.
 * Add ability to move MARC holdings between instances. Refs UIIN-1633.
 * Make mapped fields read-only for MARC holdings records. Refs UIIN-1639.
+* Fix disabled `Tags` dropdown after adding/removing tag for Item record. Fixes UIIN-3459.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)

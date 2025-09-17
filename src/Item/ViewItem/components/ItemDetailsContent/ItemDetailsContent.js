@@ -43,6 +43,7 @@ const ItemDetailsContent = ({
   isTagsEnabled,
   requestCount,
   requestsUrl,
+  onChangeTags
 }) => {
   const holdingLocation = useMemo(() => {
     const { locationsById } = referenceTables;
@@ -148,6 +149,7 @@ const ItemDetailsContent = ({
               link={`inventory/items/${item.id}`}
               getEntity={getEntity}
               getEntityTags={getEntityTags}
+              mutateEntity={onChangeTags}
               entityTagsPath="tags"
               hasOptimisticLocking
             />

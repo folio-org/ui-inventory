@@ -122,7 +122,7 @@ const ViewItem = ({
   const isLoading = useMemo(() => isItemLoading || isInstanceLoading || isHoldingsLoading,
     [isItemLoading, isInstanceLoading, isHoldingsLoading]);
 
-  const { deleteItem } = useItemMutation();
+  const { deleteItem, mutateItem } = useItemMutation();
   const {
     markItemAsMissing,
     markItemAsWithdrawn,
@@ -144,6 +144,11 @@ const ViewItem = ({
     setUpdateOwnershipData,
     onSuccess: goBackToInstance,
   });
+
+  const onChangeTags = async (entity) => {
+    await mutateItem(entity);
+    await refetchItem();
+  }
 
   useEffect(() => {
     if (checkIfUserInMemberTenant(stripes)) {
@@ -282,6 +287,7 @@ const ViewItem = ({
             isTagsEnabled={tagsEnabled}
             requestCount={requestCount}
             requestsUrl={requestsUrl}
+            onChangeTags={onChangeTags}
           />
         </Pane>
         {isVersionHistoryOpen && (

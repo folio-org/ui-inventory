@@ -669,6 +669,8 @@
           "inventory-storage.subject-sources.collection.get",
           "inventory-storage.subject-types.collection.get",
           "data-export.quick.export.post",
+          "finance.transactions.collection.get",
+          "orders.acquisition-method.item.get",
           "orders.holding-summary.collection.get",
           "orders.pieces.collection.get",
           "orders.po-lines.collection.get",
