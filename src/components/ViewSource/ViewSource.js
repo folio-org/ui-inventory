@@ -1,4 +1,4 @@
-import React, {
+import {
   useState,
   useEffect,
   useMemo,
@@ -45,7 +45,6 @@ import {
   useQuickExport,
 } from '../../hooks';
 import { useSharedInstancesQuery } from '../../Instance/hooks';
-import { IdReportGenerator } from '../../reports';
 import {
   isUserInConsortiumMode,
   handleKeyCommand,
@@ -173,18 +172,9 @@ const ViewSource = ({
 
   const canExport = !isHoldingsRecord && stripes.hasPerm('ui-data-export.edit');
 
-  const triggerQuickExport = useCallback(async () => {
-    const instanceIds = [instanceId];
-    try {
-      await exportRecords({ uuids: instanceIds, recordType: INSTANCE_RECORD_TYPE });
-      new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
-    } catch (e) {
-      callout.sendCallout({
-        type: 'error',
-        message: intl.formatMessage({ id: 'ui-inventory.communicationProblem' }),
-      });
-    }
-  }, []);
+  const triggerQuickExport = useCallback(() => {
+    exportRecords({ uuids: [instanceId], recordType: INSTANCE_RECORD_TYPE });
+  }, [instanceId, exportRecords]);
 
   const actionMenu = useCallback(({ onToggle }) => {
     if (!canEdit && !canExport && !isPrintAvailable) {

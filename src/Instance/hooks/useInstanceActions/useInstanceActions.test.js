@@ -23,10 +23,6 @@ jest.mock('../../../utils', () => ({
   ...jest.requireActual('../../../utils'),
   redirectToMarcEditPage: jest.fn(),
 }));
-jest.mock('../../../reports', () => ({
-  ...jest.requireActual('../../../reports'),
-  IdReportGenerator: jest.fn(),
-}));
 
 const mockPush = jest.fn();
 const mockSetIsItemsMovement = jest.fn();
@@ -46,7 +42,7 @@ describe('useInstanceActions', () => {
     useHistory.mockReturnValue({ push: mockPush, location: { pathname: '/inventory/view/inst1', search: '' } });
     useLocation.mockReturnValue({ pathname: '/inventory/view/inst1', search: '' });
     useParams.mockReturnValue({ id: 'inst1' });
-    useQuickExport.mockReturnValue({ mutateAsync: jest.fn() });
+    useQuickExport.mockClear().mockReturnValue({ exportRecords: jest.fn() });
     useInstanceModalsContext.mockReturnValue({
       setIsItemsMovement: mockSetIsItemsMovement,
       setIsFindInstancePluginOpen: mockSetIsFindInstancePluginOpen,
@@ -55,11 +51,6 @@ describe('useInstanceActions', () => {
       setIsSetForDeletionModalOpen: mockSetIsSetForDeletionModalOpen,
       setIsNewOrderModalOpen: mockSetIsNewOrderModalOpen,
     });
-    IdReportGenerator.mockImplementation(() => ({
-      getCSVFileName: () => 'file.csv',
-      getMARCFileName: () => 'file.mrc',
-      toCSV: jest.fn(),
-    }));
   });
 
   it('handleCreate pushes correct route', () => {
@@ -231,47 +222,16 @@ describe('useInstanceActions', () => {
   });
 
   describe('handleQuickExport', () => {
-    it('calls exportRecords and sends success callout', async () => {
-      const mutateAsync = jest.fn().mockResolvedValue({ json: () => Promise.resolve({ jobExecutionHrId: 'job1' }) });
-      useQuickExport.mockReturnValue({ mutateAsync });
+    it('calls exportRecords', async () => {
+      const exportRecords = jest.fn().mockResolvedValue();
+
+      useQuickExport.mockReturnValue({ exportRecords });
 
       const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
-      await act(async () => {
-        await result.current.handleQuickExport();
-      });
 
-      expect(mutateAsync).toHaveBeenCalledWith({ uuids: ['inst1'], recordType: expect.any(String) });
-      expect(callout.sendCallout).toHaveBeenCalledWith(expect.objectContaining({ type: 'success' }));
-    });
+      result.current.handleQuickExport();
 
-    it('sends error callout on exportRecords failure', async () => {
-      const mutateAsync = jest.fn().mockRejectedValue(new Error('fail'));
-      useQuickExport.mockReturnValue({ mutateAsync });
-
-      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
-      await act(async () => {
-        await result.current.handleQuickExport();
-      });
-
-      expect(callout.sendCallout).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
-    });
-
-    it('does nothing if export is already in progress', async () => {
-      // Simulate export in progress by calling twice
-      let resolve;
-      const mutateAsync = jest.fn(() => new Promise(r => { resolve = r; }));
-      useQuickExport.mockReturnValue({ mutateAsync });
-
-      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
-      act(() => {
-        result.current.handleQuickExport();
-      });
-
-      await act(async () => {
-        await result.current.handleQuickExport();
-      });
-
-      expect(mutateAsync).toHaveBeenCalledTimes(1);
+      expect(exportRecords).toHaveBeenCalledWith({ uuids: ['inst1'], recordType: expect.any(String) });
     });
   });
 });
