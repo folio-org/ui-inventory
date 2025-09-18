@@ -5,7 +5,6 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import useInstanceActions from './useInstanceActions';
 import useInstanceModalsContext from '../useInstanceModalsContext';
 import { useQuickExport } from '../../../hooks';
-import { IdReportGenerator } from '../../../reports';
 import { redirectToMarcEditPage } from '../../../utils';
 
 jest.mock('react-router-dom', () => ({
