@@ -115,4 +115,61 @@ describe('useInventoryBrowse', () => {
 
     expect(mockGet).not.toHaveBeenCalled();
   });
+
+  describe('when a prev parameter contains backslashes', () => {
+    const dataWithBackslashes = {
+      prev: '\\Prev',
+      next: '\\Next',
+      items,
+      totalRecords: items.length,
+    };
+    const _filters = {
+      query: 'baz',
+      qindex: browseModeOptions.CALL_NUMBERS,
+    };
+
+    beforeEach(() => {
+      mockGet.mockClear().mockResolvedValue({
+        json: () => Promise.resolve(dataWithBackslashes),
+      });
+    });
+
+    it('should escape backslashes in prev requests', async () => {
+      const { result } = renderHook(() => useInventoryBrowse({
+        filters: _filters,
+        pageParams: {
+          ...pageParams,
+          pageConfig: [1, PAGE_DIRECTIONS.prev, dataWithBackslashes.prev],
+        },
+      }), { wrapper });
+
+      await waitFor(() => !result.current.isFetching);
+
+      expect(mockGet).toHaveBeenLastCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          searchParams: expect.objectContaining({ query: '(fullCallNumber < "\\\\Prev")' })
+        })
+      );
+    });
+
+    it('should escape backslashes in next requests', async () => {
+      const { result } = renderHook(() => useInventoryBrowse({
+        filters: _filters,
+        pageParams: {
+          ...pageParams,
+          pageConfig: [1, PAGE_DIRECTIONS.next, dataWithBackslashes.next],
+        },
+      }), { wrapper });
+
+      await waitFor(() => !result.current.isFetching);
+
+      expect(mockGet).toHaveBeenLastCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          searchParams: expect.objectContaining({ query: '(fullCallNumber > "\\\\Next")' })
+        })
+      );
+    });
+  });
 });
