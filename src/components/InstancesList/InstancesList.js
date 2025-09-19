@@ -1074,6 +1074,7 @@ class InstancesList extends React.Component {
       publishOnReset,
       stripes,
       segment,
+      history,
     } = this.props;
 
     this.setState({
@@ -1090,7 +1091,9 @@ class InstancesList extends React.Component {
       searchParams.set('_isInitial', true);
       searchParams.set('segment', segment);
 
-      this.redirectToSearchParams(searchParams);
+      history.push({
+        search: searchParams.toString(),
+      });
     }
   }
 
