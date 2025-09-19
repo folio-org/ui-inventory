@@ -31,19 +31,22 @@ import {
 
 const isPrevious = (direction) => direction === PAGE_DIRECTIONS.prev;
 
+const escapeQueryString = (str) => str.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+
 const getInitialPageQuery = (query, qindex) => {
+  const escapedQuery = escapeQueryString(query);
   return regExp.test(query)
     ? query
     : [
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}>="${query.replace(/"/g, '\\"')}"`,
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}<"${query.replace(/"/g, '\\"')}"`
+      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}>="${escapedQuery}"`,
+      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}<"${escapedQuery}"`
     ].join(' or ');
 };
 
 const getUpdatedPageQuery = (direction, anchor) => (_query, qindex) => {
   const param = PAGINATION_SEARCH_PARAMS_MAP[qindex];
-
-  return `${param} ${isPrevious(direction) ? '<' : '>'} "${anchor.replace(/"/g, '\\"')}"`;
+  const escapedString = escapeQueryString(anchor);
+  return `${param} ${isPrevious(direction) ? '<' : '>'} "${escapedString}"`;
 };
 
 const useInventoryBrowse = ({
