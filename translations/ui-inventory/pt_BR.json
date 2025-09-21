@@ -465,7 +465,7 @@
     "permission.all-permissions.TEMPORARY": "Inventário: Todas as permissões",
     "permission.settings.statistical-code-types": "Configurações (Inventário): Criar, editar e excluir tipos de código estatísticos",
     "permission.settings.instance-formats": "Configurações (Inventário): Criar, editar, excluir formatos",
-    "permission.settings.electronic-access-relationships": "Configurações (Inventário): Criar, editar, excluir relacionamentos de URL",
+    "permission.settings.electronic-access-relationships": "Configurações (Inventário): Criar, editar, excluir relacionamentos da URL",
     "permission.settings.holdings-types": "Configurações (Inventário): Criar, editar e excluir tipos de acervo",
     "permission.settings.classification-types": "Configurações (Inventário): Criar, editar e excluir tipos de identificadores de classificação",
     "permission.settings.identifier-types": "Configurações (Inventário): Crie, edite e exclua tipos de identificadores de recursos",
@@ -592,7 +592,7 @@
     "remote.items": "{count, plural, one {este item} other {itens}}",
     "button.addTargetOption": "Adicionar opção de destino",
     "warning.instance.suppressedFromDiscovery": "Aviso: a instância foi marcada como oculta da descoberta",
-    "warning.holdingsRecord.suppressedFromDiscovery": "Aviso: essa Acervo está marcada como oculta da descoberta",
+    "warning.holdingsRecord.suppressedFromDiscovery": "Aviso: esse Acervo está marcada como oculto da descoberta",
     "warning.item.suppressedFromDiscovery": "Aviso: o item foi marcado como oculto para descoberta",
     "warning.instance.staffSuppressed": "Aviso: a instância está marcada como oculta para a equipe",
     "warning.instance.suppressedFromDiscoveryAndStaffSuppressed": "Aviso: Instância foi marcada como oculta para a descoberta e para a equipe",
@@ -906,5 +906,6 @@
     "settings.displaySettings.defaultColumns.options.publishers": "Editoras",
     "settings.displaySettings.defaultColumns.options.normalizedDate1": "Data",
     "settings.displaySettings.defaultColumns.options.relation": "Relação",
-    "settings.displaySettings.defaultColumns.options.hrid": "HRID da instância"
+    "settings.displaySettings.defaultColumns.options.hrid": "HRID da instância",
+    "moveItems.items.dropZone": "Coloque os itens aqui"
 }
