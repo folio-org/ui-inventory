@@ -46,6 +46,7 @@ const getFormatter = (
   locationsById,
   holdingsMapById,
   isBarcodeAsHotlink,
+  isFetching,
   tenantId,
 ) => ({
   'order': (item) => item.order || <NoValue />,
@@ -57,7 +58,7 @@ const getFormatter = (
             item={item}
             holdingId={item.holdingsRecordId}
             instanceId={holdingsMapById[item.holdingsRecordId]?.instanceId}
-            isBarcodeAsHotlink={isBarcodeAsHotlink}
+            isBarcodeAsHotlink={isBarcodeAsHotlink && !isFetching}
             tenantId={tenantId}
           />
           {item.discoverySuppress &&
@@ -177,6 +178,7 @@ const ItemsList = ({
         holdingsRecordId: holding.id,
         ifItemsSelected,
         selectAllItemsForDrag,
+        isFetching,
       });
       const colMapping = getColumnMapping(intl);
 
@@ -193,6 +195,7 @@ const ItemsList = ({
         holdingId: id,
         selectItemForDrag,
         ifItemsSelected,
+        isFetching,
       });
       const f = getFormatter(
         intl,
@@ -200,6 +203,7 @@ const ItemsList = ({
         locationsById,
         holdingsMapById,
         isBarcodeAsHotlink,
+        isFetching,
         tenantId,
       );
 

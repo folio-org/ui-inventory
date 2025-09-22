@@ -11,6 +11,7 @@ import {
   useInventoryState,
 } from '../InventoryProvider';
 import useInventoryAPI from './useInventoryAPI';
+import { useItemsUpdateMutation } from '../../hooks';
 import { useConfirmBridge } from '../ConfirmationBridge';
 import * as RemoteStorage from '../../RemoteStorageService';
 import useMoveCommands from './useMoveCommands';
@@ -72,6 +73,7 @@ const useDndHandlers = () => {
     clear,
   } = useSelection();
   const { moveItems } = useInventoryAPI();
+  const { mutateAsync: updateItems } = useItemsUpdateMutation();
   const {
     moveSelectedItemsToHolding,
     moveSelectedHoldingsToInstance,
@@ -258,8 +260,6 @@ const useDndHandlers = () => {
           const onReject = () => actions.previewCancel();
           await moveSelectedHoldingsToInstance({ holdingIds, fromInstanceId, toInstanceId: finalTo, toInstanceHrid, onSuccess, onReject });
         } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error('Failed to move holdings:', error);
           actions.previewCancel();
         }
       }
@@ -318,7 +318,22 @@ const useDndHandlers = () => {
           if (orderChanged) {
             actions.reorderItems({ holdingId: fromHoldingId, itemIds: newItemIds });
 
-            // TODO: Add API call here to persist the new order to the backend
+            const itemsToUpdate = newItemIds.map((itemId, index) => {
+              const item = state.items[itemId];
+              return {
+                id: itemId,
+                _version: item._version,
+                order: index + 1,
+                holdingId: item.holdingId,
+              };
+            });
+
+            try {
+              await updateItems({ items: itemsToUpdate });
+            } catch {
+              actions.previewCancel();
+              return;
+            }
           }
         }
 
@@ -341,8 +356,6 @@ const useDndHandlers = () => {
           actions.previewCommit();
           clear();
         } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error('Failed to move items:', error);
           actions.previewCancel();
         }
       } else {
@@ -352,8 +365,6 @@ const useDndHandlers = () => {
           const onReject = () => actions.previewCancel();
           await moveSelectedItemsToHolding({ fromHoldingId, toHoldingId: finalTo, itemIds, onSuccess, onReject });
         } catch (error) {
-          // eslint-disable-next-line no-console
-          console.error('Failed to move items:', error);
           actions.previewCancel();
         }
       }

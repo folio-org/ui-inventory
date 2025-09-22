@@ -46,6 +46,7 @@ UIIN-3437.
 * Change the order of items in the item list when dragging. Refs UIIN-3455.
 * Add missing permissions for instance view. Refs UIIN-3472.
 * Fix quick instance export. Refs UIIN-3504.
+* Handle saving items order on dragEnd event. Refs UIIN-3454.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)

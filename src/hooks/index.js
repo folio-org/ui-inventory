@@ -18,6 +18,7 @@ export { default as useClassificationBrowseConfig } from './useClassificationBro
 export { default as useUpdateOwnershipMutation } from './useUpdateOwnershipMutation';
 export { default as useLocalStorageItems } from './useLocalStorageItems';
 export { default as useInventoryVersionHistory } from './useInventoryVersionHistory';
+export { default as useItemsUpdateMutation } from './useItemsUpdateMutation';
 export { default as useStaffMembersQuery } from './useStaffMembersQuery';
 export { default as useTagSettingsQuery } from './useTagSettingsQuery';
 export { default as useTLRSettingsQuery } from './useTLRSettingsQuery';
