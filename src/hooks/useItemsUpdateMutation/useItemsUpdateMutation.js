@@ -32,9 +32,9 @@ const useItemsUpdateMutation = ({ tenantId } = {}) => {
       const updatedHoldingIds = variables.items.map(item => item.holdingId).filter(Boolean);
 
       if (!error) {
-        updatedHoldingIds.forEach(holdingId => {
+        for (const holdingId of updatedHoldingIds) {
           queryClient.invalidateQueries({ queryKey: [fetchItemsPerHoldingNamespace, 'items', holdingId] });
-        });
+        }
       }
     },
   });
