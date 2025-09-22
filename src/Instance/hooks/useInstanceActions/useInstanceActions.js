@@ -4,10 +4,7 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import React, {
-  useCallback,
-  useState,
-} from 'react';
+import { useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { redirectToMarcEditPage } from '../../../utils';
 import {
@@ -16,7 +13,6 @@ import {
   LINKED_DATA_RESOURCES_ROUTE,
 } from '../../../constants';
 import { useQuickExport } from '../../../hooks';
-import { IdReportGenerator } from '../../../reports';
 import useInstanceModalsContext from '../useInstanceModalsContext';
 
 const quickMarcPages = {
@@ -38,9 +34,7 @@ const useInstanceActions = ({
 
   const { id: instanceId } = params;
 
-  const [isQuickExportInProgress, setIsQuickExportInProgress] = useState(false);
-
-  const { mutateAsync: exportRecords } = useQuickExport();
+  const { exportRecords } = useQuickExport();
 
   const {
     setIsFindInstancePluginOpen,
@@ -114,44 +108,9 @@ const useInstanceActions = ({
     setIsNewOrderModalOpen(true);
   }, []);
 
-  const handleQuickExport = useCallback(async () => {
-    if (isQuickExportInProgress) return;
-
-    const instanceIds = [instanceId];
-
-    setIsQuickExportInProgress(true);
-
-    try {
-      const response = await exportRecords({
-        uuids: instanceIds,
-        recordType: INSTANCE_RECORD_TYPE,
-      });
-      const { jobExecutionHrId } = await response.json();
-
-      const generator = new IdReportGenerator('QuickInstanceExport', jobExecutionHrId);
-
-      const csvFileName = generator.getCSVFileName();
-      const marcFileName = generator.getMARCFileName();
-
-      generator.toCSV(instanceIds);
-
-      callout.sendCallout({
-        timeout: 0,
-        type: 'success',
-        message: <FormattedMessage
-          id="ui-inventory.exportInstancesInMARC.complete"
-          values={{ csvFileName, marcFileName }}
-        />,
-      });
-    } catch {
-      callout.sendCallout({
-        type: 'error',
-        message: <FormattedMessage id="ui-inventory.communicationProblem" />,
-      });
-    } finally {
-      setIsQuickExportInProgress(false);
-    }
-  }, [instanceId, isQuickExportInProgress]);
+  const handleQuickExport = useCallback(() => {
+    exportRecords({ uuids: [instanceId], recordType: INSTANCE_RECORD_TYPE });
+  }, [instanceId, exportRecords]);
 
   const handleViewRequests = useCallback(() => {
     history.push({

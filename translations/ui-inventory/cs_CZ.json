@@ -504,7 +504,7 @@
     "marc": "MARC",
     "effectiveLocationShort": "Efektivní lokace",
     "moveItems.move.holdings.count": "Přesunout: {count, number} {count, plural, one {holding} other {holdingy}}",
-    "moveItems.instance.dropZone": "Pustit holding",
+    "moveItems.instance.dropZone": "Přetáhněte holdingy sem",
     "moveItems.modal.confirmLabel": "Pokračovat",
     "moveItems.modal.title": "Potvrďte přesun",
     "moveItems.instance.items.success": "{count, number} {count, plural, one {jednotka byla} other {jednotky byly}} úspěšně přesunuta(y).",
@@ -906,5 +906,6 @@
     "settings.displaySettings.defaultColumns.options.publishers": "Vydavatelé",
     "settings.displaySettings.defaultColumns.options.normalizedDate1": "Datum",
     "settings.displaySettings.defaultColumns.options.relation": "Vztah",
-    "settings.displaySettings.defaultColumns.options.hrid": "Titul (HRID)"
+    "settings.displaySettings.defaultColumns.options.hrid": "Titul (HRID)",
+    "moveItems.items.dropZone": "Přetáhněte soubory sem"
 }

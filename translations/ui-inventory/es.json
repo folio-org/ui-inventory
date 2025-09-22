@@ -906,5 +906,6 @@
     "settings.displaySettings.defaultColumns.options.publishers": "Publishers",
     "settings.displaySettings.defaultColumns.options.normalizedDate1": "Date",
     "settings.displaySettings.defaultColumns.options.relation": "Relation",
-    "settings.displaySettings.defaultColumns.options.hrid": "Instance HRID"
+    "settings.displaySettings.defaultColumns.options.hrid": "Instance HRID",
+    "moveItems.items.dropZone": "Drop items here"
 }
