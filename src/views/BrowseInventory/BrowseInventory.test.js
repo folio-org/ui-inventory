@@ -71,6 +71,7 @@ const changeSearch = jest.fn();
 const resetFilters = jest.fn();
 const changeSearchIndex = jest.fn();
 const clearFilters = jest.fn();
+const applyLocationFiltersAsync = jest.fn();
 const getFiltersUtils = ({
   filters = {},
   searchQuery = 'searchQuery',
@@ -85,6 +86,7 @@ const getFiltersUtils = ({
   changeSearchIndex,
   searchIndex,
   clearFilters,
+  applyLocationFiltersAsync,
 ];
 
 describe('BrowseInventory', () => {
