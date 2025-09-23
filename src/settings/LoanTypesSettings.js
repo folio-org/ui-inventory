@@ -47,6 +47,7 @@ class LoanTypesSettings extends React.Component {
               objectLabel={<FormattedMessage id="ui-inventory.loans" />}
               actionSuppressor={actionSuppressor}
               hiddenFields={['description', 'numberOfObjects']}
+              itemTemplate={{ source: 'local' }}
               nameKey="name"
               id="loantypes"
               sortby="name"
