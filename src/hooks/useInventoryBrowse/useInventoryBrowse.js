@@ -13,6 +13,7 @@ import {
   buildFilterQuery,
   getFiltersCount,
 } from '@folio/stripes-acq-components';
+import { escapeCqlValue } from '@folio/stripes/util';
 import { FACETS_TO_REQUEST } from '@folio/stripes-inventory-components';
 
 import {
@@ -31,10 +32,8 @@ import {
 
 const isPrevious = (direction) => direction === PAGE_DIRECTIONS.prev;
 
-const escapeQueryString = (str) => str.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
-
 const getInitialPageQuery = (query, qindex) => {
-  const escapedQuery = escapeQueryString(query);
+  const escapedQuery = escapeCqlValue(query);
   return regExp.test(query)
     ? query
     : [
@@ -45,7 +44,7 @@ const getInitialPageQuery = (query, qindex) => {
 
 const getUpdatedPageQuery = (direction, anchor) => (_query, qindex) => {
   const param = PAGINATION_SEARCH_PARAMS_MAP[qindex];
-  const escapedString = escapeQueryString(anchor);
+  const escapedString = escapeCqlValue(anchor);
   return `${param} ${isPrevious(direction) ? '<' : '>'} "${escapedString}"`;
 };
 
