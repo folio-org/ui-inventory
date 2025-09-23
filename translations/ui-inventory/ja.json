@@ -504,7 +504,7 @@
     "marc": "MARC",
     "effectiveLocationShort": "有効所在",
     "moveItems.move.holdings.count": "Move: {count, number} {count, plural, one {holding} other {holdings}}",
-    "moveItems.instance.dropZone": "Drop holding",
+    "moveItems.instance.dropZone": "Drop holdings here",
     "moveItems.modal.confirmLabel": "続行",
     "moveItems.modal.title": "Confirm move",
     "moveItems.instance.items.success": "{count, number} {count, plural, one {item has} other {items have}} been successfully moved.",
@@ -906,5 +906,6 @@
     "settings.displaySettings.defaultColumns.options.publishers": "出版者",
     "settings.displaySettings.defaultColumns.options.normalizedDate1": "日付",
     "settings.displaySettings.defaultColumns.options.relation": "Relation",
-    "settings.displaySettings.defaultColumns.options.hrid": "インスタンス HRID"
+    "settings.displaySettings.defaultColumns.options.hrid": "インスタンス HRID",
+    "moveItems.items.dropZone": "Drop items here"
 }
