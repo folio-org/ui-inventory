@@ -103,7 +103,7 @@ const mockStripesCore = {
   // eslint-disable-next-line react/prop-types
   IfInterface: jest.fn(props => <>{props.children}</>),
 
-  useNamespace: () => ['@folio/inventory'],
+  useNamespace: jest.fn(() => ['@folio/inventory']),
 
   useCallout: jest.fn().mockReturnValue({
     sendCallout: jest.fn(),

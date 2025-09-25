@@ -12,7 +12,7 @@ import { Checkbox } from '@folio/stripes/components';
 import DropZone from '../../dnd/DropZone';
 import DraggableHandle from './DraggableHandle';
 
-export const getDraggableFormater = ({ holdingId, ifItemsSelected, selectItemForDrag }) => ({
+export const getDraggableFormater = ({ holdingId, ifItemsSelected, selectItemForDrag, isFetching }) => ({
   'dnd': (item) => (
     <DraggableHandle itemId={item.id} holdingId={holdingId} />
   ),
@@ -26,6 +26,7 @@ export const getDraggableFormater = ({ holdingId, ifItemsSelected, selectItemFor
               aria-label={ariaLabel}
               checked={ifItemsSelected([item.id])}
               onChange={() => selectItemForDrag(item.id)}
+              disabled={isFetching}
             />
           </span>
         )
@@ -39,6 +40,7 @@ export const getDraggableColumnMapping = ({
   holdingsRecordId,
   ifItemsSelected,
   selectAllItemsForDrag,
+  isFetching,
 }) => ({
   'dnd': '',
   'select': (
@@ -48,6 +50,7 @@ export const getDraggableColumnMapping = ({
         aria-label={intl.formatMessage({ id: 'ui-inventory.moveItems.selectAll' })}
         checked={ifItemsSelected(items.map(({ id }) => id))}
         onChange={(e) => selectAllItemsForDrag(holdingsRecordId, e.target?.checked)}
+        disabled={isFetching}
       />
     </span>
   ),
