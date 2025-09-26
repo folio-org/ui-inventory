@@ -1,10 +1,15 @@
-import { InstanceModalsProvider } from '../providers';
+import {
+  InstanceModalsProvider,
+  OrderManagementProvider,
+} from '../providers';
 import { ViewInstance } from '../Instance/ViewInstance';
 
 const ViewInstanceRoute = (props) => {
   return (
     <InstanceModalsProvider>
-      <ViewInstance {...props} />
+      <OrderManagementProvider>
+        <ViewInstance {...props} />
+      </OrderManagementProvider>
     </InstanceModalsProvider>
   );
 };

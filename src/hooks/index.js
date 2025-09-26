@@ -19,6 +19,7 @@ export { default as useUpdateOwnershipMutation } from './useUpdateOwnershipMutat
 export { default as useLocalStorageItems } from './useLocalStorageItems';
 export { default as useInventoryVersionHistory } from './useInventoryVersionHistory';
 export { default as useItemsUpdateMutation } from './useItemsUpdateMutation';
+export { default as useOrderManagement } from './useOrderManagement';
 export { default as useStaffMembersQuery } from './useStaffMembersQuery';
 export { default as useTagSettingsQuery } from './useTagSettingsQuery';
 export { default as useTLRSettingsQuery } from './useTLRSettingsQuery';
