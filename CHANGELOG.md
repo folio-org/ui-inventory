@@ -47,6 +47,7 @@ UIIN-3437.
 * Add missing permissions for instance view. Refs UIIN-3472.
 * Fix quick instance export. Refs UIIN-3504.
 * Escape backslashes in Browse requests. Fixes UIIN-3508.
+* Handle saving items order on dragEnd event. Refs UIIN-3454.
 * Change load animation during import/overlay instance. Refs UIIN-3464.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
