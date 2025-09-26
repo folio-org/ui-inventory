@@ -46,6 +46,7 @@ UIIN-3437.
 * Change the order of items in the item list when dragging. Refs UIIN-3455.
 * Add missing permissions for instance view. Refs UIIN-3472.
 * Fix quick instance export. Refs UIIN-3504.
+* Escape backslashes in Browse requests. Fixes UIIN-3508.
 * Handle saving items order on dragEnd event. Refs UIIN-3454.
 * Show order cells as text inputs when invoking “Move items within an instance” action. Refs UIIN-3486.
 

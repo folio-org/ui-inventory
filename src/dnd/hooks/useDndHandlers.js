@@ -259,7 +259,7 @@ const useDndHandlers = () => {
           const onSuccess = () => actions.previewCommit();
           const onReject = () => actions.previewCancel();
           await moveSelectedHoldingsToInstance({ holdingIds, fromInstanceId, toInstanceId: finalTo, toInstanceHrid, onSuccess, onReject });
-        } catch (error) {
+        } catch {
           actions.previewCancel();
         }
       }
@@ -355,7 +355,7 @@ const useDndHandlers = () => {
           await moveItems({ fromHoldingId, toHoldingId: finalTo, itemIds });
           actions.previewCommit();
           clear();
-        } catch (error) {
+        } catch {
           actions.previewCancel();
         }
       } else {
@@ -364,7 +364,7 @@ const useDndHandlers = () => {
           const onSuccess = () => actions.previewCommit();
           const onReject = () => actions.previewCancel();
           await moveSelectedItemsToHolding({ fromHoldingId, toHoldingId: finalTo, itemIds, onSuccess, onReject });
-        } catch (error) {
+        } catch {
           actions.previewCancel();
         }
       }
