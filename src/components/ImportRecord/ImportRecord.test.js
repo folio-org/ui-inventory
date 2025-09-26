@@ -6,7 +6,7 @@ import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import ImportRecord from './ImportRecord';
 import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 
-import { renderWithIntl } from '../../../test/jest/helpers';
+import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
 import renderWithRouter from '../../../test/jest/helpers/renderWithRouter';
 
 const mockProps = {
@@ -146,12 +146,19 @@ describe('ImportRecord', () => {
     });
   });
 
-  it('displays LoadingView during render', () => {
+  it('displays waiting screen during render', () => {
     const mockResponse = { internalIdentifier: 'newId' };
     mockProps.okapiKy.mockResolvedValue({ json: jest.fn().mockResolvedValue(mockResponse) });
-    const { getByText } = renderWithIntl(renderWithRouter(
-      <ImportRecord {...mockProps} />
-    ));
-    expect(getByText('LoadingView')).toBeInTheDocument();
+
+    const { getByText } = renderWithIntl(
+      renderWithRouter(<ImportRecord {...mockProps} />),
+      translationsProperties,
+    );
+
+    expect(
+      getByText(
+        'Importing this instance will take a few moments. A success message and updated details will be displayed upon completion.'
+      )
+    ).toBeInTheDocument();
   });
 });

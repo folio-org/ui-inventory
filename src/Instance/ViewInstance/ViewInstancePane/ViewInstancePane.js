@@ -64,6 +64,7 @@ const ViewInstancePane = ({
   holdingsSection,
   paneTitleRef,
   accordionStatusRef,
+  isRecordImporting,
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
@@ -131,6 +132,15 @@ const ViewInstancePane = ({
   ), [tagsEnabled, tags, intl, isVersionHistoryOpen, isVersionHistoryEnabled]);
 
   const getEntity = () => instance;
+
+  if (isRecordImporting) {
+    return (
+      <InstanceWarningPane
+        onClose={onClose}
+        messageBannerText={<FormattedMessage id="ui-inventory.warning.instance.importingRecord" />}
+      />
+    );
+  }
 
   if (isInstanceSharing) {
     return (
@@ -229,6 +239,7 @@ ViewInstancePane.propTypes = {
   holdingsSection: PropTypes.node,
   paneTitleRef: PropTypes.object,
   accordionStatusRef: PropTypes.object,
+  isRecordImporting: PropTypes.bool
 };
 
 export default ViewInstancePane;
