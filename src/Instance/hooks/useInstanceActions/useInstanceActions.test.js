@@ -1,4 +1,5 @@
 import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
+import { useContext } from 'react';
 
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
@@ -6,6 +7,7 @@ import useInstanceActions from './useInstanceActions';
 import useInstanceModalsContext from '../useInstanceModalsContext';
 import { useQuickExport } from '../../../hooks';
 import { redirectToMarcEditPage } from '../../../utils';
+import { OrderManagementContext } from '../../../contexts';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -22,6 +24,17 @@ jest.mock('../../../utils', () => ({
   ...jest.requireActual('../../../utils'),
   redirectToMarcEditPage: jest.fn(),
 }));
+jest.mock('../../../contexts', () => ({
+  OrderManagementContext: {
+    Provider: ({ children }) => children,
+  },
+}));
+
+// Mock useContext to return our mock context value
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  useContext: jest.fn(),
+}));
 
 const mockPush = jest.fn();
 const mockSetIsItemsMovement = jest.fn();
@@ -31,10 +44,22 @@ const mockSetIsShareLocalInstanceModalOpen = jest.fn();
 const mockSetIsSetForDeletionModalOpen = jest.fn();
 const mockSetIsNewOrderModalOpen = jest.fn();
 
+// Order management mocks
+const mockApplyOrderChanges = jest.fn();
+const mockResetOrderChanges = jest.fn();
+const mockHasPendingChanges = false;
+
 const instance = { id: 'inst1', title: 'Test Instance', identifiers: [] };
 const marcRecord = { id: 'marc1' };
 const callout = { sendCallout: jest.fn() };
 const onCopy = jest.fn();
+
+// Mock OrderManagementContext value
+const mockOrderManagementContext = {
+  applyOrderChanges: mockApplyOrderChanges,
+  resetOrderChanges: mockResetOrderChanges,
+  hasPendingChanges: mockHasPendingChanges,
+};
 
 describe('useInstanceActions', () => {
   beforeEach(() => {
@@ -43,6 +68,7 @@ describe('useInstanceActions', () => {
     useParams.mockReturnValue({ id: 'inst1' });
     useQuickExport.mockClear().mockReturnValue({ exportRecords: jest.fn() });
     useInstanceModalsContext.mockReturnValue({
+      isItemsMovement: false,
       setIsItemsMovement: mockSetIsItemsMovement,
       setIsFindInstancePluginOpen: mockSetIsFindInstancePluginOpen,
       setIsImportRecordModalOpen: mockSetIsImportRecordModalOpen,
@@ -50,6 +76,17 @@ describe('useInstanceActions', () => {
       setIsSetForDeletionModalOpen: mockSetIsSetForDeletionModalOpen,
       setIsNewOrderModalOpen: mockSetIsNewOrderModalOpen,
     });
+
+    useContext.mockImplementation((context) => {
+      if (context === OrderManagementContext) {
+        return mockOrderManagementContext;
+      }
+      return undefined;
+    });
+
+    mockApplyOrderChanges.mockClear();
+    mockResetOrderChanges.mockClear();
+    mockOrderManagementContext.hasPendingChanges = false;
   });
 
   it('handleCreate pushes correct route', () => {
@@ -92,12 +129,59 @@ describe('useInstanceActions', () => {
     expect(callout.sendCallout).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
   });
 
-  it('handleItemsMovement toggles items movement', () => {
-    const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
-    act(() => {
-      result.current.handleItemsMovement();
+  describe('handleItemsMovement', () => {
+    it('toggles items movement when not in movement mode', () => {
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
+      act(() => {
+        result.current.handleItemsMovement();
+      });
+      expect(mockSetIsItemsMovement).toHaveBeenCalledWith(expect.any(Function));
     });
-    expect(mockSetIsItemsMovement).toHaveBeenCalledWith(expect.any(Function));
+
+    it('applies order changes when exiting movement mode with pending changes', async () => {
+      mockOrderManagementContext.hasPendingChanges = true;
+      mockApplyOrderChanges.mockResolvedValue(true);
+
+      useInstanceModalsContext.mockReturnValue({
+        isItemsMovement: true,
+        setIsItemsMovement: mockSetIsItemsMovement,
+        setIsFindInstancePluginOpen: mockSetIsFindInstancePluginOpen,
+        setIsImportRecordModalOpen: mockSetIsImportRecordModalOpen,
+        setIsShareLocalInstanceModalOpen: mockSetIsShareLocalInstanceModalOpen,
+        setIsSetForDeletionModalOpen: mockSetIsSetForDeletionModalOpen,
+        setIsNewOrderModalOpen: mockSetIsNewOrderModalOpen,
+      });
+
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
+
+      await act(async () => {
+        await result.current.handleItemsMovement();
+      });
+
+      expect(mockApplyOrderChanges).toHaveBeenCalled();
+      expect(mockSetIsItemsMovement).toHaveBeenCalledWith(expect.any(Function));
+    });
+
+    it('resets order changes when exiting movement mode without pending changes', () => {
+      useInstanceModalsContext.mockReturnValue({
+        isItemsMovement: true,
+        setIsItemsMovement: mockSetIsItemsMovement,
+        setIsFindInstancePluginOpen: mockSetIsFindInstancePluginOpen,
+        setIsImportRecordModalOpen: mockSetIsImportRecordModalOpen,
+        setIsShareLocalInstanceModalOpen: mockSetIsShareLocalInstanceModalOpen,
+        setIsSetForDeletionModalOpen: mockSetIsSetForDeletionModalOpen,
+        setIsNewOrderModalOpen: mockSetIsNewOrderModalOpen,
+      });
+
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
+
+      act(() => {
+        result.current.handleItemsMovement();
+      });
+
+      expect(mockResetOrderChanges).toHaveBeenCalled();
+      expect(mockSetIsItemsMovement).toHaveBeenCalledWith(expect.any(Function));
+    });
   });
 
   it('handleMoveItemsToAnotherInstance opens find instance plugin', () => {
