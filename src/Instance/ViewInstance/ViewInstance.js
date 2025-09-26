@@ -190,7 +190,7 @@ const ViewInstance = (props) => {
     sendCallout: callout.sendCallout,
   });
   const { mutateInstance: mutateEntity } = useInstanceMutation({ tenantId: instanceTenantOwner });
-  const { importRecord } = useImportRecord();
+  const { importRecord, isImporting } = useImportRecord();
 
   const tenantIdForDeletion = isShared && !isInstanceShadowCopy(instance.source) ? centralTenantId : stripes.okapi.tenant;
   const { setRecordForDeletion } = useSetRecordForDeletion(tenantIdForDeletion);
@@ -343,6 +343,7 @@ const ViewInstance = (props) => {
         paneTitleRef={paneTitleRef}
         userTenantPermissions={userTenantPermissions}
         accordionStatusRef={accordionStatusRef}
+        isRecordImporting={isImporting}
       />
       <InstanceModals
         instance={instance}

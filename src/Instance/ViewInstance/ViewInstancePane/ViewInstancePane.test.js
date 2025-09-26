@@ -148,4 +148,16 @@ describe('ViewInstancePane', () => {
 
     expect(screen.getByText('VersionHistoryButton')).toBeInTheDocument();
   });
+
+  describe('when overlaying is in progress', () => {
+    it('should show waiting screen', () => {
+      renderViewInstancePane({ isRecordImporting: true });
+
+      expect(
+        screen.getByText(
+          'Importing this instance will take a few moments. A success message and updated details will be displayed upon completion.'
+        )
+      ).toBeInTheDocument();
+    });
+  });
 });
