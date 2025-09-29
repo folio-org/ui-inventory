@@ -854,6 +854,7 @@
   "warning.instance.setForDeletionAndSuppressedFromDiscoveryAndStaffSuppressed": "Warning: <b>Instance is set for deletion</b>, suppressed from discovery, and staff suppressed",
   "warning.instance.sharingLocalInstance": "Sharing this local instance will take a few moments. A success message and updated details will be displayed upon completion.",
   "warning.instance.accessSharedInstance": "You do not currently have permission to access details of shared instances. Contact your FOLIO administrator for more information.",
+  "warning.instance.importingRecord": "Importing this instance will take a few moments. A success message and updated details will be displayed upon completion.",
   "warning.holdingsRecord.suppressedFromDiscovery": "Warning: Holdings is marked suppressed from discovery",
   "warning.item.suppressedFromDiscovery": "Warning: Item is marked suppressed from discovery",
   "setForDeletion": "Set for deletion",
