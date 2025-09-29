@@ -112,7 +112,7 @@ class ImportRecord extends React.Component {
     this.props.stripes.logger.log('action', id ? `re-importing record ID ${this.props.id}` : 'importing new record');
 
     return (
-      <Layout className='padding-all-gutter flex centerContent'>
+      <Layout className="padding-all-gutter flex centerContent">
         <MessageBanner type="warning">
           <FormattedMessage id="ui-inventory.warning.instance.importingRecord" />
         </MessageBanner>
