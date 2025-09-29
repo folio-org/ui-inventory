@@ -2,8 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import ky from 'ky';
+
 import { withOkapiKy, CalloutContext } from '@folio/stripes/core';
-import { LoadingView } from '@folio/stripes/components';
+import { Layout, MessageBanner } from '@folio/stripes/components';
+
 import { withLocation } from '../../hocs';
 
 
@@ -108,7 +110,14 @@ class ImportRecord extends React.Component {
   render() {
     const { id } = this.props;
     this.props.stripes.logger.log('action', id ? `re-importing record ID ${this.props.id}` : 'importing new record');
-    return <LoadingView />;
+
+    return (
+      <Layout className="padding-all-gutter flex centerContent">
+        <MessageBanner type="warning">
+          <FormattedMessage id="ui-inventory.warning.instance.importingRecord" />
+        </MessageBanner>
+      </Layout>
+    );
   }
 }
 
