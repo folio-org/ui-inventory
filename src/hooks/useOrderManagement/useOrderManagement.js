@@ -3,6 +3,7 @@ import {
   useCallback,
   useState,
   useRef,
+  useMemo,
 } from 'react';
 import { useIntl } from 'react-intl';
 
@@ -23,17 +24,34 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
   const [validationErrors, setValidationErrors] = useState(new Map());
   const originalOrdersRef = useRef(new Map());
 
+  // Memoize items for this holding to prevent unnecessary re-renders
+  // Create a stable key to track when items actually change
+  const itemsKey = useMemo(() => {
+    const holding = state.holdings[holdingId];
+    if (!holding?.itemIds) return '';
+
+    // Create a stable key based on itemIds and their orders
+    return holding.itemIds
+      .map(id => `${id}:${state.items[id]?.order || ''}`)
+      .join('|');
+  }, [state.holdings[holdingId]?.itemIds, state.items, holdingId]);
+
+  const items = useMemo(() => {
+    const holding = state.holdings[holdingId];
+    if (!holding?.itemIds) return [];
+
+    return holding.itemIds.map(id => state.items[id]).filter(Boolean);
+  }, [itemsKey]);
+
   // Initialize original orders when component mounts
   const initializeOriginalOrders = useCallback(() => {
-    const items = state.holdings[holdingId]?.itemIds?.map(id => state.items[id]) || [];
     const originalOrders = new Map();
     items.forEach(item => {
       originalOrders.set(item.id, item.order);
     });
     originalOrdersRef.current = originalOrders;
-  }, [state.holdings, state.items, holdingId]);
+  }, [items]);
 
-  // Validate order value
   const validateOrder = useCallback((value, itemId, currentManualChanges) => {
     const errors = new Map();
 
@@ -55,13 +73,10 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     return errors;
   }, [intl]);
 
-
-  // Handle order change
   const handleOrderChange = useCallback((event, itemId) => {
     const newValue = event.target.value;
-    const allItems = state.holdings[holdingId]?.itemIds?.map(id => state.items[id]) || [];
 
-    // Update manual changes first
+    // Update manual changes and calculate all pending changes
     setManualOrderChanges(prev => {
       const newManualChanges = new Map(prev);
 
@@ -77,49 +92,57 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
       const errors = validateOrder(newValue, itemId, newManualChanges);
       setValidationErrors(errors);
 
-      return newManualChanges;
-    });
+      // Calculate All Pending Changes
+      const allChanges = new Map();
 
-    // Update pending changes with auto-adjustment
-    setPendingOrderChanges(prev => {
-      const newChanges = new Map(prev);
+      // Add all manual changes (including the current itemId)
+      newManualChanges.forEach((order, id) => {
+        allChanges.set(id, order);
+      });
 
       if (newValue === originalOrdersRef.current.get(itemId)) {
-        // If reverting to original value, remove from changes
-        newChanges.delete(itemId);
-      } else {
-        // Set the new order for this item
-        newChanges.set(itemId, newValue);
-
-        // Auto-adjust other items
-        const numNewOrder = parseInt(newValue, 10);
-        if (!Number.isNaN(numNewOrder) && numNewOrder >= 1) {
-          allItems.forEach(item => {
-            if (item.id === itemId) return;
-
-            const currentItemOrder = parseInt(newChanges.get(item.id) || item.order, 10);
-
-            // If current order is >= new order, increment it
-            if (currentItemOrder >= numNewOrder) {
-              // newChanges.set(item.id, (currentItemOrder + 1).toString());
-              newChanges.set(item.id, (currentItemOrder + 1));
-            }
-          });
-        }
+        setPendingOrderChanges(allChanges);
+        return newManualChanges;
       }
 
-      return newChanges;
-    });
-  }, [state.holdings, state.items, holdingId, validateOrder]);
+      // Auto-adjust other items based on the new order
+      const numNewOrder = parseInt(newValue, 10);
+      if (!Number.isNaN(numNewOrder) && numNewOrder >= 1) {
+        const currentItem = items.find(item => item.id === itemId);
+        const originalOrder = parseInt(originalOrdersRef.current.get(itemId) || currentItem?.order || '0', 10);
 
-  // Apply order changes with validation
+        items.forEach(item => {
+          if (item.id === itemId) return;
+
+          const itemOriginalOrder = parseInt(originalOrdersRef.current.get(item.id) || item.order, 10);
+
+          // If moving item to a higher position (e.g., 3 → 5)
+          if (originalOrder < numNewOrder) {
+            // Items between original and new position shift left
+            if (itemOriginalOrder > originalOrder && itemOriginalOrder <= numNewOrder) {
+              allChanges.set(item.id, (itemOriginalOrder - 1).toString());
+            }
+          }
+          // If moving item to a lower position (e.g., 5 → 2)
+          else if (originalOrder > numNewOrder) {
+            // Items between new and original position shift right
+            if (itemOriginalOrder >= numNewOrder && itemOriginalOrder < originalOrder) {
+              allChanges.set(item.id, (itemOriginalOrder + 1).toString());
+            }
+          }
+        });
+      }
+
+      setPendingOrderChanges(allChanges);
+      return newManualChanges;
+    });
+  }, [items, validateOrder]);
+
   const applyOrderChanges = useCallback(async () => {
     if (pendingOrderChanges.size === 0) return;
-
-    const allItems = state.holdings[holdingId]?.itemIds?.map(id => state.items[id]) || [];
     const errors = new Map();
 
-    // Validate all manual changes first
+    // Validate all manual changes
     for (const [itemId, newOrder] of manualOrderChanges) {
       const item = state.items[itemId];
       if (!item) return;
@@ -134,7 +157,6 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
       return;
     }
 
-    // Create a map of all items with their new orders
     const itemsWithNewOrders = new Map();
 
     // First, apply all pending changes
@@ -149,7 +171,7 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     }
 
     // Then, add items that weren't changed with their current order
-    allItems.forEach(item => {
+    items.forEach(item => {
       if (!itemsWithNewOrders.has(item.id)) {
         itemsWithNewOrders.set(item.id, {
           ...item,
@@ -162,12 +184,11 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     const sortedItems = Array.from(itemsWithNewOrders.values())
       .sort((a, b) => a.order - b.order);
 
-    // Prepare items for API update with sequential order numbers
-    const finalItemsToUpdate = sortedItems.map((item, index) => ({
+    // Prepare items for API update
+    const finalItemsToUpdate = sortedItems.map((item) => ({
       id: item.id,
       _version: item._version,
-      // order: (index + 1).toString(),
-      order: index + 1,
+      order: item.order.toString(),
       holdingId: item.holdingId,
     }));
 
@@ -183,8 +204,10 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
         type: 'error',
         message: intl.formatMessage({ id: 'ui-inventory.item.order.update.error' }),
       });
+
+      throw error;
     }
-  }, [pendingOrderChanges, state.holdings, state.items, holdingId, validateOrder, updateItems, callout, intl]);
+  }, [pendingOrderChanges, manualOrderChanges, items, validateOrder, updateItems, callout, intl]);
 
   // Reset changes
   const resetOrderChanges = useCallback(() => {
@@ -193,7 +216,6 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     setValidationErrors(new Map());
   }, []);
 
-  // Check if there are pending changes
   const hasPendingChanges = pendingOrderChanges.size > 0;
 
   return {

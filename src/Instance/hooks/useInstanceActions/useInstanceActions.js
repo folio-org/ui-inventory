@@ -97,9 +97,9 @@ const useInstanceActions = ({
 
     if (isCurrentlyInMovement && hasPendingChanges) {
       // Exiting movement mode - apply order changes
-      const success = await applyOrderChanges();
-      if (!success) {
-        // If order changes failed, don't exit movement mode
+      try {
+        await applyOrderChanges();
+      } catch {
         return;
       }
     } else if (isCurrentlyInMovement) {
