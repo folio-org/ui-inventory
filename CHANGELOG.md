@@ -49,6 +49,7 @@ UIIN-3437.
 * Escape backslashes in Browse requests. Fixes UIIN-3508.
 * Handle saving items order on dragEnd event. Refs UIIN-3454.
 * Change load animation during import/overlay instance. Refs UIIN-3464.
+* Add a default `source="local"` field to created Loan types. Fixes UIIN-3503.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
