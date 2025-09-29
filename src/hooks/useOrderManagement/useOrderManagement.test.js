@@ -17,6 +17,7 @@ jest.mock('react-intl', () => ({
 }));
 
 jest.mock('@folio/stripes/core', () => ({
+  ...jest.requireActual('@folio/stripes/core'),
   CalloutContext: {
     Provider: ({ children }) => children,
   },

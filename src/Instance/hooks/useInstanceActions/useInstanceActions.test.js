@@ -30,7 +30,6 @@ jest.mock('../../../contexts', () => ({
   },
 }));
 
-// Mock useContext to return our mock context value
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useContext: jest.fn(),
@@ -44,7 +43,6 @@ const mockSetIsShareLocalInstanceModalOpen = jest.fn();
 const mockSetIsSetForDeletionModalOpen = jest.fn();
 const mockSetIsNewOrderModalOpen = jest.fn();
 
-// Order management mocks
 const mockApplyOrderChanges = jest.fn();
 const mockResetOrderChanges = jest.fn();
 const mockHasPendingChanges = false;
@@ -54,7 +52,6 @@ const marcRecord = { id: 'marc1' };
 const callout = { sendCallout: jest.fn() };
 const onCopy = jest.fn();
 
-// Mock OrderManagementContext value
 const mockOrderManagementContext = {
   applyOrderChanges: mockApplyOrderChanges,
   resetOrderChanges: mockResetOrderChanges,
