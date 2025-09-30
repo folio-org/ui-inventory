@@ -4,7 +4,11 @@ import { FormattedMessage } from 'react-intl';
 
 import { Pluggable } from '@folio/stripes/core';
 
-const QuickMarcRoute = ({ match, history, location }) => {
+export const CreateMarcBibRoute = ({ match, history, location }) => {
+  const { path } = match;
+
+  const searchParams = new URLSearchParams(location.search);
+
   const onClose = useCallback((recordRoute) => {
     const newSearchParams = new URLSearchParams(location.search);
     newSearchParams.delete('relatedRecordVersion');
@@ -19,14 +23,23 @@ const QuickMarcRoute = ({ match, history, location }) => {
     });
   }, [location.search]);
 
+  const onCreateAndKeepEditing = useCallback((id) => {
+    history.push(`edit-bibliographic/${id}`);
+  }, []);
+
   return (
     <div data-test-inventory-quick-marc>
       <Pluggable
         type="quick-marc"
-        basePath={match.path}
+        basePath={path}
         onClose={onClose}
         onSave={onClose}
         externalRecordPath="/inventory/view"
+        action="create"
+        marcType="bibliographic"
+        isShared={searchParams.get('shared')}
+        useRoutes={false}
+        onCreateAndKeepEditing={onCreateAndKeepEditing}
       >
         <span data-test-inventory-quick-marc-no-plugin>
           <FormattedMessage id="ui-inventory.quickMarcNotAvailable" />
@@ -36,10 +49,8 @@ const QuickMarcRoute = ({ match, history, location }) => {
   );
 };
 
-QuickMarcRoute.propTypes = {
+CreateMarcBibRoute.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
   history: ReactRouterPropTypes.match.isRequired,
   location: ReactRouterPropTypes.match.isRequired,
 };
-
-export default QuickMarcRoute;

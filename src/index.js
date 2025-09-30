@@ -34,7 +34,11 @@ import {
   InstanceMarcRoute,
   InstanceEditRoute,
   ItemRoute,
-  QuickMarcRoute,
+  CreateMarcBibRoute,
+  EditMarcBibRoute,
+  DeriveMarcBibRoute,
+  CreateMarcHoldingsRoute,
+  EditMarcHoldingsRoute,
   CreateItemRoute,
   CreateHoldingRoute,
   ViewRequestsRoute,
@@ -167,8 +171,24 @@ const InventoryRouting = (props) => {
                   component={DuplicateItemRoute}
                 />
                 <Route
-                  path={`${path}/quick-marc`}
-                  component={QuickMarcRoute}
+                  path={`${path}/quick-marc/create-bibliographic`}
+                  component={CreateMarcBibRoute}
+                />
+                <Route
+                  path={`${path}/quick-marc/edit-bibliographic/:externalId`}
+                  component={EditMarcBibRoute}
+                />
+                <Route
+                  path={`${path}/quick-marc/derive-bibliographic/:externalId`}
+                  component={DeriveMarcBibRoute}
+                />
+                <Route
+                  path={`${path}/quick-marc/create-holdings`}
+                  component={CreateMarcHoldingsRoute}
+                />
+                <Route
+                  path={`${path}/quick-marc/edit-holdings/:instanceId/:externalId`}
+                  component={EditMarcHoldingsRoute}
                 />
                 <Route
                   path={`${path}/viewsource/:id/:holdingsrecordid`}
