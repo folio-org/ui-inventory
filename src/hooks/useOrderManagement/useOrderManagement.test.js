@@ -11,8 +11,21 @@ import useOrderManagement from './useOrderManagement';
 import useItemsUpdateMutation from '../useItemsUpdateMutation';
 import { useInventoryState } from '../../dnd/InventoryProvider';
 
+const mockIntl = {
+  formatMessage: jest.fn(({ id }) => `translated.${id}`),
+  formatDate: jest.fn(({ value }) => value),
+};
+
 jest.mock('react-intl', () => ({
+  injectIntl: (Component) => (props) => <Component {...props} intl={mockIntl} />,
   useIntl: jest.fn(),
+  FormattedMessage: jest.fn(({ id, children }) => {
+    if (children) {
+      return children([id]);
+    }
+
+    return id;
+  }),
 }));
 
 jest.mock('@folio/stripes/core', () => ({
@@ -34,10 +47,6 @@ jest.mock('react', () => ({
 }));
 
 describe('useOrderManagement', () => {
-  const mockIntl = {
-    formatMessage: jest.fn(({ id }) => `translated.${id}`),
-  };
-
   const mockCallout = {
     sendCallout: jest.fn(),
   };
