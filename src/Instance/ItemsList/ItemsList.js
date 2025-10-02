@@ -22,7 +22,7 @@ import ItemBarcode from './ItemBarcode';
 import DraggableItemsList, {
   draggableVisibleColumns,
   getDraggableColumnMapping,
-  getDraggableFormater,
+  getDraggableFormatter,
 } from './DraggableItemsList';
 
 import {
@@ -119,7 +119,7 @@ const getColumnMapping = (intl) => ({
 });
 
 const visibleColumns = draggableVisibleColumns.filter(col => !['dnd', 'select'].some(it => col === it));
-const columnWidths = { order: '60px', select: '60px', barcode: '160px' };
+const columnWidths = { order: '80px', select: '60px', barcode: '160px' };
 const rowMetadata = ['id', 'holdingsRecordId'];
 
 const ItemsList = ({
@@ -160,6 +160,7 @@ const ItemsList = ({
     resetOrderChanges,
     hasPendingChanges,
     validationErrors,
+    manualOrderChanges,
     initializeOriginalOrders,
   } = useOrderManagement({ holdingId: holding.id, tenantId });
 
@@ -217,12 +218,13 @@ const ItemsList = ({
   );
   const formatter = useMemo(
     () => {
-      const dndFormatter = getDraggableFormater({
+      const dndFormatter = getDraggableFormatter({
         holdingId: id,
         selectItemForDrag,
         ifItemsSelected,
         onOrderChange: handleOrderChange,
         validationErrors,
+        changedOrdersMap: manualOrderChanges,
         isFetching,
       });
       const f = getFormatter(
@@ -240,7 +242,7 @@ const ItemsList = ({
         ...(isItemsMovement ? dndFormatter : {}),
       };
     },
-    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected, handleOrderChange, validationErrors],
+    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected, handleOrderChange, validationErrors, manualOrderChanges],
   );
   const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
     const amount = (direction === 'next') ? askAmount : -askAmount;

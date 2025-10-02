@@ -11,7 +11,6 @@ import useOrderManagement from './useOrderManagement';
 import useItemsUpdateMutation from '../useItemsUpdateMutation';
 import { useInventoryState } from '../../dnd/InventoryProvider';
 
-// Mock dependencies
 jest.mock('react-intl', () => ({
   useIntl: jest.fn(),
 }));

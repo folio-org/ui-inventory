@@ -80,7 +80,7 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     setManualOrderChanges(prev => {
       const newManualChanges = new Map(prev);
 
-      if (newValue === originalOrdersRef.current.get(itemId)) {
+      if (newValue.toString() === originalOrdersRef.current.get(itemId).toString()) {
         // If reverting to original value, remove from manual changes
         newManualChanges.delete(itemId);
       } else {
@@ -224,6 +224,7 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     resetOrderChanges,
     hasPendingChanges,
     pendingOrderChanges,
+    manualOrderChanges,
     validationErrors,
     initializeOriginalOrders,
   };

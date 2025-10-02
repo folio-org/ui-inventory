@@ -15,7 +15,15 @@ import {
 import DropZone from '../../dnd/DropZone';
 import DraggableHandle from './DraggableHandle';
 
-export const getDraggableFormater = ({ holdingId, ifItemsSelected, selectItemForDrag, onOrderChange, validationErrors, isFetching }) => ({
+export const getDraggableFormatter = ({
+  holdingId,
+  ifItemsSelected,
+  selectItemForDrag,
+  onOrderChange,
+  validationErrors,
+  changedOrdersMap,
+  isFetching,
+}) => ({
   'dnd': (item) => (
     <DraggableHandle itemId={item.id} holdingId={holdingId} />
   ),
@@ -45,9 +53,8 @@ export const getDraggableFormater = ({ holdingId, ifItemsSelected, selectItemFor
             value={item.order}
             onChange={(e) => onOrderChange(e, item.id)}
             error={validationErrors?.get(item.id)}
+            dirty={changedOrdersMap.has(item.id)}
             hasClearIcon={false}
-            type="number"
-            min="1"
           />
         )
       }
