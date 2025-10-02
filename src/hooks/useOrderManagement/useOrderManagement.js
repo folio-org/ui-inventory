@@ -46,9 +46,11 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
   // Initialize original orders when component mounts
   const initializeOriginalOrders = useCallback(() => {
     const originalOrders = new Map();
-    items.forEach(item => {
+
+    for (const item of items) {
       originalOrders.set(item.id, item.order);
-    });
+    }
+
     originalOrdersRef.current = originalOrders;
   }, [items]);
 
@@ -56,14 +58,14 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     const errors = new Map();
 
     // Check if value is a positive integer
-    const numValue = parseInt(value, 10);
+    const numValue = Number.parseInt(value, 10);
     if (Number.isNaN(numValue) || numValue < 1) {
       errors.set(itemId, intl.formatMessage({ id: 'ui-inventory.item.order.validation.positiveNumber' }));
       return errors;
     }
 
     // Check for duplicates only within manually changed fields
-    const manualValues = Array.from(currentManualChanges.values()).map(v => parseInt(v, 10));
+    const manualValues = Array.from(currentManualChanges.values()).map(v => Number.parseInt(v, 10));
     const duplicateCount = manualValues.filter(v => v === numValue).length;
 
     if (duplicateCount > 1) {
@@ -96,9 +98,9 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
       const allChanges = new Map();
 
       // Add all manual changes (including the current itemId)
-      newManualChanges.forEach((order, id) => {
-        allChanges.set(id, order);
-      });
+      for (const [key, value] of newManualChanges) {
+        allChanges.set(key, value);
+      }
 
       if (newValue === originalOrdersRef.current.get(itemId)) {
         setPendingOrderChanges(allChanges);
@@ -106,15 +108,16 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
       }
 
       // Auto-adjust other items based on the new order
-      const numNewOrder = parseInt(newValue, 10);
+      const numNewOrder = Number.parseInt(newValue, 10);
       if (!Number.isNaN(numNewOrder) && numNewOrder >= 1) {
         const currentItem = items.find(item => item.id === itemId);
-        const originalOrder = parseInt(originalOrdersRef.current.get(itemId) || currentItem?.order || '0', 10);
+        const originalOrder = Number.parseInt(originalOrdersRef.current.get(itemId) || currentItem?.order || '0', 10);
 
-        items.forEach(item => {
-          if (item.id === itemId) return;
+        for (const item of items) {
+          // eslint-disable-next-line no-continue
+          if (item.id === itemId) continue;
 
-          const itemOriginalOrder = parseInt(originalOrdersRef.current.get(item.id) || item.order, 10);
+          const itemOriginalOrder = Number.parseInt(originalOrdersRef.current.get(item.id) || item.order, 10);
 
           // If moving item to a higher position (e.g., 3 → 5)
           if (originalOrder < numNewOrder) {
@@ -123,14 +126,15 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
               allChanges.set(item.id, (itemOriginalOrder - 1).toString());
             }
           }
+
           // If moving item to a lower position (e.g., 5 → 2)
-          else if (originalOrder > numNewOrder) {
+          if (originalOrder > numNewOrder) {
             // Items between new and original position shift right
             if (itemOriginalOrder >= numNewOrder && itemOriginalOrder < originalOrder) {
               allChanges.set(item.id, (itemOriginalOrder + 1).toString());
             }
           }
-        });
+        }
       }
 
       setPendingOrderChanges(allChanges);
@@ -165,20 +169,20 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
       if (item) {
         itemsWithNewOrders.set(itemId, {
           ...item,
-          order: parseInt(newOrder, 10),
+          order: Number.parseInt(newOrder, 10),
         });
       }
     }
 
     // Then, add items that weren't changed with their current order
-    items.forEach(item => {
+    for (const item of items) {
       if (!itemsWithNewOrders.has(item.id)) {
         itemsWithNewOrders.set(item.id, {
           ...item,
-          order: parseInt(item.order, 10),
+          order: Number.parseInt(item.order, 10),
         });
       }
-    });
+    }
 
     // Sort all items by their new order values
     const sortedItems = Array.from(itemsWithNewOrders.values())
