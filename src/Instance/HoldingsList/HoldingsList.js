@@ -1,7 +1,6 @@
 import {
   useCallback,
   useEffect,
-  useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
 
@@ -13,22 +12,17 @@ import DraggableHolding from './Holding/DraggableHolding';
 import DraggableHoldingsList from './DraggableHoldingsList';
 
 import { useInstanceHoldingsQuery } from '../../providers';
-import {
-  useInventoryActions,
-  useInventoryState,
-} from '../../dnd';
+import { useInventoryActions } from '../../dnd';
 
 const HoldingsList = ({
   instanceId,
   tenantId,
-  holdings = [],
   pathToAccordionsState,
   isItemsMovement = false,
   isHoldingsMovement = false,
 }) => {
   const stripes = useStripes();
   const actions = useInventoryActions();
-  const state = useInventoryState();
 
   const canViewHoldingsAndItems = stripes.hasPerm('ui-inventory.instance.view');
   const canCreateItem = stripes.hasPerm('ui-inventory.item.create');
@@ -36,16 +30,10 @@ const HoldingsList = ({
   const { holdingsRecords = [], isLoading } = useInstanceHoldingsQuery(instanceId, { tenantId });
 
   useEffect(() => {
-    if (!holdings.length && holdingsRecords?.length && !isLoading) {
+    if (!isLoading) {
       actions.setHoldings(holdingsRecords);
     }
   }, [holdingsRecords, isLoading, instanceId, actions.setHoldings]);
-
-  const holdingsContent = useMemo(() => {
-    const holdingsFromState = state.instances[instanceId]?.holdingIds?.map(id => state.holdings[id]);
-
-    return holdings.length ? holdings : (holdingsFromState?.length ? holdingsFromState : []);
-  }, [holdings, holdingsRecords, state.instances, state.holdings, instanceId]);
 
   const renderHolding = useCallback((holding, props = {}) => {
     return (
@@ -53,7 +41,7 @@ const HoldingsList = ({
         key={holding.id}
         id={holding.id}
         holding={holding}
-        holdings={holdingsContent}
+        holdings={holdingsRecords}
         instanceId={instanceId}
         tenantId={tenantId}
         pathToAccordionsState={pathToAccordionsState}
@@ -66,7 +54,7 @@ const HoldingsList = ({
       />
     );
   }, [
-    holdingsContent,
+    holdingsRecords,
     instanceId,
     tenantId,
     pathToAccordionsState,
@@ -81,10 +69,10 @@ const HoldingsList = ({
   if (isHoldingsMovement) {
     return (
       <DraggableHoldingsList
-        holdingsContent={holdingsContent}
+        holdingsContent={holdingsRecords}
         instanceId={instanceId}
       >
-        {holdingsContent.map(holding => (
+        {holdingsRecords.map(holding => (
           <DraggableHolding
             holding={holding}
             instanceId={instanceId}
@@ -97,13 +85,12 @@ const HoldingsList = ({
     );
   }
 
-  return holdingsContent.map(holding => renderHolding(holding));
+  return holdingsRecords.map(holding => renderHolding(holding));
 };
 
 HoldingsList.propTypes = {
   instanceId: PropTypes.string.isRequired,
   tenantId: PropTypes.string.isRequired,
-  holdings: PropTypes.arrayOf(PropTypes.object),
   pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
   isItemsMovement: PropTypes.bool,
   isHoldingsMovement: PropTypes.bool,
