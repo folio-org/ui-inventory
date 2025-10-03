@@ -102,7 +102,7 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
         allChanges.set(key, value);
       }
 
-      if (newValue === originalOrdersRef.current.get(itemId)) {
+      if (newValue?.toString() === originalOrdersRef.current.get(itemId)?.toString()) {
         setPendingOrderChanges(allChanges);
         return newManualChanges;
       }
