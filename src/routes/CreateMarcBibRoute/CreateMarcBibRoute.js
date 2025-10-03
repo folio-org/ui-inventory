@@ -31,7 +31,6 @@ export const CreateMarcBibRoute = ({ match, history, location }) => {
     <div data-test-inventory-quick-marc>
       <Pluggable
         type="quick-marc"
-        basePath={path}
         onClose={onClose}
         onSave={onClose}
         externalRecordPath="/inventory/view"
