@@ -907,5 +907,9 @@
     "settings.displaySettings.defaultColumns.options.normalizedDate1": "日付",
     "settings.displaySettings.defaultColumns.options.relation": "Relation",
     "settings.displaySettings.defaultColumns.options.hrid": "インスタンス HRID",
-    "moveItems.items.dropZone": "Drop items here"
+    "moveItems.items.dropZone": "Drop items here",
+    "warning.instance.importingRecord": "Importing this instance will take a few moments. A success message and updated details will be displayed upon completion.",
+    "item.order.validation.positiveNumber": "Order must be a positive number",
+    "item.order.validation.duplicate": "Order number already exists",
+    "item.order.update.error": "Failed to update item orders"
 }

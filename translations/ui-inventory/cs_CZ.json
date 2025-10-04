@@ -907,5 +907,9 @@
     "settings.displaySettings.defaultColumns.options.normalizedDate1": "Datum",
     "settings.displaySettings.defaultColumns.options.relation": "Vztah",
     "settings.displaySettings.defaultColumns.options.hrid": "Titul (HRID)",
-    "moveItems.items.dropZone": "Přetáhněte soubory sem"
+    "moveItems.items.dropZone": "Přetáhněte soubory sem",
+    "warning.instance.importingRecord": "Importing this instance will take a few moments. A success message and updated details will be displayed upon completion.",
+    "item.order.validation.positiveNumber": "Order must be a positive number",
+    "item.order.validation.duplicate": "Order number already exists",
+    "item.order.update.error": "Failed to update item orders"
 }
