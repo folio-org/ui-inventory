@@ -148,7 +148,7 @@ const ViewItem = ({
   const onChangeTags = async (entity) => {
     await mutateItem(entity);
     await refetchItem();
-  }
+  };
 
   useEffect(() => {
     if (checkIfUserInMemberTenant(stripes)) {

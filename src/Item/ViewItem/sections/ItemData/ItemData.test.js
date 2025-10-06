@@ -57,7 +57,7 @@ describe('ItemData', () => {
     expect(screen.getByText('Shelving order')).toBeInTheDocument();
     expect(screen.getByText('ABC123')).toBeInTheDocument();
 
-    expect(screen.getByText('Item call number')).toBeInTheDocument();
+    expect(screen.getByText('Primary item call number')).toBeInTheDocument();
 
     expect(screen.getByText('Call number type')).toBeInTheDocument();
     expect(screen.getByText('Library of Congress classification')).toBeInTheDocument();
@@ -119,7 +119,7 @@ describe('ItemData', () => {
         }
       };
       renderItemData(props);
-      expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+      expect(screen.getByText('Additional item call numbers')).toBeInTheDocument();
       expect(screen.getByText('addCN1')).toBeInTheDocument();
       expect(screen.getByText('addPrefix1')).toBeInTheDocument();
       expect(screen.getByText('addSuffix1')).toBeInTheDocument();
@@ -128,7 +128,7 @@ describe('ItemData', () => {
 
     it('should render an empty additional call numbers section if no additional call numbers are present', () => {
       renderItemData();
-      expect(screen.queryByText('Additional call numbers')).not.toBeInTheDocument();
+      expect(screen.queryByText('Additional item call numbers')).not.toBeInTheDocument();
     });
 
     it('should render multiple additional call numbers', () => {
@@ -152,7 +152,7 @@ describe('ItemData', () => {
         }
       };
       renderItemData(props);
-      expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+      expect(screen.getByText('Additional item call numbers')).toBeInTheDocument();
       expect(screen.getByText('addCN1')).toBeInTheDocument();
       expect(screen.getByText('addPrefix1')).toBeInTheDocument();
       expect(screen.getByText('addSuffix1')).toBeInTheDocument();

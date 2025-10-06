@@ -22,6 +22,7 @@ const CommonAdditionalCallNumbersFields = ({
   canAdd = true,
   canEdit = true,
   canDelete = true,
+  item = false,
   name = 'additionalCallNumbers',
 }) => {
   const { formatMessage } = useIntl();
@@ -122,7 +123,7 @@ const CommonAdditionalCallNumbersFields = ({
 
   return (
     <>
-      <h3><FormattedMessage id="ui-inventory.additionalCallNumbers" /></h3>
+      <h3>{item ? <FormattedMessage id="ui-inventory.additionalItemCallNumbers" /> : <FormattedMessage id="ui-inventory.additionalHoldingsCallNumbers" />}</h3>
       <FieldArray
         name={name}
         component={RepeatableField}

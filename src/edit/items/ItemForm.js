@@ -669,6 +669,11 @@ class ItemForm extends React.Component {
                       </Col>
                     </Row>
                     <Row>
+                      <Col sm={4}>
+                        <h3><FormattedMessage id="ui-inventory.primaryItemCallNumber" /></h3>
+                      </Col>
+                    </Row>
+                    <Row>
                       <Col sm={2}>
                         <FormattedMessage id="ui-inventory.selectCallNumberType">
                           {([label]) => (

@@ -554,13 +554,8 @@ class HoldingsForm extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col
-                        smOffset={0}
-                        sm={4}
-                      >
-                        <Headline>
-                          <FormattedMessage id="ui-inventory.holdingsCallNumber" />
-                        </Headline>
+                      <Col sm={4}>
+                        <h3><FormattedMessage id="ui-inventory.primaryHoldingsCallNumber" /></h3>
                       </Col>
                     </Row>
                     <Row>

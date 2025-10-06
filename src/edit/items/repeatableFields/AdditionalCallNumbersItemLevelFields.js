@@ -1,9 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import CommonAdditionalCallNumbersFields from '../../common/CommonAdditionalCallNumbersFields';
 
 const AdditionalCallNumbersItemLevelFields = (props) => (
-  <CommonAdditionalCallNumbersFields {...props} />
+  <CommonAdditionalCallNumbersFields item {...props} />
 );
 
 AdditionalCallNumbersItemLevelFields.propTypes = {
