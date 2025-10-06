@@ -13,6 +13,7 @@ import {
   AccordionSet,
   AccordionStatus,
   ExpandAllButton,
+  Headline,
   Row,
   Col,
   Button,
@@ -24,7 +25,7 @@ import {
   checkScope,
   HasCommand,
   collapseAllSections,
-  expandAllSections, Headline,
+  expandAllSections,
 } from '@folio/stripes/components';
 
 import {
@@ -555,7 +556,7 @@ class HoldingsForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={4}>
-                        <h3><FormattedMessage id="ui-inventory.primaryHoldingsCallNumber" /></h3>
+                        <Headline size="large" tag="h3"><FormattedMessage id="ui-inventory.primaryHoldingsCallNumber" /></Headline>
                       </Col>
                     </Row>
                     <Row>

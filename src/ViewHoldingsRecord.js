@@ -20,6 +20,7 @@ import {
   AccordionSet,
   AccordionStatus,
   ExpandAllButton,
+  Headline,
   KeyValue,
   MultiColumnList,
   Button,
@@ -1177,11 +1178,8 @@ class ViewHoldingsRecord extends React.Component {
                             </Col>
                           </Row>
                           <Row>
-                            <Col
-                              smOffset={0}
-                              sm={4}
-                            >
-                              <h3><FormattedMessage id="ui-inventory.primaryHoldingsCallNumber" /></h3>
+                            <Col xs={12}>
+                              <Headline size="large" tag="h3"><FormattedMessage id="ui-inventory.primaryHoldingsCallNumber" /></Headline>
                             </Col>
                           </Row>
                           <Row>
@@ -1219,7 +1217,7 @@ class ViewHoldingsRecord extends React.Component {
                           <Row>
                             {locationAccordion.additionalCallNumbers.length > 0 ? (
                               <Col xs={12}>
-                                <h3><FormattedMessage id="ui-inventory.additionalHoldingsCallNumbers" /></h3>
+                                <Headline size="large" tag="h3"><FormattedMessage id="ui-inventory.additionalHoldingsCallNumbers" /></Headline>
                                 <div>
                                   {locationAccordion.additionalCallNumbers.map((additionalCallNumber) => {
                                     const callNumberTypeName = this.refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name;

@@ -10,6 +10,7 @@ import {
   Row,
   Col,
   Button,
+  Headline,
   TextArea,
   Select,
   Label,
@@ -123,7 +124,7 @@ const CommonAdditionalCallNumbersFields = ({
 
   return (
     <>
-      <h3>{item ? <FormattedMessage id="ui-inventory.additionalItemCallNumbers" /> : <FormattedMessage id="ui-inventory.additionalHoldingsCallNumbers" />}</h3>
+      <Headline size="large" tag="h3">{item ? <FormattedMessage id="ui-inventory.additionalItemCallNumbers" /> : <FormattedMessage id="ui-inventory.additionalHoldingsCallNumbers" />}</Headline>
       <FieldArray
         name={name}
         component={RepeatableField}

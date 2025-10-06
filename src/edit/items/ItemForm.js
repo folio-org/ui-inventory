@@ -670,7 +670,7 @@ class ItemForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={4}>
-                        <h3><FormattedMessage id="ui-inventory.primaryItemCallNumber" /></h3>
+                        <Headline size="large" tag="h3"><FormattedMessage id="ui-inventory.primaryItemCallNumber" /></Headline>
                       </Col>
                     </Row>
                     <Row>

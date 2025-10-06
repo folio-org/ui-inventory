@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {
   Accordion,
   Col,
+  Headline,
   KeyValue,
   Row,
 } from '@folio/stripes/components';
@@ -32,7 +33,7 @@ const ItemData = ({ itemData, refLookup, referenceTables }) => {
       </Row>
       <Row>
         <Col xs={12}>
-          <h3><FormattedMessage id="ui-inventory.primaryItemCallNumber" /></h3>
+          <Headline size="large" tag="h3"><FormattedMessage id="ui-inventory.primaryItemCallNumber" /></Headline>
         </Col>
       </Row>
       <Row>
@@ -64,7 +65,7 @@ const ItemData = ({ itemData, refLookup, referenceTables }) => {
       <Row>
         {itemData.additionalCallNumbers?.length > 0 ? (
           <Col xs={12}>
-            <h3><FormattedMessage id="ui-inventory.additionalItemCallNumbers" /></h3>
+            <Headline size="large" tag="h3"><FormattedMessage id="ui-inventory.additionalItemCallNumbers" /></Headline>
             <div>
               {itemData.additionalCallNumbers.map((additionalCallNumber) => {
                 const callNumberTypeName = refLookup(referenceTables.callNumberTypes, additionalCallNumber.typeId)?.name;
