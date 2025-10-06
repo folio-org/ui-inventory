@@ -52,6 +52,7 @@ UIIN-3437.
 * Add a default `source="local"` field to created Loan types. Fixes UIIN-3503.
 * Show order cells as text inputs when invoking “Move items within an instance” action. Refs UIIN-3486.
 * Deleted "Holdings" record displays in Instance "Holdings" accordion after deletion. Fixes UIIN-3498.
+* When duplicating an item order value is also duplicated. Fixes UIIN-3518.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
