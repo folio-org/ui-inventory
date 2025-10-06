@@ -145,6 +145,7 @@ CommonAdditionalCallNumbersFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
+  item: PropTypes.bool,
   onSwap: PropTypes.func.isRequired,
   name: PropTypes.string,
 };
