@@ -1,4 +1,4 @@
-export const instances = [
+export const instancesExpanded = [
   {
     'id': '3afe2364-c584-46b7-8699-9667d4244d35',
     'hrid': 'in00000000001',
