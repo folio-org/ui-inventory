@@ -190,7 +190,7 @@ const ItemsList = ({
       // Initialize original orders when items are loaded
       initializeOriginalOrders();
     }
-  }, [items, isFetching, initializeOriginalOrders]);
+  }, [items, isFetching]);
 
   const { locationsById } = useReferenceData();
   const pagingCanGoPrevious = offset > 0;
