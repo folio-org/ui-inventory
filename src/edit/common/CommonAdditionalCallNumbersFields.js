@@ -10,6 +10,7 @@ import {
   Row,
   Col,
   Button,
+  Headline,
   TextArea,
   Select,
   Label,
@@ -22,6 +23,7 @@ const CommonAdditionalCallNumbersFields = ({
   canAdd = true,
   canEdit = true,
   canDelete = true,
+  item = false,
   name = 'additionalCallNumbers',
 }) => {
   const { formatMessage } = useIntl();
@@ -122,7 +124,7 @@ const CommonAdditionalCallNumbersFields = ({
 
   return (
     <>
-      <h3><FormattedMessage id="ui-inventory.additionalCallNumbers" /></h3>
+      <Headline size="large" tag="h3">{item ? <FormattedMessage id="ui-inventory.additionalItemCallNumbers" /> : <FormattedMessage id="ui-inventory.additionalHoldingsCallNumbers" />}</Headline>
       <FieldArray
         name={name}
         component={RepeatableField}
@@ -144,6 +146,7 @@ CommonAdditionalCallNumbersFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
+  item: PropTypes.bool,
   onSwap: PropTypes.func.isRequired,
   name: PropTypes.string,
 };

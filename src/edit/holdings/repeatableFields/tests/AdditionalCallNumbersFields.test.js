@@ -50,7 +50,7 @@ const renderAdditionalCallNumbersFields = (props = {}) => renderWithIntl(
 describe('AdditionalCallNumbersFields', () => {
   it('should render empty additional call numbers section', () => {
     renderAdditionalCallNumbersFields();
-    expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+    expect(screen.getByText('Additional holdings call numbers')).toBeInTheDocument();
     expect(screen.getByText('Add additional call number')).toBeInTheDocument();
   });
 
@@ -65,7 +65,7 @@ describe('AdditionalCallNumbersFields', () => {
     };
 
     renderAdditionalCallNumbersFields({ initialValues });
-    expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+    expect(screen.getByText('Additional holdings call numbers')).toBeInTheDocument();
     expect(screen.getByText('Library of Congress')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Prefix1')).toBeInTheDocument();
     expect(screen.getByDisplayValue('CN1')).toBeInTheDocument();
