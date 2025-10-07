@@ -86,4 +86,4 @@ export const instancesCollapsed = [
     'discoverySuppress': false,
     'isBoundWith': false
   }
-]
+];
