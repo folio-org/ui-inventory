@@ -29,7 +29,7 @@ import {
 import { itemStatusesMap } from '../../constants';
 import { switchAffiliation } from '../../utils';
 
-const OMITTED_INITIAL_FIELDS = ['id', 'hrid', 'barcode', 'lastCheckIn'];
+const OMITTED_INITIAL_FIELDS = ['id', 'hrid', 'order', 'barcode', 'lastCheckIn'];
 
 const DuplicateItem = ({
   referenceData,

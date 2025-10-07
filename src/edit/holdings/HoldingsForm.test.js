@@ -271,7 +271,7 @@ describe('HoldingsForm', () => {
     it('should render additional call numbers section', () => {
       const { getByText } = renderHoldingsForm();
 
-      expect(getByText('Additional call numbers')).toBeInTheDocument();
+      expect(getByText('Additional holdings call numbers')).toBeInTheDocument();
     });
 
     it('should render add button for additional call numbers', () => {

@@ -12,7 +12,7 @@ import {
 import ItemNotes from './ItemNotes';
 
 const renderItemNotes = (notes = []) => {
-  const component = <ItemNotes notes={notes}/>;
+  const component = <ItemNotes notes={notes} />;
 
   return renderWithIntl(component, translationsProperties);
 };
