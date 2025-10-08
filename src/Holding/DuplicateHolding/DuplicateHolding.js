@@ -7,6 +7,7 @@ import { useStripes } from '@folio/stripes/core';
 import { LoadingView } from '@folio/stripes/components';
 
 import {
+  useNumberGeneratorOptions,
   useHoldingQuery,
   useInstanceQuery,
 } from '../../common/hooks';
@@ -37,6 +38,7 @@ const DuplicateHolding = ({
   const stripes = useStripes();
   const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
   const { holding, isLoading: isHoldingLoading } = useHoldingQuery(holdingId);
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
 
   const sourceId = referenceTables.holdingsSourcesByName?.FOLIO?.id;
 
@@ -90,6 +92,7 @@ const DuplicateHolding = ({
   return (
     <HoldingsForm
       initialValues={initialValues}
+      numberGeneratorData={numberGeneratorData}
       onSubmit={onSubmit}
       onCancel={onCancel}
       okapi={stripes.okapi}
