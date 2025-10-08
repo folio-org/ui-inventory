@@ -1186,7 +1186,7 @@ class InstancesList extends React.Component {
     const fullInstance = await fullInstanceQuery.GET({
       params: {
         query: `id=="${instance.id}"`,
-        expandAll: true,
+        include: 'items.id,items.tenantId',
       },
       headers: {
         [OKAPI_TENANT_HEADER]: instance.tenantId,
