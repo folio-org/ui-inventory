@@ -143,11 +143,11 @@ const ItemsList = ({
 
   const [offset, setOffset] = useState(0);
   const [sortByQuery, setSortByQuery] = useState(DEFAULT_ITEM_TABLE_SORTBY_FIELD);
-  const searchParams = {
-    sortBy: sortByQuery,
+  const searchParams = useMemo(() => ({
+    sortBy: isItemsMovement ? 'order' : sortByQuery,
     limit: 200,
     offset,
-  };
+  }), [isItemsMovement, sortByQuery]);
 
   const { items, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'items', tenantId });
   const { totalRecords: total = 0 } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
