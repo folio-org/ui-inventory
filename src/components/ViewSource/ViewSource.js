@@ -170,7 +170,7 @@ const ViewSource = ({
       });
   }, []);
 
-  const canExport = !isHoldingsRecord && stripes.hasPerm('ui-data-export.edit');
+  const canExport = !isHoldingsRecord && stripes.hasInterface('data-export') && stripes.hasPerm('ui-data-export.edit');
 
   const triggerQuickExport = useCallback(() => {
     exportRecords({ uuids: [instanceId], recordType: INSTANCE_RECORD_TYPE });
