@@ -837,7 +837,7 @@ class InstancesList extends React.Component {
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
-    const canExportMarc = stripes.hasPerm('ui-data-export.edit');
+    const canExportMarc = stripes.hasInterface('data-export') && stripes.hasPerm('ui-data-export.edit');
     const canCreateItemsInTransitReport = stripes.hasPerm('ui-inventory.items.in-transit-report.create');
 
     const buildOnClickHandler = onClickHandler => {
