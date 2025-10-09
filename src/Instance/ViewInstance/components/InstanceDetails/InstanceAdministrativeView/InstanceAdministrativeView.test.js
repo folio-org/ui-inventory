@@ -6,7 +6,7 @@ import '../../../../../../test/jest/__mock__';
 
 import renderWithIntl from '../../../../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../../../../test/jest/helpers/translationsProperties';
-import { instances as instancesFixture } from '../../../../../../test/fixtures/instances';
+import { instancesExpanded as instancesExpandedFixture } from '../../../../../../test/fixtures/instancesExpanded';
 import InstanceAdministrativeView from './InstanceAdministrativeView';
 import { QUERY_INDEXES } from '../../../../../constants';
 
@@ -31,7 +31,7 @@ const defaultHRID = '11110000';
 const searchInstance = qIndex => `?qindex=${qIndex}&query=${defaultHRID}`;
 
 const setupInstanceAdministrativeView = ({
-  instance = instancesFixture[0],
+  instance = instancesExpandedFixture[0],
   history
 }) => {
   const component = (
@@ -88,7 +88,7 @@ describe('InstanceAdministrativeView', () => {
         const history = getHistory(searchInstance(QUERY_INDEXES.BARCODE));
         const { getByText } = setupInstanceAdministrativeView({
           history,
-          instance: instancesFixture[2],
+          instance: instancesExpandedFixture[2],
         });
 
         expect(getByText('FOLIO-shared')).toBeInTheDocument();
@@ -100,7 +100,7 @@ describe('InstanceAdministrativeView', () => {
         const history = getHistory(searchInstance(QUERY_INDEXES.BARCODE));
         const { getByText } = setupInstanceAdministrativeView({
           history,
-          instance: instancesFixture[3],
+          instance: instancesExpandedFixture[3],
         });
 
         expect(getByText('MARC-shared')).toBeInTheDocument();

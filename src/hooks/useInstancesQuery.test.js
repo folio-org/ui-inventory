@@ -9,7 +9,7 @@ import '../../test/jest/__mock__';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-import { instances } from '../../test/fixtures';
+import { instancesExpanded } from '../../test/fixtures';
 import useInstancesQuery from './useInstancesQuery';
 
 const queryClient = new QueryClient();
@@ -24,7 +24,7 @@ describe('useInstancesQuery', () => {
   beforeEach(() => {
     mock = useOkapiKy.mockClear().mockReturnValue({
       get: () => ({
-        json: () => ({ instances }),
+        json: () => ({ instances: instancesExpanded }),
       }),
     });
   });
@@ -34,9 +34,9 @@ describe('useInstancesQuery', () => {
   });
 
   it('fetches instances', async () => {
-    const { result } = renderHook(() => useInstancesQuery(instances.map(({ id }) => id)), { wrapper });
+    const { result } = renderHook(() => useInstancesQuery(instancesExpanded.map(({ id }) => id)), { wrapper });
 
     await act(() => result.isSuccess);
-    expect(result.current.data.instances[0].id).toEqual(instances[0].id);
+    expect(result.current.data.instances[0].id).toEqual(instancesExpanded[0].id);
   });
 });

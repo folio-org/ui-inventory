@@ -22,7 +22,7 @@ import { SORT_OPTIONS } from '@folio/stripes-inventory-components';
 import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
 import OverlayContainer from '../../test/helpers/OverlayContainer';
 import translationsProperties from '../../test/jest/helpers/translationsProperties';
-import { instances as instancesFixture } from '../../test/fixtures/instances';
+import { instancesExpanded as instancesExpandedFixture } from '../../test/fixtures/instancesExpanded';
 import { items as callNumbers } from '../../test/fixtures/callNumbers';
 import { QUICK_EXPORT_LIMIT } from '../constants';
 import { DataContext, LastSearchTermsContext } from '../contexts';
@@ -44,7 +44,7 @@ const stripesStub = {
 };
 
 const InstancesRouteSetup = ({
-  instances = instancesFixture,
+  instances = instancesExpandedFixture,
   sendCallout = noop,
   quickExportPOST = noop,
 } = {}) => (

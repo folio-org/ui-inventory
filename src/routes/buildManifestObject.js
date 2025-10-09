@@ -61,5 +61,12 @@ export function buildManifestObject() {
       accumulate: true,
       fetch: false,
     },
+    fullInstanceQuery: {
+      type: 'okapi',
+      records: 'instances',
+      path: 'search/instances',
+      accumulate: true,
+      fetch: false,
+    },
   };
 }

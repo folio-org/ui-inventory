@@ -1,6 +1,7 @@
 export { identifierTypes } from './identifierTypes';
 export { instanceRelationshipTypes } from './instanceRelationshipTypes';
-export { instances } from './instances';
+export { instancesExpanded } from './instancesExpanded';
+export { instancesCollapsed } from './instancesCollapsed';
 export { instance } from './instance';
 export { subInstances } from './subInstances';
 export { relationshipTypes } from './relationshipTypes';

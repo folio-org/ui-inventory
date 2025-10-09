@@ -4,7 +4,7 @@ import { noop } from 'lodash';
 import '../../../../../../test/jest/__mock__';
 import renderWithIntl from '../../../../../../test/jest/helpers/renderWithIntl';
 import translationsProperties from '../../../../../../test/jest/helpers/translationsProperties';
-import { instances as instancesFixture } from '../../../../../../test/fixtures/instances';
+import { instancesExpanded as instancesExpandedFixture } from '../../../../../../test/fixtures/instancesExpanded';
 import StatisticalCodesList from './StatisticalCodesList';
 import { QUERY_INDEXES } from '../../../../../constants';
 
@@ -29,7 +29,7 @@ const defaultHRID = '11110000';
 const searchInstance = qIndex => `?qindex=${qIndex}&query=${defaultHRID}`;
 
 const setupStatisticalCodesList = ({
-  instance = instancesFixture[0],
+  instance = instancesExpandedFixture[0],
   history
 }) => {
   const component = (
