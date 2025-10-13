@@ -263,7 +263,7 @@ describe('ItemForm', () => {
         referenceTables,
       });
 
-      expect(getByText('Additional call numbers')).toBeInTheDocument();
+      expect(getByText('Additional item call numbers')).toBeInTheDocument();
       expect(getByText('prefix1')).toBeInTheDocument();
       expect(getByText('suffix1')).toBeInTheDocument();
       expect(getByText('cn1')).toBeInTheDocument();

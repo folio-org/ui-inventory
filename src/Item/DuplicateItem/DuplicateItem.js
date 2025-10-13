@@ -15,6 +15,7 @@ import {
   LoadingView,
 } from '@folio/stripes/components';
 
+import { useNumberGeneratorOptions } from '../../common/hooks';
 import {
   useInstanceQuery,
   useHoldingQuery,
@@ -29,7 +30,7 @@ import {
 import { itemStatusesMap } from '../../constants';
 import { switchAffiliation } from '../../utils';
 
-const OMITTED_INITIAL_FIELDS = ['id', 'hrid', 'barcode', 'lastCheckIn'];
+const OMITTED_INITIAL_FIELDS = ['id', 'hrid', 'order', 'barcode', 'lastCheckIn'];
 
 const DuplicateItem = ({
   referenceData,
@@ -43,6 +44,7 @@ const DuplicateItem = ({
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
   const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId);
   const { isLoading: isItemLoading, item } = useItemQuery(itemId);
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();
 
@@ -109,6 +111,7 @@ const DuplicateItem = ({
       id={holding.id}
       key={holding.id}
       initialValues={initialValues}
+      numberGeneratorData={numberGeneratorData}
       onSubmit={onSubmit}
       onCancel={onCancel}
       okapi={stripes.okapi}

@@ -23,7 +23,7 @@ import {
 } from '@folio/stripes-inventory-components';
 
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
-import { instances as instancesFixture } from '../../../test/fixtures/instances';
+import { instancesCollapsed as instancesCollapsedFixture } from '../../../test/fixtures/instancesCollapsed';
 import InstancesList from './InstancesList';
 import { setItem } from '../../storage';
 import * as utils from '../../utils';
@@ -41,6 +41,12 @@ const mockItemsByQuery = jest.fn().mockResolvedValue([{
   id: 'itemId',
   holdingsRecordId: 'holdingsRecordId',
   instanceId: '69640328-788e-43fc-9c3c-af39e243f3b7',
+}]);
+const mockFullInstanceQuery = jest.fn().mockResolvedValue([{
+  id: 'instanceId',
+  items: [{
+    tenantId: 'college',
+  }],
 }]);
 const mockUnsubscribeFromReset = jest.fn();
 const mockPublishOnReset = jest.fn();
@@ -145,11 +151,11 @@ const resources = {
   records: {
     hasLoaded: true,
     resource: 'records',
-    records: instancesFixture,
-    other: { totalRecords: instancesFixture.length },
+    records: instancesCollapsedFixture,
+    other: { totalRecords: instancesCollapsedFixture.length },
     isPending: false,
   },
-  resultCount: instancesFixture.length,
+  resultCount: instancesCollapsedFixture.length,
   resultOffset: 0,
 };
 
@@ -180,6 +186,7 @@ const getInstancesListTree = ({ segment = segments.instances, ...rest } = {}) =>
               query: { update: updateMock, replace: mockQueryReplace },
               records: { reset: mockRecordsReset, POST: mockRecordPost },
               itemsByQuery: { reset: noop, GET: mockItemsByQuery },
+              fullInstanceQuery: { GET: mockFullInstanceQuery },
             }}
             data={{
               ...data,

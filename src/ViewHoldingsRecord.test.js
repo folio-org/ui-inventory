@@ -658,7 +658,7 @@ describe('ViewHoldingsRecord actions', () => {
       });
 
       await waitFor(() => {
-        expect(screen.getByText('Additional call numbers')).toBeInTheDocument();
+        expect(screen.getByText('Additional holdings call numbers')).toBeInTheDocument();
         expect(screen.getByText('CN1')).toBeInTheDocument();
       });
     });
@@ -678,7 +678,7 @@ describe('ViewHoldingsRecord actions', () => {
         resources: resourcesWithNoAdditionalCallNumbers,
       });
       await waitFor(() => {
-        expect(screen.queryByText('Additional call numbers')).not.toBeInTheDocument();
+        expect(screen.queryByText('Additional holdings call numbers')).not.toBeInTheDocument();
       });
     });
 

@@ -7,12 +7,23 @@ import {
 } from '@dnd-kit/sortable';
 import PropTypes from 'prop-types';
 
-import { Checkbox } from '@folio/stripes/components';
+import {
+  Checkbox,
+  TextField,
+} from '@folio/stripes/components';
 
 import DropZone from '../../dnd/DropZone';
 import DraggableHandle from './DraggableHandle';
 
-export const getDraggableFormater = ({ holdingId, ifItemsSelected, selectItemForDrag, isFetching }) => ({
+export const getDraggableFormatter = ({
+  holdingId,
+  ifItemsSelected,
+  selectItemForDrag,
+  onOrderChange,
+  validationErrors,
+  changedOrdersMap,
+  isFetching,
+}) => ({
   'dnd': (item) => (
     <DraggableHandle itemId={item.id} holdingId={holdingId} />
   ),
@@ -33,6 +44,22 @@ export const getDraggableFormater = ({ holdingId, ifItemsSelected, selectItemFor
       }
     </FormattedMessage>
   ),
+  'order': item => (
+    <FormattedMessage id="ui-inventory.item.order">
+      {
+        ([ariaLabel]) => (
+          <TextField
+            aria-label={`${ariaLabel}-${item.order}`}
+            value={item.order}
+            onChange={(e) => onOrderChange(e, item.id)}
+            error={validationErrors?.get(item.id)}
+            dirty={changedOrdersMap.has(item.id)}
+            hasClearIcon={false}
+          />
+        )
+      }
+    </FormattedMessage>
+  )
 });
 export const getDraggableColumnMapping = ({
   intl,

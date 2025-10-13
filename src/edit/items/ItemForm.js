@@ -22,6 +22,7 @@ import {
   Col,
   Accordion,
   Button,
+  Headline,
   KeyValue,
   TextField,
   Select,
@@ -666,6 +667,11 @@ class ItemForm extends React.Component {
                           component={TextField}
                           fullWidth
                         />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={4}>
+                        <Headline size="large" tag="h3"><FormattedMessage id="ui-inventory.primaryItemCallNumber" /></Headline>
                       </Col>
                     </Row>
                     <Row>

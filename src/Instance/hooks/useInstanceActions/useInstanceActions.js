@@ -4,7 +4,7 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import { useCallback } from 'react';
+import { useCallback, useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { redirectToMarcEditPage } from '../../../utils';
 import {
@@ -14,6 +14,7 @@ import {
 } from '../../../constants';
 import { useQuickExport } from '../../../hooks';
 import useInstanceModalsContext from '../useInstanceModalsContext';
+import { OrderManagementContext } from '../../../contexts';
 
 const quickMarcPages = {
   editInstance: 'edit-bibliographic',
@@ -37,6 +38,7 @@ const useInstanceActions = ({
   const { exportRecords } = useQuickExport();
 
   const {
+    isItemsMovement,
     setIsFindInstancePluginOpen,
     setIsImportRecordModalOpen,
     setIsShareLocalInstanceModalOpen,
@@ -84,9 +86,29 @@ const useInstanceActions = ({
     }
   }, [marcRecord, location.search, location.pathname]);
 
-  const handleItemsMovement = useCallback(() => {
+  const {
+    applyOrderChanges,
+    resetOrderChanges,
+    hasPendingChanges,
+  } = useContext(OrderManagementContext);
+
+  const handleItemsMovement = useCallback(async () => {
+    const isCurrentlyInMovement = isItemsMovement;
+
+    if (isCurrentlyInMovement && hasPendingChanges) {
+      // Exiting movement mode - apply order changes
+      try {
+        await applyOrderChanges();
+      } catch {
+        return;
+      }
+    } else if (isCurrentlyInMovement) {
+      // Exiting movement mode with no changes - reset any pending changes
+      resetOrderChanges();
+    }
+
     setIsItemsMovement(prevState => !prevState);
-  }, []);
+  }, [isItemsMovement, hasPendingChanges, applyOrderChanges, resetOrderChanges, setIsItemsMovement]);
 
   const handleMoveItemsToAnotherInstance = useCallback(() => {
     setIsFindInstancePluginOpen(true);

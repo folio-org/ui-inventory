@@ -3,6 +3,7 @@ import {
   useMemo,
   useState,
   useEffect,
+  useContext,
 } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
@@ -21,7 +22,7 @@ import ItemBarcode from './ItemBarcode';
 import DraggableItemsList, {
   draggableVisibleColumns,
   getDraggableColumnMapping,
-  getDraggableFormater,
+  getDraggableFormatter,
 } from './DraggableItemsList';
 
 import {
@@ -29,7 +30,11 @@ import {
   useInventoryActions,
   useInventoryState,
 } from '../../dnd';
-import { useHoldingItemsQuery } from '../../hooks';
+import {
+  useHoldingItemsQuery,
+  useOrderManagement,
+} from '../../hooks';
+import { OrderManagementContext } from '../../contexts';
 import useReferenceData from '../../hooks/useReferenceData';
 import useBoundWithHoldings from '../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
 
@@ -114,7 +119,7 @@ const getColumnMapping = (intl) => ({
 });
 
 const visibleColumns = draggableVisibleColumns.filter(col => !['dnd', 'select'].some(it => col === it));
-const columnWidths = { order: '60px', select: '60px', barcode: '160px' };
+const columnWidths = { order: '80px', select: '60px', barcode: '160px' };
 const rowMetadata = ['id', 'holdingsRecordId'];
 
 const ItemsList = ({
@@ -138,15 +143,35 @@ const ItemsList = ({
 
   const [offset, setOffset] = useState(0);
   const [sortByQuery, setSortByQuery] = useState(DEFAULT_ITEM_TABLE_SORTBY_FIELD);
-  const searchParams = {
-    sortBy: sortByQuery,
+  const searchParams = useMemo(() => ({
+    sortBy: isItemsMovement ? 'order' : sortByQuery,
     limit: 200,
     offset,
-  };
+  }), [isItemsMovement, sortByQuery]);
 
   const { items, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'items', tenantId });
   const { totalRecords: total = 0 } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
   const { boundWithHoldings: holdings } = useBoundWithHoldings(items, tenantId);
+  const { registerOrderManagement } = useContext(OrderManagementContext);
+
+  const {
+    handleOrderChange,
+    applyOrderChanges,
+    resetOrderChanges,
+    hasPendingChanges,
+    validationErrors,
+    manualOrderChanges,
+    initializeOriginalOrders,
+  } = useOrderManagement({ holdingId: holding.id, tenantId });
+
+  // Register order management functions with context
+  useEffect(() => {
+    registerOrderManagement({
+      applyOrderChanges,
+      resetOrderChanges,
+      hasPendingChanges,
+    });
+  }, [registerOrderManagement, applyOrderChanges, resetOrderChanges, hasPendingChanges]);
 
   const contentData = useMemo(
     () => state.holdings[holding?.id]?.itemIds.map(itemId => state.items[itemId]) || [],
@@ -162,6 +187,8 @@ const ItemsList = ({
   useEffect(() => {
     if (items?.length && !isFetching) {
       actions.setItemsToHolding(holding.id, instanceId, items);
+      // Initialize original orders when items are loaded
+      initializeOriginalOrders();
     }
   }, [items, isFetching]);
 
@@ -183,18 +210,21 @@ const ItemsList = ({
       const colMapping = getColumnMapping(intl);
 
       return {
-        ...(isItemsMovement ? draggableColMapping : {}),
         ...colMapping,
+        ...(isItemsMovement ? draggableColMapping : {}),
       };
     },
     [isItemsMovement, holding.id, contentData, ifItemsSelected, selectAllItemsForDrag],
   );
   const formatter = useMemo(
     () => {
-      const dndFormatter = getDraggableFormater({
+      const dndFormatter = getDraggableFormatter({
         holdingId: id,
         selectItemForDrag,
         ifItemsSelected,
+        onOrderChange: handleOrderChange,
+        validationErrors,
+        changedOrdersMap: manualOrderChanges,
         isFetching,
       });
       const f = getFormatter(
@@ -208,11 +238,11 @@ const ItemsList = ({
       );
 
       return {
-        ...(isItemsMovement ? dndFormatter : {}),
         ...f,
+        ...(isItemsMovement ? dndFormatter : {}),
       };
     },
-    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected],
+    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected, handleOrderChange, validationErrors, manualOrderChanges],
   );
   const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
     const amount = (direction === 'next') ? askAmount : -askAmount;
