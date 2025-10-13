@@ -58,6 +58,7 @@ UIIN-3437.
 * Use of number generator while duplicating a Holdings record. Refs UIIN-3513.
 * Use of number generators while duplicating an Item record. Refs UIIN-3514.
 * Changes to Instance search after removing all unnecessary fields from mod-search response. Refs UIIN-3494.
+* Fix application error when trying to expand holding during moving holdings. Fixes UIIN-3521.
 * Apply sorting by Order column when invoking `Move items within an instance` action button. Refs UIIN-3509.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
