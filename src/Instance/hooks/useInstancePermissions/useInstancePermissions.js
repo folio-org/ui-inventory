@@ -59,7 +59,7 @@ const useInstancePermissions = ({
   const canCentralTenantCreateOrder = checkIfUserInCentralTenant(stripes) && checkIfCentralOrderingIsActive(centralOrdering);
   const canCreateOrder = (!checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.order.create')) || canCentralTenantCreateOrder;
   const canReorder = stripes.hasPerm('ui-requests.reorderQueue.execute');
-  const canExportMarc = stripes.hasPerm('ui-data-export.edit');
+  const canExportMarc = stripes.hasInterface('data-export') && stripes.hasPerm('ui-data-export.edit');
   const canAccessLinkedDataOptions = stripes.hasPerm(LINKED_DATA_EDITOR_PERM);
   const showLinkedDataMenuSection = canAccessLinkedDataOptions && (isSourceLinkedData || canBeOpenedInLinkedData);
 
