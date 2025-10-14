@@ -17,7 +17,7 @@ import {
 } from '../../../../../../test/jest/helpers';
 import {
   identifierTypes,
-  instances,
+  instancesExpanded,
   instanceRelationshipTypes,
   childInstances,
 } from '../../../../../../test/fixtures';
@@ -55,7 +55,7 @@ const InstanceRelationshipViewSetup = () => (
 describe('InstanceRelationshipView', () => {
   beforeEach(() => {
     sandbox.stub(reactQuery, 'useQueries').returns(
-      instances.map(instance => ({ data: { instances: [instance] }, isSuccess: true }))
+      instancesExpanded.map(instance => ({ data: { instances: [instance] }, isSuccess: true }))
     );
 
     renderWithIntl(

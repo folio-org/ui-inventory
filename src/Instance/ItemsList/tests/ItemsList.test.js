@@ -1,4 +1,3 @@
-import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { fireEvent, screen } from '@folio/jest-config-stripes/testing-library/react';
@@ -14,6 +13,9 @@ import translations from '../../../../test/jest/helpers/translationsProperties';
 import ItemsList from '../ItemsList';
 import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
 import '../../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
+import { InventoryActionsContext, InventoryStateContext } from '../../../dnd/InventoryProvider/InventoryProvider';
+import { SelectionProvider } from '../../../dnd';
+import { OrderManagementProvider } from '../../../providers';
 
 jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn());
 jest.mock('../../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings', () => jest.fn(() => ({
@@ -38,28 +40,63 @@ const locations = {
     },
 };
 
-const setSortingMock = jest.fn();
+const holdings = {
+  'holdingId1': {
+    itemIds: ['itemId1', 'itemId2'],
+  },
+};
 
-const ItemsListSetup = ({ draggable }) => (
+const items = {
+  'itemId1': {
+    id: 'itemId1',
+    barcode: '1234567890123',
+    status: { name: 'Available' },
+    copyNumber: '1',
+    loanType: { name: 'Regular' },
+    effectiveLocation: { id: 'fcd64ce1-6995-48f0-840e-89ffa2288371' },
+    enumeration: 'Vol. 1',
+    chronology: '2021',
+    volume: '1',
+    yearCaption: ['2021'],
+    materialType: { name: 'Book' },
+  },
+  'itemId2': {
+    id: 'itemId2',
+    barcode: '1234567890124',
+    status: { name: 'Checked out' },
+    copyNumber: '2',
+    loanType: { name: 'Regular' },
+    effectiveLocation: { id: 'fcd64ce1-6995-48f0-840e-89ffa2288371' },
+    enumeration: 'Vol. 2',
+    chronology: '2022',
+    volume: '2',
+    yearCaption: ['2022'],
+    materialType: { name: 'Book' },
+  },
+};
+
+const ItemsListSetup = ({ isItemsMovement }) => (
   <QueryClientProvider client={queryClient}>
     <Router>
       <DataContext.Provider value={{ locationsById: locations }}>
-        <ItemsList
-          items={itemsFixture}
-          holding={holdingsRecordsFixture[0]}
-          isItemsDragSelected={(_) => false}
-          selectItemsForDrag={(_) => {}}
-          getDraggingItems={jest.fn()}
-          setSorting={setSortingMock}
-          draggable={draggable}
-          isFetching={false}
-        />
+        <InventoryStateContext.Provider value={{ holdings, items }}>
+          <InventoryActionsContext.Provider value={{ setItemsToHolding: jest.fn() }}>
+            <SelectionProvider>
+              <OrderManagementProvider>
+                <ItemsList
+                  holding={holdingsRecordsFixture[0]}
+                  isItemsMovement={isItemsMovement}
+                />
+              </OrderManagementProvider>
+            </SelectionProvider>
+          </InventoryActionsContext.Provider>
+        </InventoryStateContext.Provider>
       </DataContext.Provider>
     </Router>
   </QueryClientProvider>
 );
 
-describe.skip('ItemsList', () => {
+describe('ItemsList', () => {
   beforeEach(async () => {
     useHoldingItemsQuery.mockReturnValue({
       isFetching: false,
@@ -75,10 +112,9 @@ describe.skip('ItemsList', () => {
     const { container } = renderWithIntl(<ItemsListSetup />, translations);
     const amountOfItems = container.querySelectorAll('.mclRowFormatterContainer').length;
 
-    expect(amountOfItems).toBe(itemsFixture.length);
-    expect(screen.getByText(itemsFixture[0].barcode)).toBeInTheDocument();
-    expect(screen.getByText(itemsFixture[1].barcode)).toBeInTheDocument();
-    expect(screen.getByText(itemsFixture[2].barcode)).toBeInTheDocument();
+    expect(amountOfItems).toBe(2);
+    expect(screen.getByText("1234567890123")).toBeInTheDocument();
+    expect(screen.getByText("1234567890124")).toBeInTheDocument();
   });
 
   describe('non-draggable mode', () => {
@@ -105,14 +141,14 @@ describe.skip('ItemsList', () => {
         const barcodeHeader = screen.getByRole('button', { name: 'Item: barcode' });
         fireEvent.click(barcodeHeader);
 
-        expect(setSortingMock).toHaveBeenCalledWith('-barcode');
+        expect(useHoldingItemsQuery.mock.calls[0][1].searchParams.sortBy).toBe('barcode');
       });
     });
   });
 
   describe('draggable mode', () => {
     it('should display columns in the table with checkbox column', () => {
-      renderWithIntl(<ItemsListSetup draggable />, translations);
+      renderWithIntl(<ItemsListSetup isItemsMovement />, translations);
 
       expect(screen.getByText('Order')).toBeInTheDocument();
       expect(screen.getByRole('checkbox', { name: 'Select/unselect all items for movement' })).toBeInTheDocument();
@@ -126,6 +162,14 @@ describe.skip('ItemsList', () => {
       expect(screen.getByText('Volume')).toBeInTheDocument();
       expect(screen.getByText('Year, caption')).toBeInTheDocument();
       expect(screen.getByText('Material type')).toBeInTheDocument();
+    });
+  });
+
+  describe('when moving items', () => {
+    it('should sort items by order', () => {
+      renderWithIntl(<ItemsListSetup isItemsMovement />, translations);
+
+      expect(useHoldingItemsQuery.mock.calls[0][1].searchParams.sortBy).toBe('order');
     });
   });
 });

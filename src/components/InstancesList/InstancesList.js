@@ -1160,7 +1160,10 @@ class InstancesList extends React.Component {
   findAndOpenItem = async (instance) => {
     const {
       parentResources,
-      parentMutator: { itemsByQuery },
+      parentMutator: {
+        itemsByQuery,
+        fullInstanceQuery,
+      },
       getParams,
       stripes,
       history,
@@ -1178,7 +1181,21 @@ class InstancesList extends React.Component {
       this.setState({ searchInProgress: false });
     }
 
-    const tenantItemBelongsTo = instance?.items?.[0]?.tenantId || stripes.okapi.tenant;
+    // Inventory search doesn't use `expandAll=true`, and so `instance` here has a very limited
+    // set of properties, and `items` is not included. SO we need to make a request for a full Instance
+    const fullInstance = await fullInstanceQuery.GET({
+      params: {
+        query: `id=="${instance.id}"`,
+        include: 'items.id,items.tenantId',
+      },
+      headers: {
+        [OKAPI_TENANT_HEADER]: instance.tenantId,
+        [CONTENT_TYPE_HEADER]: 'application/json',
+        ...(stripes.okapi.token && { [OKAPI_TOKEN_HEADER]: stripes.okapi.token }),
+      },
+    });
+
+    const tenantItemBelongsTo = fullInstance[0]?.items?.[0]?.tenantId || stripes.okapi.tenant;
 
     // if a user is not affiliated with the item's member tenant then item details cannot be open
     if (isUserInConsortiumMode(stripes)) {
