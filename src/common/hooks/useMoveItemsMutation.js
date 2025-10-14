@@ -57,6 +57,7 @@ const useMoveItemsMutation = ({ onError, onSuccess, onSettled, invalidateQueries
       if (invalidateQueries && !error) {
         updatedHoldingIds.forEach(query => {
           queryClient.invalidateQueries({ queryKey: [fetchItemsPerHoldingNamespace, 'items', query] });
+          queryClient.invalidateQueries({ queryKey: [fetchItemsPerHoldingNamespace, 'itemCount', query] });
         });
       }
 
