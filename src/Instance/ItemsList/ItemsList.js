@@ -162,6 +162,7 @@ const ItemsList = ({
     validationErrors,
     manualOrderChanges,
     initializeOriginalOrders,
+    updateOriginalOrders,
   } = useOrderManagement({ holdingId: holding.id, tenantId });
 
   // Register order management functions with context
@@ -170,8 +171,9 @@ const ItemsList = ({
       applyOrderChanges,
       resetOrderChanges,
       hasPendingChanges,
+      updateOriginalOrders,
     });
-  }, [registerOrderManagement, applyOrderChanges, resetOrderChanges, hasPendingChanges]);
+  }, [registerOrderManagement, applyOrderChanges, resetOrderChanges, hasPendingChanges, updateOriginalOrders]);
 
   const contentData = useMemo(
     () => state.holdings[holding?.id]?.itemIds.map(itemId => state.items[itemId]) || [],
@@ -188,7 +190,7 @@ const ItemsList = ({
     if (items?.length && !isFetching) {
       actions.setItemsToHolding(holding.id, instanceId, items);
       // Initialize original orders when items are loaded
-      initializeOriginalOrders();
+      initializeOriginalOrders(items);
     }
   }, [items, isFetching]);
 

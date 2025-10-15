@@ -62,6 +62,7 @@ UIIN-3437.
 * Fix application error when trying to expand holding during moving holdings. Fixes UIIN-3521.
 * Apply sorting by Order column when invoking `Move items within an instance` action button. Refs UIIN-3509.
 * Item count in a holding does not automatically update after moving an item from the holding of another instance. Fixes UIIN-3507.
+* Fix items re-ordering using orders text fields. Fixes UIIN-3527.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)

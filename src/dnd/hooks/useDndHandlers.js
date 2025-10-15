@@ -3,6 +3,7 @@ import {
   useRef,
   useState,
   useMemo,
+  useContext,
 } from 'react';
 
 import { useSelection } from '../SelectionProvider';
@@ -15,6 +16,7 @@ import { useItemsUpdateMutation } from '../../hooks';
 import { useConfirmBridge } from '../ConfirmationBridge';
 import * as RemoteStorage from '../../RemoteStorageService';
 import useMoveCommands from './useMoveCommands';
+import { OrderManagementContext } from '../../contexts';
 
 const DRAG_TYPES = {
   ITEM: 'ITEM',
@@ -60,6 +62,7 @@ const parseItemId = (itemId) => {
 const useDndHandlers = () => {
   const state = useInventoryState();
   const actions = useInventoryActions();
+  const { updateOriginalOrders } = useContext(OrderManagementContext);
   const { confirmation } = useConfirmBridge();
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
 
@@ -330,6 +333,10 @@ const useDndHandlers = () => {
 
             try {
               await updateItems({ items: itemsToUpdate });
+              // Update original orders after successful reordering
+              if (updateOriginalOrders) {
+                updateOriginalOrders();
+              }
             } catch {
               actions.previewCancel();
               return;

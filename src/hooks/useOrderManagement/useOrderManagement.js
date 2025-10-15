@@ -32,7 +32,7 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
 
     // Create a stable key based on itemIds and their orders
     return holding.itemIds
-      .map(id => `${id}:${state.items[id]?.order || ''}`)
+      .map(id => `${id}:${state.items[id]?.order || ''}:${state.items[id]?._version || ''}`)
       .join('|');
   }, [state.holdings[holdingId]?.itemIds, state.items, holdingId]);
 
@@ -44,7 +44,17 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
   }, [itemsKey]);
 
   // Initialize original orders when component mounts
-  const initializeOriginalOrders = useCallback(() => {
+  const initializeOriginalOrders = useCallback((initialItems) => {
+    const originalOrders = new Map();
+
+    for (const item of initialItems) {
+      originalOrders.set(item.id, item.order);
+    }
+
+    originalOrdersRef.current = originalOrders;
+  }, []);
+
+  const updateOriginalOrders = useCallback(() => {
     const originalOrders = new Map();
 
     for (const item of items) {
@@ -231,6 +241,7 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     manualOrderChanges,
     validationErrors,
     initializeOriginalOrders,
+    updateOriginalOrders,
   };
 };
 
