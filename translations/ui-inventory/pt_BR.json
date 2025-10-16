@@ -136,7 +136,6 @@
     "itemHrid": "HRID do item",
     "administrativeData": "Dados administrativos",
     "itemNotes": "Notas do item",
-    "itemCallNumber": "Número de chamada do item",
     "holdingsNotes": "Notas de acervo",
     "electronicAccess": "Acesso eletrônico",
     "meta.title": "Inventário",
@@ -193,7 +192,6 @@
     "receivingHistory": "Histórico de recebimento",
     "shelvingOrder": "Ordem de arquivamento",
     "shelvingTitle": "Título de arquivamento",
-    "holdingsCallNumber": "Número de chamada de acervo",
     "copyNumber": "Número do exemplar",
     "callNumberType": "Tipo de número de chamada",
     "callNumberPrefix": "Prefixo do número de chamada",
@@ -897,7 +895,6 @@
     "acq.fundCode": "Código do fundo",
     "sourceUri": "URI da fonte da instância",
     "instances.columns.instanceHRID": "HRID da instância",
-    "additionalCallNumbers": "Números de chamada adicionais",
     "addAdditionalCallNumber": "Adicionar número de chamada adicional",
     "swapWithPrimaryCallNumber": "Alterar com número de chamada principal",
     "item.order": "Ordem",
@@ -911,5 +908,9 @@
     "warning.instance.importingRecord": "A importação desta instância levará alguns instantes. Uma mensagem de sucesso e detalhes atualizados serão exibidos após a conclusão.",
     "item.order.validation.positiveNumber": "O pedido deve ser um número positivo",
     "item.order.validation.duplicate": "O número do pedido já existe",
-    "item.order.update.error": "Falha ao atualizar pedidos de itens"
+    "item.order.update.error": "Falha ao atualizar pedidos de itens",
+    "primaryItemCallNumber": "Número de chamada do item primário",
+    "additionalItemCallNumbers": "Números de chamada de itens adicionais",
+    "primaryHoldingsCallNumber": "Número de chamada dos acervos primários",
+    "additionalHoldingsCallNumbers": "Números de chamada de acervos adicionais"
 }

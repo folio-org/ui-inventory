@@ -136,7 +136,6 @@
     "itemHrid": "館藏 HRID",
     "administrativeData": "管理用之資料",
     "itemNotes": "館藏附註",
-    "itemCallNumber": "館藏索書號",
     "holdingsNotes": "館藏附註",
     "electronicAccess": "電子存取",
     "meta.title": "館藏庫",
@@ -193,7 +192,6 @@
     "receivingHistory": "接收歷史",
     "shelvingOrder": "排架次序",
     "shelvingTitle": "排架題名",
-    "holdingsCallNumber": "館藏索書號",
     "copyNumber": "複本號",
     "callNumberType": "索書號類型",
     "callNumberPrefix": "索書號碼前綴",
@@ -897,7 +895,6 @@
     "acq.fundCode": "Fund code",
     "sourceUri": "Instance source URI",
     "instances.columns.instanceHRID": "Instance HRID",
-    "additionalCallNumbers": "Additional call numbers",
     "addAdditionalCallNumber": "Add additional call number",
     "swapWithPrimaryCallNumber": "Change with primary call number",
     "item.order": "Order",
@@ -911,5 +908,9 @@
     "warning.instance.importingRecord": "Importing this instance will take a few moments. A success message and updated details will be displayed upon completion.",
     "item.order.validation.positiveNumber": "Order must be a positive number",
     "item.order.validation.duplicate": "Order number already exists",
-    "item.order.update.error": "Failed to update item orders"
+    "item.order.update.error": "Failed to update item orders",
+    "primaryItemCallNumber": "Primary item call number",
+    "additionalItemCallNumbers": "Additional item call numbers",
+    "primaryHoldingsCallNumber": "Primary holdings call number",
+    "additionalHoldingsCallNumbers": "Additional holdings call numbers"
 }

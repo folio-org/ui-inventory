@@ -136,7 +136,6 @@
     "itemHrid": "单件HRID",
     "administrativeData": "管理数据",
     "itemNotes": "单件附注",
-    "itemCallNumber": "单件索书号",
     "holdingsNotes": "馆藏附注",
     "electronicAccess": "电子访问",
     "meta.title": "典藏",
@@ -193,7 +192,6 @@
     "receivingHistory": "接收历史",
     "shelvingOrder": "排架次序",
     "shelvingTitle": "排架题名",
-    "holdingsCallNumber": "馆藏索书号",
     "copyNumber": "复本号",
     "callNumberType": "索书号类型",
     "callNumberPrefix": "索书号前缀",
@@ -897,7 +895,6 @@
     "acq.fundCode": "经费代码",
     "sourceUri": "实例来源URI",
     "instances.columns.instanceHRID": "实例HRID",
-    "additionalCallNumbers": "附加索书号",
     "addAdditionalCallNumber": "添加附加索书号",
     "swapWithPrimaryCallNumber": "更改为主要索书号",
     "item.order": "订单",
@@ -911,5 +908,9 @@
     "warning.instance.importingRecord": "导入此实例需要一些时间。完成后将显示成功消息和更新的详细信息。",
     "item.order.validation.positiveNumber": "订单必须是正数",
     "item.order.validation.duplicate": "订单号已存在",
-    "item.order.update.error": "无法更新单件订单"
+    "item.order.update.error": "无法更新单件订单",
+    "primaryItemCallNumber": "Primary item call number",
+    "additionalItemCallNumbers": "Additional item call numbers",
+    "primaryHoldingsCallNumber": "Primary holdings call number",
+    "additionalHoldingsCallNumbers": "Additional holdings call numbers"
 }
