@@ -136,7 +136,6 @@
     "itemHrid": "Exemplar-HRID",
     "administrativeData": "Administrative Daten",
     "itemNotes": "Anmerkungen zum Exemplar",
-    "itemCallNumber": "Exemplarsignatur",
     "holdingsNotes": "Anmerkungen zum Bestand",
     "electronicAccess": "Elektronischer Zugang",
     "meta.title": "Katalog",
@@ -193,7 +192,6 @@
     "receivingHistory": "Inventarisierungsverlauf",
     "shelvingOrder": "Regalordnung",
     "shelvingTitle": "Regaltitel",
-    "holdingsCallNumber": "Bestandssignatur",
     "copyNumber": "Exemplarnummer",
     "callNumberType": "Signaturtyp",
     "callNumberPrefix": "Signatur-Präfix",
@@ -897,7 +895,6 @@
     "acq.fundCode": "Fondscode",
     "sourceUri": "Instanz-Quell-URI",
     "instances.columns.instanceHRID": "Instanz HRID",
-    "additionalCallNumbers": "Zusätzliche Signaturen",
     "addAdditionalCallNumber": "Zusätzliche Signatur hinzufügen",
     "swapWithPrimaryCallNumber": "Zur Hauptsignatur machen",
     "item.order": "Reihenfolge",
@@ -911,5 +908,9 @@
     "warning.instance.importingRecord": "Importing this instance will take a few moments. A success message and updated details will be displayed upon completion.",
     "item.order.validation.positiveNumber": "Order must be a positive number",
     "item.order.validation.duplicate": "Order number already exists",
-    "item.order.update.error": "Failed to update item orders"
+    "item.order.update.error": "Failed to update item orders",
+    "primaryItemCallNumber": "Primary item call number",
+    "additionalItemCallNumbers": "Additional item call numbers",
+    "primaryHoldingsCallNumber": "Primary holdings call number",
+    "additionalHoldingsCallNumbers": "Additional holdings call numbers"
 }

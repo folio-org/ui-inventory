@@ -136,7 +136,6 @@
     "itemHrid": "HRID примірника",
     "administrativeData": "Адміністративні дані",
     "itemNotes": "Примітки примірника",
-    "itemCallNumber": "Шифр примірника",
     "holdingsNotes": "Примітки щодо даних про фонди (холдінгси)",
     "electronicAccess": "Електронний доступ",
     "meta.title": "Облік фонду",
@@ -193,7 +192,6 @@
     "receivingHistory": "Історія отримання",
     "shelvingOrder": "Порядок розміщення на полицях",
     "shelvingTitle": "Розстановочна назва",
-    "holdingsCallNumber": "Шифр даних про фонди (холдінгси)",
     "copyNumber": "Номер копії",
     "callNumberType": "Тип шифру",
     "callNumberPrefix": "Префікс для шифру",
@@ -897,7 +895,6 @@
     "acq.fundCode": "Код для Грошових коштів",
     "sourceUri": "URI джерела біб.запису (інстансу)",
     "instances.columns.instanceHRID": "HRID біб.запису (інстансу)",
-    "additionalCallNumbers": "Додаткові шифри",
     "addAdditionalCallNumber": "Додати додатковий шифр",
     "swapWithPrimaryCallNumber": "Замінити основним шифром",
     "item.order": "Замовлення",
@@ -911,5 +908,9 @@
     "warning.instance.importingRecord": "Importing this instance will take a few moments. A success message and updated details will be displayed upon completion.",
     "item.order.validation.positiveNumber": "Order must be a positive number",
     "item.order.validation.duplicate": "Order number already exists",
-    "item.order.update.error": "Failed to update item orders"
+    "item.order.update.error": "Failed to update item orders",
+    "primaryItemCallNumber": "Primary item call number",
+    "additionalItemCallNumbers": "Additional item call numbers",
+    "primaryHoldingsCallNumber": "Primary holdings call number",
+    "additionalHoldingsCallNumbers": "Additional holdings call numbers"
 }

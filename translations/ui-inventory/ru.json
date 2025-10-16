@@ -136,7 +136,6 @@
     "itemHrid": "Item HRID",
     "administrativeData": "Административные данные",
     "itemNotes": "Item notes",
-    "itemCallNumber": "Шифр хранения экземпляра",
     "holdingsNotes": "Holdings notes",
     "electronicAccess": "Электронный доступ",
     "meta.title": "Фонд",
@@ -193,7 +192,6 @@
     "receivingHistory": "Receiving history",
     "shelvingOrder": "Shelving order",
     "shelvingTitle": "Shelving title",
-    "holdingsCallNumber": "Шифр хранения холдингов",
     "copyNumber": "Copy number",
     "callNumberType": "Тип шифра хранения",
     "callNumberPrefix": "Префикс шифра хранения",
@@ -897,7 +895,6 @@
     "acq.fundCode": "Fund code",
     "sourceUri": "Instance source URI",
     "instances.columns.instanceHRID": "Instance HRID",
-    "additionalCallNumbers": "Additional call numbers",
     "addAdditionalCallNumber": "Add additional call number",
     "swapWithPrimaryCallNumber": "Change with primary call number",
     "item.order": "Order",
@@ -911,5 +908,9 @@
     "warning.instance.importingRecord": "Importing this instance will take a few moments. A success message and updated details will be displayed upon completion.",
     "item.order.validation.positiveNumber": "Order must be a positive number",
     "item.order.validation.duplicate": "Order number already exists",
-    "item.order.update.error": "Failed to update item orders"
+    "item.order.update.error": "Failed to update item orders",
+    "primaryItemCallNumber": "Primary item call number",
+    "additionalItemCallNumbers": "Additional item call numbers",
+    "primaryHoldingsCallNumber": "Primary holdings call number",
+    "additionalHoldingsCallNumbers": "Additional holdings call numbers"
 }
