@@ -109,13 +109,15 @@ const ViewInstance = (props) => {
   const [userTenantPermissions, setUserTenantPermissions] = useState([]);
   const [titleLevelRequestsFeatureEnabled, setTitleLevelRequestsFeatureEnabled] = useState(false);
 
-  const isMarcOrLinkedDataSourceRecord = Boolean(isMARCSourceRecord || isLinkedDataSourceRecord);
-
   useEffect(() => {
     setIsMARCSourceRecord(isMARCSource(instance.source));
     setIsLinkedDataSourceRecord(isLinkedDataSource(instance.source));
-  }, [instance]);
+  }, [instance.source]);
 
+  const isMarcOrLinkedDataSourceRecord = useMemo(
+    () => isMARCSourceRecord || isLinkedDataSourceRecord,
+    [isMARCSourceRecord, isLinkedDataSourceRecord],
+  );
   const isShared = Boolean(instance.shared);
   const currentTenant = stripes.okapi.tenant;
   const instanceTenantOwner = instance.tenantId ?? currentTenant;
