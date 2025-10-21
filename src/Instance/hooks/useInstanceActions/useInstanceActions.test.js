@@ -5,6 +5,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import useInstanceActions from './useInstanceActions';
 import useInstanceModalsContext from '../useInstanceModalsContext';
+import useResourceMetadataQuery from '../useResourceMetadataQuery';
 import { useQuickExport } from '../../../hooks';
 import { redirectToMarcEditPage } from '../../../utils';
 import { OrderManagementContext } from '../../../contexts';
@@ -20,6 +21,7 @@ jest.mock('../../../hooks', () => ({
   useQuickExport: jest.fn(),
 }));
 jest.mock('../useInstanceModalsContext', () => jest.fn());
+jest.mock('../useResourceMetadataQuery', () => jest.fn());
 jest.mock('../../../utils', () => ({
   ...jest.requireActual('../../../utils'),
   redirectToMarcEditPage: jest.fn(),
@@ -46,6 +48,7 @@ const mockSetIsNewOrderModalOpen = jest.fn();
 const mockApplyOrderChanges = jest.fn();
 const mockResetOrderChanges = jest.fn();
 const mockHasPendingChanges = false;
+const mockFetchResourceMetadata = jest.fn();
 
 const instance = { id: 'inst1', title: 'Test Instance', identifiers: [] };
 const marcRecord = { id: 'marc1' };
@@ -64,6 +67,7 @@ describe('useInstanceActions', () => {
     useLocation.mockReturnValue({ pathname: '/inventory/view/inst1', search: '' });
     useParams.mockReturnValue({ id: 'inst1' });
     useQuickExport.mockClear().mockReturnValue({ exportRecords: jest.fn() });
+    useResourceMetadataQuery.mockReturnValue({ refetch: mockFetchResourceMetadata });
     useInstanceModalsContext.mockReturnValue({
       isItemsMovement: false,
       setIsItemsMovement: mockSetIsItemsMovement,
@@ -83,6 +87,7 @@ describe('useInstanceActions', () => {
 
     mockApplyOrderChanges.mockClear();
     mockResetOrderChanges.mockClear();
+    mockFetchResourceMetadata.mockClear();
     mockOrderManagementContext.hasPendingChanges = false;
   });
 
@@ -268,37 +273,61 @@ describe('useInstanceActions', () => {
     );
   });
 
-  it('handleEditInLinkedDataEditor pushes correct route when identifier is present', () => {
-    const linkedInstance = {
-      ...instance,
-      identifiers: [{ value: 'LD_PREFIX-123' }],
-    };
-    const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance: linkedInstance, onCopy }));
-    act(() => {
-      result.current.handleEditInLinkedDataEditor();
-    });
-    expect(mockPush).toHaveBeenCalledWith(
-      expect.objectContaining({ pathname: expect.stringContaining('/edit') })
-    );
-  });
+  describe('handleEditInLinkedDataEditor', () => {
+    it('fetches resource metadata and pushes edit route when identifier is present', async () => {
+      const mockResourceMetadata = { id: 'LD_PREFIX-123' };
+      mockFetchResourceMetadata.mockResolvedValue({ data: mockResourceMetadata });
 
-  it('handleEditInLinkedDataEditor pushes preview route when no identifier but canBeOpenedInLinkedData', () => {
-    const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy, canBeOpenedInLinkedData: true }));
-    act(() => {
-      result.current.handleEditInLinkedDataEditor();
-    });
-    expect(mockPush).toHaveBeenCalledWith(
-      expect.objectContaining({ pathname: expect.stringContaining('/preview') })
-    );
-  });
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
 
-  it('handleEditInLinkedDataEditor does nothing if no identifier and cannot be opened in linked data', () => {
-    mockPush.mockClear();
-    const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy, canBeOpenedInLinkedData: false }));
-    act(() => {
-      result.current.handleEditInLinkedDataEditor();
+      await act(async () => {
+        await result.current.handleEditInLinkedDataEditor();
+      });
+
+      expect(mockFetchResourceMetadata).toHaveBeenCalled();
+      expect.objectContaining({ pathname: expect.stringContaining('/edit') });
     });
-    expect(mockPush).not.toHaveBeenCalled();
+
+    it('pushes preview route when no identifier but canBeOpenedInLinkedData', async () => {
+      mockFetchResourceMetadata.mockResolvedValue({ data: {} });
+
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy, canBeOpenedInLinkedData: true }));
+
+      await act(async () => {
+        await result.current.handleEditInLinkedDataEditor();
+      });
+
+      expect(mockFetchResourceMetadata).toHaveBeenCalled();
+      expect.objectContaining({ pathname: expect.stringContaining('/preview') });
+    });
+
+    it('does nothing if no identifier and cannot be opened in linked data', async () => {
+      mockFetchResourceMetadata.mockResolvedValue({ data: {} });
+      mockPush.mockClear();
+
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy, canBeOpenedInLinkedData: false }));
+
+      await act(async () => {
+        await result.current.handleEditInLinkedDataEditor();
+      });
+
+      expect(mockFetchResourceMetadata).toHaveBeenCalled();
+      expect(mockPush).not.toHaveBeenCalled();
+    });
+
+    it('returns early when fetch fails', async () => {
+      mockFetchResourceMetadata.mockRejectedValue(new Error('API Error'));
+      mockPush.mockClear();
+
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
+
+      await act(async () => {
+        await result.current.handleEditInLinkedDataEditor();
+      });
+
+      expect(mockFetchResourceMetadata).toHaveBeenCalled();
+      expect(mockPush).not.toHaveBeenCalled();
+    });
   });
 
   describe('handleQuickExport', () => {

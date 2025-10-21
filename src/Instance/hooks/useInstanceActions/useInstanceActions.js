@@ -14,6 +14,7 @@ import {
 } from '../../../constants';
 import { useQuickExport } from '../../../hooks';
 import useInstanceModalsContext from '../useInstanceModalsContext';
+import useResourceMetadataQuery from '../useResourceMetadataQuery';
 import { OrderManagementContext } from '../../../contexts';
 
 const quickMarcPages = {
@@ -36,6 +37,7 @@ const useInstanceActions = ({
   const { id: instanceId } = params;
 
   const { exportRecords } = useQuickExport();
+  const { refetch: fetchResourceMetadata } = useResourceMetadataQuery(instanceId, { enabled: false });
 
   const {
     isItemsMovement,
@@ -151,8 +153,16 @@ const useInstanceActions = ({
   const handleDuplicateInstanceMarc = () => redirectToQuickMarcPage(quickMarcPages.duplicateInstance);
   const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(quickMarcPages.createHoldings);
 
-  const handleEditInLinkedDataEditor = useCallback(() => {
-    const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;
+  const handleEditInLinkedDataEditor = useCallback(async () => {
+    let resourceMetadata;
+    try {
+      const { data } = await fetchResourceMetadata();
+      resourceMetadata = data;
+    } catch {
+      return;
+    }
+
+    const selectedIdentifier = resourceMetadata?.id;
     const currentLocationState = {
       state: {
         from: {
