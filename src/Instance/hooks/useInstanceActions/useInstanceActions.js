@@ -167,15 +167,12 @@ const useInstanceActions = ({
       },
     };
 
-    // Navigate to edit if we have both selectedIdentifier and resourceMetadataId
     if (selectedIdentifier && resourceMetadataId) {
-      const identifierLiteral = selectedIdentifier.replace(LINKED_DATA_ID_PREFIX, '');
       history.push({
-        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
+        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${resourceMetadataId}/edit`,
         ...currentLocationState,
       });
     } else {
-      // Navigate to preview if no selectedIdentifier or no resourceMetadataId
       if (!selectedIdentifier && !canBeOpenedInLinkedData) return;
 
       history.push({
