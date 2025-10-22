@@ -64,6 +64,7 @@ UIIN-3437.
 * Item count in a holding does not automatically update after moving an item from the holding of another instance. Fixes UIIN-3507.
 * Fix items re-ordering using orders text fields. Fixes UIIN-3527.
 * The 'View source' option is disabled after overlaying the instance with 'FOLIO' source. Fixes UIIN-3531.
+* "Something went wrong" error when open "Version history" of edited Item having null in "Source" of Circulation note. Fixes UIIN-3529.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
