@@ -274,21 +274,27 @@ describe('useInstanceActions', () => {
   });
 
   describe('handleEditInLinkedDataEditor', () => {
-    it('fetches resource metadata and pushes edit route when identifier is present', async () => {
-      const mockResourceMetadata = { id: 'LD_PREFIX-123' };
+    it('navigates to edit route when both selectedIdentifier and resourceMetadataId are present', async () => {
+      const instanceWithIdentifier = {
+        ...instance,
+        identifiers: [{ value: 'LD_PREFIX-123' }]
+      };
+      const mockResourceMetadata = { id: 'metadata-123' };
       mockFetchResourceMetadata.mockResolvedValue({ data: mockResourceMetadata });
 
-      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance: instanceWithIdentifier, onCopy }));
 
       await act(async () => {
         await result.current.handleEditInLinkedDataEditor();
       });
 
       expect(mockFetchResourceMetadata).toHaveBeenCalled();
-      expect.objectContaining({ pathname: expect.stringContaining('/edit') });
+      expect(mockPush).toHaveBeenCalledWith(
+        expect.objectContaining({ pathname: expect.stringContaining('/edit') })
+      );
     });
 
-    it('pushes preview route when no identifier but canBeOpenedInLinkedData', async () => {
+    it('navigates to preview route when no selectedIdentifier but canBeOpenedInLinkedData is true', async () => {
       mockFetchResourceMetadata.mockResolvedValue({ data: {} });
 
       const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy, canBeOpenedInLinkedData: true }));
@@ -298,10 +304,12 @@ describe('useInstanceActions', () => {
       });
 
       expect(mockFetchResourceMetadata).toHaveBeenCalled();
-      expect.objectContaining({ pathname: expect.stringContaining('/preview') });
+      expect(mockPush).toHaveBeenCalledWith(
+        expect.objectContaining({ pathname: expect.stringContaining('/preview') })
+      );
     });
 
-    it('does nothing if no identifier and cannot be opened in linked data', async () => {
+    it('does nothing when no selectedIdentifier and canBeOpenedInLinkedData is false', async () => {
       mockFetchResourceMetadata.mockResolvedValue({ data: {} });
       mockPush.mockClear();
 
@@ -313,6 +321,25 @@ describe('useInstanceActions', () => {
 
       expect(mockFetchResourceMetadata).toHaveBeenCalled();
       expect(mockPush).not.toHaveBeenCalled();
+    });
+
+    it('navigates to preview when selectedIdentifier exists but no resourceMetadataId', async () => {
+      const instanceWithIdentifier = {
+        ...instance,
+        identifiers: [{ value: 'LD_PREFIX-123' }]
+      };
+      mockFetchResourceMetadata.mockResolvedValue({ data: {} });
+
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance: instanceWithIdentifier, onCopy, canBeOpenedInLinkedData: true }));
+
+      await act(async () => {
+        await result.current.handleEditInLinkedDataEditor();
+      });
+
+      expect(mockFetchResourceMetadata).toHaveBeenCalled();
+      expect(mockPush).toHaveBeenCalledWith(
+        expect.objectContaining({ pathname: expect.stringContaining('/preview') })
+      );
     });
   });
 

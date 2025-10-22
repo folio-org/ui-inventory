@@ -154,8 +154,10 @@ const useInstanceActions = ({
   const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(quickMarcPages.createHoldings);
 
   const handleEditInLinkedDataEditor = useCallback(async () => {
+    const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;
     const { data: resourceMetadata } = await fetchResourceMetadata();
-    const selectedIdentifier = resourceMetadata?.id;
+    const resourceMetadataId = resourceMetadata?.id;
+
     const currentLocationState = {
       state: {
         from: {
@@ -165,18 +167,19 @@ const useInstanceActions = ({
       },
     };
 
-    if (!selectedIdentifier) {
-      if (!canBeOpenedInLinkedData) return;
-
+    // Navigate to edit if we have both selectedIdentifier and resourceMetadataId
+    if (selectedIdentifier && resourceMetadataId) {
+      const identifierLiteral = selectedIdentifier.replace(LINKED_DATA_ID_PREFIX, '');
       history.push({
-        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instanceId}/preview`,
+        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
         ...currentLocationState,
       });
     } else {
-      const identifierLiteral = selectedIdentifier.replace(LINKED_DATA_ID_PREFIX, '');
+      // Navigate to preview if no selectedIdentifier or no resourceMetadataId
+      if (!selectedIdentifier && !canBeOpenedInLinkedData) return;
 
       history.push({
-        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
+        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instanceId}/preview`,
         ...currentLocationState,
       });
     }
