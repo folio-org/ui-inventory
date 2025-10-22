@@ -63,7 +63,8 @@ UIIN-3437.
 * Apply sorting by Order column when invoking `Move items within an instance` action button. Refs UIIN-3509.
 * Item count in a holding does not automatically update after moving an item from the holding of another instance. Fixes UIIN-3507.
 * Fix items re-ordering using orders text fields. Fixes UIIN-3527.
-* Update "Edit in Linked Data Editor" handler. Refs UIIN-3480.
+* The 'View source' option is disabled after overlaying the instance with 'FOLIO' source. Fixes UIIN-3531.
+* Update "Edit in Linked Data Editor" handler to make API request. Refs UIIN-3480.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
