@@ -154,14 +154,7 @@ const useInstanceActions = ({
   const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(quickMarcPages.createHoldings);
 
   const handleEditInLinkedDataEditor = useCallback(async () => {
-    let resourceMetadata;
-    try {
-      const { data } = await fetchResourceMetadata();
-      resourceMetadata = data;
-    } catch {
-      return;
-    }
-
+    const { data: resourceMetadata } = await fetchResourceMetadata();
     const selectedIdentifier = resourceMetadata?.id;
     const currentLocationState = {
       state: {

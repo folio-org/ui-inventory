@@ -314,20 +314,6 @@ describe('useInstanceActions', () => {
       expect(mockFetchResourceMetadata).toHaveBeenCalled();
       expect(mockPush).not.toHaveBeenCalled();
     });
-
-    it('returns early when fetch fails', async () => {
-      mockFetchResourceMetadata.mockRejectedValue(new Error('API Error'));
-      mockPush.mockClear();
-
-      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
-
-      await act(async () => {
-        await result.current.handleEditInLinkedDataEditor();
-      });
-
-      expect(mockFetchResourceMetadata).toHaveBeenCalled();
-      expect(mockPush).not.toHaveBeenCalled();
-    });
   });
 
   describe('handleQuickExport', () => {
