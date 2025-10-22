@@ -5,7 +5,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import useInstanceActions from './useInstanceActions';
 import useInstanceModalsContext from '../useInstanceModalsContext';
-import useResourceMetadataQuery from '../useResourceMetadataQuery';
+import useLinkedDataIdQuery from '../useLinkedDataIdQuery';
 import { useQuickExport } from '../../../hooks';
 import { redirectToMarcEditPage } from '../../../utils';
 import { OrderManagementContext } from '../../../contexts';
@@ -21,7 +21,7 @@ jest.mock('../../../hooks', () => ({
   useQuickExport: jest.fn(),
 }));
 jest.mock('../useInstanceModalsContext', () => jest.fn());
-jest.mock('../useResourceMetadataQuery', () => jest.fn());
+jest.mock('../useLinkedDataIdQuery', () => jest.fn());
 jest.mock('../../../utils', () => ({
   ...jest.requireActual('../../../utils'),
   redirectToMarcEditPage: jest.fn(),
@@ -48,7 +48,7 @@ const mockSetIsNewOrderModalOpen = jest.fn();
 const mockApplyOrderChanges = jest.fn();
 const mockResetOrderChanges = jest.fn();
 const mockHasPendingChanges = false;
-const mockFetchResourceMetadata = jest.fn();
+const mockFetchLinkedDataId = jest.fn();
 
 const instance = { id: 'inst1', title: 'Test Instance', identifiers: [] };
 const marcRecord = { id: 'marc1' };
@@ -67,7 +67,7 @@ describe('useInstanceActions', () => {
     useLocation.mockReturnValue({ pathname: '/inventory/view/inst1', search: '' });
     useParams.mockReturnValue({ id: 'inst1' });
     useQuickExport.mockClear().mockReturnValue({ exportRecords: jest.fn() });
-    useResourceMetadataQuery.mockReturnValue({ refetch: mockFetchResourceMetadata });
+    useLinkedDataIdQuery.mockReturnValue({ refetch: mockFetchLinkedDataId });
     useInstanceModalsContext.mockReturnValue({
       isItemsMovement: false,
       setIsItemsMovement: mockSetIsItemsMovement,
@@ -87,7 +87,7 @@ describe('useInstanceActions', () => {
 
     mockApplyOrderChanges.mockClear();
     mockResetOrderChanges.mockClear();
-    mockFetchResourceMetadata.mockClear();
+    mockFetchLinkedDataId.mockClear();
     mockOrderManagementContext.hasPendingChanges = false;
   });
 
@@ -274,43 +274,40 @@ describe('useInstanceActions', () => {
   });
 
   describe('handleEditInLinkedDataEditor', () => {
-    it('navigates to edit route when both selectedIdentifier and resourceMetadataId are present', async () => {
+    it('navigates to edit route when selectedIdentifier exists and resourceMetadataId is returned', async () => {
       const instanceWithIdentifier = {
         ...instance,
-        identifiers: [{ value: 'LD_PREFIX-123' }]
+        identifiers: [{ value: '(ld) 123' }]
       };
       const mockResourceMetadata = { id: 'metadata-123' };
-      mockFetchResourceMetadata.mockResolvedValue({ data: mockResourceMetadata });
+      mockFetchLinkedDataId.mockResolvedValue({ data: mockResourceMetadata });
 
-      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance: instanceWithIdentifier, onCopy }));
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance: instanceWithIdentifier, onCopy, canBeOpenedInLinkedData: true }));
 
       await act(async () => {
         await result.current.handleEditInLinkedDataEditor();
       });
 
-      expect(mockFetchResourceMetadata).toHaveBeenCalled();
+      expect(mockFetchLinkedDataId).toHaveBeenCalled();
       expect(mockPush).toHaveBeenCalledWith(
         expect.objectContaining({ pathname: expect.stringContaining('/edit') })
       );
     });
 
-    it('navigates to preview route when no selectedIdentifier but canBeOpenedInLinkedData is true', async () => {
-      mockFetchResourceMetadata.mockResolvedValue({ data: {} });
-
+    it('navigates to preview route when no selectedIdentifier and canBeOpenedInLinkedData is true', async () => {
       const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy, canBeOpenedInLinkedData: true }));
 
       await act(async () => {
         await result.current.handleEditInLinkedDataEditor();
       });
 
-      expect(mockFetchResourceMetadata).toHaveBeenCalled();
+      expect(mockFetchLinkedDataId).not.toHaveBeenCalled();
       expect(mockPush).toHaveBeenCalledWith(
         expect.objectContaining({ pathname: expect.stringContaining('/preview') })
       );
     });
 
-    it('does nothing when no selectedIdentifier and canBeOpenedInLinkedData is false', async () => {
-      mockFetchResourceMetadata.mockResolvedValue({ data: {} });
+    it('does nothing when canBeOpenedInLinkedData is false', async () => {
       mockPush.mockClear();
 
       const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy, canBeOpenedInLinkedData: false }));
@@ -319,16 +316,17 @@ describe('useInstanceActions', () => {
         await result.current.handleEditInLinkedDataEditor();
       });
 
-      expect(mockFetchResourceMetadata).toHaveBeenCalled();
+      expect(mockFetchLinkedDataId).not.toHaveBeenCalled();
       expect(mockPush).not.toHaveBeenCalled();
     });
 
-    it('navigates to preview when selectedIdentifier exists but no resourceMetadataId', async () => {
+    it('does not navigate when selectedIdentifier exists but no resourceMetadataId is returned', async () => {
       const instanceWithIdentifier = {
         ...instance,
-        identifiers: [{ value: 'LD_PREFIX-123' }]
+        identifiers: [{ value: '(ld) 123' }]
       };
-      mockFetchResourceMetadata.mockResolvedValue({ data: {} });
+      mockFetchLinkedDataId.mockResolvedValue({ data: {} });
+      mockPush.mockClear();
 
       const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance: instanceWithIdentifier, onCopy, canBeOpenedInLinkedData: true }));
 
@@ -336,10 +334,8 @@ describe('useInstanceActions', () => {
         await result.current.handleEditInLinkedDataEditor();
       });
 
-      expect(mockFetchResourceMetadata).toHaveBeenCalled();
-      expect(mockPush).toHaveBeenCalledWith(
-        expect.objectContaining({ pathname: expect.stringContaining('/preview') })
-      );
+      expect(mockFetchLinkedDataId).toHaveBeenCalled();
+      expect(mockPush).not.toHaveBeenCalled();
     });
   });
 

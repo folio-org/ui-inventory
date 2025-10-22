@@ -5,7 +5,7 @@ import {
   useOkapiKy,
 } from '@folio/stripes/core';
 
-const useResourceMetadataQuery = (instanceId, { enabled = true } = {}) => {
+const useLinkedDataIdQuery = (instanceId, { enabled = true } = {}) => {
   const [namespace] = useNamespace({ key: 'resource-metadata' });
   const ky = useOkapiKy();
 
@@ -24,4 +24,4 @@ const useResourceMetadataQuery = (instanceId, { enabled = true } = {}) => {
   };
 };
 
-export default useResourceMetadataQuery;
+export default useLinkedDataIdQuery;

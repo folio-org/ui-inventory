@@ -12,7 +12,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 
 import '../../../../test/jest/__mock__';
 
-import useResourceMetadataQuery from './useResourceMetadataQuery';
+import useLinkedDataIdQuery from './useLinkedDataIdQuery';
 
 const queryClient = new QueryClient();
 
@@ -24,7 +24,7 @@ const wrapper = ({ children }) => (
 
 const mockResourceMetadata = { id: 'http://example.com/resource/123' };
 
-describe('useResourceMetadataQuery', () => {
+describe('useLinkedDataIdQuery', () => {
   const mockGet = jest.fn();
 
   beforeEach(() => {
@@ -45,14 +45,14 @@ describe('useResourceMetadataQuery', () => {
   it('should fetch resource metadata when enabled and instanceId is provided', async () => {
     const instanceId = 'inst1';
 
-    const { result } = renderHook(() => useResourceMetadataQuery(instanceId), { wrapper });
+    const { result } = renderHook(() => useLinkedDataIdQuery(instanceId), { wrapper });
 
     await waitFor(() => expect(result.current.data).toEqual(mockResourceMetadata));
     expect(mockGet).toHaveBeenCalledWith('linked-data/resource/metadata/inst1/id');
   });
 
   it('should not fetch when instanceId is not provided', () => {
-    const { result } = renderHook(() => useResourceMetadataQuery(null), { wrapper });
+    const { result } = renderHook(() => useLinkedDataIdQuery(null), { wrapper });
 
     expect(result.current.data).toBeUndefined();
     expect(mockGet).not.toHaveBeenCalled();
@@ -61,7 +61,7 @@ describe('useResourceMetadataQuery', () => {
   it('should not fetch when enabled is false', () => {
     const instanceId = 'inst1';
 
-    const { result } = renderHook(() => useResourceMetadataQuery(instanceId, { enabled: false }), { wrapper });
+    const { result } = renderHook(() => useLinkedDataIdQuery(instanceId, { enabled: false }), { wrapper });
 
     expect(result.current.data).toBeUndefined();
     expect(mockGet).not.toHaveBeenCalled();
@@ -70,7 +70,7 @@ describe('useResourceMetadataQuery', () => {
   it('should return isLoading state correctly', async () => {
     const instanceId = 'inst1';
 
-    const { result } = renderHook(() => useResourceMetadataQuery(instanceId), { wrapper });
+    const { result } = renderHook(() => useLinkedDataIdQuery(instanceId), { wrapper });
 
     expect(result.current.isLoading).toBe(true);
 
@@ -81,7 +81,7 @@ describe('useResourceMetadataQuery', () => {
   it('should provide refetch function', async () => {
     const instanceId = 'inst1';
 
-    const { result } = renderHook(() => useResourceMetadataQuery(instanceId, { enabled: false }), { wrapper });
+    const { result } = renderHook(() => useLinkedDataIdQuery(instanceId, { enabled: false }), { wrapper });
 
     expect(typeof result.current.refetch).toBe('function');
 
@@ -100,7 +100,7 @@ describe('useResourceMetadataQuery', () => {
       json: () => Promise.reject(mockError),
     });
 
-    const { result } = renderHook(() => useResourceMetadataQuery(instanceId), { wrapper });
+    const { result } = renderHook(() => useLinkedDataIdQuery(instanceId), { wrapper });
 
     // Wait a bit for the query to complete
     await new Promise(resolve => setTimeout(resolve, 100));
@@ -112,7 +112,7 @@ describe('useResourceMetadataQuery', () => {
   it('should use correct query key with namespace and instanceId', async () => {
     const instanceId = 'inst1';
 
-    renderHook(() => useResourceMetadataQuery(instanceId), { wrapper });
+    renderHook(() => useLinkedDataIdQuery(instanceId), { wrapper });
 
     await waitFor(() => {
       const queryKey = queryClient.getQueryCache().getAll()[0]?.queryKey;

@@ -14,7 +14,7 @@ import {
 } from '../../../constants';
 import { useQuickExport } from '../../../hooks';
 import useInstanceModalsContext from '../useInstanceModalsContext';
-import useResourceMetadataQuery from '../useResourceMetadataQuery';
+import useLinkedDataIdQuery from '../useLinkedDataIdQuery';
 import { OrderManagementContext } from '../../../contexts';
 
 const quickMarcPages = {
@@ -37,7 +37,7 @@ const useInstanceActions = ({
   const { id: instanceId } = params;
 
   const { exportRecords } = useQuickExport();
-  const { refetch: fetchResourceMetadata } = useResourceMetadataQuery(instanceId, { enabled: false });
+  const { refetch: fetchLinkedDataId } = useLinkedDataIdQuery(instanceId, { enabled: false });
 
   const {
     isItemsMovement,
@@ -155,9 +155,6 @@ const useInstanceActions = ({
 
   const handleEditInLinkedDataEditor = useCallback(async () => {
     const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;
-    const { data: resourceMetadata } = await fetchResourceMetadata();
-    const resourceMetadataId = resourceMetadata?.id;
-
     const currentLocationState = {
       state: {
         from: {
@@ -167,13 +164,18 @@ const useInstanceActions = ({
       },
     };
 
-    if (selectedIdentifier && resourceMetadataId) {
-      history.push({
-        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${resourceMetadataId}/edit`,
-        ...currentLocationState,
-      });
+    if (selectedIdentifier) {
+      const { data: linkedDataValue } = await fetchLinkedDataId();
+      const resourceMetadataId = linkedDataValue?.id;
+
+      if (resourceMetadataId) {
+        history.push({
+          pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${resourceMetadataId}/edit`,
+          ...currentLocationState,
+        });
+      }
     } else {
-      if (!selectedIdentifier && !canBeOpenedInLinkedData) return;
+      if (!canBeOpenedInLinkedData) return;
 
       history.push({
         pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instanceId}/preview`,
