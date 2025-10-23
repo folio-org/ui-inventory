@@ -33,12 +33,11 @@ import {
 const isPrevious = (direction) => direction === PAGE_DIRECTIONS.prev;
 
 const getInitialPageQuery = (query, qindex) => {
-  const escapedQuery = escapeCqlValue(query);
   return regExp.test(query)
     ? query
     : [
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}>="${escapedQuery}"`,
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}<"${escapedQuery}"`
+      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}>="${query.replace(/"/g, '\\"')}"`,
+      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}<"${query.replace(/"/g, '\\"')}"`
     ].join(' or ');
 };
 
