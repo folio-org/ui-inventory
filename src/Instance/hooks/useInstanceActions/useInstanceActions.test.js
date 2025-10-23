@@ -320,7 +320,7 @@ describe('useInstanceActions', () => {
       expect(mockPush).not.toHaveBeenCalled();
     });
 
-    it('does not navigate when selectedIdentifier exists but no resourceMetadataId is returned', async () => {
+    it('navigates to preview route when selectedIdentifier exists but no resourceMetadataId is returned', async () => {
       const instanceWithIdentifier = {
         ...instance,
         identifiers: [{ value: '(ld) 123' }]
@@ -335,7 +335,9 @@ describe('useInstanceActions', () => {
       });
 
       expect(mockFetchLinkedDataId).toHaveBeenCalled();
-      expect(mockPush).not.toHaveBeenCalled();
+      expect(mockPush).toHaveBeenCalledWith(
+        expect.objectContaining({ pathname: expect.stringContaining('/preview') })
+      );
     });
   });
 

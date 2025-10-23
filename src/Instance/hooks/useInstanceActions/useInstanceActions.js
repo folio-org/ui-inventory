@@ -173,15 +173,17 @@ const useInstanceActions = ({
           pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${resourceMetadataId}/edit`,
           ...currentLocationState,
         });
-      }
-    } else {
-      if (!canBeOpenedInLinkedData) return;
 
-      history.push({
-        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instanceId}/preview`,
-        ...currentLocationState,
-      });
+        return;
+      }
     }
+
+    if (!canBeOpenedInLinkedData) return;
+
+    history.push({
+      pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instanceId}/preview`,
+      ...currentLocationState,
+    });
   }, [instance, canBeOpenedInLinkedData, instanceId]);
 
   return {
