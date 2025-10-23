@@ -1,5 +1,8 @@
 import { useContext } from 'react';
-import { useIntl } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import PropTypes from 'prop-types';
 
 import {
@@ -11,8 +14,8 @@ import { Link } from 'react-router-dom';
 import { DataContext } from '../../../../contexts';
 import {
   useInventoryVersionHistory,
-  useTotalVersions,
   useStaffMembersQuery,
+  useTotalVersions,
 } from '../../../../hooks';
 import {
   useItemAuditDataQuery,
@@ -44,7 +47,15 @@ export const createFieldFormatter = (referenceData, circulationHistory) => ({
   servicePointId: () => circulationHistory.servicePointName,
   staffMemberId: () => circulationHistory.source,
   dateTime: value => getDateWithTime(value),
-  source: value => `${value.personal.lastName}, ${value.personal.firstName}`,
+  source: value => {
+    if (value.personal) {
+      const { firstName, lastName = '' } = value.personal;
+
+      return firstName ? `${lastName}, ${firstName}` : lastName;
+    }
+
+    return <FormattedMessage id="stripes-components.metaSection.unknownUser" />;
+  },
 });
 
 const ItemVersionHistory = ({
