@@ -14,6 +14,7 @@ import {
 } from '../../../constants';
 import { useQuickExport } from '../../../hooks';
 import useInstanceModalsContext from '../useInstanceModalsContext';
+import useLinkedDataIdQuery from '../useLinkedDataIdQuery';
 import { OrderManagementContext } from '../../../contexts';
 
 const quickMarcPages = {
@@ -36,6 +37,7 @@ const useInstanceActions = ({
   const { id: instanceId } = params;
 
   const { exportRecords } = useQuickExport();
+  const { refetch: fetchLinkedDataId } = useLinkedDataIdQuery(instanceId, { enabled: false });
 
   const {
     isItemsMovement,
@@ -151,7 +153,7 @@ const useInstanceActions = ({
   const handleDuplicateInstanceMarc = () => redirectToQuickMarcPage(quickMarcPages.duplicateInstance);
   const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(quickMarcPages.createHoldings);
 
-  const handleEditInLinkedDataEditor = useCallback(() => {
+  const handleEditInLinkedDataEditor = useCallback(async () => {
     const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;
     const currentLocationState = {
       state: {
@@ -162,21 +164,26 @@ const useInstanceActions = ({
       },
     };
 
-    if (!selectedIdentifier) {
-      if (!canBeOpenedInLinkedData) return;
+    if (selectedIdentifier) {
+      const { data: linkedDataValue } = await fetchLinkedDataId();
+      const resourceMetadataId = linkedDataValue?.id;
 
-      history.push({
-        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instanceId}/preview`,
-        ...currentLocationState,
-      });
-    } else {
-      const identifierLiteral = selectedIdentifier.replace(LINKED_DATA_ID_PREFIX, '');
+      if (resourceMetadataId) {
+        history.push({
+          pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${resourceMetadataId}/edit`,
+          ...currentLocationState,
+        });
 
-      history.push({
-        pathname: `${LINKED_DATA_RESOURCES_ROUTE}/${identifierLiteral}/edit`,
-        ...currentLocationState,
-      });
+        return;
+      }
     }
+
+    if (!canBeOpenedInLinkedData) return;
+
+    history.push({
+      pathname: `${LINKED_DATA_RESOURCES_ROUTE}/external/${instanceId}/preview`,
+      ...currentLocationState,
+    });
   }, [instance, canBeOpenedInLinkedData, instanceId]);
 
   return {

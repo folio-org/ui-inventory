@@ -10,3 +10,4 @@ export { default as useSharedInstancesQuery } from './useSharedInstancesQuery';
 export { default as useInstanceSharing } from './useInstanceSharing';
 export { default as useSetRecordForDeletion } from './useSetRecordForDeletion';
 export { default as useInstanceMutation } from './useInstanceMutation';
+export { default as useLinkedDataIdQuery } from './useLinkedDataIdQuery';
