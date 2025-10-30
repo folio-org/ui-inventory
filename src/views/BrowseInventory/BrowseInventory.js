@@ -166,6 +166,10 @@ const BrowseInventory = () => {
     }
   }, [searchQuery, filters]);
 
+  const getIndexGroupForIndex = (index) => {
+    return browseInstanceIndexes.find(indexGroup => !!indexGroup.subIndexes?.find(subIndex => subIndex.value === index) || indexGroup.value === index);
+  };
+
   const onChangeSearchIndex = useCallback((e) => {
     deleteItemToView();
     /*
@@ -174,7 +178,17 @@ const BrowseInventory = () => {
       as a work-around we can call `clearFilters` to clear filters only
     */
     changeSearchIndex(e);
-    clearFilters();
+
+    const currentIndexGroup = getIndexGroupForIndex(withExtraFilters.qindex);
+    const newIndexGroup = getIndexGroupForIndex(e.target.value);
+
+    // if current is from, for example, Call Numbers and new index is from Classification
+    // they could have incompatible facets selected so we should clear selected filters
+    const isNewIndexFromDifferentBrowseGroup = newIndexGroup !== currentIndexGroup;
+
+    if (isNewIndexFromDifferentBrowseGroup) {
+      clearFilters();
+    }
 
     if (isCallNumberBrowseOption(e.target.value) && checkIfUserInMemberTenant(stripes)) {
       // we want to applyFilters without writing the value to the url because it will trigger a search

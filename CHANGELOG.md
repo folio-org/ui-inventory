@@ -68,6 +68,7 @@ UIIN-3437.
 * When setting an instance for deletion warning banner is not displayed. Fixes UIIN-3532.
 * Do not escape backslashes in Browse queries. Fixes UIIN-3530.
 * Update "Edit in Linked Data Editor" handler to make API request. Refs UIIN-3480.
+* Clear Browse filters when switching between browse types. Fixes UIIN-3499.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
