@@ -67,6 +67,7 @@ UIIN-3437.
 * "Something went wrong" error when open "Version history" of edited Item having null in "Source" of Circulation note. Fixes UIIN-3529.
 * When setting an instance for deletion warning banner is not displayed. Fixes UIIN-3532.
 * Do not escape backslashes in Browse queries. Fixes UIIN-3530.
+* Clear Browse filters when switching between browse types. Fixes UIIN-3499.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
