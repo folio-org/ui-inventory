@@ -181,7 +181,7 @@ const InstanceActionMenu = ({
             <ActionItem
               id="move-instance-items"
               icon="transfer"
-              messageId={`ui-inventory.moveItems.instance.actionMenu.${isItemsMovement ? 'disable' : 'enable'}`}
+              messageId={`ui-inventory.moveEntity.instance.actionMenu.${isItemsMovement ? 'disable' : 'enable'}`}
               onClickHandler={() => buildOnClickHandler(handleItemsMovement)}
             />
           )}

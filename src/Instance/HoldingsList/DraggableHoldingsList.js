@@ -32,7 +32,7 @@ const DraggableHoldingsList = ({
         {children}
         {!holdingsContent.length && (
           <DropZone>
-            <FormattedMessage id="ui-inventory.moveItems.instance.dropZone" />
+            <FormattedMessage id="ui-inventory.moveEntity.instance.dropZone" />
           </DropZone>
         )}
       </SortableContext>
