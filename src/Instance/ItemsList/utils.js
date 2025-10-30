@@ -3,6 +3,15 @@
  * CUDDLING THE ELSE IS WRONG. Yes, I'm shouting. Come fight me.
  */
 
+import {
+  Icon,
+  NoValue,
+} from '@folio/stripes/components';
+import { itemStatuses } from '@folio/stripes-inventory-components';
+
+import ItemBarcode from './ItemBarcode';
+import { draggableVisibleColumns } from './DraggableItemsList';
+
 /**
  * atoiComparator
  * Compare two strings, e.g. "2" and "33", as numbers. Empty string compares as 0.
@@ -137,3 +146,84 @@ export const sortItems = (items, sorting) => {
   const sorted = [...items].sort(sorters[sorting.column]);
   return sorting.isDesc ? sorted.reverse() : sorted;
 };
+
+export const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
+
+export const getFormatter = (
+  intl,
+  holdingId,
+  locationsById,
+  holdingsMapById,
+  isBarcodeAsHotlink,
+  isFetching,
+  tenantId,
+) => ({
+  'order': (item) => item.order || <NoValue />,
+  'barcode': item => {
+    return (
+      item.id && (
+        <>
+          <ItemBarcode
+            item={item}
+            holdingId={item.holdingsRecordId}
+            instanceId={holdingsMapById[item.holdingsRecordId]?.instanceId}
+            isBarcodeAsHotlink={isBarcodeAsHotlink && !isFetching}
+            tenantId={tenantId}
+          />
+          {item.discoverySuppress &&
+            <span>
+              <Icon
+                size="medium"
+                icon="exclamation-circle"
+                status="warn"
+              />
+            </span>
+          }
+        </>)
+    ) || <NoValue />;
+  },
+  'status': x => {
+    if (!x.status?.name) return <NoValue />;
+
+    const statusName = x.status.name;
+    const itemStatusTranslationId = itemStatuses.find(({ value }) => value === statusName)?.label;
+
+    return itemStatusTranslationId ? intl.formatMessage({ id: itemStatusTranslationId }) : statusName;
+  },
+  'copyNumber': ({ copyNumber }) => copyNumber || <NoValue />,
+  'loanType': x => x.temporaryLoanType?.name || x.permanentLoanType?.name || <NoValue />,
+  'effectiveLocation': x => {
+    const effectiveLocation = locationsById[x.effectiveLocation?.id];
+    return effectiveLocation?.isActive ?
+      effectiveLocation?.name || <NoValue /> :
+      intl.formatMessage(
+        { id: 'ui-inventory.inactive.gridCell' },
+        { location: effectiveLocation?.name }
+      );
+  },
+  'enumeration': x => x.enumeration || <NoValue />,
+  'chronology': x => x.chronology || <NoValue />,
+  'volume': x => x.volume || <NoValue />,
+  'yearCaption': x => x.yearCaption?.join(', ') || <NoValue />,
+  'materialType': x => x.materialType?.name || <NoValue />,
+});
+
+export const getColumnMapping = (intl) => ({
+  'order': intl.formatMessage({ id: 'ui-inventory.item.order' }),
+  'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
+  'status': intl.formatMessage({ id: 'ui-inventory.status' }),
+  'copyNumber': intl.formatMessage({ id: 'ui-inventory.copyNumber' }),
+  'loanType': intl.formatMessage({ id: 'ui-inventory.loanType' }),
+  'effectiveLocation': intl.formatMessage({ id: 'ui-inventory.effectiveLocationShort' }),
+  'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
+  'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
+  'volume': intl.formatMessage({ id: 'ui-inventory.volume' }),
+  'yearCaption': intl.formatMessage({ id: 'ui-inventory.yearCaption' }),
+  'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
+});
+
+export const getColumnWidths = () => ({ order: '80px', select: '60px', barcode: '160px' });
+
+export const getVisibleColumns = () => draggableVisibleColumns.filter(col => !['dnd', 'select'].some(it => col === it));
+
+

@@ -17,7 +17,7 @@ const useMoveItemsMutation = ({ onError, onSuccess, onSettled, invalidateQueries
   const customOptions = {
     onError: (error, variables, ...rest) => {
       const errorMessage = intl.formatMessage(
-        { id: 'ui-inventory.moveItems.instance.items.error.server' },
+        { id: 'ui-inventory.moveEntity.instance.items.error.server' },
         { items: variables?.itemIds?.join(', ') || '' }
       );
 
@@ -31,7 +31,7 @@ const useMoveItemsMutation = ({ onError, onSuccess, onSettled, invalidateQueries
 
       if (nonUpdatedIds?.length) {
         const errorMessage = intl.formatMessage(
-          { id: 'ui-inventory.moveItems.instance.items.error' },
+          { id: 'ui-inventory.moveEntity.instance.items.error' },
           { items: nonUpdatedIds.join(', ') }
         );
 

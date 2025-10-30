@@ -118,7 +118,7 @@ const MoveToDropdown = ({
       id={`clickable-move-holdings-${holding.id}`}
       data-test-move-holdings
     >
-      <FormattedMessage id="ui-inventory.moveItems.moveButton" />
+      <FormattedMessage id="ui-inventory.moveEntity.moveButton" />
     </DropdownButton>
   ), [holding.id]);
 

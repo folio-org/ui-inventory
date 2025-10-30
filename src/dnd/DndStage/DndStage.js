@@ -44,12 +44,12 @@ const DndStage = ({ children }) => {
           >
             {activeDragHolding ? (
               <FormattedMessage
-                id="ui-inventory.moveItems.move.holdings.count"
+                id="ui-inventory.moveEntity.move.holdings.count"
                 values={{ count: selectedHoldings.size || 1 }}
               />
             ) : (
               <FormattedMessage
-                id="ui-inventory.moveItems.move.items.count"
+                id="ui-inventory.moveEntity.move.items.count"
                 values={{ count: selectedItems.size || 1 }}
               />
             )}

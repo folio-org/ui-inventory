@@ -21,21 +21,23 @@ const useInventoryAPI = () => {
   const { moveHoldings: moveHoldingsApi, isMoving: isHoldingsMoving } = Move.useHoldings();
 
   const checkPOLinkage = useCallback(async (holdingIds = []) => {
-    if (!holdingIds.length) {
+    if (!holdingIds.size) {
       return { hasLinkedPOLs: false, poLineHoldingIds: [] };
     }
+
+    const holdingsIdList = [...holdingIds];
 
     try {
       const { poLines = [] } = await ky.get(LINES_API, {
         searchParams: {
-          query: holdingIds.map(id => `locations=="*${id}*"`).join(' or '),
+          query: holdingsIdList.map(id => `locations=="*${id}*"`).join(' or '),
           limit: LIMIT_MAX,
         }
       }).json();
 
       return {
         hasLinkedPOLs: poLines.length > 1 || (poLines[0]?.locations?.length > 1),
-        poLineHoldingIds: getPOLineHoldingIds(poLines, holdingIds),
+        poLineHoldingIds: getPOLineHoldingIds(poLines, holdingsIdList),
       };
     } catch (e) {
       return { hasLinkedPOLs: false, poLineHoldingIds: [] };
