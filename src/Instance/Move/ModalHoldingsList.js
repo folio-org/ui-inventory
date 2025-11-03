@@ -77,6 +77,15 @@ const HoldingsHeaderAcc = ({
   );
 };
 
+HoldingsHeaderAcc.propTypes = {
+  holding: PropTypes.object.isRequired,
+  tenantId: PropTypes.string,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.func,
+  ]).isRequired,
+};
+
 const ItemsList = ({
   id,
   holding,
@@ -119,6 +128,12 @@ const ItemsList = ({
       loading={isFetching}
     />
   );
+};
+
+ItemsList.propTypes = {
+  id: PropTypes.string.isRequired,
+  holding: PropTypes.object.isRequired,
+  tenantId: PropTypes.string,
 };
 
 const ModalHoldingsList = ({
