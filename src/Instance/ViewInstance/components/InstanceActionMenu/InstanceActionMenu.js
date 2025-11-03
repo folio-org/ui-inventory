@@ -189,7 +189,7 @@ const InstanceActionMenu = ({
             <ActionItem
               id="move-instance"
               icon="arrow-right"
-              messageId="ui-inventory.moveItems"
+              messageId="ui-inventory.moveEntity"
               onClickHandler={() => buildOnClickHandler(handleMoveItemsToAnotherInstance)}
             />
           )}
