@@ -209,6 +209,11 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     try {
       await updateItems({ items: finalItemsToUpdate });
 
+      callout.sendCallout({
+        type: 'success',
+        message: intl.formatMessage({ id: 'ui-inventory.item.order.update.success' }),
+      });
+
       // Clear pending changes and errors
       setPendingOrderChanges(new Map());
       setManualOrderChanges(new Map());
