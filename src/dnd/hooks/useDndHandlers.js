@@ -13,7 +13,6 @@ import {
 } from '../InventoryProvider';
 import useInventoryAPI from './useInventoryAPI';
 import { useItemsUpdateMutation } from '../../hooks';
-import { useConfirmBridge } from '../ConfirmationBridge';
 import * as RemoteStorage from '../../RemoteStorageService';
 import useMoveCommands from './useMoveCommands';
 import { OrderManagementContext } from '../../contexts';
@@ -63,7 +62,6 @@ const useDndHandlers = () => {
   const state = useInventoryState();
   const actions = useInventoryActions();
   const { updateOriginalOrders } = useContext(OrderManagementContext);
-  const { confirmation } = useConfirmBridge();
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
 
   const {
@@ -382,7 +380,7 @@ const useDndHandlers = () => {
       fromHoldingRef.current = null;
       toHoldingRef.current = null;
     }
-  }, [actions, clear, findContainerForItem, moveItems, state.holdings, state.instances, isDualInstanceMode, isSingleInstanceMode, confirmation, checkFromRemoteToNonRemote]);
+  }, [actions, clear, findContainerForItem, moveItems, state.holdings, state.instances, isDualInstanceMode, isSingleInstanceMode, checkFromRemoteToNonRemote]);
 
   return { onDragStart, onDragOver, onDragEnd, activeDragItem, activeDragHolding };
 };

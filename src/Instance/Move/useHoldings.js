@@ -17,7 +17,7 @@ export const useHoldings = () => {
       // Show success message
       const message = (
         <FormattedMessage
-          id="ui-inventory.moveItems.instance.holdings.success"
+          id="ui-inventory.moveEntity.instance.holdings.success"
           values={{ count: variables.holdingsRecordIds.length }}
         />
       );
