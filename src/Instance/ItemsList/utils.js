@@ -224,6 +224,6 @@ export const getColumnMapping = (intl) => ({
 
 export const getColumnWidths = () => ({ order: '80px', select: '60px', barcode: '160px' });
 
-export const getVisibleColumns = () => draggableVisibleColumns.filter(col => !['dnd', 'select'].some(it => col === it));
+export const getVisibleColumns = () => draggableVisibleColumns.filter(col => !['dnd', 'select'].includes(col));
 
 
