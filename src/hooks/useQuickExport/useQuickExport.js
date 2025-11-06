@@ -39,7 +39,6 @@ const useQuickExport = () => {
         generator.toCSV(uuids);
 
         callout.sendCallout({
-          timeout: 0,
           type: 'success',
           message: <FormattedMessage
             id="ui-inventory.exportInstancesInMARC.complete"
