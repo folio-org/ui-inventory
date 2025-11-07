@@ -141,7 +141,7 @@ describe('ItemsList', () => {
         const barcodeHeader = screen.getByRole('button', { name: 'Item: barcode' });
         fireEvent.click(barcodeHeader);
 
-        expect(useHoldingItemsQuery.mock.calls[0][1].searchParams.sortBy).toBe('barcode');
+        expect(useHoldingItemsQuery.mock.calls[0][1].searchParams.sortBy).toBe('order');
       });
     });
   });

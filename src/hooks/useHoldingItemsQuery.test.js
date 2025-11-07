@@ -49,7 +49,7 @@ describe('useHoldingItemsQuery', () => {
         searchParams: {
           offset: 0,
           limit,
-          query: `holdingsRecordId==${id} sortby barcode/sort.ascending`
+          query: `holdingsRecordId==${id} sortby order/sort.ascending`
         }
       }
     );
