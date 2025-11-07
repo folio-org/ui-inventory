@@ -79,7 +79,7 @@ const getClassificationQuery = (qindex, data, row) => {
     return '';
   }
 
-  let query = `classifications.classificationNumber=="${row.classificationNumber}"`;
+  let query = `classifications.classificationNumber=="${row.classificationNumber.replaceAll('"', '\\"')}"`;
 
   const classificationBrowseConfigId = browseClassificationIndexToId[qindex];
 
@@ -120,7 +120,7 @@ const getCallNumberQuery = (qindex, data, row) => {
     return '';
   }
 
-  let query = `itemFullCallNumbers="${fullCallNumber}"`;
+  let query = `itemFullCallNumbers="${fullCallNumber.replaceAll('"', '\\"')}"`;
 
   const callNumberBrowseConfigId = browseCallNumberIndexToId[qindex];
 

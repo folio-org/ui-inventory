@@ -115,6 +115,13 @@ describe('getBrowseResultsFormatter', () => {
         callNumberSuffix: 'SUF',
         totalRecords: 2,
       },
+      {
+        fullCallNumber: '"WITH QUOTES" SUF 2',
+        callNumber: '"WITH QUOTES"',
+        callNumberPrefix: 'PRE',
+        callNumberSuffix: 'SUF 2',
+        totalRecords: 1,
+      },
     ];
     const [anchorRecord, nonAnchorRecord] = contentData;
 
@@ -169,6 +176,25 @@ describe('getBrowseResultsFormatter', () => {
         });
 
         expect(getByText('PRE CALL SUF').href).toContain(`${INVENTORY_ROUTE}?${query}`);
+      });
+
+      describe('when a call number has double quotes', () => {
+        it('should escape the double quotes in the search parameters', async () => {
+          const { getByText } = renderCallNumberList({
+            formatter: getBrowseResultsFormatter({
+              data,
+              browseOption: browseCallNumberOptions.DEWEY,
+            }),
+          });
+
+          const query = queryString.stringify({
+            selectedBrowseResult: true,
+            qindex: queryIndexes.QUERY_SEARCH,
+            query: 'itemFullCallNumbers="PRE \\"WITH QUOTES\\" SUF 2" and (item.effectiveCallNumberComponents.typeId=="dewey-id" or item.effectiveCallNumberComponents.typeId=="lc-id")',
+          });
+
+          expect(getByText('PRE "WITH QUOTES" SUF 2').href).toContain(`${INVENTORY_ROUTE}?${query}`);
+        });
       });
     });
   });
@@ -364,6 +390,11 @@ describe('getBrowseResultsFormatter', () => {
         classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
         totalRecords: 2,
       },
+      {
+        classificationNumber: '"WITH QUOTES"',
+        classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+        totalRecords: 3,
+      },
     ];
     const [anchorRecord] = contentData;
 
@@ -388,6 +419,20 @@ describe('getBrowseResultsFormatter', () => {
 
       expect(getByText(missedMatchRecord.classificationNumber)).toBeInTheDocument();
       expect(getByText(missedMatchText)).toBeInTheDocument();
+    });
+
+    describe('when a call number has double quotes', () => {
+      it('should escape the double quotes in the search parameters', async () => {
+        const { getByText } = renderClassificationList();
+
+        const query = queryString.stringify({
+          selectedBrowseResult: true,
+          qindex: queryIndexes.QUERY_SEARCH,
+          query: 'classifications.classificationNumber=="\\"WITH QUOTES\\""',
+        });
+
+        expect(getByText('"WITH QUOTES"').href).toContain(`${INVENTORY_ROUTE}?${query}`);
+      });
     });
   });
 });
