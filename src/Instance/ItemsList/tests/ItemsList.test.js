@@ -113,8 +113,8 @@ describe('ItemsList', () => {
     const amountOfItems = container.querySelectorAll('.mclRowFormatterContainer').length;
 
     expect(amountOfItems).toBe(2);
-    expect(screen.getByText("1234567890123")).toBeInTheDocument();
-    expect(screen.getByText("1234567890124")).toBeInTheDocument();
+    expect(screen.getByText('1234567890123')).toBeInTheDocument();
+    expect(screen.getByText('1234567890124')).toBeInTheDocument();
   });
 
   describe('non-draggable mode', () => {
