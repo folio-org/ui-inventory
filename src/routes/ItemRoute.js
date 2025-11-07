@@ -1,7 +1,7 @@
-import React from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
+import queryString from 'query-string';
 
 import { stripesConnect } from '@folio/stripes/core';
 
@@ -20,6 +20,8 @@ const ItemRoute = props => {
   const { id: instanceId } = useParams();
   const { instance } = useSearchInstanceByIdQuery(instanceId);
 
+  const queryParams = queryString.parse(props.location.search);
+
   return (
     <DataContext.Consumer>
       {data => (
@@ -27,7 +29,9 @@ const ItemRoute = props => {
           <ViewItem
             {...props}
             isInstanceShared={instance?.shared}
-            tenantTo={state?.tenantTo || okapi.tenant}
+            isInNewTab={!!queryParams?.tenantTo}
+            tenantTo={state?.tenantTo || queryParams?.tenantTo || okapi.tenant}
+            tenantFrom={state?.tenantFrom || okapi.tenant}
             initialTenantId={state?.initialTenantId || okapi.tenant}
             referenceTables={data}
           />

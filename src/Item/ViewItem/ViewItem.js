@@ -21,6 +21,8 @@ import {
   checkScope,
   HasCommand,
   PaneMenu,
+  MessageBanner,
+  Layout,
 } from '@folio/stripes/components';
 import {
   AppIcon,
@@ -84,7 +86,10 @@ const ViewItem = ({
   isInstanceShared,
   initialTenantId,
   tenantTo,
+  tenantFrom,
+  isInNewTab,
 }) => {
+  console.log({ tenantTo, initialTenantId, tenantFrom });
   const stripes = useStripes();
   const location = useLocation();
   const history = useHistory();
@@ -114,10 +119,10 @@ const ViewItem = ({
 
   const { isLoading: isItemLoading, item, refetch: refetchItem } = useItemQuery(itemId, { tenant: tenantTo });
   const { isLoading: isInstanceLoading, instance } = useInstance(instanceId);
-  const { isLoading: isHoldingsLoading, holding } = useHoldingQuery(holdingsId);
-  const { requests } = useCirculationItemRequestsQuery(itemId);
-  const { tagSettings } = useTagSettingsQuery();
-  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+  const { isLoading: isHoldingsLoading, holding } = useHoldingQuery(holdingsId, { tenantId: tenantTo });
+  const { requests } = useCirculationItemRequestsQuery(itemId, { tenantId: tenantTo });
+  const { tagSettings } = useTagSettingsQuery({ tenantId: tenantTo });
+  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP, tenantId: tenantTo });
 
   const isLoading = useMemo(() => isItemLoading || isInstanceLoading || isHoldingsLoading,
     [isItemLoading, isInstanceLoading, isHoldingsLoading]);
@@ -127,7 +132,7 @@ const ViewItem = ({
     markItemAsMissing,
     markItemAsWithdrawn,
     markItemWithStatus,
-  } = useItemStatusMutation(itemId, refetchItem);
+  } = useItemStatusMutation(itemId, refetchItem, tenantTo);
 
   const {
     handleUpdateOwnership,
@@ -152,7 +157,7 @@ const ViewItem = ({
 
   useEffect(() => {
     if (checkIfUserInMemberTenant(stripes)) {
-      setTenants(omitCurrentAndCentralTenants(stripes));
+      setTenants(omitCurrentAndCentralTenants(stripes, tenantTo));
     }
   }, []);
 
@@ -200,9 +205,11 @@ const ViewItem = ({
         isSharedInstance={isSharedInstance}
         tenants={tenants}
         initialTenantId={initialTenantId}
+        tenantTo={tenantTo}
+        tenantFrom={tenantFrom}
       />
     );
-  }, [isVersionHistoryOpen, stripes, isInstanceShared, instance, item, requests, tenants, initialTenantId, handleUpdateOwnership]);
+  }, [isVersionHistoryOpen, stripes, isInstanceShared, instance, item, requests, tenants, tenantTo, handleUpdateOwnership]);
 
   const renderLastMenu = useCallback(() => {
     const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
@@ -261,6 +268,13 @@ const ViewItem = ({
           actionMenu={renderActionMenu}
           lastMenu={renderLastMenu()}
         >
+          {isInNewTab && (
+            <Layout className="padding-all-gutter">
+              <MessageBanner type="warning">
+                <FormattedMessage id="ui-inventory.warning.instance.importingRecord" />
+              </MessageBanner>
+            </Layout>
+          )}
           <ItemModals
             onSelectNewItemOwnership={setUpdateOwnershipData}
             onConfirmHandleUpdateOwnership={onConfirmHandleUpdateOwnership}
@@ -293,6 +307,7 @@ const ViewItem = ({
         {isVersionHistoryOpen && (
           <ItemVersionHistory
             item={item}
+            tenantId={tenantTo}
             onClose={() => setIsVersionHistoryOpen(false)}
           />
         )}

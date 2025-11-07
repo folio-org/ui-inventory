@@ -6,8 +6,8 @@ import {
   useOkapiKy,
 } from '@folio/stripes/core';
 
-const useItemAuditDataQuery = (itemId) => {
-  const ky = useOkapiKy();
+const useItemAuditDataQuery = (itemId, { tenantId }) => {
+  const ky = useOkapiKy({ tenant: tenantId });
   const [namespace] = useNamespace({ key: 'item-audit-data' });
 
   const {

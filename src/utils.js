@@ -815,9 +815,9 @@ export const switchAffiliation = async (stripes, tenantId, move) => {
 
     await handleUpdateUser(stripes);
 
-    move();
+    move?.();
   } else {
-    move();
+    move?.();
   }
 };
 
@@ -927,10 +927,10 @@ export const getSortOptions = (intl) => {
   }));
 };
 
-export const omitCurrentAndCentralTenants = (stripes) => {
+export const omitCurrentAndCentralTenants = (stripes, currentTenant) => {
   const tenants = stripes?.user?.user?.tenants;
 
-  const currentTenantId = stripes.okapi.tenant;
+  const currentTenantId = currentTenant || stripes.okapi.tenant;
   const centralTenantId = stripes.user?.user?.consortium?.centralTenantId;
 
   return tenants?.filter(tenant => tenant.id !== currentTenantId && tenant.id !== centralTenantId);

@@ -35,6 +35,7 @@ const UpdateItemOwnershipModal = ({
   targetTenantId,
   instanceId,
 }) => {
+  console.log({targetTenantId})
   const { formatMessage } = useIntl();
   const [targetLocation, setTargetLocation] = useState(null);
   const [targetHolding, setTargetHolding] = useState(null);

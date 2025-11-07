@@ -5,16 +5,13 @@ import {
   useParams,
 } from 'react-router-dom';
 
-import { useStripes } from '@folio/stripes/core';
-
 import useItemModalsContext from '../useItemModalsContext';
 import {
   itemStatusesMap,
   NOT_REMOVABLE_ITEM_STATUSES,
 } from '../../../constants';
 
-const useItemActions = ({ initialTenantId }) => {
-  const stripes = useStripes();
+const useItemActions = ({ initialTenantId, tenantTo, tenantFrom }) => {
   const history = useHistory();
   const location = useLocation();
   const params = useParams();
@@ -33,13 +30,13 @@ const useItemActions = ({ initialTenantId }) => {
     (e) => {
       if (e) e.preventDefault();
 
-      const tenantFrom = stripes.okapi.tenant;
       const { id, holdingsrecordid, itemid } = params;
 
       history.push({
         pathname: `/inventory/edit/${id}/${holdingsrecordid}/${itemid}`,
         search: location.search,
         state: {
+          tenantTo,
           tenantFrom,
           initialTenantId,
         }
@@ -49,12 +46,12 @@ const useItemActions = ({ initialTenantId }) => {
   const handleCopy = useCallback(
     () => {
       const { itemid, id, holdingsrecordid } = params;
-      const tenantFrom = stripes.okapi.tenant;
 
       history.push({
         pathname: `/inventory/copy/${id}/${holdingsrecordid}/${itemid}`,
         search: location.search,
         state: {
+          tenantTo,
           tenantFrom,
           initialTenantId,
         },
