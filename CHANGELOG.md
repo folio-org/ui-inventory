@@ -72,6 +72,8 @@ UIIN-3437.
 * Confirmation alert is not displayed when moving holdings linked to the PO line. Fixes UIIN-3523.
 * Add a success toast when “Stop items movement within an instance” action is invoked. Refs UIIN-3534.
 * Change show time of success message to default after exporting the Instance (MARC). Fixes UIIN-3512.
+* Escape double quotes during switching from Classifications, Call numbers browse. Fixes UIIN-3537.
+* Change default sort for items from `Barcode` to `Order`. Refs UIIN-3533.
 * Fix loading state of tags selection after successfully updated instance. Fixes UIIN-3510.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
