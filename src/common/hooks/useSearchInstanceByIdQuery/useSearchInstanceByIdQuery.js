@@ -12,7 +12,7 @@ const useSearchInstanceByIdQuery = (instanceId, { enabled = true } = {}) => {
   const [namespace] = useNamespace({ key: 'search-instance' });
 
   const queryFn = async () => {
-    const response = await ky.get(`search/instances?query=id==${instanceId}&expandAll=true`).json();
+    const response = await ky.get(`search/instances?query=id==${instanceId}`).json();
 
     if (response.totalRecords === 0) {
       throw new Error(NO_RECORDS_FOUND_ERROR); // this triggers the retry mechanism
