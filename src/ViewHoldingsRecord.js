@@ -36,6 +36,8 @@ import {
   Callout,
   PaneMenu,
   Paneset,
+  NoValue,
+  FormattedDate,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -62,7 +64,6 @@ import {
   staffOnlyFormatter,
   getSortedNotes,
   handleKeyCommand,
-  getDate,
   switchAffiliation,
   isInstanceShadowCopy,
   omitCurrentAndCentralTenants,
@@ -970,7 +971,7 @@ class ViewHoldingsRecord extends React.Component {
                       id: 'ui-inventory.instanceRecordSubtitle',
                     }, {
                       hrid: holdingsRecord?.hrid,
-                      updatedDate: getDate(holdingsRecord?.metadata?.updatedDate),
+                      date: holdingsRecord?.metadata?.updatedDate ? <FormattedDate value={holdingsRecord?.metadata?.updatedDate} /> : <NoValue />,
                     })}
                     dismissible
                     onClose={this.onClose}
