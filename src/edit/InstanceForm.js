@@ -35,6 +35,8 @@ import {
   HasCommand,
   collapseAllSections,
   expandAllSections,
+  FormattedDate,
+  NoValue,
 } from '@folio/stripes/components';
 
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -63,7 +65,6 @@ import NatureOfContentFields from './natureOfContentFields';
 import SucceedingTitleFields from './succeedingTitleFields';
 import {
   isUserInConsortiumMode,
-  getDate,
   handleKeyCommand,
   psTitleRelationshipId,
   validateOptionalField,
@@ -277,7 +278,7 @@ class InstanceForm extends React.Component {
           id="ui-inventory.instanceRecordSubtitle"
           values={{
             hrid,
-            updatedDate: getDate(updatedDate),
+            date: updatedDate ? <FormattedDate value={updatedDate} /> : <NoValue />,
           }}
         />
       </span>
