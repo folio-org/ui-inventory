@@ -76,6 +76,7 @@ UIIN-3437.
 * Change default sort for items from `Barcode` to `Order`. Refs UIIN-3533.
 * Fix loading state of tags selection after successfully updated instance. Fixes UIIN-3510.
 * Remove "expandAll=true" parameter from useSearchInstanceByIdQuery hook. Refs UIIN-3524.
+* Show success toast when “Stop items movement within an instance” action is invoked for drag and dropped movements. Refs UIIN-3556.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)

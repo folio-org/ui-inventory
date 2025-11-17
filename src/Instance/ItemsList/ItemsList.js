@@ -86,20 +86,22 @@ const ItemsList = ({
     resetOrderChanges,
     hasPendingChanges,
     validationErrors,
-    manualOrderChanges,
+    dirtyItemsMap,
     initializeOriginalOrders,
     updateOriginalOrders,
+    handleDndReorder,
   } = useOrderManagement({ holdingId: holding.id, tenantId });
 
   // Register order management functions with context
   useEffect(() => {
-    registerOrderManagement({
+    registerOrderManagement(holding.id, {
       applyOrderChanges,
       resetOrderChanges,
       hasPendingChanges,
       updateOriginalOrders,
+      handleDndReorder,
     });
-  }, [registerOrderManagement, applyOrderChanges, resetOrderChanges, hasPendingChanges, updateOriginalOrders]);
+  }, [registerOrderManagement, holding.id, applyOrderChanges, resetOrderChanges, hasPendingChanges, updateOriginalOrders, handleDndReorder]);
 
   const contentData = useMemo(
     () => state.holdings[holding?.id]?.itemIds.map(itemId => state.items[itemId]) || [],
@@ -152,7 +154,7 @@ const ItemsList = ({
         ifItemsSelected,
         onOrderChange: handleOrderChange,
         validationErrors,
-        changedOrdersMap: manualOrderChanges,
+        changedOrdersMap: dirtyItemsMap,
         isFetching,
       });
       const f = getFormatter(
@@ -170,7 +172,7 @@ const ItemsList = ({
         ...(isItemsMovement ? dndFormatter : {}),
       };
     },
-    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected, handleOrderChange, validationErrors, manualOrderChanges],
+    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected, handleOrderChange, validationErrors, dirtyItemsMap],
   );
   const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
     const amount = (direction === 'next') ? askAmount : -askAmount;
