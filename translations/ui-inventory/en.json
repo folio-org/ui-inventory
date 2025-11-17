@@ -253,7 +253,7 @@
   "instanceRecordWithType": "Instance record ({instanceTypeName})",
   "instanceRecordTitle": "Instance • {title} {publisherAndDate}",
   "consortia.instanceRecordTitle": "{isShared, select, false {Local} true {Shared} other {}} instance • {title} {publisherAndDate}",
-  "instanceRecordSubtitle": "{hrid} • Last updated: {updatedDate}",
+  "instanceRecordSubtitle": "{hrid} • Last updated: {date}",
   "instanceRecordRequestsTitle": "Requests on items - {instanceResourceTitle}, {instancePublicationDate}",
   "instanceRecordRequestsSubtitle": "{count} items found",
   "contentData": "Content data",
