@@ -326,7 +326,7 @@ export const convertArrayToBlocks = elements => (!isEmpty(elements)
   ? elements.map((line, i) => (line ? <div key={i}>{line}</div> : <NoValue />))
   : <NoValue />);
 
-export const getDate = dateValue => {
+export const getUTCDate = dateValue => {
   return dateValue ? (
     <FormattedUTCDate
       value={dateValue}
