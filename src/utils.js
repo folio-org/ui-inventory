@@ -333,7 +333,7 @@ export const getUTCDate = dateValue => {
       month="numeric"
       year="numeric"
     />
-  ) : <NoValue />;
+  ) : '-';
 };
 
 export const getDateWithTime = dateValue => {
