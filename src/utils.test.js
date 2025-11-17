@@ -3,7 +3,6 @@ import '../test/jest/__mock__';
 import { FormattedMessage } from 'react-intl';
 
 import { updateTenant } from '@folio/stripes/core';
-import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
 
 import buildStripes from '../test/jest/__mock__/stripesCore.mock';
 
@@ -22,11 +21,7 @@ import {
   marshalInstance,
   getIsVersionHistoryEnabled,
 } from './utils';
-import {
-  CONTENT_TYPE_HEADER,
-  OKAPI_TOKEN_HEADER,
-  VERSION_HISTORY_ENABLED_SETTING,
-} from './constants';
+import { VERSION_HISTORY_ENABLED_SETTING } from './constants';
 
 describe('validateRequiredField', () => {
   const expectedResult = <FormattedMessage id="ui-inventory.hridHandling.validation.enterValue" />;
