@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import {
   includes,
@@ -334,7 +333,7 @@ export const getUTCDate = dateValue => {
       month="numeric"
       year="numeric"
     />
-  ) : '-';
+  ) : <NoValue />;
 };
 
 export const getDateWithTime = dateValue => {
