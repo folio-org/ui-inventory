@@ -75,6 +75,7 @@ UIIN-3437.
 * Escape double quotes during switching from Classifications, Call numbers browse. Fixes UIIN-3537.
 * Change default sort for items from `Barcode` to `Order`. Refs UIIN-3533.
 * Fix loading state of tags selection after successfully updated instance. Fixes UIIN-3510.
+* Remove "expandAll=true" parameter from useSearchInstanceByIdQuery hook. Refs UIIN-3524.
 * "Last updated" in view panes displays date in UTC instead of tenant time. Fixes UIIN-3517.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
