@@ -18,7 +18,7 @@ import useStaffMembersQuery from '../../../hooks/useStaffMembersQuery';
 
 import {
   areAllFieldsEmpty,
-  getDate,
+  getUTCDate,
   getDateWithTime,
 } from '../../../utils';
 
@@ -148,9 +148,9 @@ const useItemDetailsData = ({
   const condition = useMemo(() => ({
     numberOfMissingPieces: item?.numberOfMissingPieces,
     missingPieces: item?.missingPieces,
-    missingPiecesDate: getDate(item?.missingPiecesDate),
+    missingPiecesDate: getUTCDate(item?.missingPiecesDate),
     itemDamagedStatus: refLookup(referenceTables.itemDamagedStatuses, item?.itemDamagedStatusId)?.name,
-    itemDamagedStatusDate: getDate(item?.itemDamagedStatusDate),
+    itemDamagedStatusDate: getUTCDate(item?.itemDamagedStatusDate),
   }), [item, referenceTables]);
 
   const itemNotes = useMemo(() => ({

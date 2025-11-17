@@ -21,6 +21,8 @@ import {
   checkScope,
   HasCommand,
   PaneMenu,
+  FormattedDate,
+  NoValue,
 } from '@folio/stripes/components';
 import {
   AppIcon,
@@ -57,7 +59,6 @@ import {
 } from '../../common';
 
 import {
-  getDate,
   switchAffiliation,
   isInstanceShadowCopy,
   omitCurrentAndCentralTenants,
@@ -173,15 +174,22 @@ const ViewItem = ({
       }}
     />
   ), [item]);
-  const renderPaneSub = useCallback(() => (
-    <FormattedMessage
-      id="ui-inventory.instanceRecordSubtitle"
-      values={{
-        hrid: item.hrid,
-        updatedDate: getDate(item.metadata?.updatedDate),
-      }}
-    />
-  ), [item]);
+  const renderPaneSub = useCallback(
+    () => {
+      const updatedDate = item?.metadata?.updatedDate;
+
+      return (
+        <FormattedMessage
+          id="ui-inventory.instanceRecordSubtitle"
+          values={{
+            hrid: item?.hrid,
+            date: updatedDate ? <FormattedDate value={updatedDate} /> : <NoValue />,
+          }}
+        />
+      );
+    },
+    [item?.hrid, item?.metadata?.updatedDate],
+  );
 
   const renderActionMenu = useCallback(({ onToggle }) => {
     if (isVersionHistoryOpen) return null;
