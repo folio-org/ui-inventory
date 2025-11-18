@@ -12,7 +12,6 @@ import {
   useInventoryState,
 } from '../InventoryProvider';
 import useInventoryAPI from './useInventoryAPI';
-import { useItemsUpdateMutation } from '../../hooks';
 import * as RemoteStorage from '../../RemoteStorageService';
 import useMoveCommands from './useMoveCommands';
 import { OrderManagementContext } from '../../contexts';
@@ -61,7 +60,7 @@ const parseItemId = (itemId) => {
 const useDndHandlers = () => {
   const state = useInventoryState();
   const actions = useInventoryActions();
-  const { updateOriginalOrders } = useContext(OrderManagementContext);
+  const { getOrderManagement } = useContext(OrderManagementContext);
   const checkFromRemoteToNonRemote = RemoteStorage.Check.useByHoldings();
 
   const {
@@ -74,7 +73,6 @@ const useDndHandlers = () => {
     clear,
   } = useSelection();
   const { moveItems } = useInventoryAPI();
-  const { mutateAsync: updateItems } = useItemsUpdateMutation();
   const {
     moveSelectedItemsToHolding,
     moveSelectedHoldingsToInstance,
@@ -317,27 +315,15 @@ const useDndHandlers = () => {
           const orderChanged = JSON.stringify(currentItemIds) !== JSON.stringify(newItemIds);
 
           if (orderChanged) {
+            // Update local state with new item order
             actions.reorderItems({ holdingId: fromHoldingId, itemIds: newItemIds });
 
-            const itemsToUpdate = newItemIds.map((itemId, index) => {
-              const item = state.items[itemId];
-              return {
-                id: itemId,
-                _version: item._version,
-                order: index + 1,
-                holdingId: item.holdingId,
-              };
-            });
+            const orderManagement = getOrderManagement(fromHoldingId);
 
-            try {
-              await updateItems({ items: itemsToUpdate });
-              // Update original orders after successful reordering
-              if (updateOriginalOrders) {
-                updateOriginalOrders();
-              }
-            } catch {
-              actions.previewCancel();
-              return;
+            // Update item order properties in state and add to pending changes
+            // This will update the order input values and defer API call until "Stop movement"
+            if (orderManagement.handleDndReorder) {
+              orderManagement.handleDndReorder(newItemIds, draggedItemIds);
             }
           }
         }
@@ -380,7 +366,7 @@ const useDndHandlers = () => {
       fromHoldingRef.current = null;
       toHoldingRef.current = null;
     }
-  }, [actions, clear, findContainerForItem, moveItems, state.holdings, state.instances, isDualInstanceMode, isSingleInstanceMode, checkFromRemoteToNonRemote]);
+  }, [actions, clear, findContainerForItem, moveItems, state.holdings, state.instances, isDualInstanceMode, isSingleInstanceMode, checkFromRemoteToNonRemote, getOrderManagement, state.items]);
 
   return { onDragStart, onDragOver, onDragEnd, activeDragItem, activeDragHolding };
 };

@@ -45,7 +45,7 @@ describe('OrderManagementProvider', () => {
       useEffect(() => {
         if (!registered) {
           act(() => {
-            registerOrderManagement({
+            registerOrderManagement('holding-1', {
               applyOrderChanges: jest.fn(),
               resetOrderChanges: jest.fn(),
               hasPendingChanges: true,
@@ -76,9 +76,9 @@ describe('OrderManagementProvider', () => {
       useEffect(() => {
         act(() => {
           // Test various edge cases
-          registerOrderManagement({});
-          registerOrderManagement(null);
-          registerOrderManagement(undefined);
+          registerOrderManagement('holding-1', {});
+          registerOrderManagement('holding-2', null);
+          registerOrderManagement('holding-3', undefined);
         });
       }, [registerOrderManagement]);
 
