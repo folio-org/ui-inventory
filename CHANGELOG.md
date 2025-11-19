@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## [13.0.11](https://github.com/folio-org/ui-inventory/tree/v13.0.11) (IN PROGRESS)
+## [13.0.11](https://github.com/folio-org/ui-inventory/tree/v13.0.11) (2025-11-19)
 
 * Add source URI field to instance full-record display and (disabled) to edit form. Fixes UIIN-3287. Backported in UIIN-3511.
 
