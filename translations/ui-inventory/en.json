@@ -483,6 +483,7 @@
   "modesOfIssuance": "Modes of issuance",
   "selectModeOfIssuance": "Select mode of issuance",
   "metadataSource": "Source",
+  "sourceUri": "Instance source URI",
   "tba": "TBA",
   "catalogedDate": "Cataloged date",
   "instanceStatusTerm": "Instance status term",

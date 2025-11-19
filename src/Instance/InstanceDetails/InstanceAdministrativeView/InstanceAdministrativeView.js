@@ -12,6 +12,7 @@ import {
   KeyValue,
   Highlighter,
   NoValue,
+  TextLink,
 } from '@folio/stripes/components';
 import {
   ViewMetaData,
@@ -138,6 +139,16 @@ const InstanceAdministrativeView = ({
             label={<FormattedMessage id="ui-inventory.metadataSource" />}
             value={getSourceValue(instance.source)}
           />
+        </Col>
+
+        <Col xs={3}>
+          <KeyValue
+            label={<FormattedMessage id="ui-inventory.sourceUri" />}
+          >
+            <TextLink href={instance.sourceUri} target="_blank" rel="noreferrer">
+              {instance.sourceUri || <NoValue />}
+            </TextLink>
+          </KeyValue>
         </Col>
 
         <Col xs={3}>

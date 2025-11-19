@@ -606,8 +606,7 @@ class InstanceForm extends React.Component {
                           </Row>
                           <Row>
                             <Col
-                              xs={10}
-                              sm={5}
+                              xs={5}
                             >
                               <Field
                                 name="catalogedDate"
@@ -616,6 +615,17 @@ class InstanceForm extends React.Component {
                                 component={Datepicker}
                                 label={<FormattedMessage id="ui-inventory.catalogedDate" />}
                                 disabled={this.isFieldBlocked('catalogedDate')}
+                              />
+                            </Col>
+                            <Col
+                              xs={5}
+                            >
+                              <Field
+                                name="sourceUri"
+                                component={TextArea}
+                                rows="1"
+                                label={<FormattedMessage id="ui-inventory.sourceUri" />}
+                                disabled
                               />
                             </Col>
                           </Row>
