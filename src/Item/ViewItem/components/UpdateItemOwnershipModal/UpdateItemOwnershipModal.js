@@ -45,7 +45,7 @@ const UpdateItemOwnershipModal = ({
       label: tenant.name,
       value: tenant.id,
     }));
-  }, []);
+  }, [tenantsList]);
 
   const onAffiliationChange = useCallback(fieldProps => value => {
     const targetTenant = tenantsList.find(tenant => tenant.id === value);
