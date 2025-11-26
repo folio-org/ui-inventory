@@ -66,7 +66,6 @@ UIIN-3437.
 * The 'View source' option is disabled after overlaying the instance with 'FOLIO' source. Fixes UIIN-3531.
 * "Something went wrong" error when open "Version history" of edited Item having null in "Source" of Circulation note. Fixes UIIN-3529.
 * When setting an instance for deletion warning banner is not displayed. Fixes UIIN-3532.
-* Do not escape backslashes in Browse queries. Fixes UIIN-3530.
 * Update "Edit in Linked Data Editor" handler to make API request. Refs UIIN-3480.
 * Clear Browse filters when switching between browse types. Fixes UIIN-3499.
 * Confirmation alert is not displayed when moving holdings linked to the PO line. Fixes UIIN-3523.
