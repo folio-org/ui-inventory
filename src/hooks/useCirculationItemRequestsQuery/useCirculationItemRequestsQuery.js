@@ -10,8 +10,8 @@ import { REQUEST_OPEN_STATUSES } from '../../constants';
 
 const requestsStatusString = map(REQUEST_OPEN_STATUSES, requestStatus => `"${requestStatus}"`).join(' or ');
 
-const useCirculationItemRequestsQuery = (itemId) => {
-  const ky = useOkapiKy();
+const useCirculationItemRequestsQuery = (itemId, { tenantId = '' } = {}) => {
+  const ky = useOkapiKy({ tenant: tenantId });
   const [namespace] = useNamespace({ key: 'circulation-item-requests' });
 
 

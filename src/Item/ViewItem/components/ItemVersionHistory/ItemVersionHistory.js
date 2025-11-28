@@ -61,6 +61,7 @@ export const createFieldFormatter = (referenceData, circulationHistory) => ({
 const ItemVersionHistory = ({
   item,
   onClose,
+  tenantId,
 }) => {
   const { formatMessage } = useIntl();
   const referenceData = useContext(DataContext);
@@ -73,7 +74,7 @@ const ItemVersionHistory = ({
     isLoadingMore,
     fetchNextPage,
     hasNextPage,
-  } = useItemAuditDataQuery(itemId);
+  } = useItemAuditDataQuery(itemId, { tenantId });
   const {
     actionsMap,
     versions,
