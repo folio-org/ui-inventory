@@ -125,6 +125,23 @@ const reducer = (state, action) => {
       };
     }
 
+    case 'UPDATE_ITEMS_ORDER': {
+      const { itemOrders } = action.payload || {};
+      if (!itemOrders || typeof itemOrders !== 'object') return state;
+
+      const items = { ...state.items };
+      let hasChanges = false;
+
+      Object.entries(itemOrders).forEach(([itemId, order]) => {
+        if (items[itemId] && items[itemId].order !== order) {
+          items[itemId] = { ...items[itemId], order };
+          hasChanges = true;
+        }
+      });
+
+      return hasChanges ? { ...state, items } : state;
+    }
+
     case 'MOVE_ITEM': {
       const { itemId, toHoldingId, toIndex } = action.payload || {};
       if (!itemId || !toHoldingId) return state;
@@ -259,6 +276,7 @@ const InventoryProvider = ({
     moveItems: (opts) => dispatch({ type: 'MOVE_ITEMS', payload: opts }),
     moveHolding: (opts) => dispatch({ type: 'MOVE_HOLDING', payload: opts }),
     reorderItems: (opts) => dispatch({ type: 'REORDER_ITEMS', payload: opts }),
+    updateItemsOrder: (opts) => dispatch({ type: 'UPDATE_ITEMS_ORDER', payload: opts }),
 
     previewStart: () => dispatch({ type: 'PREVIEW_START' }),
     previewMoveItems: (opts) => dispatch({ type: 'PREVIEW_MOVE_ITEMS', payload: opts }),

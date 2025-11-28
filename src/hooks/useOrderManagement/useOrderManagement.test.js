@@ -9,7 +9,7 @@ import { CalloutContext } from '@folio/stripes/core';
 
 import useOrderManagement from './useOrderManagement';
 import useItemsUpdateMutation from '../useItemsUpdateMutation';
-import { useInventoryState } from '../../dnd/InventoryProvider';
+import { useInventoryState, useInventoryActions } from '../../dnd/InventoryProvider';
 
 const mockIntl = {
   formatMessage: jest.fn(({ id }) => `translated.${id}`),
@@ -39,6 +39,7 @@ jest.mock('../useItemsUpdateMutation', () => jest.fn());
 
 jest.mock('../../dnd/InventoryProvider', () => ({
   useInventoryState: jest.fn(),
+  useInventoryActions: jest.fn(),
 }));
 
 jest.mock('react', () => ({
@@ -92,6 +93,10 @@ describe('useOrderManagement', () => {
     { id: 'item-3', order: '3', holdingId: 'holding-1' },
   ];
 
+  const mockInventoryActions = {
+    updateItemsOrder: jest.fn(),
+  };
+
   beforeEach(() => {
     useIntl.mockReturnValue(mockIntl);
     useContext.mockImplementation((context) => {
@@ -101,6 +106,7 @@ describe('useOrderManagement', () => {
       return undefined;
     });
     useInventoryState.mockReturnValue(mockInventoryState);
+    useInventoryActions.mockReturnValue(mockInventoryActions);
     useItemsUpdateMutation.mockReturnValue({
       mutateAsync: mockUpdateItems,
     });

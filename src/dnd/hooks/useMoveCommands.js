@@ -13,6 +13,7 @@ import { useConfirmBridge } from '../ConfirmationBridge';
 import useInventoryAPI from './useInventoryAPI';
 import useReferenceData from '../../hooks/useReferenceData';
 import * as RemoteStorage from '../../RemoteStorageService';
+import ModalHoldingsList from '../../Instance/Move/ModalHoldingsList';
 
 import { callNumberLabel } from '../../utils';
 
@@ -45,7 +46,7 @@ const useMoveCommands = () => {
     const labelLocation = targetHolding.permanentLocationId ? locationsById[targetHolding.permanentLocationId]?.name : '';
 
     const movingMessage = intl.formatMessage(
-      { id: 'ui-inventory.moveItems.modal.message.items' },
+      { id: 'ui-inventory.moveEntity.modal.message.items' },
       {
         count: itemsCount,
         targetName: <b>{`${labelLocation} ${callNumber}`}</b>
@@ -120,10 +121,18 @@ const useMoveCommands = () => {
   const setHoldingsConfirmationMessage = useCallback((hasLinkedPOLs, holdingsIds, holdingsCount, fromInstanceId, toInstanceId) => {
     let movingMessage;
     if (hasLinkedPOLs) {
-      movingMessage = intl.formatMessage({ id: 'ui-inventory.moveItems.modal.message.hasLinkedPOLsOrHoldings' });
+      movingMessage = (
+        <>
+          { intl.formatMessage({ id: 'ui-inventory.moveEntity.modal.message.hasLinkedPOLsOrHoldings' }) }
+          <ModalHoldingsList
+            holdings={holdingsIds.map(id => state.holdings[id])}
+            instanceId={fromInstanceId}
+          />
+        </>
+      );
     } else {
       movingMessage = intl.formatMessage(
-        { id: 'ui-inventory.moveItems.modal.message.holdings' },
+        { id: 'ui-inventory.moveEntity.modal.message.holdings' },
         {
           count: holdingsCount,
           targetName: <b>{state.instances[toInstanceId]?.title}</b>
@@ -132,7 +141,7 @@ const useMoveCommands = () => {
     }
 
     setMoveModalMessage(movingMessage);
-  }, [state.instances]);
+  }, [state.instances, locationsById, intl]);
 
   const confirmHoldingsMove = (toInstanceId, toInstanceHrid, finalIds, handleSuccess) => async () => {
     const onSuccess = () => {

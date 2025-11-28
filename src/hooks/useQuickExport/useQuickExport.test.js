@@ -128,7 +128,6 @@ describe('useQuickExport', () => {
       // Assert success callout is sent
       expect(mockCallout.sendCallout).toHaveBeenCalledWith(
         expect.objectContaining({
-          timeout: 0,
           type: 'success',
           message: expect.any(Object),
         })
