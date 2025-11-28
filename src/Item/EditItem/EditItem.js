@@ -44,7 +44,6 @@ const EditItem = ({
   const callout = useCallout();
   const stripes = useStripes();
   const queryParams = queryString.parse(location.search);
-  console.log(location?.state);
 
   const setKeepEditing = useCallback((value) => {
     keepEditing.current = value;

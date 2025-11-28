@@ -21,8 +21,6 @@ import {
   checkScope,
   HasCommand,
   PaneMenu,
-  MessageBanner,
-  Layout,
 } from '@folio/stripes/components';
 import {
   AppIcon,
@@ -87,9 +85,7 @@ const ViewItem = ({
   initialTenantId,
   tenantTo,
   tenantFrom,
-  isInNewTab,
 }) => {
-  console.log({ tenantTo, initialTenantId, tenantFrom });
   const stripes = useStripes();
   const location = useLocation();
   const history = useHistory();
@@ -268,13 +264,6 @@ const ViewItem = ({
           actionMenu={renderActionMenu}
           lastMenu={renderLastMenu()}
         >
-          {isInNewTab && (
-            <Layout className="padding-all-gutter">
-              <MessageBanner type="warning">
-                <FormattedMessage id="ui-inventory.warning.instance.importingRecord" />
-              </MessageBanner>
-            </Layout>
-          )}
           <ItemModals
             onSelectNewItemOwnership={setUpdateOwnershipData}
             onConfirmHandleUpdateOwnership={onConfirmHandleUpdateOwnership}
