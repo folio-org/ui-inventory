@@ -9,8 +9,8 @@ export const ConfirmationModal = props => {
 
   return (
     <OriginalConfirmationModal
-      heading={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.title' })}
-      confirmLabel={intl.formatMessage({ id: 'ui-inventory.moveItems.modal.confirmLabel' })}
+      heading={intl.formatMessage({ id: 'ui-inventory.moveEntity.modal.title' })}
+      confirmLabel={intl.formatMessage({ id: 'ui-inventory.moveEntity.modal.confirmLabel' })}
       bodyTag="div"
       {...props}
     />

@@ -9,16 +9,12 @@ import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { keyBy } from 'lodash';
 
-import { itemStatuses } from '@folio/stripes-inventory-components';
 import {
-  Icon,
   MCLPagingTypes,
   MultiColumnList,
-  NoValue,
 } from '@folio/stripes/components';
 
 import ItemRow from './ItemRow';
-import ItemBarcode from './ItemBarcode';
 import DraggableItemsList, {
   draggableVisibleColumns,
   getDraggableColumnMapping,
@@ -42,84 +38,14 @@ import {
   DEFAULT_ITEM_TABLE_SORTBY_FIELD,
   ITEM_TABLE_PAGE_AMOUNT,
 } from '../../constants';
+import {
+  getColumnMapping,
+  getColumnWidths,
+  getFormatter,
+  getTableAria,
+  getVisibleColumns,
+} from './utils';
 
-const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
-
-const getFormatter = (
-  intl,
-  holdingId,
-  locationsById,
-  holdingsMapById,
-  isBarcodeAsHotlink,
-  isFetching,
-  tenantId,
-) => ({
-  'order': (item) => item.order || <NoValue />,
-  'barcode': item => {
-    return (
-      item.id && (
-        <>
-          <ItemBarcode
-            item={item}
-            holdingId={item.holdingsRecordId}
-            instanceId={holdingsMapById[item.holdingsRecordId]?.instanceId}
-            isBarcodeAsHotlink={isBarcodeAsHotlink && !isFetching}
-            tenantId={tenantId}
-          />
-          {item.discoverySuppress &&
-            <span>
-              <Icon
-                size="medium"
-                icon="exclamation-circle"
-                status="warn"
-              />
-            </span>
-          }
-        </>)
-    ) || <NoValue />;
-  },
-  'status': x => {
-    if (!x.status?.name) return <NoValue />;
-
-    const statusName = x.status.name;
-    const itemStatusTranslationId = itemStatuses.find(({ value }) => value === statusName)?.label;
-
-    return itemStatusTranslationId ? intl.formatMessage({ id: itemStatusTranslationId }) : statusName;
-  },
-  'copyNumber': ({ copyNumber }) => copyNumber || <NoValue />,
-  'loanType': x => x.temporaryLoanType?.name || x.permanentLoanType?.name || <NoValue />,
-  'effectiveLocation': x => {
-    const effectiveLocation = locationsById[x.effectiveLocation?.id];
-    return effectiveLocation?.isActive ?
-      effectiveLocation?.name || <NoValue /> :
-      intl.formatMessage(
-        { id: 'ui-inventory.inactive.gridCell' },
-        { location: effectiveLocation?.name }
-      );
-  },
-  'enumeration': x => x.enumeration || <NoValue />,
-  'chronology': x => x.chronology || <NoValue />,
-  'volume': x => x.volume || <NoValue />,
-  'yearCaption': x => x.yearCaption?.join(', ') || <NoValue />,
-  'materialType': x => x.materialType?.name || <NoValue />,
-});
-
-const getColumnMapping = (intl) => ({
-  'order': intl.formatMessage({ id: 'ui-inventory.item.order' }),
-  'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
-  'status': intl.formatMessage({ id: 'ui-inventory.status' }),
-  'copyNumber': intl.formatMessage({ id: 'ui-inventory.copyNumber' }),
-  'loanType': intl.formatMessage({ id: 'ui-inventory.loanType' }),
-  'effectiveLocation': intl.formatMessage({ id: 'ui-inventory.effectiveLocationShort' }),
-  'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
-  'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
-  'volume': intl.formatMessage({ id: 'ui-inventory.volume' }),
-  'yearCaption': intl.formatMessage({ id: 'ui-inventory.yearCaption' }),
-  'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
-});
-
-const visibleColumns = draggableVisibleColumns.filter(col => !['dnd', 'select'].some(it => col === it));
-const columnWidths = { order: '80px', select: '60px', barcode: '160px' };
 const rowMetadata = ['id', 'holdingsRecordId'];
 
 const ItemsList = ({
@@ -160,20 +86,22 @@ const ItemsList = ({
     resetOrderChanges,
     hasPendingChanges,
     validationErrors,
-    manualOrderChanges,
+    dirtyItemsMap,
     initializeOriginalOrders,
     updateOriginalOrders,
+    handleDndReorder,
   } = useOrderManagement({ holdingId: holding.id, tenantId });
 
   // Register order management functions with context
   useEffect(() => {
-    registerOrderManagement({
+    registerOrderManagement(holding.id, {
       applyOrderChanges,
       resetOrderChanges,
       hasPendingChanges,
       updateOriginalOrders,
+      handleDndReorder,
     });
-  }, [registerOrderManagement, applyOrderChanges, resetOrderChanges, hasPendingChanges, updateOriginalOrders]);
+  }, [registerOrderManagement, holding.id, applyOrderChanges, resetOrderChanges, hasPendingChanges, updateOriginalOrders, handleDndReorder]);
 
   const contentData = useMemo(
     () => state.holdings[holding?.id]?.itemIds.map(itemId => state.items[itemId]) || [],
@@ -226,7 +154,7 @@ const ItemsList = ({
         ifItemsSelected,
         onOrderChange: handleOrderChange,
         validationErrors,
-        changedOrdersMap: manualOrderChanges,
+        changedOrdersMap: dirtyItemsMap,
         isFetching,
       });
       const f = getFormatter(
@@ -244,7 +172,7 @@ const ItemsList = ({
         ...(isItemsMovement ? dndFormatter : {}),
       };
     },
-    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected, handleOrderChange, validationErrors, manualOrderChanges],
+    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected, handleOrderChange, validationErrors, dirtyItemsMap],
   );
   const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
     const amount = (direction === 'next') ? askAmount : -askAmount;
@@ -268,6 +196,15 @@ const ItemsList = ({
     setSortByQuery(`${newItemsSorting.isDesc ? '-' : ''}${newItemsSorting.column}`);
   }, [itemsSorting]);
 
+  const visibleColumns = useMemo(
+    () => (isItemsMovement ? draggableVisibleColumns : getVisibleColumns()),
+    [isItemsMovement, draggableVisibleColumns],
+  );
+  const nonInteractiveHeaders = useMemo(
+    () => (isItemsMovement ? getVisibleColumns() : ['loanType', 'effectiveLocation', 'materialType']),
+    [isItemsMovement],
+  );
+
   const renderFormatter = (props) => {
     return (
       <ItemRow
@@ -285,15 +222,15 @@ const ItemsList = ({
       contentData={contentData}
       rowMetadata={rowMetadata}
       formatter={formatter}
-      visibleColumns={isItemsMovement ? draggableVisibleColumns : visibleColumns}
+      visibleColumns={visibleColumns}
       columnMapping={columnMapping}
       ariaLabel={ariaLabel}
       interactive={false}
       onNeedMoreData={onNeedMoreData}
-      columnWidths={columnWidths}
+      columnWidths={getColumnWidths()}
       pagingType={MCLPagingTypes.PREV_NEXT}
       totalCount={total}
-      nonInteractiveHeaders={isItemsMovement ? visibleColumns : ['loanType', 'effectiveLocation', 'materialType']}
+      nonInteractiveHeaders={nonInteractiveHeaders}
       onHeaderClick={onHeaderClick}
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}

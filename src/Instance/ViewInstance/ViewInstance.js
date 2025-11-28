@@ -231,8 +231,9 @@ const ViewInstance = (props) => {
     onCopy,
   });
 
-  const mutateInstance = async (entity, { onError }) => {
-    await mutateEntity(entity, { onSuccess: refetch, onError });
+  const mutateInstance = async (entity, { onError, onSuccess }) => {
+    await mutateEntity(entity, { onSuccess, onError });
+    await refetch();
   };
 
   const flattenedPermissions = useMemo(() => flattenCentralTenantPermissions(centralTenantPermissions), [centralTenantPermissions]);

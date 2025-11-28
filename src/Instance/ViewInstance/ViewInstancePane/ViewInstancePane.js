@@ -14,9 +14,11 @@ import PropTypes from 'prop-types';
 
 import {
   IconButton,
+  NoValue,
   Pane,
   PaneCloseLink,
   PaneMenu,
+  FormattedDate,
 } from '@folio/stripes/components';
 import {
   AppIcon,
@@ -35,7 +37,6 @@ import { useSharedInstancesQuery } from '../../hooks';
 import { useAuditSettings } from '../../../hooks';
 
 import {
-  getDate,
   getIsVersionHistoryEnabled,
   isInstanceShadowCopy,
   isUserInConsortiumMode,
@@ -98,15 +99,19 @@ const ViewInstancePane = ({
   );
 
   const paneSubTitle = useMemo(
-    () => (
-      <FormattedMessage
-        id="ui-inventory.instanceRecordSubtitle"
-        values={{
-          hrid: instance?.hrid,
-          updatedDate: getDate(instance?.metadata?.updatedDate),
-        }}
-      />
-    ),
+    () => {
+      const updatedDate = instance?.metadata?.updatedDate;
+
+      return (
+        <FormattedMessage
+          id="ui-inventory.instanceRecordSubtitle"
+          values={{
+            hrid: instance?.hrid,
+            date: updatedDate ? <FormattedDate value={updatedDate} /> : <NoValue />,
+          }}
+        />
+      );
+    },
     [instance?.hrid, instance?.metadata?.updatedDate],
   );
 
