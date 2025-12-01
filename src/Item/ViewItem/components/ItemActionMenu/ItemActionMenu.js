@@ -205,6 +205,8 @@ ItemActionMenu.propTypes = {
   tenants: PropTypes.arrayOf(PropTypes.object).isRequired,
   isSharedInstance: PropTypes.bool,
   initialTenantId: PropTypes.string,
+  tenantTo: PropTypes.string,
+  tenantFrom: PropTypes.string,
 };
 
 export default ItemActionMenu;

@@ -18,7 +18,7 @@ const useItemAuditDataQuery = (itemId, { tenantId = '' } = {}) => {
     fetchNextPage,
     ...rest
   } = useInfiniteQuery({
-    queryKey: [namespace, itemId],
+    queryKey: [namespace, itemId, tenantId],
     queryFn: ({ pageParam }) => ky.get(`audit-data/inventory/item/${itemId}`, {
       searchParams: {
         ...(pageParam && { eventTs: pageParam }),

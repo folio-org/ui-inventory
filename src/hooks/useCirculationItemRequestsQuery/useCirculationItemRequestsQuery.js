@@ -16,7 +16,7 @@ const useCirculationItemRequestsQuery = (itemId, { tenantId = '' } = {}) => {
 
 
   const { isLoading, data: requests = {}, isFetching } = useQuery(
-    [namespace, itemId],
+    [namespace, itemId, tenantId],
     () => ky.get('circulation/requests', {
       searchParams: {
         query: `(itemId==${itemId}) and status==(${requestsStatusString}) sortby requestDate desc`,

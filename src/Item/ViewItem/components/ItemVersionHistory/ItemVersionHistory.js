@@ -160,6 +160,7 @@ const ItemVersionHistory = ({
 ItemVersionHistory.propTypes = {
   item: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
+  tenantId: PropTypes.string,
 };
 
 export default ItemVersionHistory;

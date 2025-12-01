@@ -10,7 +10,7 @@ const useTagSettingsQuery = ({ tenantId = '' } = {}) => {
   const [namespace] = useNamespace({ key: 'tag-settings' });
 
   const { isLoading, data: tagSettings = {}, isFetching } = useQuery(
-    [namespace],
+    [namespace, tenantId],
     () => ky.get('configurations/entries?query=(module==TAGS and configName==tags_enabled)').json(),
   );
 

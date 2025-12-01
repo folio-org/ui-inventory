@@ -231,9 +231,9 @@ const ViewItem = ({
   }, [settings, isVersionHistoryOpen]);
 
   const onCloseViewItem = useCallback(async () => {
-    const tenantFrom = location.state?.initialTenantId || stripes.okapi.tenant;
+    const fromTenant = location.state?.initialTenantId || stripes.okapi.tenant;
 
-    await switchAffiliation(stripes, tenantFrom, () => goBackToInstance(tenantFrom));
+    await switchAffiliation(stripes, fromTenant, () => goBackToInstance(fromTenant));
   }, [location, stripes]);
 
   const onDeleteItem = async (itemToDeleteId) => {
@@ -318,6 +318,7 @@ ViewItem.propTypes = {
   isInstanceShared: PropTypes.bool,
   initialTenantId: PropTypes.string,
   tenantTo: PropTypes.string,
+  tenantFrom: PropTypes.string,
 };
 
 export default ViewItem;
