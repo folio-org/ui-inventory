@@ -59,7 +59,11 @@ describe('useItemActions', () => {
   });
 
   it('should handle edit action', () => {
-    const { result } = renderHook(() => useItemActions({ initialTenantId: 'initial-tenant' }));
+    const { result } = renderHook(() => useItemActions({
+      initialTenantId: 'initial-tenant',
+      tenantFrom: 'from-tenant',
+      tenantTo: 'to-tenant',
+    }));
     const event = { preventDefault: jest.fn() };
 
     result.current.handleEdit(event);
@@ -69,14 +73,19 @@ describe('useItemActions', () => {
       pathname: '/inventory/edit/instance-id/holdings-id/item-id',
       search: '?query=test',
       state: {
-        tenantFrom: 'test-tenant',
+        tenantFrom: 'from-tenant',
+        tenantTo: 'to-tenant',
         initialTenantId: 'initial-tenant',
       },
     });
   });
 
   it('should handle copy action', () => {
-    const { result } = renderHook(() => useItemActions({ initialTenantId: 'initial-tenant' }));
+    const { result } = renderHook(() => useItemActions({
+      initialTenantId: 'initial-tenant',
+      tenantFrom: 'from-tenant',
+      tenantTo: 'to-tenant',
+    }));
 
     result.current.handleCopy();
 
@@ -84,7 +93,8 @@ describe('useItemActions', () => {
       pathname: '/inventory/copy/instance-id/holdings-id/item-id',
       search: '?query=test',
       state: {
-        tenantFrom: 'test-tenant',
+        tenantFrom: 'from-tenant',
+        tenantTo: 'to-tenant',
         initialTenantId: 'initial-tenant',
       },
     });

@@ -42,8 +42,8 @@ const DuplicateItem = ({
   const location = useLocation();
 
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
-  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId);
-  const { isLoading: isItemLoading, item } = useItemQuery(itemId);
+  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId, { tenantId: location?.state?.tenantTo });
+  const { isLoading: isItemLoading, item } = useItemQuery(itemId, { tenant: location?.state?.tenantTo });
   const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();
@@ -60,7 +60,11 @@ const DuplicateItem = ({
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${id}`,
       search: location.search,
-      state: { tenantTo: stripes.okapi.tenant },
+      state: {
+        tenantTo: location?.state?.tenantTo,
+        tenantFrom: location?.state?.tenantFrom,
+        initialTenantId: location?.state?.initialTenantId,
+      },
     });
   }, [location.search, instanceId]);
 
@@ -78,14 +82,15 @@ const DuplicateItem = ({
     });
   }, [callout, instanceId, holdingId]);
 
-  const { mutateItem } = useItemMutation({ onSuccess });
+  const { mutateItem } = useItemMutation({ onSuccess }, { tenantId: location?.state?.tenantTo });
 
   const goBack = useCallback(() => {
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
       search: location.search,
       state: {
-        tenantTo: stripes.okapi.tenant,
+        tenantTo: location?.state?.tenantTo,
+        tenantFrom: location?.state?.tenantFrom,
         initialTenantId: location?.state?.initialTenantId,
       },
     });

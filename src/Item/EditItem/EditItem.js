@@ -1,10 +1,11 @@
-import React, { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import queryString from 'query-string';
 
 import { useStripes } from '@folio/stripes/core';
 import {
@@ -37,11 +38,12 @@ const EditItem = ({
   const [httpError, setHttpError] = useState();
   const keepEditing = useRef(false);
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
-  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId);
-  const { isFetching: isItemLoading, item, refetch: refetchItem } = useItemQuery(itemId);
+  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId, { tenantId: location?.state?.tenantTo });
+  const { isFetching: isItemLoading, item, refetch: refetchItem } = useItemQuery(itemId, { tenant: location?.state?.tenantTo });
   const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();
+  const queryParams = queryString.parse(location.search);
 
   const setKeepEditing = useCallback((value) => {
     keepEditing.current = value;
@@ -52,7 +54,7 @@ const EditItem = ({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
       search: location.search,
       state: {
-        tenantTo: stripes.okapi.tenant,
+        tenantTo: queryParams?.tenantTo || stripes.okapi.tenant,
         initialTenantId: location?.state?.initialTenantId,
       },
     });
@@ -80,7 +82,7 @@ const EditItem = ({
     setHttpError(parsedError);
   };
 
-  const { mutateItem } = useItemMutation({ onSuccess });
+  const { mutateItem } = useItemMutation({ onSuccess }, { tenantId: location?.state?.tenantTo });
 
   const { mutateBoundWiths } = useBoundWithsMutation();
 

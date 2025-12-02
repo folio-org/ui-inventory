@@ -5,12 +5,12 @@ import {
   useOkapiKy,
 } from '@folio/stripes/core';
 
-const useTagSettingsQuery = () => {
-  const ky = useOkapiKy();
+const useTagSettingsQuery = ({ tenantId = '' } = {}) => {
+  const ky = useOkapiKy({ tenant: tenantId });
   const [namespace] = useNamespace({ key: 'tag-settings' });
 
   const { isLoading, data: tagSettings = {}, isFetching } = useQuery(
-    [namespace],
+    [namespace, tenantId],
     () => ky.get('configurations/entries?query=(module==TAGS and configName==tags_enabled)').json(),
   );
 

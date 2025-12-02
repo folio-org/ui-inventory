@@ -4,8 +4,8 @@ import {
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-const useItemMutation = (options = {}) => {
-  const ky = useOkapiKy();
+const useItemMutation = (options = {}, { tenantId = '' } = {}) => {
+  const ky = useOkapiKy({ tenant: tenantId });
 
   const { mutateAsync: mutateItemAsync } = useMutation({
     mutationFn: (item) => {
