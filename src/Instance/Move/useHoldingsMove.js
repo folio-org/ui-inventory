@@ -82,7 +82,7 @@ export const useHoldingsMove = (options = {}) => {
         if (hasErrors) {
           // Some holdings failed to move
           const errorMessage = intl.formatMessage(
-            { id: 'ui-inventory.moveItems.instance.holdings.error' },
+            { id: 'ui-inventory.moveEntity.instance.holdings.error' },
             { holdings: nonUpdatedIds.join(', ') }
           );
 
@@ -102,7 +102,7 @@ export const useHoldingsMove = (options = {}) => {
         const { holdingsRecordIds } = variables;
 
         const errorMessage = intl.formatMessage(
-          { id: 'ui-inventory.moveItems.instance.holdings.error.server' },
+          { id: 'ui-inventory.moveEntity.instance.holdings.error.server' },
           { holdings: holdingsRecordIds.join(', ') }
         );
 

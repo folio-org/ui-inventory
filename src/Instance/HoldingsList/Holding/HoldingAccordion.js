@@ -60,7 +60,7 @@ const CustomAccordionHeader = ({
           </div>
           <span style={{ marginRight: '10px' }}>
             <Checkbox
-              aria-label={intl.formatMessage({ id: 'ui-inventory.moveItems.selectHolding' })}
+              aria-label={intl.formatMessage({ id: 'ui-inventory.moveEntity.selectHolding' })}
               checked={isHoldingSelected}
               onClick={e => {
                 e.stopPropagation();

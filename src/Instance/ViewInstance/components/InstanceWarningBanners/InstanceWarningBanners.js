@@ -21,7 +21,7 @@ const InstanceWarningBanners = ({ instance }) => {
       condition: instance.deleted && instance.discoverySuppress && instance.staffSuppress,
       messageId: 'ui-inventory.warning.instance.setForDeletionAndSuppressedFromDiscoveryAndStaffSuppressed',
     },
-  ]), [instance]);
+  ]), [instance.deleted, instance.staffSuppress, instance.discoverySuppress]);
 
   return warningBanners.map(({ condition, messageId }) => (
     <MessageBanner marginTop0 key={messageId} show={Boolean(condition)} type="warning">

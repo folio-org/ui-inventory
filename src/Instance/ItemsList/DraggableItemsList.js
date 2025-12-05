@@ -28,7 +28,7 @@ export const getDraggableFormatter = ({
     <DraggableHandle itemId={item.id} holdingId={holdingId} />
   ),
   'select': (item) => (
-    <FormattedMessage id="ui-inventory.moveItems.selectItem">
+    <FormattedMessage id="ui-inventory.moveEntity.selectItem">
       {
         ([ariaLabel]) => (
           <span>
@@ -74,7 +74,7 @@ export const getDraggableColumnMapping = ({
     <span>
       <Checkbox
         id={`select-all-items-${holdingsRecordId}`}
-        aria-label={intl.formatMessage({ id: 'ui-inventory.moveItems.selectAll' })}
+        aria-label={intl.formatMessage({ id: 'ui-inventory.moveEntity.selectAll' })}
         checked={ifItemsSelected(items.map(({ id }) => id))}
         onChange={(e) => selectAllItemsForDrag(holdingsRecordId, e.target?.checked)}
         disabled={isFetching}
@@ -134,7 +134,7 @@ const DraggableItemsList = ({
         {showDropZone
           ? (
             <DropZone>
-              <FormattedMessage id="ui-inventory.moveItems.items.dropZone" />
+              <FormattedMessage id="ui-inventory.moveEntity.items.dropZone" />
             </DropZone>
           )
           : children}

@@ -9,6 +9,7 @@ import {
   FACETS,
   queryIndexes,
 } from '@folio/stripes-inventory-components';
+import { escapeCqlValue } from '@folio/stripes/util';
 
 export const isRowPreventsClick = (row, browseOption) => {
   /**
@@ -79,7 +80,7 @@ const getClassificationQuery = (qindex, data, row) => {
     return '';
   }
 
-  let query = `classifications.classificationNumber=="${row.classificationNumber}"`;
+  let query = `classifications.classificationNumber=="${escapeCqlValue(row.classificationNumber)}"`;
 
   const classificationBrowseConfigId = browseClassificationIndexToId[qindex];
 
@@ -120,7 +121,7 @@ const getCallNumberQuery = (qindex, data, row) => {
     return '';
   }
 
-  let query = `itemFullCallNumbers="${fullCallNumber}"`;
+  let query = `itemFullCallNumbers="${escapeCqlValue(fullCallNumber)}"`;
 
   const callNumberBrowseConfigId = browseCallNumberIndexToId[qindex];
 

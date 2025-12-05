@@ -9,7 +9,7 @@ import { CalloutContext } from '@folio/stripes/core';
 
 import useOrderManagement from './useOrderManagement';
 import useItemsUpdateMutation from '../useItemsUpdateMutation';
-import { useInventoryState } from '../../dnd/InventoryProvider';
+import { useInventoryState, useInventoryActions } from '../../dnd/InventoryProvider';
 
 const mockIntl = {
   formatMessage: jest.fn(({ id }) => `translated.${id}`),
@@ -39,6 +39,7 @@ jest.mock('../useItemsUpdateMutation', () => jest.fn());
 
 jest.mock('../../dnd/InventoryProvider', () => ({
   useInventoryState: jest.fn(),
+  useInventoryActions: jest.fn(),
 }));
 
 jest.mock('react', () => ({
@@ -86,6 +87,16 @@ describe('useOrderManagement', () => {
     tenantId: 'tenant-1',
   };
 
+  const getTestItems = () => [
+    { id: 'item-1', order: '1', holdingId: 'holding-1' },
+    { id: 'item-2', order: '2', holdingId: 'holding-1' },
+    { id: 'item-3', order: '3', holdingId: 'holding-1' },
+  ];
+
+  const mockInventoryActions = {
+    updateItemsOrder: jest.fn(),
+  };
+
   beforeEach(() => {
     useIntl.mockReturnValue(mockIntl);
     useContext.mockImplementation((context) => {
@@ -95,6 +106,7 @@ describe('useOrderManagement', () => {
       return undefined;
     });
     useInventoryState.mockReturnValue(mockInventoryState);
+    useInventoryActions.mockReturnValue(mockInventoryActions);
     useItemsUpdateMutation.mockReturnValue({
       mutateAsync: mockUpdateItems,
     });
@@ -120,11 +132,11 @@ describe('useOrderManagement', () => {
   });
 
   describe('initializeOriginalOrders', () => {
-    it('should populate originalOrdersRef with current item orders', () => {
+    it('should populate originalOrdersRef with provided item orders', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       const mockEvent = { target: { value: '1' } };
@@ -145,7 +157,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders([]);
       });
 
       expect(result.current).toBeDefined();
@@ -157,7 +169,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       const mockEvent = { target: { value: '5' } };
@@ -173,7 +185,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       act(() => {
@@ -193,7 +205,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       act(() => {
@@ -207,7 +219,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       act(() => {
@@ -223,7 +235,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       // Test valid positive integer
@@ -239,7 +251,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       // Set two items to the same order
@@ -259,7 +271,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       // Set items to different orders
@@ -281,7 +293,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       act(() => {
@@ -310,7 +322,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       act(() => {
@@ -337,7 +349,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       // Create duplicate orders
@@ -363,7 +375,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       // Change orders to create a different sequence
@@ -396,7 +408,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       act(() => {
@@ -425,7 +437,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       act(() => {
@@ -473,7 +485,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       act(() => {
@@ -496,7 +508,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       expect(result.current).toBeDefined();
@@ -508,7 +520,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       // Move item-1 to position 3
@@ -545,7 +557,7 @@ describe('useOrderManagement', () => {
       const { result } = renderHook(() => useOrderManagement(defaultProps));
 
       act(() => {
-        result.current.initializeOriginalOrders();
+        result.current.initializeOriginalOrders(getTestItems());
       });
 
       act(() => {

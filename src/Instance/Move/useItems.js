@@ -30,7 +30,7 @@ export const useItems = () => {
       } else {
         const message = (
           <FormattedMessage
-            id="ui-inventory.moveItems.instance.items.success"
+            id="ui-inventory.moveEntity.instance.items.success"
             values={{ count: itemIds?.length ?? 0 }}
           />
         );
