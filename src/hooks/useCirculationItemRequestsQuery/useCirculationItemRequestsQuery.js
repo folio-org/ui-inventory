@@ -10,13 +10,13 @@ import { REQUEST_OPEN_STATUSES } from '../../constants';
 
 const requestsStatusString = map(REQUEST_OPEN_STATUSES, requestStatus => `"${requestStatus}"`).join(' or ');
 
-const useCirculationItemRequestsQuery = (itemId) => {
-  const ky = useOkapiKy();
+const useCirculationItemRequestsQuery = (itemId, { tenantId = '' } = {}) => {
+  const ky = useOkapiKy({ tenant: tenantId });
   const [namespace] = useNamespace({ key: 'circulation-item-requests' });
 
 
   const { isLoading, data: requests = {}, isFetching } = useQuery(
-    [namespace, itemId],
+    [namespace, itemId, tenantId],
     () => ky.get('circulation/requests', {
       searchParams: {
         query: `(itemId==${itemId}) and status==(${requestsStatusString}) sortby requestDate desc`,
