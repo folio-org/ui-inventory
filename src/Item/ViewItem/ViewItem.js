@@ -85,6 +85,7 @@ const ViewItem = ({
   isInstanceShared,
   initialTenantId,
   tenantTo,
+  tenantFrom,
 }) => {
   const stripes = useStripes();
   const location = useLocation();
@@ -115,10 +116,10 @@ const ViewItem = ({
 
   const { isLoading: isItemLoading, item, refetch: refetchItem } = useItemQuery(itemId, { tenant: tenantTo });
   const { isLoading: isInstanceLoading, instance } = useInstance(instanceId);
-  const { isLoading: isHoldingsLoading, holding } = useHoldingQuery(holdingsId);
-  const { requests } = useCirculationItemRequestsQuery(itemId);
-  const { tagSettings } = useTagSettingsQuery();
-  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
+  const { isLoading: isHoldingsLoading, holding } = useHoldingQuery(holdingsId, { tenantId: tenantTo });
+  const { requests } = useCirculationItemRequestsQuery(itemId, { tenantId: tenantTo });
+  const { tagSettings } = useTagSettingsQuery({ tenantId: tenantTo });
+  const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP, tenantId: tenantTo });
 
   const isLoading = useMemo(() => isItemLoading || isInstanceLoading || isHoldingsLoading,
     [isItemLoading, isInstanceLoading, isHoldingsLoading]);
@@ -128,7 +129,7 @@ const ViewItem = ({
     markItemAsMissing,
     markItemAsWithdrawn,
     markItemWithStatus,
-  } = useItemStatusMutation(itemId, refetchItem);
+  } = useItemStatusMutation(itemId, refetchItem, tenantTo);
 
   const {
     handleUpdateOwnership,
@@ -153,7 +154,7 @@ const ViewItem = ({
 
   useEffect(() => {
     if (checkIfUserInMemberTenant(stripes)) {
-      setTenants(omitCurrentAndCentralTenants(stripes));
+      setTenants(omitCurrentAndCentralTenants(stripes, tenantTo));
     }
   }, []);
 
@@ -208,9 +209,24 @@ const ViewItem = ({
         isSharedInstance={isSharedInstance}
         tenants={tenants}
         initialTenantId={initialTenantId}
+        tenantTo={tenantTo}
+        tenantFrom={tenantFrom}
       />
     );
-  }, [isVersionHistoryOpen, stripes, isInstanceShared, instance, item, requests, tenants, initialTenantId, handleUpdateOwnership]);
+  },
+  [
+    isVersionHistoryOpen,
+    stripes,
+    isInstanceShared,
+    instance,
+    item,
+    requests,
+    tenants,
+    tenantTo,
+    tenantFrom,
+    initialTenantId,
+    handleUpdateOwnership,
+  ]);
 
   const renderLastMenu = useCallback(() => {
     const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
@@ -228,9 +244,9 @@ const ViewItem = ({
   }, [settings, isVersionHistoryOpen]);
 
   const onCloseViewItem = useCallback(async () => {
-    const tenantFrom = location.state?.initialTenantId || stripes.okapi.tenant;
+    const fromTenant = location.state?.initialTenantId || stripes.okapi.tenant;
 
-    await switchAffiliation(stripes, tenantFrom, () => goBackToInstance(tenantFrom));
+    await switchAffiliation(stripes, fromTenant, () => goBackToInstance(fromTenant));
   }, [location, stripes]);
 
   const onDeleteItem = async (itemToDeleteId) => {
@@ -301,6 +317,7 @@ const ViewItem = ({
         {isVersionHistoryOpen && (
           <ItemVersionHistory
             item={item}
+            tenantId={tenantTo}
             onClose={() => setIsVersionHistoryOpen(false)}
           />
         )}
@@ -314,6 +331,7 @@ ViewItem.propTypes = {
   isInstanceShared: PropTypes.bool,
   initialTenantId: PropTypes.string,
   tenantTo: PropTypes.string,
+  tenantFrom: PropTypes.string,
 };
 
 export default ViewItem;

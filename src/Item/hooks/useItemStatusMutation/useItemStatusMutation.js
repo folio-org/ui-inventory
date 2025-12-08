@@ -10,10 +10,10 @@ import {
   REQUEST_OPEN_STATUSES,
 } from '../../../constants';
 
-const useItemStatusMutation = (itemId, refetchItem) => {
-  const { requests } = useCirculationItemRequestsQuery(itemId);
-  const { mutateRequests } = useItemRequestsMutation();
-  const { markItemAs } = useMarkItem();
+const useItemStatusMutation = (itemId, refetchItem, tenantId) => {
+  const { requests } = useCirculationItemRequestsQuery(itemId, { tenantId });
+  const { mutateRequests } = useItemRequestsMutation({ tenantId });
+  const { markItemAs } = useMarkItem({ tenantId });
 
   const markRequestAsOpen = async () => {
     const request = requests?.[0];

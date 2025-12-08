@@ -28,6 +28,8 @@ const ItemActionMenu = ({
   isSharedInstance,
   tenants,
   initialTenantId,
+  tenantTo,
+  tenantFrom
 }) => {
   const {
     handleEdit,
@@ -36,7 +38,7 @@ const ItemActionMenu = ({
     handleMarcAsMissing,
     handleMarkAsWithdrawn,
     handleMarkWithStatus,
-  } = useItemActions({ initialTenantId });
+  } = useItemActions({ initialTenantId, tenantTo, tenantFrom });
 
   const {
     canEdit: hasPermissionToEdit,
@@ -203,6 +205,8 @@ ItemActionMenu.propTypes = {
   tenants: PropTypes.arrayOf(PropTypes.object).isRequired,
   isSharedInstance: PropTypes.bool,
   initialTenantId: PropTypes.string,
+  tenantTo: PropTypes.string,
+  tenantFrom: PropTypes.string,
 };
 
 export default ItemActionMenu;

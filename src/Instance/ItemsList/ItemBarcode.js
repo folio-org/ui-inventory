@@ -52,6 +52,7 @@ const ItemBarcode = ({
       search,
       state: {
         tenantTo: tenantId,
+        tenantFrom: stripes.okapi.tenant,
         initialTenantId: stripes.okapi.tenant,
       },
     });
@@ -84,7 +85,7 @@ const ItemBarcode = ({
     <>
       {isBarcodeAsHotlink ? (
         <TextLink
-          to={`/inventory/view/${instanceId}/${holdingId}/${item.id}`}
+          to={`/inventory/view/${instanceId}/${holdingId}/${item.id}?tenantTo=${tenantId}`}
           onClick={async (e) => {
             e.preventDefault();
             addItem(item.id);
