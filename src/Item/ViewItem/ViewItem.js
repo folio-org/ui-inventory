@@ -213,7 +213,20 @@ const ViewItem = ({
         tenantFrom={tenantFrom}
       />
     );
-  }, [isVersionHistoryOpen, stripes, isInstanceShared, instance, item, requests, tenants, tenantTo, handleUpdateOwnership]);
+  },
+  [
+    isVersionHistoryOpen,
+    stripes,
+    isInstanceShared,
+    instance,
+    item,
+    requests,
+    tenants,
+    tenantTo,
+    tenantFrom,
+    initialTenantId,
+    handleUpdateOwnership,
+  ]);
 
   const renderLastMenu = useCallback(() => {
     const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
