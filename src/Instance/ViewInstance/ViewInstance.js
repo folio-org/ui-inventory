@@ -369,7 +369,7 @@ const ViewInstance = flow([
   stripesConnect,
 ])(ViewInstanceComponent);
 
-ViewInstance.propTypes = {
+ViewInstanceComponent.propTypes = {
   canUseSingleRecordImport: PropTypes.bool,
   onCopy: PropTypes.func,
   focusTitleOnInstanceLoad: PropTypes.bool,
