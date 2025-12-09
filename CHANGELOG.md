@@ -79,6 +79,7 @@ UIIN-3437.
 * Show success toast when “Stop items movement within an instance” action is invoked for drag and dropped movements. Refs UIIN-3556.
 * ECS | Affiliation dropdown does not display available tenants in the “Update Ownership” modal. Fixes UIIN-3535.
 * Escape backslashes in Classification and Item Call number browse to search redirect links. Refs UIIN-3552.
+* ECS | Display item data when user tries to open it from another tenant in the new tab. Fixes UIIN-3528.
 * Provide error message if MARC record could not be set for deletion because it was not found. Refs UIIN-3502.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
