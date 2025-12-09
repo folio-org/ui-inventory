@@ -88,6 +88,7 @@ const ViewInstance = (props) => {
   const history = useHistory();
   const location = useLocation();
   const paneTitleRef = useRef(null);
+  const closeButtonRef = useRef(null);
   const accordionStatusRef = useRef();
 
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
@@ -170,10 +171,14 @@ const ViewInstance = (props) => {
   }, [stripes.user?.user?.tenants]);
 
   useEffect(() => {
-    if (!isLoading && instance?.id && focusTitleOnInstanceLoad && !isCentralTenantPermissionsLoading) {
-      paneTitleRef.current?.focus();
+    if (!isLoading && instance?.id && !isCentralTenantPermissionsLoading) {
+      if (location.state?.isClosingFocused) {
+        closeButtonRef.current?.focus();
+      } else if (focusTitleOnInstanceLoad) {
+        paneTitleRef.current?.focus();
+      }
     }
-  }, [isLoading, instance, focusTitleOnInstanceLoad, isCentralTenantPermissionsLoading]);
+  }, [isLoading, instance, focusTitleOnInstanceLoad, isCentralTenantPermissionsLoading, location.state?.isClosingFocused]);
 
   const {
     isItemsMovement,
@@ -344,6 +349,7 @@ const ViewInstance = (props) => {
         isInstanceSharing={isInstanceSharing}
         holdingsSection={holdingsSection}
         paneTitleRef={paneTitleRef}
+        closeButtonRef={closeButtonRef}
         userTenantPermissions={userTenantPermissions}
         accordionStatusRef={accordionStatusRef}
         isRecordImporting={isImporting}
