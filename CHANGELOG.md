@@ -81,6 +81,7 @@ UIIN-3437.
 * Escape backslashes in Classification and Item Call number browse to search redirect links. Refs UIIN-3552.
 * ECS | Display item data when user tries to open it from another tenant in the new tab. Fixes UIIN-3528.
 * *BREAKING* Replace dependency on `mod-configuration` with `mod-settings`. Refs UIIN-3219.
+* Focus on the Close Instance pane button when returning from MARC edit/create/derive page. Fixes UIIN-3570.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
