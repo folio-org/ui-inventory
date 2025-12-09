@@ -255,7 +255,7 @@ const ViewItem = ({
   };
 
   const tagsEnabled = useMemo(
-    () => !tagSettings.configs?.length || tagSettings.configs?.[0]?.value === 'true',
+    () => tagSettings.items?.[0]?.value,
     [tagSettings],
   );
 

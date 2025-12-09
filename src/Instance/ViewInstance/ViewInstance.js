@@ -70,6 +70,7 @@ import {
   INSTANCE_RECORD_TYPE,
   LINKED_DATA_CHECK_EXTERNAL_RESOURCE_FETCHABLE,
   LINKED_DATA_EDITOR_PERM,
+  TAGS_SCOPE,
 } from '../../constants';
 
 const getTlrSettings = (settings) => {
@@ -80,7 +81,7 @@ const getTlrSettings = (settings) => {
   }
 };
 
-const ViewInstance = (props) => {
+const ViewInstanceComponent = (props) => {
   const { canUseSingleRecordImport, onCopy, focusTitleOnInstanceLoad } = props;
 
   const callout = useCallout();
@@ -374,14 +375,20 @@ const ViewInstance = (props) => {
   );
 };
 
-ViewInstance.propTypes = {
+const ViewInstance = flow([
+  withSingleRecordImport,
+  withTags,
+  stripesConnect,
+])(ViewInstanceComponent);
+
+ViewInstanceComponent.propTypes = {
   canUseSingleRecordImport: PropTypes.bool,
   onCopy: PropTypes.func,
   focusTitleOnInstanceLoad: PropTypes.bool,
 };
 
-export default flow([
-  withSingleRecordImport,
-  withTags,
-  stripesConnect,
-])(ViewInstance);
+ViewInstance.defaultProps = {
+  tagsScope: TAGS_SCOPE,
+};
+
+export default ViewInstance;
