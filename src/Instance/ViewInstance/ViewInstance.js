@@ -281,7 +281,7 @@ const ViewInstance = (props) => {
       });
     } catch (err) {
       setIsSetForDeletionModalOpen(false);
-      
+
       if (err.response.status === HTTP_RESPONSE_STATUS_CODES.INTERNAL_SERVER_ERROR) {
         const errorMessage = await err.response.text();
 
