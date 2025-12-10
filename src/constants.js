@@ -243,6 +243,7 @@ export const INSTANCE_SHARING_STATUSES = {
 
 export const HTTP_RESPONSE_STATUS_CODES = {
   FORBIDDEN: 403,
+  INTERNAL_SERVER_ERROR: 500,
 };
 
 export const EVENTS = {

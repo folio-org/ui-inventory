@@ -66,6 +66,7 @@ import {
 } from '../../utils';
 import {
   CONSORTIUM_PREFIX,
+  HTTP_RESPONSE_STATUS_CODES,
   INSTANCE_RECORD_TYPE,
   LINKED_DATA_CHECK_EXTERNAL_RESOURCE_FETCHABLE,
   LINKED_DATA_EDITOR_PERM,
@@ -279,8 +280,19 @@ const ViewInstanceComponent = (props) => {
         type: 'success',
         message: <FormattedMessage id="ui-inventory.setForDeletion.toast.successful" values={{ instanceTitle: instance?.title }} />,
       });
-    } catch {
+    } catch (err) {
       setIsSetForDeletionModalOpen(false);
+
+      if (err.response.status === HTTP_RESPONSE_STATUS_CODES.INTERNAL_SERVER_ERROR) {
+        const errorMessage = await err.response.text();
+
+        callout.sendCallout({
+          type: 'error',
+          message: errorMessage,
+        });
+
+        return;
+      }
 
       callout.sendCallout({
         type: 'error',
