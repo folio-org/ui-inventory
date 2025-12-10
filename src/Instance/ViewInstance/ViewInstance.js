@@ -71,13 +71,9 @@ import {
   TAGS_SCOPE,
 } from '../../constants';
 
-const getTlrSettings = (settings) => {
-  try {
-    return JSON.parse(settings);
-  } catch {
-    return {};
-  }
-};
+export const getTlrSettings = (settings) => (
+  settings?.circulationSettings?.[0]?.value || {}
+);
 
 const ViewInstanceComponent = (props) => {
   const { canUseSingleRecordImport, onCopy, focusTitleOnInstanceLoad } = props;
@@ -150,7 +146,7 @@ const ViewInstanceComponent = (props) => {
 
   useEffect(() => {
     if (!isTLRSettingsLoading) {
-      const { titleLevelRequestsFeatureEnabled: tlrEnabled } = getTlrSettings(tlrSettings?.configs[0]?.value);
+      const { titleLevelRequestsFeatureEnabled: tlrEnabled } = getTlrSettings(tlrSettings);
 
       setTitleLevelRequestsFeatureEnabled(Boolean(tlrEnabled));
 
