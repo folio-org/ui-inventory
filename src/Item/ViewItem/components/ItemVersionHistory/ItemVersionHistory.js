@@ -137,10 +137,18 @@ const ItemVersionHistory = ({
     typeId: formatMessage({ id: 'ui-inventory.callNumberType' }),
     volume: formatMessage({ id: 'ui-inventory.volume' }),
     yearCaption: formatMessage({ id: 'ui-inventory.yearCaption' }),
+    additionalCallNumbers: formatMessage({ id: 'ui-inventory.additionalItemCallNumbers' }),
   };
 
   const fieldFormatter = createFieldFormatter(referenceData, circulationHistory);
-
+  const itemFormatter = (field, i) => {
+    return (
+      <li key={i}>
+        {field.label && <strong>{field.label}:</strong>}
+        {fieldFormatter?.[field.name]?.(field.value) || field.value}
+      </li>
+    );
+  };
   return (
     <AuditLogPane
       versions={versions}
@@ -151,6 +159,7 @@ const ItemVersionHistory = ({
       isInitialLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
+      itemFormatter={itemFormatter}
       actionsMap={actionsMap}
       totalVersions={totalVersions}
     />
