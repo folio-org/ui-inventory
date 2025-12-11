@@ -127,14 +127,14 @@ const ItemVersionHistory = ({
     numberOfPieces: formatMessage({ id: 'ui-inventory.numberOfPieces' }),
     permanentLoanTypeId: formatMessage({ id: 'ui-inventory.permanentLoantype' }),
     permanentLocationId: formatMessage({ id: 'ui-inventory.permanentLocation' }),
-    prefix: formatMessage({ id: 'ui-inventory.effectiveCallNumberPrefix' }),
+    prefix: formatMessage({ id: 'ui-inventory.callNumberPrefix' }),
     servicePointId: formatMessage({ id: 'ui-inventory.servicePoint' }),
     staffMemberId: formatMessage({ id: 'ui-inventory.source' }),
     statisticalCodeIds: formatMessage({ id: 'ui-inventory.statisticalCodes' }),
-    suffix: formatMessage({ id: 'ui-inventory.effectiveCallNumberSuffix' }),
+    suffix: formatMessage({ id: 'ui-inventory.callNumberSuffix' }),
     temporaryLoanTypeId: formatMessage({ id: 'ui-inventory.temporaryLoantype' }),
     temporaryLocationId: formatMessage({ id: 'ui-inventory.temporaryLocation' }),
-    typeId: formatMessage({ id: 'ui-inventory.effectiveCallNumberType' }),
+    typeId: formatMessage({ id: 'ui-inventory.callNumberType' }),
     volume: formatMessage({ id: 'ui-inventory.volume' }),
     yearCaption: formatMessage({ id: 'ui-inventory.yearCaption' }),
     additionalCallNumbers: formatMessage({ id: 'ui-inventory.additionalCallNumbers' }),
@@ -156,7 +156,6 @@ const ItemVersionHistory = ({
     if (!item) return null;
 
     const { name: fieldName, value, collectionName } = item;
-    console.log('itemFormatter item:', item);
     const compositeKey = collectionName && fieldName
       ? `${collectionName}.${fieldName}`
       : null;
