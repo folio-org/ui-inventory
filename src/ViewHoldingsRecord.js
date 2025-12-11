@@ -74,6 +74,8 @@ import {
   emptyList,
   noValue,
   holdingsStatementTypes,
+  TAGS_SCOPE,
+  TAGS_KEY,
 } from './constants';
 import {
   WarningMessage,
@@ -84,6 +86,7 @@ import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
 import HoldingBoundWith from './Holding/ViewHolding/HoldingBoundWith';
 import { HoldingVersionHistory } from './Holding/HoldingVersionHistory';
+import { MOD_SETTINGS_API } from './settings/NumberGeneratorSettings/constants';
 
 import css from './View.css';
 
@@ -124,8 +127,7 @@ class ViewHoldingsRecord extends React.Component {
     },
     tagSettings: {
       type: 'okapi',
-      records: 'configs',
-      path: 'configurations/entries?query=(module==TAGS and configName==tags_enabled)',
+      path: `${MOD_SETTINGS_API}?query=(scope==${TAGS_SCOPE} and key==${TAGS_KEY})`,
     },
     marcRecordId: {},
     marcRecord: {
@@ -672,7 +674,7 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsEffectiveLocation = referenceTables?.locationsById[holdingsRecord?.effectiveLocationId];
     const itemCount = get(items, 'records.length', 0);
     const holdingsSourceName = holdingsSource?.name;
-    const tagsEnabled = !tagSettings?.records?.length || tagSettings?.records?.[0]?.value === 'true';
+    const tagsEnabled = tagSettings?.records?.[0]?.items?.[0]?.value;
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <FormattedMessage

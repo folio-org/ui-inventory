@@ -243,6 +243,7 @@ export const INSTANCE_SHARING_STATUSES = {
 
 export const HTTP_RESPONSE_STATUS_CODES = {
   FORBIDDEN: 403,
+  INTERNAL_SERVER_ERROR: 500,
 };
 
 export const EVENTS = {
@@ -284,3 +285,5 @@ export const UPDATE_OWNERSHIP_API = {
 export const INVENTORY_AUDIT_GROUP = 'audit.inventory';
 export const VERSION_HISTORY_PAGE_SIZE_SETTING = 'records.page.size';
 export const VERSION_HISTORY_ENABLED_SETTING = 'enabled';
+export const TAGS_SCOPE = 'ui-tags.tags.manage';
+export const TAGS_KEY = 'tags_enabled';
