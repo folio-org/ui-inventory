@@ -8,6 +8,7 @@ import {
 } from '../../../test/jest/helpers';
 
 import { ViewInstance } from './index';
+import { getTlrSettings } from './ViewInstance';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -33,12 +34,12 @@ jest.mock('../../common', () => ({
 }));
 jest.mock('../../hooks', () => ({
   useMarcRecordQuery: jest.fn().mockReturnValue({ data: {} }),
-  useTLRSettingsQuery: jest.fn().mockReturnValue({ data: { configs: [{ value: { titleLevelRequestsFeatureEnabled: 'true' } }] } }),
+  useTLRSettingsQuery: jest.fn().mockReturnValue({ data: { circulationSettings: [{ value: { titleLevelRequestsFeatureEnabled: true } }] } }),
 }));
 jest.mock('../hooks', () => ({
   useUserTenantPermissions: jest.fn().mockReturnValue({ userPermissions: [], isFetching: false, isLoading: false }),
   useInstanceImportSupportedQuery: jest.fn().mockReturnValue({ data: true }),
-  useCirculationInstanceRequestsQuery: jest.fn().mockReturnValue({ data: { requests: [], totalRecords: 0 } }),
+  useCirculationInstanceRequestsQuery: jest.fn().mockReturnValue({ data: { requests: [], totalRecords: 0 }, refetch: jest.fn() }),
   useInstanceModalsContext: jest.fn().mockReturnValue({
     isItemsMovement: false,
     setIsShareLocalInstanceModalOpen: jest.fn(),
@@ -77,5 +78,32 @@ describe('ViewInstance', () => {
     await act(async () => renderViewInstance());
 
     expect(screen.getByText('InstanceModals')).toBeInTheDocument();
+  });
+});
+
+describe('getTlrSettings', () => {
+  it('should returns the value object from settings.circulationSettings[0].value', () => {
+    const value = { titleLevelRequestsFeatureEnabled: true };
+    const settings = {
+      circulationSettings: [{ value }],
+    };
+
+    expect(getTlrSettings(settings)).toEqual(value);
+  });
+
+  it('should returns empty object if settings is undefined', () => {
+    expect(getTlrSettings(undefined)).toEqual({});
+  });
+
+  it('should returns empty object if circulationSettings is missing', () => {
+    expect(getTlrSettings({})).toEqual({});
+  });
+
+  it('should returns empty object if circulationSettings is empty', () => {
+    expect(getTlrSettings({ circulationSettings: [] })).toEqual({});
+  });
+
+  it('should returns empty object if value is missing in first element', () => {
+    expect(getTlrSettings({ circulationSettings: [{}] })).toEqual({});
   });
 });
