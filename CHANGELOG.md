@@ -82,6 +82,7 @@ UIIN-3437.
 * ECS | Display item data when user tries to open it from another tenant in the new tab. Fixes UIIN-3528.
 * *BREAKING* Replace dependency on `mod-configuration` with `mod-settings`. Refs UIIN-3219.
 * Provide error message if MARC record could not be set for deletion because it was not found. Refs UIIN-3502.
+* Acquisition accordion does not display PO line link after moving holding until page is refreshed. Fixes UIIN-3554.
 * Include additional cal numbers in Version History for Inventory Item. Refs UIIN-3558.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
