@@ -258,7 +258,7 @@ describe('ItemForm', () => {
         ...mockReferenceTables,
         callNumberTypes: [{ id: '1', name: 'Library of Congress classification' }],
       };
-      const { getByText, getAllByText, queryByText } = renderItemForm({
+      const { getByText, getAllByText } = renderItemForm({
         initialValues,
         referenceTables,
       });
@@ -291,9 +291,9 @@ describe('ItemForm', () => {
           'itemLevelCallNumberTypeId': { value: '2' },
           'additionalCallNumbers': {
             value: [{
-              callNumber: 'cn1',
-              prefix: 'prefix1',
-              suffix: 'suffix1',
+              additionalCallNumber: 'cn1',
+              additionalCallNumberPrefix: 'prefix1',
+              additionalCallNumberSuffix: 'suffix1',
               typeId: '1'
             }]
           }
