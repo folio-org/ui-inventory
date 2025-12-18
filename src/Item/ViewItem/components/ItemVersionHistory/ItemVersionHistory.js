@@ -58,6 +58,32 @@ export const createFieldFormatter = (referenceData, circulationHistory) => ({
   },
 });
 
+export const createItemFormatter = (fieldLabelsMap, fieldFormatter) => (element, i) => {
+  if (!element) return null;
+
+  const { name: fieldName, value, collectionName } = element;
+  const compositeKey = collectionName && fieldName
+    ? `${collectionName}.${fieldName}`
+    : null;
+
+  const label = (compositeKey && fieldLabelsMap?.[compositeKey])
+    || fieldLabelsMap?.[fieldName]
+    || fieldLabelsMap?.[collectionName];
+
+  const formattedValue = (compositeKey && fieldFormatter?.[compositeKey]?.(value))
+    || fieldFormatter?.[fieldName]?.(value)
+    || fieldFormatter?.[collectionName]?.(value)
+    || value;
+
+  return (
+    <li key={i}>
+      {fieldName && <strong>{label}: </strong>}
+      {formattedValue}
+    </li>
+  );
+};
+
+
 const ItemVersionHistory = ({
   item,
   onClose,
@@ -151,31 +177,7 @@ const ItemVersionHistory = ({
   };
 
   const fieldFormatter = createFieldFormatter(referenceData, circulationHistory);
-
-  const itemFormatter = (element, i) => {
-    if (!element) return null;
-
-    const { name: fieldName, value, collectionName } = element;
-    const compositeKey = collectionName && fieldName
-      ? `${collectionName}.${fieldName}`
-      : null;
-
-    const label = (compositeKey && fieldLabelsMap?.[compositeKey])
-      || fieldLabelsMap?.[fieldName]
-      || fieldLabelsMap?.[collectionName];
-
-    const formattedValue = (compositeKey && fieldFormatter?.[compositeKey]?.(value))
-      || fieldFormatter?.[fieldName]?.(value)
-      || fieldFormatter?.[collectionName]?.(value)
-      || value;
-
-    return (
-      <li key={i}>
-        {fieldName && <strong>{label}: </strong>}
-        {formattedValue}
-      </li>
-    );
-  };
+  const itemFormatter = createItemFormatter(fieldLabelsMap, fieldFormatter);
 
   return (
     <AuditLogPane
