@@ -155,7 +155,7 @@ const ItemVersionHistory = ({
   const itemFormatter = (element, i) => {
     if (!element) return null;
 
-    const { name: fieldName, value, collectionName } = item;
+    const { name: fieldName, value, collectionName } = element;
     const compositeKey = collectionName && fieldName
       ? `${collectionName}.${fieldName}`
       : null;
