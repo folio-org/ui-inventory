@@ -83,6 +83,7 @@ UIIN-3437.
 * *BREAKING* Replace dependency on `mod-configuration` with `mod-settings`. Refs UIIN-3219.
 * Provide error message if MARC record could not be set for deletion because it was not found. Refs UIIN-3502.
 * Acquisition accordion does not display PO line link after moving holding until page is refreshed. Fixes UIIN-3554.
+* When moving item within one holding manually, recalculate other item orders based on their position in the list. Fixes UIIN-3539.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)

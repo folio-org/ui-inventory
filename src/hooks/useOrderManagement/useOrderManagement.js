@@ -28,33 +28,47 @@ const getCurrentOrder = (item) => {
   return parseOrder(item?.order, 0);
 };
 
-const calculateAutoAdjustedOrders = (items, changedItemId, newOrder, originalOrder, originalOrdersRef, excludeItemIds = new Set()) => {
+// Recalculate all orders based on sorted positions
+// all items are sorted by their new order values, then assigned sequential orders 1, 2, 3...
+const recalculateAllOrders = (items, manualChanges, originalOrdersRef) => {
   const adjusted = new Map();
-  const numNewOrder = parseOrder(newOrder, 0);
 
-  if (numNewOrder < 1) return adjusted;
+  // Create a map of all items with their new order values
+  const itemsWithOrders = items.map(item => {
+    const itemId = item.id;
+    // Use manual change if exists, otherwise use current order
+    const newOrder = manualChanges.has(itemId)
+      ? parseOrder(manualChanges.get(itemId), 0)
+      : getCurrentOrder(item);
 
-  for (const item of items) {
-    if (item.id !== changedItemId && !excludeItemIds.has(item.id)) {
-      const itemOriginalOrder = getOriginalOrder(item.id, item, originalOrdersRef);
+    return {
+      itemId,
+      order: newOrder,
+      item,
+    };
+  });
 
-      // If moving item to a higher position (e.g., 3 → 5)
-      if (originalOrder < numNewOrder) {
-        // Items between original and new position shift left
-        if (itemOriginalOrder > originalOrder && itemOriginalOrder <= numNewOrder) {
-          adjusted.set(item.id, (itemOriginalOrder - 1).toString());
-        }
-      }
-
-      // If moving item to a lower position (e.g., 5 → 2)
-      if (originalOrder > numNewOrder) {
-        // Items between new and original position shift right
-        if (itemOriginalOrder >= numNewOrder && itemOriginalOrder < originalOrder) {
-          adjusted.set(item.id, (itemOriginalOrder + 1).toString());
-        }
-      }
+  itemsWithOrders.sort((a, b) => {
+    if (a.order !== b.order) {
+      return a.order - b.order;
     }
-  }
+
+    const aOriginal = getOriginalOrder(a.itemId, a.item, originalOrdersRef);
+    const bOriginal = getOriginalOrder(b.itemId, b.item, originalOrdersRef);
+
+    return aOriginal - bOriginal;
+  });
+
+  // Assign sequential orders based on position in sorted list
+  itemsWithOrders.forEach((itemWithOrder, index) => {
+    const newSequentialOrder = index + 1;
+    const originalOrder = getOriginalOrder(itemWithOrder.itemId, itemWithOrder.item, originalOrdersRef);
+
+    // Only add to adjusted if the new order differs from original
+    if (newSequentialOrder !== originalOrder) {
+      adjusted.set(itemWithOrder.itemId, newSequentialOrder.toString());
+    }
+  });
 
   return adjusted;
 };
@@ -182,26 +196,11 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
       recalculated.set(key, value);
     }
 
-    // Recalculate auto-adjusted items based on remaining manual changes
-    const excludeItemIds = new Set(newManualChanges.keys());
+    // Recalculate all orders based on sorted positions
+    const adjusted = recalculateAllOrders(items, newManualChanges, originalOrdersRef);
 
-    for (const [manualItemId, manualOrder] of newManualChanges) {
-      const item = itemsMap.get(manualItemId);
-      if (item) {
-        const originalOrder = getOriginalOrder(manualItemId, item, originalOrdersRef);
-        const adjusted = calculateAutoAdjustedOrders(
-          items,
-          manualItemId,
-          manualOrder,
-          originalOrder,
-          originalOrdersRef,
-          excludeItemIds
-        );
-
-        for (const [itemId, order] of adjusted) {
-          recalculated.set(itemId, order);
-        }
-      }
+    for (const [itemId, order] of adjusted) {
+      recalculated.set(itemId, order);
     }
 
     // Remove any items that are now back to their original order
@@ -254,22 +253,11 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
           allChanges.set(key, value);
         }
 
-        // Auto-adjust other items based on the new order
-        const item = itemsMap.get(itemId);
-        if (item) {
-          const originalOrder = getOriginalOrder(itemId, item, originalOrdersRef);
-          const adjusted = calculateAutoAdjustedOrders(
-            items,
-            itemId,
-            newValue,
-            originalOrder,
-            originalOrdersRef,
-            new Set([itemId])
-          );
-
-          for (const [adjustedItemId, adjustedOrder] of adjusted) {
-            allChanges.set(adjustedItemId, adjustedOrder);
-          }
+        // Recalculate all orders based on sorted positions
+        // Use allChanges (which includes both manual and DnD changes) for recalculation
+        const adjusted = recalculateAllOrders(items, allChanges, originalOrdersRef);
+        for (const [adjustedItemId, adjustedOrder] of adjusted) {
+          allChanges.set(adjustedItemId, adjustedOrder);
         }
 
         // Remove any items that are now back to their original order
@@ -326,11 +314,12 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
     const sortedItems = Array.from(itemsWithNewOrders.values())
       .sort((a, b) => a.order - b.order);
 
-    // Prepare items for API update
-    const finalItemsToUpdate = sortedItems.map((item) => ({
+    // Reassign sequential orders based on sorted position (1, 2, 3...)
+    // This ensures all items have sequential orders regardless of their target order values
+    const finalItemsToUpdate = sortedItems.map((item, index) => ({
       id: item.id,
       _version: item._version,
-      order: item.order.toString(),
+      order: (index + 1).toString(),
       holdingId: item.holdingId,
     }));
 
