@@ -47,14 +47,6 @@ class LoanTypesSettings extends React.Component {
               objectLabel={<FormattedMessage id="ui-inventory.loans" />}
               actionSuppressor={actionSuppressor}
               hiddenFields={['description', 'numberOfObjects']}
-              visibleFields={['name', 'source']}
-              columnMapping={{
-                source: intl.formatMessage({ id: 'ui-inventory.source' }),
-              }}
-              formatter={{
-                source: (item) => item.source || 'folio',
-              }}
-              readOnlyFields={['source']}
               itemTemplate={{ source: 'local' }}
               nameKey="name"
               id="loantypes"

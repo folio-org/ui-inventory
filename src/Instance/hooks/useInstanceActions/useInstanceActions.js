@@ -151,7 +151,7 @@ const useInstanceActions = ({
 
   const handleEditInstanceMarc = () => redirectToQuickMarcPage(`${quickMarcPages.editInstance}/${instance.id}`);
   const handleDuplicateInstanceMarc = () => redirectToQuickMarcPage(`${quickMarcPages.duplicateInstance}/${instance.id}`);
-  const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(quickMarcPages.createHoldings);
+  const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(`${quickMarcPages.createHoldings}/${instance.id}`);
 
   const handleEditInLinkedDataEditor = useCallback(async () => {
     const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;

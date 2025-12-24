@@ -183,7 +183,7 @@ const InventoryRouting = (props) => {
                   component={DeriveMarcBibRoute}
                 />
                 <Route
-                  path={`${path}/quick-marc/create-holdings`}
+                  path={`${path}/quick-marc/create-holdings/:instanceId`}
                   component={CreateMarcHoldingsRoute}
                 />
                 <Route
