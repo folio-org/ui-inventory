@@ -144,14 +144,14 @@ const useInstanceActions = ({
   }, [instanceId, location.search]);
 
   const redirectToQuickMarcPage = useCallback((page) => {
-    const pathname = `/inventory/quick-marc/${page}/${instanceId}`;
+    const pathname = `/inventory/quick-marc/${page}`;
 
     redirectToMarcEditPage(pathname, instance, location, history);
   }, [instance, instanceId]);
 
-  const handleEditInstanceMarc = () => redirectToQuickMarcPage(quickMarcPages.editInstance);
-  const handleDuplicateInstanceMarc = () => redirectToQuickMarcPage(quickMarcPages.duplicateInstance);
-  const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(quickMarcPages.createHoldings);
+  const handleEditInstanceMarc = () => redirectToQuickMarcPage(`${quickMarcPages.editInstance}/${instance.id}`);
+  const handleDuplicateInstanceMarc = () => redirectToQuickMarcPage(`${quickMarcPages.duplicateInstance}/${instance.id}`);
+  const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(`${quickMarcPages.createHoldings}/${instance.id}`);
 
   const handleEditInLinkedDataEditor = useCallback(async () => {
     const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;
