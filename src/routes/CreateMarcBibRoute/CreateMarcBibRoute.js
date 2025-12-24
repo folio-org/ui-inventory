@@ -1,15 +1,19 @@
-import React, { useCallback } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import { useCallback } from 'react';
+import {
+  useHistory,
+  useLocation,
+} from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
 import { Pluggable } from '@folio/stripes/core';
 
-export const CreateMarcBibRoute = ({ history, location }) => {
+export const CreateMarcBibRoute = () => {
+  const history = useHistory();
+  const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
 
   const onClose = useCallback((recordRoute) => {
     const newSearchParams = new URLSearchParams(location.search);
-    newSearchParams.delete('relatedRecordVersion');
     newSearchParams.delete('shared');
 
     history.push({
@@ -44,10 +48,4 @@ export const CreateMarcBibRoute = ({ history, location }) => {
       </Pluggable>
     </div>
   );
-};
-
-CreateMarcBibRoute.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
-  history: ReactRouterPropTypes.match.isRequired,
-  location: ReactRouterPropTypes.match.isRequired,
 };
