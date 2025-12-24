@@ -61,6 +61,7 @@ export const createFieldFormatter = (referenceData, circulationHistory) => ({
 const ItemVersionHistory = ({
   item,
   onClose,
+  tenantId,
 }) => {
   const { formatMessage } = useIntl();
   const referenceData = useContext(DataContext);
@@ -73,7 +74,7 @@ const ItemVersionHistory = ({
     isLoadingMore,
     fetchNextPage,
     hasNextPage,
-  } = useItemAuditDataQuery(itemId);
+  } = useItemAuditDataQuery(itemId, { tenantId });
   const {
     actionsMap,
     versions,
@@ -126,14 +127,14 @@ const ItemVersionHistory = ({
     numberOfPieces: formatMessage({ id: 'ui-inventory.numberOfPieces' }),
     permanentLoanTypeId: formatMessage({ id: 'ui-inventory.permanentLoantype' }),
     permanentLocationId: formatMessage({ id: 'ui-inventory.permanentLocation' }),
-    prefix: formatMessage({ id: 'ui-inventory.callNumberPrefix' }),
+    prefix: formatMessage({ id: 'ui-inventory.effectiveCallNumberPrefix' }),
     servicePointId: formatMessage({ id: 'ui-inventory.servicePoint' }),
     staffMemberId: formatMessage({ id: 'ui-inventory.source' }),
     statisticalCodeIds: formatMessage({ id: 'ui-inventory.statisticalCodes' }),
-    suffix: formatMessage({ id: 'ui-inventory.callNumberSuffix' }),
+    suffix: formatMessage({ id: 'ui-inventory.effectiveCallNumberSuffix' }),
     temporaryLoanTypeId: formatMessage({ id: 'ui-inventory.temporaryLoantype' }),
     temporaryLocationId: formatMessage({ id: 'ui-inventory.temporaryLocation' }),
-    typeId: formatMessage({ id: 'ui-inventory.callNumberType' }),
+    typeId: formatMessage({ id: 'ui-inventory.effectiveCallNumberType' }),
     volume: formatMessage({ id: 'ui-inventory.volume' }),
     yearCaption: formatMessage({ id: 'ui-inventory.yearCaption' }),
   };
@@ -159,6 +160,7 @@ const ItemVersionHistory = ({
 ItemVersionHistory.propTypes = {
   item: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
+  tenantId: PropTypes.string,
 };
 
 export default ItemVersionHistory;

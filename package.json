@@ -162,7 +162,7 @@
       },
       {
         "permissionName": "ui-inventory.call-number-browse.view",
-        "displayName": "Call number browse: View permissions ",
+        "displayName": "Call number browse: View permissions",
         "description": "Enable call number browse feature",
         "subPermissions": [
           "ui-inventory.instance.view",
@@ -690,6 +690,8 @@
           "consortium-search.locations.collection.get",
           "browse.config.collection.get",
           "mod-settings.entries.collection.get",
+          "mod-settings.entries.item.get",
+          "mod-settings.global.read.ui-tags.tags.manage",
           "mod-settings.global.read.ui-inventory.display-settings.manage",
           "inventory-storage.instance-date-types.collection.get",
           "audit.inventory.instance.collection.get",

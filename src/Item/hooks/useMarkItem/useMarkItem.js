@@ -2,8 +2,8 @@ import { useMutation } from 'react-query';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
-const useMarkItem = () => {
-  const ky = useOkapiKy();
+const useMarkItem = ({ tenantId = '' } = {}) => {
+  const ky = useOkapiKy({ tenant: tenantId });
 
   const { mutateAsync, isLoading, error } = useMutation({
     mutationFn: async ({ itemId, markAs, body = {} }) => {

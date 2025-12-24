@@ -66,9 +66,11 @@ import {
 } from '../../utils';
 import {
   CONSORTIUM_PREFIX,
+  HTTP_RESPONSE_STATUS_CODES,
   INSTANCE_RECORD_TYPE,
   LINKED_DATA_CHECK_EXTERNAL_RESOURCE_FETCHABLE,
   LINKED_DATA_EDITOR_PERM,
+  TAGS_SCOPE,
 } from '../../constants';
 
 const getTlrSettings = (settings) => {
@@ -79,7 +81,7 @@ const getTlrSettings = (settings) => {
   }
 };
 
-const ViewInstance = (props) => {
+const ViewInstanceComponent = (props) => {
   const { canUseSingleRecordImport, onCopy, focusTitleOnInstanceLoad } = props;
 
   const callout = useCallout();
@@ -278,8 +280,19 @@ const ViewInstance = (props) => {
         type: 'success',
         message: <FormattedMessage id="ui-inventory.setForDeletion.toast.successful" values={{ instanceTitle: instance?.title }} />,
       });
-    } catch {
+    } catch (err) {
       setIsSetForDeletionModalOpen(false);
+
+      if (err.response.status === HTTP_RESPONSE_STATUS_CODES.INTERNAL_SERVER_ERROR) {
+        const errorMessage = await err.response.text();
+
+        callout.sendCallout({
+          type: 'error',
+          message: errorMessage,
+        });
+
+        return;
+      }
 
       callout.sendCallout({
         type: 'error',
@@ -362,14 +375,20 @@ const ViewInstance = (props) => {
   );
 };
 
-ViewInstance.propTypes = {
+const ViewInstance = flow([
+  withSingleRecordImport,
+  withTags,
+  stripesConnect,
+])(ViewInstanceComponent);
+
+ViewInstanceComponent.propTypes = {
   canUseSingleRecordImport: PropTypes.bool,
   onCopy: PropTypes.func,
   focusTitleOnInstanceLoad: PropTypes.bool,
 };
 
-export default flow([
-  withSingleRecordImport,
-  withTags,
-  stripesConnect,
-])(ViewInstance);
+ViewInstance.defaultProps = {
+  tagsScope: TAGS_SCOPE,
+};
+
+export default ViewInstance;
