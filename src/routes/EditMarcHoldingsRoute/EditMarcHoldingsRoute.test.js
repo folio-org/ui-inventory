@@ -10,8 +10,8 @@ import {
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import { DeriveMarcBibRoute } from './DeriveMarcBibRoute';
-import { useInstanceQuery } from '../../common';
+import { EditMarcHoldingsRoute } from './EditMarcHoldingsRoute';
+import { useHoldingQuery } from '../../common';
 
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
@@ -21,35 +21,34 @@ jest.mock('react-router', () => ({
 
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
-  Pluggable: jest.fn().mockImplementation(({ onCreateAndKeepEditing, onClose, onSave }) => (
+  Pluggable: jest.fn().mockImplementation(({ onClose, onSave }) => (
     <>
       Pluggable
-      <button type="button" onClick={() => onCreateAndKeepEditing('id')}>Save and Keep editing</button>
-      <button type="button" onClick={() => onClose('id')}>Close</button>
-      <button type="button" onClick={() => onSave('id')}>Save</button>
+      <button type="button" onClick={() => onClose('instanceId/holdingId')}>Close</button>
+      <button type="button" onClick={() => onSave('instanceId/holdingId')}>Save</button>
     </>
   ))
 }));
 
 jest.mock('../../common', () => ({
-  useInstanceQuery: jest.fn(),
+  useHoldingQuery: jest.fn(),
 }));
 
 const wrapper = ({ children }) => (
-  <MemoryRouter initialEntries={['/derive-bibliographic/id']}>
+  <MemoryRouter initialEntries={['/edit-holdings/instanceId/holdingId']}>
     <Route
-      path="/derive-bibliographic/:externalId"
+      path="/edit-holdings/:instanceId/:externalId"
       render={() => children}
     />
   </MemoryRouter>
 );
 
-const renderDeriveMarcBibRoute = (props = {}) => render(
-  <DeriveMarcBibRoute {...props} />,
+const renderEditMarcHoldingsRoute = (props = {}) => render(
+  <EditMarcHoldingsRoute {...props} />,
   { wrapper },
 );
 
-describe('DeriveMarcBibRoute', () => {
+describe('EditMarcHoldingsRoute', () => {
   const mockPush = jest.fn();
   const mockRefetchInstance = jest.fn();
 
@@ -58,39 +57,30 @@ describe('DeriveMarcBibRoute', () => {
       push: mockPush,
     });
 
-    useInstanceQuery.mockClear().mockReturnValue({
+    useHoldingQuery.mockClear().mockReturnValue({
       refetch: mockRefetchInstance,
     });
   });
 
   it('should fetch an instance', () => {
-    renderDeriveMarcBibRoute();
+    renderEditMarcHoldingsRoute();
 
-    expect(useInstanceQuery).toHaveBeenCalledWith('id', { tenantId: '' });
+    expect(useHoldingQuery).toHaveBeenCalledWith('holdingId');
   });
 
   it('should render Pluggable component', () => {
-    renderDeriveMarcBibRoute();
+    renderEditMarcHoldingsRoute();
 
     expect(screen.getByText('Pluggable')).toBeInTheDocument();
   });
 
-  describe('when handling save and keep editing', () => {
-    it('should redirect to marc bib edit route', () => {
-      renderDeriveMarcBibRoute();
-
-      fireEvent.click(screen.getByText('Save and Keep editing'));
-      expect(mockPush).toHaveBeenCalledWith('/inventory/quick-marc/edit-bibliographic/id');
-    });
-  });
-
   describe('when handling save', () => {
     it('should redirect to instance record', () => {
-      renderDeriveMarcBibRoute();
+      renderEditMarcHoldingsRoute();
 
       fireEvent.click(screen.getByText('Save'));
       expect(mockPush).toHaveBeenCalledWith({
-        pathname: '/inventory/view/id',
+        pathname: '/inventory/view/instanceId/holdingId',
         search: '',
         state: { isClosingFocused: true },
       });
@@ -99,11 +89,11 @@ describe('DeriveMarcBibRoute', () => {
 
   describe('when handling close', () => {
     it('should redirect to instance record', () => {
-      renderDeriveMarcBibRoute();
+      renderEditMarcHoldingsRoute();
 
       fireEvent.click(screen.getByText('Close'));
       expect(mockPush).toHaveBeenCalledWith({
-        pathname: '/inventory/view/id',
+        pathname: '/inventory/view/instanceId/holdingId',
         search: '',
         state: { isClosingFocused: true },
       });

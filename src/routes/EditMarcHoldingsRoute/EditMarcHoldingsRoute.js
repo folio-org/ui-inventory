@@ -1,11 +1,20 @@
-import React, { useCallback } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import { useCallback } from 'react';
+import {
+  useRouteMatch,
+  useHistory,
+  useLocation,
+} from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
 import { Pluggable } from '@folio/stripes/core';
+
 import { useHoldingQuery } from '../../common';
 
-export const EditMarcHoldingsRoute = ({ match, history, location }) => {
+export const EditMarcHoldingsRoute = () => {
+  const history = useHistory();
+  const match = useRouteMatch();
+  const location = useLocation();
+
   const {
     externalId,
     instanceId,
@@ -22,7 +31,6 @@ export const EditMarcHoldingsRoute = ({ match, history, location }) => {
 
   const onClose = useCallback((recordRoute) => {
     const newSearchParams = new URLSearchParams(location.search);
-    newSearchParams.delete('relatedRecordVersion');
     newSearchParams.delete('shared');
 
     history.push({
@@ -56,10 +64,4 @@ export const EditMarcHoldingsRoute = ({ match, history, location }) => {
       </Pluggable>
     </div>
   );
-};
-
-EditMarcHoldingsRoute.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
-  history: ReactRouterPropTypes.match.isRequired,
-  location: ReactRouterPropTypes.match.isRequired,
 };
