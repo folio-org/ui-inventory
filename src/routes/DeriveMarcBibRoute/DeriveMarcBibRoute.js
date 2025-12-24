@@ -1,5 +1,9 @@
-import React, { useCallback } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import { useCallback } from 'react';
+import {
+  useRouteMatch,
+  useHistory,
+  useLocation,
+} from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
 import {
@@ -9,8 +13,11 @@ import {
 
 import { useInstanceQuery } from '../../common';
 
-export const DeriveMarcBibRoute = ({ match, history, location }) => {
+export const DeriveMarcBibRoute = () => {
   const stripes = useStripes();
+  const history = useHistory();
+  const match = useRouteMatch();
+  const location = useLocation();
 
   const { externalId } = match.params;
   const searchParams = new URLSearchParams(location.search);
@@ -27,7 +34,6 @@ export const DeriveMarcBibRoute = ({ match, history, location }) => {
 
   const onClose = useCallback((recordRoute) => {
     const newSearchParams = new URLSearchParams(location.search);
-    newSearchParams.delete('relatedRecordVersion');
     newSearchParams.delete('shared');
 
     history.push({
@@ -65,10 +71,4 @@ export const DeriveMarcBibRoute = ({ match, history, location }) => {
       </Pluggable>
     </div>
   );
-};
-
-DeriveMarcBibRoute.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
-  history: ReactRouterPropTypes.match.isRequired,
-  location: ReactRouterPropTypes.match.isRequired,
 };

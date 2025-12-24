@@ -1,6 +1,7 @@
 import {
   MemoryRouter,
   useHistory,
+  Route,
 } from 'react-router';
 
 import {
@@ -9,7 +10,8 @@ import {
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import { CreateMarcBibRoute } from './CreateMarcBibRoute';
+import { EditMarcBibRoute } from './EditMarcBibRoute';
+import { useInstanceQuery } from '../../common';
 
 jest.mock('react-router', () => ({
   ...jest.requireActual('react-router'),
@@ -18,54 +20,63 @@ jest.mock('react-router', () => ({
 }));
 
 jest.mock('@folio/stripes/core', () => ({
-  Pluggable: jest.fn().mockImplementation(({ onCreateAndKeepEditing, onClose, onSave }) => (
+  ...jest.requireActual('@folio/stripes/core'),
+  Pluggable: jest.fn().mockImplementation(({ onClose, onSave }) => (
     <>
       Pluggable
-      <button type="button" onClick={() => onCreateAndKeepEditing('id')}>Save and Keep editing</button>
       <button type="button" onClick={() => onClose('id')}>Close</button>
       <button type="button" onClick={() => onSave('id')}>Save</button>
     </>
   ))
 }));
 
+jest.mock('../../common', () => ({
+  useInstanceQuery: jest.fn(),
+}));
+
 const wrapper = ({ children }) => (
-  <MemoryRouter>
-    {children}
+  <MemoryRouter initialEntries={['/edit-bibliographic/id']}>
+    <Route
+      path="/edit-bibliographic/:externalId"
+      render={() => children}
+    />
   </MemoryRouter>
 );
 
-const renderCreateMarcBibRoute = (props = {}) => render(
-  <CreateMarcBibRoute {...props} />,
+const renderEditMarcBibRoute = (props = {}) => render(
+  <EditMarcBibRoute {...props} />,
   { wrapper },
 );
 
-describe('CreateMarcBibRoute', () => {
+describe('EditMarcBibRoute', () => {
   const mockPush = jest.fn();
+  const mockRefetchInstance = jest.fn();
 
   beforeEach(() => {
     useHistory.mockClear().mockReturnValue({
       push: mockPush,
     });
+
+    useInstanceQuery.mockClear().mockReturnValue({
+      refetch: mockRefetchInstance,
+    });
+  });
+
+  it('should fetch an instance', () => {
+    renderEditMarcBibRoute();
+
+    expect(useInstanceQuery).toHaveBeenCalledWith('id', { tenantId: '' });
   });
 
   it('should render Pluggable component', () => {
-    renderCreateMarcBibRoute();
+    renderEditMarcBibRoute();
 
     expect(screen.getByText('Pluggable')).toBeInTheDocument();
   });
 
-  describe('when handling save and keep editing', () => {
-    it('should redirect to marc bib edit route', () => {
-      renderCreateMarcBibRoute();
-
-      fireEvent.click(screen.getByText('Save and Keep editing'));
-      expect(mockPush).toHaveBeenCalledWith('edit-bibliographic/id');
-    });
-  });
-
   describe('when handling save', () => {
     it('should redirect to instance record', () => {
-      renderCreateMarcBibRoute();
+      renderEditMarcBibRoute();
 
       fireEvent.click(screen.getByText('Save'));
       expect(mockPush).toHaveBeenCalledWith({
@@ -78,7 +89,7 @@ describe('CreateMarcBibRoute', () => {
 
   describe('when handling close', () => {
     it('should redirect to instance record', () => {
-      renderCreateMarcBibRoute();
+      renderEditMarcBibRoute();
 
       fireEvent.click(screen.getByText('Close'));
       expect(mockPush).toHaveBeenCalledWith({
