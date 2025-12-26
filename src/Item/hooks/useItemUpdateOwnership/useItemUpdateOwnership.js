@@ -113,8 +113,12 @@ const useItemUpdateOwnership = ({
       });
 
       showSuccessMessageAndGoBack(item.hrid);
-    } catch (e) {
-      showCommonErrorCallout();
+    } catch (error) {
+      if (error.response?.status === 400) {
+        showReferenceDataErrorCallout();
+      } else {
+        showCommonErrorCallout();
+      }
     }
   }, [instanceId, holdingsSourcesByName, item]);
 
