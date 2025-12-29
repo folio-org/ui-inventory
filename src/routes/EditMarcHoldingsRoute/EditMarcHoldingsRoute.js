@@ -1,13 +1,36 @@
-import React, { useCallback } from 'react';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import { useCallback } from 'react';
+import {
+  useRouteMatch,
+  useHistory,
+  useLocation,
+} from 'react-router';
 import { FormattedMessage } from 'react-intl';
 
 import { Pluggable } from '@folio/stripes/core';
 
-const QuickMarcRoute = ({ match, history, location }) => {
+import { useHoldingQuery } from '../../common';
+
+export const EditMarcHoldingsRoute = () => {
+  const history = useHistory();
+  const match = useRouteMatch();
+  const location = useLocation();
+
+  const {
+    externalId,
+    instanceId,
+  } = match.params;
+  const searchParams = new URLSearchParams(location.search);
+
+  const { refetch } = useHoldingQuery(externalId);
+
+  const fetchHolding = async () => {
+    const { data } = await refetch();
+
+    return data;
+  };
+
   const onClose = useCallback((recordRoute) => {
     const newSearchParams = new URLSearchParams(location.search);
-    newSearchParams.delete('relatedRecordVersion');
     newSearchParams.delete('shared');
 
     history.push({
@@ -27,6 +50,13 @@ const QuickMarcRoute = ({ match, history, location }) => {
         onClose={onClose}
         onSave={onClose}
         externalRecordPath="/inventory/view"
+        action="edit"
+        marcType="holdings"
+        instanceId={instanceId}
+        externalId={externalId}
+        isShared={searchParams.get('shared')}
+        useRoutes={false}
+        fetchExternalRecord={fetchHolding}
       >
         <span data-test-inventory-quick-marc-no-plugin>
           <FormattedMessage id="ui-inventory.quickMarcNotAvailable" />
@@ -35,11 +65,3 @@ const QuickMarcRoute = ({ match, history, location }) => {
     </div>
   );
 };
-
-QuickMarcRoute.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
-  history: ReactRouterPropTypes.match.isRequired,
-  location: ReactRouterPropTypes.match.isRequired,
-};
-
-export default QuickMarcRoute;
