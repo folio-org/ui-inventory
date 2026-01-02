@@ -61,7 +61,7 @@ export const DeriveMarcBibRoute = () => {
         action="derive"
         marcType="bibliographic"
         externalId={externalId}
-        isShared={searchParams.get('shared')}
+        isShared={isShared}
         useRoutes={false}
         fetchExternalRecord={fetchInstance}
       >

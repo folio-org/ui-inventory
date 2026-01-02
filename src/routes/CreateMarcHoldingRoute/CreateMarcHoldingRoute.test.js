@@ -10,7 +10,7 @@ import {
   screen,
 } from '@folio/jest-config-stripes/testing-library/react';
 
-import { CreateMarcHoldingsRoute } from './CreateMarcHoldingsRoute';
+import { CreateMarcHoldingRoute } from './CreateMarcHoldingRoute';
 import { useInstanceQuery } from '../../common';
 
 jest.mock('react-router', () => ({
@@ -44,8 +44,8 @@ const wrapper = ({ children }) => (
   </MemoryRouter>
 );
 
-const renderCreateMarcHoldingsRoute = (props = {}) => render(
-  <CreateMarcHoldingsRoute {...props} />,
+const renderCreateMarcHoldingRoute = (props = {}) => render(
+  <CreateMarcHoldingRoute {...props} />,
   { wrapper },
 );
 
@@ -64,20 +64,20 @@ describe('CreateMarcHoldingsRoute', () => {
   });
 
   it('should fetch an instance', () => {
-    renderCreateMarcHoldingsRoute();
+    renderCreateMarcHoldingRoute();
 
     expect(useInstanceQuery).toHaveBeenCalledWith('instanceId', { tenantId: '' });
   });
 
   it('should render Pluggable component', () => {
-    renderCreateMarcHoldingsRoute();
+    renderCreateMarcHoldingRoute();
 
     expect(screen.getByText('Pluggable')).toBeInTheDocument();
   });
 
   describe('when handling save and keep editing', () => {
     it('should redirect to marc bib edit route', () => {
-      renderCreateMarcHoldingsRoute();
+      renderCreateMarcHoldingRoute();
 
       fireEvent.click(screen.getByText('Save and Keep editing'));
       expect(mockPush).toHaveBeenCalledWith('edit-holdings/instanceId/holdingsId');
@@ -86,7 +86,7 @@ describe('CreateMarcHoldingsRoute', () => {
 
   describe('when handling save', () => {
     it('should redirect to instance record', () => {
-      renderCreateMarcHoldingsRoute();
+      renderCreateMarcHoldingRoute();
 
       fireEvent.click(screen.getByText('Save'));
       expect(mockPush).toHaveBeenCalledWith({
@@ -99,7 +99,7 @@ describe('CreateMarcHoldingsRoute', () => {
 
   describe('when handling close', () => {
     it('should redirect to instance record', () => {
-      renderCreateMarcHoldingsRoute();
+      renderCreateMarcHoldingRoute();
 
       fireEvent.click(screen.getByText('Close'));
       expect(mockPush).toHaveBeenCalledWith({

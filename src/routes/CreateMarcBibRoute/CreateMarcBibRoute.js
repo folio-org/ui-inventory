@@ -11,6 +11,7 @@ export const CreateMarcBibRoute = () => {
   const history = useHistory();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
+  const isShared = searchParams.get('shared') === 'true';
 
   const onClose = useCallback((recordRoute) => {
     const newSearchParams = new URLSearchParams(location.search);
@@ -38,7 +39,7 @@ export const CreateMarcBibRoute = () => {
         externalRecordPath="/inventory/view"
         action="create"
         marcType="bibliographic"
-        isShared={searchParams.get('shared')}
+        isShared={isShared}
         useRoutes={false}
         onCreateAndKeepEditing={onCreateAndKeepEditing}
       >

@@ -13,7 +13,7 @@ import {
 
 import { useInstanceQuery } from '../../common';
 
-export const CreateMarcHoldingsRoute = () => {
+export const CreateMarcHoldingRoute = () => {
   const stripes = useStripes();
   const history = useHistory();
   const match = useRouteMatch();
@@ -65,7 +65,7 @@ export const CreateMarcHoldingsRoute = () => {
         marcType="holdings"
         instanceId={instanceId}
         externalId={externalId}
-        isShared={searchParams.get('shared')}
+        isShared={isShared}
         useRoutes={false}
         fetchExternalRecord={fetchInstance}
       >

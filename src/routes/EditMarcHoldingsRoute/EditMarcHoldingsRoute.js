@@ -20,6 +20,7 @@ export const EditMarcHoldingsRoute = () => {
     instanceId,
   } = match.params;
   const searchParams = new URLSearchParams(location.search);
+  const isShared = searchParams.get('shared') === 'true';
 
   const { refetch } = useHoldingQuery(externalId);
 
@@ -54,7 +55,7 @@ export const EditMarcHoldingsRoute = () => {
         marcType="holdings"
         instanceId={instanceId}
         externalId={externalId}
-        isShared={searchParams.get('shared')}
+        isShared={isShared}
         useRoutes={false}
         fetchExternalRecord={fetchHolding}
       >
