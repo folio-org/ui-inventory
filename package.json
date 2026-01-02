@@ -96,7 +96,7 @@
       "tags": "1.0",
       "users": "15.0 16.0"
     },
-    "optionalOkapiInterfaces": {      
+    "optionalOkapiInterfaces": {
       "acquisition-methods": "1.0",
       "audit-config": "1.0",
       "audit-marc": "1.0",
