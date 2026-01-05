@@ -913,5 +913,13 @@
     "moveEntity.modal.title": "Zet bevestigen",
     "moveEntity.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} wordt verplaatst naar {targetName}",
     "moveEntity.modal.message.hasLinkedPOLsOrHoldings": "Deze holdings zijn Gekoppeld aan een Regel purchase order. Als u deze holdings naar een nieuwe instantie verplaatst, worden alle andere holdings en items die aan deze Regel purchase order gekoppeld zijn, ook naar de nieuwe instantie verplaatst. De Regel purchase order zal ook aan de nieuwe instantie worden gekoppeld. Wilt u verdergaan?",
-    "moveEntity.modal.message.items": "{count, number} {count, plural, one {item} other {items}} wordt verplaatst naar {targetName}"
+    "moveEntity.modal.message.items": "{count, number} {count, plural, one {item} other {items}} wordt verplaatst naar {targetName}",
+    "effectiveCallNumberPrefix": "Effectief voorvoegsel voor het Vindplaatsnummer",
+    "effectiveCallNumberSuffix": "Effectief vindplaats achtervoegsel",
+    "effectiveCallNumberType": "Effectief Vindplaats type",
+    "additionalCallNumbers": "Additional call numbers",
+    "additionalCallNumber": "Additional call number",
+    "additionalCallNumberPrefix": "Additional call number prefix",
+    "additionalCallNumberSuffix": "Additional call number suffix",
+    "additionalCallNumberType": "Additional call number type"
 }
