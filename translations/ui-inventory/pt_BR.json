@@ -913,5 +913,13 @@
     "moveEntity.modal.title": "Confirmar movimentação",
     "moveEntity.modal.message.holdings": "{count, number} {count, plural, one {acervo} other {acervos}} será(ão) movido(s) para {targetName}",
     "moveEntity.modal.message.hasLinkedPOLsOrHoldings": "Esse acervo está vinculado a uma linha de pedido de compra. Mover esse acervo para uma nova instância moverá quaisquer outros acervos e itens que estejam vinculados a essa linha de pedido de compra para a nova instância também. A linha do pedido de compra também será vinculada à nova instância. Deseja continuar?",
-    "moveEntity.modal.message.items": "{count, number} {count, plural, one {item} other {itens}} será(ão) movido(s) para {targetName}"
+    "moveEntity.modal.message.items": "{count, number} {count, plural, one {item} other {itens}} será(ão) movido(s) para {targetName}",
+    "effectiveCallNumberPrefix": "Prefixo efetivo do número de chamada",
+    "effectiveCallNumberSuffix": "Sufixo efetivo do número de chamada",
+    "effectiveCallNumberType": "Tipo de número de chamada efetivo",
+    "additionalCallNumbers": "Additional call numbers",
+    "additionalCallNumber": "Additional call number",
+    "additionalCallNumberPrefix": "Additional call number prefix",
+    "additionalCallNumberSuffix": "Additional call number suffix",
+    "additionalCallNumberType": "Additional call number type"
 }
