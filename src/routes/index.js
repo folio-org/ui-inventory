@@ -17,5 +17,5 @@ export { default as BrowseRoute } from './BrowseRoute';
 export * from './CreateMarcBibRoute/CreateMarcBibRoute';
 export * from './EditMarcBibRoute/EditMarcBibRoute';
 export * from './DeriveMarcBibRoute/DeriveMarcBibRoute';
-export * from './CreateMarcHoldingsRoute/CreateMarcHoldingsRoute';
+export * from './CreateMarcHoldingRoute/CreateMarcHoldingRoute';
 export * from './EditMarcHoldingsRoute/EditMarcHoldingsRoute';

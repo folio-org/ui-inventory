@@ -37,7 +37,7 @@ import {
   CreateMarcBibRoute,
   EditMarcBibRoute,
   DeriveMarcBibRoute,
-  CreateMarcHoldingsRoute,
+  CreateMarcHoldingRoute,
   EditMarcHoldingsRoute,
   CreateItemRoute,
   CreateHoldingRoute,
@@ -184,7 +184,7 @@ const InventoryRouting = (props) => {
                 />
                 <Route
                   path={`${path}/quick-marc/create-holdings/:instanceId`}
-                  component={CreateMarcHoldingsRoute}
+                  component={CreateMarcHoldingRoute}
                 />
                 <Route
                   path={`${path}/quick-marc/edit-holdings/:instanceId/:externalId`}

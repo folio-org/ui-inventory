@@ -49,7 +49,7 @@ const renderCreateMarcHoldingRoute = (props = {}) => render(
   { wrapper },
 );
 
-describe('CreateMarcHoldingsRoute', () => {
+describe('CreateMarcHoldingRoute', () => {
   const mockPush = jest.fn();
   const mockRefetchInstance = jest.fn();
 
