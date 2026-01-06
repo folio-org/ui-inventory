@@ -11,7 +11,7 @@ import {
   translationsProperties,
 } from '../../../../../test/jest/helpers';
 
-import ItemVersionHistory, { createFieldFormatter } from './ItemVersionHistory';
+import ItemVersionHistory, { createFieldFormatter, createItemFormatter } from './ItemVersionHistory';
 import { DataContext } from '../../../../contexts';
 
 import {
@@ -276,5 +276,106 @@ describe('createFieldFormatter', () => {
 
   it('should display only last name as source if no first name provided', () => {
     expect(fieldFormatter.source({ personal: { lastName: 'Doe' } })).toBe('Doe');
+  });
+});
+
+describe('createItemFormatter', () => {
+  const fieldLabelsMap = {
+    barcode: 'Item Barcode',
+    discoverySuppress: 'Discovery Suppress',
+    circulationNotes: 'Circulation History',
+    'additionalCallNumbers.prefix': 'Additional call number prefix',
+    'additionalCallNumbers.suffix': 'Additional call number suffix',
+    'additionalCallNumbers.typeId': 'Additional call number type',
+    'additionalCallNumbers.callNumber': 'Additional call number',
+    'circulationNotes.staffOnly': 'Staff Only',
+    'circulationNotes.note': 'Note',
+    'circulationNotes.noteType': 'Note Type',
+    materialTypeId: 'Material Type',
+  };
+
+  const fieldFormatter = createFieldFormatter(mockReferenceData, {
+    servicePointName: 'Main Desk',
+    source: 'Librarian User',
+  });
+
+  const itemFormatter = createItemFormatter(fieldLabelsMap, fieldFormatter);
+
+  it('should return null for null element', () => {
+    expect(itemFormatter(null, 0)).toBeNull();
+  });
+
+  it('should return null for undefined element', () => {
+    expect(itemFormatter(undefined, 0)).toBeNull();
+  });
+
+  it('should format field with collectionName using composite key', () => {
+    const element = {
+      name: 'staffOnly',
+      value: false,
+      collectionName: 'circulationNotes',
+    };
+
+    const result = itemFormatter(element, 0);
+    const { container } = renderWithIntl(result, translationsProperties);
+
+    expect(container.querySelector('strong')).toHaveTextContent('Staff Only:');
+    expect(container.querySelector('li')).toHaveTextContent('Staff Only: false');
+  });
+
+  it('should fallback to fieldName label when composite key not found', () => {
+    const element = {
+      name: 'discoverySuppress',
+      value: true,
+      collectionName: 'unknownCollection',
+    };
+
+    const result = itemFormatter(element, 0);
+    const { container } = renderWithIntl(result, translationsProperties);
+
+    expect(container.querySelector('strong')).toHaveTextContent('Discovery Suppress:');
+    expect(container.querySelector('li')).toHaveTextContent('Discovery Suppress: true');
+  });
+
+  it('should fallback to collectionName label when fieldName not found', () => {
+    const element = {
+      name: 'unknownField',
+      value: 'test value',
+      collectionName: 'circulationNotes',
+    };
+
+    const result = itemFormatter(element, 0);
+    const { container } = renderWithIntl(result, translationsProperties);
+
+    expect(container.querySelector('strong')).toHaveTextContent('Circulation History:');
+    expect(container.querySelector('li')).toHaveTextContent('Circulation History: test value');
+  });
+
+  it('should render additionalCallNumbers.prefix with label and value', () => {
+    const element = {
+      name: 'prefix',
+      value: 'ABC',
+      collectionName: 'additionalCallNumbers',
+    };
+
+    const result = itemFormatter(element, 0);
+    const { container } = renderWithIntl(result, translationsProperties);
+
+    expect(container.querySelector('li'))
+      .toHaveTextContent('Additional call number prefix: ABC');
+  });
+
+  it('should render circulationNotes.note with label and value', () => {
+    const element = {
+      name: 'note',
+      value: 'Damaged cover',
+      collectionName: 'circulationNotes',
+    };
+
+    const result = itemFormatter(element, 0);
+    const { container } = renderWithIntl(result, translationsProperties);
+
+    expect(container.querySelector('li'))
+      .toHaveTextContent('Note: Damaged cover');
   });
 });

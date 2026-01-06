@@ -12,7 +12,7 @@ import {
 } from '../../../test/jest/helpers';
 
 import { DataContext } from '../../contexts';
-import HoldingVersionHistory, { getFieldFormatter } from './HoldingVersionHistory';
+import HoldingVersionHistory, { getFieldFormatter, getItemFormatter } from './HoldingVersionHistory';
 
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
@@ -115,3 +115,86 @@ describe('field formatter', () => {
     expect(fieldFormatter.publicDisplay(false)).toBe('false');
   });
 });
+
+describe('getItemFormatter', () => {
+  const fieldLabelsMap = {
+    formerIds: 'Former ID',
+    additionalCallNumbers: 'Additional call numbers',
+    notes: 'Notes',
+    'additionalCallNumbers.prefix': 'Additional call number prefix',
+    'additionalCallNumbers.suffix': 'Additional call number suffix',
+    'additionalCallNumbers.typeId': 'Additional call number type',
+    'additionalCallNumbers.callNumber': 'Additional call number',
+    'notes.holdingsNoteTypeId': 'Note type',
+    'notes.note': 'Note',
+    'notes.staffOnly': 'Staff only',
+  };
+
+  const fieldFormatter = getFieldFormatter(mockReferenceData);
+  const itemFormatter = getItemFormatter(fieldLabelsMap, fieldFormatter);
+
+  it('should return null for null element', () => {
+    expect(itemFormatter(null, 0)).toBeNull();
+  });
+
+  it('should return null for undefined element', () => {
+    expect(itemFormatter(undefined, 0)).toBeNull();
+  });
+
+  it('should format field with collectionName using composite key', () => {
+    const element = {
+      name: 'staffOnly',
+      value: false,
+      collectionName: 'notes',
+    };
+
+    const result = itemFormatter(element, 0);
+    const { container } = renderWithIntl(result, translationsProperties);
+
+    expect(container.querySelector('strong')).toHaveTextContent('Staff only:');
+    expect(container.querySelector('li')).toHaveTextContent('Staff only: false');
+  });
+
+  it('should fallback to fieldName label when composite key not found', () => {
+    const element = {
+      name: 'formerIds',
+      value: '1123',
+      collectionName: 'unknownCollection',
+    };
+
+    const result = itemFormatter(element, 0);
+    const { container } = renderWithIntl(result, translationsProperties);
+
+    expect(container.querySelector('strong')).toHaveTextContent('Former ID:');
+    expect(container.querySelector('li')).toHaveTextContent('Former ID: 1123');
+  });
+
+  it('should fallback to collectionName label when fieldName not found', () => {
+    const element = {
+      name: 'unknownField',
+      value: 'test value',
+      collectionName: 'notes',
+    };
+
+    const result = itemFormatter(element, 0);
+    const { container } = renderWithIntl(result, translationsProperties);
+
+    expect(container.querySelector('strong')).toHaveTextContent('Notes:');
+    expect(container.querySelector('li')).toHaveTextContent('Notes: test value');
+  });
+
+  it('should render additionalCallNumbers.prefix with label and value', () => {
+    const element = {
+      name: 'prefix',
+      value: 'ABC',
+      collectionName: 'additionalCallNumbers',
+    };
+
+    const result = itemFormatter(element, 0);
+    const { container } = renderWithIntl(result, translationsProperties);
+
+    expect(container.querySelector('li'))
+      .toHaveTextContent('Additional call number prefix: ABC');
+  });
+});
+

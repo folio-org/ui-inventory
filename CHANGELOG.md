@@ -85,6 +85,9 @@ UIIN-3437.
 * Acquisition accordion does not display PO line link after moving holding until page is refreshed. Fixes UIIN-3554.
 * Wrong message is displayed after updating ownership of item. Fixes UIIN-3560.
 * When moving item within one holding manually, recalculate other item orders based on their position in the list. Fixes UIIN-3539.
+* Handle audit-marc dependency: hide audit button. Refs UIIN-3576.
+* Include additional call numbers in Version History for Inventory Item. Refs UIIN-3558.
+* Include additional call numbers in Version History for Inventory Holdings. Refs UIIN-3540.
 * Define separate routes for Create/Edit/Derive MARC Bibs and Create/Edit MARC Holdings. Refs UIIN-3572.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)

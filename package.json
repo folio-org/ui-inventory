@@ -54,8 +54,6 @@
     "okapiInterfaces": {
       "alternative-title-types": "1.0",
       "audit-inventory": "1.0",
-      "audit-config": "1.0",
-      "audit-marc": "1.0",
       "call-number-types": "1.0",
       "browse-inventory": "1.0",
       "circulation": "9.0 10.0 11.0 12.0 13.0 14.0",
@@ -100,6 +98,8 @@
     },
     "optionalOkapiInterfaces": {
       "acquisition-methods": "1.0",
+      "audit-config": "1.0",
+      "audit-marc": "1.0",
       "consortia": "1.0",
       "copycat-imports": "1.1",
       "copycat-profiles": "1.2",
@@ -1071,7 +1071,7 @@
     "@folio/eslint-config-stripes": "^8.0.0",
     "@folio/jest-config-stripes": "^3.0.0",
     "@folio/service-interaction": "^4.0.0",
-    "@folio/stripes": "^10.0.0",
+    "@folio/stripes": "^10.1.0",
     "@folio/stripes-cli": "^4.0.0",
     "@folio/stripes-components": "^13.0.0",
     "@folio/stripes-connect": "^10.0.0",
@@ -1124,7 +1124,7 @@
   },
   "peerDependencies": {
     "@folio/service-interaction": "^4.0.0",
-    "@folio/stripes": "^10.0.0",
+    "@folio/stripes": "^10.1.0",
     "@folio/stripes-erm-components": "^10.0.0",
     "@folio/stripes-inventory-components": "^2.0.0",
     "@folio/stripes-marc-components": "^2.0.0",

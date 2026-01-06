@@ -30,6 +30,31 @@ export const getFieldFormatter = referenceData => ({
   publicDisplay: value => value.toString(),
 });
 
+export const getItemFormatter = (fieldLabelsMap, fieldFormatter) => (element, i) => {
+  if (!element) return null;
+
+  const { name: fieldName, value, collectionName } = element;
+  const compositeKey = collectionName && fieldName
+    ? `${collectionName}.${fieldName}`
+    : null;
+
+  const label = (compositeKey && fieldLabelsMap?.[compositeKey])
+    || fieldLabelsMap?.[fieldName]
+    || fieldLabelsMap?.[collectionName];
+
+  const formattedValue = (compositeKey && fieldFormatter?.[compositeKey]?.(value))
+    || fieldFormatter?.[fieldName]?.(value)
+    || fieldFormatter?.[collectionName]?.(value)
+    || value;
+
+  return (
+    <li key={i}>
+      {fieldName && <strong>{label}: </strong>}
+      {formattedValue}
+    </li>
+  );
+};
+
 const HoldingVersionHistory = ({ onClose, holdingId }) => {
   const { formatMessage } = useIntl();
   const referenceData = useContext(DataContext);
@@ -81,9 +106,35 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
     acquisitionMethod: formatMessage({ id: 'ui-inventory.acquisitionMethod' }),
     receiptStatus: formatMessage({ id: 'ui-inventory.receiptStatus' }),
     entries: formatMessage({ id: 'ui-inventory.receivingHistory' }),
+    additionalCallNumbers: formatMessage({ id: 'ui-inventory.additionalCallNumbers' }),
+    'additionalCallNumbers.prefix': formatMessage({ id: 'ui-inventory.additionalCallNumberPrefix' }),
+    'additionalCallNumbers.suffix': formatMessage({ id: 'ui-inventory.additionalCallNumberSuffix' }),
+    'additionalCallNumbers.typeId': formatMessage({ id: 'ui-inventory.additionalCallNumberType' }),
+    'additionalCallNumbers.callNumber': formatMessage({ id: 'ui-inventory.additionalCallNumber' }),
+    'holdingsStatements.statement': formatMessage({ id: 'ui-inventory.holdingsStatement' }),
+    'holdingsStatements.note': formatMessage({ id: 'ui-inventory.holdingsStatementPublicNote' }),
+    'holdingsStatements.staffNote': formatMessage({ id: 'ui-inventory.holdingsStatementStaffNote' }),
+    'holdingsStatementsForSupplements.statement': formatMessage({ id: 'ui-inventory.holdingsStatementForSupplements' }),
+    'holdingsStatementsForSupplements.note': formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsPublicNote' }),
+    'holdingsStatementsForSupplements.staffNote': formatMessage({ id: 'ui-inventory.holdingsStatementForSupplementsStaffNote' }),
+    'holdingsStatementsForIndexes.statement': formatMessage({ id: 'ui-inventory.holdingsStatementForIndexes' }),
+    'holdingsStatementsForIndexes.note': formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesPublicNote' }),
+    'holdingsStatementsForIndexes.staffNote': formatMessage({ id: 'ui-inventory.holdingsStatementForIndexesStaffNote' }),
+    'notes.holdingsNoteTypeId': formatMessage({ id: 'ui-inventory.noteType' }),
+    'notes.note': formatMessage({ id: 'ui-inventory.note' }),
+    'notes.staffOnly': formatMessage({ id: 'ui-inventory.staffOnly' }),
+    'electronicAccess.urlRelationship': formatMessage({ id: 'ui-inventory.urlRelationship' }),
+    'electronicAccess.uri': formatMessage({ id: 'ui-inventory.uri' }),
+    'electronicAccess.linkText': formatMessage({ id: 'ui-inventory.linkText' }),
+    'electronicAccess.materialsSpecification': formatMessage({ id: 'ui-inventory.materialsSpecification' }),
+    'electronicAccess.urlPublicNote': formatMessage({ id: 'ui-inventory.urlPublicNote' }),
+    'entries.publicDisplay': formatMessage({ id: 'ui-inventory.publicDisplay' }),
+    'entries.enumeration': formatMessage({ id: 'ui-inventory.enumeration' }),
+    'entries.chronology': formatMessage({ id: 'ui-inventory.chronology' }),
   };
 
   const fieldFormatter = getFieldFormatter(referenceData);
+  const itemFormatter = getItemFormatter(fieldLabelsMap, fieldFormatter);
 
   return (
     <AuditLogPane
@@ -95,6 +146,7 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
       isInitialLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
+      itemFormatter={itemFormatter}
       actionsMap={actionsMap}
       totalVersions={totalVersions}
     />
