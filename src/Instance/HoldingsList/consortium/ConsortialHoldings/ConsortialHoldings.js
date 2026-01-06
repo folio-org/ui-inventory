@@ -1,6 +1,7 @@
-import React, {
+import {
   useContext,
   useEffect,
+  useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -8,6 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import {
   IfInterface,
   useStripes,
+  getUserTenantsPermissions,
 } from '@folio/stripes/core';
 import {
   Accordion,
@@ -26,7 +28,6 @@ const ConsortialHoldings = ({
   instance,
   prevInstanceId,
   updatePrevInstanceId,
-  userTenantPermissions,
   isAllExpanded,
 }) => {
   const instanceId = instance?.id;
@@ -35,6 +36,7 @@ const ConsortialHoldings = ({
   const { consortiaTenantsById } = useContext(DataContext);
   const { tenants } = useSearchForShadowInstanceTenants({ instanceId });
   const [status, updateStatus] = useHoldingsFromStorage({ defaultValue: {} });
+  const [userTenantPermissions, setUserTenantPermissions] = useState([]);
 
   useEffect(() => {
     if (instanceId !== prevInstanceId) {
@@ -42,6 +44,10 @@ const ConsortialHoldings = ({
       updatePrevInstanceId(instanceId);
     }
   }, []);
+
+  useEffect(() => {
+    getUserTenantsPermissions(stripes, tenants).then(perms => setUserTenantPermissions(perms));
+  }, [tenants]);
 
   useEffect(() => {
     if (typeof isAllExpanded === 'boolean') {
@@ -121,7 +127,6 @@ ConsortialHoldings.propTypes = {
   instance: PropTypes.object.isRequired,
   prevInstanceId: PropTypes.string,
   updatePrevInstanceId: PropTypes.func,
-  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
   isAllExpanded: PropTypes.bool,
 };
 
