@@ -36,7 +36,7 @@ const ConsortialHoldings = ({
   const { consortiaTenantsById } = useContext(DataContext);
   const { tenants } = useSearchForShadowInstanceTenants({ instanceId });
   const [status, updateStatus] = useHoldingsFromStorage({ defaultValue: {} });
-  const [userTenantPermissions, setUserTenantPermissions] = useState(null);
+  const [userTenantPermissions, setUserTenantPermissions] = useState([]);
 
   useEffect(() => {
     if (instanceId !== prevInstanceId) {
