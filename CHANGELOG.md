@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## [13.0.12] (IN PROGRESS)
+## [13.0.12](https://github.com/folio-org/ui-inventory/tree/v13.0.12) (2026-01-07)
 
 * Reduce the amount of calls `/_self` endpoint. Fixes UIIN-3579.
 
