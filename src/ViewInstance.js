@@ -16,7 +16,6 @@ import {
   stripesConnect,
   checkIfUserInMemberTenant,
   checkIfUserInCentralTenant,
-  getUserTenantsPermissions,
 } from '@folio/stripes/core';
 import {
   MenuSection,
@@ -37,7 +36,6 @@ import makeConnectedInstance from './ConnectedInstance';
 import withLocation from './withLocation';
 import InstancePlugin from './components/InstancePlugin';
 import {
-  isUserInConsortiumMode,
   handleKeyCommand,
   isInstanceShadowCopy,
   isMARCSource,
@@ -228,7 +226,6 @@ class ViewInstance extends React.Component {
       isNewOrderModalOpen: false,
       afterCreate: false,
       instancesQuickExportInProgress: false,
-      userTenantPermissions: [],
     };
     this.instanceId = null;
     this.intervalId = null;
@@ -239,10 +236,7 @@ class ViewInstance extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      selectedInstance,
-      stripes,
-    } = this.props;
+    const { selectedInstance } = this.props;
     const isMARCSourceRecord = isMARCSource(selectedInstance?.source);
     const isLinkedDataSourceRecord = isLinkedDataSource(selectedInstance?.source);
 
@@ -252,10 +246,6 @@ class ViewInstance extends React.Component {
     }
 
     this.setTlrSettings();
-
-    if (isUserInConsortiumMode(stripes)) {
-      this.getCurrentTenantPermissions();
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -301,15 +291,6 @@ class ViewInstance extends React.Component {
   componentWillUnmount() {
     this.props.mutator.allInstanceItems.reset();
     clearInterval(this.intervalId);
-  }
-
-  getCurrentTenantPermissions = () => {
-    const {
-      stripes,
-      stripes: { user: { user: { tenants } } },
-    } = this.props;
-
-    getUserTenantsPermissions(stripes, tenants).then(userTenantPermissions => this.setState({ userTenantPermissions }));
   }
 
   getMARCRecord = () => {
@@ -1126,7 +1107,6 @@ class ViewInstance extends React.Component {
         instance={instance}
         tagsEnabled={tagsEnabled}
         ref={this.accordionStatusRef}
-        userTenantPermissions={this.state.userTenantPermissions}
         isShared={isShared}
         mutateInstance={mutateInstance}
       >

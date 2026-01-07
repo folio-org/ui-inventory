@@ -78,8 +78,6 @@ import {
   buildSingleItemQuery,
   isUserInConsortiumMode,
   switchAffiliation,
-  addFilter,
-  replaceFilter,
   batchQueryIntoSmaller,
   getSortOptions,
   hasMemberTenantPermission,
@@ -213,7 +211,6 @@ class InstancesList extends React.Component {
       searchAndSortKey: 0,
       segmentsSortBy: this.getInitialSegmentsSortBy(),
       searchInProgress: false,
-      userTenantPermissions: [],
     };
   }
 
@@ -223,7 +220,6 @@ class InstancesList extends React.Component {
       location: _location,
       getParams,
       data,
-      stripes,
     } = this.props;
 
     const params = getParams();
@@ -258,10 +254,6 @@ class InstancesList extends React.Component {
 
     if (isSortingUpdated) {
       this.redirectToSearchParams(searchParams);
-    }
-
-    if (isUserInConsortiumMode(stripes)) {
-      this.getCurrentTenantPermissions();
     }
   }
 
@@ -1150,15 +1142,6 @@ class InstancesList extends React.Component {
     };
   }
 
-  getCurrentTenantPermissions = () => {
-    const {
-      stripes,
-      stripes: { user: { user: { tenants } } },
-    } = this.props;
-
-    getUserTenantsPermissions(stripes, tenants).then(userTenantPermissions => this.setState({ userTenantPermissions }));
-  }
-
   findAndOpenItem = async (instance) => {
     const {
       parentResources,
@@ -1186,7 +1169,8 @@ class InstancesList extends React.Component {
     if (isUserInConsortiumMode(stripes)) {
       const tenants = stripes.user.user.tenants || [];
       const isUserAffiliatedWithMemberTenant = tenants.find(tenant => tenant?.id === tenantItemBelongsTo);
-      const canMemberTenantViewItems = hasMemberTenantPermission('ui-inventory.instance.view', tenantItemBelongsTo, this.state.userTenantPermissions);
+      const userTenantPermissions = await getUserTenantsPermissions(stripes, [tenantItemBelongsTo]);
+      const canMemberTenantViewItems = hasMemberTenantPermission('ui-inventory.instance.view', tenantItemBelongsTo, userTenantPermissions);
 
       if (isEmpty(isUserAffiliatedWithMemberTenant) || !canMemberTenantViewItems) {
         return instance;

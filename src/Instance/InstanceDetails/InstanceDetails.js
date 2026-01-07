@@ -85,7 +85,6 @@ const InstanceDetails = forwardRef(({
   actionMenu,
   mutateInstance,
   instance = {},
-  userTenantPermissions = [],
   tagsEnabled = false,
   isShared = false,
   ...rest
@@ -263,7 +262,6 @@ const InstanceDetails = forwardRef(({
                 instance={instance}
                 prevInstanceId={prevInstanceId.current}
                 updatePrevInstanceId={updatePrevInstanceId}
-                userTenantPermissions={userTenantPermissions}
                 isAllExpanded={isAllExpanded}
               />
             )}
@@ -378,7 +376,6 @@ InstanceDetails.propTypes = {
   instance: PropTypes.object,
   tagsToggle: PropTypes.func,
   tagsEnabled: PropTypes.bool,
-  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
   isShared: PropTypes.bool,
 };
 
