@@ -15,7 +15,6 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import saveAs from 'file-saver';
-import moment from 'moment';
 import classnames from 'classnames';
 import { stringify } from 'query-string';
 
@@ -45,6 +44,7 @@ import {
   MCLPagingTypes,
   TextLink,
   DefaultMCLRowFormatter,
+  dayjs,
 } from '@folio/stripes/components';
 import {
   advancedSearchQueryBuilder,
@@ -688,7 +688,7 @@ class InstancesList extends React.Component {
       const { data } = this.props;
 
       const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
-      const fileName = `SearchInstanceCQLQuery${moment().format()}.cql`;
+      const fileName = `SearchInstanceCQLQuery${dayjs().format()}.cql`;
 
       saveAs(new Blob([query], { type: 'text/plain;charset=utf-8;' }), fileName);
     }
