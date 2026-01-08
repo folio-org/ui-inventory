@@ -7,6 +7,7 @@ import {
 import { FormattedMessage } from 'react-intl';
 
 import { Pluggable } from '@folio/stripes/core';
+import { useLocationsQuery } from '@folio/stripes-inventory-components';
 
 import { useHoldingQuery } from '../../common';
 
@@ -22,6 +23,7 @@ export const EditMarcHoldingsRoute = () => {
   const searchParams = new URLSearchParams(location.search);
   const isShared = searchParams.get('shared') === 'true';
 
+  const { locations } = useLocationsQuery();
   const { refetch } = useHoldingQuery(externalId);
 
   const fetchHolding = async () => {
@@ -58,6 +60,7 @@ export const EditMarcHoldingsRoute = () => {
         isShared={isShared}
         useRoutes={false}
         fetchExternalRecord={fetchHolding}
+        locations={locations}
       >
         <span data-test-inventory-quick-marc-no-plugin>
           <FormattedMessage id="ui-inventory.quickMarcNotAvailable" />

@@ -10,6 +10,7 @@ import {
   Pluggable,
   useStripes,
 } from '@folio/stripes/core';
+import { useLocationsQuery } from '@folio/stripes-inventory-components';
 
 import { useInstanceQuery } from '../../common';
 
@@ -27,6 +28,7 @@ export const CreateMarcHoldingRoute = () => {
   const isShared = searchParams.get('shared') === 'true';
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
+  const { locations } = useLocationsQuery();
   const { refetch } = useInstanceQuery(instanceId, { tenantId: isShared ? centralTenantId : '' });
 
   const fetchInstance = async () => {
@@ -68,6 +70,7 @@ export const CreateMarcHoldingRoute = () => {
         isShared={isShared}
         useRoutes={false}
         fetchExternalRecord={fetchInstance}
+        locations={locations}
       >
         <span data-test-inventory-quick-marc-no-plugin>
           <FormattedMessage id="ui-inventory.quickMarcNotAvailable" />
