@@ -89,28 +89,28 @@ const useInstanceActions = ({
   }, [marcRecord, location.search, location.pathname]);
 
   const {
-    applyOrderChanges,
-    resetOrderChanges,
-    hasPendingChanges,
+    applyAllOrderChanges,
+    resetAllOrderChanges,
+    hasAnyPendingChanges,
   } = useContext(OrderManagementContext);
 
   const handleItemsMovement = useCallback(async () => {
     const isCurrentlyInMovement = isItemsMovement;
 
-    if (isCurrentlyInMovement && hasPendingChanges) {
-      // Exiting movement mode - apply order changes
+    if (isCurrentlyInMovement && hasAnyPendingChanges) {
+      // Exiting movement mode - apply order changes for all holdings with pending changes
       try {
-        await applyOrderChanges();
+        await applyAllOrderChanges();
       } catch {
         return;
       }
     } else if (isCurrentlyInMovement) {
       // Exiting movement mode with no changes - reset any pending changes
-      resetOrderChanges();
+      resetAllOrderChanges();
     }
 
     setIsItemsMovement(prevState => !prevState);
-  }, [isItemsMovement, hasPendingChanges, applyOrderChanges, resetOrderChanges, setIsItemsMovement]);
+  }, [isItemsMovement, hasAnyPendingChanges, applyAllOrderChanges, resetAllOrderChanges, setIsItemsMovement]);
 
   const handleMoveItemsToAnotherInstance = useCallback(() => {
     setIsFindInstancePluginOpen(true);

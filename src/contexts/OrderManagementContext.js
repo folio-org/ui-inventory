@@ -13,6 +13,9 @@ const OrderManagementContext = createContext({
     updateOriginalOrders: () => {},
     handleDndReorder: () => {},
   }),
+  applyAllOrderChanges: async () => {},
+  hasAnyPendingChanges: false,
+  resetAllOrderChanges: () => {},
 });
 
 export default OrderManagementContext;
