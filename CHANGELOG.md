@@ -89,6 +89,7 @@ UIIN-3437.
 * Include additional call numbers in Version History for Inventory Item. Refs UIIN-3558.
 * Include additional call numbers in Version History for Inventory Holdings. Refs UIIN-3540.
 * Reduce the amount of calls `/_self` endpoint. Fixes UIIN-3579.
+* Replace moment with day.js. Refs UIIN-3265.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
