@@ -1,7 +1,9 @@
-import moment from 'moment';
 import { noop } from 'lodash';
 
-import { exportToCsv } from '@folio/stripes/components';
+import {
+  dayjs,
+  exportToCsv,
+} from '@folio/stripes/components';
 
 import { isTestEnv } from '../utils';
 
@@ -16,7 +18,7 @@ class IdReportGenerator {
   }
 
   getCSVFileName() {
-    return `${this.fileNamePrefix}${moment().format()}`;
+    return `${this.fileNamePrefix}${dayjs().format()}`;
   }
 
   getMARCFileName() {
