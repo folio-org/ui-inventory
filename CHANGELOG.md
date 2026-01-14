@@ -91,6 +91,7 @@ UIIN-3437.
 * Reduce the amount of calls `/_self` endpoint. Fixes UIIN-3579.
 * Define separate routes for Create/Edit/Derive MARC Bibs and Create/Edit MARC Holdings. Refs UIIN-3572.
 * Replace moment with day.js. Refs UIIN-3265.
+* "Order" value of multiple moved Items is randomly changed. Fixes UIIN-3549.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
