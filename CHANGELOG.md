@@ -89,6 +89,8 @@ UIIN-3437.
 * Include additional call numbers in Version History for Inventory Item. Refs UIIN-3558.
 * Include additional call numbers in Version History for Inventory Holdings. Refs UIIN-3540.
 * Reduce the amount of calls `/_self` endpoint. Fixes UIIN-3579.
+* Define separate routes for Create/Edit/Derive MARC Bibs and Create/Edit MARC Holdings. Refs UIIN-3572.
+* Replace moment with day.js. Refs UIIN-3265.
 * "Order" value of multiple moved Items is randomly changed. Fixes UIIN-3549.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
