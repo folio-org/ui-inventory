@@ -89,28 +89,28 @@ const useInstanceActions = ({
   }, [marcRecord, location.search, location.pathname]);
 
   const {
-    applyOrderChanges,
-    resetOrderChanges,
-    hasPendingChanges,
+    applyAllOrderChanges,
+    resetAllOrderChanges,
+    hasAnyPendingChanges,
   } = useContext(OrderManagementContext);
 
   const handleItemsMovement = useCallback(async () => {
     const isCurrentlyInMovement = isItemsMovement;
 
-    if (isCurrentlyInMovement && hasPendingChanges) {
-      // Exiting movement mode - apply order changes
+    if (isCurrentlyInMovement && hasAnyPendingChanges) {
+      // Exiting movement mode - apply order changes for all holdings with pending changes
       try {
-        await applyOrderChanges();
+        await applyAllOrderChanges();
       } catch {
         return;
       }
     } else if (isCurrentlyInMovement) {
       // Exiting movement mode with no changes - reset any pending changes
-      resetOrderChanges();
+      resetAllOrderChanges();
     }
 
     setIsItemsMovement(prevState => !prevState);
-  }, [isItemsMovement, hasPendingChanges, applyOrderChanges, resetOrderChanges, setIsItemsMovement]);
+  }, [isItemsMovement, hasAnyPendingChanges, applyAllOrderChanges, resetAllOrderChanges, setIsItemsMovement]);
 
   const handleMoveItemsToAnotherInstance = useCallback(() => {
     setIsFindInstancePluginOpen(true);
@@ -144,14 +144,14 @@ const useInstanceActions = ({
   }, [instanceId, location.search]);
 
   const redirectToQuickMarcPage = useCallback((page) => {
-    const pathname = `/inventory/quick-marc/${page}/${instanceId}`;
+    const pathname = `/inventory/quick-marc/${page}`;
 
     redirectToMarcEditPage(pathname, instance, location, history);
   }, [instance, instanceId]);
 
-  const handleEditInstanceMarc = () => redirectToQuickMarcPage(quickMarcPages.editInstance);
-  const handleDuplicateInstanceMarc = () => redirectToQuickMarcPage(quickMarcPages.duplicateInstance);
-  const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(quickMarcPages.createHoldings);
+  const handleEditInstanceMarc = () => redirectToQuickMarcPage(`${quickMarcPages.editInstance}/${instance.id}`);
+  const handleDuplicateInstanceMarc = () => redirectToQuickMarcPage(`${quickMarcPages.duplicateInstance}/${instance.id}`);
+  const handleCreateHoldingsMarc = () => redirectToQuickMarcPage(`${quickMarcPages.createHoldings}/${instance.id}`);
 
   const handleEditInLinkedDataEditor = useCallback(async () => {
     const selectedIdentifier = instance.identifiers?.find(({ value }) => value.includes(LINKED_DATA_ID_PREFIX))?.value;
