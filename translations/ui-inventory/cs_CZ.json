@@ -914,12 +914,12 @@
     "moveEntity.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdingy}} budou přesunuty {targetName}",
     "moveEntity.modal.message.hasLinkedPOLsOrHoldings": "This holdings is linked to a purchase order line. Moving this holdings to a new instance will move any other holdings and items that are linked to this purchase order line to the new instance as well. The purchase order line will also be linked to the new instance. Do you want to continue?",
     "moveEntity.modal.message.items": "{count, number} {count, plural, one {jednotka} other {jednotky}} bude(ou) přesunuta(y) do {targetName}",
-    "effectiveCallNumberPrefix": "Effective call number prefix",
-    "effectiveCallNumberSuffix": "Effective call number suffix",
-    "effectiveCallNumberType": "Effective call number type",
-    "additionalCallNumbers": "Additional call numbers",
-    "additionalCallNumber": "Additional call number",
-    "additionalCallNumberPrefix": "Additional call number prefix",
-    "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "effectiveCallNumberPrefix": "Prefix efektivní signatury",
+    "effectiveCallNumberSuffix": "Suffix efektivní signatury",
+    "effectiveCallNumberType": "Typ efektivní signatury",
+    "additionalCallNumbers": "Další signatury",
+    "additionalCallNumber": "Další signatura",
+    "additionalCallNumberPrefix": "Prefix další signatury",
+    "additionalCallNumberSuffix": "Suffix další signatury",
+    "additionalCallNumberType": "Typ další signatury"
 }
