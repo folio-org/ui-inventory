@@ -522,7 +522,7 @@
     "instanceMatchKey": "Örnek eşleşme anahtarı",
     "confirm": "Onaylayın",
     "confirmModal.message": "<strong>{title} ({materialType})</strong> (Barkod: {barcode})'s item Durum will be marked as <strong>{status}</strong>.",
-    "confirmModal.requestMessage": " {countIndex, plural, =-1 {There may be open requests Bu kopya için.} =0 {} bir {Burada {openRequestValue} Bu kopya için.} other {Şunlar var {openRequestValue} for this item.}}",
+    "confirmModal.requestMessage": "{countIndex, plural, =-1 {There may be open requests Bu kopya için.} =0 {} bir {Burada {openRequestValue} Bu kopya için.} other {Şunlar var {openRequestValue} for this item.}}",
     "saveInstancesUIIDS.info": "Örneklerin Evrensel benzersiz tanımlayıcılarını kaydet isteği alındı. Dosya indirme işlemi birkaç dakika sürebilir.",
     "instances.rows.select": "Örnek seçin",
     "showTags": "Etiketleri göster",
