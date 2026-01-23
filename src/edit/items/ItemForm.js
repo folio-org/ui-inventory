@@ -45,7 +45,10 @@ import stripesFinalForm from '@folio/stripes/final-form';
 import {
   ViewMetaData,
 } from '@folio/stripes/smart-components';
-import { effectiveCallNumber } from '@folio/stripes/util';
+import {
+  effectiveCallNumber,
+  escapeCqlWildcards,
+} from '@folio/stripes/util';
 
 import {
   ACCESSION_NUMBER_SETTING,
@@ -111,7 +114,11 @@ function validate(values) {
 }
 
 function checkUniqueBarcode(okapi, barcode) {
-  return fetch(`${okapi.url}/inventory/items?query=(barcode=="${barcode}")`,
+  const encodedBarcode = escapeCqlWildcards(barcode);
+  const cql = `barcode=="${encodedBarcode}"`;
+  const query = encodeURIComponent(cql);
+
+  return fetch(`${okapi.url}/item-storage/items?limit=0&query=${query}`,
     {
       headers: {
         'X-Okapi-Tenant': okapi.tenant,
