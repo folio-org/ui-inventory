@@ -18,9 +18,8 @@ import DragAndDropProvider from '../../../../dnd/DragAndDropProvider';
 import HoldingsList from '../../HoldingsList';
 import { LimitedHoldingsList } from '../LimitedHoldingsList';
 import { InstanceNewHolding } from '../../../ViewInstance/components/InstanceDetails/InstanceNewHolding';
-import useMemberTenantHoldings from '../../../../hooks/useMemberTenantHoldings';
 
-import { useHoldingsFromStorage } from '../../../../hooks';
+import { useHoldingsFromStorage, useMemberTenantHoldings } from '../../../../hooks';
 import { hasMemberTenantPermission } from '../../../../utils';
 
 import css from './MemberTenantHoldings.css';

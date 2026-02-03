@@ -24,6 +24,7 @@ export { default as useStaffMembersQuery } from './useStaffMembersQuery';
 export { default as useTagSettingsQuery } from './useTagSettingsQuery';
 export { default as useTLRSettingsQuery } from './useTLRSettingsQuery';
 export { default as useTotalVersions } from './useTotalVersions';
+export * from './useMemberTenantHoldings';
 export * from './useQuickExport';
 export * from '@folio/stripes-inventory-components/lib/queries/useInstanceDateTypes';
 export * from './useCallNumberTypesQuery';
