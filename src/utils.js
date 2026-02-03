@@ -767,7 +767,7 @@ export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `$
  * @returns true if permissions contains a value matching the given permissionName and tenant
  */
 export const hasMemberTenantPermission = (permissionName, tenantId, permissions = []) => {
-  const tenantPermissions = permissions?.find(permission => permission?.tenantId === tenantId)?.permissionNames || [];
+  const tenantPermissions = permissions?.find(permission => permission?.tenantId === tenantId)?.permissionNames || permissions || [];
 
   const hasPermission = tenantPermissions?.some(tenantPermission => tenantPermission?.permissionName === permissionName);
 
