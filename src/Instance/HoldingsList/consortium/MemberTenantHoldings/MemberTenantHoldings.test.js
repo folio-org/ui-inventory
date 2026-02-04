@@ -14,6 +14,7 @@ import { useHoldingsFromStorage } from '../../../../hooks';
 
 import MemberTenantHoldings from './MemberTenantHoldings';
 
+jest.mock('../../../../hooks/useMemberTenantHoldings', () => () => ({ holdings: [{ id: 'holdingId' }], isLoading: false }));
 jest.mock('@folio/stripes/core', () => ({
   ...jest.requireActual('@folio/stripes/core'),
   useUserTenantPermissions: jest.fn().mockReturnValue({
@@ -23,7 +24,6 @@ jest.mock('@folio/stripes/core', () => ({
 }));
 jest.mock('../../../../hooks', () => ({
   ...jest.requireActual('../../../../hooks'),
-  useMemberTenantHoldings: jest.fn().mockReturnValue({ holdings: [{ id: 'holdingId' }], isLoading: false }),
   useHoldingsFromStorage: jest.fn(),
 }));
 jest.mock('../../HoldingsList', () => () => <>Holdings</>);
@@ -44,14 +44,14 @@ const mockMemberTenant = {
 const accordionId = `${mockMemberTenant.id}.${instance.id}`;
 
 const userTenantFullPermissions = [{
-    permissionName: 'ui-inventory.holdings.create',
-    subPermissions: ['test subPermission 1']
-  }, {
-    permissionName: 'ui-inventory.instance.view',
-    subPermissions: ['test subPermission 1']
-  }, {
-    permissionName: 'ui-inventory.item.create',
-    subPermissions: ['test subPermission 1']
+  permissionName: 'ui-inventory.holdings.create',
+  subPermissions: ['test subPermission 1']
+}, {
+  permissionName: 'ui-inventory.instance.view',
+  subPermissions: ['test subPermission 1']
+}, {
+  permissionName: 'ui-inventory.item.create',
+  subPermissions: ['test subPermission 1']
 }];
 
 const renderMemberTenantHoldings = () => {
@@ -70,7 +70,7 @@ const renderMemberTenantHoldings = () => {
 describe('MemberTenantHoldings', () => {
   beforeEach(() => {
     useHoldingsFromStorage.mockClear().mockReturnValue(
-      [{ [accordionId]: true },jest.fn()]
+      [{ [accordionId]: true }, jest.fn()]
     );
   });
 
