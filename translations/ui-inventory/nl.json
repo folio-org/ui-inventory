@@ -917,9 +917,9 @@
     "effectiveCallNumberPrefix": "Effectief voorvoegsel voor het Vindplaatsnummer",
     "effectiveCallNumberSuffix": "Effectief vindplaats achtervoegsel",
     "effectiveCallNumberType": "Effectief Vindplaats type",
-    "additionalCallNumbers": "Additional call numbers",
-    "additionalCallNumber": "Additional call number",
-    "additionalCallNumberPrefix": "Additional call number prefix",
-    "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "additionalCallNumbers": "Extra Vindplaatsen",
+    "additionalCallNumber": "Extra Vindplaats",
+    "additionalCallNumberPrefix": "Extra voorvoegsel voor het Vindplaatsnummer",
+    "additionalCallNumberSuffix": "Extra Vindplaats achtervoegsel",
+    "additionalCallNumberType": "Extra Vindplaats type"
 }
