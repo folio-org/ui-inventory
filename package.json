@@ -53,10 +53,8 @@
     ],
     "okapiInterfaces": {
       "alternative-title-types": "1.0",
-      "audit-inventory": "1.0",
       "call-number-types": "1.0",
       "browse-inventory": "1.0",
-      "circulation": "9.0 10.0 11.0 12.0 13.0 14.0",
       "classification-types": "1.1",
       "configuration": "2.0",
       "circulation-settings": "1.0",
@@ -100,7 +98,9 @@
     "optionalOkapiInterfaces": {
       "acquisition-methods": "1.0",
       "audit-config": "1.0",
+      "audit-inventory": "1.0",
       "audit-marc": "1.0",
+      "circulation": "9.0 10.0 11.0 12.0 13.0 14.0",
       "consortia": "1.0",
       "copycat-imports": "1.1",
       "copycat-profiles": "1.2",
