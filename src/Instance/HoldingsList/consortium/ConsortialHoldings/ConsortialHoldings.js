@@ -1,7 +1,6 @@
 import {
   useContext,
   useEffect,
-  useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -9,7 +8,6 @@ import { FormattedMessage } from 'react-intl';
 import {
   IfInterface,
   useStripes,
-  getUserTenantsPermissions,
 } from '@folio/stripes/core';
 import {
   Accordion,
@@ -36,7 +34,6 @@ const ConsortialHoldings = ({
   const { consortiaTenantsById } = useContext(DataContext);
   const { tenants } = useSearchForShadowInstanceTenants({ instanceId });
   const [status, updateStatus] = useHoldingsFromStorage({ defaultValue: {} });
-  const [userTenantPermissions, setUserTenantPermissions] = useState([]);
 
   useEffect(() => {
     if (instanceId !== prevInstanceId) {
@@ -44,10 +41,6 @@ const ConsortialHoldings = ({
       updatePrevInstanceId(instanceId);
     }
   }, []);
-
-  useEffect(() => {
-    getUserTenantsPermissions(stripes, tenants).then(perms => setUserTenantPermissions(perms));
-  }, [tenants]);
 
   useEffect(() => {
     if (typeof isAllExpanded === 'boolean') {
@@ -111,7 +104,6 @@ const ConsortialHoldings = ({
                     key={`${memberTenant.id}.${instanceId}`}
                     memberTenant={memberTenant}
                     instance={instance}
-                    userTenantPermissions={userTenantPermissions}
                   />
                 ))}
               </>
