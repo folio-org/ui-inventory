@@ -98,6 +98,7 @@ UIIN-3437.
 * Make interface dependencies optional (audit-inventory, circulation). Refs UIIN-3592.
 * Improve usage of GET `/users-keycloak/_self` requests in "Inventory" app. Fixes UIIN-3585.
 * Error handling is missing when creating holdings. Fixes UIIN-3591.
+* Display additional call number type in Version History for Holdings correctly. Refs UIIN-3595.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
