@@ -1223,6 +1223,7 @@ class InstancesList extends React.Component {
         state: {
           tenantTo: tenantItemBelongsTo,
           tenantFrom: stripes.okapi.tenant,
+          initialTenantId: stripes.okapi.tenant,
         },
       });
     };
