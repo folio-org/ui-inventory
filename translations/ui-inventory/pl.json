@@ -430,7 +430,7 @@
     "circulationHistory": "Historia cyrkulacji",
     "mostRecentCheckIn": "Ostatnie zwroty",
     "checkInDate": "Data zwrotu",
-    "servicePoint": "Punkt obsługi",
+    "servicePoint": "Punkt odbioru",
     "hridHandling.toast.updated": "Ustawienie zostało pomyślnie zaktualizowane.",
     "hridHandling.toast.notUpdated": "Ustawienie NIE zostało zaktualizowane.",
     "hridHandling.modal.header": "Jesteś pewien?",
