@@ -53,6 +53,17 @@ const recalculateAllOrders = (items, manualChanges, originalOrdersRef) => {
       return a.order - b.order;
     }
 
+    const aHasManualChange = manualChanges.has(a.itemId);
+    const bHasManualChange = manualChanges.has(b.itemId);
+
+    if (aHasManualChange && !bHasManualChange) {
+      return -1; // a comes before b
+    }
+    if (!aHasManualChange && bHasManualChange) {
+      return 1; // b comes before a
+    }
+
+    // Both have manual changes or neither does, use original order as tiebreaker
     const aOriginal = getOriginalOrder(a.itemId, a.item, originalOrdersRef);
     const bOriginal = getOriginalOrder(b.itemId, b.item, originalOrdersRef);
 
@@ -312,7 +323,26 @@ const useOrderManagement = ({ holdingId, tenantId } = {}) => {
 
     // Sort all items by their new order values
     const sortedItems = Array.from(itemsWithNewOrders.values())
-      .sort((a, b) => a.order - b.order);
+      .sort((a, b) => {
+        if (a.order !== b.order) {
+          return a.order - b.order;
+        }
+
+        const aHasPendingChange = pendingOrderChanges.has(a.id);
+        const bHasPendingChange = pendingOrderChanges.has(b.id);
+
+        if (aHasPendingChange && !bHasPendingChange) {
+          return -1; // a comes before b
+        }
+        if (!aHasPendingChange && bHasPendingChange) {
+          return 1; // b comes before a
+        }
+
+        const aOriginal = getOriginalOrder(a.id, a, originalOrdersRef);
+        const bOriginal = getOriginalOrder(b.id, b, originalOrdersRef);
+
+        return aOriginal - bOriginal;
+      });
 
     // Reassign sequential orders based on sorted position (1, 2, 3...)
     // This ensures all items have sequential orders regardless of their target order values
