@@ -28,6 +28,7 @@ export const getFieldFormatter = referenceData => ({
   holdingsNoteTypeId: value => referenceData.holdingsNoteTypes?.find(noteType => noteType.id === value)?.name,
   relationshipId: value => referenceData.electronicAccessRelationships?.find(noteType => noteType.id === value)?.name,
   publicDisplay: value => value.toString(),
+  typeId: value => referenceData.callNumberTypes?.find(type => type.id === value)?.name,
 });
 
 export const getItemFormatter = (fieldLabelsMap, fieldFormatter) => (element, i) => {
