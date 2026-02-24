@@ -1,5 +1,5 @@
 {
-    "inventory.label": "Inventory",
+    "inventory.label": "Bibliogrāfiskie ieraksti",
     "resultCount": "{count, number} {count, plural, one {record found} other {records found}}",
     "item.availability.itemStatus": "Item status",
     "item.availability.itemStatusDate": "Item status date",
@@ -138,7 +138,7 @@
     "itemNotes": "Item notes",
     "holdingsNotes": "Holdings notes",
     "electronicAccess": "Electronic access",
-    "meta.title": "Inventory",
+    "meta.title": "Bibliogrāfiskie ieraksti",
     "location": "Location",
     "callNumber": "Call number",
     "barcode": "Barcode",
