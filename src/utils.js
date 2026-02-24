@@ -732,7 +732,7 @@ export const buildSingleItemQuery = (qindex, query) => {
     return null;
   }
 
-  return template(queryTemplate, { interpolate: /%{([\s\S]+?)}/g })({ query });
+  return template(queryTemplate, { interpolate: /%{([\s\S]+?)}/g })({ query: query.trim() });
 };
 
 export const isMARCSource = (source) => {
