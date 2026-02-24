@@ -160,7 +160,7 @@ const ViewInstanceComponent = (props) => {
     if (!isLoading && instance?.id && focusTitleOnInstanceLoad && !isCentralTenantPermissionsLoading) {
       paneTitleRef.current?.focus();
     }
-  }, [isLoading, instance, focusTitleOnInstanceLoad, isCentralTenantPermissionsLoading]);
+  }, [isLoading, instance?.id, focusTitleOnInstanceLoad, isCentralTenantPermissionsLoading]);
 
   const {
     isItemsMovement,
