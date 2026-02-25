@@ -1157,7 +1157,7 @@ class InstancesList extends React.Component {
     const { query, qindex } = parentResources?.query ?? {};
     const { searchInProgress } = this.state;
 
-    if (!searchInProgress) {
+    if (!searchInProgress || !instance?.id) {
       return instance;
     }
 
@@ -1171,7 +1171,7 @@ class InstancesList extends React.Component {
     // set of properties, and `items` is not included. SO we need to make a request for a full Instance
     const fullInstance = await fullInstanceQuery.GET({
       params: {
-        query: `id=="${instance.id}"`,
+        query: `id=="${instance?.id}"`,
         include: 'items.id,items.tenantId',
       },
       headers: {
@@ -1218,7 +1218,7 @@ class InstancesList extends React.Component {
 
     const navigateToItemView = () => {
       history.push({
-        pathname: `/inventory/view/${instance.id}/${holdingsRecordId}/${id}`,
+        pathname: `/inventory/view/${instance?.id}/${holdingsRecordId}/${id}`,
         search,
         state: {
           tenantTo: tenantItemBelongsTo,
