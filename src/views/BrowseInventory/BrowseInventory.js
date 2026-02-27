@@ -162,7 +162,7 @@ const BrowseInventory = () => {
     if (isSearchQueryValid) {
       deleteItemToView();
       applySearch();
-      paneTitleRef.current.focus();
+      paneTitleRef.current?.focus();
     }
   }, [searchQuery, filters]);
 
@@ -198,7 +198,7 @@ const BrowseInventory = () => {
 
   const onReset = useCallback(() => {
     resetAll();
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }, [inputRef.current, resetAll]);
 
   useEffect(() => {
@@ -207,7 +207,7 @@ const BrowseInventory = () => {
     }
 
     if (!search || (search && isFetched && !isFetching)) {
-      indexRef.current.focus();
+      indexRef.current?.focus();
       hasFocusedSearchOptionOnMount.current = true;
     }
   }, [isFetched, search, isFetching]);
