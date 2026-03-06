@@ -1,6 +1,7 @@
-import React from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
+import { useQueryClient } from 'react-query';
 
 import {
   Accordion,
@@ -8,7 +9,9 @@ import {
 } from '@folio/stripes/components';
 import {
   checkIfUserInCentralTenant,
+  useNamespace,
   useStripes,
+  useUserTenantPermissions,
 } from '@folio/stripes/core';
 
 import HoldingsList from '../../HoldingsList';
@@ -20,26 +23,53 @@ import useMemberTenantHoldings from '../../../../hooks/useMemberTenantHoldings';
 import { hasMemberTenantPermission } from '../../../../utils';
 
 import css from './MemberTenantHoldings.css';
+import { useHoldingsFromStorage } from '../../../../hooks';
 
 const MemberTenantHoldings = ({
   memberTenant,
   instance,
-  userTenantPermissions,
 }) => {
   const {
     name,
     id: memberTenantId,
   } = memberTenant;
   const stripes = useStripes();
+  const queryClient = useQueryClient();
+
+  const [namespace] = useNamespace({ key: 'user-self-permissions' });
+  const accordionId = `${memberTenantId}.${instance?.id}`;
+  const [accordionStatus, updateAccordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
+  const isAccordionOpen = accordionStatus[accordionId] || false;
+
+  const {
+    userPermissions,
+    isFetching: isUserTenantPermissionsLoading,
+  } = useUserTenantPermissions(
+    { tenantId: memberTenantId },
+    { enabled: !!memberTenantId && isAccordionOpen },
+  );
+
+  useEffect(() => {
+    if (!isAccordionOpen) {
+      queryClient.cancelQueries([namespace, memberTenantId]);
+    }
+  }, [isAccordionOpen, memberTenantId, queryClient]);
 
   const pathToHoldingsAccordion = ['consortialHoldings', memberTenantId];
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
 
-  const canViewHoldingsAndItems = hasMemberTenantPermission('ui-inventory.instance.view', memberTenantId, userTenantPermissions);
-  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', memberTenantId, userTenantPermissions);
-  const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', memberTenantId, userTenantPermissions);
+  const canViewHoldingsAndItems = hasMemberTenantPermission('ui-inventory.instance.view', memberTenantId, userPermissions);
+  const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', memberTenantId, userPermissions);
+  const canCreateHoldings = hasMemberTenantPermission('ui-inventory.holdings.create', memberTenantId, userPermissions);
 
-  const { holdings, isLoading } = useMemberTenantHoldings(instance, memberTenantId, userTenantPermissions);
+  const { holdings, isLoading } = useMemberTenantHoldings(instance, memberTenantId, userPermissions);
+
+  const onToggle = ({ id }) => {
+    updateAccordionStatus(current => ({
+      ...current,
+      [id]: !current[id],
+    }));
+  };
 
   if (isEmpty(holdings)) return null;
 
@@ -65,7 +95,7 @@ const MemberTenantHoldings = ({
           instance={instance}
           holdings={holdings}
           tenantId={memberTenantId}
-          userTenantPermissions={userTenantPermissions}
+          userTenantPermissions={userPermissions}
           pathToAccordionsState={pathToHoldingsAccordion}
         />
       )
@@ -74,11 +104,13 @@ const MemberTenantHoldings = ({
   return (
     <Accordion
       className={css.memberTenantHoldings}
-      id={`${memberTenantId}.${instance?.id}`}
+      id={accordionId}
       label={name}
+      open={isAccordionOpen}
+      onToggle={onToggle}
     >
       <div className={css.memberTenantHoldings}>
-        {isLoading
+        {isLoading || isUserTenantPermissionsLoading
           ? <Loading size="large" />
           : renderHoldings()
         }
@@ -96,7 +128,6 @@ const MemberTenantHoldings = ({
 MemberTenantHoldings.propTypes = {
   instance: PropTypes.object.isRequired,
   memberTenant: PropTypes.object.isRequired,
-  userTenantPermissions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default MemberTenantHoldings;
