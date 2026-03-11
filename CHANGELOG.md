@@ -105,6 +105,7 @@ UIIN-3437.
 * "Something went wrong" error appears sometimes when user opens Item's detail view pane. Fixes UIIN-3599.
 * Trim the query value before searching for Items when auto-opening Item records. Fixes UIIN-3598.
 * Condtionally evaluate DOM refs before calling `.focus()`. Fixes UIIN-3603.
+* Add `stripes-core.settings.read` permission to app and settings permissions. Refs UIIN-3544.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
