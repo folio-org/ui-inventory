@@ -1,14 +1,17 @@
 # Change history for ui-inventory
 
-## 13.0.13 - In progress
+## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.12...v13.0.13)
 
 * Make FOLIO responsive when the Instance Detail View pane is closed while it is still loading and then opened again. Fixes UIIN-3589.
 
 ## [13.0.12](https://github.com/folio-org/ui-inventory/tree/v13.0.12) (2026-01-07)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.11...v13.0.12)
 
 * Reduce the amount of calls `/_self` endpoint. Fixes UIIN-3579.
 
 ## [13.0.11](https://github.com/folio-org/ui-inventory/tree/v13.0.11) (2025-11-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.10...v13.0.11)
 
 * Add source URI field to instance full-record display and (disabled) to edit form. Fixes UIIN-3287. Backported in UIIN-3511.
 
