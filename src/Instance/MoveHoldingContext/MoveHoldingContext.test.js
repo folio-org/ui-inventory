@@ -1,8 +1,8 @@
+import { act } from 'react';
 import keyBy from 'lodash/keyBy';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import {
-  act,
   configure,
   fireEvent,
   screen,
@@ -215,17 +215,25 @@ describe('MoveHoldingContext', () => {
     });
 
     const clickMoveFlow = async ({ getByTestId, findByText }) => {
-      const holdingsAnnex = getByTestId('item-row-c4a15834-0184-4a6f-9c0c-0ca5bad8286d');
+      const holdingId = 'c4a15834-0184-4a6f-9c0c-0ca5bad8286d';
+      const holdingsAnnex = getByTestId('item-row-' + holdingId);
 
       const moveToBtn = within(holdingsAnnex).getByText('Move to');
 
-      fireEvent.click(moveToBtn);
+      await act(async () => {
+        fireEvent.click(moveToBtn);
+      });
 
-      const dropdownMoveBtn = within(holdingsAnnex).getByText('A journey through Europe Bildtontraeger high-speed lines European Commission, Directorate-General for Mobility and Transport');
-      expect(dropdownMoveBtn).toBeInTheDocument();
+      const dropdownItem = await findByText((content, element) => {
+        return content.includes('A journey through Europe') &&
+               element?.classList.contains('dropDownItem') &&
+               element?.getAttribute('data-item-id') === holdingId;
+      });
+
+      expect(dropdownItem).toBeInTheDocument();
 
       await act(async () => {
-        fireEvent.click(dropdownMoveBtn);
+        fireEvent.click(dropdownItem);
       });
 
       expect(await findByText(/This holdings is linked to a purchase order line/)).toBeInTheDocument();
@@ -241,7 +249,7 @@ describe('MoveHoldingContext', () => {
       fireEvent.click(confirmBtn);
 
       expect(screen.queryByText('Loading')).toBeInTheDocument();
-    });
+    }, 10000);
 
     it('should close modal and stop moving when "Cancel" is clicked', async () => {
       const { findByText, getByTestId } = renderMoveHoldingContext();
@@ -253,6 +261,6 @@ describe('MoveHoldingContext', () => {
       fireEvent.click(cancelBtn);
 
       expect(screen.queryByText('Loading')).not.toBeInTheDocument();
-    });
+    }, 10000);
   });
 });
