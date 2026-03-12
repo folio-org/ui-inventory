@@ -8,7 +8,6 @@
 * Display additional order data on Inventory item record. Refs UIIN-3350.
 * Item -> ViewItem: refactor component. Refs UIIN-3267.
 * *BREAKING* Use `/search/resources/jobs` endpoints to get Instances and Holdings UUIDs. Refs UIIN-3366.
-* Add source URI field to instance full-record display and (disabled) to edit form. Fixes UIIN-3287.
 * Adding HRID to the Inventory results list & show columns options. Refs UIIN-1262.
 * Display more detailed error message when updating ownership for holdings fails. Refs UIIN-3339.
 * Remove empty lines in drop-down menus in Settings > Inventory > Number generator options. Refs UIIN-3439.
@@ -88,7 +87,6 @@ UIIN-3437.
 * Handle audit-marc dependency: hide audit button. Refs UIIN-3576.
 * Include additional call numbers in Version History for Inventory Item. Refs UIIN-3558.
 * Include additional call numbers in Version History for Inventory Holdings. Refs UIIN-3540.
-* Reduce the amount of calls `/_self` endpoint. Fixes UIIN-3579.
 * Define separate routes for Create/Edit/Derive MARC Bibs and Create/Edit MARC Holdings. Refs UIIN-3572.
 * Replace moment with day.js. Refs UIIN-3265.
 * "Order" value of multiple moved Items is randomly changed. Fixes UIIN-3549.
@@ -106,6 +104,21 @@ UIIN-3437.
 * Trim the query value before searching for Items when auto-opening Item records. Fixes UIIN-3598.
 * Condtionally evaluate DOM refs before calling `.focus()`. Fixes UIIN-3603.
 * Add missing permission for number generator. Fixes UIIN-3609.
+
+## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.12...v13.0.13)
+
+* Make FOLIO responsive when the Instance Detail View pane is closed while it is still loading and then opened again. Fixes UIIN-3589.
+
+## [13.0.12](https://github.com/folio-org/ui-inventory/tree/v13.0.12) (2026-01-07)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.11...v13.0.12)
+
+* Reduce the amount of calls `/_self` endpoint. Fixes UIIN-3579.
+
+## [13.0.11](https://github.com/folio-org/ui-inventory/tree/v13.0.11) (2025-11-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.10...v13.0.11)
+
+* Add source URI field to instance full-record display and (disabled) to edit form. Fixes UIIN-3287. Backported in UIIN-3511.
 
 ## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
