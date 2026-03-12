@@ -133,7 +133,8 @@
           "search.index.inventory.reindex.post",
           "search.facets.collection.get",
           "consortium-search.holdings.collection.get",
-          "consortium-search.items.collection.get"
+          "consortium-search.items.collection.get",
+          "stripes-core.settings.read"
         ]
       },
       {
@@ -189,7 +190,8 @@
         "subPermissions": [
           "settings.enabled",
           "audit.config.groups.settings.audit.inventory.collection.get",
-          "perms.users.get"
+          "perms.users.get",
+          "stripes-core.settings.read"
         ],
         "visible": false
       },
