@@ -695,6 +695,7 @@
           "mod-settings.entries.item.get",
           "mod-settings.global.read.ui-tags.tags.manage",
           "mod-settings.global.read.ui-inventory.display-settings.manage",
+          "mod-settings.global.read.ui-inventory.number-generator-settings.manage",
           "inventory-storage.instance-date-types.collection.get",
           "audit.inventory.instance.collection.get",
           "audit.inventory.holdings.collection.get",
