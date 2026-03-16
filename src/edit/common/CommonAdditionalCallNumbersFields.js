@@ -96,7 +96,7 @@ const CommonAdditionalCallNumbersFields = ({
           aria-label={callNumberLabel}
           id={`callnumber_${index}`}
           component={TextArea}
-          disabled={isCallNumberDisabled}
+          disabled={!canEdit || isCallNumberDisabled}
           rows={1}
           fullWidth
           formatOnBlur
