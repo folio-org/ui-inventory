@@ -750,7 +750,12 @@ class ItemForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={10}>
-                        <AdditionalCallNumbersItemLevelFields callNumberTypeOptions={callNumberTypeOptions} onSwap={this.handleCallNumberSwap} />
+                        <AdditionalCallNumbersItemLevelFields
+                          callNumberTypeOptions={callNumberTypeOptions}
+                          onSwap={this.handleCallNumberSwap}
+                          showNumberGenerator={showNumberGeneratorForCallNumber}
+                          isCallNumberDisabled={isCallNumberDisabled}
+                        />
                       </Col>
                     </Row>
                     <Row>

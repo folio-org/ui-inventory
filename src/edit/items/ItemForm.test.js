@@ -7,7 +7,7 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import { fireEvent, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
 import { StripesContext } from '@folio/stripes/core';
 
 import {
@@ -268,6 +268,26 @@ describe('ItemForm', () => {
       expect(getByText('suffix1')).toBeInTheDocument();
       expect(getByText('cn1')).toBeInTheDocument();
       expect(getAllByText('Library of Congress classification').length).toBe(2);
+    });
+
+    it('should render generate number button for additional call numbers and disable call number field', () => {
+      const { getByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          callNumberHoldings: '',
+          useSharedNumber: true,
+        }
+      });
+
+      fireEvent.click(getByRole('button', { name: 'Add additional call number' }));
+
+      const heading = getByRole('heading', { name: 'Additional item call numbers' });
+      const additionalCallnumberSection = within(heading.parentElement);
+
+      expect(additionalCallnumberSection.getByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
+      expect(additionalCallnumberSection.getByRole('textbox', { name: 'Call number' })).toBeDisabled();
     });
   });
 
