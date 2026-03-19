@@ -1,11 +1,12 @@
 import { FieldArray } from 'react-final-form-arrays';
-import { Field } from 'react-final-form';
+import { Field, useForm } from 'react-final-form';
 import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
 import PropTypes from 'prop-types';
 
+import { NumberGeneratorModalButton } from '@folio/service-interaction';
 import {
   Row,
   Col,
@@ -23,10 +24,13 @@ const CommonAdditionalCallNumbersFields = ({
   canAdd = true,
   canEdit = true,
   canDelete = true,
+  showNumberGenerator = false,
+  isCallNumberDisabled = false,
   item = false,
   name = 'additionalCallNumbers',
 }) => {
   const { formatMessage } = useIntl();
+  const { change } = useForm();
   const callNumberTypeLabel = formatMessage({ id: 'ui-inventory.callNumberType' });
   const callNumberPrefixLabel = formatMessage({ id: 'ui-inventory.callNumberPrefix' });
   const callNumberLabel = formatMessage({ id: 'ui-inventory.callNumber' });
@@ -65,7 +69,7 @@ const CommonAdditionalCallNumbersFields = ({
             <Field
               name={`${fieldName}.typeId`}
               aria-label={callNumberTypeLabel}
-              id={`additem_callnumbertype_${index}`}
+              id={`callnumbertype_${index}`}
               component={Select}
               fullWidth
               dataOptions={[{ label, value: '' }, ...callNumberTypeOptions]}
@@ -78,7 +82,7 @@ const CommonAdditionalCallNumbersFields = ({
         <Field
           name={`${fieldName}.prefix`}
           aria-label={callNumberPrefixLabel}
-          id={`additem_prefix_${index}`}
+          id={`prefix_${index}`}
           component={TextArea}
           rows={1}
           fullWidth
@@ -90,19 +94,31 @@ const CommonAdditionalCallNumbersFields = ({
         <Field
           name={`${fieldName}.callNumber`}
           aria-label={callNumberLabel}
-          id={`additem_callnumber_${index}`}
+          id={`callnumber_${index}`}
           component={TextArea}
+          disabled={!canEdit || isCallNumberDisabled}
           rows={1}
           fullWidth
           formatOnBlur
-          disabled={!canEdit}
         />
+        {showNumberGenerator &&
+          <NumberGeneratorModalButton
+            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+            callback={(generated) => change(`${fieldName}.callNumber`, generated)}
+            id={`number_generator_callnumber_${index}`}
+            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+            generator="inventory_callNumber"
+            modalProps={{
+              label: <FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />
+            }}
+          />
+        }
       </Col>
       <Col sm={2}>
         <Field
           name={`${fieldName}.suffix`}
           aria-label={callNumberSuffixLabel}
-          id={`additem_suffix_${index}`}
+          id={`suffix_${index}`}
           component={TextArea}
           rows={1}
           fullWidth
@@ -146,9 +162,11 @@ CommonAdditionalCallNumbersFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
+  isCallNumberDisabled: PropTypes.bool,
   item: PropTypes.bool,
   onSwap: PropTypes.func.isRequired,
   name: PropTypes.string,
+  showNumberGenerator: PropTypes.bool,
 };
 
 export default CommonAdditionalCallNumbersFields;

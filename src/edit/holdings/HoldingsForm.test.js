@@ -4,7 +4,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { fireEvent, waitFor, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent, waitFor, screen, within } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -305,7 +305,28 @@ describe('HoldingsForm', () => {
       expect(getAllByLabelText('Call number prefix')).toHaveLength(1);
       expect(getAllByLabelText('Call number suffix')).toHaveLength(1);
     });
+
+    it('should render generate number button for additional call numbers and disable call number field', () => {
+      const { getByRole } = renderHoldingsForm({
+        numberGeneratorData: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: '',
+          callNumberHoldings: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          useSharedNumber: true,
+        }
+      });
+
+      fireEvent.click(getByRole('button', { name: 'Add additional call number' }));
+
+      const heading = getByRole('heading', { name: 'Additional holdings call numbers' });
+      const additionalCallnumberSection = within(heading.parentElement);
+
+      expect(additionalCallnumberSection.getByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
+      expect(additionalCallnumberSection.getByRole('textbox', { name: 'Call number' })).toBeDisabled();
+    });
   });
+
   describe('form validation', () => {
     it('should show error when call number is required but empty', async () => {
       const { getByRole, getAllByText } = renderHoldingsForm();
