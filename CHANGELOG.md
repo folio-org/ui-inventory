@@ -107,6 +107,7 @@ UIIN-3437.
 * Add missing permission for number generator. Fixes UIIN-3609.
 * Inventory Holdings: Add number generator button "Generate call number" to additional holdings call numbers. Refs UIIN-3606.
 * Inventory Item: Add number generator button "Generate call number" to additional item call numbers. Refs UIIN-3608.
+* Make `circulation-settings` dependency optional. Refs UIIN-3621.
 
 ## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.12...v13.0.13)

@@ -57,7 +57,6 @@
       "browse-inventory": "1.0",
       "classification-types": "1.1",
       "configuration": "2.0",
-      "circulation-settings": "1.0",
       "contributor-name-types": "1.2",
       "contributor-types": "2.0",
       "electronic-access-relationships": "1.0",
@@ -116,7 +115,8 @@
       "pieces": "3.0",
       "titles": "1.2",
       "linked-data": "2.0",
-      "data-import-converter-storage": "1.3 1.4 1.5"
+      "data-import-converter-storage": "1.3 1.4 1.5",
+      "circulation-settings": "1.0"
     },
     "permissionSets": [
       {
