@@ -888,9 +888,9 @@
     "item.order.validation.duplicate": "Order number already exists",
     "item.order.update.error": "Failed to update item orders",
     "primaryItemCallNumber": "Primary item call number",
-    "additionalItemCallNumbers": "Additional item call numbers",
+    "additionalItemCallNumbers": "Додаткові шифри примірника",
     "primaryHoldingsCallNumber": "Primary holdings call number",
-    "additionalHoldingsCallNumbers": "Additional holdings call numbers",
+    "additionalHoldingsCallNumbers": "Додаткові шифри даних про фонди (холдінгсів)",
     "item.order.update.success": "Item movement has been successfully saved.",
     "moveEntity": "Перемістити дані про фонди (холдінгси)/примірники до іншого біб.запису (інстансу)",
     "moveEntity.moveButton": "Перемістити до",
@@ -920,6 +920,6 @@
     "additionalCallNumbers": "Додаткові шифри",
     "additionalCallNumber": "Додатковий шифр",
     "additionalCallNumberPrefix": "Additional call number prefix",
-    "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "additionalCallNumberSuffix": "Додатковий суфікс для шифру",
+    "additionalCallNumberType": "Додатковий тип шифру"
 }
