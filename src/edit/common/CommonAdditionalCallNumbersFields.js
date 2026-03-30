@@ -49,7 +49,7 @@ const CommonAdditionalCallNumbersFields = ({
         </Label>
       </Col>
       <Col sm={3}>
-        <Label tagName="legend">
+        <Label tagName="legend" required>
           {callNumberLabel}
         </Label>
       </Col>
