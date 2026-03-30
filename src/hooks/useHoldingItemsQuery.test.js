@@ -28,6 +28,8 @@ describe('useHoldingItemsQuery', () => {
   }));
 
   beforeEach(() => {
+    queryClient.clear();
+    mockGet.mockClear();
     useOkapiKy.mockClear().mockReturnValue({
       get: mockGet,
       extend: jest.fn().mockReturnValue({ get: mockGet }),
@@ -109,5 +111,28 @@ describe('useHoldingItemsQuery', () => {
         }
       );
     });
+  });
+
+  it('does not refetch on remount when request params are unchanged', async () => {
+    const id = items[0].holdingsRecordId;
+    const searchParams = { limit: 5, offset: 0 };
+
+    const { unmount } = renderHook(
+      () => useHoldingItemsQuery(id, { searchParams }),
+      { wrapper }
+    );
+
+    await act(() => !queryClient.isFetching());
+    expect(mockGet).toHaveBeenCalledTimes(1);
+
+    unmount();
+
+    renderHook(
+      () => useHoldingItemsQuery(id, { searchParams }),
+      { wrapper }
+    );
+
+    await act(() => !queryClient.isFetching());
+    expect(mockGet).toHaveBeenCalledTimes(1);
   });
 });
