@@ -58,12 +58,15 @@ const useHoldingItemsQuery = (
     ...omit(options.searchParams, ['sortBy']),
   };
 
-  const queryKey = [namespace, options.key, holdingsRecordId, searchParams.offset, sortBy];
+  const queryKey = [namespace, options.key, holdingsRecordId, searchParams];
   const queryFn = () => ky.get('inventory/items-by-holdings-id', { searchParams }).json();
+  const queryOptions = omit(options, ['searchParams']);
   const { data, refetch, isLoading, isFetching } = useQuery({
     queryKey,
     queryFn,
-    ...omit(options, ['searchParams']),
+    staleTime: queryOptions.staleTime ?? Infinity,
+    refetchOnMount: queryOptions.refetchOnMount ?? false,
+    ...queryOptions,
   });
 
   return {
