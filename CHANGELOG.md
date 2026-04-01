@@ -2,6 +2,7 @@
 
 ## [14.0.0] (IN PROGRESS)
 
+* Add missing asterisk to call number label in additional call numbers section. Fixes UIIN-3615, UIIN-3618.
 * Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
 * Update `orders` and `order-lines` interfaces to `13.0` and `4.0` accordingly. Refs UIIN-3345.
 * Remove extra record from Central tenant after adding `Receiving history` record in local member instance. Fixes UIIN-3211.
