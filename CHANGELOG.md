@@ -111,6 +111,7 @@ UIIN-3437.
 * Make `circulation-settings` dependency optional. Refs UIIN-3621.
 * User without affiliation in member tenant is not able to see an item record. Fixes UIIN-3614.
 * Item reorder changes are lost if holdings accordion is collapsed before 'stop item movement' invoked. Fixes UIIN-3626.
+* Make pagination for items enabled. Fixes UIIN-3624.
 
 ## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.12...v13.0.13)
