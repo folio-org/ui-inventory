@@ -693,7 +693,7 @@
     "selectCode": "Select code",
     "actions.menuSection.sortBy": "Sort by",
     "actions.menuSection.sortBy.relevance": "Relevance",
-    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.title": "Titre",
     "actions.menuSection.sortBy.contributors": "Contributors",
     "exportInstanceInMARC": "Exporter la notice (MARC)",
     "editInstance.title": "Modifier la notice • {title}",
