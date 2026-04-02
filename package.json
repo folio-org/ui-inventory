@@ -783,6 +783,8 @@
         "subPermissions": [
           "ui-inventory.item.create",
           "inventory.items.item.put",
+          "inventory-storage.items.item.put",
+          "inventory-storage.items.collection.patch",
           "inventory-storage.bound-with-parts.item.delete",
           "inventory-storage.bound-withs.collection.put"
         ],
