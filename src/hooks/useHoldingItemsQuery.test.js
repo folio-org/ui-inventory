@@ -113,7 +113,7 @@ describe('useHoldingItemsQuery', () => {
     });
   });
 
-  it('does not refetch on remount when request params are unchanged', async () => {
+  it('refetches on remount when query is stale', async () => {
     const id = items[0].holdingsRecordId;
     const searchParams = { limit: 5, offset: 0 };
 
@@ -133,6 +133,6 @@ describe('useHoldingItemsQuery', () => {
     );
 
     await act(() => !queryClient.isFetching());
-    expect(mockGet).toHaveBeenCalledTimes(1);
+    expect(mockGet).toHaveBeenCalledTimes(2);
   });
 });
