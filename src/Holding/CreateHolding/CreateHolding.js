@@ -57,6 +57,16 @@ const CreateHolding = ({
             values={{ hrid: holdingsRecord.hrid }}
           />,
         });
+      })
+      .catch((error) => {
+        const defaultErrorMessage = <FormattedMessage id="ui-inventory.communicationProblem" />;
+
+        error.text().then(text => {
+          callout.sendCallout({
+            type: 'error',
+            message: text || defaultErrorMessage,
+          });
+        });
       });
   }, [onCancel, callout]);
 
@@ -95,6 +105,7 @@ CreateHolding.manifest = Object.freeze({
     type: 'okapi',
     path: 'holdings-storage/holdings',
     fetch: false,
+    throwErrors: false,
   },
 });
 

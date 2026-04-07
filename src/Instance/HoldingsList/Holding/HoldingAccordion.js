@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 import {
   FormattedMessage,
   useIntl,
@@ -93,6 +94,7 @@ const HoldingAccordion = ({
   dragHandleListeners,
   ref,
 }) => {
+  const hasBeenOpenedRef = useRef(false);
   const searchParams = {
     limit: 0,
     offset: 0,
@@ -163,15 +165,24 @@ const HoldingAccordion = ({
       displayWhenClosed={holdingButtonsGroup(false)}
       closedByDefault
     >
-      {open => (
-        open && (
+      {open => {
+        if (open) {
+          hasBeenOpenedRef.current = true;
+        }
+
+        if (!hasBeenOpenedRef.current) return null;
+
+        return (
           <Row>
-            <Col sm={12}>
+            <Col
+              sm={12}
+              style={{ display: open ? 'block' : 'none' }}
+            >
               {children}
             </Col>
           </Row>
-        )
-      )}
+        );
+      }}
     </Accordion>
   );
 };

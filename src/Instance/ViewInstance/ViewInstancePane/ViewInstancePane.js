@@ -55,7 +55,6 @@ const ViewInstancePane = ({
   error,
   isCentralTenantPermissionsLoading,
   tagsEnabled = false,
-  userTenantPermissions = [],
   onClose,
   actionMenu,
   isInstanceSharing = false,
@@ -196,7 +195,6 @@ const ViewInstancePane = ({
           <InstanceDetailsContent
             instance={instance}
             tenantId={tenantId}
-            userTenantPermissions={userTenantPermissions}
             holdingsSection={holdingsSection}
             accordionStatusRef={accordionStatusRef}
           />
@@ -234,7 +232,6 @@ ViewInstancePane.propTypes = {
   error: PropTypes.object,
   isCentralTenantPermissionsLoading: PropTypes.bool,
   tagsEnabled: PropTypes.bool,
-  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
   onClose: PropTypes.func.isRequired,
   actionMenu: PropTypes.func.isRequired,
   isInstanceSharing: PropTypes.bool,

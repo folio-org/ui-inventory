@@ -1,4 +1,4 @@
-import React, {
+import {
   useContext,
   useEffect,
 } from 'react';
@@ -26,7 +26,6 @@ const ConsortialHoldings = ({
   instance,
   prevInstanceId,
   updatePrevInstanceId,
-  userTenantPermissions,
   isAllExpanded,
 }) => {
   const instanceId = instance?.id;
@@ -105,7 +104,6 @@ const ConsortialHoldings = ({
                     key={`${memberTenant.id}.${instanceId}`}
                     memberTenant={memberTenant}
                     instance={instance}
-                    userTenantPermissions={userTenantPermissions}
                   />
                 ))}
               </>
@@ -121,7 +119,6 @@ ConsortialHoldings.propTypes = {
   instance: PropTypes.object.isRequired,
   prevInstanceId: PropTypes.string,
   updatePrevInstanceId: PropTypes.func,
-  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
   isAllExpanded: PropTypes.bool,
 };
 

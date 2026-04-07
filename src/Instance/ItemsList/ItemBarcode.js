@@ -83,7 +83,7 @@ const ItemBarcode = ({
 
   return (
     <>
-      {isBarcodeAsHotlink ? (
+      {isBarcodeAsHotlink && instanceId && holdingId && item.id ? (
         <TextLink
           to={`/inventory/view/${instanceId}/${holdingId}/${item.id}?tenantTo=${tenantId}`}
           onClick={async (e) => {

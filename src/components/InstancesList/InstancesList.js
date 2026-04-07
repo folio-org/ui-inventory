@@ -15,7 +15,6 @@ import {
   FormattedMessage,
 } from 'react-intl';
 import saveAs from 'file-saver';
-import moment from 'moment';
 import classnames from 'classnames';
 import { stringify } from 'query-string';
 
@@ -45,6 +44,7 @@ import {
   MCLPagingTypes,
   TextLink,
   DefaultMCLRowFormatter,
+  dayjs,
 } from '@folio/stripes/components';
 import {
   advancedSearchQueryBuilder,
@@ -208,7 +208,6 @@ class InstancesList extends React.Component {
       searchAndSortKey: 0,
       segmentsSortBy: this.getInitialSegmentsSortBy(),
       searchInProgress: false,
-      userTenantPermissions: [],
     };
   }
 
@@ -254,10 +253,6 @@ class InstancesList extends React.Component {
     }
 
     this.redirectToSearchParams(searchParams);
-
-    if (isUserInConsortiumMode(stripes)) {
-      this.getCurrentTenantPermissions();
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -693,7 +688,7 @@ class InstancesList extends React.Component {
       const { data } = this.props;
 
       const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
-      const fileName = `SearchInstanceCQLQuery${moment().format()}.cql`;
+      const fileName = `SearchInstanceCQLQuery${dayjs().format()}.cql`;
 
       saveAs(new Blob([query], { type: 'text/plain;charset=utf-8;' }), fileName);
     }
@@ -1148,15 +1143,6 @@ class InstancesList extends React.Component {
     };
   }
 
-  getCurrentTenantPermissions = () => {
-    const {
-      stripes,
-      stripes: { user: { user: { tenants } } },
-    } = this.props;
-
-    getUserTenantsPermissions(stripes, tenants).then(userTenantPermissions => this.setState({ userTenantPermissions }));
-  }
-
   findAndOpenItem = async (instance) => {
     const {
       parentResources,
@@ -1171,7 +1157,7 @@ class InstancesList extends React.Component {
     const { query, qindex } = parentResources?.query ?? {};
     const { searchInProgress } = this.state;
 
-    if (!searchInProgress) {
+    if (!searchInProgress || !instance?.id) {
       return instance;
     }
 
@@ -1185,7 +1171,7 @@ class InstancesList extends React.Component {
     // set of properties, and `items` is not included. SO we need to make a request for a full Instance
     const fullInstance = await fullInstanceQuery.GET({
       params: {
-        query: `id=="${instance.id}"`,
+        query: `id=="${instance?.id}"`,
         include: 'items.id,items.tenantId',
       },
       headers: {
@@ -1201,7 +1187,8 @@ class InstancesList extends React.Component {
     if (isUserInConsortiumMode(stripes)) {
       const tenants = stripes.user.user.tenants || [];
       const isUserAffiliatedWithMemberTenant = tenants.find(tenant => tenant?.id === tenantItemBelongsTo);
-      const canMemberTenantViewItems = hasMemberTenantPermission('ui-inventory.instance.view', tenantItemBelongsTo, this.state.userTenantPermissions);
+      const userTenantPermissions = await getUserTenantsPermissions(stripes, [tenantItemBelongsTo]);
+      const canMemberTenantViewItems = hasMemberTenantPermission('ui-inventory.instance.view', tenantItemBelongsTo, userTenantPermissions);
 
       if (isEmpty(isUserAffiliatedWithMemberTenant) || !canMemberTenantViewItems) {
         return instance;
@@ -1231,11 +1218,12 @@ class InstancesList extends React.Component {
 
     const navigateToItemView = () => {
       history.push({
-        pathname: `/inventory/view/${instance.id}/${holdingsRecordId}/${id}`,
+        pathname: `/inventory/view/${instance?.id}/${holdingsRecordId}/${id}`,
         search,
         state: {
           tenantTo: tenantItemBelongsTo,
           tenantFrom: stripes.okapi.tenant,
+          initialTenantId: stripes.okapi.tenant,
         },
       });
     };

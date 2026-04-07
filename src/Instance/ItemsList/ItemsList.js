@@ -73,7 +73,7 @@ const ItemsList = ({
     sortBy: isItemsMovement ? 'order' : sortByQuery,
     limit: 200,
     offset,
-  }), [isItemsMovement, sortByQuery]);
+  }), [isItemsMovement, sortByQuery, offset]);
 
   const { items, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'items', tenantId });
   const { totalRecords: total = 0 } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });

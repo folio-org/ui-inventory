@@ -18,7 +18,6 @@ import PropTypes from 'prop-types';
 
 import {
   checkIfUserInMemberTenant,
-  getUserTenantsPermissions,
   stripesConnect,
   useCallout,
   useStripes,
@@ -62,23 +61,19 @@ import {
   isInstanceShadowCopy,
   isLinkedDataSource,
   isMARCSource,
-  isUserInConsortiumMode,
 } from '../../utils';
 import {
   CONSORTIUM_PREFIX,
+  HTTP_RESPONSE_STATUS_CODES,
   INSTANCE_RECORD_TYPE,
   LINKED_DATA_CHECK_EXTERNAL_RESOURCE_FETCHABLE,
   LINKED_DATA_EDITOR_PERM,
   TAGS_SCOPE,
 } from '../../constants';
 
-const getTlrSettings = (settings) => {
-  try {
-    return JSON.parse(settings);
-  } catch {
-    return {};
-  }
-};
+export const getTlrSettings = (settings) => (
+  settings?.circulationSettings?.[0]?.value || {}
+);
 
 const ViewInstanceComponent = (props) => {
   const { canUseSingleRecordImport, onCopy, focusTitleOnInstanceLoad } = props;
@@ -108,7 +103,6 @@ const ViewInstanceComponent = (props) => {
   const [canBeOpenedInLinkedData, setCanBeOpenedInLinkedData] = useState(false);
   const [isMARCSourceRecord, setIsMARCSourceRecord] = useState(false);
   const [isLinkedDataSourceRecord, setIsLinkedDataSourceRecord] = useState(false);
-  const [userTenantPermissions, setUserTenantPermissions] = useState([]);
   const [titleLevelRequestsFeatureEnabled, setTitleLevelRequestsFeatureEnabled] = useState(false);
 
   useEffect(() => {
@@ -153,7 +147,7 @@ const ViewInstanceComponent = (props) => {
 
   useEffect(() => {
     if (!isTLRSettingsLoading) {
-      const { titleLevelRequestsFeatureEnabled: tlrEnabled } = getTlrSettings(tlrSettings?.configs[0]?.value);
+      const { titleLevelRequestsFeatureEnabled: tlrEnabled } = getTlrSettings(tlrSettings);
 
       setTitleLevelRequestsFeatureEnabled(Boolean(tlrEnabled));
 
@@ -284,8 +278,19 @@ const ViewInstanceComponent = (props) => {
         type: 'success',
         message: <FormattedMessage id="ui-inventory.setForDeletion.toast.successful" values={{ instanceTitle: instance?.title }} />,
       });
-    } catch {
+    } catch (err) {
       setIsSetForDeletionModalOpen(false);
+
+      if (err.response.status === HTTP_RESPONSE_STATUS_CODES.INTERNAL_SERVER_ERROR) {
+        const errorMessage = await err.response.text();
+
+        callout.sendCallout({
+          type: 'error',
+          message: errorMessage,
+        });
+
+        return;
+      }
 
       callout.sendCallout({
         type: 'error',
@@ -351,7 +356,6 @@ const ViewInstanceComponent = (props) => {
         holdingsSection={holdingsSection}
         paneTitleRef={paneTitleRef}
         closeButtonRef={closeButtonRef}
-        userTenantPermissions={userTenantPermissions}
         accordionStatusRef={accordionStatusRef}
         isRecordImporting={isImporting}
       />

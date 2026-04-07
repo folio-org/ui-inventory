@@ -224,7 +224,7 @@ const ViewSource = ({
 
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
-  const showVersionHistoryButton = marcType === MARC_TYPES.BIB && isVersionHistoryEnabled;
+  const showVersionHistoryButton = marcType === MARC_TYPES.BIB && isVersionHistoryEnabled && stripes.hasInterface('audit-marc');
 
   const actionsDropdown = (
     <Dropdown

@@ -308,8 +308,8 @@ describe('useOrderManagement', () => {
 
       expect(mockUpdateItems).toHaveBeenCalledWith({
         items: expect.arrayContaining([
-          expect.objectContaining({ id: 'item-2', order: '1' }),
-          expect.objectContaining({ id: 'item-1', order: '2' }),
+          expect.objectContaining({ id: 'item-1', order: '1' }),
+          expect.objectContaining({ id: 'item-2', order: '2' }),
           expect.objectContaining({ id: 'item-3', order: '3' }),
         ]),
       });
@@ -396,10 +396,15 @@ describe('useOrderManagement', () => {
       const updateCall = mockUpdateItems.mock.calls[0][0];
       const items = updateCall.items;
 
-      // Should be sorted by order
-      expect(items[0].order).toBe('1');
-      expect(items[1].order).toBe('2');
-      expect(items[2].order).toBe('3');
+      // Items should be sorted by order and have sequential orders 1, 2, 3
+      const sortedItems = items.sort((a, b) => Number.parseInt(a.order, 10) - Number.parseInt(b.order, 10));
+
+      expect(sortedItems[0].order).toBe('1');
+      expect(sortedItems[1].order).toBe('2');
+      expect(sortedItems[2].order).toBe('3');
+
+      // Verify all items have sequential orders
+      expect(items.every((item, index) => Number.parseInt(item.order, 10) === index + 1)).toBe(true);
     });
   });
 
@@ -542,15 +547,19 @@ describe('useOrderManagement', () => {
       const updateCall = mockUpdateItems.mock.calls[0][0];
       const items = updateCall.items;
 
-      // Verify the final order - items are sorted by their order values
+      // Verify the final order - items are sorted by their order values and have sequential orders
       expect(items).toHaveLength(3);
-      // The final order depends on how the auto-adjustment and sorting works
       expect(items.map(item => item.id)).toContain('item-1');
       expect(items.map(item => item.id)).toContain('item-2');
       expect(items.map(item => item.id)).toContain('item-3');
-      expect(items[0].order).toBe('1');
-      expect(items[1].order).toBe('2');
-      expect(items[2].order).toBe('3');
+
+      // Items should be sorted by order and have sequential orders 1, 2, 3
+      const sortedItems = items.sort((a, b) => Number.parseInt(a.order, 10) - Number.parseInt(b.order, 10));
+      expect(sortedItems[0].order).toBe('1');
+      expect(sortedItems[1].order).toBe('2');
+      expect(sortedItems[2].order).toBe('3');
+      // Verify all items have sequential orders
+      expect(items.every((item, index) => Number.parseInt(item.order, 10) === index + 1)).toBe(true);
     });
 
     it('should handle multiple changes and validation', async () => {

@@ -62,7 +62,6 @@ const accordions = {
 const InstanceDetailsContent = ({
   instance,
   tenantId,
-  userTenantPermissions,
   holdingsSection,
   accordionStatusRef,
 }) => {
@@ -128,7 +127,6 @@ const InstanceDetailsContent = ({
             instance={instance}
             prevInstanceId={prevInstanceId.current}
             updatePrevInstanceId={updatePrevInstanceId}
-            userTenantPermissions={userTenantPermissions}
             isAllExpanded={isAllExpanded}
           />
         )}
@@ -220,7 +218,6 @@ const InstanceDetailsContent = ({
 InstanceDetailsContent.propTypes = {
   instance: PropTypes.object.isRequired,
   tenantId: PropTypes.string,
-  userTenantPermissions: PropTypes.arrayOf(PropTypes.object),
   holdingsSection: PropTypes.node,
   accordionStatusRef: PropTypes.object,
 };

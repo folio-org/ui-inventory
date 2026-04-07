@@ -17,7 +17,7 @@ import ItemBarcode from '../../ItemBarcode';
 
 import { hasMemberTenantPermission } from '../../../../utils';
 import {
-  DEFAULT_ITEM_TABLE_SORTBY_FIELD,
+  BARCODE_ITEM_FIELD,
   ITEM_TABLE_PAGE_AMOUNT,
 } from '../../../../constants';
 
@@ -34,7 +34,7 @@ const LimitedItemsList = ({
   const [offset, setOffset] = useState(0);
   const [itemsSorting, setItemsSorting] = useState({
     isDesc: false,
-    column: DEFAULT_ITEM_TABLE_SORTBY_FIELD,
+    column: BARCODE_ITEM_FIELD,
   });
 
   const searchParams = {

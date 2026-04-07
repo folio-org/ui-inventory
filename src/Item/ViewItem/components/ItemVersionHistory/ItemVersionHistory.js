@@ -58,6 +58,32 @@ export const createFieldFormatter = (referenceData, circulationHistory) => ({
   },
 });
 
+export const createItemFormatter = (fieldLabelsMap, fieldFormatter) => (element, i) => {
+  if (!element) return null;
+
+  const { name: fieldName, value, collectionName } = element;
+  const compositeKey = collectionName && fieldName
+    ? `${collectionName}.${fieldName}`
+    : null;
+
+  const label = (compositeKey && fieldLabelsMap?.[compositeKey])
+    || fieldLabelsMap?.[fieldName]
+    || fieldLabelsMap?.[collectionName];
+
+  const formattedValue = (compositeKey && fieldFormatter?.[compositeKey]?.(value))
+    || fieldFormatter?.[fieldName]?.(value)
+    || fieldFormatter?.[collectionName]?.(value)
+    || value;
+
+  return (
+    <li key={i}>
+      {fieldName && <strong>{label}: </strong>}
+      {formattedValue}
+    </li>
+  );
+};
+
+
 const ItemVersionHistory = ({
   item,
   onClose,
@@ -127,19 +153,31 @@ const ItemVersionHistory = ({
     numberOfPieces: formatMessage({ id: 'ui-inventory.numberOfPieces' }),
     permanentLoanTypeId: formatMessage({ id: 'ui-inventory.permanentLoantype' }),
     permanentLocationId: formatMessage({ id: 'ui-inventory.permanentLocation' }),
-    prefix: formatMessage({ id: 'ui-inventory.callNumberPrefix' }),
+    prefix: formatMessage({ id: 'ui-inventory.effectiveCallNumberPrefix' }),
     servicePointId: formatMessage({ id: 'ui-inventory.servicePoint' }),
     staffMemberId: formatMessage({ id: 'ui-inventory.source' }),
     statisticalCodeIds: formatMessage({ id: 'ui-inventory.statisticalCodes' }),
-    suffix: formatMessage({ id: 'ui-inventory.callNumberSuffix' }),
+    suffix: formatMessage({ id: 'ui-inventory.effectiveCallNumberSuffix' }),
     temporaryLoanTypeId: formatMessage({ id: 'ui-inventory.temporaryLoantype' }),
     temporaryLocationId: formatMessage({ id: 'ui-inventory.temporaryLocation' }),
-    typeId: formatMessage({ id: 'ui-inventory.callNumberType' }),
+    typeId: formatMessage({ id: 'ui-inventory.effectiveCallNumberType' }),
     volume: formatMessage({ id: 'ui-inventory.volume' }),
     yearCaption: formatMessage({ id: 'ui-inventory.yearCaption' }),
+    additionalCallNumbers: formatMessage({ id: 'ui-inventory.additionalCallNumbers' }),
+    'additionalCallNumbers.prefix': formatMessage({ id: 'ui-inventory.additionalCallNumberPrefix' }),
+    'additionalCallNumbers.suffix': formatMessage({ id: 'ui-inventory.additionalCallNumberSuffix' }),
+    'additionalCallNumbers.typeId': formatMessage({ id: 'ui-inventory.additionalCallNumberType' }),
+    'additionalCallNumbers.callNumber': formatMessage({ id: 'ui-inventory.additionalCallNumber' }),
+    'circulationNotes.noteType': formatMessage({ id: 'ui-inventory.noteType' }),
+    'circulationNotes.note': formatMessage({ id: 'ui-inventory.note' }),
+    'circulationNotes.id': formatMessage({ id: 'ui-inventory.identifier' }),
+    'circulationNotes.date': formatMessage({ id: 'ui-inventory.date' }),
+    'circulationNotes.staffOnly': formatMessage({ id: 'ui-inventory.staffOnly' }),
+    'circulationNotes.source': formatMessage({ id: 'ui-inventory.source' }),
   };
 
   const fieldFormatter = createFieldFormatter(referenceData, circulationHistory);
+  const itemFormatter = createItemFormatter(fieldLabelsMap, fieldFormatter);
 
   return (
     <AuditLogPane
@@ -151,6 +189,7 @@ const ItemVersionHistory = ({
       isInitialLoading={isLoading}
       fieldLabelsMap={fieldLabelsMap}
       fieldFormatter={fieldFormatter}
+      itemFormatter={itemFormatter}
       actionsMap={actionsMap}
       totalVersions={totalVersions}
     />

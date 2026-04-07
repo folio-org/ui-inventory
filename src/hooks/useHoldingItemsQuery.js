@@ -58,7 +58,7 @@ const useHoldingItemsQuery = (
     ...omit(options.searchParams, ['sortBy']),
   };
 
-  const queryKey = [namespace, options.key, holdingsRecordId, searchParams.offset, sortBy];
+  const queryKey = [namespace, options.key, holdingsRecordId, searchParams];
   const queryFn = () => ky.get('inventory/items-by-holdings-id', { searchParams }).json();
   const { data, refetch, isLoading, isFetching } = useQuery({
     queryKey,

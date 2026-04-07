@@ -12,6 +12,7 @@ export const useHoldingsMove = (options = {}) => {
   const ky = useOkapiKy();
   const queryClient = useQueryClient();
   const [fetchHoldingNamespace] = useNamespace({ key: 'fetch-holding-by-instance-id' });
+  const [fetchAcquisitionNamespace] = useNamespace({ key: 'instance-acquisition' });
 
   const {
     onSuccess,
@@ -119,6 +120,7 @@ export const useHoldingsMove = (options = {}) => {
         // Invalidate relevant queries to refresh data
         if (invalidateQueries) {
           queryClient.invalidateQueries([fetchHoldingNamespace]);
+          queryClient.invalidateQueries([fetchAcquisitionNamespace]);
         }
 
         if (onSettled) {

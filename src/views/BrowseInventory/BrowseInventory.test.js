@@ -171,46 +171,46 @@ describe('BrowseInventory', () => {
 
     describe('when the new option is one of Call Number Browse options', () => {
       describe('and a user is in a member tenant', () => {
-        it('should apply a default value of a current tenant in Held By facet', () => {
+        it('should apply a default value of a current tenant in Held By facet', async () => {
           renderBrowseInventory();
 
           fireEvent.change(screen.getByRole('combobox'), { target: { value: 'callNumbers' } });
 
-          waitFor(() => expect(applyFilters).toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku']));
+          await waitFor(() => expect(applyLocationFiltersAsync).toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku'], false));
         });
       });
 
       describe('and a user is not in a member tenant', () => {
-        it('should not apply a default value of a current tenant in Held By facet', () => {
+        it('should not apply a default value of a current tenant in Held By facet', async () => {
           checkIfUserInMemberTenant.mockReturnValue(false);
           renderBrowseInventory();
 
           fireEvent.change(screen.getByRole('combobox'), { target: { value: 'callNumbers' } });
 
-          waitFor(() => expect(applyFilters).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku']));
+          await waitFor(() => expect(applyLocationFiltersAsync).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku'], false));
         });
       });
     });
 
     describe('when the new option is not one of Call Number Browse options', () => {
       describe('and a user is in a member tenant', () => {
-        it('should not apply a default value of a current tenant in Held By facet', () => {
+        it('should not apply a default value of a current tenant in Held By facet', async () => {
           renderBrowseInventory();
 
           fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
 
-          waitFor(() => expect(applyFilters).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku']));
+          await waitFor(() => expect(applyLocationFiltersAsync).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku'], false));
         });
       });
 
       describe('and a user is not in a member tenant', () => {
-        it('should not apply a default value of a current tenant in Held By facet', () => {
+        it('should not apply a default value of a current tenant in Held By facet', async () => {
           checkIfUserInMemberTenant.mockReturnValue(false);
           renderBrowseInventory();
 
           fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
 
-          waitFor(() => expect(applyFilters).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku']));
+          await waitFor(() => expect(applyLocationFiltersAsync).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku'], false));
         });
       });
     });

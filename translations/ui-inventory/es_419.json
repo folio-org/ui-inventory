@@ -869,8 +869,8 @@
     "versionHistory.anonymousUser": "Anonymous user",
     "numberGenerator.infoAdditional": "Additional number generator settings are available under {serviceInteractionLink}. At {numberGeneratorSequencesLink} sequences can be defined by selecting the appropriate generator via the drop-down menu.",
     "acq.vendorName": "Organization name",
-    "acq.acqMethod": "Acquisition method",
-    "acq.averageCost": "Average cost",
+    "acq.acqMethod": "Método de adquisición",
+    "acq.averageCost": "Costo promedio",
     "acq.fundCode": "Fund code",
     "sourceUri": "Instance source URI",
     "instances.columns.instanceHRID": "Instance HRID",
@@ -913,5 +913,13 @@
     "moveEntity.modal.title": "Confirm move",
     "moveEntity.modal.message.holdings": "{count, number} {count, plural, one {holding} other {holdings}} will be moved to {targetName}",
     "moveEntity.modal.message.hasLinkedPOLsOrHoldings": "This holdings is linked to a purchase order line. Moving this holdings to a new instance will move any other holdings and items that are linked to this purchase order line to the new instance as well. The purchase order line will also be linked to the new instance. Do you want to continue?",
-    "moveEntity.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}"
+    "moveEntity.modal.message.items": "{count, number} {count, plural, one {item} other {items}} will be moved to {targetName}",
+    "effectiveCallNumberPrefix": "Effective call number prefix",
+    "effectiveCallNumberSuffix": "Effective call number suffix",
+    "effectiveCallNumberType": "Effective call number type",
+    "additionalCallNumbers": "Additional call numbers",
+    "additionalCallNumber": "Additional call number",
+    "additionalCallNumberPrefix": "Additional call number prefix",
+    "additionalCallNumberSuffix": "Additional call number suffix",
+    "additionalCallNumberType": "Additional call number type"
 }

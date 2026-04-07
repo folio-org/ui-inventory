@@ -226,6 +226,7 @@ export const OKAPI_TOKEN_HEADER = 'X-Okapi-Token';
 export const CONTENT_TYPE_HEADER = 'Content-Type';
 
 export const DEFAULT_ITEM_TABLE_SORTBY_FIELD = 'order';
+export const BARCODE_ITEM_FIELD = 'barcode';
 export const ITEM_TABLE_PAGE_AMOUNT = 200;
 
 export const AUTHORITY_LINKED_FIELDS = [
@@ -243,6 +244,7 @@ export const INSTANCE_SHARING_STATUSES = {
 
 export const HTTP_RESPONSE_STATUS_CODES = {
   FORBIDDEN: 403,
+  INTERNAL_SERVER_ERROR: 500,
 };
 
 export const EVENTS = {

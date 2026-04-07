@@ -639,7 +639,13 @@ class HoldingsForm extends React.Component {
                     </Row>
                     <Row>
                       <Col xs={10}>
-                        <AdditionalCallNumbersFields callNumberTypeOptions={callNumberTypeOptions} isFieldBlocked={this.isFieldBlocked} onSwap={this.handleCallNumberSwap} />
+                        <AdditionalCallNumbersFields
+                          callNumberTypeOptions={callNumberTypeOptions}
+                          isFieldBlocked={this.isFieldBlocked}
+                          onSwap={this.handleCallNumberSwap}
+                          showNumberGenerator={showNumberGeneratorForCallNumber}
+                          isCallNumberDisabled={this.isFieldBlocked('callNumber') || isCallNumberHoldingsDisabled}
+                        />
                       </Col>
                     </Row>
                   </Accordion>
