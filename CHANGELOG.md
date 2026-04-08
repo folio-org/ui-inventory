@@ -115,6 +115,7 @@ UIIN-3437.
 * User gets "Authorization error" when changing Items "order" manually or via drag and drop. Fixes UIIN-3543.
 * Fix items list data caching issues after remounting ViewInstanceDetails pane. Fixes UIIN-3627.
 * Update label references from "Linked data editor" to "Marigold". Refs UILD-771.
+* The "Action" button remains visible after opening "Version History" pane. Fixes UIIN-3629.
 * Focus on the Close Instance pane button when returning from MARC edit/create/derive page. Fixes UIIN-3570.
 
 ## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
