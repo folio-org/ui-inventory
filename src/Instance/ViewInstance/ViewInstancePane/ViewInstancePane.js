@@ -181,7 +181,7 @@ const ViewInstancePane = ({
         paneTitle={paneTitle}
         paneSub={paneSubTitle}
         lastMenu={lastMenu}
-        actionMenu={actionMenu}
+        actionMenu={isVersionHistoryOpen ? null : actionMenu}
         firstMenu={(
           <PaneCloseLink
             autoFocus={location.state?.isClosingFocused}
