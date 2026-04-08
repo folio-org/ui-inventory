@@ -158,14 +158,6 @@ const ViewInstanceComponent = (props) => {
   }, [isTLRSettingsLoading, tlrSettings]);
 
   useEffect(() => {
-    if (isUserInConsortiumMode(stripes)) {
-      const { user: { user: { tenants } } } = stripes;
-
-      getUserTenantsPermissions(stripes, tenants).then(perms => setUserTenantPermissions(perms));
-    }
-  }, [stripes.user?.user?.tenants]);
-
-  useEffect(() => {
     if (!isLoading && instance?.id && !isCentralTenantPermissionsLoading) {
       if (location.state?.isClosingFocused) {
         closeButtonRef.current?.focus();
