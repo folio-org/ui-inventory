@@ -117,6 +117,7 @@ UIIN-3437.
 * Update label references from "Linked data editor" to "Marigold". Refs UILD-771.
 * The "Action" button remains visible after opening "Version History" pane. Fixes UIIN-3629.
 * Focus on the Close Instance pane button when returning from MARC edit/create/derive page. Fixes UIIN-3570.
+* The page reloads instead of showing "Confirm move" modal when moving holdings to another instance in member tenant. Fixes UIIN-3625.
 
 ## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.12...v13.0.13)

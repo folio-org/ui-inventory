@@ -20,7 +20,7 @@ const useInventoryAPI = () => {
   const { moveItems: moveItemsApi, isMoving: isItemsMoving } = Move.useItems();
   const { moveHoldings: moveHoldingsApi, isMoving: isHoldingsMoving } = Move.useHoldings();
 
-  const checkPOLinkage = useCallback(async (holdingIds = []) => {
+  const checkPOLinkage = useCallback(async (holdingIds = new Set()) => {
     if (!holdingIds.size) {
       return { hasLinkedPOLs: false, poLineHoldingIds: [] };
     }
