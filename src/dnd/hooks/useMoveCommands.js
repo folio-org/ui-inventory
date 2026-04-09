@@ -119,13 +119,17 @@ const useMoveCommands = () => {
   };
 
   const setHoldingsConfirmationMessage = useCallback((hasLinkedPOLs, holdingsIds, holdingsCount, fromInstanceId, toInstanceId) => {
+    const resolvedHoldings = (holdingsIds || [])
+      .map(id => state.holdings[id])
+      .filter(Boolean);
+
     let movingMessage;
-    if (hasLinkedPOLs) {
+    if (hasLinkedPOLs && resolvedHoldings.length) {
       movingMessage = (
         <>
           { intl.formatMessage({ id: 'ui-inventory.moveEntity.modal.message.hasLinkedPOLsOrHoldings' }) }
           <ModalHoldingsList
-            holdings={holdingsIds.map(id => state.holdings[id])}
+            holdings={resolvedHoldings}
             instanceId={fromInstanceId}
           />
         </>
@@ -162,14 +166,15 @@ const useMoveCommands = () => {
   const moveSelectedHoldingsToInstance = async ({ activeHoldingId, holdingIds = [], fromInstanceId, toInstanceId, toInstanceHrid, onSuccess, onReject }) => {
     const selectedHoldings = getSelectedHoldingsFromInstance(fromInstanceId);
     const holdingsToMove = holdingIds.length ? new Set(holdingIds) : selectedHoldings.add(activeHoldingId);
+    const setOfHoldings = new Set([...holdingsToMove].filter(Boolean));
 
-    if (!holdingsToMove.size) return;
+    if (!setOfHoldings.size) return;
 
     // In dual-instance mode, show confirmation modal
     if (isDualInstanceMode) {
       // Check for linked POLs first
-      const { hasLinkedPOLs, poLineHoldingIds } = await checkPOLinkage(holdingsToMove);
-      const finalIds = uniq([...holdingsToMove, ...poLineHoldingIds]);
+      const { hasLinkedPOLs, poLineHoldingIds } = await checkPOLinkage(setOfHoldings);
+      const finalIds = uniq([...setOfHoldings, ...poLineHoldingIds]).filter(Boolean);
 
       setHoldingsConfirmationMessage(hasLinkedPOLs, finalIds, finalIds.length, fromInstanceId, toInstanceId);
       setOnConfirm(() => confirmHoldingsMove(toInstanceId, toInstanceHrid, finalIds, onSuccess));

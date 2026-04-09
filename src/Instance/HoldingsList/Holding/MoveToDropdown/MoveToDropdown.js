@@ -117,6 +117,16 @@ const MoveToDropdown = ({
       {...getTriggerProps()}
       id={`clickable-move-holdings-${holding.id}`}
       data-test-move-holdings
+      type="button"
+      onMouseDown={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }}
+      onClick={(e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        getTriggerProps()?.onClick?.(e);
+      }}
     >
       <FormattedMessage id="ui-inventory.moveEntity.moveButton" />
     </DropdownButton>
@@ -131,8 +141,15 @@ const MoveToDropdown = ({
       >
         <Button
           buttonStyle="dropdownItem"
+          type="button"
           role="menuitem"
-          onClick={async () => {
+          onMouseDown={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          onClick={async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             await moveSelectedItemsToHolding({ fromHoldingId: holding.id, toHoldingId: moveToHolding.id });
             onToggle();
           }}
@@ -152,8 +169,15 @@ const MoveToDropdown = ({
       {isDualPane && showInstanceOnly && canMoveHoldings ? (
         <Button
           buttonStyle="dropdownItem"
+          type="button"
           role="menuitem"
-          onClick={async () => {
+          onMouseDown={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
+          onClick={async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             await moveSelectedHoldingsToInstance({
               activeHoldingId: holding.id,
               fromInstanceId,
