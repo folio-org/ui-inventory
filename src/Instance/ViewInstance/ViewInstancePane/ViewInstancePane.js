@@ -6,10 +6,7 @@ import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
-import {
-  useLocation,
-  useParams,
-} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import {
@@ -63,13 +60,13 @@ const ViewInstancePane = ({
   isInstanceSharing = false,
   holdingsSection,
   paneTitleRef,
+  closeButtonRef,
   accordionStatusRef,
   isRecordImporting,
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
   const { id: instanceId } = useParams();
-  const location = useLocation();
   const tags = instance?.tags?.tagList;
 
   const [helperApp, setHelperApp] = useState();
@@ -181,12 +178,12 @@ const ViewInstancePane = ({
         paneTitle={paneTitle}
         paneSub={paneSubTitle}
         lastMenu={lastMenu}
-        actionMenu={actionMenu}
+        actionMenu={isVersionHistoryOpen ? null : actionMenu}
         firstMenu={(
           <PaneCloseLink
-            autoFocus={location.state?.isClosingFocused}
             onClick={onClose}
             aria-label={intl.formatMessage({ id: 'stripes-components.closeItem' }, { item: paneTitle })}
+            closeButtonRef={closeButtonRef}
           />
         )}
         defaultWidth="fill"
@@ -240,6 +237,7 @@ ViewInstancePane.propTypes = {
   isInstanceSharing: PropTypes.bool,
   holdingsSection: PropTypes.node,
   paneTitleRef: PropTypes.object,
+  closeButtonRef: PropTypes.object,
   accordionStatusRef: PropTypes.object,
   isRecordImporting: PropTypes.bool
 };
