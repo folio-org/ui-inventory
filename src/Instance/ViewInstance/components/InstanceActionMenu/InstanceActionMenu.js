@@ -309,7 +309,7 @@ const InstanceActionMenu = ({
           <ActionItem
             id="edit-resource-in-ld"
             icon="edit"
-            messageId="ui-inventory.editInLinkedDataEditor"
+            messageId="ui-inventory.editInMarigold"
             onClickHandler={() => buildOnClickHandler(handleEditInLinkedDataEditor)}
           />
         </MenuSection>

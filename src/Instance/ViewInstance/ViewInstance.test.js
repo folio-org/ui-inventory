@@ -12,7 +12,9 @@ import { getTlrSettings } from './ViewInstance';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useLocation: jest.fn(),
+  useLocation: jest.fn().mockReturnValue({
+    state: {},
+  }),
   useHistory: jest.fn(),
   useParams: jest.fn().mockReturnValue({ id: 'instance-id' }),
 }));
