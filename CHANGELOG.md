@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 13.0.14 (IN PROGRESS)
+
+* Hide `Move items within an instance` button for shared instances without local holdings on member tenant. Fixes UIIN-3611.
+
 ## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.12...v13.0.13)
 

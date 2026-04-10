@@ -729,7 +729,7 @@ class ViewInstance extends React.Component {
       titleLevelRequestsFeatureEnabled,
     } = this.state;
     const source = instance?.source;
-    const noInstanceHoldings = allInstanceHoldings?.other?.totalRecords === 0;
+    const noInstanceHoldings = allInstanceHoldings?.other?.totalRecords === 0 || allInstanceHoldings?.records?.length === 0;
 
     const editBibRecordPerm = 'ui-quick-marc.quick-marc-editor.all';
     const editInstancePerm = 'ui-inventory.instance.edit';
