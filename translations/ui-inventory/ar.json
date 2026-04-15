@@ -780,8 +780,7 @@
     "boundPieces.remove.button": "إزالة",
     "boundPieces.remove.heading": "هل أنت متأكد؟",
     "searchForTitle": "Search for {title}",
-    "ld.label": "Linked data editor",
-    "editInLinkedDataEditor": "تحرير الموارد في محرر البيانات المرتبطة",
+    "ld.label": "Marigold",
     "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
     "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types",
     "print": "Print",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Additional call number",
     "additionalCallNumberPrefix": "Additional call number prefix",
     "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "additionalCallNumberType": "Additional call number type",
+    "editInMarigold": "Edit resource in Marigold"
 }

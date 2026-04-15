@@ -781,7 +781,6 @@
     "boundPieces.remove.heading": "Emin misin?",
     "searchForTitle": "Ara için {title}",
     "ld.label": "Bağlı veri editör",
-    "editInLinkedDataEditor": "Bağlı veri düzenleyicisinde kaynağı düzenleme",
     "permission.settings.subject-sources": "Ayarlar (Envanter): Konu kaynakları oluşturma, düzenleme, silme",
     "permission.settings.subject-types": "Ayarlar (Envanter): Konu türleri oluşturma, düzenleme, silme",
     "print": "Baskı",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Additional call number",
     "additionalCallNumberPrefix": "Additional call number prefix",
     "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "additionalCallNumberType": "Additional call number type",
+    "editInMarigold": "Edit resource in Marigold"
 }

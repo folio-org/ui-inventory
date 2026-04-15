@@ -693,7 +693,7 @@
     "selectCode": "Select code",
     "actions.menuSection.sortBy": "Sort by",
     "actions.menuSection.sortBy.relevance": "Relevance",
-    "actions.menuSection.sortBy.title": "Title",
+    "actions.menuSection.sortBy.title": "Titre",
     "actions.menuSection.sortBy.contributors": "Contributors",
     "exportInstanceInMARC": "Exporter la notice (MARC)",
     "editInstance.title": "Modifier la notice • {title}",
@@ -781,7 +781,6 @@
     "boundPieces.remove.heading": "Are you sure?",
     "searchForTitle": "Rechercher {title}",
     "ld.label": "Éditeur de données liées",
-    "editInLinkedDataEditor": "Modifier la ressource dans l'éditeur de données liées",
     "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
     "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types",
     "print": "Print",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Additional call number",
     "additionalCallNumberPrefix": "Additional call number prefix",
     "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "additionalCallNumberType": "Additional call number type",
+    "editInMarigold": "Edit resource in Marigold"
 }
