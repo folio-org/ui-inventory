@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [14.0.0] (IN PROGRESS)
+## [14.0.0](https://github.com/folio-org/ui-inventory/tree/v14.0.0) (2026-04-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.13...v14.0.0)
 
 * Add missing asterisk to call number label in additional call numbers section. Fixes UIIN-3615, UIIN-3618.
 * Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
