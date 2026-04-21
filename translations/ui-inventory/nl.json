@@ -781,7 +781,6 @@
     "boundPieces.remove.heading": "Weet u het zeker?",
     "searchForTitle": "Zoeken naar {title}",
     "ld.label": "Linked-data-editor",
-    "editInLinkedDataEditor": "Bron bewerken in linked-data-editor",
     "permission.settings.subject-sources": "Instellingen (Collectiebezit): Onderwerpsbronnen aanmaken, bewerken, verwijderen",
     "permission.settings.subject-types": "Instellingen (Collectiebezit): Soorten onderwerpen aanmaken, bewerken, verwijderen",
     "print": "Printen",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Extra Vindplaats",
     "additionalCallNumberPrefix": "Extra voorvoegsel voor het Vindplaatsnummer",
     "additionalCallNumberSuffix": "Extra Vindplaats achtervoegsel",
-    "additionalCallNumberType": "Extra Vindplaats type"
+    "additionalCallNumberType": "Extra Vindplaats type",
+    "editInMarigold": "Edit resource in Marigold"
 }

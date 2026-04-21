@@ -781,7 +781,6 @@
     "boundPieces.remove.heading": "Jesteś pewien?",
     "searchForTitle": "Szukaj {title}",
     "ld.label": "Edytor Linked data",
-    "editInLinkedDataEditor": "Edytuj zasób w edytorze Linked data",
     "permission.settings.subject-sources": "Ustawienia (Katalogowanie): tworzenie, edycja, usuwanie źródeł hasła",
     "permission.settings.subject-types": "Ustawienia (Katalogowanie): tworzenie, edycja, usuwanie rodzajów hasła",
     "print": "Drukuj",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Additional call number",
     "additionalCallNumberPrefix": "Additional call number prefix",
     "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "additionalCallNumberType": "Additional call number type",
+    "editInMarigold": "Edit resource in Marigold"
 }
