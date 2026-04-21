@@ -255,7 +255,8 @@ const ViewItem = ({
   };
 
   const tagsEnabled = useMemo(
-    () => tagSettings.items?.[0]?.value,
+    // Empty settings means tags are enabled by default
+    () => !tagSettings.items?.length || tagSettings.items?.[0]?.value,
     [tagSettings],
   );
 
