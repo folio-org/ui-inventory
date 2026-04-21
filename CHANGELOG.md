@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [14.0.1] (IN PROGRESS)
+
+* Make item status in Item details pane header translatable. Fixes UIIN-3632.
+
 ## [14.0.0] (IN PROGRESS)
 
 * Add missing asterisk to call number label in additional call numbers section. Fixes UIIN-3615, UIIN-3618.
