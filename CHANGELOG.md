@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## [14.0.1] (IN PROGRESS)
+
+* Holdings-record detail path with invalid UUIDs shows never-ending loading spinner. Fixes UIIN-3605.
+
 ## [14.0.0] (IN PROGRESS)
 
 * Add missing asterisk to call number label in additional call numbers section. Fixes UIIN-3615, UIIN-3618.
