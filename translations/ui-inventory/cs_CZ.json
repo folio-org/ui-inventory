@@ -780,8 +780,7 @@
     "boundPieces.remove.button": "Odstranit",
     "boundPieces.remove.heading": "Opravdu?",
     "searchForTitle": "Vyhledat {title}",
-    "ld.label": "Editor propojených dat",
-    "editInLinkedDataEditor": "Upravit zdroj v Editoru propojených dat",
+    "ld.label": "Marigold",
     "permission.settings.subject-sources": "Nastavení (Katalog): Vytváření, úpravy, mazání heslář/tezaurus",
     "permission.settings.subject-types": "Nastavení (Katalog): Vytváření, úpravy, mazání předmětových kategorií",
     "print": "Tisk",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Další signatura",
     "additionalCallNumberPrefix": "Prefix další signatury",
     "additionalCallNumberSuffix": "Suffix další signatury",
-    "additionalCallNumberType": "Typ další signatury"
+    "additionalCallNumberType": "Typ další signatury",
+    "editInMarigold": "Upravit zdroj v aplikaci Marigold"
 }
