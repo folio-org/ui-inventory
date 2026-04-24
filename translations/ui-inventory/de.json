@@ -585,7 +585,7 @@
     "holdingsRecord.successfullySaved": "Der <strong>Bestand</strong> - HRID <strong>{hrid}</strong> wurde erfolgreich gespeichert.",
     "instance.successfullySaved": "Die <strong>Instanz</strong> - HRID <strong>{hrid}</strong> wurde erfolgreich gespeichert.",
     "holdingsPaneTitle": "Bestand • {location} • {callNumber}",
-    "instanceRecordSubtitle": "{hrid} • Zuletzt aktualisiert: {updatedDate}",
+    "instanceRecordSubtitle": "{hrid} • Zuletzt aktualisiert: {date}",
     "instance.saveError": "Speichern der Instanz fehlgeschlagen",
     "itemRecordWithDescriptionBW": "Exemplardatensatz ({materialType}, {status}, Konvolut)",
     "acq.polNumber": "Bestellpostennummer",
@@ -781,7 +781,6 @@
     "boundPieces.remove.heading": "Sicher?",
     "searchForTitle": "Suche nach {title}",
     "ld.label": "Linked-Data-Editor",
-    "editInLinkedDataEditor": "Ressource im Linked-Data-Editor bearbeiten",
     "permission.settings.subject-sources": "Einstellungen (Katalog): Schlagwortquellen erstellen, bearbeiten, löschen",
     "permission.settings.subject-types": "Einstellungen (Katalog): Schlagworttypen erstellen, bearbeiten, löschen",
     "print": "Drucken",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Additional call number",
     "additionalCallNumberPrefix": "Additional call number prefix",
     "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "additionalCallNumberType": "Additional call number type",
+    "editInMarigold": "Edit resource in Marigold"
 }

@@ -1080,13 +1080,13 @@
     "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^10.1.0",
     "@folio/stripes-cli": "^4.0.0",
-    "@folio/stripes-components": "^13.0.0",
-    "@folio/stripes-connect": "^10.0.0",
-    "@folio/stripes-core": "^11.0.0",
+    "@folio/stripes-components": "^13.1.0",
+    "@folio/stripes-connect": "^10.1.0",
+    "@folio/stripes-core": "^11.1.0",
     "@folio/stripes-erm-components": "^10.0.0",
-    "@folio/stripes-inventory-components": "^2.0.0",
-    "@folio/stripes-marc-components": "^2.0.0",
-    "@folio/stripes-smart-components": "^10.0.0",
+    "@folio/stripes-inventory-components": "^2.1.0",
+    "@folio/stripes-marc-components": "^2.1.0",
+    "@folio/stripes-smart-components": "^10.1.0",
     "@folio/stripes-testing": "^5.0.0",
     "@folio/stripes-util": "^7.0.0",
     "@formatjs/cli": "^6.6.0",
@@ -1109,7 +1109,7 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@folio/stripes-acq-components": "^7.0.0",
+    "@folio/stripes-acq-components": "^7.1.0",
     "classnames": "^2.3.2",
     "file-saver": "^2.0.0",
     "final-form": "^4.18.2",
@@ -1131,9 +1131,9 @@
   "peerDependencies": {
     "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^10.1.0",
-    "@folio/stripes-erm-components": "^10.0.0",
-    "@folio/stripes-inventory-components": "^2.0.0",
-    "@folio/stripes-marc-components": "^2.0.0",
+    "@folio/stripes-erm-components": "^10.1.0",
+    "@folio/stripes-inventory-components": "^2.1.0",
+    "@folio/stripes-marc-components": "^2.1.0",
     "react": "^18.2.0",
     "react-intl": "^7.1.5",
     "react-query": "^3.6.0",
@@ -1142,7 +1142,7 @@
     "zustand": "^4.1.1"
   },
   "optionalDependencies": {
-    "@folio/plugin-create-inventory-records": "^6.0.0",
-    "@folio/plugin-find-instance": "^9.0.0"
+    "@folio/plugin-create-inventory-records": "^7.0.0",
+    "@folio/plugin-find-instance": "^10.0.0"
   }
 }

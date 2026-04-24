@@ -77,7 +77,7 @@
     "loans": "Empréstimos",
     "materialTypes": "Tipos de materiais",
     "materialType": "Tipo de material",
-    "holdingsHeader": "Acervo: {location} > {callNumber} {copyNumber}",
+    "holdingsHeader": "<span>Acervo: {location} > {callNumber} {copyNumber}</span>",
     "viewHoldings": "Visualizar acervos",
     "holdingsRecord": "Registro de acervo",
     "viewHoldingsRecord": "Ver registro de acervo",
@@ -780,8 +780,7 @@
     "boundPieces.remove.button": "Remover",
     "boundPieces.remove.heading": "Você tem certeza?",
     "searchForTitle": "Buscar por {title}",
-    "ld.label": "Editor de dados vinculados",
-    "editInLinkedDataEditor": "Editar recurso no Editor de Dados Vinculados",
+    "ld.label": "Calêndula",
     "permission.settings.subject-sources": "Configurações (Inventário): Criar, editar, excluir fontes de assunto",
     "permission.settings.subject-types": "Configurações (Inventário): Criar, editar, excluir tipos de assunto",
     "print": "Imprimir",
@@ -902,7 +901,7 @@
     "moveEntity.instance.actionMenu.enable": "Mover itens dentro de uma instância",
     "moveEntity.instance.actionMenu.disable": "Interromper o movimento de itens em uma instância",
     "moveEntity.instance.items.success": "{count, number} {count, plural, one {item foi} other {itens foram}} movido(s) com sucesso.",
-    "moveEntity.instance.holdings.success": "{count, number} {count, plural, one {acervo foi} other {acervos foram}} movida(s) com sucesso.",
+    "moveEntity.instance.holdings.success": "{count, number} {count, plural, one {acervo foi} other {acervos foram}} movido(s) com sucesso.",
     "moveEntity.instance.items.error": "Os seguintes itens não puderam ser movidos {items}. Verifique os campos de registro da instância e tente novamente ou notifique o administrador do sistema.",
     "moveEntity.instance.items.error.server": "Ocorreu um problema ao atualizar os seguintes itens {items}. Por favor, tente novamente ou notifique o administrador do sistema.",
     "moveEntity.instance.holdings.error": "Os seguintes acervos não puderam ser movidos: {holdings}. Verifique os campos de registro da instância e tente novamente ou notifique o administrador do sistema.",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Número de chamada adicional",
     "additionalCallNumberPrefix": "Prefixo adicional do número de chamada",
     "additionalCallNumberSuffix": "Sufixo adicional do número de chamada",
-    "additionalCallNumberType": "Tipo de número de chamada adicional"
+    "additionalCallNumberType": "Tipo de número de chamada adicional",
+    "editInMarigold": "Editar recurso em Marigold"
 }
