@@ -585,7 +585,7 @@
     "holdingsRecord.successfullySaved": "La <strong>localisation</strong> - HRID <strong>{hrid}</strong> a été enregistrée avec succès.",
     "instance.successfullySaved": "La <strong>notice</strong> - HRID <strong>{hrid}</strong> a été enregistrée avec succès.",
     "holdingsPaneTitle": "Localisations • {location} • {callNumber}",
-    "instanceRecordSubtitle": "{hrid} • Dernière mise à jour : {updatedDate}",
+    "instanceRecordSubtitle": "{hrid} • Dernière mise à jour : {date}",
     "instance.saveError": "La sauvegarde de la notice a échoué",
     "itemRecordWithDescriptionBW": "Item record ({materialType}, {status}, bound with)",
     "acq.polNumber": "POL number",

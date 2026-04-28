@@ -585,7 +585,7 @@
     "holdingsRecord.successfullySaved": "<strong>Дані про фонди (холдінгси)</strong> - HRID <strong>{hrid}</strong> успішно збережено.",
     "instance.successfullySaved": "<strong>Біб.запис (інстанс)</strong> - HRID <strong>{hrid}</strong> був успішно збережений.",
     "holdingsPaneTitle": "Дані про фонди (холдінгси): • {location} • {callNumber}",
-    "instanceRecordSubtitle": "{hrid} • Останнє оновлення: {updatedDate}",
+    "instanceRecordSubtitle": "{hrid} • Останнє оновлення: {date}",
     "instance.saveError": "Не вдалося зберегти біб.запис (інстанс)",
     "itemRecordWithDescriptionBW": "Запис примірника ({materialType}, {status}, у зшитку з)",
     "acq.polNumber": "Номер рядка замовлення на придбання",

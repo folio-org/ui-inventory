@@ -77,7 +77,7 @@
     "loans": "Kölcsönzések",
     "materialTypes": "Anyagtípusok",
     "materialType": "Anyagtípus",
-    "holdingsHeader": "Állományok: {location} > {callNumber} {copyNumber}",
+    "holdingsHeader": "<span>Állományok: {location} > {callNumber} {copyNumber}</span>",
     "viewHoldings": "Állományok megtekintése",
     "holdingsRecord": "Állományrekord",
     "viewHoldingsRecord": "Állományrekord megtekintése",

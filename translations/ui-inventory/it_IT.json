@@ -77,7 +77,7 @@
     "loans": "Prestiti",
     "materialTypes": "Tipologie materiale",
     "materialType": "Tipologia materiale",
-    "holdingsHeader": "Posseduto: {location} > {callNumber} {copyNumber}",
+    "holdingsHeader": "<span>Posseduto: {location} > {callNumber} {copyNumber}</span>",
     "viewHoldings": "Visualizza holding",
     "holdingsRecord": "Record holding",
     "viewHoldingsRecord": "Visualizza record holding",

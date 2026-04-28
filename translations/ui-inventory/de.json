@@ -585,7 +585,7 @@
     "holdingsRecord.successfullySaved": "Der <strong>Bestand</strong> - HRID <strong>{hrid}</strong> wurde erfolgreich gespeichert.",
     "instance.successfullySaved": "Die <strong>Instanz</strong> - HRID <strong>{hrid}</strong> wurde erfolgreich gespeichert.",
     "holdingsPaneTitle": "Bestand • {location} • {callNumber}",
-    "instanceRecordSubtitle": "{hrid} • Zuletzt aktualisiert: {updatedDate}",
+    "instanceRecordSubtitle": "{hrid} • Zuletzt aktualisiert: {date}",
     "instance.saveError": "Speichern der Instanz fehlgeschlagen",
     "itemRecordWithDescriptionBW": "Exemplardatensatz ({materialType}, {status}, Konvolut)",
     "acq.polNumber": "Bestellpostennummer",

@@ -585,7 +585,7 @@
     "holdingsRecord.successfullySaved": "تم حفظ رقم التعريف القابل للقراءة بشرياً <strong>{hrid}</strong> <strong>للمقتنيات</strong> بنجاح.",
     "instance.successfullySaved": "تم حفظ رقم التعريف القابل للقراءة بشرياً <strong>{hrid}</strong> <strong>للوعاء</strong> بنجاح.",
     "holdingsPaneTitle": "المقتنيات • {location} • {callNumber}",
-    "instanceRecordSubtitle": "{hrid} • آخر تحديث: {updatedDate}",
+    "instanceRecordSubtitle": "{hrid} • آخر تحديث: {date}",
     "instance.saveError": "فشل حفظ الوعاء",
     "itemRecordWithDescriptionBW": "تسجيلة المادة ({materialType}, {status}, مرتبطة بـ)",
     "acq.polNumber": "رقم سطر أمر الشراء",

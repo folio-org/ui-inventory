@@ -77,7 +77,7 @@
     "loans": "Empréstimos",
     "materialTypes": "Tipos de materiais",
     "materialType": "Tipo de material",
-    "holdingsHeader": "Acervo: {location} > {callNumber} {copyNumber}",
+    "holdingsHeader": "<span>Acervo: {location} > {callNumber} {copyNumber}</span>",
     "viewHoldings": "Visualizar acervos",
     "holdingsRecord": "Registro de acervo",
     "viewHoldingsRecord": "Ver registro de acervo",
