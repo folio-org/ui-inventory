@@ -11,7 +11,10 @@ import {
   useLocation,
   useParams,
 } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 import { map } from 'lodash';
 import PropTypes from 'prop-types';
 
@@ -68,6 +71,7 @@ import {
   REQUEST_OPEN_STATUSES,
   INVENTORY_AUDIT_GROUP,
 } from '../../constants';
+import { ITEM_STATUS_TRANSLATIONS_ID_MAP } from '../constants';
 
 export const requestStatusFiltersString = map(REQUEST_OPEN_STATUSES, requestStatus => `requestStatus.${requestStatus}`).join(',');
 
@@ -98,6 +102,7 @@ const ViewItem = ({
 
   const calloutContext = useContext(CalloutContext);
   const accordionStatusRef = useRef();
+  const { formatMessage } = useIntl();
 
   const goBackToInstance = useCallback(toTenant => {
     const { search } = location;
@@ -166,15 +171,21 @@ const ViewItem = ({
       iconKey="item"
     />
   );
-  const renderPaneTitle = useCallback(() => (
-    <FormattedMessage
-      id="ui-inventory.itemDotStatus"
-      values={{
-        barcode: item.barcode || '',
-        status: item.status?.name || '',
-      }}
-    />
-  ), [item]);
+  const renderPaneTitle = useCallback(() => {
+    const itemStatus = item?.status?.name || '';
+
+    return (
+      <FormattedMessage
+        id="ui-inventory.itemDotStatus"
+        values={{
+          barcode: item.barcode || '',
+          status: itemStatus in ITEM_STATUS_TRANSLATIONS_ID_MAP
+            ? formatMessage({ id: ITEM_STATUS_TRANSLATIONS_ID_MAP[itemStatus] })
+            : itemStatus,
+        }}
+      />
+    );
+  }, [item]);
   const renderPaneSub = useCallback(
     () => {
       const updatedDate = item?.metadata?.updatedDate;

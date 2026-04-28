@@ -1,0 +1,25 @@
+import { itemStatusesMap } from '../constants';
+
+export const ITEM_STATUS_TRANSLATIONS_ID_MAP = {
+  [itemStatusesMap.AGED_TO_LOST]: 'ui-inventory.item.status.agedToLost.lowercase',
+  [itemStatusesMap.AVAILABLE]: 'ui-inventory.item.status.available.lowercase',
+  [itemStatusesMap.AWAITING_PICKUP]: 'ui-inventory.item.status.awaitingPickup.lowercase',
+  [itemStatusesMap.AWAITING_DELIVERY]: 'ui-inventory.item.status.awaitingDelivery.lowercase',
+  [itemStatusesMap.CHECKED_OUT]: 'ui-inventory.item.status.checkedOut.lowercase',
+  [itemStatusesMap.CLAIMED_RETURNED]: 'ui-inventory.item.status.claimedReturned.lowercase',
+  [itemStatusesMap.DECLARED_LOST]: 'ui-inventory.item.status.declaredLost.lowercase',
+  [itemStatusesMap.IN_PROCESS]: 'ui-inventory.item.status.inProcess.lowercase',
+  [itemStatusesMap.IN_PROCESS_NON_REQUESTABLE]: 'ui-inventory.item.status.inProcessNonRequestable.lowercase',
+  [itemStatusesMap.IN_TRANSIT]: 'ui-inventory.item.status.inTransit.lowercase',
+  [itemStatusesMap.INTELLECTUAL_ITEM]: 'ui-inventory.item.status.intellectualItem.lowercase',
+  [itemStatusesMap.LONG_MISSING]: 'ui-inventory.item.status.longMissing.lowercase',
+  [itemStatusesMap.LOST_AND_PAID]: 'ui-inventory.item.status.lostAndPaid.lowercase',
+  [itemStatusesMap.MISSING]: 'ui-inventory.item.status.missing.lowercase',
+  [itemStatusesMap.ON_ORDER]: 'ui-inventory.item.status.onOrder.lowercase',
+  [itemStatusesMap.ORDER_CLOSED]: 'ui-inventory.item.status.orderClosed.lowercase',
+  [itemStatusesMap.PAGED]: 'ui-inventory.item.status.paged.lowercase',
+  [itemStatusesMap.RESTRICTED]: 'ui-inventory.item.status.restricted.lowercase',
+  [itemStatusesMap.UNAVAILABLE]: 'ui-inventory.item.status.unavailable.lowercase',
+  [itemStatusesMap.UNKNOWN]: 'ui-inventory.item.status.unknown.lowercase',
+  [itemStatusesMap.WITHDRAWN]: 'ui-inventory.item.status.withdrawn.lowercase',
+};
