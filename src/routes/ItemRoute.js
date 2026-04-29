@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 import queryString from 'query-string';
 
-import { stripesConnect } from '@folio/stripes/core';
+import {
+  stripesConnect,
+  AuthenticatedError,
+} from '@folio/stripes/core';
 
 import { withLocation } from '../hocs';
 import { ViewItem } from '../Item';
@@ -11,16 +14,30 @@ import { DataContext } from '../contexts';
 import { useSearchInstanceByIdQuery } from '../common';
 import { ItemModalsStateProvider } from '../providers';
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+const isUuid = (value) => UUID_REGEX.test(value);
+
 const ItemRoute = props => {
   const {
     stripes: { okapi },
+    location,
     location: { state },
   } = props;
 
-  const { id: instanceId } = useParams();
-  const { instance } = useSearchInstanceByIdQuery(instanceId);
+  const {
+    id: instanceId,
+    holdingsrecordid: holdingsRecordId,
+    itemid: itemId,
+  } = useParams();
+  const hasValidParams = [instanceId, holdingsRecordId, itemId].every(isUuid);
+  const { instance } = useSearchInstanceByIdQuery(instanceId, { enabled: hasValidParams });
 
   const queryParams = queryString.parse(props.location.search);
+
+  if (!hasValidParams) {
+    return <AuthenticatedError location={location} />;
+  }
 
   return (
     <DataContext.Consumer>
