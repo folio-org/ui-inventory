@@ -105,6 +105,10 @@ describe('ViewSource', () => {
     it('should render LoadingView', () => {
       expect(screen.getByText('LoadingView')).toBeInTheDocument();
     });
+
+    it('should not fetch marc record yet', () => {
+      expect(mutator.marcRecord.GET).not.toHaveBeenCalled();
+    });
   });
 
   describe('when marc source request is failed', () => {
@@ -112,7 +116,7 @@ describe('ViewSource', () => {
       mutator.marcRecord.GET.mockRejectedValueOnce('marcRecord error');
 
       await act(async () => {
-        await renderWithIntl(getViewSource({ instance: null, isInstanceLoading: true }), translations);
+        await renderWithIntl(getViewSource({ instance: null, isInstanceLoading: false }), translations);
       });
     });
 
