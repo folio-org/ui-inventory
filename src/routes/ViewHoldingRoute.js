@@ -47,6 +47,7 @@ const ViewHoldingRoute = () => {
     callout.sendCallout({
       type: 'error',
       message: error?.message || defaultErrorMessage,
+      timeout: 0,
     });
   }
 
