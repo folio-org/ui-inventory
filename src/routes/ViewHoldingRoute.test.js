@@ -94,6 +94,7 @@ describe('ViewHoldingRoute', () => {
     expect(mockSendCallout).toHaveBeenCalledWith({
       type: 'error',
       message: 'Not found',
+      timeout: 0,
     });
   });
 });
