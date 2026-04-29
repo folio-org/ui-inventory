@@ -145,6 +145,10 @@ const ViewSource = ({
   ], [stripes, redirectToMARCEdit]);
 
   useEffect(() => {
+    if (isInstanceLoading) {
+      return;
+    }
+
     setIsMarcLoading(true);
 
     const { okapi: { tenant, token, locale } } = stripes;
@@ -168,7 +172,7 @@ const ViewSource = ({
       .finally(() => {
         setIsMarcLoading(false);
       });
-  }, []);
+  }, [isInstanceLoading]);
 
   const canExport = !isHoldingsRecord && stripes.hasInterface('data-export') && stripes.hasPerm('ui-data-export.edit');
 

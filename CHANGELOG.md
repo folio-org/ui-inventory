@@ -128,6 +128,11 @@ UIIN-3437.
 * Focus on the Close Instance pane button when returning from MARC edit/create/derive page. Fixes UIIN-3570.
 * The page reloads instead of showing "Confirm move" modal when moving holdings to another instance in member tenant. Fixes UIIN-3625.
 
+## [13.0.14](https://github.com/folio-org/ui-inventory/tree/v13.0.14) (2026-04-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.13...v13.0.14)
+
+* `<ViewSource>` - don't load MARC record until Instance has finished loading. Fixes UIIN-3635.
+
 ## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.12...v13.0.13)
 
