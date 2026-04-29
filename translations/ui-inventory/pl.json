@@ -77,7 +77,7 @@
     "loans": "Wypożyczenia",
     "materialTypes": "Rodzaje materiałów",
     "materialType": "Rodzaj materiału",
-    "holdingsHeader": "Zasoby: {location} > {callNumber} {copyNumber}",
+    "holdingsHeader": "<span>Zasoby: {location} > {callNumber} {copyNumber}</span>",
     "viewHoldings": "Wyświetl zasoby",
     "holdingsRecord": "Rekord zasobów",
     "viewHoldingsRecord": "Wyświetl rekord zasobów",
@@ -585,7 +585,7 @@
     "holdingsRecord.successfullySaved": "<strong>{hrid}</strong> HRID - <strong>zasobu</strong> został pomyślnie zapisany.",
     "instance.successfullySaved": "<strong>{hrid}</strong> HRID - <strong>instancji</strong> został pomyślnie zapisany.",
     "holdingsPaneTitle": "Zasoby • {location} • {callNumber}",
-    "instanceRecordSubtitle": "{hrid} • Ostatnio modyfikowany: {updatedDate}",
+    "instanceRecordSubtitle": "{hrid} • Ostatnio modyfikowany: {date}",
     "instance.saveError": "Nie udał się zapis instancji",
     "itemRecordWithDescriptionBW": "Rekord egzemplarza ({materialType}, {status}, macierzyste)",
     "acq.polNumber": "Numer pozycji zamówienia",
@@ -781,7 +781,6 @@
     "boundPieces.remove.heading": "Jesteś pewien?",
     "searchForTitle": "Szukaj {title}",
     "ld.label": "Edytor Linked data",
-    "editInLinkedDataEditor": "Edytuj zasób w edytorze Linked data",
     "permission.settings.subject-sources": "Ustawienia (Katalogowanie): tworzenie, edycja, usuwanie źródeł hasła",
     "permission.settings.subject-types": "Ustawienia (Katalogowanie): tworzenie, edycja, usuwanie rodzajów hasła",
     "print": "Drukuj",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Additional call number",
     "additionalCallNumberPrefix": "Additional call number prefix",
     "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "additionalCallNumberType": "Additional call number type",
+    "editInMarigold": "Edit resource in Marigold"
 }

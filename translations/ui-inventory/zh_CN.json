@@ -781,7 +781,6 @@
     "boundPieces.remove.heading": "你确定吗？",
     "searchForTitle": "搜索{title}",
     "ld.label": "关联数据编辑器",
-    "editInLinkedDataEditor": "在关联数据编辑器中编辑资源",
     "permission.settings.subject-sources": "设置 : 典藏 )  : 创建、编辑、删除主题来源",
     "permission.settings.subject-types": "设置 : 典藏 )  : 创建、编辑、删除主题类型",
     "print": "打印",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "附加索书号",
     "additionalCallNumberPrefix": "附加索书号—前缀",
     "additionalCallNumberSuffix": "附加索书号—后缀",
-    "additionalCallNumberType": "添加附加索书号类型"
+    "additionalCallNumberType": "添加附加索书号类型",
+    "editInMarigold": "Edit resource in Marigold"
 }

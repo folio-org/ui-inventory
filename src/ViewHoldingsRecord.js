@@ -685,7 +685,8 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsEffectiveLocation = referenceTables?.locationsById[holdingsRecord?.effectiveLocationId];
     const itemCount = get(items, 'records.length', 0);
     const holdingsSourceName = holdingsSource?.name;
-    const tagsEnabled = tagSettings?.records?.[0]?.items?.[0]?.value;
+    // Empty settings means tags are enabled by default
+    const tagsEnabled = !tagSettings?.records?.[0]?.items?.length || tagSettings?.records?.[0]?.items?.[0]?.value;
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <FormattedMessage

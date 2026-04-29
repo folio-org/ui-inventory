@@ -77,7 +77,7 @@
     "loans": "Empréstimos",
     "materialTypes": "Tipos de materiais",
     "materialType": "Tipo de material",
-    "holdingsHeader": "Acervo: {location} > {callNumber} {copyNumber}",
+    "holdingsHeader": "<span>Acervo: {location} > {callNumber} {copyNumber}</span>",
     "viewHoldings": "Visualizar acervo",
     "holdingsRecord": "Registo de acervo",
     "viewHoldingsRecord": "Visualizar registo de acervo",
@@ -780,8 +780,7 @@
     "boundPieces.remove.button": "Remove",
     "boundPieces.remove.heading": "Are you sure?",
     "searchForTitle": "Search for {title}",
-    "ld.label": "Linked data editor",
-    "editInLinkedDataEditor": "Edit resource in Linked data editor",
+    "ld.label": "Marigold",
     "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
     "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types",
     "print": "Print",
@@ -921,5 +920,6 @@
     "additionalCallNumber": "Additional call number",
     "additionalCallNumberPrefix": "Additional call number prefix",
     "additionalCallNumberSuffix": "Additional call number suffix",
-    "additionalCallNumberType": "Additional call number type"
+    "additionalCallNumberType": "Additional call number type",
+    "editInMarigold": "Edit resource in Marigold"
 }
