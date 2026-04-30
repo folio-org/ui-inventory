@@ -132,6 +132,7 @@ UIIN-3437.
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.13...v13.0.14)
 
 * `<ViewSource>` - don't load MARC record until Instance has finished loading. Fixes UIIN-3635.
+* `<ViewSource>` - add missing useEffect/useMemo deps to update when instance data is loaded. Fixes UIIN-3641.
 
 ## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.12...v13.0.13)
