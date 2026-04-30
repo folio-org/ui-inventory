@@ -174,7 +174,7 @@ describe('ViewItem', () => {
   it('should display correct item status in pane title', () => {
     renderViewItem();
 
-    const expectedTitle = `Item • ${mockItem.barcode} • ${mockItem.status.name.toLowerCase()}`;
+    const expectedTitle = `Item • ${mockItem.barcode} • ${mockItem.status.name}`;
     expect(screen.getByText(expectedTitle)).toBeInTheDocument();
   });
 
