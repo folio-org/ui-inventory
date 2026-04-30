@@ -10,10 +10,11 @@ import {
   waitFor,
   fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
+import { MarcVersionHistory } from '@folio/stripes-marc-components';
+import { useUserTenantPermissions } from '@folio/stripes/core';
 
 import '../../../test/jest/__mock__';
 
-import { MarcVersionHistory } from '@folio/stripes-marc-components';
 import renderWithIntl from '../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../test/jest/helpers/translationsProperties';
 import ViewSource from './ViewSource';
@@ -83,6 +84,14 @@ const getViewSource = (props = {}) => (
 
 describe('ViewSource', () => {
   beforeEach(() => {
+    useUserTenantPermissions.mockClear().mockReturnValue({
+      userPermissions: [{
+        permissionName: 'ui-quick-marc.quick-marc-editor.all',
+      }],
+      isFetched: true,
+      isFetching: false,
+      isLoading: false,
+    });
     useHistory.mockClear().mockReturnValue({
       push: mockPush,
     });
@@ -192,6 +201,26 @@ describe('ViewSource', () => {
 
     it('should display "shared marc bibliographic record" message', () => {
       expect(screen.getByText('Shared MARC bibliographic record')).toBeInTheDocument();
+    });
+
+    describe('action menu', () => {
+      it('should render actions', () => {
+        expect(screen.getByText('Edit MARC bibliographic record')).toBeInTheDocument();
+        expect(screen.getByText('Export instance (MARC)')).toBeInTheDocument();
+        expect(screen.getByText('Print')).toBeInTheDocument();
+      });
+
+      describe('when clicking on Edit', () => {
+        it('should redirect to marc edit page with "shared=true" url parameter', () => {
+          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Edit MARC bibliographic record' }));
+
+          expect(mockPush).toHaveBeenLastCalledWith({
+            pathname: `/inventory/quick-marc/edit-bibliographic/${mockInstance.id}`,
+            search: 'shared=true',
+          });
+        });
+      });
     });
   });
 
