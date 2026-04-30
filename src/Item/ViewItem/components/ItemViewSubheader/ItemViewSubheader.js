@@ -14,7 +14,7 @@ import { AppIcon } from '@folio/stripes/core';
 import LinkedInstanceDetails from './LinkedInstanceDetails';
 import LinkedHoldingDetails from './LinkedHoldingDetails';
 
-import { ITEM_STATUS_TRANSLATIONS_ID_MAP } from '../../../constants';
+import { ITEM_STATUS_LOWERCASE_TRANSLATIONS_ID_MAP } from '../../../constants';
 
 const ItemViewSubheader = ({
   item,
@@ -27,8 +27,8 @@ const ItemViewSubheader = ({
   const itemMaterialType = item?.materialType?.name || '';
   const itemStatus = item?.status?.name || '';
 
-  const itemStatusValue = itemStatus in ITEM_STATUS_TRANSLATIONS_ID_MAP
-    ? formatMessage({ id: ITEM_STATUS_TRANSLATIONS_ID_MAP[itemStatus] })
+  const itemStatusValue = itemStatus in ITEM_STATUS_LOWERCASE_TRANSLATIONS_ID_MAP
+    ? formatMessage({ id: ITEM_STATUS_LOWERCASE_TRANSLATIONS_ID_MAP[itemStatus] })
     : itemStatus;
 
   return (
