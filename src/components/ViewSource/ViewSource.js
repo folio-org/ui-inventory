@@ -105,7 +105,7 @@ const ViewSource = ({
     const pathname = `/inventory/quick-marc/edit-${isHoldingsRecord ? 'holdings' : 'bibliographic'}/${urlId}`;
 
     redirectToMarcEditPage(pathname, instance, location, history);
-  }, [isHoldingsRecord]);
+  }, [isHoldingsRecord, instance, location]);
 
   const { userPermissions: centralTenantPermissions } = useUserTenantPermissions({
     tenantId: centralTenantId,
@@ -125,7 +125,7 @@ const ViewSource = ({
     }
 
     return stripes.hasPerm('ui-quick-marc.quick-marc-editor.all');
-  }, [marcType, instance?.shared]);
+  }, [marcType, instance?.shared, flattenedPermissions]);
 
   const shortcuts = useMemo(() => [
     {
@@ -222,7 +222,7 @@ const ViewSource = ({
         )}
       </>
     );
-  }, []);
+  }, [redirectToMARCEdit, triggerQuickExport, openPrintPopup, canEdit]);
 
   const { settings } = useAuditSettings({ tenantId, group: INVENTORY_AUDIT_GROUP, enabled: isBibRecord });
 

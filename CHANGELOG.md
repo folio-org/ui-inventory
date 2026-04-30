@@ -6,6 +6,7 @@
 * Make item status in Item details pane header translatable. Fixes UIIN-3632.
 * `<ViewSource>` - don't load MARC record until Instance has finished loading. Fixes UIIN-3635.
 * Item status is displayed in lowercase (“available”) instead of capitalized (“Available”) in the item title. Fixes UIIN-3640.
+* `<ViewSource>` - add missing useEffect/useMemo deps to update when instance data is loaded. Fixes UIIN-3641.
 
 ## [14.0.0](https://github.com/folio-org/ui-inventory/tree/v14.0.0) (2026-04-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.13...v14.0.0)
