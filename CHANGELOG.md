@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## 14.0.2 IN PROGRESS
+## [14.0.2](https://github.com/folio-org/ui-inventory/tree/v14.0.2) (2026-05-21)
 
 * Show error message when edit URLs are with invalid UUIDs. Fixes UIIN-3604.
 * ECS | Show child and parent of shared Instance when Instance from Member tenant. Fixes UIIN-3642.
