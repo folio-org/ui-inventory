@@ -36,7 +36,7 @@ jest.mock('@folio/stripes/smart-components', () => ({
     return <RealSearchAndSort {...props} />;
   }),
   withTags: Component => (props) => {
-    return <Component {...props} tagsEnabled={true} />;
+    return <Component {...props} tagsEnabled />;
   },
 }), { virtual: true });
 

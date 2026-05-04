@@ -1,8 +1,7 @@
+import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
-
-import EditHoldingRoute from './EditHoldingRoute';
+import InstanceEditRoute from './InstanceEditRoute';
 
 const mockedUseParams = jest.fn();
 const mockAuthenticatedError = jest.fn(({ location }) => (
@@ -25,20 +24,20 @@ jest.mock('../contexts', () => ({
   },
 }));
 
-jest.mock('../Holding', () => ({
-  EditHolding: jest.fn().mockReturnValue('EditHolding'),
+jest.mock('../Instance', () => ({
+  InstanceEdit: jest.fn().mockReturnValue('InstanceEdit'),
 }));
 
-const renderEditHoldingRoute = (initialEntry = '/holdings/foo/bar') => render(
+const renderInstanceEditRoute = (initialEntry = '/inventory/edit/foo') => render(
   <MemoryRouter initialEntries={[initialEntry]}>
-    <EditHoldingRoute
-      location={{ search: '', state: {}, pathname: '/holdings/foo/bar' }}
+    <InstanceEditRoute
+      location={{ search: '', state: {}, pathname: '/inventory/edit/foo' }}
       stripes={{ okapi: { tenant: 'diku' } }}
     />
   </MemoryRouter>,
 );
 
-describe('EditHoldingRoute', () => {
+describe('InstanceEditRoute', () => {
   beforeEach(() => {
     mockAuthenticatedError.mockClear();
   });
@@ -46,30 +45,28 @@ describe('EditHoldingRoute', () => {
   it('renders authenticated error for invalid UUID params', () => {
     mockedUseParams.mockReturnValue({
       id: 'foo',
-      holdingsrecordid: 'bar',
     });
 
-    renderEditHoldingRoute();
+    renderInstanceEditRoute();
 
-    expect(screen.getByText('AuthenticatedError: /holdings/foo/bar')).toBeInTheDocument();
+    expect(screen.getByText('AuthenticatedError: /inventory/edit/foo')).toBeInTheDocument();
     expect(mockAuthenticatedError).toHaveBeenCalledWith(
       expect.objectContaining({
         location: expect.objectContaining({
-          pathname: '/holdings/foo/bar',
+          pathname: '/inventory/edit/foo',
         }),
       }),
     );
   });
 
-  it('renders holding edit for valid UUID params', () => {
+  it('renders instance edit for valid UUID params', () => {
     mockedUseParams.mockReturnValue({
       id: '11111111-1111-4111-8111-111111111111',
-      holdingsrecordid: '22222222-2222-4222-8222-222222222222',
     });
 
-    renderEditHoldingRoute('/holdings/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222');
+    renderInstanceEditRoute('/inventory/edit/11111111-1111-4111-8111-111111111111');
 
-    expect(screen.getByText('EditHolding')).toBeInTheDocument();
+    expect(screen.getByText('InstanceEdit')).toBeInTheDocument();
     expect(mockAuthenticatedError).not.toHaveBeenCalled();
   });
 });
