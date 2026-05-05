@@ -7,16 +7,13 @@ import {
   stripesConnect,
   AuthenticatedError,
 } from '@folio/stripes/core';
+import { isValidUUID } from '@folio/stripes/util';
 
 import { withLocation } from '../hocs';
 import { ViewItem } from '../Item';
 import { DataContext } from '../contexts';
 import { useSearchInstanceByIdQuery } from '../common';
 import { ItemModalsStateProvider } from '../providers';
-
-const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-
-const isUuid = (value) => UUID_REGEX.test(value);
 
 const ItemRoute = props => {
   const {
@@ -30,7 +27,7 @@ const ItemRoute = props => {
     holdingsrecordid: holdingsRecordId,
     itemid: itemId,
   } = useParams();
-  const hasValidParams = [instanceId, holdingsRecordId, itemId].every(isUuid);
+  const hasValidParams = [instanceId, holdingsRecordId, itemId].every(isValidUUID);
   const { instance } = useSearchInstanceByIdQuery(instanceId, { enabled: hasValidParams });
 
   const queryParams = queryString.parse(props.location.search);
