@@ -9,6 +9,7 @@ import {
   useStripes,
   AuthenticatedError,
 } from '@folio/stripes/core';
+import { isValidUUID } from '@folio/stripes/util';
 
 import { useSearchInstanceByIdQuery } from '../common';
 import { DataContext } from '../contexts';
@@ -21,7 +22,6 @@ import ViewHoldingsRecord from '../ViewHoldingsRecord';
 import {
   INVENTORY_AUDIT_GROUP,
   UPDATE_OWNERSHIP_API,
-  UUID_PATTERN,
 } from '../constants';
 import { getIsVersionHistoryEnabled } from '../utils';
 
@@ -31,13 +31,15 @@ const ViewHoldingRoute = () => {
   const { okapi } = useStripes();
   const callout = useCallout();
   const location = useLocation();
+
+  const hasValidParams = [instanceId, holdingsrecordid].every(isValidUUID);
   const { instance, error } = useSearchInstanceByIdQuery(instanceId);
   const { updateOwnership } = useUpdateOwnershipMutation(UPDATE_OWNERSHIP_API.HOLDINGS);
 
   const { settings } = useAuditSettings({ group: INVENTORY_AUDIT_GROUP });
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
-  if (!UUID_PATTERN.test(instanceId) || !UUID_PATTERN.test(holdingsrecordid)) {
+  if (!hasValidParams) {
     return <AuthenticatedError location={location} />;
   }
 
