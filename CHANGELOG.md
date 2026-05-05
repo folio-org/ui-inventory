@@ -4,6 +4,9 @@
 
 * Fix Tags accordion displaying in Holdings and Items until Tags setting is re-enabled. Fixes UIIN-3602.
 * Make item status in Item details pane header translatable. Fixes UIIN-3632.
+* `<ViewSource>` - don't load MARC record until Instance has finished loading. Fixes UIIN-3635.
+* Item status is displayed in lowercase (“available”) instead of capitalized (“Available”) in the item title. Fixes UIIN-3640.
+* `<ViewSource>` - add missing useEffect/useMemo deps to update when instance data is loaded. Fixes UIIN-3641.
 * Item-record detail path with invalid UUIDs shows full-screen "Something went wrong". Fixes UIIN-3607.
 
 ## [14.0.0](https://github.com/folio-org/ui-inventory/tree/v14.0.0) (2026-04-17)

@@ -1,6 +1,6 @@
 import { itemStatusesMap } from '../constants';
 
-export const ITEM_STATUS_TRANSLATIONS_ID_MAP = {
+export const ITEM_STATUS_LOWERCASE_TRANSLATIONS_ID_MAP = {
   [itemStatusesMap.AGED_TO_LOST]: 'ui-inventory.item.status.agedToLost.lowercase',
   [itemStatusesMap.AVAILABLE]: 'ui-inventory.item.status.available.lowercase',
   [itemStatusesMap.AWAITING_PICKUP]: 'ui-inventory.item.status.awaitingPickup.lowercase',
@@ -22,4 +22,28 @@ export const ITEM_STATUS_TRANSLATIONS_ID_MAP = {
   [itemStatusesMap.UNAVAILABLE]: 'ui-inventory.item.status.unavailable.lowercase',
   [itemStatusesMap.UNKNOWN]: 'ui-inventory.item.status.unknown.lowercase',
   [itemStatusesMap.WITHDRAWN]: 'ui-inventory.item.status.withdrawn.lowercase',
+};
+
+export const ITEM_STATUS_TRANSLATIONS_ID_MAP = {
+  [itemStatusesMap.AGED_TO_LOST]: 'ui-inventory.item.status.agedToLost',
+  [itemStatusesMap.AVAILABLE]: 'ui-inventory.item.status.available',
+  [itemStatusesMap.AWAITING_PICKUP]: 'ui-inventory.item.status.awaitingPickup',
+  [itemStatusesMap.AWAITING_DELIVERY]: 'ui-inventory.item.status.awaitingDelivery',
+  [itemStatusesMap.CHECKED_OUT]: 'ui-inventory.item.status.checkedOut',
+  [itemStatusesMap.CLAIMED_RETURNED]: 'ui-inventory.item.status.claimedReturned',
+  [itemStatusesMap.DECLARED_LOST]: 'ui-inventory.item.status.declaredLost',
+  [itemStatusesMap.IN_PROCESS]: 'ui-inventory.item.status.inProcess',
+  [itemStatusesMap.IN_PROCESS_NON_REQUESTABLE]: 'ui-inventory.item.status.inProcessNonRequestable',
+  [itemStatusesMap.IN_TRANSIT]: 'ui-inventory.item.status.inTransit',
+  [itemStatusesMap.INTELLECTUAL_ITEM]: 'ui-inventory.item.status.intellectualItem',
+  [itemStatusesMap.LONG_MISSING]: 'ui-inventory.item.status.longMissing',
+  [itemStatusesMap.LOST_AND_PAID]: 'ui-inventory.item.status.lostAndPaid',
+  [itemStatusesMap.MISSING]: 'ui-inventory.item.status.missing',
+  [itemStatusesMap.ON_ORDER]: 'ui-inventory.item.status.onOrder',
+  [itemStatusesMap.ORDER_CLOSED]: 'ui-inventory.item.status.orderClosed',
+  [itemStatusesMap.PAGED]: 'ui-inventory.item.status.paged',
+  [itemStatusesMap.RESTRICTED]: 'ui-inventory.item.status.restricted',
+  [itemStatusesMap.UNAVAILABLE]: 'ui-inventory.item.status.unavailable',
+  [itemStatusesMap.UNKNOWN]: 'ui-inventory.item.status.unknown',
+  [itemStatusesMap.WITHDRAWN]: 'ui-inventory.item.status.withdrawn',
 };
