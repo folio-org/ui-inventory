@@ -111,6 +111,8 @@ const mockStripesCore = {
 
   TitleManager: ({ children }) => <>{children}</>,
 
+  AuthenticatedError: () => <span>AuthenticatedError</span>,
+
   checkIfUserInMemberTenant: jest.fn(() => true),
 
   checkIfUserInCentralTenant: jest.fn(() => false),
