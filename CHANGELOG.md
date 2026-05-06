@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [14.0.1] (IN PROGRESS)
+## [14.0.1](https://github.com/folio-org/ui-inventory/tree/v14.0.1) (2026-05-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.0...v14.0.1)
 
 * Fix Tags accordion displaying in Holdings and Items until Tags setting is re-enabled. Fixes UIIN-3602.
 * Make item status in Item details pane header translatable. Fixes UIIN-3632.
