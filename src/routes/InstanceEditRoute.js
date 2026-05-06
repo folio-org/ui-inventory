@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
 import { AuthenticatedError } from '@folio/stripes/core';
-import { isValidUUID } from '@folio/stripes-util';
+import { isValidUUID } from '@folio/stripes/util';
 
 import { InstanceEdit } from '../Instance';
 import { DataContext } from '../contexts';
