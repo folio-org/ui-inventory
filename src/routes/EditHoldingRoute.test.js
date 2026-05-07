@@ -1,17 +1,16 @@
 import { MemoryRouter } from 'react-router-dom';
 
 import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
+import * as stripesUtil from '@folio/stripes/util';
 
 import EditHoldingRoute from './EditHoldingRoute';
 
-const mockedUseParams = jest.fn();
 const mockAuthenticatedError = jest.fn(({ location }) => (
   <div>AuthenticatedError: {location.pathname}</div>
 ));
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useParams: () => mockedUseParams(),
+jest.mock('@folio/stripes/util', () => ({
+  isValidUUID: jest.fn(() => false),
 }));
 
 jest.mock('@folio/stripes/core', () => ({
@@ -40,15 +39,10 @@ const renderEditHoldingRoute = (initialEntry = '/holdings/foo/bar') => render(
 
 describe('EditHoldingRoute', () => {
   beforeEach(() => {
-    mockAuthenticatedError.mockClear();
+    jest.clearAllMocks();
   });
 
   it('renders authenticated error for invalid UUID params', () => {
-    mockedUseParams.mockReturnValue({
-      id: 'foo',
-      holdingsrecordid: 'bar',
-    });
-
     renderEditHoldingRoute();
 
     expect(screen.getByText('AuthenticatedError: /holdings/foo/bar')).toBeInTheDocument();
@@ -62,10 +56,7 @@ describe('EditHoldingRoute', () => {
   });
 
   it('renders holding edit for valid UUID params', () => {
-    mockedUseParams.mockReturnValue({
-      id: '11111111-1111-4111-8111-111111111111',
-      holdingsrecordid: '22222222-2222-4222-8222-222222222222',
-    });
+    stripesUtil.isValidUUID.mockReturnValue(true);
 
     renderEditHoldingRoute('/holdings/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222');
 
