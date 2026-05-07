@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import * as stripesUtil from '@folio/stripes/util';
 
-import EditItemRoute from './EditItemRoute';
+import InstanceEditRoute from './InstanceEditRoute';
 
 const mockAuthenticatedError = jest.fn(({ location }) => (
   <div>AuthenticatedError: {location.pathname}</div>
@@ -24,43 +24,43 @@ jest.mock('../contexts', () => ({
   },
 }));
 
-jest.mock('../Item', () => ({
-  EditItem: jest.fn().mockReturnValue('EditItem'),
+jest.mock('../Instance', () => ({
+  InstanceEdit: jest.fn().mockReturnValue('InstanceEdit'),
 }));
 
-const renderEditItemRoute = (initialEntry = '/inventory/edit/foo/bar/baz') => render(
+const renderInstanceEditRoute = (initialEntry = '/inventory/edit/foo') => render(
   <MemoryRouter initialEntries={[initialEntry]}>
-    <EditItemRoute
-      location={{ search: '', state: {}, pathname: '/inventory/edit/foo/bar/baz' }}
+    <InstanceEditRoute
+      location={{ search: '', state: {}, pathname: '/inventory/edit/foo' }}
       stripes={{ okapi: { tenant: 'diku' } }}
     />
   </MemoryRouter>,
 );
 
-describe('EditItemRoute', () => {
+describe('InstanceEditRoute', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('renders authenticated error for invalid UUID params', () => {
-    renderEditItemRoute();
+    renderInstanceEditRoute();
 
-    expect(screen.getByText('AuthenticatedError: /inventory/edit/foo/bar/baz')).toBeInTheDocument();
+    expect(screen.getByText('AuthenticatedError: /inventory/edit/foo')).toBeInTheDocument();
     expect(mockAuthenticatedError).toHaveBeenCalledWith(
       expect.objectContaining({
         location: expect.objectContaining({
-          pathname: '/inventory/edit/foo/bar/baz',
+          pathname: '/inventory/edit/foo',
         }),
       }),
     );
   });
 
-  it('renders item edit for valid UUID params', () => {
+  it('renders instance edit for valid UUID params', () => {
     stripesUtil.isValidUUID.mockReturnValue(true);
 
-    renderEditItemRoute('/inventory/edit/11111111-1111-4111-8111-111111111111/22222222-2222-4222-8222-222222222222/33333333-3333-4333-8333-333333333333');
+    renderInstanceEditRoute('/inventory/edit/11111111-1111-4111-8111-111111111111');
 
-    expect(screen.getByText('EditItem')).toBeInTheDocument();
+    expect(screen.getByText('InstanceEdit')).toBeInTheDocument();
     expect(mockAuthenticatedError).not.toHaveBeenCalled();
   });
 });

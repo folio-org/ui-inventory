@@ -113,7 +113,7 @@ const useMoveCommands = () => {
         actions.moveItems({ itemIds: [...itemsToMove], toHoldingId });
         toggleAllItems(fromHoldingId, false); // clear selection after success
       } catch (error) {
-        console.error('Failed to move items:', error);
+        console.error('Failed to move items:', error); // eslint-disable-line no-console
       }
     }
   };
