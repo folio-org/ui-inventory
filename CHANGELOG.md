@@ -9,6 +9,7 @@
 * `<ViewSource>` - add missing useEffect/useMemo deps to update when instance data is loaded. Fixes UIIN-3641.
 * Item-record detail path with invalid UUIDs shows full-screen "Something went wrong". Fixes UIIN-3607.
 * Holdings-record detail path with invalid UUIDs shows never-ending loading spinner. Fixes UIIN-3605.
+* Show error message when edit URLs are with invalid UUIDs. Fixes UIIN-3604.
 
 ## [14.0.0](https://github.com/folio-org/ui-inventory/tree/v14.0.0) (2026-04-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.13...v14.0.0)

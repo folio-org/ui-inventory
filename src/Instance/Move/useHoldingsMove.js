@@ -48,7 +48,7 @@ export const useHoldingsMove = (options = {}) => {
 
         return { success: true, holdingId: marcHoldingsId };
       } catch (error) {
-        console.error(`Failed to update MARC holding ${marcHoldingsId}:`, error);
+        console.error(`Failed to update MARC holding ${marcHoldingsId}:`, error); // eslint-disable-line no-console
         return { success: false, holdingId: marcHoldingsId, error };
       }
     });
