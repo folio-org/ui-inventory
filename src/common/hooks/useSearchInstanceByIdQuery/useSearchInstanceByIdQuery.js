@@ -23,14 +23,14 @@ const useSearchInstanceByIdQuery = (instanceId, { enabled = true } = {}) => {
     return response;
   };
 
-  const { refetch, isLoading, data = {} } = useQuery(
+  const { refetch, isLoading, data = {}, error } = useQuery(
     {
       queryKey: [namespace, instanceId],
       queryFn,
       enabled: Boolean(enabled && instanceId),
-      retry: (failureCount, error) => {
+      retry: (failureCount, err) => {
         if (failureCount >= 3) return false; // stop after 3 attempts
-        if (error.message === NO_RECORDS_FOUND_ERROR) return true; // retry if no records
+        if (err.message === NO_RECORDS_FOUND_ERROR) return true; // retry if no records
         return false; // stop retrying on other errors
       },
       retryDelay: () => 3000,
@@ -41,6 +41,7 @@ const useSearchInstanceByIdQuery = (instanceId, { enabled = true } = {}) => {
     refetch,
     isLoading,
     instance: data?.instances?.[0],
+    error,
   });
 };
 
