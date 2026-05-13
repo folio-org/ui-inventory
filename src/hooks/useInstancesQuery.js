@@ -32,7 +32,7 @@ const combineResults = (results) => {
 };
 
 // Fetches and returns multiple instances for given instance ids
-const useInstancesQuery = (ids = [], isInstanceShared) => {
+const useInstancesQuery = (ids = [], isInstanceShared = false) => {
   const stripes = useStripes();
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
 
