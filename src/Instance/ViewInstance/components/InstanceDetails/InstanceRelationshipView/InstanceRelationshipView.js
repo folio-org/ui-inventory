@@ -15,6 +15,7 @@ const InstanceRelationshipView = ({
   id,
   parentInstances,
   childInstances,
+  isInstanceShared = false,
 }) => {
   return (
     <Accordion
@@ -28,6 +29,7 @@ const InstanceRelationshipView = ({
             titleKey="subInstanceId"
             label={<FormattedMessage id="ui-inventory.childInstances" />}
             titles={childInstances}
+            isInstanceShared={isInstanceShared}
           />
         </Col>
       </Row>
@@ -38,6 +40,7 @@ const InstanceRelationshipView = ({
             titleKey="superInstanceId"
             label={<FormattedMessage id="ui-inventory.parentInstances" />}
             titles={parentInstances}
+            isInstanceShared={isInstanceShared}
           />
         </Col>
       </Row>

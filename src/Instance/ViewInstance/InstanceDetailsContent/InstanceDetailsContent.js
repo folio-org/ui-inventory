@@ -77,7 +77,7 @@ const InstanceDetailsContent = ({
   const accordionState = useMemo(() => getAccordionState(instance, accordions), [instance]);
 
   const isUserInCentralTenant = checkIfUserInCentralTenant(stripes);
-  const isConsortialHoldingsVisible = instance?.shared || isInstanceShadowCopy(instance?.source);
+  const isInstanceShared = instance?.shared || isInstanceShadowCopy(instance?.source);
   const canCreateHoldings = stripes.hasPerm('ui-inventory.holdings.create');
 
   const onToggle = newState => {
@@ -122,7 +122,7 @@ const InstanceDetailsContent = ({
           isVisible={!isUserInCentralTenant && canCreateHoldings}
         />
 
-        {isConsortialHoldingsVisible && (
+        {isInstanceShared && (
           <ConsortialHoldings
             instance={instance}
             prevInstanceId={prevInstanceId.current}
@@ -209,6 +209,7 @@ const InstanceDetailsContent = ({
           id={accordions.relationship}
           parentInstances={instance.parentInstances}
           childInstances={instance.childInstances}
+          isInstanceShared={isInstanceShared}
         />
       </AccordionSet>
     </AccordionStatus>

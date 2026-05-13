@@ -15,10 +15,10 @@ import useInstancesQuery from './useInstancesQuery';
 
 // Loads full instance records
 // for given sub instance ids (parentInstances/childInstaces).
-const useLoadSubInstances = (instanceIds = [], subId) => {
+const useLoadSubInstances = (instanceIds = [], subId, isInstanceShared) => {
   const instanstcesById = keyBy(instanceIds, subId);
   const [subInstances, setSubInstances] = useState([]);
-  const { isSuccess, data: results } = useInstancesQuery(instanceIds.map(inst => inst[subId]));
+  const { isSuccess, data: results } = useInstancesQuery(instanceIds.map(inst => inst[subId]), isInstanceShared);
 
   const instances = flow(
     items => filter(items, instance => instance),

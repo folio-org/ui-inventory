@@ -1,7 +1,7 @@
 import { chunk } from 'lodash';
 import { useQueries } from 'react-query';
 
-import { useOkapiKy, useNamespace } from '@folio/stripes/core';
+import { useOkapiKy, useNamespace, useStripes } from '@folio/stripes/core';
 import usePrevious from './usePrevious';
 
 const ITEMS_PER_CHUNK = 80;
@@ -32,8 +32,11 @@ const combineResults = (results) => {
 };
 
 // Fetches and returns multiple instances for given instance ids
-const useInstancesQuery = (ids = []) => {
-  const ky = useOkapiKy();
+const useInstancesQuery = (ids = [], isInstanceShared) => {
+  const stripes = useStripes();
+  const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
+
+  const ky = useOkapiKy({ tenant: isInstanceShared ? centralTenantId : stripes.okapi.tenant });
   const [queryKey] = useNamespace({ key: 'sub-instance' });
   const queryCache = ids.join();
   const prevQueryCache = usePrevious(queryCache);
