@@ -13,6 +13,7 @@ const SubInstanceGroup = ({
   id,
   titleKey,
   label,
+  isInstanceShared,
 }) => {
   const { instanceRelationshipTypes } = useReferenceData();
   const titlesByInstanceRelationshipTypeId = groupBy(titles, 'instanceRelationshipTypeId');
@@ -33,6 +34,7 @@ const SubInstanceGroup = ({
               titles={titlesByInstanceRelationshipTypeId[typeId]}
               titleKey={titleKey}
               label={name}
+              isInstanceShared={isInstanceShared}
             />
           </div>
         ))

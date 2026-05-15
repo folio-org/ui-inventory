@@ -1,5 +1,10 @@
 # Change history for ui-inventory
 
+## 14.0.2 IN PROGRESS
+
+* Show error message when edit URLs are with invalid UUIDs. Fixes UIIN-3604.
+* ECS | Show child and parent of shared Instance when Instance from Member tenant. Fixes UIIN-3642.
+
 ## [14.0.1](https://github.com/folio-org/ui-inventory/tree/v14.0.1) (2026-05-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.0...v14.0.1)
 
@@ -8,7 +13,6 @@
 * Item status is displayed in lowercase (“available”) instead of capitalized (“Available”) in the item title. Fixes UIIN-3640.
 * Item-record detail path with invalid UUIDs shows full-screen "Something went wrong". Fixes UIIN-3607.
 * Holdings-record detail path with invalid UUIDs shows never-ending loading spinner. Fixes UIIN-3605.
-* Show error message when edit URLs are with invalid UUIDs. Fixes UIIN-3604.
 
 ## [14.0.0](https://github.com/folio-org/ui-inventory/tree/v14.0.0) (2026-04-17)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.13...v14.0.0)
