@@ -48,13 +48,15 @@ export const createFieldFormatter = (referenceData, circulationHistory) => ({
   staffMemberId: () => circulationHistory.source,
   dateTime: value => getDateWithTime(value),
   source: value => {
+    const unknownUser = <FormattedMessage id="stripes-components.metaSection.unknownUser" />;
+
     if (value.personal) {
       const { firstName, lastName = '' } = value.personal;
 
-      return firstName ? `${lastName}, ${firstName}` : lastName;
+      return firstName ? `${lastName}, ${firstName}` : (lastName || unknownUser);
     }
 
-    return <FormattedMessage id="stripes-components.metaSection.unknownUser" />;
+    return unknownUser;
   },
 });
 

@@ -25,8 +25,9 @@ export const versionsFormatter = (usersMap, intl, canViewUser) => (diffArray) =>
 
   const getUserName = (userId) => {
     const user = usersMap[userId];
+    const { firstName, lastName = '' } = (user?.personal || {});
 
-    return user ? `${user.personal.lastName}, ${user.personal.firstName}` : null;
+    return firstName ? `${lastName}, ${firstName}` : (lastName || anonymousUserLabel);
   };
 
   const getSourceLink = (userId) => {
@@ -44,7 +45,7 @@ export const versionsFormatter = (usersMap, intl, canViewUser) => (diffArray) =>
       isOriginal: action === ACTIONS.CREATE,
       eventDate: formatDateTime(eventDate, intl),
       source: getSourceLink(userId),
-      userName: getUserName(userId) || anonymousUserLabel,
+      userName: getUserName(userId),
       fieldChanges: diff ? getChangedFieldsList(diff) : [],
       eventId,
       eventTs,
