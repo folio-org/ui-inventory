@@ -97,6 +97,7 @@ const MemberTenantHoldings = ({
           tenantId={memberTenantId}
           userTenantPermissions={userPermissions}
           pathToAccordionsState={pathToHoldingsAccordion}
+          isAccordionOpen={isAccordionOpen}
         />
       )
   );

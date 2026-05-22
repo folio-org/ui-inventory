@@ -63,6 +63,7 @@ const ItemsListContainerSetup = () => (
             holding={holdingsRecordsFixture[0]}
             draggable={draggable}
             droppable={droppable}
+            pathToAccordionsState={[]}
           />
         </DnDContext.Provider>
       </DataContext.Provider>

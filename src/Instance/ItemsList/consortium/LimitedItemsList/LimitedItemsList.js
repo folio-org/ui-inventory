@@ -26,6 +26,7 @@ const LimitedItemsList = ({
   holding,
   tenantId,
   userTenantPermissions,
+  isHoldingAccOpen,
 }) => {
   const intl = useIntl();
   const location = useLocation();
@@ -48,7 +49,12 @@ const LimitedItemsList = ({
     items,
     totalRecords,
     isFetching,
-  } = useConsortiumItems(instance.id, holding.id, tenantId, { searchParams });
+  } = useConsortiumItems(
+    instance.id,
+    holding.id,
+    tenantId,
+    { searchParams, enabled: isHoldingAccOpen },
+  );
 
   const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
     const amount = (direction === 'next') ? askAmount : -askAmount;

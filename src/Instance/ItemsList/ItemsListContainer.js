@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import DnDContext from '../DnDContext';
 import ItemsList from './ItemsList';
 
-import { useHoldingItemsQuery } from '../../hooks';
+import { useHoldingItemsQuery, useHoldingsFromStorage } from '../../hooks';
 
 import { DEFAULT_ITEM_TABLE_SORTBY_FIELD } from '../../constants';
 
@@ -19,6 +19,7 @@ const ItemsListContainer = ({
   draggable,
   droppable,
   isBarcodeAsHotlink,
+  pathToAccordionsState,
 }) => {
   const {
     selectItemsForDrag,
@@ -37,7 +38,12 @@ const ItemsListContainer = ({
     offset,
   };
 
-  const { isFetching, items } = useHoldingItemsQuery(holding.id, { searchParams, tenantId });
+  const pathToAccordion = [...pathToAccordionsState, holding?.id];
+  const accId = pathToAccordion.join('.');
+  const [accordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
+  const isHoldingAccOpen = accordionStatus[accId] || false;
+
+  const { isFetching, items } = useHoldingItemsQuery(holding.id, { searchParams, tenantId, enabled: isHoldingAccOpen });
   const { totalRecords } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
 
   useEffect(() => {

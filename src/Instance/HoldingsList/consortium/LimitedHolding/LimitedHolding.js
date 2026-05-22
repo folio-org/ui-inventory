@@ -18,7 +18,7 @@ import {
   AddItemButton,
   ItemsCountBadge,
 } from '../../Holding';
-import { useConsortiumItems } from '../../../../hooks';
+import { useConsortiumItems, useHoldingsFromStorage } from '../../../../hooks';
 
 import { hasMemberTenantPermission } from '../../../../utils';
 import {
@@ -33,6 +33,7 @@ const LimitedHolding = ({
   locationName,
   userTenantPermissions,
   pathToAccordionsState,
+  isAccordionOpen,
 }) => {
   const stripes = useStripes();
   const history = useHistory();
@@ -42,10 +43,13 @@ const LimitedHolding = ({
   const pathToAccordion = [...pathToAccordionsState, holding?.id];
   const accId = pathToAccordion.join('.');
 
+  const [accordionStatus, updateAccordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
+  const isHoldingAccOpen = accordionStatus[accId] || false;
+
   const canViewHoldingsAndItems = hasMemberTenantPermission('ui-inventory.instance.view', tenantId, userTenantPermissions);
   const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', tenantId, userTenantPermissions);
 
-  const { totalRecords: itemCount } = useConsortiumItems(instance.id, holding.id, tenantId, { searchParams: { limit: 0 } });
+  const { totalRecords: itemCount } = useConsortiumItems(instance.id, holding.id, tenantId, { enabled: isAccordionOpen, searchParams: { limit: 0 } });
 
   const onViewHolding = useCallback(() => {
     navigateToHoldingsViewPage(history, location, instance, holding, tenantId, stripes.okapi.tenant);
@@ -54,6 +58,13 @@ const LimitedHolding = ({
   const onAddItem = useCallback(() => {
     navigateToItemCreatePage(history, location, instance, holding, tenantId, stripes.okapi.tenant);
   }, [location.search, instance.id, holding.id]);
+
+  const onToggle = ({ id }) => {
+    updateAccordionStatus(current => ({
+      ...current,
+      [id]: !current[id],
+    }));
+  };
 
   const accordionLabel = (
     <HoldingAccordionLabel
@@ -88,8 +99,10 @@ const LimitedHolding = ({
     <Accordion
       id={accId}
       label={accordionLabel}
+      open={isHoldingAccOpen}
       displayWhenClosed={renderHoldingsButtons(false)}
       displayWhenOpen={renderHoldingsButtons(true)}
+      onToggle={onToggle}
       closedByDefault
     >
       <LimitedItemsList
@@ -97,6 +110,7 @@ const LimitedHolding = ({
         holding={holding}
         tenantId={tenantId}
         userTenantPermissions={userTenantPermissions}
+        isHoldingAccOpen={isHoldingAccOpen}
       />
     </Accordion>
   );
