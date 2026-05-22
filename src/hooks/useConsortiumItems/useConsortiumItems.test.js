@@ -40,7 +40,7 @@ describe('useConsortiumItems', () => {
   });
 
   it('should fetch items', async () => {
-    const { result } = renderHook(() => useConsortiumItems('instanceId', 'holdingsId', 'college'), { wrapper });
+    const { result } = renderHook(() => useConsortiumItems('instanceId', 'holdingsId', 'college', { enabled: true }), { wrapper });
 
     await act(() => !result.current.isLoading);
 

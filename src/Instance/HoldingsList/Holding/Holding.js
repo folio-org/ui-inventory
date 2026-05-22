@@ -68,6 +68,7 @@ const Holding = ({
             droppable={droppable}
             tenantId={tenantId}
             isBarcodeAsHotlink={isBarcodeAsHotlink}
+            pathToAccordionsState={pathToAccordionsState}
           />
         </HoldingAccordion>
       </DropZone>

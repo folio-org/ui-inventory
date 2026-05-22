@@ -16,7 +16,12 @@ import { useTenantKy } from '../common';
 
 const useHoldingItemsQuery = (
   holdingsRecordId,
-  options = { searchParams: {}, key: 'items', tenantId: null },
+  options = {
+    searchParams: {},
+    key: 'items',
+    tenantId: null,
+    enabled: true,
+  },
 ) => {
   const [sortBy, setSortBy] = useState(`${DEFAULT_ITEM_TABLE_SORTBY_FIELD}/sort.ascending`);
   const ky = useTenantKy({ tenantId: options.tenantId }).extend({ timeout: false });

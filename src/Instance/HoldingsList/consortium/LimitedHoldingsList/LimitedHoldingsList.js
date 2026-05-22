@@ -10,6 +10,7 @@ const LimitedHoldingsList = ({
   tenantId,
   userTenantPermissions,
   pathToAccordionsState,
+  isAccordionOpen,
 }) => {
   const { locationsById } = useContext(DataContext);
 
@@ -22,6 +23,7 @@ const LimitedHoldingsList = ({
       locationName={locationsById[holding.permanentLocationId]?.name}
       userTenantPermissions={userTenantPermissions}
       pathToAccordionsState={pathToAccordionsState}
+      isAccordionOpen={isAccordionOpen}
     />
   ));
 };
