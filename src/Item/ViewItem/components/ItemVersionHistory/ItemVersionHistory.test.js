@@ -277,6 +277,12 @@ describe('createFieldFormatter', () => {
   it('should display only last name as source if no first name provided', () => {
     expect(fieldFormatter.source({ personal: { lastName: 'Doe' } })).toBe('Doe');
   });
+
+  it('should display Unknown user as source if no firstName and lastName provided', () => {
+    const result = fieldFormatter.source({ personal: { firstName: '', lastName: '' } });
+
+    expect(result.props.id).toBe('stripes-components.metaSection.unknownUser');
+  });
 });
 
 describe('createItemFormatter', () => {
