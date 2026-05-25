@@ -1,6 +1,6 @@
 # Change history for ui-inventory
 
-## 13.0.15 (IN PROGRESS)
+## [13.0.15](https://github.com/folio-org/ui-inventory/tree/v13.0.15) (2026-05-25)
 
 * Reduce the amount of calls when many holdings exist in several tenants. Fixes UIIN-3660.
 
