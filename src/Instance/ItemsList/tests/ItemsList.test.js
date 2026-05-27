@@ -86,6 +86,7 @@ const ItemsListSetup = ({ isItemsMovement }) => (
                 <ItemsList
                   holding={holdingsRecordsFixture[0]}
                   isItemsMovement={isItemsMovement}
+                  pathToAccordionsState={[]}
                 />
               </OrderManagementProvider>
             </SelectionProvider>

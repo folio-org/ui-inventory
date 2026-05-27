@@ -18,7 +18,7 @@ import {
   AddItemButton,
   ItemsCountBadge,
 } from '../../Holding';
-import { useConsortiumItems } from '../../../../hooks';
+import { useConsortiumItems, useHoldingsFromStorage } from '../../../../hooks';
 
 import { hasMemberTenantPermission } from '../../../../utils';
 import {
@@ -43,10 +43,20 @@ const LimitedHolding = ({
   const pathToAccordion = [...pathToAccordionsState, holding?.id];
   const accId = pathToAccordion.join('.');
 
+  const [accordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
+  const memberTenantAccId = `${tenantId}.${instanceId}`;
+  const isMemberAccOpen = accordionStatus[memberTenantAccId];
+  const isHoldingAccOpen = accordionStatus[accId];
+
   const canViewHoldingsAndItems = hasMemberTenantPermission('ui-inventory.instance.view', tenantId, userTenantPermissions);
   const canCreateItem = hasMemberTenantPermission('ui-inventory.item.create', tenantId, userTenantPermissions);
 
-  const { totalRecords: itemCount } = useConsortiumItems(instance.id, holding.id, tenantId, { searchParams: { limit: 0 } });
+  const { totalRecords: itemCount } = useConsortiumItems(
+    instance.id,
+    holding.id,
+    tenantId,
+    { enabled: isMemberAccOpen, searchParams: { limit: 0 } },
+  );
 
   const onViewHolding = useCallback(() => {
     navigateToHoldingsViewPage(history, location, instanceId, holding, tenantId, stripes.okapi.tenant);
@@ -98,6 +108,7 @@ const LimitedHolding = ({
         holding={holding}
         tenantId={tenantId}
         userTenantPermissions={userTenantPermissions}
+        enabled={isHoldingAccOpen && isMemberAccOpen}
       />
     </Accordion>
   );
