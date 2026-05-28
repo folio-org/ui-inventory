@@ -58,7 +58,7 @@ const initialValues = {
 const renderBoundWithTitlesFields = (props = {}) => {
   const component = (
     <BoundWithTitlesFields
-      item={{}}
+      item={{ id: 123 }}
       addBoundWithTitles={addBoundWithTitlesProp}
       {...props}
     />

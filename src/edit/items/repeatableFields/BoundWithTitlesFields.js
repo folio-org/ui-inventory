@@ -144,6 +144,7 @@ const BoundWithTitlesFields = ({
         type="button"
         align="end"
         onClick={() => setBoundWithModalOpen(true)}
+        disabled={!item.id}
       >
         <FormattedMessage id="ui-inventory.boundWithTitles.add" />
       </Button>
