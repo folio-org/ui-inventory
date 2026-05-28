@@ -6,7 +6,12 @@ import {
   useOkapiKy,
 } from '@folio/stripes/core';
 
-const useConsortiumItems = (instanceId, holdingsRecordId, tenant, { searchParams } = {}) => {
+const useConsortiumItems = (
+  instanceId,
+  holdingsRecordId,
+  tenant,
+  { searchParams, enabled = true } = {},
+) => {
   const stripes = useStripes();
   const consortium = stripes.user?.user?.consortium;
   const centralTenantId = consortium?.centralTenantId;
@@ -25,7 +30,7 @@ const useConsortiumItems = (instanceId, holdingsRecordId, tenant, { searchParams
           ...searchParams,
         },
       }).json(),
-    enabled: Boolean(centralTenantId && instanceId && holdingsRecordId && tenant),
+    enabled: Boolean(centralTenantId && instanceId && holdingsRecordId && tenant && enabled),
   });
 
   return {
