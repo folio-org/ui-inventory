@@ -19,7 +19,7 @@ import { useLocationsQuery } from '@folio/stripes-inventory-components';
 import { HoldingButtonsGroup } from './HoldingButtonsGroup';
 import HoldingAccordionLabel from './HoldingAccordionLabel';
 
-import { useHoldingItemsQuery } from '../../../hooks';
+import { useHoldingItemsQuery, useHoldingsFromStorage } from '../../../hooks';
 
 const CustomAccordionHeader = ({
   withMoveHoldingCheckbox = false,
@@ -83,6 +83,7 @@ const HoldingAccordion = ({
   onViewHolding,
   onAddItem,
   tenantId,
+  instanceId,
   isHoldingSelected,
   onSelectHolding,
   showViewHoldingsButton,
@@ -100,8 +101,20 @@ const HoldingAccordion = ({
     offset: 0,
   };
 
+  const [accordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
   const pathToAccordion = [...pathToAccordionsState, holding?.id];
-  const { totalRecords, isFetching } = useHoldingItemsQuery(holding?.id, { searchParams, key: 'itemCount', tenantId });
+  const memberTenantAccId = `${tenantId}.${instanceId}`;
+  const isMemberAccOpen = accordionStatus[memberTenantAccId];
+
+  const { totalRecords, isFetching } = useHoldingItemsQuery(
+    holding?.id,
+    {
+      searchParams,
+      key: 'itemCount',
+      tenantId,
+      enabled: isMemberAccOpen,
+    },
+  );
   const { locations } = useLocationsQuery({ tenantId });
 
   if (!locations) return null;
@@ -194,6 +207,7 @@ HoldingAccordion.propTypes = {
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
   tenantId: PropTypes.string,
+  instanceId: PropTypes.string,
   isHoldingSelected: PropTypes.bool,
   onSelectHolding: PropTypes.func,
   showViewHoldingsButton: PropTypes.bool,

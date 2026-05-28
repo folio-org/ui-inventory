@@ -28,6 +28,7 @@ import {
 } from '../../dnd';
 import {
   useHoldingItemsQuery,
+  useHoldingsFromStorage,
   useOrderManagement,
 } from '../../hooks';
 import { OrderManagementContext } from '../../contexts';
@@ -55,6 +56,7 @@ const ItemsList = ({
   tenantId,
   isBarcodeAsHotlink,
   isItemsMovement = false,
+  pathToAccordionsState,
 }) => {
   const intl = useIntl();
 
@@ -67,6 +69,13 @@ const ItemsList = ({
     isItemsDragSelected: ifItemsSelected,
   } = useSelection();
 
+  const [accordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
+  const pathToAccordion = [...pathToAccordionsState, holding?.id];
+  const accId = pathToAccordion.join('.');
+  const memberTenantAccId = `${tenantId}.${instanceId}`;
+  const isMemberAccOpen = accordionStatus[memberTenantAccId];
+  const isHoldingAccOpen = accordionStatus[accId];
+
   const [offset, setOffset] = useState(0);
   const [sortByQuery, setSortByQuery] = useState(DEFAULT_ITEM_TABLE_SORTBY_FIELD);
   const searchParams = useMemo(() => ({
@@ -75,8 +84,24 @@ const ItemsList = ({
     offset,
   }), [isItemsMovement, sortByQuery, offset]);
 
-  const { items, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'items', tenantId });
-  const { totalRecords: total = 0 } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
+  const { items, isFetching } = useHoldingItemsQuery(
+    holding.id,
+    {
+      searchParams,
+      key: 'items',
+      tenantId,
+      enabled: isHoldingAccOpen && isMemberAccOpen,
+    },
+  );
+  const { totalRecords: total = 0 } = useHoldingItemsQuery(
+    holding.id,
+    {
+      searchParams: { limit: 0 },
+      key: 'itemCount',
+      tenantId,
+      enabled: isHoldingAccOpen && isMemberAccOpen,
+    },
+  );
   const { boundWithHoldings: holdings } = useBoundWithHoldings(items, tenantId);
   const { registerOrderManagement } = useContext(OrderManagementContext);
 
@@ -267,6 +292,7 @@ ItemsList.propTypes = {
   tenantId: PropTypes.string.isRequired,
   isBarcodeAsHotlink: PropTypes.bool,
   isItemsMovement: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ItemsList;

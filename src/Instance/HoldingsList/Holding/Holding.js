@@ -79,6 +79,7 @@ const Holding = ({
         tenantId={tenantId}
         isBarcodeAsHotlink={isBarcodeAsHotlink}
         isItemsMovement={isItemsMovement}
+        pathToAccordionsState={pathToAccordionsState}
       />
     </HoldingAccordion>
   );
