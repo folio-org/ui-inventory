@@ -1,11 +1,15 @@
 # Change history for ui-inventory
 
-## 14.0.2 IN PROGRESS
+## 14.0.3 IN PROGRESS
+
+* Source not displaying in Inventory version history for circ actions taken in different tenant. Fixes UIIN-3617.
+* Fetch items when holding accordion is open. Fixes UIIN-3658.
+
+## [14.0.2](https://github.com/folio-org/ui-inventory/tree/v14.0.2) (2026-05-21)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.1...v14.0.2)
 
 * Show error message when edit URLs are with invalid UUIDs. Fixes UIIN-3604.
 * ECS | Show child and parent of shared Instance when Instance from Member tenant. Fixes UIIN-3642.
-* Source not displaying in Inventory version history for circ actions taken in different tenant. Fixes UIIN-3617.
-* Fetch items when holding accordion is open. Fixes UIIN-3658.
 
 ## [14.0.1](https://github.com/folio-org/ui-inventory/tree/v14.0.1) (2026-05-06)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.0...v14.0.1)
