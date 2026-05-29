@@ -139,15 +139,16 @@ const BoundWithTitlesFields = ({
         canAdd={false}
         onRemove={false}
       />
-      <Button
-        data-testid="bound-with-add-button"
-        type="button"
-        align="end"
-        onClick={() => setBoundWithModalOpen(true)}
-        disabled={!item.id}
-      >
-        <FormattedMessage id="ui-inventory.boundWithTitles.add" />
-      </Button>
+      {item.id && (
+        <Button
+          data-testid="bound-with-add-button"
+          type="button"
+          align="end"
+          onClick={() => setBoundWithModalOpen(true)}
+        >
+          <FormattedMessage id="ui-inventory.boundWithTitles.add" />
+        </Button>
+      )}
       <BoundWithModal
         item={item}
         open={isBoundWithModalOpen}
