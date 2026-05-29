@@ -128,6 +128,8 @@ const BoundWithTitlesFields = ({
     </Row>
   );
 
+  if (!item.id) return null;
+
   return (
     <>
       <FieldArray

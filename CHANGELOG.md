@@ -8,6 +8,7 @@
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.2...v14.0.3)
 
 * Fetch items when holding accordion is open. Fixes UIIN-3658.
+* "Add Bound with and analytics" button is not shown when creating a new item. Fixes UIIN-3631.
 
 ## [14.0.2](https://github.com/folio-org/ui-inventory/tree/v14.0.2) (2026-05-21)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.1...v14.0.2)
