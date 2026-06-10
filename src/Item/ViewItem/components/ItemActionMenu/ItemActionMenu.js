@@ -14,6 +14,8 @@ import { ActionItem } from '../../../../components';
 import useItemPermissions from '../../../hooks/useItemPermissions';
 import useItemStatusChecks from '../../../hooks/useItemStatusChecks';
 import useItemActions from '../../../hooks/useItemActions';
+import { ITEM_STATUS_TRANSLATIONS_ID_MAP } from '../../../constants';
+
 
 import {
   itemStatusesMap,
@@ -79,7 +81,7 @@ const ItemActionMenu = ({
               }}
             >
               <Icon icon="flag">
-                {itemStatus}
+                <FormattedMessage id={ITEM_STATUS_TRANSLATIONS_ID_MAP[itemStatus]} />
               </Icon>
             </Button>
           </IfPermission>
