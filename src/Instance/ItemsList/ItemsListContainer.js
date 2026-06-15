@@ -6,6 +6,8 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
+import { useStripes } from '@folio/stripes/core';
+
 import DnDContext from '../DnDContext';
 import ItemsList from './ItemsList';
 
@@ -21,6 +23,7 @@ const ItemsListContainer = ({
   isBarcodeAsHotlink,
   pathToAccordionsState,
 }) => {
+  const stripes = useStripes();
   const {
     selectItemsForDrag,
     isItemsDragSelected,
@@ -42,9 +45,26 @@ const ItemsListContainer = ({
   const accId = pathToAccordion.join('.');
   const [accordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
   const isHoldingAccOpen = accordionStatus[accId] || false;
+  const isConsortiumMode = stripes.hasInterface('consortia');
+  const enabled = isConsortiumMode ? isHoldingAccOpen : true;
 
-  const { isFetching, items } = useHoldingItemsQuery(holding.id, { searchParams, tenantId, enabled: isHoldingAccOpen });
-  const { totalRecords } = useHoldingItemsQuery(holding.id, { searchParams: { limit: 0 }, key: 'itemCount', tenantId });
+  const { isFetching, items } = useHoldingItemsQuery(
+    holding.id,
+    {
+      searchParams,
+      tenantId,
+      enabled,
+    },
+  );
+  const { totalRecords } = useHoldingItemsQuery(
+    holding.id,
+    {
+      searchParams: { limit: 0 },
+      key: 'itemCount',
+      tenantId,
+      enabled,
+    },
+  );
 
   useEffect(() => {
     setItemsToShow(items);

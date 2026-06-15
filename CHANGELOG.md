@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 13.0.16 (IN PROGRESS)
+
+* Render items under Holdings accordion in Inventory instance detail view. Fixes UIIN-3668.
+
 ## [13.0.15](https://github.com/folio-org/ui-inventory/tree/v13.0.15) (2026-05-25)
 
 * Reduce the amount of calls when many holdings exist in several tenants. Fixes UIIN-3660.
