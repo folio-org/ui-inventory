@@ -46,7 +46,10 @@ const ItemsListContainer = ({
   const [accordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
   const isHoldingAccOpen = accordionStatus[accId] || false;
   const isConsortiumMode = stripes.hasInterface('consortia');
-  const enabled = isConsortiumMode ? isHoldingAccOpen : true;
+  const enabled =
+    isConsortiumMode && tenantId !== stripes.okapi.tenant
+      ? isHoldingAccOpen
+      : true;
 
   const { isFetching, items } = useHoldingItemsQuery(
     holding.id,

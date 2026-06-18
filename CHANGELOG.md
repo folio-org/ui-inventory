@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## 13.0.17 (IN PROGRESS)
+* ECS - Render items under Holdings accordion in Inventory instance detail view. Fixes UIIN-3673.
+
 ## [13.0.16](https://github.com/folio-org/ui-inventory/tree/v13.0.14) (2026-06-15)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.15...v13.0.16)
 
