@@ -1,5 +1,8 @@
 # Change history for ui-inventory
 
+## (13.0.18) IN PROGRESS
+* Do not show item link, status and "View holding" button for user without affiliation in Member tenant. Fixes UIIN-3675.
+
 ## [13.0.17](https://github.com/folio-org/ui-inventory/tree/v13.0.17) (2026-06-18)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.16...v13.0.17)
 * ECS - Render items under Holdings accordion in Inventory instance detail view. Fixes UIIN-3673.
