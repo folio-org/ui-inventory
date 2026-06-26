@@ -41,12 +41,14 @@ const MemberTenantHoldings = ({
   const [accordionStatus, updateAccordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
   const isAccordionOpen = accordionStatus[accordionId] || false;
 
+  const isUserAffiliatedWithMemberTenant = stripes.user.user.tenants?.some(tenant => tenant.id === memberTenantId);
+
   const {
     userPermissions,
     isFetching: isUserTenantPermissionsLoading,
   } = useUserTenantPermissions(
     { tenantId: memberTenantId },
-    { enabled: !!memberTenantId && isAccordionOpen },
+    { enabled: !!memberTenantId && isAccordionOpen && isUserAffiliatedWithMemberTenant },
   );
 
   useEffect(() => {
