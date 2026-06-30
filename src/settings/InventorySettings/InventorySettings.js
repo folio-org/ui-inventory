@@ -301,7 +301,7 @@ const InventorySettings = (props) => {
             component: NumberGeneratorSettings,
             label: <FormattedMessage id="ui-inventory.numberGenerator.options" />,
             route: 'numberGeneratorOptions',
-            perm: 'ui-inventory.settings.manage-number-generator-options',
+            perm: 'ui-inventory.settings.number-generator-options.manage',
           },
         ]
       },

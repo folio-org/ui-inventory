@@ -5,6 +5,7 @@
 * Source not displaying in Inventory version history for circ actions taken in different tenant. Fixes UIIN-3617.
 * "Add Bound with and analytics" button is not shown when creating a new item. Fixes UIIN-3631.
 * Translate all status-action entries in `<ItemStatusMenu>`. Fixes UIIN-3666.
+* Place "Manage number generator options" capability checkbox in the `manage` column instead of `view`. Fixes UIIN-3665.
 
 ## [14.0.3](https://github.com/folio-org/ui-inventory/tree/v14.0.3) (2026-05-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.2...v14.0.3)

@@ -595,8 +595,9 @@
         "visible": false
       },
       {
-        "permissionName": "ui-inventory.settings.manage-number-generator-options",
+        "permissionName": "ui-inventory.settings.number-generator-options.manage",
         "displayName": "Settings (Inventory): Manage number generator options",
+        "replaces": ["ui-inventory.settings.manage-number-generator-options"],
         "subPermissions": [
           "settings.inventory.enabled",
           "mod-settings.entries.collection.get",
