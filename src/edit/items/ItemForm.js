@@ -34,6 +34,7 @@ import {
   AccordionStatus,
   checkScope,
   HasCommand,
+  InfoPopover,
   collapseAllSections,
   expandAllSections,
 } from '@folio/stripes/components';
@@ -441,6 +442,21 @@ class ItemForm extends React.Component {
       );
     };
 
+    const callNumberLabel = (
+      <>
+        <FormattedMessage id="ui-inventory.callNumber" />
+        {numberGeneratorData?.useSharedNumber &&
+          <InfoPopover content={
+            <>
+              <FormattedMessage id="ui-inventory.numberGenerator.callNumberInfo.title" tagName="p" />
+              <FormattedMessage id="ui-inventory.numberGenerator.callNumberInfo.accessionAndCallNumber" tagName="p" />
+              <FormattedMessage id="ui-inventory.numberGenerator.callNumberInfo.additionalCallNumber" tagName="p" />
+            </>
+          }
+          />}
+      </>
+    );
+
     return (
       <HasCommand
         commands={shortcuts}
@@ -710,7 +726,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
-                          label={<FormattedMessage id="ui-inventory.callNumber" />}
+                          label={callNumberLabel}
                           name="itemLevelCallNumber"
                           id="additem_callnumber"
                           component={TextArea}
@@ -720,8 +736,7 @@ class ItemForm extends React.Component {
                           rows={1}
                           fullWidth
                         />
-                        {numberGeneratorData?.useSharedNumber ?
-                          renderSharedNumberGenerator() :
+                        {!numberGeneratorData?.useSharedNumber &&
                           showNumberGeneratorForCallNumber &&
                           <NumberGeneratorModalButton
                             buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}

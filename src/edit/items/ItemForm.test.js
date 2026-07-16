@@ -227,7 +227,7 @@ describe('ItemForm', () => {
   });
 
   describe('Render ItemsForm with number generator settings "useSharedNumber" true', () => {
-    it('should render renderSharedNumberGenerator', () => {
+    it('should render renderSharedNumberGenerator only once, next to the accession number field', () => {
       const { getAllByRole, queryByRole } = renderItemForm({
         numberGeneratorData: {
           accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
@@ -238,9 +238,45 @@ describe('ItemForm', () => {
         }
       });
 
-      expect(getAllByRole('button', { name: 'Generate accession and call numbers' })).toHaveLength(2);
+      expect(getAllByRole('button', { name: 'Generate accession and call numbers' })).toHaveLength(1);
       expect(queryByRole('button', { name: 'Generate accession number' })).not.toBeInTheDocument();
       expect(queryByRole('button', { name: 'Generate call number' })).not.toBeInTheDocument();
+    });
+
+    it('should render an info popover next to the call number field', () => {
+      const { getByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          barcode: '',
+          callNumber: NUMBER_GENERATOR_OPTIONS_OFF,
+          callNumberHoldings: '',
+          useSharedNumber: true,
+        }
+      });
+
+      const infoPopoverTrigger = getByRole('button', { name: 'info' });
+      expect(infoPopoverTrigger).toBeInTheDocument();
+
+      fireEvent.click(infoPopoverTrigger);
+
+      expect(screen.getByText('Number generators', { exact: false })).toBeInTheDocument();
+    });
+  });
+
+  describe('Render ItemsForm with number generator settings "useSharedNumber" false', () => {
+    it('should not render an info popover next to the call number field', () => {
+      const { queryByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          barcode: '',
+          callNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          callNumberHoldings: '',
+          useSharedNumber: false,
+        }
+      });
+
+      expect(queryByRole('button', { name: 'info' })).not.toBeInTheDocument();
+      expect(queryByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
     });
   });
   describe('Render additional call numbers', () => {
