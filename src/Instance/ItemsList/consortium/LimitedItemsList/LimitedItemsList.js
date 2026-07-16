@@ -17,7 +17,7 @@ import ItemBarcode from '../../ItemBarcode';
 
 import { hasMemberTenantPermission } from '../../../../utils';
 import {
-  DEFAULT_ITEM_TABLE_SORTBY_FIELD,
+  BARCODE_ITEM_FIELD,
   ITEM_TABLE_PAGE_AMOUNT,
 } from '../../../../constants';
 
@@ -26,6 +26,7 @@ const LimitedItemsList = ({
   holding,
   tenantId,
   userTenantPermissions,
+  enabled,
 }) => {
   const intl = useIntl();
   const location = useLocation();
@@ -34,7 +35,7 @@ const LimitedItemsList = ({
   const [offset, setOffset] = useState(0);
   const [itemsSorting, setItemsSorting] = useState({
     isDesc: false,
-    column: DEFAULT_ITEM_TABLE_SORTBY_FIELD,
+    column: BARCODE_ITEM_FIELD,
   });
 
   const searchParams = {
@@ -48,7 +49,12 @@ const LimitedItemsList = ({
     items,
     totalRecords,
     isFetching,
-  } = useConsortiumItems(instance.id, holding.id, tenantId, { searchParams });
+  } = useConsortiumItems(
+    instance.id,
+    holding.id,
+    tenantId,
+    { enabled, searchParams },
+  );
 
   const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
     const amount = (direction === 'next') ? askAmount : -askAmount;
@@ -156,6 +162,7 @@ LimitedItemsList.propTypes = {
   holding: PropTypes.object.isRequired,
   tenantId: PropTypes.string.isRequired,
   userTenantPermissions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  enabled: PropTypes.bool,
 };
 
 export default LimitedItemsList;

@@ -47,7 +47,10 @@ const mockSetIsNewOrderModalOpen = jest.fn();
 
 const mockApplyOrderChanges = jest.fn();
 const mockResetOrderChanges = jest.fn();
+const mockApplyAllOrderChanges = jest.fn();
+const mockResetAllOrderChanges = jest.fn();
 const mockHasPendingChanges = false;
+const mockHasAnyPendingChanges = false;
 const mockFetchLinkedDataId = jest.fn();
 
 const instance = { id: 'inst1', title: 'Test Instance', identifiers: [] };
@@ -59,6 +62,9 @@ const mockOrderManagementContext = {
   applyOrderChanges: mockApplyOrderChanges,
   resetOrderChanges: mockResetOrderChanges,
   hasPendingChanges: mockHasPendingChanges,
+  applyAllOrderChanges: mockApplyAllOrderChanges,
+  resetAllOrderChanges: mockResetAllOrderChanges,
+  hasAnyPendingChanges: mockHasAnyPendingChanges,
 };
 
 describe('useInstanceActions', () => {
@@ -87,8 +93,11 @@ describe('useInstanceActions', () => {
 
     mockApplyOrderChanges.mockClear();
     mockResetOrderChanges.mockClear();
+    mockApplyAllOrderChanges.mockClear();
+    mockResetAllOrderChanges.mockClear();
     mockFetchLinkedDataId.mockClear();
     mockOrderManagementContext.hasPendingChanges = false;
+    mockOrderManagementContext.hasAnyPendingChanges = false;
   });
 
   it('handleCreate pushes correct route', () => {
@@ -141,8 +150,8 @@ describe('useInstanceActions', () => {
     });
 
     it('applies order changes when exiting movement mode with pending changes', async () => {
-      mockOrderManagementContext.hasPendingChanges = true;
-      mockApplyOrderChanges.mockResolvedValue(true);
+      mockOrderManagementContext.hasAnyPendingChanges = true;
+      mockApplyAllOrderChanges.mockResolvedValue(undefined);
 
       useInstanceModalsContext.mockReturnValue({
         isItemsMovement: true,
@@ -160,7 +169,7 @@ describe('useInstanceActions', () => {
         await result.current.handleItemsMovement();
       });
 
-      expect(mockApplyOrderChanges).toHaveBeenCalled();
+      expect(mockApplyAllOrderChanges).toHaveBeenCalled();
       expect(mockSetIsItemsMovement).toHaveBeenCalledWith(expect.any(Function));
     });
 
@@ -181,7 +190,7 @@ describe('useInstanceActions', () => {
         result.current.handleItemsMovement();
       });
 
-      expect(mockResetOrderChanges).toHaveBeenCalled();
+      expect(mockResetAllOrderChanges).toHaveBeenCalled();
       expect(mockSetIsItemsMovement).toHaveBeenCalledWith(expect.any(Function));
     });
   });

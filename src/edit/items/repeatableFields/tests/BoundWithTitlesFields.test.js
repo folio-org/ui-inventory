@@ -58,7 +58,7 @@ const initialValues = {
 const renderBoundWithTitlesFields = (props = {}) => {
   const component = (
     <BoundWithTitlesFields
-      item={{}}
+      item={{ id: 123 }}
       addBoundWithTitles={addBoundWithTitlesProp}
       {...props}
     />
@@ -144,7 +144,7 @@ describe('BoundWithTitlesFields', () => {
 
   describe("when item's holdingsRecordId is equal to added briefHoldingsRecord id", () => {
     it('trash icon for this field should be disabled', () => {
-      const { getByRole } = renderBoundWithTitlesFields({ item: { holdingsRecordId: 'holdingsId' } });
+      const { getByRole } = renderBoundWithTitlesFields({ item: { id: 123, holdingsRecordId: 'holdingsId' } });
 
       const deleteButton = getByRole('button', { name: /delete this item/i });
 
@@ -154,7 +154,7 @@ describe('BoundWithTitlesFields', () => {
 
   describe("when item's holdingsRecordId is not equal to added briefHoldingsRecord id", () => {
     it('trash icon for this field should be active', () => {
-      const { getByRole } = renderBoundWithTitlesFields({ item: { holdingsRecordId: 'holdingsId1' } });
+      const { getByRole } = renderBoundWithTitlesFields({ item: { id: 123, holdingsRecordId: 'holdingsId1' } });
 
       const deleteButton = getByRole('button', { name: /delete this item/i });
 

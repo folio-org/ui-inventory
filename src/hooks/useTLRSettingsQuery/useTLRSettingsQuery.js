@@ -8,10 +8,13 @@ import {
 const useTLRSettingsQuery = (tenant) => {
   const ky = useOkapiKy({ tenant });
   const [namespace] = useNamespace({ key: 'tlr-settings' });
+  const searchParams = {
+    query: '(name==TLR)',
+  };
 
   return useQuery(
     [namespace, tenant],
-    () => ky.get('configurations/entries?query=(module==SETTINGS and configName==TLR)').json(),
+    () => ky.get('circulation/settings', { searchParams }).json(),
   );
 };
 

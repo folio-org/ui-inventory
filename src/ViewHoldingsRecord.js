@@ -52,6 +52,7 @@ import {
   checkIfUserInCentralTenant,
   checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
+
 import {
   FindLocation,
   VersionHistoryButton,
@@ -101,6 +102,7 @@ class ViewHoldingsRecord extends React.Component {
       resourceShouldRefresh: false,
       accumulate: true,
       tenant: '!{tenantTo}',
+      throwErrors: false
     },
     items: {
       type: 'okapi',
@@ -117,6 +119,7 @@ class ViewHoldingsRecord extends React.Component {
       path: 'inventory/instances/:{id}',
       accumulate: true,
       tenant: '!{tenantTo}',
+      throwErrors: false
     },
     orderLine: {
       accumulate: true,
@@ -192,6 +195,14 @@ class ViewHoldingsRecord extends React.Component {
         }
 
         this.getMARCRecord();
+      })
+      .catch(error => {
+        const defaultErrorMessage = <FormattedMessage id="ui-inventory.communicationProblem" />;
+
+        this.context.sendCallout({
+          type: 'error',
+          message: error?.message || defaultErrorMessage,
+        });
       });
 
     if (checkIfUserInMemberTenant(stripes)) {
@@ -631,7 +642,7 @@ class ViewHoldingsRecord extends React.Component {
       return false;
     }
 
-    if (!holdingsRecords || holdingsRecords.isPending || !holdingsRecords.records.length) {
+    if (!holdingsRecords || holdingsRecords.isPending || !holdingsRecords.records) {
       return true;
     }
 
@@ -674,7 +685,8 @@ class ViewHoldingsRecord extends React.Component {
     const holdingsEffectiveLocation = referenceTables?.locationsById[holdingsRecord?.effectiveLocationId];
     const itemCount = get(items, 'records.length', 0);
     const holdingsSourceName = holdingsSource?.name;
-    const tagsEnabled = tagSettings?.records?.[0]?.items?.[0]?.value;
+    // Empty settings means tags are enabled by default
+    const tagsEnabled = !tagSettings?.records?.[0]?.items?.length || tagSettings?.records?.[0]?.items?.[0]?.value;
 
     const confirmHoldingsRecordDeleteModalMessage = (
       <FormattedMessage

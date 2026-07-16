@@ -105,7 +105,7 @@ const ViewSource = ({
     const pathname = `/inventory/quick-marc/edit-${isHoldingsRecord ? 'holdings' : 'bibliographic'}/${urlId}`;
 
     redirectToMarcEditPage(pathname, instance, location, history);
-  }, [isHoldingsRecord]);
+  }, [isHoldingsRecord, instance, location]);
 
   const { userPermissions: centralTenantPermissions } = useUserTenantPermissions({
     tenantId: centralTenantId,
@@ -125,7 +125,7 @@ const ViewSource = ({
     }
 
     return stripes.hasPerm('ui-quick-marc.quick-marc-editor.all');
-  }, [marcType, instance?.shared]);
+  }, [marcType, instance?.shared, flattenedPermissions]);
 
   const shortcuts = useMemo(() => [
     {
@@ -145,6 +145,10 @@ const ViewSource = ({
   ], [stripes, redirectToMARCEdit]);
 
   useEffect(() => {
+    if (isInstanceLoading) {
+      return;
+    }
+
     setIsMarcLoading(true);
 
     const { okapi: { tenant, token, locale } } = stripes;
@@ -168,7 +172,7 @@ const ViewSource = ({
       .finally(() => {
         setIsMarcLoading(false);
       });
-  }, []);
+  }, [isInstanceLoading]);
 
   const canExport = !isHoldingsRecord && stripes.hasInterface('data-export') && stripes.hasPerm('ui-data-export.edit');
 
@@ -218,13 +222,13 @@ const ViewSource = ({
         )}
       </>
     );
-  }, []);
+  }, [redirectToMARCEdit, triggerQuickExport, openPrintPopup, canEdit]);
 
   const { settings } = useAuditSettings({ tenantId, group: INVENTORY_AUDIT_GROUP, enabled: isBibRecord });
 
   const isVersionHistoryEnabled = getIsVersionHistoryEnabled(settings);
 
-  const showVersionHistoryButton = marcType === MARC_TYPES.BIB && isVersionHistoryEnabled;
+  const showVersionHistoryButton = marcType === MARC_TYPES.BIB && isVersionHistoryEnabled && stripes.hasInterface('audit-marc');
 
   const actionsDropdown = (
     <Dropdown

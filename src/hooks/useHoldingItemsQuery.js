@@ -16,7 +16,12 @@ import { useTenantKy } from '../common';
 
 const useHoldingItemsQuery = (
   holdingsRecordId,
-  options = { searchParams: {}, key: 'items', tenantId: null },
+  options = {
+    searchParams: {},
+    key: 'items',
+    tenantId: null,
+    enabled: true,
+  },
 ) => {
   const [sortBy, setSortBy] = useState(`${DEFAULT_ITEM_TABLE_SORTBY_FIELD}/sort.ascending`);
   const ky = useTenantKy({ tenantId: options.tenantId }).extend({ timeout: false });
@@ -58,7 +63,7 @@ const useHoldingItemsQuery = (
     ...omit(options.searchParams, ['sortBy']),
   };
 
-  const queryKey = [namespace, options.key, holdingsRecordId, searchParams.offset, sortBy];
+  const queryKey = [namespace, options.key, holdingsRecordId, searchParams];
   const queryFn = () => ky.get('inventory/items-by-holdings-id', { searchParams }).json();
   const { data, refetch, isLoading, isFetching } = useQuery({
     queryKey,

@@ -7,7 +7,7 @@ import {
 
 import '../../../test/jest/__mock__';
 
-import { fireEvent, screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+import { fireEvent, screen, waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
 import { StripesContext } from '@folio/stripes/core';
 
 import {
@@ -227,7 +227,7 @@ describe('ItemForm', () => {
   });
 
   describe('Render ItemsForm with number generator settings "useSharedNumber" true', () => {
-    it('should render renderSharedNumberGenerator', () => {
+    it('should render renderSharedNumberGenerator only once, next to the accession number field', () => {
       const { getAllByRole, queryByRole } = renderItemForm({
         numberGeneratorData: {
           accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
@@ -238,9 +238,45 @@ describe('ItemForm', () => {
         }
       });
 
-      expect(getAllByRole('button', { name: 'Generate accession and call numbers' })).toHaveLength(2);
+      expect(getAllByRole('button', { name: 'Generate accession and call numbers' })).toHaveLength(1);
       expect(queryByRole('button', { name: 'Generate accession number' })).not.toBeInTheDocument();
       expect(queryByRole('button', { name: 'Generate call number' })).not.toBeInTheDocument();
+    });
+
+    it('should render an info popover next to the call number field', () => {
+      const { getByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          barcode: '',
+          callNumber: NUMBER_GENERATOR_OPTIONS_OFF,
+          callNumberHoldings: '',
+          useSharedNumber: true,
+        }
+      });
+
+      const infoPopoverTrigger = getByRole('button', { name: 'info' });
+      expect(infoPopoverTrigger).toBeInTheDocument();
+
+      fireEvent.click(infoPopoverTrigger);
+
+      expect(screen.getByText('Number generators', { exact: false })).toBeInTheDocument();
+    });
+  });
+
+  describe('Render ItemsForm with number generator settings "useSharedNumber" false', () => {
+    it('should not render an info popover next to the call number field', () => {
+      const { queryByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          barcode: '',
+          callNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+          callNumberHoldings: '',
+          useSharedNumber: false,
+        }
+      });
+
+      expect(queryByRole('button', { name: 'info' })).not.toBeInTheDocument();
+      expect(queryByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
     });
   });
   describe('Render additional call numbers', () => {
@@ -258,7 +294,7 @@ describe('ItemForm', () => {
         ...mockReferenceTables,
         callNumberTypes: [{ id: '1', name: 'Library of Congress classification' }],
       };
-      const { getByText, getAllByText, queryByText } = renderItemForm({
+      const { getByText, getAllByText } = renderItemForm({
         initialValues,
         referenceTables,
       });
@@ -268,6 +304,26 @@ describe('ItemForm', () => {
       expect(getByText('suffix1')).toBeInTheDocument();
       expect(getByText('cn1')).toBeInTheDocument();
       expect(getAllByText('Library of Congress classification').length).toBe(2);
+    });
+
+    it('should render generate number button for additional call numbers and disable call number field', () => {
+      const { getByRole } = renderItemForm({
+        numberGeneratorData: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+          callNumberHoldings: '',
+          useSharedNumber: true,
+        }
+      });
+
+      fireEvent.click(getByRole('button', { name: 'Add additional call number' }));
+
+      const heading = getByRole('heading', { name: 'Additional item call numbers' });
+      const additionalCallnumberSection = within(heading.parentElement);
+
+      expect(additionalCallnumberSection.getByRole('button', { name: 'Generate call number' })).toBeInTheDocument();
+      expect(additionalCallnumberSection.getByRole('textbox', { name: 'Call number' })).toBeDisabled();
     });
   });
 
@@ -291,9 +347,9 @@ describe('ItemForm', () => {
           'itemLevelCallNumberTypeId': { value: '2' },
           'additionalCallNumbers': {
             value: [{
-              callNumber: 'cn1',
-              prefix: 'prefix1',
-              suffix: 'suffix1',
+              additionalCallNumber: 'cn1',
+              additionalCallNumberPrefix: 'prefix1',
+              additionalCallNumberSuffix: 'suffix1',
               typeId: '1'
             }]
           }

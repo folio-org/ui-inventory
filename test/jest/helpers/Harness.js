@@ -57,7 +57,7 @@ Harness.propTypes = {
   translations: PropTypes.arrayOf(
     PropTypes.shape({
       prefix: PropTypes.string,
-      translations: PropTypes.object,
+      translations: PropTypes.objectOf(PropTypes.string),
     })
   ),
 };

@@ -18,7 +18,6 @@ import PropTypes from 'prop-types';
 
 import {
   checkIfUserInMemberTenant,
-  getUserTenantsPermissions,
   stripesConnect,
   useCallout,
   useStripes,
@@ -62,7 +61,6 @@ import {
   isInstanceShadowCopy,
   isLinkedDataSource,
   isMARCSource,
-  isUserInConsortiumMode,
 } from '../../utils';
 import {
   CONSORTIUM_PREFIX,
@@ -73,13 +71,9 @@ import {
   TAGS_SCOPE,
 } from '../../constants';
 
-const getTlrSettings = (settings) => {
-  try {
-    return JSON.parse(settings);
-  } catch {
-    return {};
-  }
-};
+export const getTlrSettings = (settings) => (
+  settings?.circulationSettings?.[0]?.value || {}
+);
 
 const ViewInstanceComponent = (props) => {
   const { canUseSingleRecordImport, onCopy, focusTitleOnInstanceLoad } = props;
@@ -90,6 +84,7 @@ const ViewInstanceComponent = (props) => {
   const history = useHistory();
   const location = useLocation();
   const paneTitleRef = useRef(null);
+  const closeButtonRef = useRef(null);
   const accordionStatusRef = useRef();
 
   const centralTenantId = stripes.user.user?.consortium?.centralTenantId;
@@ -108,7 +103,6 @@ const ViewInstanceComponent = (props) => {
   const [canBeOpenedInLinkedData, setCanBeOpenedInLinkedData] = useState(false);
   const [isMARCSourceRecord, setIsMARCSourceRecord] = useState(false);
   const [isLinkedDataSourceRecord, setIsLinkedDataSourceRecord] = useState(false);
-  const [userTenantPermissions, setUserTenantPermissions] = useState([]);
   const [titleLevelRequestsFeatureEnabled, setTitleLevelRequestsFeatureEnabled] = useState(false);
 
   useEffect(() => {
@@ -153,7 +147,7 @@ const ViewInstanceComponent = (props) => {
 
   useEffect(() => {
     if (!isTLRSettingsLoading) {
-      const { titleLevelRequestsFeatureEnabled: tlrEnabled } = getTlrSettings(tlrSettings?.configs[0]?.value);
+      const { titleLevelRequestsFeatureEnabled: tlrEnabled } = getTlrSettings(tlrSettings);
 
       setTitleLevelRequestsFeatureEnabled(Boolean(tlrEnabled));
 
@@ -164,18 +158,14 @@ const ViewInstanceComponent = (props) => {
   }, [isTLRSettingsLoading, tlrSettings]);
 
   useEffect(() => {
-    if (isUserInConsortiumMode(stripes)) {
-      const { user: { user: { tenants } } } = stripes;
-
-      getUserTenantsPermissions(stripes, tenants).then(perms => setUserTenantPermissions(perms));
+    if (!isLoading && instance?.id && !isCentralTenantPermissionsLoading) {
+      if (location.state?.isClosingFocused) {
+        closeButtonRef.current?.focus();
+      } else if (focusTitleOnInstanceLoad) {
+        paneTitleRef.current?.focus();
+      }
     }
-  }, [stripes.user?.user?.tenants]);
-
-  useEffect(() => {
-    if (!isLoading && instance?.id && focusTitleOnInstanceLoad && !isCentralTenantPermissionsLoading) {
-      paneTitleRef.current?.focus();
-    }
-  }, [isLoading, instance, focusTitleOnInstanceLoad, isCentralTenantPermissionsLoading]);
+  }, [isLoading, instance, focusTitleOnInstanceLoad, isCentralTenantPermissionsLoading, location.state?.isClosingFocused]);
 
   const {
     isItemsMovement,
@@ -357,7 +347,7 @@ const ViewInstanceComponent = (props) => {
         isInstanceSharing={isInstanceSharing}
         holdingsSection={holdingsSection}
         paneTitleRef={paneTitleRef}
-        userTenantPermissions={userTenantPermissions}
+        closeButtonRef={closeButtonRef}
         accordionStatusRef={accordionStatusRef}
         isRecordImporting={isImporting}
       />

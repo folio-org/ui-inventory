@@ -7,9 +7,11 @@ import {
 import {
   useNamespace,
   useOkapiKy,
+  useStripes,
 } from '@folio/stripes/core';
 
 export const useAuditSettings = ({ tenantId, group, enabled = true } = {}) => {
+  const stripes = useStripes();
   const ky = useOkapiKy({ tenant: tenantId });
   const [namespace] = useNamespace({ key: 'audit-settings' });
 
@@ -19,7 +21,7 @@ export const useAuditSettings = ({ tenantId, group, enabled = true } = {}) => {
     [namespace, group, tenantId],
     () => ky.get(path).json(),
     {
-      enabled,
+      enabled: enabled && stripes.hasInterface('audit-config'),
     },
   );
 

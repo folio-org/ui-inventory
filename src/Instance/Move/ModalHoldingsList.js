@@ -141,7 +141,7 @@ const ModalHoldingsList = ({
   instanceId,
 }) => {
   const stripes = useStripes();
-  const tenantId = stripes.okapi.tenantId;
+  const tenantId = stripes.okapi.tenant;
 
   const renderHoldings = (holding) => {
     return (
@@ -161,7 +161,11 @@ const ModalHoldingsList = ({
     );
   };
 
-  return holdings.map((holding) => renderHoldings(holding));
+  return holdings.filter(holding => holding?.id).map((holding) => (
+    <div key={holding.id}>
+      {renderHoldings(holding)}
+    </div>
+  ));
 };
 
 ModalHoldingsList.propTypes = {

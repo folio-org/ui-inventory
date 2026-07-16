@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useRef } from 'react';
 import {
   FormattedMessage,
   useIntl,
@@ -18,7 +19,7 @@ import { useLocationsQuery } from '@folio/stripes-inventory-components';
 import { HoldingButtonsGroup } from './HoldingButtonsGroup';
 import HoldingAccordionLabel from './HoldingAccordionLabel';
 
-import { useHoldingItemsQuery } from '../../../hooks';
+import { useHoldingItemsQuery, useHoldingsFromStorage } from '../../../hooks';
 
 const CustomAccordionHeader = ({
   withMoveHoldingCheckbox = false,
@@ -82,6 +83,7 @@ const HoldingAccordion = ({
   onViewHolding,
   onAddItem,
   tenantId,
+  instanceId,
   isHoldingSelected,
   onSelectHolding,
   showViewHoldingsButton,
@@ -93,13 +95,26 @@ const HoldingAccordion = ({
   dragHandleListeners,
   ref,
 }) => {
+  const hasBeenOpenedRef = useRef(false);
   const searchParams = {
     limit: 0,
     offset: 0,
   };
 
+  const [accordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
   const pathToAccordion = [...pathToAccordionsState, holding?.id];
-  const { totalRecords, isFetching } = useHoldingItemsQuery(holding?.id, { searchParams, key: 'itemCount', tenantId });
+  const memberTenantAccId = `${tenantId}.${instanceId}`;
+  const isMemberAccOpen = accordionStatus[memberTenantAccId];
+
+  const { totalRecords, isFetching } = useHoldingItemsQuery(
+    holding?.id,
+    {
+      searchParams,
+      key: 'itemCount',
+      tenantId,
+      enabled: isMemberAccOpen,
+    },
+  );
   const { locations } = useLocationsQuery({ tenantId });
 
   if (!locations) return null;
@@ -163,15 +178,24 @@ const HoldingAccordion = ({
       displayWhenClosed={holdingButtonsGroup(false)}
       closedByDefault
     >
-      {open => (
-        open && (
+      {open => {
+        if (open) {
+          hasBeenOpenedRef.current = true;
+        }
+
+        if (!hasBeenOpenedRef.current) return null;
+
+        return (
           <Row>
-            <Col sm={12}>
+            <Col
+              sm={12}
+              style={{ display: open ? 'block' : 'none' }}
+            >
               {children}
             </Col>
           </Row>
-        )
-      )}
+        );
+      }}
     </Accordion>
   );
 };
@@ -183,6 +207,7 @@ HoldingAccordion.propTypes = {
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
   tenantId: PropTypes.string,
+  instanceId: PropTypes.string,
   isHoldingSelected: PropTypes.bool,
   onSelectHolding: PropTypes.func,
   showViewHoldingsButton: PropTypes.bool,

@@ -50,7 +50,9 @@ describe('useSetRecordForDeletion', () => {
     await act(async () => {
       try {
         await result.current.setRecordForDeletion('instance-123');
-      } catch (e) {}
+      } catch (e) {
+        console.error('Error in setRecordForDeletion:', e); // eslint-disable-line no-console
+      }
     });
 
     expect(mockDelete).toHaveBeenCalledWith('inventory/instances/instance-123/mark-deleted');

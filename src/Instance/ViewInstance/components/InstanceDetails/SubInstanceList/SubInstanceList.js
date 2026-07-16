@@ -29,6 +29,7 @@ const SubInstanceList = ({
   id,
   titleKey,
   label,
+  isInstanceShared,
 }) => {
   const {
     ISSN,
@@ -41,7 +42,7 @@ const SubInstanceList = ({
   const [slicedItems, setSlicedItems] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [data, setData] = useState([]);
-  const paginatedTitles = useLoadSubInstances(slicedItems, titleKey);
+  const paginatedTitles = useLoadSubInstances(slicedItems, titleKey, isInstanceShared);
 
   useEffect(() => {
     const sparseData = new Array(currentIndex);

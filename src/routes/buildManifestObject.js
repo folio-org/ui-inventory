@@ -67,6 +67,7 @@ export function buildManifestObject() {
       path: 'search/instances',
       accumulate: true,
       fetch: false,
+      throwErrors: false,
     },
   };
 }

@@ -122,8 +122,8 @@ describe('InstanceActionMenu', () => {
   it('renders Linked Data menu section if showLinkedDataMenuSection is true', () => {
     renderInstanceActionMenu();
 
-    expect(screen.getByText('Linked data editor')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /edit resource in linked data editor/i })).toBeInTheDocument();
+    expect(screen.getByText('Marigold')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /edit resource in marigold/i })).toBeInTheDocument();
   });
 
   it('calls onToggle and handleEdit when Edit Instance is clicked', () => {

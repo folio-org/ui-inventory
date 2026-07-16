@@ -1,4 +1,4 @@
-﻿import {
+import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
