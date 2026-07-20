@@ -25,6 +25,7 @@ import {
   ACCESSION_NUMBER_SETTING,
   BARCODE_SETTING,
   CALL_NUMBER_SETTING,
+  IDENTIFIER_SETTING,
   NUMBER_GENERATOR_OPTIONS,
   NUMBER_GENERATOR_OPTIONS_OFF,
   USE_SHARED_NUMBER,
@@ -123,6 +124,23 @@ const NumberGeneratorSettingsForm = ({
           <AccordionSet>
             <Accordion
               id="acc01"
+              label={<FormattedMessage id="ui-inventory.instances" />}
+            >
+              <Row className={css.marginBottomGutter}>
+                <Col xs={6}>
+                  <Field
+                    component={Select}
+                    dataOptions={dataOptionsAllEnabled}
+                    defaultValue={NUMBER_GENERATOR_OPTIONS_OFF}
+                    id={IDENTIFIER_SETTING}
+                    label={<FormattedMessage id="ui-inventory.numberGenerator.identifier" />}
+                    name={IDENTIFIER_SETTING}
+                  />
+                </Col>
+              </Row>
+            </Accordion>
+            <Accordion
+              id="acc02"
               label={<FormattedMessage id="ui-inventory.holdings" />}
             >
               <Row className={css.marginBottomGutter}>
@@ -139,7 +157,7 @@ const NumberGeneratorSettingsForm = ({
               </Row>
             </Accordion>
             <Accordion
-              id="acc02"
+              id="acc03"
               label={<FormattedMessage id="ui-inventory.items" />}
             >
               <Row className={css.marginBottomGutter}>
