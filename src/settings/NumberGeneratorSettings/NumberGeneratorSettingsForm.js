@@ -123,7 +123,7 @@ const NumberGeneratorSettingsForm = ({
           </Row>
           <AccordionSet>
             <Accordion
-              id="acc01"
+              id="accordion-instances"
               label={<FormattedMessage id="ui-inventory.instances" />}
             >
               <Row className={css.marginBottomGutter}>
@@ -140,7 +140,7 @@ const NumberGeneratorSettingsForm = ({
               </Row>
             </Accordion>
             <Accordion
-              id="acc02"
+              id="accordion-holdings"
               label={<FormattedMessage id="ui-inventory.holdings" />}
             >
               <Row className={css.marginBottomGutter}>
@@ -157,7 +157,7 @@ const NumberGeneratorSettingsForm = ({
               </Row>
             </Accordion>
             <Accordion
-              id="acc03"
+              id="accordion-items"
               label={<FormattedMessage id="ui-inventory.items" />}
             >
               <Row className={css.marginBottomGutter}>
