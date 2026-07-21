@@ -263,6 +263,12 @@ const InventorySettings = (props) => {
             perm: addPerm('ui-inventory.settings.hrid-handling'),
           },
           {
+            component: NumberGeneratorSettings,
+            label: <FormattedMessage id="ui-inventory.numberGenerator.options" />,
+            route: 'numberGeneratorOptions',
+            perm: 'ui-inventory.settings.number-generator-options.manage',
+          },
+          {
             route: 'statisticalCodeTypes',
             label: <FormattedMessage id="ui-inventory.statisticalCodeTypes" />,
             component: StatisticalCodeTypes,
@@ -296,12 +302,6 @@ const InventorySettings = (props) => {
             label: <FormattedMessage id="ui-inventory.callNumberTypes" />,
             component: CallNumberTypes,
             perm: addPerm('ui-inventory.settings.call-number-types'),
-          },
-          {
-            component: NumberGeneratorSettings,
-            label: <FormattedMessage id="ui-inventory.numberGenerator.options" />,
-            route: 'numberGeneratorOptions',
-            perm: 'ui-inventory.settings.number-generator-options.manage',
           },
         ]
       },
