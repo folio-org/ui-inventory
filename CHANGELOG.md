@@ -8,6 +8,7 @@
 * Place "Manage number generator options" capability checkbox in the `manage` column instead of `view`. Fixes UIIN-3665.
 * Remove button "Generate accession and call numbers" at call number field and add an info popover instead. Refs UIIN-3680.
 * Add number generator settings for Instance Identifier. Refs UIIN-3678.
+* Move menu item "Number generator options" to Section Settings > Inventory > Instances, Holdings, Items. Refs UIIN-3677.
 
 ## [14.0.3](https://github.com/folio-org/ui-inventory/tree/v14.0.3) (2026-05-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.2...v14.0.3)
