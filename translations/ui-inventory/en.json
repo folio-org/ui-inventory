@@ -388,6 +388,7 @@
   "numberGenerator.generateAccessionAndCallNumberWarning": "Both accession number and call number will be filled from this action, using a sequence from the Inventory: Accession number generator.",
   "numberGenerator.generateBarcode": "Generate barcode",
   "numberGenerator.generateCallNumber": "Generate call number",
+  "numberGenerator.generateIdentifier": "Generate identifier",
   "numberGenerator.info": "Fields which are usually filled using a numeric sequence can use the number generator. When the generator is switched on the field can either be fixed to prevent manual update, or made fully editable. When switched off, the field must be filled manually.",
   "numberGenerator.infoAdditional": "Additional number generator settings are available under {serviceInteractionLink}. At {numberGeneratorSequencesLink} sequences can be defined by selecting the appropriate generator via the drop-down menu.",
   "numberGenerator.options": "Number generator options",

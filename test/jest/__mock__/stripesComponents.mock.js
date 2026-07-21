@@ -1,5 +1,7 @@
 import React from 'react';
 
+const mockForwardRef = React.forwardRef;
+
 jest.mock('@folio/stripes/components', () => ({
   ...jest.requireActual('@folio/stripes/components'),
   collapseAllSections: jest.fn(),
@@ -41,9 +43,10 @@ jest.mock('@folio/stripes/components', () => ({
   Loading: () => <div>Loading</div>,
   LoadingPane: () => <div>LoadingPane</div>,
   LoadingView: jest.fn(() => <div>LoadingView</div>),
-  Modal: jest.fn(({ children, open, label, footer, ...rest }) => {
+  Modal: mockForwardRef(({ children, open, label, footer, ...rest }, ref) => {
     return open && (
       <div
+        ref={ref}
         {...rest}
       >
         <h1>{label}</h1>
