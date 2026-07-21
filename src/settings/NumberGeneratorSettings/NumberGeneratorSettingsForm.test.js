@@ -36,9 +36,15 @@ describe('Rendering NumberGeneratorSettingsForm', () => {
     expect(screen.getByText('ui-service-interaction.settings.numberGeneratorSequences', { exact: false })).toBeInTheDocument();
   });
 
-  it('should show accordions for "holdings" and "items"', () => {
+  it('should show accordions for "instances", "holdings" and "items"', () => {
+    expect(screen.getByRole('region', { name: 'Instances' })).toBeInTheDocument();
     expect(screen.getByRole('region', { name: 'Holdings' })).toBeInTheDocument();
     expect(screen.getByRole('region', { name: 'Items' })).toBeInTheDocument();
+  });
+
+  it('should show all input form fields in "instances" accordion', () => {
+    const instancesAccordion = screen.getByRole('region', { name: 'Instances' });
+    expect(within(instancesAccordion).getByRole('combobox', { name: 'Identifier' })).toBeInTheDocument();
   });
 
   it('should show all input form fields in "holdings" accordion', () => {
