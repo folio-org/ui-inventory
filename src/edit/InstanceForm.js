@@ -76,6 +76,8 @@ import {
   validateDates,
 } from '../validation';
 
+import { useNumberGeneratorOptions } from '../common/hooks';
+
 import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields';
 import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
 import { getPublishingInfo } from '../Instance/ViewInstance/utils';
@@ -211,6 +213,7 @@ class InstanceForm extends React.Component {
     id: PropTypes.string,
     httpError: PropTypes.object,
     form: PropTypes.object.isRequired,
+    numberGeneratorData: PropTypes.object,
   };
 
   static defaultProps = {
@@ -397,6 +400,7 @@ class InstanceForm extends React.Component {
       history,
       httpError,
       id,
+      numberGeneratorData,
     } = this.props;
 
     const refLookup = (referenceTable, recordId) => {
@@ -752,6 +756,7 @@ class InstanceForm extends React.Component {
                             canAdd={!this.isFieldBlocked('identifiers')}
                             canEdit={!this.isFieldBlocked('identifiers')}
                             canDelete={!this.isFieldBlocked('identifiers')}
+                            numberGeneratorData={numberGeneratorData}
                           />
                         </Accordion>
                         <Accordion
@@ -939,7 +944,20 @@ class InstanceForm extends React.Component {
   }
 }
 
-export default withRouter(stripesFinalForm({
+const ConnectedInstanceForm = withRouter(stripesFinalForm({
   validate,
   navigationCheck: true,
 })(stripesConnect(InstanceForm)));
+
+const InstanceFormContainer = (props) => {
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
+
+  return (
+    <ConnectedInstanceForm
+      {...props}
+      numberGeneratorData={numberGeneratorData}
+    />
+  );
+};
+
+export default InstanceFormContainer;

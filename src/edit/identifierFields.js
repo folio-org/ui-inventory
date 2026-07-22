@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'react-final-form-arrays';
-import { Field } from 'react-final-form';
+import {
+  Field,
+  useForm,
+} from 'react-final-form';
 import {
   FormattedMessage,
   useIntl,
 } from 'react-intl';
 
+
+import { NumberGeneratorModalButton } from '@folio/service-interaction';
 import {
   Row,
   Col,
@@ -16,13 +21,21 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
+import {
+  IDENTIFIER_SETTING,
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+} from '../settings/NumberGeneratorSettings/constants';
+
 const IdentifierFields = ({
   identifierTypes = [],
   canAdd = true,
   canEdit = true,
   canDelete = true,
+  numberGeneratorData,
 }) => {
   const { formatMessage } = useIntl();
+  const { change } = useForm();
 
   const identifierTypeOptions = identifierTypes.map(it => ({
     label: it.name,
@@ -31,6 +44,9 @@ const IdentifierFields = ({
 
   const typeLabel = formatMessage({ id: 'ui-inventory.type' });
   const identifierLabel = formatMessage({ id: 'ui-inventory.identifier' });
+  const isIdentifierDisabled = numberGeneratorData?.[IDENTIFIER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE;
+  const showNumberGeneratorForIdentifier = isIdentifierDisabled ||
+      numberGeneratorData?.[IDENTIFIER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
 
   const headLabels = (
     <Row>
@@ -47,7 +63,7 @@ const IdentifierFields = ({
     </Row>
   );
 
-  const renderField = field => (
+  const renderField = (field, index) => (
     <Row>
       <Col sm={6}>
         <Field
@@ -65,9 +81,21 @@ const IdentifierFields = ({
           ariaLabel={identifierLabel}
           name={`${field}.value`}
           component={TextField}
-          disabled={!canEdit}
+          disabled={!canEdit || isIdentifierDisabled}
           required
         />
+        {showNumberGeneratorForIdentifier &&
+          <NumberGeneratorModalButton
+            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateIdentifier" />}
+            callback={(generated) => change(`${field}.value`, generated)}
+            id={`number_generator_identifier_${index}`}
+            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateIdentifier" />}
+            generator="inventory_instanceIdentifier"
+            modalProps={{
+              label: <FormattedMessage id="ui-inventory.numberGenerator.generateIdentifier" />
+            }}
+          />
+        }
       </Col>
     </Row>
   );
@@ -92,6 +120,7 @@ IdentifierFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
+  numberGeneratorData: PropTypes.object,
 };
 
 export default IdentifierFields;
