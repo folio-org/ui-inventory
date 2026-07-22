@@ -47,11 +47,11 @@ const InstanceAdministrativeView = ({
 
   const instanceStatus = useMemo(() => {
     return instanceStatuses.find(status => status.id === instance.statusId) || {};
-  }, [instance, instanceStatuses]);
+  }, [instance.statusId, instanceStatuses]);
 
   const issuanceMode = useMemo(() => {
     return issuanceModes.find(mode => mode.id === instance.modeOfIssuanceId) || {};
-  }, [instance, issuanceModes]);
+  }, [instance.modeOfIssuanceId, issuanceModes]);
 
   const formattedStatisticalCodes = useMemo(() => {
     const statisticalCodeTypesMap = statisticalCodeTypes.reduce((acc, type) => {
@@ -70,7 +70,7 @@ const InstanceAdministrativeView = ({
     }, {});
 
     return (instance.statisticalCodeIds || []).map(codeId => statisticalCodesMap[codeId]);
-  }, [instance, statisticalCodeTypes, statisticalCodes]);
+  }, [instance.statisticalCodeIds, statisticalCodeTypes, statisticalCodes]);
 
   const getSourceValue = (source) => {
     if (!source || source === '-') {
