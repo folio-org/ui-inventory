@@ -23,7 +23,7 @@ const props = {
   identifierTypes: [{ name: 'identifyName', id: '129459' }]
 };
 
-const Form = ({ handleSubmit, identifierFieldsProps }) => (
+const Form = ({ handleSubmit, identifierFieldsProps = {} }) => (
   <form onSubmit={handleSubmit}>
     <IdentifierFields {...props} {...identifierFieldsProps} />
   </form>
@@ -32,10 +32,6 @@ const Form = ({ handleSubmit, identifierFieldsProps }) => (
 Form.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   identifierFieldsProps: PropTypes.object,
-};
-
-Form.defaultProps = {
-  identifierFieldsProps: {},
 };
 
 const WrappedForm = stripesFinalForm({

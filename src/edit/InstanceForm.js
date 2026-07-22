@@ -954,8 +954,8 @@ const InstanceFormContainer = (props) => {
 
   return (
     <ConnectedInstanceForm
-      numberGeneratorData={numberGeneratorData}
       {...props}
+      numberGeneratorData={numberGeneratorData}
     />
   );
 };
