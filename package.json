@@ -792,6 +792,56 @@
         "visible": true
       },
       {
+        "permissionName": "mod-settings.global.read.ui-inventory.custom-fields.manage",
+        "displayName": "Settings (Inventory): Read the settings in the 'custom fields' section",
+        "visible": false
+      },
+      {
+        "permissionName": "mod-settings.global.write.ui-inventory.custom-fields.manage",
+        "displayName": "Settings (Inventory): Write the settings in the 'custom fields' section",
+        "visible": false
+      },
+      {
+        "permissionName": "ui-inventory.settings.custom-fields.view",
+        "displayName": "Settings (Inventory): Can view custom fields",
+        "description": "",
+        "visible": true,
+        "subPermissions": [
+          "settings.inventory.enabled",
+          "mod-settings.global.read.ui-inventory.custom-fields.manage",
+          "inventory-storage.custom-fields.collection.get",
+          "inventory-storage.custom-fields.item.get",
+          "inventory-storage.custom-fields.item.stats.get",
+          "inventory-storage.custom-fields.item.option.stats.get",
+          "inventory-storage.settings.collection.get"
+        ]
+      },
+      {
+        "permissionName": "ui-inventory.settings.custom-fields.edit",
+        "displayName": "Settings (Inventory): Can create, edit, view custom fields",
+        "description": "",
+        "visible": true,
+        "subPermissions": [
+          "ui-inventory.settings.custom-fields.view",
+          "mod-settings.global.write.ui-inventory.custom-fields.manage",
+          "mod-settings.entries.item.post",
+          "mod-settings.entries.item.put",
+          "inventory-storage.custom-fields.collection.put",
+          "inventory-storage.custom-fields.item.post",
+          "inventory-storage.custom-fields.item.put"
+        ]
+      },
+      {
+        "permissionName": "ui-inventory.settings.custom-fields.delete",
+        "displayName": "Settings (Inventory): Can create, edit, view and delete custom fields",
+        "description": "",
+        "visible": true,
+        "subPermissions": [
+          "ui-inventory.settings.custom-fields.edit",
+          "inventory-storage.custom-fields.item.delete"
+        ]
+      },
+      {
         "permissionName": "ui-inventory.item.move",
         "displayName": "Inventory: Move items",
         "subPermissions": [
@@ -931,7 +981,8 @@
           "inventory-storage.item-note-types.collection.get",
           "inventory-storage.item-note-types.item.get",
           "inventory-storage.hrid-settings.item.get",
-          "configuration.entries.collection.get"
+          "configuration.entries.collection.get",
+          "ui-inventory.custom-fields.view"
         ],
         "visible": true
       },
@@ -1052,7 +1103,10 @@
           "audit.config.groups.settings.audit.inventory.collection.get",
           "audit.config.groups.settings.collection.get",
           "audit.config.groups.settings.item.put",
-          "audit.config.groups.settings.audit.inventory.records.page.size.item.put"
+          "audit.config.groups.settings.audit.inventory.records.page.size.item.put",
+          "ui-inventory.custom-fields.view",
+          "ui-inventory.custom-fields.edit",
+          "ui-inventory.custom-fields.delete"
         ],
         "visible": true
       }

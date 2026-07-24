@@ -754,6 +754,8 @@
   "quickMarcNotAvailable": "No plugin available!",
   "print": "Print",
 
+  "settings.customFields": "Custom fields",
+
   "settings.instanceClassification.all": "Classification (all)",
   "settings.instanceClassification.dewey": "Dewey Decimal classification",
   "settings.instanceClassification.lc": "Library of Congress classification",
@@ -779,6 +781,10 @@
   "permission.settings.call-number-browse": "Settings (Inventory): Configure call number browse",
   "permission.settings.classification-browse": "Settings (Inventory): Configure classification browse",
   "permission.settings.classification-types": "Settings (Inventory): Create, edit, delete classification identifier types",
+  "permission.settings.custom-fields.view": "Settings (Inventory): View custom fields",
+  "permission.settings.custom-fields.edit": "Settings (Inventory): Edit custom fields",
+  "permission.settings.custom-fields.delete": "Settings (Inventory): Delete custom fields",
+  "permission.settings.custom-fields.item'": "Settings (Inventory): View custom fields for items",
   "permission.settings.identifier-types": "Settings (Inventory): Create, edit, delete resource identifier types",
   "permission.settings.subject-sources": "Settings (Inventory): Create, edit, delete subject sources",
   "permission.settings.subject-types": "Settings (Inventory): Create, edit, delete subject types",
