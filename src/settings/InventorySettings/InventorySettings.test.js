@@ -115,6 +115,25 @@ describe('InventorySettings', () => {
 
       expect(Settings).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
     });
+
+    it('should display "Custom fields" settings for items', () => {
+      renderInventorySettings();
+
+      const expectedProps = {
+        sections: expect.arrayContaining([
+          expect.objectContaining({
+            pages: expect.arrayContaining([
+              expect.objectContaining({
+                route: 'itemCustomFields',
+                perm: 'ui-inventory.settings.custom-fields.view',
+              }),
+            ]),
+          }),
+        ]),
+      };
+
+      expect(Settings).toHaveBeenCalledWith(expect.objectContaining(expectedProps), {});
+    });
   });
 
   describe('when version history is disabled', () => {

@@ -9,6 +9,7 @@ import {
   useStripes,
 } from '@folio/stripes/core';
 import {
+  EditCustomFieldsSettings,
   ViewCustomFieldsSettings,
 } from '@folio/stripes/smart-components';
 
@@ -34,11 +35,23 @@ const CustomFieldsSettings = () => {
   return (
     <Switch>
       <Route exact path={baseItem}>
-        <TitleManager record={intl.formatMessage({ id: 'ui-inventory.settings.customFields.el' })}>
+        <TitleManager record={intl.formatMessage({ id: 'ui-inventory.settings.customFields' })}>
           <ViewCustomFieldsSettings
             backendModuleName={CUSTOM_FIELDS_INVENTORY_BACKEND_NAME}
             entityType={ENTITY_TYPE_ITEM_INVENTORY}
             editRoute={`${baseItem}/edit`}
+            permissions={permissions}
+            scope={SCOPE_CUSTOM_FIELDS_MANAGE}
+            configNamePrefix={ITEM_CONFIG_NAME_PREFIX}
+          />
+        </TitleManager>
+      </Route>
+      <Route exact path={`${baseItem}/edit`}>
+        <TitleManager record={intl.formatMessage({ id: 'ui-inventory.settings.customFields' })}>
+          <EditCustomFieldsSettings
+            backendModuleName={CUSTOM_FIELDS_INVENTORY_BACKEND_NAME}
+            entityType={ENTITY_TYPE_ITEM_INVENTORY}
+            viewRoute={baseItem}
             permissions={permissions}
             scope={SCOPE_CUSTOM_FIELDS_MANAGE}
             configNamePrefix={ITEM_CONFIG_NAME_PREFIX}
