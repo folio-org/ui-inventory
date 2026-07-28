@@ -90,6 +90,7 @@ const ItemVersionHistory = ({
   item,
   onClose,
   tenantId,
+  isInstanceShared,
 }) => {
   const { formatMessage } = useIntl();
   const referenceData = useContext(DataContext);
@@ -106,7 +107,7 @@ const ItemVersionHistory = ({
   const {
     actionsMap,
     versions,
-  } = useInventoryVersionHistory(data);
+  } = useInventoryVersionHistory(data, isInstanceShared);
   const { servicePoints } = useItemServicePointsQuery(item.lastCheckIn?.servicePointId);
   const { staffMembers } = useStaffMembersQuery(item.lastCheckIn?.staffMemberId);
 
@@ -202,6 +203,7 @@ ItemVersionHistory.propTypes = {
   item: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   tenantId: PropTypes.string,
+  isInstanceShared: PropTypes.bool,
 };
 
 export default ItemVersionHistory;

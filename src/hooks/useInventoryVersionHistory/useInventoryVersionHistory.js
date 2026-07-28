@@ -52,16 +52,18 @@ export const versionsFormatter = (usersMap, intl, canViewUser) => (diffArray) =>
     }));
 };
 
-const useInventoryVersionHistory = (data) => {
+const useInventoryVersionHistory = (data, isInstanceShared) => {
   const stripes = useStripes();
   const intl = useIntl();
 
   const [usersId, setUsersId] = useState([]);
   const [usersMap, setUsersMap] = useState({});
 
-  const centralTenantId = stripes.user.user.consortium?.centralTenantId;
+  const tenantId = isInstanceShared
+    ? stripes.user.user.consortium?.centralTenantId
+    : stripes.okapi.tenant;
 
-  const { users } = useUsersBatch(usersId, { tenantId: centralTenantId });
+  const { users } = useUsersBatch(usersId, { tenantId });
 
   const canViewUser = stripes.hasPerm('users.item.get');
 

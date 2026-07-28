@@ -56,7 +56,11 @@ export const getItemFormatter = (fieldLabelsMap, fieldFormatter) => (element, i)
   );
 };
 
-const HoldingVersionHistory = ({ onClose, holdingId }) => {
+const HoldingVersionHistory = ({
+  onClose,
+  holdingId,
+  isInstanceShared,
+}) => {
   const { formatMessage } = useIntl();
   const referenceData = useContext(DataContext);
 
@@ -72,7 +76,7 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
   const {
     actionsMap,
     versions,
-  } = useInventoryVersionHistory(data);
+  } = useInventoryVersionHistory(data, isInstanceShared);
 
   const [totalVersions] = useTotalVersions(totalRecords);
 
@@ -157,6 +161,7 @@ const HoldingVersionHistory = ({ onClose, holdingId }) => {
 HoldingVersionHistory.propTypes = {
   holdingId: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
+  isInstanceShared: PropTypes.bool,
 };
 
 export default HoldingVersionHistory;

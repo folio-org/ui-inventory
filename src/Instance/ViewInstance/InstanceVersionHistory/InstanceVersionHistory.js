@@ -49,6 +49,7 @@ const InstanceVersionHistory = ({
   onClose,
   tenantId,
   isSharedFromLocalRecord,
+  isInstanceShared,
 }) => {
   const intl = useIntl();
   const { formatMessage } = intl;
@@ -67,7 +68,7 @@ const InstanceVersionHistory = ({
   const {
     actionsMap,
     versions,
-  } = useInventoryVersionHistory(data);
+  } = useInventoryVersionHistory(data, isInstanceShared);
 
   const [totalVersions] = useTotalVersions(totalRecords);
 
@@ -136,6 +137,7 @@ InstanceVersionHistory.propTypes = {
   onClose: PropTypes.func,
   tenantId: PropTypes.string,
   isSharedFromLocalRecord: PropTypes.bool,
+  isInstanceShared: PropTypes.bool,
 };
 
 export default InstanceVersionHistory;
