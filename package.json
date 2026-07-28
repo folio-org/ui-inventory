@@ -982,7 +982,7 @@
           "inventory-storage.item-note-types.item.get",
           "inventory-storage.hrid-settings.item.get",
           "configuration.entries.collection.get",
-          "ui-inventory.custom-fields.view"
+          "ui-inventory.settings.custom-fields.view"
         ],
         "visible": true
       },
@@ -1104,9 +1104,9 @@
           "audit.config.groups.settings.collection.get",
           "audit.config.groups.settings.item.put",
           "audit.config.groups.settings.audit.inventory.records.page.size.item.put",
-          "ui-inventory.custom-fields.view",
-          "ui-inventory.custom-fields.edit",
-          "ui-inventory.custom-fields.delete"
+          "ui-inventory.settings.custom-fields.view",
+          "ui-inventory.settings.custom-fields.edit",
+          "ui-inventory.settings.custom-fields.delete"
         ],
         "visible": true
       }
