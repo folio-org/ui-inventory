@@ -288,3 +288,8 @@ export const VERSION_HISTORY_PAGE_SIZE_SETTING = 'records.page.size';
 export const VERSION_HISTORY_ENABLED_SETTING = 'enabled';
 export const TAGS_SCOPE = 'ui-tags.tags.manage';
 export const TAGS_KEY = 'tags_enabled';
+
+export const CUSTOM_FIELDS_INVENTORY_BACKEND_NAME = 'Inventory Storage Module';
+export const ENTITY_TYPE_ITEM_INVENTORY = 'item';
+export const ITEM_CONFIG_NAME_PREFIX = 'item';
+export const SCOPE_CUSTOM_FIELDS_MANAGE = 'ui-inventory.custom-fields.manage';

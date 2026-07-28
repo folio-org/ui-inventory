@@ -19,6 +19,7 @@ import { LoadingPane } from '@folio/stripes/components';
 
 import MaterialTypesSettings from '../MaterialTypesSettings';
 import LoanTypesSettings from '../LoanTypesSettings';
+import CustomFieldsSettings from '../CustomFieldsSettings';
 import ItemNoteTypesSettings from '../ItemNoteTypesSettings';
 import FormatsSettings from '../FormatsSettings';
 import ResourceTypesSettings from '../ResourceTypesSettings';
@@ -227,6 +228,12 @@ const InventorySettings = (props) => {
       {
         label: <FormattedMessage id="ui-inventory.items" />,
         pages: [
+          {
+            route: 'itemCustomFields',
+            label: <FormattedMessage id="ui-inventory.settings.customFields" />,
+            component: CustomFieldsSettings,
+            perm: addPerm('ui-inventory.settings.custom-fields.view'),
+          },
           {
             route: 'itemNoteTypes',
             label: <FormattedMessage id="ui-inventory.itemNoteTypes" />,
