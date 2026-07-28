@@ -1024,7 +1024,7 @@ class InstancesList extends React.Component {
       return intl.formatMessage({ id: 'ui-inventory.instances.rows.unselectAll' }, { count: rowCount });
     }
 
-    return intl.formatMessage({ id: 'ui-inventory.instances.rows.selectAll' }, { count: unselectedRowCount })
+    return intl.formatMessage({ id: 'ui-inventory.instances.rows.selectAll' }, { count: unselectedRowCount });
   };
 
   toggleAllRows = () => {
