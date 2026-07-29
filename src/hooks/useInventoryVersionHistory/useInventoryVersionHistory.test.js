@@ -90,7 +90,7 @@ describe('useInventoryVersionHistory', () => {
       },
     }));
 
-    renderHook(() => useInventoryVersionHistory(data));
+    renderHook(() => useInventoryVersionHistory(data, true));
 
     expect(useUsersBatch).toHaveBeenLastCalledWith(usersId, { tenantId: centralTenantId });
   });
