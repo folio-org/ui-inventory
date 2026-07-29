@@ -15,8 +15,18 @@ import {
   Row,
 } from '@folio/stripes/components';
 import { effectiveCallNumber } from '@folio/stripes/util';
-import { TagsAccordion } from '@folio/stripes/smart-components';
+import {
+  TagsAccordion,
+  useCustomFields,
+  ViewCustomFieldsRecord,
+} from '@folio/stripes/smart-components';
 
+import {
+  CUSTOM_FIELDS_INVENTORY_BACKEND_NAME,
+  ENTITY_TYPE_ITEM_INVENTORY,
+  ITEM_CONFIG_NAME_PREFIX,
+  SCOPE_CUSTOM_FIELDS_MANAGE,
+} from '../../../../constants';
 import ItemViewSubheader from '../ItemViewSubheader';
 import AdministrativeData from '../../sections/AdministrativeData';
 import BoundPiecesData from '../../sections/BoundPiecesData';
@@ -88,6 +98,9 @@ const ItemDetailsContent = ({
   // getEntity needs to return an object from a closure so that Tags can compare old and new entity versions
   const getEntity = () => item;
   const getEntityTags = () => item.tags?.tagList || [];
+  const customFieldsValues = get(item, 'customFields', {});
+  const [customFieldsDefinitions] = useCustomFields(CUSTOM_FIELDS_INVENTORY_BACKEND_NAME, ENTITY_TYPE_ITEM_INVENTORY);
+  const hasVisibleCustomField = Boolean(customFieldsDefinitions?.some(customField => customField.visible));
 
   return (
     <>
@@ -186,6 +199,16 @@ const ItemDetailsContent = ({
             itemId={item.id}
             instanceId={instance.id}
           />
+          {hasVisibleCustomField && (
+            <ViewCustomFieldsRecord
+              accordionId="customFields"
+              backendModuleName={CUSTOM_FIELDS_INVENTORY_BACKEND_NAME}
+              customFieldsValues={customFieldsValues}
+              entityType={ENTITY_TYPE_ITEM_INVENTORY}
+              configNamePrefix={ITEM_CONFIG_NAME_PREFIX}
+              scope={SCOPE_CUSTOM_FIELDS_MANAGE}
+            />
+          )}
         </AccordionSet>
       </AccordionStatus>
     </>

@@ -9,6 +9,7 @@ import '../../../test/jest/__mock__';
 
 import { fireEvent, screen, waitFor, within } from '@folio/jest-config-stripes/testing-library/react';
 import { StripesContext } from '@folio/stripes/core';
+import { EditCustomFieldsRecord } from '@folio/stripes/smart-components';
 
 import {
   NUMBER_GENERATOR_OPTIONS_OFF,
@@ -122,6 +123,39 @@ describe('ItemForm', () => {
     expect(getByText('Location')).toBeInTheDocument();
     expect(getAllByText('Electronic access')[0]).toBeInTheDocument();
     expect(getAllByText('Bound-with and analytics')[0]).toBeInTheDocument();
+  });
+
+  describe('custom fields accordion', () => {
+    it('should render the custom fields accordion', () => {
+      renderItemForm();
+
+      expect(screen.getByText('EditCustomFieldsRecord')).toBeInTheDocument();
+    });
+
+    it('should mark isCreateMode true when the item has no id', () => {
+      renderItemForm();
+
+      const lastCallProps = EditCustomFieldsRecord.mock.calls.at(-1)[0];
+      expect(lastCallProps.isCreateMode).toBe(true);
+    });
+
+    it('should mark isCreateMode false when editing an existing item', () => {
+      renderItemForm({
+        initialValues: { ...mockInitialValues, id: 'existing-item-id' },
+      });
+
+      const lastCallProps = EditCustomFieldsRecord.mock.calls.at(-1)[0];
+      expect(lastCallProps.isCreateMode).toBe(false);
+    });
+
+    it('should pass the item customFields as finalFormCustomFieldsValues', () => {
+      renderItemForm({
+        initialValues: { ...mockInitialValues, customFields: { notHidden: '2026-07-01' } },
+      });
+
+      const lastCallProps = EditCustomFieldsRecord.mock.calls.at(-1)[0];
+      expect(lastCallProps.finalFormCustomFieldsValues).toEqual({ notHidden: '2026-07-01' });
+    });
   });
 
   it('should render Save & keep editing and Save & close buttons', () => {

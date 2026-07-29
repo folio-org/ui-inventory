@@ -44,6 +44,7 @@ import {
 } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import {
+  EditCustomFieldsRecord,
   ViewMetaData,
 } from '@folio/stripes/smart-components';
 import {
@@ -51,6 +52,13 @@ import {
   escapeCqlWildcards,
 } from '@folio/stripes/util';
 
+import {
+  CUSTOM_FIELDS_INVENTORY_BACKEND_NAME,
+  ENTITY_TYPE_ITEM_INVENTORY,
+  ITEM_CONFIG_NAME_PREFIX,
+  SCOPE_CUSTOM_FIELDS_MANAGE,
+  itemStatusesMap,
+} from '../../constants';
 import {
   ACCESSION_NUMBER_SETTING,
   BARCODE_SETTING,
@@ -81,7 +89,6 @@ import NoteFields from '../noteFields';
 import AdditionalCallNumbersItemLevelFields from './repeatableFields/AdditionalCallNumbersItemLevelFields';
 
 import styles from './ItemForm.css';
-import { itemStatusesMap } from '../../constants';
 
 function validate(values) {
   const errors = {};
@@ -293,7 +300,7 @@ class ItemForm extends React.Component {
 
   render() {
     const {
-      form: { change },
+      form,
       numberGeneratorData,
       onCancel,
       initialValues,
@@ -320,6 +327,7 @@ class ItemForm extends React.Component {
 
     const holdingLocation = locationsById[holdingsRecord?.permanentLocationId];
     const item = initialValues;
+    const customFieldsValues = get(item, 'customFields', {});
 
     const refLookup = (referenceTable, id) => {
       const ref = (referenceTable && id) ? referenceTable.find(record => record.id === id) : {};
@@ -426,8 +434,8 @@ class ItemForm extends React.Component {
         <NumberGeneratorModalButton
           buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />}
           callback={(generated) => {
-            change('accessionNumber', generated);
-            change('itemLevelCallNumber', generated);
+            form.change('accessionNumber', generated);
+            form.change('itemLevelCallNumber', generated);
           }}
           generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />}
           generator="inventory_accessionNumber"
@@ -593,7 +601,7 @@ class ItemForm extends React.Component {
                         {showNumberGeneratorForBarcode &&
                           <NumberGeneratorModalButton
                             buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />}
-                            callback={(generated) => change('barcode', generated)}
+                            callback={(generated) => form.change('barcode', generated)}
                             id="inventoryBarcode"
                             generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />}
                             generator="inventory_itemBarcode"
@@ -617,7 +625,7 @@ class ItemForm extends React.Component {
                           showNumberGeneratorForAccessionNumber &&
                           <NumberGeneratorModalButton
                             buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
-                            callback={(generated) => change('accessionNumber', generated)}
+                            callback={(generated) => form.change('accessionNumber', generated)}
                             id="inventoryAccessionNumber"
                             generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
                             generator="inventory_accessionNumber"
@@ -740,7 +748,7 @@ class ItemForm extends React.Component {
                           showNumberGeneratorForCallNumber &&
                           <NumberGeneratorModalButton
                             buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
-                            callback={(generated) => change('itemLevelCallNumber', generated)}
+                            callback={(generated) => form.change('itemLevelCallNumber', generated)}
                             id="inventoryCallNumber"
                             generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
                             generator="inventory_callNumber"
@@ -1054,6 +1062,18 @@ class ItemForm extends React.Component {
                       addBoundWithTitles={newBoundWiths => this.addBoundWiths(newBoundWiths)}
                     />
                   </Accordion>
+                  <EditCustomFieldsRecord
+                    accordionId="customFields"
+                    backendModuleName={CUSTOM_FIELDS_INVENTORY_BACKEND_NAME}
+                    changeFinalFormField={form.change}
+                    configNamePrefix={ITEM_CONFIG_NAME_PREFIX}
+                    entityType={ENTITY_TYPE_ITEM_INVENTORY}
+                    fieldComponent={Field}
+                    finalFormCustomFieldsValues={customFieldsValues}
+                    finalFormInstance={form}
+                    isCreateMode={!item.id}
+                    scope={SCOPE_CUSTOM_FIELDS_MANAGE}
+                  />
                 </AccordionSet>
               </AccordionStatus>
             </form>

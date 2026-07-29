@@ -8,10 +8,12 @@ import {
 import { runAxeTest } from '@folio/stripes-testing';
 
 import '../../../../../test/jest/__mock__';
+import { useCustomFields } from '@folio/stripes/smart-components';
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../../../test/jest/helpers';
+
 
 import ItemDetailsContent from './ItemDetailsContent';
 import useItemDetailsData from '../../../hooks/useItemDetailsData';
@@ -102,6 +104,7 @@ describe('ItemDetailsContent', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     useItemDetailsData.mockReturnValue(mockItemDetailsData);
+    useCustomFields.mockReturnValue([[], false, false]);
   });
 
   it('should render with no axe errors', async () => {
@@ -151,6 +154,29 @@ describe('ItemDetailsContent', () => {
   it('should not render item acquisition section when purchase order line identifier does not exist', async () => {
     await renderItemDetailsContent();
     expect(screen.queryByText('Acquisition')).not.toBeInTheDocument();
+  });
+
+  describe('custom fields accordion', () => {
+    it('should not render when there are no custom field definitions', async () => {
+      useCustomFields.mockReturnValue([[], false, false]);
+      await renderItemDetailsContent();
+      expect(screen.queryByText('ViewCustomFieldsRecord')).not.toBeInTheDocument();
+    });
+
+    it('should not render when all custom field definitions are hidden', async () => {
+      useCustomFields.mockReturnValue([[{ refId: 'hiddenField', visible: false }], false, false]);
+      await renderItemDetailsContent();
+      expect(screen.queryByText('ViewCustomFieldsRecord')).not.toBeInTheDocument();
+    });
+
+    it('should render when at least one custom field definition is visible', async () => {
+      useCustomFields.mockReturnValue([[
+        { refId: 'hiddenField', visible: false },
+        { refId: 'visibleField', visible: true },
+      ], false, false]);
+      await renderItemDetailsContent();
+      expect(screen.getByText('ViewCustomFieldsRecord')).toBeInTheDocument();
+    });
   });
 
   it('should render all required sections', async () => {

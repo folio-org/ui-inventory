@@ -38,5 +38,8 @@ jest.mock('@folio/stripes/smart-components', () => ({
   withTags: Component => (props) => {
     return <Component {...props} tagsEnabled />;
   },
+  useCustomFields: jest.fn(() => [[], false, false]),
+  ViewCustomFieldsRecord: jest.fn(() => <div>ViewCustomFieldsRecord</div>),
+  EditCustomFieldsRecord: jest.fn(() => <div>EditCustomFieldsRecord</div>),
 }), { virtual: true });
 

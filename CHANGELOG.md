@@ -11,6 +11,7 @@
 * Move menu item "Number generator options" to Section Settings > Inventory > Instances, Holdings, Items. Refs UIIN-3677.
 * Update `Instance status term` field when opening instance after updating. Fixes UIIN-3650.
 * Add Settings components and permissions for Custom Fields in Inventory > Item. Refs UIIN-3335.
+* Add Custom Fields in Create/Edit/View components for Inventory > Item. Refs UIIN-3343.
 
 ## [14.0.3](https://github.com/folio-org/ui-inventory/tree/v14.0.3) (2026-05-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.2...v14.0.3)
