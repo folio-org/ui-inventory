@@ -990,6 +990,9 @@ class ViewHoldingsRecord extends React.Component {
                     dismissible
                     onClose={this.onClose}
                     actionMenu={(params) => !isVersionHistoryOpen && this.getPaneHeaderActionMenu(params)}
+                    actionMenuToggleProps={{
+                      'aria-label': intl.formatMessage({ id: 'ui-inventory.actions.detailRecord' }),
+                    }}
                     lastMenu={(
                       <PaneMenu>
                         {isVersionHistoryEnabled && (

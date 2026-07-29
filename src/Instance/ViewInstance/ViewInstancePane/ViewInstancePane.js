@@ -179,6 +179,9 @@ const ViewInstancePane = ({
         paneSub={paneSubTitle}
         lastMenu={lastMenu}
         actionMenu={isVersionHistoryOpen ? null : actionMenu}
+        actionMenuToggleProps={{
+          'aria-label': intl.formatMessage({ id: 'ui-inventory.actions.detailRecord' }),
+        }}
         firstMenu={(
           <PaneCloseLink
             onClick={onClose}

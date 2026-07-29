@@ -212,7 +212,7 @@ describe('ViewSource', () => {
 
       describe('when clicking on Edit', () => {
         it('should redirect to marc edit page with "shared=true" url parameter', () => {
-          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Show detail record actions' }));
           fireEvent.click(screen.getByRole('button', { name: 'Edit MARC bibliographic record' }));
 
           expect(mockPush).toHaveBeenLastCalledWith({
@@ -296,7 +296,7 @@ describe('ViewSource', () => {
 
     describe('when clicking on Edit', () => {
       it('should redirect to marc edit page', () => {
-        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Show detail record actions' }));
         fireEvent.click(screen.getByRole('button', { name: 'Edit MARC bibliographic record' }));
 
         expect(mockPush).toHaveBeenLastCalledWith({
@@ -308,7 +308,7 @@ describe('ViewSource', () => {
 
     describe('when clicking on Export', () => {
       it('should start record export', () => {
-        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Show detail record actions' }));
         fireEvent.click(screen.getByRole('button', { name: 'Export instance (MARC)' }));
 
         expect(mockExportRecords).toHaveBeenLastCalledWith({

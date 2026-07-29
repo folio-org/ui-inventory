@@ -237,6 +237,7 @@ const ViewSource = ({
       renderTrigger={({ getTriggerProps }) => (
         <DropdownButton
           data-testid="actions-dropdown"
+          aria-label={intl.formatMessage({ id: 'ui-inventory.actions.detailRecord' })}
           buttonStyle="primary"
           marginBottom0
           {...getTriggerProps()}

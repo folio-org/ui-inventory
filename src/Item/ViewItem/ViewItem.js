@@ -295,6 +295,9 @@ const ViewItem = ({
           dismissible
           onClose={onCloseViewItem}
           actionMenu={renderActionMenu}
+          actionMenuToggleProps={{
+            'aria-label': formatMessage({ id: 'ui-inventory.actions.detailRecord' }),
+          }}
           lastMenu={renderLastMenu()}
         >
           <ItemModals

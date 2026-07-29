@@ -873,6 +873,8 @@
   "actions.menuSection.sortBy.title": "Title",
   "actions.menuSection.sortBy.contributors": "Contributors",
   "actions.menuSection.sortBy.date": "Date",
+  "actions.resultsList": "Show results list actions",
+  "actions.detailRecord": "Show detail record actions",
 
   "remote.confirmation.heading": "Removing from remote storage",
   "remote.confirmation.message": "Are you sure you want to remove {something} from remote storage?",
