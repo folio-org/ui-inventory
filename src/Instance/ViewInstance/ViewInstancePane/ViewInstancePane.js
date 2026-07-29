@@ -78,10 +78,13 @@ const ViewInstancePane = ({
   const { sharedInstances } = useSharedInstancesQuery({ searchParams: { instanceIdentifier: instanceId } });
   const isUserInConsortium = isUserInConsortiumMode(stripes);
 
+  const isInstanceShared = useMemo(
+    () => Boolean(isShared || isInstanceShadowCopy(instance?.source)),
+    [isShared, instance?.source],
+  );
+
   const paneTitle = useMemo(
     () => {
-      const isInstanceShared = Boolean(isShared || isInstanceShadowCopy(instance?.source));
-
       return intl.formatMessage(
         { id: `ui-inventory.${isUserInConsortium ? 'consortia.' : ''}instanceRecordTitle` },
         {
@@ -91,7 +94,7 @@ const ViewInstancePane = ({
         }
       );
     },
-    [isShared, instance?.source, instance?.title, isUserInConsortium, intl],
+    [isInstanceShared, instance?.title, isUserInConsortium, intl],
   );
 
   const paneSubTitle = useMemo(
@@ -207,6 +210,7 @@ const ViewInstancePane = ({
           onClose={() => setIsVersionHistoryOpen(false)}
           tenantId={instance?.tenantId}
           isSharedFromLocalRecord={!!sharedInstances?.[0]}
+          isInstanceShared={isInstanceShared}
         />
       )}
       {helperApp && (
