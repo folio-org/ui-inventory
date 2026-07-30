@@ -10,6 +10,7 @@
 * Add number generator settings for Instance Identifier. Refs UIIN-3678.
 * Move menu item "Number generator options" to Section Settings > Inventory > Instances, Holdings, Items. Refs UIIN-3677.
 * Update `Instance status term` field when opening instance after updating. Fixes UIIN-3650.
+* Show "Source" field in "Version history" for a user not having permissions in Central tenant. Fixes UIIN-3686.
 * Integrate Button "Generate identifier" in Inventory instance records. Refs UIIN-3679.
 
 ## [14.0.3](https://github.com/folio-org/ui-inventory/tree/v14.0.3) (2026-05-29)
