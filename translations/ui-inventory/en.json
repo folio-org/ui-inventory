@@ -21,6 +21,8 @@
   "instances.columns.classificationNumber": "Classification",
   "instances.columns.instanceHRID": "Instance HRID",
   "instances.rows.select": "Select instance",
+  "instances.rows.selectAll": "Select {count} results",
+  "instances.rows.unselectAll": "Unselect {count} results",
   "instances.showSelectedRecords": "Show selected records",
   "instances.selectedRecords": "Selected records",
   "instances.rows.recordsSelected": "{count, number} {count, plural, one {record} other {records}} selected",
