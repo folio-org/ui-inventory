@@ -1,6 +1,11 @@
 # Change history for ui-inventory
 
-## [14.0.4](https://github.com/folio-org/ui-inventory/tree/v14.0.3) (2026-06-02)
+## [14.0.5](https://github.com/folio-org/ui-inventory/tree/v14.0.5) (2026-07-31)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.4...v14.0.5)
+
+* Translate all status-action entries in `<ItemStatusMenu>`. Fixes UIIN-3666.
+
+## [14.0.4](https://github.com/folio-org/ui-inventory/tree/v14.0.4) (2026-06-02)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.3...v14.0.4)
 
 * "Add Bound with and analytics" button is not shown when creating a new item. Fixes UIIN-3631.
