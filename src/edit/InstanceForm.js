@@ -76,11 +76,10 @@ import {
   validateDates,
 } from '../validation';
 
-import { useNumberGeneratorOptions } from '../common/hooks';
-
 import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields';
 import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
 import { getPublishingInfo } from '../Instance/ViewInstance/utils';
+import { withNumberGeneratorOptions } from '../hocs';
 import DateFields from './dateFields';
 
 import styles from './InstanceForm.css';
@@ -949,15 +948,4 @@ const ConnectedInstanceForm = withRouter(stripesFinalForm({
   navigationCheck: true,
 })(stripesConnect(InstanceForm)));
 
-const InstanceFormContainer = (props) => {
-  const { data: numberGeneratorData } = useNumberGeneratorOptions();
-
-  return (
-    <ConnectedInstanceForm
-      {...props}
-      numberGeneratorData={numberGeneratorData}
-    />
-  );
-};
-
-export default InstanceFormContainer;
+export default withNumberGeneratorOptions(ConnectedInstanceForm);
