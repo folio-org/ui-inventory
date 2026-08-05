@@ -12,6 +12,7 @@ import { useOkapiKy } from '@folio/stripes/core';
 import {
   NUMBER_GENERATOR_OPTIONS_OFF,
   NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
   NUMBER_GENERATOR_SETTINGS_KEY,
   NUMBER_GENERATOR_SETTINGS_SCOPE,
 } from '../../../settings/NumberGeneratorSettings/constants';
@@ -29,6 +30,7 @@ const NUMBER_GENERATOR = {
   accessionNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
   callNumber: NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
   callNumberHoldings: '',
+  identifier: NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
   useSharedNumber: false,
 };
 
@@ -41,6 +43,8 @@ const mockData = {
 
 describe('useNumberGeneratorOptions', () => {
   beforeEach(() => {
+    queryClient.clear();
+
     useOkapiKy
       .mockClear()
       .mockReturnValue({
@@ -59,5 +63,31 @@ describe('useNumberGeneratorOptions', () => {
       isLoading: false,
       data: NUMBER_GENERATOR,
     }));
+  });
+
+  describe('when no settings have been saved yet', () => {
+    it('should resolve with default empty values', async () => {
+      useOkapiKy.mockReturnValue({
+        get: () => ({
+          json: () => Promise.resolve({ items: [] }),
+        }),
+      });
+
+      const { result } = renderHook(() => useNumberGeneratorOptions(), { wrapper });
+
+      await waitFor(() => expect(result.current.isLoading).toBeFalsy());
+
+      expect(result.current).toEqual(expect.objectContaining({
+        isLoading: false,
+        data: {
+          accessionNumber: '',
+          barcode: '',
+          callNumber: '',
+          callNumberHoldings: '',
+          identifier: '',
+          useSharedNumber: false,
+        },
+      }));
+    });
   });
 });
