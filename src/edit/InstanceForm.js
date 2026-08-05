@@ -79,6 +79,7 @@ import {
 import ParentInstanceFields from '../Instance/InstanceEdit/ParentInstanceFields';
 import ChildInstanceFields from '../Instance/InstanceEdit/ChildInstanceFields';
 import { getPublishingInfo } from '../Instance/ViewInstance/utils';
+import { withNumberGeneratorOptions } from '../hocs';
 import DateFields from './dateFields';
 
 import styles from './InstanceForm.css';
@@ -211,6 +212,7 @@ class InstanceForm extends React.Component {
     id: PropTypes.string,
     httpError: PropTypes.object,
     form: PropTypes.object.isRequired,
+    numberGeneratorData: PropTypes.object,
   };
 
   static defaultProps = {
@@ -397,6 +399,7 @@ class InstanceForm extends React.Component {
       history,
       httpError,
       id,
+      numberGeneratorData,
     } = this.props;
 
     const refLookup = (referenceTable, recordId) => {
@@ -752,6 +755,7 @@ class InstanceForm extends React.Component {
                             canAdd={!this.isFieldBlocked('identifiers')}
                             canEdit={!this.isFieldBlocked('identifiers')}
                             canDelete={!this.isFieldBlocked('identifiers')}
+                            numberGeneratorData={numberGeneratorData}
                           />
                         </Accordion>
                         <Accordion
@@ -939,7 +943,9 @@ class InstanceForm extends React.Component {
   }
 }
 
-export default withRouter(stripesFinalForm({
+const ConnectedInstanceForm = withRouter(stripesFinalForm({
   validate,
   navigationCheck: true,
 })(stripesConnect(InstanceForm)));
+
+export default withNumberGeneratorOptions(ConnectedInstanceForm);
