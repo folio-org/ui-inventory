@@ -1013,6 +1013,20 @@ class InstancesList extends React.Component {
     return parentResources.records.records.every(({ id }) => Object.keys(selectedRows).includes(id));
   };
 
+  getCheckColumnLabel = () => {
+    const { intl, parentResources } = this.props;
+    const { selectedRows } = this.state;
+
+    const rowCount = parentResources.records.records.length;
+    const unselectedRowCount = rowCount - parentResources.records.records.filter(({ id }) => Object.keys(selectedRows).includes(id)).length;
+
+    if (this.getIsAllRowsSelected()) {
+      return intl.formatMessage({ id: 'ui-inventory.instances.rows.unselectAll' }, { count: rowCount });
+    }
+
+    return intl.formatMessage({ id: 'ui-inventory.instances.rows.selectAll' }, { count: unselectedRowCount });
+  };
+
   toggleAllRows = () => {
     const { parentResources } = this.props;
     const { selectedRows } = this.state;
@@ -1042,7 +1056,7 @@ class InstancesList extends React.Component {
       select: !this.state.isSelectedRecordsModalOpened && (
         <Checkbox
           checked={this.getIsAllRowsSelected()}
-          aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })}
+          aria-label={this.getCheckColumnLabel()}
           onChange={() => this.toggleAllRows()}
         />
       ),

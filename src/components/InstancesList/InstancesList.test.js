@@ -1240,4 +1240,26 @@ describe('InstancesList', () => {
       expect(checkboxes[4]).toHaveTextContent('Instance HRID');
     });
   });
+
+  describe('Select column header', () => {
+    it('is labelled correctly for "select all" state', async () => {
+      const { getAllByRole } = await act(async () => renderInstancesList());
+
+      const selectColumn = getAllByRole('columnheader')[0];
+      const selectColumnCheckbox = within(selectColumn).getByRole('checkbox');
+
+      expect(selectColumnCheckbox).toHaveAttribute('aria-label', 'Select 4 results');
+    });
+
+    it('is labelled correctly for "unselect all" state', async () => {
+      const { getAllByRole } = await act(async () => renderInstancesList());
+
+      const selectColumn = getAllByRole('columnheader')[0];
+      const selectColumnCheckbox = within(selectColumn).getByRole('checkbox');
+
+      fireEvent.click(selectColumnCheckbox);
+
+      expect(selectColumnCheckbox).toHaveAttribute('aria-label', 'Unselect 4 results');
+    });
+  });
 });

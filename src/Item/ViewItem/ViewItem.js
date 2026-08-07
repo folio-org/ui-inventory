@@ -334,6 +334,7 @@ const ViewItem = ({
             item={item}
             tenantId={tenantTo}
             onClose={() => setIsVersionHistoryOpen(false)}
+            isInstanceShared={isInstanceShared || isInstanceShadowCopy(instance.source)}
           />
         )}
       </Paneset>

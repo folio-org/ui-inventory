@@ -3,14 +3,25 @@
 ## 14.1.0 IN PROGRESS
 
 * Source not displaying in Inventory version history for circ actions taken in different tenant. Fixes UIIN-3617.
-* "Add Bound with and analytics" button is not shown when creating a new item. Fixes UIIN-3631.
-* Translate all status-action entries in `<ItemStatusMenu>`. Fixes UIIN-3666.
 * Place "Manage number generator options" capability checkbox in the `manage` column instead of `view`. Fixes UIIN-3665.
 * Remove button "Generate accession and call numbers" at call number field and add an info popover instead. Refs UIIN-3680.
 * Add number generator settings for Instance Identifier. Refs UIIN-3678.
 * Move menu item "Number generator options" to Section Settings > Inventory > Instances, Holdings, Items. Refs UIIN-3677.
 * Update `Instance status term` field when opening instance after updating. Fixes UIIN-3650.
+* Show "Source" field in "Version history" for a user not having permissions in Central tenant. Fixes UIIN-3686.
+* Update Inventory results list's select/unselect all checkbox label. Refs UIIN-3684.
+* Integrate Button "Generate identifier" in Inventory instance records. Refs UIIN-3679.
 * Update aria-label for action menu buttons based on context. Refs UIIN-3685.
+
+## [14.0.5](https://github.com/folio-org/ui-inventory/tree/v14.0.5) (2026-07-31)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.4...v14.0.5)
+
+* Translate all status-action entries in `<ItemStatusMenu>`. Fixes UIIN-3666.
+
+## [14.0.4](https://github.com/folio-org/ui-inventory/tree/v14.0.4) (2026-06-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.3...v14.0.4)
+
+* "Add Bound with and analytics" button is not shown when creating a new item. Fixes UIIN-3631.
 
 ## [14.0.3](https://github.com/folio-org/ui-inventory/tree/v14.0.3) (2026-05-29)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.2...v14.0.3)

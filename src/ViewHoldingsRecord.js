@@ -668,6 +668,7 @@ class ViewHoldingsRecord extends React.Component {
       goTo,
       stripes,
       isVersionHistoryEnabled,
+      isInstanceShared,
     } = this.props;
     const {
       instance,
@@ -1411,6 +1412,7 @@ class ViewHoldingsRecord extends React.Component {
                     <HoldingVersionHistory
                       holdingId={holdingsRecord.id}
                       onClose={() => this.setState({ isVersionHistoryOpen: false })}
+                      isInstanceShared={isInstanceShared || isInstanceShadowCopy(instance.source)}
                     />
                   )}
                 </Paneset>
