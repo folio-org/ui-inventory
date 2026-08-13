@@ -165,7 +165,7 @@ const openActionMenu = () => {
   fireEvent.change(screen.getByRole('combobox', { name: /search field index/i }), {
     target: { value: queryIndexes.INSTANCE_KEYWORD }
   });
-  fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
 };
 
 const getInstancesListTree = ({ segment = segments.instances, ...rest } = {}) => {
@@ -939,7 +939,7 @@ describe('InstancesList', () => {
         target: { value: queryIndexes.INSTANCE_KEYWORD }
       });
 
-      fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
 
       expect(screen.getByRole('button', { name: 'Save holdings UUIDs' })).toBeVisible();
     });

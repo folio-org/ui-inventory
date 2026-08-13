@@ -1424,6 +1424,9 @@ class InstancesList extends React.Component {
           <SearchAndSort
             key={searchAndSortKey}
             actionMenu={this.getActionMenu}
+            actionMenuToggleProps={{
+              'aria-label': intl.formatMessage({ id: 'ui-inventory.actions.resultsList' }),
+            }}
             packageInfo={packageInfo}
             objectName="inventory"
             maxSortKeys={1}

@@ -171,7 +171,7 @@ describe('InstancesRoute', () => {
 
     describe('opening action menu', () => {
       beforeEach(() => {
-        fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
       });
 
       it('should not display exceeded quick export limit warning', () => {
@@ -207,7 +207,7 @@ describe('InstancesRoute', () => {
       describe('selecting one more row and clicking on show selected records action button', () => {
         beforeEach(() => {
           fireEvent.click(selectRowCheckboxes[1]);
-          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
           fireEvent.click(screen.getByRole('button', { name: 'Show selected records' }));
         });
 
@@ -278,7 +278,7 @@ describe('InstancesRoute', () => {
         });
 
         it('should not initiate display of error callout and make an API call upon click on export instances (MARC) button', () => {
-          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
           fireEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
 
           expect(quickExportAPICallMock).toBeCalled();
@@ -287,7 +287,7 @@ describe('InstancesRoute', () => {
 
         it('should initiate display of error callout and make an API call upon click on export instances (MARC) button with API request set up to fail', async () => {
           quickExportAPICallMock.mockImplementationOnce(Promise.reject.bind(Promise));
-          fireEvent.click(screen.getByRole('button', { name: 'Actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
           fireEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
 
           expect(quickExportAPICallMock).toBeCalled();
