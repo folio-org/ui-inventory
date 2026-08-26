@@ -258,7 +258,7 @@ class ItemForm extends React.Component {
     const saveAndKeepEditingButton = (
       <Button
         buttonStyle="default mega"
-        type="submit"
+        type="button"
         buttonClass={styles.saveAndKeepEditingButton}
         disabled={(pristine || submitting) && !copy}
         onClick={(e) => this.handleSaveClick(e, true)}
