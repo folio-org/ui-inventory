@@ -14,6 +14,11 @@
 * Update aria-label for action menu buttons based on context. Refs UIIN-3685.
 * Revert UIIN-3377. Make submitting an Item Form default to Save & close behaviour. Refs UIIN-3596.
 
+## [14.0.6](https://github.com/folio-org/ui-inventory/tree/v14.0.6) (2026-08-12)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.5...v14.0.6)
+
+* Show "Source" field in "Version history" for a user not having permissions in Central tenant. Fixes UIIN-3686.
+
 ## [14.0.5](https://github.com/folio-org/ui-inventory/tree/v14.0.5) (2026-07-31)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.4...v14.0.5)
 
