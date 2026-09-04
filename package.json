@@ -461,6 +461,20 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.instance-custom-links",
+        "displayName": "Settings (Inventory): Create, edit, delete instance custom links",
+        "subPermissions": [
+          "inventory-storage.instance-custom-links.collection.get",
+          "inventory-storage.instance-custom-links.item.delete",
+          "inventory-storage.instance-custom-links.item.get",
+          "inventory-storage.instance-custom-links.item.post",
+          "inventory-storage.instance-custom-links.item.put",
+          "settings.inventory.enabled",
+          "users.collection.get"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.ill-policies",
         "displayName": "Settings (Inventory): Create, edit, delete ILL policies",
         "subPermissions": [

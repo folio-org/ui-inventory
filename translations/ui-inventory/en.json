@@ -253,6 +253,8 @@
   "addInstanceFormat": "Add format",
   "instanceNoteTypes": "Instance note types",
   "instanceNoteType": "Instance note type",
+  "instanceCustomLinks": "Custom links",
+  "instanceCustomLink": "Custom link",
   "natureOfContentTerms": "Nature of content",
   "natureOfContentTerm": "Nature of content term",
   "addNatureOfContentTerm": "Add nature of content",
@@ -965,5 +967,20 @@
   "settings.displaySettings.defaultColumns.options.relation": "Relation",
   "settings.displaySettings.defaultColumns.options.hrid": "Instance HRID",
 
-  "instance.linked.id": "Linked instance ID - {id}"
+  "instance.linked.id": "Linked instance ID - {id}",
+
+  "show": "Show",
+  "baseUrl": "Base URL",
+  "queryString": "Query string",
+  "instanceCustomLink.error.nameUnique": "Error saving data. Name must be unique.",
+  "instanceCustomLink.error.nameTooLong": "Name cannot be more than 150 characters.",
+  "instanceCustomLink.error.linkTextRequired": "Link text is required.",
+  "instanceCustomLink.error.linkTextUnique": "Error saving data. Link text must be unique.",
+  "instanceCustomLink.error.linkTextTooLong": "Link text cannot be more than 40 characters.",
+  "instanceCustomLink.error.baseUrlRequired": "Base URL is required.",
+  "instanceCustomLink.error.baseUrlProtocol": "Base URL must be HTTP or HTTPS.",
+  "instanceCustomLink.error.baseUrlUnique": "Error saving data. Base URL must be unique.",
+  "instanceCustomLink.error.queryStringTooLong": "Query string cannot be more than 150 characters.",
+  "instanceCustomLink.error.queryStringParameter": "Query string must contain a valid parameter.",
+  "instanceCustomLink.error.tooMany": "Error aving data. Only 10 custom links per tenant allowed."
 }
