@@ -14,6 +14,11 @@
 * Update aria-label for action menu buttons based on context. Refs UIIN-3685.
 * Revert UIIN-3377. Make submitting an Item Form default to Save & close behaviour. Refs UIIN-3596.
 
+## [14.0.6](https://github.com/folio-org/ui-inventory/tree/v14.0.6) (2026-08-12)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.5...v14.0.6)
+
+* Show "Source" field in "Version history" for a user not having permissions in Central tenant. Fixes UIIN-3686.
+
 ## [14.0.5](https://github.com/folio-org/ui-inventory/tree/v14.0.5) (2026-07-31)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.4...v14.0.5)
 
@@ -163,6 +168,31 @@ UIIN-3437.
 * The "Action" button remains visible after opening "Version History" pane. Fixes UIIN-3629.
 * Focus on the Close Instance pane button when returning from MARC edit/create/derive page. Fixes UIIN-3570.
 * The page reloads instead of showing "Confirm move" modal when moving holdings to another instance in member tenant. Fixes UIIN-3625.
+
+## [13.0.19](https://github.com/folio-org/ui-inventory/tree/v13.0.19) (2026-09-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.18...v13.0.19)
+
+* Revert UIIN-3377. Make submitting an Item Form default to Save & close behaviour. Refs UIIN-3596.
+
+## [13.0.18](https://github.com/folio-org/ui-inventory/tree/v13.0.18) (2026-07-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.17...v13.0.18)
+
+* Do not show item link, status and "View holding" button for user without affiliation in Member tenant. Fixes UIIN-3675.
+
+## [13.0.17](https://github.com/folio-org/ui-inventory/tree/v13.0.17) (2026-06-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.16...v13.0.17)
+
+* ECS - Render items under Holdings accordion in Inventory instance detail view. Fixes UIIN-3673.
+
+## [13.0.16](https://github.com/folio-org/ui-inventory/tree/v13.0.16) (2026-06-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.15...v13.0.16)
+
+* Render items under Holdings accordion in Inventory instance detail view. Fixes UIIN-3668.
+
+## [13.0.15](https://github.com/folio-org/ui-inventory/tree/v13.0.15) (2026-05-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.14...v13.0.15)
+
+* Reduce the amount of calls when many holdings exist in several tenants. Fixes UIIN-3660.
 
 ## [13.0.14](https://github.com/folio-org/ui-inventory/tree/v13.0.14) (2026-04-30)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.13...v13.0.14)
