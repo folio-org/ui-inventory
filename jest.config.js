@@ -3,6 +3,7 @@ const config = require('@folio/jest-config-stripes');
 
 const additionalModules = [
   '@k-int/stripes-kint-components',
+  'keyboardjs',
 ].join('|');
 const combinedModules = config.transformIgnorePatterns[0].replace(')', `|${additionalModules})`);
 

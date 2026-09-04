@@ -1,4 +1,4 @@
-import { act } from 'react';
+import { act, useContext } from 'react';
 import keyBy from 'lodash/keyBy';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -30,6 +30,8 @@ import {
   useInstanceHoldingsQuery
 } from '../../providers';
 import { InstanceMovementDetailsContainer } from '../InstanceMovement';
+import { useItems } from '../Move';
+import DnDContext from '../DnDContext';
 import MoveHoldingContext from './MoveHoldingContext';
 
 configure({ testIdAttribute: 'id' });
@@ -49,6 +51,11 @@ jest.mock('../../hooks', () => ({
   })),
 }));
 
+jest.mock('../Move', () => ({
+  ...jest.requireActual('../Move'),
+  useItems: jest.fn(),
+}));
+
 useHoldings.mockImplementation(() => ({
   holdingsById,
 }));
@@ -65,8 +72,42 @@ useLocationsQuery.mockImplementation(() => ({
 
 const onClose = jest.fn();
 const moveHoldings = jest.fn().mockImplementation(() => Promise.resolve());
+const moveItems = jest.fn();
 
-const renderMoveHoldingContext = () => renderWithIntl(
+useItems.mockReturnValue({
+  moveItems,
+  isMoving: false,
+});
+
+const ItemMoveTrigger = ({ holdingId, itemId, targetHoldingId }) => {
+  const { selectItemsForDrag, onSelect } = useContext(DnDContext);
+
+  return (
+    <>
+      <button
+        type="button"
+        id="select-item-for-move"
+        aria-label="Select item for move"
+        onClick={() => selectItemsForDrag([{ id: itemId, holdingsRecordId: holdingId }])}
+      />
+      <button
+        type="button"
+        id="move-item"
+        aria-label="Move item"
+        onClick={() => onSelect({
+          target: {
+            dataset: {
+              itemId: holdingId,
+              toId: targetHoldingId,
+            },
+          },
+        })}
+      />
+    </>
+  );
+};
+
+const renderMoveHoldingContext = ({ additionalChildren } = {}) => renderWithIntl(
   <Router>
     <DataContext.Provider value={{
       contributorTypes: [],
@@ -100,6 +141,7 @@ const renderMoveHoldingContext = () => renderWithIntl(
           data-test-movement-to-instance-details
           id="movement-to-instance-details"
         />
+        {additionalChildren}
       </MoveHoldingContext>
     </DataContext.Provider>
   </Router>,
@@ -200,6 +242,8 @@ describe('MoveHoldingContext', () => {
 
   describe('when "Move" button is clicked', () => {
     beforeEach(() => {
+      moveHoldings.mockClear();
+      moveItems.mockClear();
       useOkapiKy.mockClear().mockReturnValue({
         get: () => ({
           json: () => ({
@@ -248,7 +292,39 @@ describe('MoveHoldingContext', () => {
 
       fireEvent.click(confirmBtn);
 
+      expect(moveHoldings).toHaveBeenCalledWith(
+        rightInstance.id,
+        ['c4a15834-0184-4a6f-9c0c-0ca5bad8286d']
+      );
       expect(screen.queryByText('Loading')).toBeInTheDocument();
+    }, 10000);
+
+    it('should move selected items if "Confirm button" is clicked', async () => {
+      const holdingId = 'c4a15834-0184-4a6f-9c0c-0ca5bad8286d';
+      const itemId = 'item-id';
+      const targetHoldingId = '0c45bb50-7c9b-48b0-86eb-178a494e25fe';
+      const { getByTestId } = renderMoveHoldingContext({
+        additionalChildren: (
+          <ItemMoveTrigger
+            holdingId={holdingId}
+            itemId={itemId}
+            targetHoldingId={targetHoldingId}
+          />
+        ),
+      });
+
+      fireEvent.click(getByTestId('select-item-for-move'));
+      await act(async () => {
+        fireEvent.click(getByTestId('move-item'));
+      });
+      fireEvent.click(screen.getByRole('button', { name: /confirm/ }));
+
+      expect(moveItems).toHaveBeenCalledWith(
+        holdingId,
+        targetHoldingId,
+        [itemId]
+      );
+      expect(moveHoldings).not.toHaveBeenCalled();
     }, 10000);
 
     it('should close modal and stop moving when "Cancel" is clicked', async () => {

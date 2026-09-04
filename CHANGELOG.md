@@ -1,5 +1,9 @@
 # Change history for ui-inventory
 
+## 13.0.20 (IN PROGRESS)
+
+* Enable moving items from one instance to another instance with on order status. Fixes UIIN-3694.
+
 ## [13.0.19](https://github.com/folio-org/ui-inventory/tree/v13.0.19) (2026-09-03)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.18...v13.0.19)
 

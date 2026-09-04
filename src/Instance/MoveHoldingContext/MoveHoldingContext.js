@@ -63,7 +63,7 @@ const MoveHoldingContext = ({
   const [selectedHoldingsMap, setSelectedHoldingsMap] = useState([]);
   const [activeDropZone, setActiveDropZone] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [movingItems, setMovingItems] = useState([]);
+  const [movingIds, setMovingIds] = useState([]);
   const [dragToId, setDragToId] = useState();
   const [dragFromId, setDragFromId] = useState();
   const [isHoldingMoved, setIsHoldingMoved] = useState();
@@ -89,10 +89,10 @@ const MoveHoldingContext = ({
 
     if (isHoldingMoved) {
       setIsMoving(true);
-      moveHoldings(dragToId, movingItems)
+      moveHoldings(dragToId, movingIds)
         .finally(() => { setIsMoving(false); });
     } else {
-      moveItems(dragFromId, dragToId, movingItems);
+      moveItems(dragFromId, dragToId, movingIds);
     }
 
     setSelectedItemsMap((prevItemsMap) => ({
@@ -105,7 +105,7 @@ const MoveHoldingContext = ({
     setSelectedHoldingIds([]);
     refetchLeftHolding();
     refetchRightHolding();
-  }, [movingItems, dragToId]);
+  }, [movingIds, dragToId]);
 
   const onBeforeCapture = useCallback((result) => {
     const isHolding = result.draggableId.slice(0, 8) === 'holding-';
@@ -123,7 +123,8 @@ const MoveHoldingContext = ({
     const from = result.source.droppableId;
     const to = result.destination.droppableId;
     const fromSelectedMap = selectedItemsMap[from] || {};
-    const items = isHoldingMoved
+    // Holding moves use holding IDs; item moves use item IDs.
+    const idsToMove = isHoldingMoved
       ? selectedHoldingsMap
       : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
     const itemDropId = isHoldingMoved ? result.draggableId.slice(8) : result.draggableId;
@@ -131,10 +132,10 @@ const MoveHoldingContext = ({
     setDragToId(to);
     setDragFromId(from);
 
-    if (!items.length) {
-      items.push(itemDropId);
+    if (!idsToMove.length) {
+      idsToMove.push(itemDropId);
     }
-    setMovingItems(items);
+    setMovingIds(idsToMove);
     setIsModalOpen(true);
   }, [selectedItemsMap, selectedHoldingsMap, isHoldingMoved]);
 
@@ -218,7 +219,8 @@ const MoveHoldingContext = ({
     const selectedInstanceHoldings = leftInstance.id === to ? rightHoldings : leftHoldings;
     const selectedInstanceHoldingsIds = selectedInstanceHoldings.map(i => i.id);
 
-    const items = isHolding
+    // Holding moves start with holding IDs; item moves start with item IDs.
+    const idsToMove = isHolding
       ? selectedHoldingsMap
       : Object.keys(fromSelectedMap).filter(item => fromSelectedMap[item]);
 
@@ -226,7 +228,7 @@ const MoveHoldingContext = ({
     setDragToId(to);
     setDragFromId(from);
 
-    const holdingIds = [...new Set([...items, from])];
+    const holdingIds = [...new Set([...idsToMove, from])];
 
     const holdingIdsFromSelection = selectedInstanceHoldingsIds.filter(holdingId => holdingIds.includes(holdingId));
 
@@ -235,11 +237,24 @@ const MoveHoldingContext = ({
       poLineHoldingIds
     } = await checkHasMultiplePOLsOrHoldings(holdingIdsFromSelection);
 
+    // Include related holdings only for a holding move linked to a purchase order.
     const holdingIdsToMove = uniq([...poLineHoldingIds, ...holdingIdsFromSelection]);
 
-    setMovingItems(isHolding || hasLinkedPOLs ? holdingIdsToMove : items);
-    setHasLinkedPOLsOrHoldings(hasLinkedPOLs);
-    setSelectedHoldingIds(holdingIdsToMove);
+    if (isHolding) {
+      setMovingIds(holdingIdsToMove);
+      setHasLinkedPOLsOrHoldings(hasLinkedPOLs);
+      setSelectedHoldingIds(holdingIdsToMove);
+    }
+
+    if (!isHolding) {
+      setMovingIds(idsToMove);
+    }
+
+    if (hasLinkedPOLs) {
+      setHasLinkedPOLsOrHoldings(hasLinkedPOLs);
+      setSelectedHoldingIds(holdingIdsToMove);
+    }
+
     setIsModalOpen(true);
   }, [selectedItemsMap, leftInstance, rightHoldings, leftHoldings, selectedHoldingsMap, checkHasMultiplePOLsOrHoldings]);
 
@@ -250,9 +265,9 @@ const MoveHoldingContext = ({
     const holdings = allHoldings.filter(holding => selectedHoldingIds.includes(holding.id));
     const currentInstance = rightInstance.id === dragToId ? rightInstance : leftInstance;
 
-    const count = movingItems.length;
+    const count = movingIds.length;
 
-    if (hasLinkedPOLsOrHoldings) {
+    if (hasLinkedPOLsOrHoldings && isHoldingMoved) {
       return (
         <>
           { intl.formatMessage(
@@ -300,7 +315,7 @@ const MoveHoldingContext = ({
     holdingsById,
     dragToId,
     locationsById,
-    movingItems.length,
+    movingIds.length,
     isHoldingMoved,
     intl,
     checkFromRemoteToNonRemote,
