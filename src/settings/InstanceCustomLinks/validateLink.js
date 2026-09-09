@@ -13,7 +13,7 @@ export default function validateBaseUrl(item) {
     errors.link = <FormattedMessage id="ui-inventory.instanceCustomLink.error.linkProtocol" />;
   }
 
-  if (item.link && !patterns.test(item.link) && item.link.indexOf("{{") >= 0 && item.link.indexOf("}}") >= 0) {
+  if (item.link && !patterns.test(item.link) && item.link.includes("{{") && item.link.includes("}}")) {
     errors.link = <FormattedMessage id="ui-inventory.instanceCustomLink.error.linkParameter" />;
   }
   
