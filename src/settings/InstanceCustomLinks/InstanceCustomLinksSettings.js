@@ -23,8 +23,7 @@ import {
 
 import validateName from './validateName';
 import validateLinkText from './validateLinkText';
-import validateBaseUrl from './validateBaseUrl';
-import validateQueryString from './validateQueryString';
+import validateLink from './validateLink';
 import validateResponse from './validateResponse';
 
 import css from './InstanceCustomLinks.css';
@@ -115,14 +114,12 @@ class InstanceCustomLinksSettings extends React.Component {
     const validator = (item) => {
       const nameErrors = validateName(item);
       const linkTextErrors = validateLinkText(item);
-      const baseUrlErrors = validateBaseUrl(item);
-      const queryStringErrors = validateQueryString(item);
+      const linkErrors = validateLink(item);
       const associatedServerErrors = validateResponse(item, this.state.serverErrors);
 
       return {
         ...associatedServerErrors,
-        ...queryStringErrors,
-        ...baseUrlErrors,
+        ...linkErrors,
         ...linkTextErrors,
         ...nameErrors
       };
@@ -181,12 +178,11 @@ class InstanceCustomLinksSettings extends React.Component {
                   label={<FormattedMessage id="ui-inventory.instanceCustomLinks" />}
                   labelSingular={intl.formatMessage({ id: 'ui-inventory.instanceCustomLink' })}
                   objectLabel={<FormattedMessage id="ui-inventory.instanceCustomLinks" />}
-                  visibleFields={['name', 'linkText', 'baseUrl', 'queryString', 'show']}
+                  visibleFields={['name', 'linkText', 'link', 'show']}
                   columnMapping={{
                     name: formatHeader('ui-inventory.name'),
                     linkText: formatHeader('ui-inventory.linkText'),
-                    baseUrl: formatHeader('ui-inventory.baseUrl'),
-                    queryString: intl.formatMessage({ id: 'ui-inventory.queryString' }),
+                    link: formatHeader('ui-inventory.link'),
                     show: intl.formatMessage({ id: 'ui-inventory.show' }),
                   }}
                   actionSuppressor={actionSuppressor}

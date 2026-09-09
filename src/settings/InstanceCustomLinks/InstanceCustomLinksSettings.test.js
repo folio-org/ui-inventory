@@ -118,7 +118,7 @@ describe('InstanceCustomLinksSettings', () => {
       renderInstanceCustomLinksSettings();
       const { validate } = getLatestControlledVocabProps();
 
-      expect(validate({ name: 'Foo', linkText: 'Bar', baseUrl: 'https://example.com' })).toEqual({});
+      expect(validate({ name: 'Foo', linkText: 'Bar', link: 'https://example.com' })).toEqual({});
     });
 
     it('surfaces each field-level client-side validation error', () => {
@@ -129,7 +129,7 @@ describe('InstanceCustomLinksSettings', () => {
 
       expect(errors.name.props.id).toBe('ui-inventory.fillIn');
       expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLink.error.linkTextRequired');
-      expect(errors.baseUrl.props.id).toBe('ui-inventory.instanceCustomLink.error.baseUrlRequired');
+      expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLink.error.linkRequired');
     });
   });
 
@@ -213,14 +213,14 @@ describe('InstanceCustomLinksSettings', () => {
       const { mutator } = getLatestControlledVocabProps();
 
       await act(async () => {
-        await expect(mutator.entries.POST({ name: 'Foo', linkText: 'Bar', baseUrl: 'https://example.com' })).rejects.toBe(httpError);
+        await expect(mutator.entries.POST({ name: 'Foo', linkText: 'Bar', link: 'https://example.com' })).rejects.toBe(httpError);
       });
 
       expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'Something went wrong' });
 
       const { validate } = getLatestControlledVocabProps();
 
-      expect(validate({ name: 'Foo', linkText: 'Bar', baseUrl: 'https://example.com' })).toEqual({});
+      expect(validate({ name: 'Foo', linkText: 'Bar', link: 'https://example.com' })).toEqual({});
     });
   });
 });

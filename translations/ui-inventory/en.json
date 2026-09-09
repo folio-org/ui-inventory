@@ -970,17 +970,15 @@
   "instance.linked.id": "Linked instance ID - {id}",
 
   "show": "Show",
-  "baseUrl": "Base URL",
-  "queryString": "Query string",
+  "link": "Link",
   "instanceCustomLink.error.nameUnique": "Error saving data. Name must be unique.",
   "instanceCustomLink.error.nameTooLong": "Name cannot be more than 150 characters.",
   "instanceCustomLink.error.linkTextRequired": "Link text is required.",
   "instanceCustomLink.error.linkTextUnique": "Error saving data. Link text must be unique.",
   "instanceCustomLink.error.linkTextTooLong": "Link text cannot be more than 40 characters.",
-  "instanceCustomLink.error.baseUrlRequired": "Base URL is required.",
-  "instanceCustomLink.error.baseUrlProtocol": "Base URL must be HTTP or HTTPS.",
-  "instanceCustomLink.error.baseUrlUnique": "Error saving data. Base URL must be unique.",
-  "instanceCustomLink.error.queryStringTooLong": "Query string cannot be more than 150 characters.",
-  "instanceCustomLink.error.queryStringParameter": "Query string must contain a valid parameter.",
-  "instanceCustomLink.error.tooMany": "Error aving data. Only 10 custom links per tenant allowed."
+  "instanceCustomLink.error.linkRequired": "Link is required.",
+  "instanceCustomLink.error.linkProtocol": "Link must be HTTP or HTTPS.",
+  "instanceCustomLink.error.linkUnique": "Error saving data. Link must be unique.",
+  "instanceCustomLink.error.linkParameter": "Link must contain a valid parameter when provided.",
+  "instanceCustomLink.error.tooMany": "Error saving data. Only 10 custom links per tenant allowed."
 }
