@@ -186,6 +186,10 @@ const useInstanceActions = ({
     });
   }, [instance, canBeOpenedInLinkedData, instanceId]);
 
+  const handleCustomLink = useCallback((customLink) => {
+    window.location.assign(customLink);
+  }, [instance, instanceId]);
+
   return {
     handleCreate,
     handleEdit,
@@ -203,6 +207,7 @@ const useInstanceActions = ({
     handleDuplicateInstanceMarc,
     handleCreateHoldingsMarc,
     handleEditInLinkedDataEditor,
+    handleCustomLink,
   };
 };
 
