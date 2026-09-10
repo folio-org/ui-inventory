@@ -48,6 +48,7 @@ import DisplaySettings from '../DisplaySettings';
 import CardsPerVersionHistoryPage from '../CardsPerVersionHistoryPage';
 import CallNumberBrowseSettings from '../CallNumberBrowseSettings';
 import NumberGeneratorSettings from '../NumberGeneratorSettings';
+import InstanceCustomLinksSettings from '../InstanceCustomLinks';
 import {
   flattenCentralTenantPermissions,
   getIsVersionHistoryEnabled,
@@ -138,6 +139,12 @@ const InventorySettings = (props) => {
             label: <FormattedMessage id="ui-inventory.contributorTypes" />,
             component: ContributorTypesSettings,
             perm: addPerm('ui-inventory.settings.contributor-types'),
+          },
+          {
+            route: 'customlinks',
+            label: <FormattedMessage id="ui-inventory.instanceCustomLinks" />,
+            component: InstanceCustomLinksSettings,
+            perm: addPerm('ui-inventory.settings.instance-custom-links'),
           },
           {
             route: 'formats',

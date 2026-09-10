@@ -1,0 +1,10 @@
+@import '@folio/stripes-components/lib/variables';
+
+.showField {
+  text-align: center;
+}
+
+.required {
+  color: var(--color--text-danger, #900);
+  margin-left: 0.25em;
+}

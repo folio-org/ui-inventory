@@ -288,3 +288,6 @@ export const VERSION_HISTORY_PAGE_SIZE_SETTING = 'records.page.size';
 export const VERSION_HISTORY_ENABLED_SETTING = 'enabled';
 export const TAGS_SCOPE = 'ui-tags.tags.manage';
 export const TAGS_KEY = 'tags_enabled';
+
+export const KNOWN_INSTANCE_CUSTOM_LINK_CODES = ['unique'];
+export const KNOWN_INSTANCE_CUSTOM_LINK_FIELDS = ['name', 'linkText', 'baseUrl'];
