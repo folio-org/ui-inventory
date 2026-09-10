@@ -58,6 +58,7 @@ jest.mock('../hooks', () => ({
   useInstanceDetailsShortcuts: jest.fn().mockReturnValue([]),
   useSharedInstancesQuery: jest.fn().mockReturnValue({ sharedInstances: [] }),
   useAuditSettings: jest.fn().mockReturnValue({ settings: {} }),
+  useInstanceCustomLinks: jest.fn().mockReturnValue({ customLinks: [] }),
 }));
 jest.mock('./components', () => ({
   ViewInstancePane: jest.fn(() => <div>ViewInstancePane</div>),

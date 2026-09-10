@@ -363,4 +363,29 @@ describe('useInstanceActions', () => {
       expect(exportRecords).toHaveBeenCalledWith({ uuids: ['inst1'], recordType: expect.any(String) });
     });
   });
+
+  describe('handleCustomLink', () => {
+    const originalLocation = window.location;
+
+    beforeEach(() => {
+      delete window.location;
+
+      window.location = new URL('http://localhost');
+
+      window.location.assign = jest.fn();
+    });
+
+    afterEach(() => {
+      window.location = originalLocation;
+    });
+
+    it('updates browser location', () => {
+      const customLink = 'https://example.com';
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
+
+      result.current.handleCustomLink(customLink);
+
+      expect(window.location.assign).toHaveBeenCalledWith(customLink);
+    });
+  });
 });

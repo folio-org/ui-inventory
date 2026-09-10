@@ -41,6 +41,7 @@ const InstanceActionMenu = ({
   requests,
   numberOfRequests,
   onCopy,
+  customLinks,
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
@@ -69,6 +70,7 @@ const InstanceActionMenu = ({
     canCreateMARCHoldings,
     hasReorderPermissions,
     showLinkedDataMenuSection,
+    canViewInstanceCustomLinks,
   } = useInstancePermissions({
     instance,
     isShared,
@@ -96,6 +98,7 @@ const InstanceActionMenu = ({
     handleDuplicateInstanceMarc,
     handleCreateHoldingsMarc,
     handleEditInLinkedDataEditor,
+    handleCustomLink,
   } = useInstanceActions({
     marcRecord,
     callout,
@@ -312,6 +315,25 @@ const InstanceActionMenu = ({
             messageId="ui-inventory.editInMarigold"
             onClickHandler={() => buildOnClickHandler(handleEditInLinkedDataEditor)}
           />
+        </MenuSection>
+      )}
+
+      {canViewInstanceCustomLinks && customLinks && (
+        <MenuSection
+          id="instance-custom-links-menu-section"
+          label={intl.formatMessage({ id: 'ui-inventory.instanceCustomLinks' })}
+        >
+          { customLinks.map(customLink => {
+            return (
+              <ActionItem
+                key={customLink.id}
+                id={customLink.id}
+                icon="external-link"
+                messageId={intl.formatMessage({ id: 'ui-inventory.instanceCustomLink.viewIn' }, { linkText: customLink.label })}
+                onClickHandler={() => buildOnClickHandler(handleCustomLink(customLink.link))}
+              />
+            );
+          })}
         </MenuSection>
       )}
 
