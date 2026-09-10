@@ -12,4 +12,4 @@ export default function validateName(item) {
   }
 
   return errors;
-};
+}

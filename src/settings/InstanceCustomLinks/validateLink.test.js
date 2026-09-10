@@ -33,7 +33,7 @@ describe('validateLink', () => {
 
   it.each(['{{UUID}}', '{{HRID}}', '{{indexTitle}}'])(
     'returns no errors when link contains the placeholder %s',
-      (placeholder) => {
+    (placeholder) => {
       const errors = validateLink({ link: `http://example.com/?id=${placeholder}` });
       expect(errors).toEqual({});
     }

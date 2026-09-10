@@ -48,7 +48,11 @@ const formatter = {
 };
 
 const formatHeader = (id) => {
-  return (<><FormattedMessage id={id}/> <span className={css.required}>*</span></>);
+  return (
+    <>
+      <FormattedMessage id={id} /> <span className={css.required}>*</span>
+    </>
+  );
 };
 
 const classifyErrors = (errors = []) => {
@@ -100,7 +104,7 @@ class InstanceCustomLinksSettings extends React.Component {
   showCallout(type, message) {
     this.context.sendCallout({
       type,
-      message: message,
+      message,
     });
   }
 
@@ -187,7 +191,7 @@ class InstanceCustomLinksSettings extends React.Component {
                   }}
                   actionSuppressor={actionSuppressor}
                   readOnlyFields={['source']}
-                  itemTemplate={{ source: 'local' , show: true }}
+                  itemTemplate={{ source: 'local', show: true }}
                   hiddenFields={['description', 'numberOfObjects', 'source']}
                   nameKey="name"
                   id="instanceCustomLinks"
