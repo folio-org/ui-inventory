@@ -475,6 +475,16 @@
         "visible": true
       },
       {
+        "permissionName": "ui-inventory.settings.instance-custom-links.view",
+        "displayName": "View instance custom links",
+        "subPermissions": [
+          "ui-inventory.instance.view",
+          "inventory-storage.instance-custom-links.collection.get",
+          "inventory-storage.instance-custom-links.item.get"
+        ],
+        "visible": true
+      },
+      {
         "permissionName": "ui-inventory.settings.ill-policies",
         "displayName": "Settings (Inventory): Create, edit, delete ILL policies",
         "subPermissions": [

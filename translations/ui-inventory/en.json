@@ -971,6 +971,7 @@
 
   "show": "Show",
   "link": "Link",
+  "instanceCustomLink.viewIn": "View in {linkText}",
   "instanceCustomLink.error.nameUnique": "Error saving data. Name must be unique.",
   "instanceCustomLink.error.nameTooLong": "Name cannot be more than 150 characters.",
   "instanceCustomLink.error.linkTextRequired": "Link text is required.",
