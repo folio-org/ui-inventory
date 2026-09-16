@@ -1077,7 +1077,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.9.0",
     "@folio/eslint-config-stripes": "^8.0.0",
-    "@folio/jest-config-stripes": "^3.0.0",
+    "@folio/jest-config-stripes": "^4.0.0",
     "@folio/service-interaction": "^4.0.0",
     "@folio/stripes": "^10.1.0",
     "@folio/stripes-cli": "^4.0.0",
