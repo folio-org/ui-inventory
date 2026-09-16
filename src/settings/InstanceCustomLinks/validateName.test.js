@@ -22,7 +22,7 @@ describe('validateName', () => {
   it('returns a "name too long" error when name exceeds 150 characters', () => {
     const errors = validateName({ name: 'a'.repeat(151) });
 
-    expect(errors.name.props.id).toBe('ui-inventory.instanceCustomLink.error.nameTooLong');
+    expect(errors.name.props.id).toBe('ui-inventory.instanceCustomLinks.error.nameTooLong');
   });
 
   it('returns no errors when name is exactly 150 characters', () => {

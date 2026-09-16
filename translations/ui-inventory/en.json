@@ -971,14 +971,14 @@
 
   "show": "Show",
   "link": "Link",
-  "instanceCustomLink.error.nameUnique": "Error saving data. Name must be unique.",
-  "instanceCustomLink.error.nameTooLong": "Name cannot be more than 150 characters.",
-  "instanceCustomLink.error.linkTextRequired": "Link text is required.",
-  "instanceCustomLink.error.linkTextUnique": "Error saving data. Link text must be unique.",
-  "instanceCustomLink.error.linkTextTooLong": "Link text cannot be more than 40 characters.",
-  "instanceCustomLink.error.linkRequired": "Link is required.",
-  "instanceCustomLink.error.linkProtocol": "Link must be HTTP or HTTPS.",
-  "instanceCustomLink.error.linkUnique": "Error saving data. Link must be unique.",
-  "instanceCustomLink.error.linkParameter": "Link must contain a valid parameter when provided.",
-  "instanceCustomLink.error.tooMany": "Error saving data. Only 10 custom links per tenant allowed."
+  "instanceCustomLinks.error.nameUnique": "Error saving data. Name must be unique.",
+  "instanceCustomLinks.error.nameTooLong": "Name cannot be more than 150 characters.",
+  "instanceCustomLinks.error.linkTextRequired": "Link text is required.",
+  "instanceCustomLinks.error.linkTextUnique": "Error saving data. Link text must be unique.",
+  "instanceCustomLinks.error.linkTextTooLong": "Link text cannot be more than 40 characters.",
+  "instanceCustomLinks.error.linkRequired": "Link is required.",
+  "instanceCustomLinks.error.linkProtocol": "Link must be HTTP or HTTPS.",
+  "instanceCustomLinks.error.linkUnique": "Error saving data. Link must be unique.",
+  "instanceCustomLinks.error.linkParameter": "Link must contain a valid parameter when provided.",
+  "instanceCustomLinks.error.tooMany": "Error saving data. Only 10 custom links per tenant allowed."
 }

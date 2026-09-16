@@ -16,19 +16,19 @@ describe('validateLink', () => {
   it('returns a "required" error when link is missing', () => {
     const errors = validateLink({});
 
-    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLink.error.linkRequired');
+    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkRequired');
   });
 
   it('returns a "required" error when link is an empty string', () => {
     const errors = validateLink({ link: '' });
 
-    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLink.error.linkRequired');
+    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkRequired');
   });
 
   it('returns a "protocol" error when link does not start with http:// or https://', () => {
     const errors = validateLink({ link: 'ftp://example.com' });
 
-    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLink.error.linkProtocol');
+    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.errors.linkProtocol');
   });
 
   it.each(['{{UUID}}', '{{HRID}}', '{{indexTitle}}'])(
@@ -42,6 +42,6 @@ describe('validateLink', () => {
   it('returns a "parameter" error when link does not contain a valid placeholder', () => {
     const errors = validateLink({ link: 'http://example.com/?id={{ID}}' });
 
-    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLink.error.linkParameter');
+    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkParameter');
   });
 });

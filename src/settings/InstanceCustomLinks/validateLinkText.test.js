@@ -10,19 +10,19 @@ describe('validateLinkText', () => {
   it('returns a "required" error when linkText is missing', () => {
     const errors = validateLinkText({});
 
-    expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLink.error.linkTextRequired');
+    expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextRequired');
   });
 
   it('returns a "required" error when linkText is an empty string', () => {
     const errors = validateLinkText({ linkText: '' });
 
-    expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLink.error.linkTextRequired');
+    expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextRequired');
   });
 
   it('returns a "too long" error when linkText exceeds 40 characters', () => {
     const errors = validateLinkText({ linkText: 'a'.repeat(41) });
 
-    expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLink.error.linkTextTooLong');
+    expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextTooLong');
   });
 
   it('returns no errors when linkText is exactly 40 characters', () => {

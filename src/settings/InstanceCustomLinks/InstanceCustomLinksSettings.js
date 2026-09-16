@@ -70,13 +70,13 @@ const getCustomErrorMessages = (errors = []) => {
         key && KNOWN_INSTANCE_CUSTOM_LINK_FIELDS.includes(key)) {
       switch (key) {
         case 'linkText':
-          fieldErrors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLink.error.linkTextUnique" />;
+          fieldErrors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextUnique" />;
           break;
         case 'link':
-          fieldErrors.link = <FormattedMessage id="ui-inventory.instanceCustomLink.error.linkUnique" />;
+          fieldErrors.link = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkUnique" />;
           break;
         case 'name':
-          fieldErrors.name = <FormattedMessage id="ui-inventory.instanceCustomLink.error.nameUnique" />;
+          fieldErrors.name = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.nameUnique" />;
           break;
         default:
           break;
