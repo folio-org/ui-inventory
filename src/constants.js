@@ -290,4 +290,4 @@ export const TAGS_SCOPE = 'ui-tags.tags.manage';
 export const TAGS_KEY = 'tags_enabled';
 
 export const KNOWN_INSTANCE_CUSTOM_LINK_CODES = ['unique'];
-export const KNOWN_INSTANCE_CUSTOM_LINK_FIELDS = ['name', 'linkText', 'baseUrl'];
+export const KNOWN_INSTANCE_CUSTOM_LINK_FIELDS = ['name', 'linkText', 'link'];

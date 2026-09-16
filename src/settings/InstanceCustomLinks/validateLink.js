@@ -2,7 +2,7 @@ import { FormattedMessage } from 'react-intl';
 
 const patterns = /\{\{(UUID|HRID|indexTitle)\}\}/;
 
-export default function validateBaseUrl(item) {
+export default function validateLink(item) {
   const errors = {};
 
   if (!item.link) {

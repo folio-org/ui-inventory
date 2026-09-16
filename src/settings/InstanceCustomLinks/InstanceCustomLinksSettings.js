@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
+import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
@@ -9,7 +11,6 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 import {
-  CalloutContext,
   IntlConsumer,
   TitleManager,
 } from '@folio/stripes/core';
@@ -24,7 +25,6 @@ import {
 import validateName from './validateName';
 import validateLinkText from './validateLinkText';
 import validateLink from './validateLink';
-import validateResponse from './validateResponse';
 
 import css from './InstanceCustomLinks.css';
 
@@ -34,7 +34,11 @@ const actionSuppressor = { edit: suppress, delete: suppress };
 const fieldComponents = {
   'show': ({ fieldProps }) => (
     <div className={css.showField}>
-      <Checkbox {...fieldProps.input} />
+      <Field
+        {...fieldProps}
+        component={Checkbox}
+        type="checkbox"
+      />
     </div>
   ),
 };
@@ -55,28 +59,41 @@ const formatHeader = (id) => {
   );
 };
 
-const classifyErrors = (errors = []) => {
-  const fieldErrors = [];
-  const calloutErrors = [];
+const getCustomErrorMessages = (errors = []) => {
+  const fieldErrors = {};
+  const commonErrors = [];
 
   errors.forEach(error => {
     const key = error.parameters?.[0]?.key;
     const code = error.code;
     if (KNOWN_INSTANCE_CUSTOM_LINK_CODES.includes(code) &&
         key && KNOWN_INSTANCE_CUSTOM_LINK_FIELDS.includes(key)) {
-      fieldErrors.push(error);
+      switch (key) {
+        case 'linkText':
+          fieldErrors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLink.error.linkTextUnique" />;
+          break;
+        case 'link':
+          fieldErrors.link = <FormattedMessage id="ui-inventory.instanceCustomLink.error.linkUnique" />;
+          break;
+        case 'name':
+          fieldErrors.name = <FormattedMessage id="ui-inventory.instanceCustomLink.error.nameUnique" />;
+          break;
+        default:
+          break;
+      }
     } else {
-      calloutErrors.push(error.message);
+      commonErrors.push(error.message);
     }
   });
 
-  return { fieldErrors, calloutErrors };
+  return { fieldErrors, commonErrors };
 };
 
 class InstanceCustomLinksSettings extends React.Component {
-  static contextType = CalloutContext;
-
   static propTypes = {
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
     stripes: PropTypes.shape({
       connect: PropTypes.func.isRequired,
       hasPerm: PropTypes.func.isRequired,
@@ -87,7 +104,8 @@ class InstanceCustomLinksSettings extends React.Component {
     instanceCustomLinksList: {
       type: 'okapi',
       path: 'instance-custom-links',
-      records: 'InstanceCustomLinks',
+      records: 'instanceCustomLinks',
+      throwErrors: false,
     },
   });
 
@@ -95,23 +113,20 @@ class InstanceCustomLinksSettings extends React.Component {
     super(props);
 
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
-
-    this.state = {
-      serverErrors: [],
-    };
   }
 
-  showCallout(type, message) {
-    this.context.sendCallout({
-      type,
-      message,
-    });
-  }
+  handleClose = () => {
+    this.props.history.push('/settings/inventory');
+  };
 
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-custom-links');
 
-    const { resources } = this.props;
+    // Since the manifest is defined to help prevent exceeding the limit on
+    // link count, it sets up a dataKey prop that ControlledVocab wants to
+    // use but shouldn't. Remove it.
+    // eslint-disable-next-line no-unused-vars
+    const { resources, dataKey, ...restProps } = this.props;
     const records = resources?.instanceCustomLinksList?.records || [];
     const atLimit = records.length >= 10;
 
@@ -119,51 +134,12 @@ class InstanceCustomLinksSettings extends React.Component {
       const nameErrors = validateName(item);
       const linkTextErrors = validateLinkText(item);
       const linkErrors = validateLink(item);
-      const associatedServerErrors = validateResponse(item, this.state.serverErrors);
 
       return {
-        ...associatedServerErrors,
         ...linkErrors,
         ...linkTextErrors,
         ...nameErrors
       };
-    };
-
-    const handleError = async (httpError) => {
-      const body = await httpError.json().catch(() => null);
-      const { fieldErrors, calloutErrors } = classifyErrors(body?.errors);
-
-      if (fieldErrors.length > 0) {
-        this.setState({ serverErrors: fieldErrors });
-      }
-
-      calloutErrors.forEach((message) => {
-        this.showCallout('error', message);
-      });
-
-      throw httpError;
-    };
-
-    const mutator = {
-      ...this.props.mutator,
-      entries: {
-        POST: (item) => this.props.mutator.entries.POST(item)
-          .then((res) => {
-            this.setState({ serverErrors: [] });
-            return res;
-          })
-          .catch((err) => {
-            return handleError(err);
-          }),
-        PUT: (item) => this.props.mutator.entries.PUT(item)
-          .then((res) => {
-            this.setState({ serverErrors: [] });
-            return res;
-          })
-          .catch((err) => {
-            return handleError(err);
-          }),
-      },
     };
 
     return (
@@ -176,7 +152,7 @@ class InstanceCustomLinksSettings extends React.Component {
                 record={intl.formatMessage({ id: 'ui-inventory.instanceCustomLinks' })}
               >
                 <this.connectedControlledVocab
-                  {...this.props}
+                  {...restProps}
                   baseUrl="instance-custom-links"
                   records="instanceCustomLinks"
                   label={<FormattedMessage id="ui-inventory.instanceCustomLinks" />}
@@ -201,7 +177,8 @@ class InstanceCustomLinksSettings extends React.Component {
                   formatter={formatter}
                   validate={item => validator(item)}
                   fieldComponents={fieldComponents}
-                  mutator={mutator}
+                  dismissPane={this.handleClose}
+                  getCustomErrorMessages={getCustomErrorMessages}
                 />
               </TitleManager>
             </Paneset>
@@ -212,4 +189,4 @@ class InstanceCustomLinksSettings extends React.Component {
   }
 }
 
-export default InstanceCustomLinksSettings;
+export default withRouter(InstanceCustomLinksSettings);
