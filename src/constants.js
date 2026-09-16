@@ -18,6 +18,12 @@ export const INVENTORY_ROUTE = '/inventory';
 export const LINKED_DATA_RESOURCES_ROUTE = '/linked-data-editor/resources';
 export const DATA_IMPORT_JOB_PROFILES_ROUTE = 'data-import-profiles/jobProfiles';
 
+export const CONNECTED_RECORD_TYPES = {
+  INSTANCE: 'instance',
+  HOLDINGS: 'holdings',
+  ITEM: 'item',
+};
+
 export const searchModeSegments = {
   search: 'search',
   browse: 'browse',

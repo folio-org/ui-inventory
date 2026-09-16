@@ -25,6 +25,16 @@ import {
 } from '../test/jest/helpers';
 
 import ViewHoldingsRecord from './ViewHoldingsRecord';
+import {
+  ConnectedTasksJobsButton,
+  ConnectedTasksJobsPane,
+} from './components';
+
+jest.mock('./components', () => ({
+  ...jest.requireActual('./components'),
+  ConnectedTasksJobsButton: jest.fn(() => null),
+  ConnectedTasksJobsPane: jest.fn(() => null),
+}));
 
 jest.mock('./Holding/ViewHolding/HoldingReceivingHistory/useReceivingHistory', () => jest.fn(() => ({
   isFetching: false,
@@ -96,6 +106,9 @@ const defaultProps = {
           temporaryLocationId: 'inactiveLocation',
           id: 'holdingId',
           instanceId: 'instanceId',
+          effectiveLocationId: 'inactiveLocation',
+          callNumber: 'CN-1',
+          hrid: 'holdings-hrid',
           _version: 1,
         }
       ],
@@ -217,6 +230,22 @@ describe('ViewHoldingsRecord actions', () => {
     const tempLocation = document.querySelector('*[data-test-id=temporary-location]').innerHTML;
 
     expect(tempLocation).toContain('Inactive');
+  });
+
+  it.each([
+    ConnectedTasksJobsButton,
+    ConnectedTasksJobsPane,
+  ])('provides Holdings context to Connected Tasks/Jobs', async (Component) => {
+    await act(async () => { renderViewHoldingsRecord(); });
+
+    expect(Component).toHaveBeenCalledWith(expect.objectContaining({
+      recordId: 'holdingId',
+      recordObject: {
+        displayName: expect.stringMatching(/Location 1.*CN-1/),
+        hrid: 'holdings-hrid',
+      },
+      recordType: 'holdings',
+    }), {});
   });
 
   describe('Action menu', () => {

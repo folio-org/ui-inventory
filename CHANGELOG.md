@@ -12,6 +12,7 @@
 * Update Inventory results list's select/unselect all checkbox label. Refs UIIN-3684.
 * Integrate Button "Generate identifier" in Inventory instance records. Refs UIIN-3679.
 * Update aria-label for action menu buttons based on context. Refs UIIN-3685.
+* Add Connected Tasks/Jobs to Instance, Holdings, and Item detail pages. Refs UIIN-3706.
 
 ## [14.0.5](https://github.com/folio-org/ui-inventory/tree/v14.0.5) (2026-07-31)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.4...v14.0.5)
