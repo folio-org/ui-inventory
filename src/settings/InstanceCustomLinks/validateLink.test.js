@@ -28,7 +28,7 @@ describe('validateLink', () => {
   it('returns a "protocol" error when link does not start with http:// or https://', () => {
     const errors = validateLink({ link: 'ftp://example.com' });
 
-    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.errors.linkProtocol');
+    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkProtocol');
   });
 
   it.each(['{{UUID}}', '{{HRID}}', '{{indexTitle}}'])(
