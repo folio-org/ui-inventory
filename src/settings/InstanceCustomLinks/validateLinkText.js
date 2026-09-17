@@ -11,5 +11,9 @@ export default function validateLinkText(item) {
     errors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextTooLong" />;
   }
 
+  if (item.linkText && item.linkText.trim() === '') {
+    errors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextBlank" />;
+  }
+
   return errors;
 }

@@ -17,5 +17,9 @@ export default function validateLink(item) {
     errors.link = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkParameter" />;
   }
 
+  if (item.link && item.link.length > 1000) {
+    errors.link = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTooLong" />;
+  }
+
   return errors;
 }

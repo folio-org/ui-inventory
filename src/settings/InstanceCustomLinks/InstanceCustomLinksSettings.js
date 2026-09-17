@@ -11,6 +11,7 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 import {
+  CalloutContext,
   IntlConsumer,
   TitleManager,
 } from '@folio/stripes/core';
@@ -59,37 +60,9 @@ const formatHeader = (id) => {
   );
 };
 
-const getCustomErrorMessages = (errors = []) => {
-  const fieldErrors = {};
-  const commonErrors = [];
-
-  errors.forEach(error => {
-    const key = error.parameters?.[0]?.key;
-    const code = error.code;
-    if (KNOWN_INSTANCE_CUSTOM_LINK_CODES.includes(code) &&
-        key && KNOWN_INSTANCE_CUSTOM_LINK_FIELDS.includes(key)) {
-      switch (key) {
-        case 'linkText':
-          fieldErrors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextUnique" />;
-          break;
-        case 'link':
-          fieldErrors.link = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkUnique" />;
-          break;
-        case 'name':
-          fieldErrors.name = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.nameUnique" />;
-          break;
-        default:
-          break;
-      }
-    } else {
-      commonErrors.push(error.message);
-    }
-  });
-
-  return { fieldErrors, commonErrors };
-};
-
 class InstanceCustomLinksSettings extends React.Component {
+  static contextType = CalloutContext;
+
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -115,8 +88,46 @@ class InstanceCustomLinksSettings extends React.Component {
     this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
   }
 
+  showCallout = (type, message) => {
+    this.context.sendCallout({
+      type,
+      message,
+    });
+  };
+
   handleClose = () => {
     this.props.history.push('/settings/inventory');
+  };
+
+  getCustomErrorMessages = (errors = []) => {
+    // Common errors override field errors. Until they can interleave instead of
+    // always deferring to backend response-derived common errors, use callouts
+    // to show response-based complaints.
+    errors.forEach(error => {
+      const key = error.parameters?.[0]?.key;
+      const code = error.code;
+      if (KNOWN_INSTANCE_CUSTOM_LINK_CODES.includes(code) &&
+          key && KNOWN_INSTANCE_CUSTOM_LINK_FIELDS.includes(key)) {
+        switch (key) {
+          case 'linkText':
+            this.showCallout('error', <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextUnique" />);
+            break;
+          case 'link':
+            this.showCallout('error', <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkUnique" />);
+            break;
+          case 'name':
+            this.showCallout('error', <FormattedMessage id="ui-inventory.instanceCustomLinks.error.nameUnique" />);
+            break;
+          default:
+            break;
+        }
+      } else {
+        const calloutMessage = key ? `${error.message} (${key})` : error.message;
+        this.showCallout('error', calloutMessage);
+      }
+    });
+
+    return undefined;
   };
 
   render() {
@@ -163,7 +174,7 @@ class InstanceCustomLinksSettings extends React.Component {
                     name: formatHeader('ui-inventory.name'),
                     linkText: formatHeader('ui-inventory.linkText'),
                     link: formatHeader('ui-inventory.link'),
-                    show: intl.formatMessage({ id: 'ui-inventory.show' }),
+                    show: formatHeader('ui-inventory.show'),
                   }}
                   actionSuppressor={actionSuppressor}
                   readOnlyFields={['source']}
@@ -178,7 +189,7 @@ class InstanceCustomLinksSettings extends React.Component {
                   validate={item => validator(item)}
                   fieldComponents={fieldComponents}
                   dismissPane={this.handleClose}
-                  getCustomErrorMessages={getCustomErrorMessages}
+                  getCustomErrorMessages={this.getCustomErrorMessages}
                 />
               </TitleManager>
             </Paneset>
