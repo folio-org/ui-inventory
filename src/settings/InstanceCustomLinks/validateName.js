@@ -7,7 +7,7 @@ export default function validateName(item) {
     errors.name = <FormattedMessage id="ui-inventory.fillIn" />;
   }
 
-  if (item.name && item.name.length > 150) {
+  if (item?.name?.length > 150) {
     errors.name = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.nameTooLong" />;
   }
 

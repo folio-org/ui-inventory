@@ -16,7 +16,7 @@ describe('validateLinkText', () => {
   it('returns a "required" error when linkText is an empty string', () => {
     const errors = validateLinkText({ linkText: '' });
 
-    expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextRequired');
+    expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextBlank');
   });
 
   it('returns a "blank" error when linkText is a non-empty but blank string', () => {

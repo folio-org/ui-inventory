@@ -7,11 +7,11 @@ export default function validateLinkText(item) {
     errors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextRequired" />;
   }
 
-  if (item.linkText && item.linkText.length > 40) {
+  if (item?.linkText?.length > 40) {
     errors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextTooLong" />;
   }
 
-  if (item.linkText && item.linkText.trim() === '') {
+  if (item?.linkText?.trim() === '') {
     errors.linkText = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextBlank" />;
   }
 

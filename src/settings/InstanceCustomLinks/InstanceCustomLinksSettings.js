@@ -30,7 +30,7 @@ import css from './InstanceCustomLinks.css';
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.CONSORTIUM);
 const actionSuppressor = { edit: suppress, delete: suppress };
-const columnWidths = { show: '5%'};
+const columnWidths = { show: '5%' };
 
 const fieldComponents = {
   'show': ({ fieldProps }) => (
@@ -131,8 +131,7 @@ class InstanceCustomLinksSettings extends React.Component {
   };
 
   render() {
-    //const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-custom-links');
-    const hasPerm = true;
+    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-custom-links');
 
     // Since the manifest is defined to help prevent exceeding the limit on
     // link count, it sets up a dataKey prop that ControlledVocab wants to
