@@ -1,5 +1,6 @@
 const path = require('path');
-const config = require('@folio/jest-config-stripes');
+const stripesJestConfig = require('@folio/jest-config-stripes');
+const config = stripesJestConfig.config || stripesJestConfig;
 
 const additionalModules = [
   '@k-int/stripes-kint-components',

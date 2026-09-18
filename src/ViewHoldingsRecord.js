@@ -75,6 +75,7 @@ import {
   emptyList,
   noValue,
   holdingsStatementTypes,
+  CONNECTED_RECORD_TYPES,
   TAGS_SCOPE,
   TAGS_KEY,
 } from './constants';
@@ -82,6 +83,8 @@ import {
   WarningMessage,
   AdministrativeNoteList,
   ActionItem,
+  ConnectedTasksJobsButton,
+  ConnectedTasksJobsPane,
 } from './components';
 import HoldingAcquisitions from './Holding/ViewHolding/HoldingAcquisitions';
 import HoldingReceivingHistory from './Holding/ViewHolding/HoldingReceivingHistory';
@@ -90,6 +93,30 @@ import { HoldingVersionHistory } from './Holding/HoldingVersionHistory';
 import { MOD_SETTINGS_API } from './settings/NumberGeneratorSettings/constants';
 
 import css from './View.css';
+
+const getConnectedRecordDisplayName = (intl, holdingsRecord, holdingsEffectiveLocation) => (
+  intl.formatMessage({
+    id: 'ui-inventory.holdingsPaneTitle',
+  }, {
+    callNumber: holdingsRecord?.callNumber,
+    location: holdingsEffectiveLocation?.isActive
+      ? holdingsEffectiveLocation?.name
+      : `${intl.formatMessage({ id: 'ui-inventory.inactive' })} ${holdingsEffectiveLocation?.name}`,
+  })
+);
+
+const getConnectedTasksJobsProps = ({
+  holdingsEffectiveLocation,
+  holdingsRecord,
+  intl,
+}) => ({
+  recordId: holdingsRecord.id,
+  recordObject: {
+    displayName: getConnectedRecordDisplayName(intl, holdingsRecord, holdingsEffectiveLocation),
+    hrid: holdingsRecord.hrid,
+  },
+  recordType: CONNECTED_RECORD_TYPES.HOLDINGS,
+});
 
 class ViewHoldingsRecord extends React.Component {
   static contextType = CalloutContext;
@@ -996,6 +1023,13 @@ class ViewHoldingsRecord extends React.Component {
                     }}
                     lastMenu={(
                       <PaneMenu>
+                        <ConnectedTasksJobsButton
+                          {...getConnectedTasksJobsProps({
+                            holdingsEffectiveLocation,
+                            holdingsRecord,
+                            intl,
+                          })}
+                        />
                         {isVersionHistoryEnabled && (
                           <VersionHistoryButton
                             disabled={isVersionHistoryOpen}
@@ -1408,6 +1442,13 @@ class ViewHoldingsRecord extends React.Component {
                       </AccordionSet>
                     </AccordionStatus>
                   </Pane>
+                  <ConnectedTasksJobsPane
+                    {...getConnectedTasksJobsProps({
+                      holdingsEffectiveLocation,
+                      holdingsRecord,
+                      intl,
+                    })}
+                  />
                   {this.state.isVersionHistoryOpen && (
                     <HoldingVersionHistory
                       holdingId={holdingsRecord.id}
