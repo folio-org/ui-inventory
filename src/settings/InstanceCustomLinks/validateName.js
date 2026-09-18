@@ -11,9 +11,5 @@ export default function validateName(item) {
     errors.name = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.nameTooLong" />;
   }
 
-  if (item.name && item.name.trim() === '') {
-    errors.name = <FormattedMessage id="ui-inventory.instanceCustomLinks.error.nameBlank" />;
-  }
-
   return errors;
 }

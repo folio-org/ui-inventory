@@ -972,7 +972,6 @@
   "show": "Show",
   "link": "Link",
   "instanceCustomLinks.error.nameUnique": "Error saving data. Name must be unique.",
-  "instanceCustomLinks.error.nameBlank": "Name cannot be a blank string.",
   "instanceCustomLinks.error.nameTooLong": "Name cannot be more than 150 characters.",
   "instanceCustomLinks.error.linkTextRequired": "Link text is required.",
   "instanceCustomLinks.error.linkTextBlank": "Link cannot be a blank string.",

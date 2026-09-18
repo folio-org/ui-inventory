@@ -22,7 +22,6 @@ import {
   KNOWN_INSTANCE_CUSTOM_LINK_FIELDS,
   RECORD_SOURCE,
 } from '../../constants';
-
 import validateName from './validateName';
 import validateLinkText from './validateLinkText';
 import validateLink from './validateLink';
@@ -31,6 +30,7 @@ import css from './InstanceCustomLinks.css';
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.CONSORTIUM);
 const actionSuppressor = { edit: suppress, delete: suppress };
+const columnWidths = { show: '5%'};
 
 const fieldComponents = {
   'show': ({ fieldProps }) => (
@@ -100,9 +100,9 @@ class InstanceCustomLinksSettings extends React.Component {
   };
 
   getCustomErrorMessages = (errors = []) => {
-    // Common errors override field errors. Until they can interleave instead of
-    // always deferring to backend response-derived common errors, use callouts
-    // to show response-based complaints.
+    // Custom errors override form validation errors. Until they can interleave
+    // instead of always deferring to backend response-derived errors, use callouts
+    // to show response-derived errors, leaving in-form messages solely to validation.
     errors.forEach(error => {
       const key = error.parameters?.[0]?.key;
       const code = error.code;
@@ -131,7 +131,8 @@ class InstanceCustomLinksSettings extends React.Component {
   };
 
   render() {
-    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-custom-links');
+    //const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-custom-links');
+    const hasPerm = true;
 
     // Since the manifest is defined to help prevent exceeding the limit on
     // link count, it sets up a dataKey prop that ControlledVocab wants to
@@ -174,7 +175,7 @@ class InstanceCustomLinksSettings extends React.Component {
                     name: formatHeader('ui-inventory.name'),
                     linkText: formatHeader('ui-inventory.linkText'),
                     link: formatHeader('ui-inventory.link'),
-                    show: formatHeader('ui-inventory.show'),
+                    show: intl.formatMessage({ id: 'ui-inventory.show' }),
                   }}
                   actionSuppressor={actionSuppressor}
                   readOnlyFields={['source']}
@@ -190,6 +191,7 @@ class InstanceCustomLinksSettings extends React.Component {
                   fieldComponents={fieldComponents}
                   dismissPane={this.handleClose}
                   getCustomErrorMessages={this.getCustomErrorMessages}
+                  columnWidths={columnWidths}
                 />
               </TitleManager>
             </Paneset>

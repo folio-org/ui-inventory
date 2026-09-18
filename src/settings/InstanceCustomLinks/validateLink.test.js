@@ -44,4 +44,16 @@ describe('validateLink', () => {
 
     expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkParameter');
   });
+
+  it('returns a "too long" error when link exceeds 1000 characters', () => {
+    const errors = validateLink({ link: 'http://' + 'a'.repeat(1001) });
+
+    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTooLong');
+  });
+
+  it('returns a "too long" error when link with missing protocol exceeds 1000 characters', () => {
+    const errors = validateLink({ link: 'a'.repeat(1001) });
+
+    expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTooLong');
+  });
 });

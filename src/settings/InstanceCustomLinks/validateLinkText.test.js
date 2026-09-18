@@ -19,6 +19,12 @@ describe('validateLinkText', () => {
     expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextRequired');
   });
 
+  it('returns a "blank" error when linkText is a non-empty but blank string', () => {
+    const errors = validateLinkText({ linkText: '    ' });
+
+    expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextBlank');
+  });
+
   it('returns a "too long" error when linkText exceeds 40 characters', () => {
     const errors = validateLinkText({ linkText: 'a'.repeat(41) });
 
