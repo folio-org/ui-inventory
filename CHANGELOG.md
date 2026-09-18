@@ -13,6 +13,7 @@
 * Integrate Button "Generate identifier" in Inventory instance records. Refs UIIN-3679.
 * Update aria-label for action menu buttons based on context. Refs UIIN-3685.
 * Revert UIIN-3377. Make submitting an Item Form default to Save & close behaviour. Refs UIIN-3596.
+* Add Connected Tasks/Jobs to Instance, Holdings, and Item detail pages. Refs UIIN-3706.
 * Add instance custom links settings. Refs UIIN-3652.
 
 ## [14.0.6](https://github.com/folio-org/ui-inventory/tree/v14.0.6) (2026-08-12)

@@ -28,10 +28,15 @@ import InstanceDetailsContent from '../InstanceDetailsContent';
 import InstanceLoadingPane from '../components/InstanceLoadingPane';
 import InstanceWarningPane from '../components/InstanceWarningPane';
 import InstanceVersionHistory from '../InstanceVersionHistory';
-import { HelperApp } from '../../../components';
+import {
+  ConnectedTasksJobsButton,
+  ConnectedTasksJobsPane,
+  HelperApp,
+} from '../../../components';
 
 import { useSharedInstancesQuery } from '../../hooks';
 import { useAuditSettings } from '../../../hooks';
+import useReferenceData from '../../../hooks/useReferenceData';
 
 import {
   getIsVersionHistoryEnabled,
@@ -40,6 +45,7 @@ import {
 } from '../../../utils';
 import { getPublishingInfo } from '../utils';
 import {
+  CONNECTED_RECORD_TYPES,
   HTTP_RESPONSE_STATUS_CODES,
   INVENTORY_AUDIT_GROUP,
 } from '../../../constants';
@@ -68,6 +74,7 @@ const ViewInstancePane = ({
   const stripes = useStripes();
   const { id: instanceId } = useParams();
   const tags = instance?.tags?.tagList;
+  const referenceData = useReferenceData();
 
   const [helperApp, setHelperApp] = useState();
   const [isVersionHistoryOpen, setIsVersionHistoryOpen] = useState(false);
@@ -82,6 +89,17 @@ const ViewInstancePane = ({
     () => Boolean(isShared || isInstanceShadowCopy(instance?.source)),
     [isShared, instance?.source],
   );
+
+  const connectedTasksJobsProps = useMemo(() => ({
+    recordId: instance?.id,
+    recordObject: {
+      hrid: instance?.hrid,
+      statusTerm: referenceData?.instanceStatuses
+        ?.find(status => status.id === instance?.statusId)?.name,
+      title: instance?.title,
+    },
+    recordType: CONNECTED_RECORD_TYPES.INSTANCE,
+  }), [instance?.hrid, instance?.id, instance?.statusId, instance?.title, referenceData?.instanceStatuses]);
 
   const paneTitle = useMemo(
     () => {
@@ -126,6 +144,7 @@ const ViewInstancePane = ({
           disabled={isVersionHistoryOpen}
         />
       )}
+      <ConnectedTasksJobsButton {...connectedTasksJobsProps} />
       {isVersionHistoryEnabled && (
         <VersionHistoryButton
           disabled={isVersionHistoryOpen}
@@ -133,7 +152,7 @@ const ViewInstancePane = ({
         />
       )}
     </PaneMenu>
-  ), [tagsEnabled, tags, intl, isVersionHistoryOpen, isVersionHistoryEnabled]);
+  ), [connectedTasksJobsProps, tagsEnabled, tags, intl, isVersionHistoryOpen, isVersionHistoryEnabled]);
 
   const getEntity = () => instance;
 
@@ -206,7 +225,7 @@ const ViewInstancePane = ({
           />
         </div>
       </Pane>
-
+      <ConnectedTasksJobsPane {...connectedTasksJobsProps} />
       {isVersionHistoryOpen && (
         <InstanceVersionHistory
           instanceId={instanceId}

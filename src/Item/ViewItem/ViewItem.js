@@ -42,7 +42,11 @@ import {
   ItemDetailsContent,
   ItemVersionHistory,
 } from './components';
-import { PaneLoading } from '../../components';
+import {
+  ConnectedTasksJobsButton,
+  ConnectedTasksJobsPane,
+  PaneLoading,
+} from '../../components';
 
 import {
   useAuditSettings,
@@ -68,6 +72,7 @@ import {
   getIsVersionHistoryEnabled,
 } from '../../utils';
 import {
+  CONNECTED_RECORD_TYPES,
   REQUEST_OPEN_STATUSES,
   INVENTORY_AUDIT_GROUP,
 } from '../../constants';
@@ -128,6 +133,15 @@ const ViewItem = ({
 
   const isLoading = useMemo(() => isItemLoading || isInstanceLoading || isHoldingsLoading,
     [isItemLoading, isInstanceLoading, isHoldingsLoading]);
+
+  const connectedTasksJobsProps = useMemo(() => ({
+    recordId: item?.id,
+    recordObject: {
+      barcode: item?.barcode,
+      status: item?.status?.name,
+    },
+    recordType: CONNECTED_RECORD_TYPES.ITEM,
+  }), [item?.barcode, item?.id, item?.status?.name]);
 
   const { deleteItem, mutateItem } = useItemMutation();
   const {
@@ -244,6 +258,7 @@ const ViewItem = ({
 
     return (
       <PaneMenu>
+        <ConnectedTasksJobsButton {...connectedTasksJobsProps} />
         {isVersionHistoryEnabled && (
           <VersionHistoryButton
             onClick={() => setIsVersionHistoryOpen(true)}
@@ -252,7 +267,7 @@ const ViewItem = ({
         )}
       </PaneMenu>
     );
-  }, [settings, isVersionHistoryOpen]);
+  }, [connectedTasksJobsProps, settings, isVersionHistoryOpen]);
 
   const onCloseViewItem = useCallback(async () => {
     const fromTenant = location.state?.initialTenantId || stripes.okapi.tenant;
@@ -329,6 +344,7 @@ const ViewItem = ({
             onChangeTags={onChangeTags}
           />
         </Pane>
+        <ConnectedTasksJobsPane {...connectedTasksJobsProps} />
         {isVersionHistoryOpen && (
           <ItemVersionHistory
             item={item}

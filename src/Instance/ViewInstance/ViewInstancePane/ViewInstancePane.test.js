@@ -6,6 +6,10 @@ import { renderWithIntl, translationsProperties } from '../../../../test/jest/he
 
 import ViewInstancePane from './ViewInstancePane';
 import { getIsVersionHistoryEnabled } from '../../../utils';
+import {
+  ConnectedTasksJobsButton,
+  ConnectedTasksJobsPane,
+} from '../../../components';
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
@@ -22,6 +26,9 @@ jest.mock('../../hooks', () => ({
 jest.mock('../../../hooks', () => ({
   useAuditSettings: jest.fn().mockReturnValue({ settings: {} }),
 }));
+jest.mock('../../../hooks/useReferenceData', () => jest.fn(() => ({
+  instanceStatuses: [{ id: 'status-id', name: 'Cataloged' }],
+})));
 jest.mock('../../../utils', () => ({
   getDate: jest.fn(() => '01/01/2023'),
   getIsVersionHistoryEnabled: jest.fn(() => false),
@@ -48,6 +55,8 @@ jest.mock('../components/InstanceWarningPane', () => jest.fn(({ onClose, message
 jest.mock('../InstanceVersionHistory', () => jest.fn(() => <div>InstanceVersionHistory</div>));
 jest.mock('../../../components', () => ({
   ...jest.requireActual('../../../components'),
+  ConnectedTasksJobsButton: jest.fn(() => null),
+  ConnectedTasksJobsPane: jest.fn(() => null),
   HelperApp: jest.fn(() => <div>HelperApp</div>),
 }));
 jest.mock('@folio/stripes-acq-components', () => ({
@@ -61,6 +70,7 @@ const defaultProps = {
     title: 'Test Instance',
     hrid: 'hrid-1',
     source: 'FOLIO',
+    statusId: 'status-id',
     tags: { tagList: ['tag1', 'tag2'] },
     metadata: { updatedDate: '2023-01-01T00:00:00.000Z' },
   },
@@ -89,6 +99,23 @@ describe('ViewInstancePane', () => {
 
     expect(screen.getByText('InstanceDetailsContent')).toBeInTheDocument();
     expect(screen.getByText('ActionMenu')).toBeInTheDocument();
+  });
+
+  it.each([
+    ConnectedTasksJobsButton,
+    ConnectedTasksJobsPane,
+  ])('provides Instance context to Connected Tasks/Jobs', (Component) => {
+    renderViewInstancePane();
+
+    expect(Component).toHaveBeenCalledWith(expect.objectContaining({
+      recordId: defaultProps.instance.id,
+      recordObject: {
+        hrid: defaultProps.instance.hrid,
+        statusTerm: 'Cataloged',
+        title: defaultProps.instance.title,
+      },
+      recordType: 'instance',
+    }), {});
   });
 
   it('renders loading pane when isLoading is true', () => {

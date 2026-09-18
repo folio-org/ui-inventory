@@ -15,6 +15,10 @@ import {
 } from '../../../test/jest/helpers';
 
 import ViewItem from './ViewItem';
+import {
+  ConnectedTasksJobsButton,
+  ConnectedTasksJobsPane,
+} from '../../components';
 
 import { useItemQuery } from '../hooks';
 
@@ -43,6 +47,8 @@ jest.mock('./components', () => ({
 
 jest.mock('../../components', () => ({
   ...jest.requireActual('../../components'),
+  ConnectedTasksJobsButton: jest.fn(() => null),
+  ConnectedTasksJobsPane: jest.fn(() => null),
   PaneLoading: () => <div>PaneLoading</div>,
 }));
 
@@ -138,6 +144,11 @@ const renderViewItem = (props = {}) => {
 
 describe('ViewItem', () => {
   beforeEach(() => {
+    useParams.mockReturnValue({
+      holdingsrecordid: mockHolding.id,
+      id: mockInstance.id,
+      itemid: mockItem.id,
+    });
     useItemQuery.mockClear().mockReturnValue({ isLoading: false, item: mockItem });
   });
 
@@ -160,6 +171,22 @@ describe('ViewItem', () => {
 
     expect(screen.getByText('ItemDetailsContent')).toBeInTheDocument();
     expect(screen.getByText('ItemModals')).toBeInTheDocument();
+  });
+
+  it.each([
+    ConnectedTasksJobsButton,
+    ConnectedTasksJobsPane,
+  ])('provides Item context to Connected Tasks/Jobs', (Component) => {
+    renderViewItem();
+
+    expect(Component).toHaveBeenCalledWith(expect.objectContaining({
+      recordId: mockItem.id,
+      recordObject: {
+        barcode: mockItem.barcode,
+        status: mockItem.status.name,
+      },
+      recordType: 'item',
+    }), {});
   });
 
   it('should render version history pane when version history button is clicked', async () => {
