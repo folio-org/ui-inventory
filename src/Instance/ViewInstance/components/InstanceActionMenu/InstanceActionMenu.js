@@ -317,7 +317,7 @@ const InstanceActionMenu = ({
         </MenuSection>
       )}
 
-      {customLinks && (
+      {customLinks?.length > 0 && (
         <MenuSection
           id="instance-custom-links-menu-section"
           label={intl.formatMessage({ id: 'ui-inventory.instanceCustomLinks' })}
@@ -329,7 +329,7 @@ const InstanceActionMenu = ({
                 id={customLink.id}
                 icon="external-link"
                 messageId={intl.formatMessage({ id: 'ui-inventory.instanceCustomLinks.viewIn' }, { linkText: customLink.label })}
-                onClickHandler={() => buildOnClickHandler(handleCustomLink(customLink.link))}
+                onClickHandler={() => buildOnClickHandler(() => handleCustomLink(customLink.link))}
               />
             );
           })}
@@ -368,6 +368,7 @@ InstanceActionMenu.propTypes = {
   requests: PropTypes.arrayOf(PropTypes.object),
   numberOfRequests: PropTypes.number,
   onCopy: PropTypes.func,
+  customLinks: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default InstanceActionMenu;

@@ -8,7 +8,7 @@ import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../../test/jest/__mock__';
 import { useOkapiKy } from '@folio/stripes/core';
 
-import useInstanceCustomLinks from './useInstanceCustomLinks';
+import { useInstanceCustomLinks } from './useInstanceCustomLinks';
 
 const queryClient = new QueryClient();
 
@@ -50,7 +50,7 @@ describe('useInstanceCustomLinks', () => {
   beforeEach(() => {
     useOkapiKy.mockClear().mockReturnValue({
       get: () => ({
-        json: () => Promise.resolve(defaultCustomLinks),
+        json: () => Promise.resolve({ instanceCustomLinks: defaultCustomLinks }),
       }),
     });
   });
@@ -102,5 +102,24 @@ describe('useInstanceCustomLinks', () => {
     await act(() => !result.current.isLoading);
 
     expect(result.current.customLinks[2].link).toBe('https://search.example.com/q?title=Lorem%20ipsum%20dolor%20%7Bsit%20amet%7D');
+  });
+
+  it('should not fetch custom links when disabled', async () => {
+    const get = jest.fn(() => ({ json: () => Promise.resolve({ instanceCustomLinks: defaultCustomLinks }) }));
+
+    useOkapiKy.mockClear().mockReturnValue({ get });
+
+    const freshQueryClient = new QueryClient();
+    const freshWrapper = ({ children }) => (
+      <QueryClientProvider client={freshQueryClient}>
+        {children}
+      </QueryClientProvider>
+    );
+
+    const { result } = renderHook(() => useInstanceCustomLinks(defaultInstance, { enabled: false }), { wrapper: freshWrapper });
+
+    expect(result.current.isLoading).toBe(false);
+    expect(result.current.customLinks).toEqual([]);
+    expect(get).not.toHaveBeenCalled();
   });
 });

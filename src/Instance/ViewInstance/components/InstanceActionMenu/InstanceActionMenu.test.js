@@ -151,4 +151,26 @@ describe('InstanceActionMenu', () => {
     expect(screen.getByText('Custom links')).toBeInTheDocument();
     expect(screen.getByText('View in Link 1')).toBeInTheDocument();
   });
+
+  it('does not render the custom links section when there are no custom links', () => {
+    renderInstanceActionMenu({ customLinks: [] });
+
+    expect(screen.queryByText('Custom links')).not.toBeInTheDocument();
+  });
+
+  it('does not render the custom links section when customLinks is not provided', () => {
+    renderInstanceActionMenu();
+
+    expect(screen.queryByText('Custom links')).not.toBeInTheDocument();
+  });
+
+  it('calls onToggle and handleCustomLink when a custom link is clicked', () => {
+    renderInstanceActionMenu({ customLinks: defaultInstanceCustomLinks });
+
+    const customLinkBtn = screen.getByRole('button', { name: /view in link 1/i });
+    fireEvent.click(customLinkBtn);
+
+    expect(onToggle).toHaveBeenCalled();
+    expect(defaultActions.handleCustomLink).toHaveBeenCalledWith('https://example.org');
+  });
 });
