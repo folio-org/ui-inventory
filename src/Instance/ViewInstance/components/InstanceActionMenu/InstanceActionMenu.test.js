@@ -63,7 +63,6 @@ const defaultPermissions = {
   canCreateMARCHoldings: true,
   hasReorderPermissions: true,
   showLinkedDataMenuSection: true,
-  canViewInstanceCustomLinks: true,
 };
 
 const onToggle = jest.fn();

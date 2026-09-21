@@ -1,1 +1,1 @@
-export { default } from './useInstanceCustomLinks';
+export { useInstanceCustomLinks } from './useInstanceCustomLinks';

@@ -23,7 +23,7 @@ const renderCustomLink = (instance, customLink) => {
   };
 };
 
-const useInstanceCustomLinks = (
+export const useInstanceCustomLinks = (
   instance,
   { enabled = true } = {},
 ) => {
@@ -34,7 +34,7 @@ const useInstanceCustomLinks = (
     queryKey: [namespace],
     queryFn: async () => {
       const response = await ky.get('instance-custom-links').json();
-      return response.filter(link => link.show);
+      return response.instanceCustomLinks.filter(link => link.show);
     },
     enabled: !!enabled,
   });
@@ -44,5 +44,3 @@ const useInstanceCustomLinks = (
     isLoading,
   };
 };
-
-export default useInstanceCustomLinks;

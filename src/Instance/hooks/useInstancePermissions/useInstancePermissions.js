@@ -55,7 +55,6 @@ const useInstancePermissions = ({
     && stripes.hasPerm('consortia.inventory.local.sharing-instances.execute')
     && !isShared
     && !isInstanceShadowCopy(source);
-  const canViewInstanceCustomLinks = stripes.hasPerm('ui-inventory.settings.instance-custom-links.view');
 
   const canCentralTenantCreateOrder = checkIfUserInCentralTenant(stripes) && checkIfCentralOrderingIsActive(centralOrdering);
   const canCreateOrder = (!checkIfUserInCentralTenant(stripes) && stripes.hasInterface('orders') && stripes.hasPerm('ui-inventory.instance.order.create')) || canCentralTenantCreateOrder;
@@ -100,7 +99,6 @@ const useInstancePermissions = ({
     canEditMARCRecord,
     canDeriveMARCRecord,
     canAddMARCHoldingsRecord,
-    canViewInstanceCustomLinks,
     canViewMARCSource,
     canViewInstance,
     canViewSource,

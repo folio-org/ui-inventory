@@ -70,7 +70,6 @@ const InstanceActionMenu = ({
     canCreateMARCHoldings,
     hasReorderPermissions,
     showLinkedDataMenuSection,
-    canViewInstanceCustomLinks,
   } = useInstancePermissions({
     instance,
     isShared,
@@ -318,7 +317,7 @@ const InstanceActionMenu = ({
         </MenuSection>
       )}
 
-      {canViewInstanceCustomLinks && customLinks && (
+      {customLinks && (
         <MenuSection
           id="instance-custom-links-menu-section"
           label={intl.formatMessage({ id: 'ui-inventory.instanceCustomLinks' })}
