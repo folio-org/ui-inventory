@@ -30,7 +30,12 @@ import css from './InstanceCustomLinks.css';
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.CONSORTIUM);
 const actionSuppressor = { edit: suppress, delete: suppress };
-const columnWidths = { show: '5%' };
+const columnWidths = {
+  name: '15%',
+  linkText: '15%',
+  link: '35%',
+  show: '5%'
+};
 
 const fieldComponents = {
   'show': ({ fieldProps }) => (
