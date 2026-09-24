@@ -1,0 +1,1 @@
+export { useInstanceCustomLinks } from './useInstanceCustomLinks';
