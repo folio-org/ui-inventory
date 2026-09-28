@@ -874,7 +874,8 @@
         "replaces": ["ui-inventory.instance.set-deletion-and-staff-suppress"],
         "subPermissions": [
           "ui-inventory.instance.view",
-          "source-storage.records.update"
+          "source-storage.records.update",
+          "inventory.instances.item.mark-deleted.delete"
         ],
         "visible": true
       },
