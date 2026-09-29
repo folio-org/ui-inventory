@@ -15,6 +15,9 @@ import {
   IntlConsumer,
   TitleManager,
 } from '@folio/stripes/core';
+import {
+  validateCustomLink
+} from '@folio/stripes-acq-components';
 import { getSourceSuppressor } from '@folio/stripes/util';
 
 import {
@@ -22,9 +25,6 @@ import {
   KNOWN_INSTANCE_CUSTOM_LINK_FIELDS,
   RECORD_SOURCE,
 } from '../../constants';
-import validateName from './validateName';
-import validateLinkText from './validateLinkText';
-import validateLink from './validateLink';
 
 import css from './InstanceCustomLinks.css';
 
@@ -146,18 +146,6 @@ class InstanceCustomLinksSettings extends React.Component {
     const records = resources?.instanceCustomLinksList?.records || [];
     const atLimit = records.length >= 10;
 
-    const validator = (item) => {
-      const nameErrors = validateName(item);
-      const linkTextErrors = validateLinkText(item);
-      const linkErrors = validateLink(item);
-
-      return {
-        ...linkErrors,
-        ...linkTextErrors,
-        ...nameErrors
-      };
-    };
-
     return (
       <IntlConsumer>
         {intl => (
@@ -191,7 +179,7 @@ class InstanceCustomLinksSettings extends React.Component {
                   editable={hasPerm}
                   hideCreateButton={atLimit}
                   formatter={formatter}
-                  validate={item => validator(item)}
+                  validate={item => validateCustomLink(item)}
                   fieldComponents={fieldComponents}
                   dismissPane={this.handleClose}
                   getCustomErrorMessages={this.getCustomErrorMessages}
