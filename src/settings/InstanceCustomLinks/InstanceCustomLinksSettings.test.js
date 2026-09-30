@@ -12,30 +12,10 @@ import {
 
 import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 
-import InstanceCustomLinksSettings from './InstanceCustomLinksSettings';
+import { InstanceCustomLinksSettings } from './InstanceCustomLinksSettings';
+import errorResponseNotifications from './errorResponseNotifications';
 
-jest.mock('../../hooks', () => ({
-  ...jest.requireActual('../../hooks'),
-  useCallNumberTypesQuery: jest.fn(),
-}));
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useStripes: jest.fn().mockReturnValue({
-    hasInterface: () => true,
-    hasPerm: () => true,
-    connect: component => component,
-    user: {},
-    okapi: {},
-  }),
-  useOkapiKy: jest.fn().mockReturnValue({
-    get: jest.fn(),
-    extend: jest.fn(),
-  }),
-  useUserTenantPermissions: jest.fn().mockReturnValue({
-    userPermissions: [],
-    isFetching: false,
-  }),
-}));
+jest.mock('./errorResponseNotifications', () => jest.fn());
 
 const defaultProps = {
   stripes: buildStripes(),
@@ -133,124 +113,19 @@ describe('InstanceCustomLinksSettings', () => {
   });
 
   describe('getCustomErrorMessages', () => {
-    it('shows no callouts when response contains no errors', () => {
+    it('delegates backend errors and the callout to errorResponseNotifications', () => {
       const sendCallout = jest.fn();
+      const errors = [{ code: 'unique', parameters: [{ key: 'name', value: 'Foo' }], message: 'name must be unique' }];
+
       renderInstanceCustomLinksSettings({}, { sendCallout });
       const { getCustomErrorMessages } = getLatestControlledVocabProps();
 
-      getCustomErrorMessages([]);
+      getCustomErrorMessages(errors);
 
-      expect(sendCallout).not.toHaveBeenCalled();
-    });
-
-    it('shows the generic case callout when response contains a field-specific unique error for an unrecognized field', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
-
-      getCustomErrorMessages([{
-        code: 'unique',
-        parameters: [{ key: 'description', value: 'Foo' }],
-        message: 'description must be unique',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'description must be unique (description)' });
-    });
-
-    it('shows the callout for name uniqueness error', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
-
-      getCustomErrorMessages([{
-        code: 'unique',
-        parameters: [{ key: 'name', value: 'Foo' }],
-        message: 'name must be unique',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      const { type, message } = sendCallout.mock.calls[0][0];
-      expect(type).toBe('error');
-      expect(message.props.id).toBe('ui-inventory.instanceCustomLinks.error.nameUnique');
-    });
-
-    it('shows the callout for linkText uniqueness error', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
-
-      getCustomErrorMessages([{
-        code: 'unique',
-        parameters: [{ key: 'linkText', value: 'Bar' }],
-        message: 'linkText must be unique',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      const { type, message } = sendCallout.mock.calls[0][0];
-      expect(type).toBe('error');
-      expect(message.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextUnique');
-    });
-
-    it('shows the callout for link uniqueness error', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
-
-      getCustomErrorMessages([{
-        code: 'unique',
-        parameters: [{ key: 'link', value: 'https://example.com' }],
-        message: 'link must be unique',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      const { type, message } = sendCallout.mock.calls[0][0];
-      expect(type).toBe('error');
-      expect(message.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkUnique');
-    });
-
-    it('shows the callout for a generic, non-uniqueness related error', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
-
-      getCustomErrorMessages([{
-        code: 'genericError',
-        message: 'Something went wrong',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'Something went wrong' });
-    });
-
-    it('shows the callout for a generic, non-uniqueness related error unrelated to any field', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
-
-      getCustomErrorMessages([{
-        code: 'genericError',
-        parameters: [],
-        message: 'Something went wrong',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'Something went wrong' });
-    });
-
-    it('shows the callout for a generic, non-uniqueness related error including the relevant field', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
-
-      getCustomErrorMessages([{
-        code: 'genericError',
-        parameters: [{ key: 'name', value: 'Foo' }],
-        message: 'Something went wrong',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'Something went wrong (name)' });
+      expect(errorResponseNotifications).toHaveBeenCalledWith(
+        expect.objectContaining({ sendCallout }),
+        errors,
+      );
     });
   });
 });
