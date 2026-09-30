@@ -25,6 +25,7 @@ jest.mock('../../../../hooks/useReferenceData', () => jest.fn());
 const defaultInstance = { id: 'inst1', title: 'Test Instance', source: 'FOLIO', identifiers: [] };
 const defaultReferenceData = { identifierTypesById: {} };
 const defaultModalsContext = { isItemsMovement: false, isCopyrightModalOpen: false, setIsCopyrightModalOpen: jest.fn() };
+const defaultInstanceCustomLinks = [{ id: 'link-1', label: 'Link 1', link: 'https://example.org' }];
 const defaultActions = {
   handleEdit: jest.fn(),
   handleViewSource: jest.fn(),
@@ -41,6 +42,7 @@ const defaultActions = {
   handleDuplicateInstanceMarc: jest.fn(),
   handleCreateHoldingsMarc: jest.fn(),
   handleEditInLinkedDataEditor: jest.fn(),
+  handleCustomLink: jest.fn(),
 };
 const defaultPermissions = {
   showInventoryMenuSection: true,
@@ -141,5 +143,34 @@ describe('InstanceActionMenu', () => {
     const viewSourceBtn = screen.getByRole('button', { name: /view source/i });
 
     expect(viewSourceBtn).toBeDisabled();
+  });
+
+  it('renders custom links', () => {
+    renderInstanceActionMenu({ customLinks: defaultInstanceCustomLinks });
+
+    expect(screen.getByText('Custom links')).toBeInTheDocument();
+    expect(screen.getByText('View in Link 1')).toBeInTheDocument();
+  });
+
+  it('does not render the custom links section when there are no custom links', () => {
+    renderInstanceActionMenu({ customLinks: [] });
+
+    expect(screen.queryByText('Custom links')).not.toBeInTheDocument();
+  });
+
+  it('does not render the custom links section when customLinks is not provided', () => {
+    renderInstanceActionMenu();
+
+    expect(screen.queryByText('Custom links')).not.toBeInTheDocument();
+  });
+
+  it('calls onToggle and handleCustomLink when a custom link is clicked', () => {
+    renderInstanceActionMenu({ customLinks: defaultInstanceCustomLinks });
+
+    const customLinkBtn = screen.getByRole('button', { name: /view in link 1/i });
+    fireEvent.click(customLinkBtn);
+
+    expect(onToggle).toHaveBeenCalled();
+    expect(defaultActions.handleCustomLink).toHaveBeenCalledWith('https://example.org');
   });
 });

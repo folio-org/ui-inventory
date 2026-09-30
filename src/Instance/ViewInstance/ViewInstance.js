@@ -53,6 +53,7 @@ import {
   useAuthoritiesByIdQuery,
   useInstanceSharing,
   useInstanceDetailsShortcuts,
+  useInstanceCustomLinks,
 } from '../hooks';
 
 import {
@@ -214,6 +215,8 @@ const ViewInstanceComponent = (props) => {
     },
   });
 
+  const { customLinks } = useInstanceCustomLinks(instance);
+
   const shortcuts = useInstanceDetailsShortcuts({
     instance,
     marcRecord,
@@ -245,6 +248,7 @@ const ViewInstanceComponent = (props) => {
         onCopy={onCopy}
         numberOfRequests={totalRequestsRecords || 0}
         titleLevelRequestsFeatureEnabled={titleLevelRequestsFeatureEnabled}
+        customLinks={customLinks}
       />
     );
   };
