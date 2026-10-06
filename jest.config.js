@@ -1,9 +1,10 @@
 const path = require('path');
 const stripesJestConfig = require('@folio/jest-config-stripes');
-const config = stripesJestConfig.config || stripesJestConfig;
 
+const config = stripesJestConfig.config || stripesJestConfig;
 const additionalModules = [
   '@k-int/stripes-kint-components',
+  'keyboardjs',
 ].join('|');
 const combinedModules = config.transformIgnorePatterns[0].replace(')', `|${additionalModules})`);
 

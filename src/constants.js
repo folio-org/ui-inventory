@@ -294,3 +294,11 @@ export const VERSION_HISTORY_PAGE_SIZE_SETTING = 'records.page.size';
 export const VERSION_HISTORY_ENABLED_SETTING = 'enabled';
 export const TAGS_SCOPE = 'ui-tags.tags.manage';
 export const TAGS_KEY = 'tags_enabled';
+
+export const KNOWN_INSTANCE_CUSTOM_LINK_CODES = ['unique'];
+export const KNOWN_INSTANCE_CUSTOM_LINK_FIELDS = ['name', 'linkText', 'link'];
+export const UNIQUE_FIELD_TO_ERROR = {
+  name: 'ui-inventory.instanceCustomLinks.error.nameUnique',
+  linkText: 'ui-inventory.instanceCustomLinks.error.linkTextUnique',
+  link: 'ui-inventory.instanceCustomLinks.error.linkUnique',
+};

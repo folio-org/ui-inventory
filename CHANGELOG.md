@@ -15,6 +15,7 @@
 * Revert UIIN-3377. Make submitting an Item Form default to Save & close behaviour. Refs UIIN-3596.
 * Add Connected Tasks/Jobs to Instance, Holdings, and Item detail pages. Refs UIIN-3706.
 * Add dedicated permission `inventory.instances.item.mark-deleted.delete` for setting instances for deletion. Refs UIIN-3711.
+* Add instance custom links settings. Refs UIIN-3652.
 
 ## [14.0.6](https://github.com/folio-org/ui-inventory/tree/v14.0.6) (2026-08-12)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.5...v14.0.6)
