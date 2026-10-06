@@ -55,6 +55,31 @@ const validator = (item) => {
   };
 };
 
+const getFieldComponents = (intl) => ({
+  'show': ({ fieldProps }) => (
+    <div className={css.showField}>
+      <Field
+        {...fieldProps}
+        component={Checkbox}
+        type="checkbox"
+        aria-label={intl.formatMessage({ id: 'ui-inventory.show' })}
+      />
+    </div>
+  )
+});
+
+const getFormatter = (intl) => ({
+  'show': ({ show }) => (
+    <div className={css.showField}>
+      <Checkbox
+        checked={show}
+        aria-label={intl.formatMessage({ id: 'ui-inventory.show' })}
+        disabled
+      />
+    </div>
+  )
+});
+
 const CUSTOM_LINKS_LIMIT = 10;
 
 // Extract limit check props from manifest, pass the rest to ControlledVocab.
@@ -69,34 +94,8 @@ export const InstanceCustomLinksSettings = ({ resources, dataKey: _dataKey, ...p
   const records = resources?.instanceCustomLinksList?.records;
   const atLimit = (records?.length ?? 0) >= CUSTOM_LINKS_LIMIT;
 
-  const fieldComponents = useMemo(() => {
-    return {
-      'show': ({ fieldProps }) => (
-        <div className={css.showField}>
-          <Field
-            {...fieldProps}
-            component={Checkbox}
-            type="checkbox"
-            aria-label={intl.formatMessage({ id: 'ui-inventory.show' })}
-          />
-        </div>
-      )
-    };
-  }, [intl]);
-
-  const formatter = useMemo(() => {
-    return {
-      'show': ({ show }) => (
-        <div className={css.showField}>
-          <Checkbox
-            checked={show}
-            aria-label={intl.formatMessage({ id: 'ui-inventory.show' })}
-            disabled
-          />
-        </div>
-      )
-    };
-  }, [intl]);
+  const fieldComponents = useMemo(() => getFieldComponents(intl), [intl]);
+  const formatter = useMemo(() => getFormatter(intl), [intl]);
 
   const handleClose = () => {
     history.push({

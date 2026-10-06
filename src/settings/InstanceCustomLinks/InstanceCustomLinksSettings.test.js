@@ -33,6 +33,7 @@ jest.unmock('@folio/stripes/smart-components');
 
 const sendCallout = jest.fn();
 const POST = jest.fn();
+const validValues = { name: 'Foo', linkText: 'Bar', link: 'https://example.com' };
 
 const buildRecords = (count) => Array.from({ length: count }, (_, i) => ({
   id: `link-${i}`,
@@ -94,8 +95,6 @@ const fillRow = async ({ name, linkText, link }) => {
 };
 
 const clickSave = () => userEvent.click(screen.getByRole('button', { name: /save/i }));
-
-const validValues = { name: 'Foo', linkText: 'Bar', link: 'https://example.com' };
 
 const rejectWith422 = (errors) => POST.mockRejectedValue({
   status: 422,
