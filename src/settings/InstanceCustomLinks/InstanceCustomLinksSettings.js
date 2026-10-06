@@ -35,26 +35,6 @@ const columnWidths = {
   show: '5%'
 };
 
-const fieldComponents = {
-  'show': ({ fieldProps }) => (
-    <div className={css.showField}>
-      <Field
-        {...fieldProps}
-        component={Checkbox}
-        type="checkbox"
-      />
-    </div>
-  ),
-};
-
-const formatter = {
-  'show': ({ show }) => (
-    <div className={css.showField}>
-      <Checkbox checked={show} disabled />
-    </div>
-  ),
-};
-
 const formatHeader = (id) => {
   return (
     <>
@@ -88,6 +68,35 @@ export const InstanceCustomLinksSettings = ({ resources, dataKey: _dataKey, ...p
   const hasPerm = stripes.hasPerm('ui-inventory.settings.instance-custom-links');
   const records = resources?.instanceCustomLinksList?.records;
   const atLimit = (records?.length ?? 0) >= CUSTOM_LINKS_LIMIT;
+
+  const fieldComponents = useMemo(() => {
+    return {
+      'show': ({ fieldProps }) => (
+        <div className={css.showField}>
+          <Field
+            {...fieldProps}
+            component={Checkbox}
+            type="checkbox"
+            aria-label={intl.formatMessage({ id: 'ui-inventory.show' })}
+          />
+        </div>
+      )
+    };
+  }, [intl]);
+
+  const formatter = useMemo(() => {
+    return {
+      'show': ({ show }) => (
+        <div className={css.showField}>
+          <Checkbox
+            checked={show}
+            aria-label={intl.formatMessage({ id: 'ui-inventory.show' })}
+            disabled
+          />
+        </div>
+      )
+    };
+  }, [intl]);
 
   const handleClose = () => {
     history.push({
