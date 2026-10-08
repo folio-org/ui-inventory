@@ -1,1 +1,1 @@
-export { default } from './InstanceCustomLinksSettings';
+export { InstanceCustomLinksSettings } from './InstanceCustomLinksSettings';

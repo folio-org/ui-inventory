@@ -48,7 +48,7 @@ import DisplaySettings from '../DisplaySettings';
 import CardsPerVersionHistoryPage from '../CardsPerVersionHistoryPage';
 import CallNumberBrowseSettings from '../CallNumberBrowseSettings';
 import NumberGeneratorSettings from '../NumberGeneratorSettings';
-import InstanceCustomLinksSettings from '../InstanceCustomLinks';
+import { InstanceCustomLinksSettings } from '../InstanceCustomLinks';
 import {
   flattenCentralTenantPermissions,
   getIsVersionHistoryEnabled,

@@ -1,256 +1,308 @@
 import { MemoryRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import {
+  combineReducers,
+  createStore,
+} from 'redux';
+import { reducer as formReducer } from 'redux-form';
 
+import {
+  screen,
+  waitFor,
+  within,
+} from '@folio/jest-config-stripes/testing-library/react';
+import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { runAxeTest } from '@folio/stripes-testing';
+
 import { Paneset } from '@folio/stripes/components';
-import { CalloutContext } from '@folio/stripes/core';
-import { ControlledVocab } from '@folio/stripes/smart-components';
+import {
+  CalloutContext,
+  useStripes,
+} from '@folio/stripes/core';
 
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
-
 import buildStripes from '../../../test/jest/__mock__/stripesCore.mock';
 
-import InstanceCustomLinksSettings from './InstanceCustomLinksSettings';
+import { InstanceCustomLinksSettings } from './InstanceCustomLinksSettings';
 
-jest.mock('../../hooks', () => ({
-  ...jest.requireActual('../../hooks'),
-  useCallNumberTypesQuery: jest.fn(),
-}));
-jest.mock('@folio/stripes/core', () => ({
-  ...jest.requireActual('@folio/stripes/core'),
-  useStripes: jest.fn().mockReturnValue({
-    hasInterface: () => true,
-    hasPerm: () => true,
-    connect: component => component,
-    user: {},
-    okapi: {},
-  }),
-  useOkapiKy: jest.fn().mockReturnValue({
-    get: jest.fn(),
-    extend: jest.fn(),
-  }),
-  useUserTenantPermissions: jest.fn().mockReturnValue({
-    userPermissions: [],
-    isFetching: false,
-  }),
+jest.unmock('@folio/stripes/components');
+jest.unmock('@folio/stripes/smart-components');
+
+const sendCallout = jest.fn();
+const POST = jest.fn();
+const validValues = { name: 'Foo', linkText: 'Bar', link: 'https://example.com' };
+
+const buildRecords = (count) => Array.from({ length: count }, (_, i) => ({
+  id: `link-${i}`,
+  name: `Link name ${i}`,
+  linkText: `Link text ${i}`,
+  link: `https://example.com/${i}`,
+  source: 'local',
+  show: true,
 }));
 
-const defaultProps = {
-  stripes: buildStripes(),
+const renderInstanceCustomLinksSettings = ({ records = [], hasPerm = true } = {}) => {
+  const mutator = {
+    values: { POST, PUT: jest.fn(), DELETE: jest.fn() },
+    activeRecord: { update: jest.fn() },
+    updaterIds: { replace: jest.fn() },
+  };
+
+  useStripes.mockReturnValue(buildStripes({
+    hasPerm: () => hasPerm,
+    connect: Component => props => (
+      <Component
+        resources={{ values: { records, isPending: false }, updaters: { records: [] } }}
+        mutator={mutator}
+        {...props}
+      />
+    ),
+  }));
+
+  return renderWithIntl(
+    <MemoryRouter>
+      <Paneset>
+        <Provider store={createStore(combineReducers({ form: formReducer }))}>
+          <CalloutContext.Provider value={{ sendCallout }}>
+            <InstanceCustomLinksSettings
+              resources={{ instanceCustomLinksList: { records } }}
+            />
+          </CalloutContext.Provider>
+        </Provider>
+      </Paneset>
+    </MemoryRouter>,
+    translationsProperties
+  );
 };
 
-const renderInstanceCustomLinksSettings = (props = {}, { sendCallout } = {}) => renderWithIntl(
-  <MemoryRouter>
-    <Paneset>
-      {sendCallout ? (
-        <CalloutContext.Provider value={{ sendCallout }}>
-          <InstanceCustomLinksSettings
-            {...defaultProps}
-            {...props}
-          />
-        </CalloutContext.Provider>
-      ) : (
-        <InstanceCustomLinksSettings
-          {...defaultProps}
-          {...props}
-        />
-      )}
-    </Paneset>
-  </MemoryRouter>,
-  translationsProperties
-);
+const getNewButton = () => screen.queryByRole('button', { name: /new/i });
 
-const getLatestControlledVocabProps = () => {
-  const { calls } = ControlledVocab.mock;
-
-  return calls[calls.length - 1][0];
+const openNewRow = async () => {
+  await userEvent.click(await screen.findByRole('button', { name: /new/i }));
 };
+
+const fillRow = async ({ name, linkText, link }) => {
+  const [nameInput, linkTextInput, linkInput] = await screen.findAllByRole('textbox');
+
+  // Fields only show errors once touched, so focus every field even when leaving it empty.
+  for (const [input, value] of [[nameInput, name], [linkTextInput, linkText], [linkInput, link]]) {
+    await userEvent.click(input);
+    if (value) await userEvent.paste(value);
+  }
+};
+
+const clickSave = () => userEvent.click(screen.getByRole('button', { name: /save/i }));
+
+const rejectWith422 = (errors) => POST.mockRejectedValue({
+  status: 422,
+  json: () => Promise.resolve({ errors }),
+});
 
 describe('InstanceCustomLinksSettings', () => {
   beforeEach(() => {
-    ControlledVocab.mockClear();
+    sendCallout.mockClear();
+    POST.mockReset();
   });
 
-  it('should render with no axe errors', async () => {
-    const { container } = renderInstanceCustomLinksSettings();
+  describe('accessibility', () => {
+    it('should render with no axe errors', async () => {
+      const { container } = renderInstanceCustomLinksSettings({ records: buildRecords(2) });
 
-    await runAxeTest({
-      rootNode: container,
-    });
-  });
-
-  describe('hideCreateButton', () => {
-    it('is false when there are fewer than 10 links', () => {
-      renderInstanceCustomLinksSettings({
-        resources: { instanceCustomLinksList: { records: new Array(9).fill({}) } },
+      await screen.findByText('Link name 0');
+      await runAxeTest({
+        rootNode: container,
       });
-
-      expect(getLatestControlledVocabProps().hideCreateButton).toBe(false);
     });
 
-    it('is true once there are 10 or more links', () => {
-      renderInstanceCustomLinksSettings({
-        resources: { instanceCustomLinksList: { records: new Array(10).fill({}) } },
-      });
+    it('should render with no axe errors while creating a link', async () => {
+      const { container } = renderInstanceCustomLinksSettings({ records: buildRecords(2) });
 
-      expect(getLatestControlledVocabProps().hideCreateButton).toBe(true);
+      await openNewRow();
+      await runAxeTest({
+        rootNode: container,
+      });
     });
   });
 
-  describe('formatter.show', () => {
-    it('renders a disabled checkbox reflecting the show value', () => {
+  describe('list of existing links', () => {
+    it('shows each link\'s name, text and URL', async () => {
+      renderInstanceCustomLinksSettings({ records: buildRecords(2) });
+
+      expect(await screen.findByText('Link name 0')).toBeInTheDocument();
+      expect(screen.getByText('Link text 1')).toBeInTheDocument();
+      expect(screen.getByText('https://example.com/1')).toBeInTheDocument();
+    });
+
+    it('shows a disabled checkbox reflecting each link\'s show value', async () => {
+      const [shown, hidden] = buildRecords(2);
+
+      renderInstanceCustomLinksSettings({ records: [shown, { ...hidden, show: false }] });
+
+      const shownRow = (await screen.findByText(shown.name)).closest('[role="row"]');
+      const hiddenRow = screen.getByText(hidden.name).closest('[role="row"]');
+
+      expect(within(shownRow).getByRole('checkbox', { name: 'Show' })).toBeChecked();
+      expect(within(shownRow).getByRole('checkbox')).toBeDisabled();
+      expect(within(hiddenRow).getByRole('checkbox')).not.toBeChecked();
+    });
+  });
+
+  describe('new link row', () => {
+    it('has an editable "Show" checkbox that is checked by default', async () => {
       renderInstanceCustomLinksSettings();
-      const { formatter } = getLatestControlledVocabProps();
+      await openNewRow();
 
-      const { container } = renderWithIntl(formatter.show({ show: true }), translationsProperties);
-      const checkbox = container.querySelector('input[type="checkbox"]');
+      const checkbox = await screen.findByRole('checkbox', { name: 'Show' });
 
       expect(checkbox).toBeChecked();
-      expect(checkbox).toBeDisabled();
+      expect(checkbox).toBeEnabled();
+    });
+
+    it('submits the show value as unchecked when the user clears it', async () => {
+      POST.mockResolvedValue({});
+      renderInstanceCustomLinksSettings();
+      await openNewRow();
+      await fillRow(validValues);
+      await userEvent.click(screen.getByRole('checkbox', { name: 'Show' }));
+      await clickSave();
+
+      await waitFor(() => expect(POST).toHaveBeenCalledWith(expect.objectContaining({ show: false })));
     });
   });
 
-  describe('validate', () => {
-    it('returns no errors for a fully valid item', () => {
-      renderInstanceCustomLinksSettings();
-      const { validate } = getLatestControlledVocabProps();
+  describe('create button', () => {
+    it('is available when there are fewer than 10 links', async () => {
+      renderInstanceCustomLinksSettings({ records: buildRecords(9) });
 
-      expect(validate({ name: 'Foo', linkText: 'Bar', link: 'https://example.com' })).toEqual({});
+      await screen.findByText('Link name 0');
+
+      expect(getNewButton()).toBeInTheDocument();
     });
 
-    it('surfaces each field-level client-side validation error', () => {
-      renderInstanceCustomLinksSettings();
-      const { validate } = getLatestControlledVocabProps();
+    it('is hidden once there are 10 or more links', async () => {
+      renderInstanceCustomLinksSettings({ records: buildRecords(10) });
 
-      const errors = validate({});
+      await screen.findByText('Link name 0');
 
-      expect(errors.name.props.id).toBe('ui-inventory.fillIn');
-      expect(errors.linkText.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextRequired');
-      expect(errors.link.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkRequired');
+      expect(getNewButton()).not.toBeInTheDocument();
+    });
+
+    it('is hidden when the user lacks permission to edit', async () => {
+      renderInstanceCustomLinksSettings({ records: buildRecords(1), hasPerm: false });
+
+      await screen.findByText('Link name 0');
+
+      expect(getNewButton()).not.toBeInTheDocument();
     });
   });
 
-  describe('getCustomErrorMessages', () => {
-    it('shows no callouts when response contains no errors', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
+  describe('client-side validation', () => {
+    it('submits a valid item without errors or error callouts', async () => {
+      POST.mockResolvedValue({});
+      renderInstanceCustomLinksSettings();
+      await openNewRow();
+      await fillRow(validValues);
+      await clickSave();
 
-      getCustomErrorMessages([]);
-
-      expect(sendCallout).not.toHaveBeenCalled();
+      await waitFor(() => expect(POST).toHaveBeenCalledWith(expect.objectContaining(validValues)));
+      expect(sendCallout).not.toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
     });
 
-    it('shows the generic case callout when response contains a field-specific unique error for an unrecognized field', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
+    it('asks for required values and does not submit when fields are empty', async () => {
+      renderInstanceCustomLinksSettings();
+      await openNewRow();
+      await clickSave();
 
-      getCustomErrorMessages([{
-        code: 'unique',
-        parameters: [{ key: 'description', value: 'Foo' }],
-        message: 'description must be unique',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'description must be unique (description)' });
+      expect(await screen.findByText('Please fill this in to continue')).toBeInTheDocument();
+      expect(POST).not.toHaveBeenCalled();
     });
 
-    it('shows the callout for name uniqueness error', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
+    it.each([
+      ['link text is empty', { linkText: '' }, 'Link text is required.'],
+      ['link is empty', { link: '' }, 'Link is required.'],
+      ['name is over 150 characters', { name: 'a'.repeat(151) }, 'Name cannot be more than 150 characters.'],
+      ['link text is over 40 characters', { linkText: 'a'.repeat(41) }, 'Link text cannot be more than 40 characters.'],
+      ['link text is only whitespace', { linkText: '   ' }, 'Link cannot be a blank string.'],
+      ['link has no http(s) protocol', { link: 'ftp://example.com' }, 'Link must be HTTP or HTTPS.'],
+      ['link has an unknown parameter', { link: 'https://example.com/{{bogus}}' }, 'Link must contain a valid parameter when provided.'],
+      ['link is over 1000 characters', { link: `https://${'a'.repeat(1000)}` }, 'Link cannot be more than 1000 characters.'],
+    ])('rejects the item when %s', async (_description, override, message) => {
+      renderInstanceCustomLinksSettings();
+      await openNewRow();
+      await fillRow({ ...validValues, ...override });
+      await clickSave();
 
-      getCustomErrorMessages([{
-        code: 'unique',
-        parameters: [{ key: 'name', value: 'Foo' }],
-        message: 'name must be unique',
-      }]);
+      expect(await screen.findByText(message)).toBeInTheDocument();
+      expect(POST).not.toHaveBeenCalled();
+    });
 
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      const { type, message } = sendCallout.mock.calls[0][0];
+    it.each([
+      ['http://example.com'],
+      ['HTTPS://example.com'],
+      ['https://example.com/{{UUID}}'],
+      ['https://example.com/{{HRID}}'],
+      ['https://example.com/{{indexTitle}}'],
+    ])('accepts link %s', async (link) => {
+      POST.mockResolvedValue({});
+      renderInstanceCustomLinksSettings();
+      await openNewRow();
+      await fillRow({ ...validValues, link });
+      await clickSave();
+
+      await waitFor(() => expect(POST).toHaveBeenCalledWith(expect.objectContaining({ link })));
+    });
+  });
+
+  describe('backend error responses', () => {
+    const save = async () => {
+      renderInstanceCustomLinksSettings();
+      await openNewRow();
+      await fillRow(validValues);
+      await clickSave();
+    };
+
+    it.each([
+      ['name', 'Error saving data. Name must be unique.'],
+      ['linkText', 'Error saving data. Link text must be unique.'],
+      ['link', 'Error saving data. Link must be unique.'],
+    ])('shows a callout when %s is not unique', async (key, message) => {
+      rejectWith422([{ code: 'unique', message: `${key} must be unique`, parameters: [{ key, value: 'x' }] }]);
+      await save();
+
+      await waitFor(() => expect(sendCallout).toHaveBeenCalledTimes(1));
+
+      const [{ type, message: content }] = sendCallout.mock.calls[0];
+      const { container } = renderWithIntl(content, translationsProperties);
+
       expect(type).toBe('error');
-      expect(message.props.id).toBe('ui-inventory.instanceCustomLinks.error.nameUnique');
+      expect(container).toHaveTextContent(message);
     });
 
-    it('shows the callout for linkText uniqueness error', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
+    it('shows the server message with the field name for other errors tied to a field', async () => {
+      rejectWith422([{ code: 'other', message: 'Something went wrong', parameters: [{ key: 'name', value: 'x' }] }]);
+      await save();
 
-      getCustomErrorMessages([{
-        code: 'unique',
-        parameters: [{ key: 'linkText', value: 'Bar' }],
-        message: 'linkText must be unique',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      const { type, message } = sendCallout.mock.calls[0][0];
-      expect(type).toBe('error');
-      expect(message.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkTextUnique');
+      await waitFor(() => expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'Something went wrong (name)' }));
     });
 
-    it('shows the callout for link uniqueness error', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
+    it('shows the server message as-is for errors not tied to a field', async () => {
+      rejectWith422([{ code: 'other', message: 'Something went wrong' }]);
+      await save();
 
-      getCustomErrorMessages([{
-        code: 'unique',
-        parameters: [{ key: 'link', value: 'https://example.com' }],
-        message: 'link must be unique',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      const { type, message } = sendCallout.mock.calls[0][0];
-      expect(type).toBe('error');
-      expect(message.props.id).toBe('ui-inventory.instanceCustomLinks.error.linkUnique');
+      await waitFor(() => expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'Something went wrong' }));
     });
 
-    it('shows the callout for a generic, non-uniqueness related error', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
+    it('shows one callout per error in the response', async () => {
+      rejectWith422([
+        { code: 'other', message: 'First problem' },
+        { code: 'other', message: 'Second problem' },
+      ]);
+      await save();
 
-      getCustomErrorMessages([{
-        code: 'genericError',
-        message: 'Something went wrong',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'Something went wrong' });
-    });
-
-    it('shows the callout for a generic, non-uniqueness related error unrelated to any field', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
-
-      getCustomErrorMessages([{
-        code: 'genericError',
-        parameters: [],
-        message: 'Something went wrong',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'Something went wrong' });
-    });
-
-    it('shows the callout for a generic, non-uniqueness related error including the relevant field', () => {
-      const sendCallout = jest.fn();
-      renderInstanceCustomLinksSettings({}, { sendCallout });
-      const { getCustomErrorMessages } = getLatestControlledVocabProps();
-
-      getCustomErrorMessages([{
-        code: 'genericError',
-        parameters: [{ key: 'name', value: 'Foo' }],
-        message: 'Something went wrong',
-      }]);
-
-      expect(sendCallout).toHaveBeenCalledTimes(1);
-      expect(sendCallout).toHaveBeenCalledWith({ type: 'error', message: 'Something went wrong (name)' });
+      await waitFor(() => expect(sendCallout).toHaveBeenCalledTimes(2));
     });
   });
 });

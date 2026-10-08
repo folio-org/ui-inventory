@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
+import { useMemo } from 'react';
 import { Field } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { useHistory } from 'react-router-dom';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import {
@@ -11,20 +10,19 @@ import {
   Paneset,
 } from '@folio/stripes/components';
 import {
-  CalloutContext,
-  IntlConsumer,
   TitleManager,
+  useStripes,
 } from '@folio/stripes/core';
-import {
-  validateCustomLink
-} from '@folio/stripes-acq-components';
 import { getSourceSuppressor } from '@folio/stripes/util';
 
 import {
-  KNOWN_INSTANCE_CUSTOM_LINK_CODES,
-  KNOWN_INSTANCE_CUSTOM_LINK_FIELDS,
   RECORD_SOURCE,
 } from '../../constants';
+import { useCallout } from '../../hooks';
+import validateName from './validateName';
+import validateLinkText from './validateLinkText';
+import validateLink from './validateLink';
+import errorResponseNotifications from './errorResponseNotifications';
 
 import css from './InstanceCustomLinks.css';
 
@@ -37,26 +35,6 @@ const columnWidths = {
   show: '5%'
 };
 
-const fieldComponents = {
-  'show': ({ fieldProps }) => (
-    <div className={css.showField}>
-      <Field
-        {...fieldProps}
-        component={Checkbox}
-        type="checkbox"
-      />
-    </div>
-  ),
-};
-
-const formatter = {
-  'show': ({ show }) => (
-    <div className={css.showField}>
-      <Checkbox checked={show} disabled />
-    </div>
-  ),
-};
-
 const formatHeader = (id) => {
   return (
     <>
@@ -65,133 +43,121 @@ const formatHeader = (id) => {
   );
 };
 
-class InstanceCustomLinksSettings extends React.Component {
-  static contextType = CalloutContext;
+const validator = (item) => {
+  const nameErrors = validateName(item);
+  const linkTextErrors = validateLinkText(item);
+  const linkErrors = validateLink(item);
 
-  static propTypes = {
-    history: PropTypes.shape({
-      push: PropTypes.func.isRequired,
-    }).isRequired,
-    stripes: PropTypes.shape({
-      connect: PropTypes.func.isRequired,
-      hasPerm: PropTypes.func.isRequired,
-    }).isRequired,
+  return {
+    ...linkErrors,
+    ...linkTextErrors,
+    ...nameErrors
   };
+};
 
-  static manifest = Object.freeze({
-    instanceCustomLinksList: {
-      type: 'okapi',
-      path: 'instance-custom-links',
-      records: 'instanceCustomLinks',
-      throwErrors: false,
-    },
-  });
+const getFieldComponents = (intl) => ({
+  'show': ({ fieldProps }) => (
+    <div className={css.showField}>
+      <Field
+        {...fieldProps}
+        component={Checkbox}
+        type="checkbox"
+        aria-label={intl.formatMessage({ id: 'ui-inventory.show' })}
+      />
+    </div>
+  )
+});
 
-  constructor(props) {
-    super(props);
+const getFormatter = (intl) => ({
+  'show': ({ show }) => (
+    <div className={css.showField}>
+      <Checkbox
+        checked={show}
+        aria-label={intl.formatMessage({ id: 'ui-inventory.show' })}
+        disabled
+      />
+    </div>
+  )
+});
 
-    this.connectedControlledVocab = props.stripes.connect(ControlledVocab);
-  }
+const CUSTOM_LINKS_LIMIT = 10;
 
-  showCallout = (type, message) => {
-    this.context.sendCallout({
-      type,
-      message,
+// Extract limit check props from manifest, pass the rest to ControlledVocab.
+export const InstanceCustomLinksSettings = ({ resources, dataKey: _dataKey, ...props }) => {
+  const stripes = useStripes();
+  const intl = useIntl();
+  const history = useHistory();
+  const callout = useCallout();
+
+  const ConnectedControlledVocab = useMemo(() => stripes.connect(ControlledVocab), [stripes]);
+  const hasPerm = stripes.hasPerm('ui-inventory.settings.instance-custom-links');
+  const records = resources?.instanceCustomLinksList?.records;
+  const atLimit = (records?.length ?? 0) >= CUSTOM_LINKS_LIMIT;
+
+  const fieldComponents = useMemo(() => getFieldComponents(intl), [intl]);
+  const formatter = useMemo(() => getFormatter(intl), [intl]);
+
+  const handleClose = () => {
+    history.push({
+      pathname: '/settings/inventory',
     });
   };
 
-  handleClose = () => {
-    this.props.history.push('/settings/inventory');
+  const getCustomErrorMessages = (errors = []) => {
+    return errorResponseNotifications(callout, errors);
   };
 
-  getCustomErrorMessages = (errors = []) => {
-    // Custom errors override form validation errors. Until they can interleave
-    // instead of always deferring to backend response-derived errors, use callouts
-    // to show response-derived errors, leaving in-form messages solely to validation.
-    errors.forEach(error => {
-      const key = error.parameters?.[0]?.key;
-      const code = error.code;
-      if (KNOWN_INSTANCE_CUSTOM_LINK_CODES.includes(code) &&
-          key && KNOWN_INSTANCE_CUSTOM_LINK_FIELDS.includes(key)) {
-        switch (key) {
-          case 'linkText':
-            this.showCallout('error', <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkTextUnique" />);
-            break;
-          case 'link':
-            this.showCallout('error', <FormattedMessage id="ui-inventory.instanceCustomLinks.error.linkUnique" />);
-            break;
-          case 'name':
-            this.showCallout('error', <FormattedMessage id="ui-inventory.instanceCustomLinks.error.nameUnique" />);
-            break;
-          default:
-            break;
-        }
-      } else {
-        const calloutMessage = key ? `${error.message} (${key})` : error.message;
-        this.showCallout('error', calloutMessage);
-      }
-    });
+  return (
+    <Layer isOpen>
+      <Paneset isRoot>
+        <TitleManager
+          page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+          record={intl.formatMessage({ id: 'ui-inventory.instanceCustomLinks' })}
+        >
+          <ConnectedControlledVocab
+            {...props}
+            baseUrl="instance-custom-links"
+            records="instanceCustomLinks"
+            label={<FormattedMessage id="ui-inventory.instanceCustomLinks" />}
+            labelSingular={intl.formatMessage({ id: 'ui-inventory.instanceCustomLink' })}
+            objectLabel={<FormattedMessage id="ui-inventory.instanceCustomLinks" />}
+            visibleFields={['name', 'linkText', 'link', 'show']}
+            columnMapping={{
+              name: formatHeader('ui-inventory.name'),
+              linkText: formatHeader('ui-inventory.linkText'),
+              link: formatHeader('ui-inventory.link'),
+              show: intl.formatMessage({ id: 'ui-inventory.show' }),
+            }}
+            actionSuppressor={actionSuppressor}
+            readOnlyFields={['source']}
+            itemTemplate={{ source: 'local', show: true }}
+            hiddenFields={['description', 'numberOfObjects', 'source']}
+            nameKey="name"
+            id="instanceCustomLinks"
+            sortby="name"
+            editable={hasPerm}
+            hideCreateButton={atLimit}
+            formatter={formatter}
+            validate={item => validator(item)}
+            fieldComponents={fieldComponents}
+            dismissPane={handleClose}
+            getCustomErrorMessages={getCustomErrorMessages}
+            columnWidths={columnWidths}
+          />
+        </TitleManager>
+      </Paneset>
+    </Layer>
+  );
+};
 
-    return undefined;
-  };
-
-  render() {
-    const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.instance-custom-links');
-
-    // Since the manifest is defined to help prevent exceeding the limit on
-    // link count, it sets up a dataKey prop that ControlledVocab wants to
-    // use but shouldn't. Remove it.
-    // eslint-disable-next-line no-unused-vars
-    const { resources, dataKey, ...restProps } = this.props;
-    const records = resources?.instanceCustomLinksList?.records || [];
-    const atLimit = records.length >= 10;
-
-    return (
-      <IntlConsumer>
-        {intl => (
-          <Layer isOpen>
-            <Paneset isRoot>
-              <TitleManager
-                page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
-                record={intl.formatMessage({ id: 'ui-inventory.instanceCustomLinks' })}
-              >
-                <this.connectedControlledVocab
-                  {...restProps}
-                  baseUrl="instance-custom-links"
-                  records="instanceCustomLinks"
-                  label={<FormattedMessage id="ui-inventory.instanceCustomLinks" />}
-                  labelSingular={intl.formatMessage({ id: 'ui-inventory.instanceCustomLink' })}
-                  objectLabel={<FormattedMessage id="ui-inventory.instanceCustomLinks" />}
-                  visibleFields={['name', 'linkText', 'link', 'show']}
-                  columnMapping={{
-                    name: formatHeader('ui-inventory.name'),
-                    linkText: formatHeader('ui-inventory.linkText'),
-                    link: formatHeader('ui-inventory.link'),
-                    show: intl.formatMessage({ id: 'ui-inventory.show' }),
-                  }}
-                  actionSuppressor={actionSuppressor}
-                  readOnlyFields={['source']}
-                  itemTemplate={{ source: 'local', show: true }}
-                  hiddenFields={['description', 'numberOfObjects', 'source']}
-                  nameKey="name"
-                  id="instanceCustomLinks"
-                  sortby="name"
-                  editable={hasPerm}
-                  hideCreateButton={atLimit}
-                  formatter={formatter}
-                  validate={item => validateCustomLink(item)}
-                  fieldComponents={fieldComponents}
-                  dismissPane={this.handleClose}
-                  getCustomErrorMessages={this.getCustomErrorMessages}
-                  columnWidths={columnWidths}
-                />
-              </TitleManager>
-            </Paneset>
-          </Layer>
-        )}
-      </IntlConsumer>
-    );
-  }
-}
-
-export default withRouter(InstanceCustomLinksSettings);
+// React Query would require a way for the ControlledVocab component to
+// call a post-success hook, but this does not currently exist, so
+// use Stripes Connect to fetch this in order to fulfill the limit check.
+InstanceCustomLinksSettings.manifest = Object.freeze({
+  instanceCustomLinksList: {
+    type: 'okapi',
+    path: 'instance-custom-links',
+    records: 'instanceCustomLinks',
+    throwErrors: false,
+  },
+});
