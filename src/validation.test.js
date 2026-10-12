@@ -1,4 +1,4 @@
-import { validateTitles, validateSubInstances } from './validation';
+import { validateTitles, validateSubInstances, validateDates } from './validation';
 
 describe('validateTitles', () => {
   it('need to add an error to the errors object if title is not defined', () => {
@@ -36,5 +36,59 @@ describe('validateSubInstances', () => {
     const message = 'This field is required';
     validateSubInstances(instance, type, errors, message);
     expect(errors).toEqual({});
+  });
+});
+describe('validateDates', () => {
+  describe('when dates are empty', () => {
+    it('should not return errors', () => {
+      const instance = {
+        dates: {
+          date1: '',
+          date2: '',
+        },
+      };
+      const errors = {};
+      const message = 'dates length message';
+
+      validateDates(instance, errors, message);
+      expect(errors).toEqual({ dates: {} });
+    });
+  });
+
+  describe('when dates are not empty and not valid', () => {
+    it('should return errors', () => {
+      const instance = {
+        dates: {
+          date1: '123',
+          date2: '123',
+        },
+      };
+      const errors = {};
+      const message = 'dates length message';
+
+      validateDates(instance, errors, message);
+      expect(errors).toEqual({
+        dates: {
+          date1: message,
+          date2: message,
+        },
+      });
+    });
+  });
+
+  describe('when dates are not empty and valid', () => {
+    it('should not return errors', () => {
+      const instance = {
+        dates: {
+          date1: '1234',
+          date2: '1234',
+        },
+      };
+      const errors = {};
+      const message = 'dates length message';
+
+      validateDates(instance, errors, message);
+      expect(errors).toEqual({ dates: {} });
+    });
   });
 });

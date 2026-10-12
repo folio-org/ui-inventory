@@ -1,11 +1,16 @@
 import '../../../test/jest/__mock__';
 
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { act, screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
+import queryString from 'query-string';
 
 import { MultiColumnList } from '@folio/stripes-components';
+import {
+  browseCallNumberOptions,
+  browseModeOptions,
+  queryIndexes,
+} from '@folio/stripes-inventory-components';
 
 import {
   renderWithIntl,
@@ -13,7 +18,6 @@ import {
 } from '../../../test/jest/helpers';
 
 import {
-  browseModeOptions,
   BROWSE_INVENTORY_ROUTE,
   INVENTORY_ROUTE,
 } from '../../constants';
@@ -29,6 +33,34 @@ let history;
 const data = {
   contributorNameTypes: [{ id: 'contributorNameTypeId', name: 'nameType' }],
   contributorTypes: [{ id: 'contributorTypeId', name: 'type' }],
+  classificationBrowseConfig: [
+    {
+      id: 'all',
+      typeIds: [],
+    },
+    {
+      id: 'dewey',
+      typeIds: [
+        'id-dewey',
+      ]
+    },
+    {
+      id: 'lc',
+      typeIds: [
+        'id-lc',
+        'id-lc-local',
+      ],
+    },
+  ],
+  callNumberBrowseConfig: [
+    {
+      id: 'dewey',
+      shelvingAlgorithm: 'dewey',
+      typeIds: ['dewey-id', 'lc-id'],
+    },
+  ],
+  subjectSources: [{ id: 'sourceId1', name: 'sourceName1' }, { id: 'sourceId2', name: 'sourceName2' }],
+  subjectTypes: [{ id: 'typeId1', name: 'typeName1' }, { id: 'typeId2', name: 'typeName2' }],
 };
 const missedMatchText = 'would be here';
 
@@ -67,21 +99,28 @@ describe('getBrowseResultsFormatter', () => {
     const missedMatchRecord = {
       isAnchor: true,
       fullCallNumber: 'bla bla',
+      callNumber: 'bla bla',
       totalRecords: 0,
     };
     const contentData = [
       {
-        fullCallNumber: 'A 1958 A 8050',
-        shelfKey: '41958 A 48050',
+        fullCallNumber: 'CALL',
         isAnchor: true,
-        totalRecords: 1,
-        instance: { id: 'ce9dd893-c812-49d5-8973-d55d018894c4', title: 'Test title' },
+        totalRecords: 0,
       },
       {
-        fullCallNumber: 'AAA',
-        shelfKey: '123456',
+        fullCallNumber: 'CALL SUF',
+        callNumber: 'CALL',
+        callNumberPrefix: 'PRE',
+        callNumberSuffix: 'SUF',
         totalRecords: 2,
-        instance: { id: 'ce9dd893-c812-49d5-8973-d55d018894c4', title: 'Test title 2' },
+      },
+      {
+        fullCallNumber: '"WITH QUOTES" SUF 2',
+        callNumber: '"WITH QUOTES"',
+        callNumberPrefix: 'PRE',
+        callNumberSuffix: 'SUF 2',
+        totalRecords: 1,
       },
     ];
     const [anchorRecord, nonAnchorRecord] = contentData;
@@ -97,30 +136,66 @@ describe('getBrowseResultsFormatter', () => {
       renderCallNumberList();
 
       // Anchor row
-      expect(screen.getByText(anchorRecord.fullCallNumber).tagName.toLowerCase()).toBe('strong');
-      expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
-      expect(screen.getByText(anchorRecord.instance.title).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText('would be here').tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText('CALL').tagName.toLowerCase()).not.toBe('strong');
       // Default row
-      expect(screen.getByText(nonAnchorRecord.fullCallNumber).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText('PRE CALL SUF').tagName.toLowerCase()).not.toBe('strong');
       expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
-      expect(screen.getByText(nonAnchorRecord.instance.title).tagName.toLowerCase()).not.toBe('strong');
     });
 
     it('should render \'Missed match item\' row', () => {
       renderCallNumberList({ contentData: [missedMatchRecord] });
 
-      expect(screen.getByText(missedMatchRecord.fullCallNumber)).toBeInTheDocument();
+      expect(screen.getByText(missedMatchRecord.callNumber)).toBeInTheDocument();
       expect(screen.getByText(missedMatchText)).toBeInTheDocument();
     });
 
-    it('should navigate to instance "Search" page when target column was clicked', async () => {
+    it('should not navigate to any page when anchor is clicked', async () => {
       renderCallNumberList();
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
-      await act(async () => userEvent.click(screen.getByText(anchorRecord.fullCallNumber)));
+      await act(async () => fireEvent.click(screen.getByText(anchorRecord.fullCallNumber)));
 
-      expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
+      expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
+    });
+
+    describe('when call number title is clicked', () => {
+      it('should navigate to the instance "Search" page', async () => {
+        const { getByText } = renderCallNumberList({
+          formatter: getBrowseResultsFormatter({
+            data,
+            browseOption: browseCallNumberOptions.DEWEY,
+          }),
+        });
+
+        const query = queryString.stringify({
+          selectedBrowseResult: true,
+          qindex: queryIndexes.QUERY_SEARCH,
+          query: 'itemFullCallNumbers="PRE CALL SUF" and (item.effectiveCallNumberComponents.typeId=="dewey-id" or item.effectiveCallNumberComponents.typeId=="lc-id")',
+        });
+
+        expect(getByText('PRE CALL SUF').href).toContain(`${INVENTORY_ROUTE}?${query}`);
+      });
+
+      describe('when a call number has double quotes', () => {
+        it('should escape the double quotes in the search parameters', async () => {
+          const { getByText } = renderCallNumberList({
+            formatter: getBrowseResultsFormatter({
+              data,
+              browseOption: browseCallNumberOptions.DEWEY,
+            }),
+          });
+
+          const query = queryString.stringify({
+            selectedBrowseResult: true,
+            qindex: queryIndexes.QUERY_SEARCH,
+            query: 'itemFullCallNumbers="PRE \\"WITH QUOTES\\" SUF 2" and (item.effectiveCallNumberComponents.typeId=="dewey-id" or item.effectiveCallNumberComponents.typeId=="lc-id")',
+          });
+
+          expect(getByText('PRE "WITH QUOTES" SUF 2').href).toContain(`${INVENTORY_ROUTE}?${query}`);
+        });
+      });
     });
   });
 
@@ -152,9 +227,16 @@ describe('getBrowseResultsFormatter', () => {
         contributorTypeId: ['contributorTypeId'],
         contributorNameTypeId: 'contributorNameTypeId',
         totalRecords: 1,
+      },
+      {
+        name: 'Antoniou, Grigoris 2',
+        contributorTypeId: ['contributorTypeId'],
+        contributorNameTypeId: 'contributorNameTypeId',
+        totalRecords: 0,
+        isAnchor: false,
       }
     ];
-    const [anchorRecord, nonAnchorRecord] = contentData;
+    const [anchorRecord, nonAnchorRecord, notClickableRecord] = contentData;
 
     const renderContributorsList = (params = {}) => renderComponent({
       contentData,
@@ -172,6 +254,9 @@ describe('getBrowseResultsFormatter', () => {
       // Default row
       expect(screen.getByText(nonAnchorRecord.name).tagName.toLowerCase()).not.toBe('strong');
       expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
+      // Non clickable row
+      expect(screen.getByText(notClickableRecord.name).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText(notClickableRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
     });
 
     it('should render \'Missed match item\' rows', () => {
@@ -186,15 +271,25 @@ describe('getBrowseResultsFormatter', () => {
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
-      await act(async () => userEvent.click(screen.getByText(anchorRecord.name)));
+      await act(async () => fireEvent.click(screen.getByText(anchorRecord.name)));
 
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
+    });
+
+    it('should not navigate to instance "Search" page when not clickable target column was clicked', async () => {
+      renderContributorsList();
+
+      expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
+
+      await act(async () => fireEvent.click(screen.getByText(notClickableRecord.name)));
+
+      expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
     });
 
     it('should open the record in MARC authority app in new tab when "authority" icon was clicked', async () => {
       renderContributorsList();
 
-      await act(async () => userEvent.click(screen.getByTestId('authority-app-link')));
+      await act(async () => fireEvent.click(screen.getByTestId('authority-app-link')));
 
       expect(window.open).toHaveBeenCalledWith(expect.stringContaining('/marc-authorities/authorities'), '_blank', 'noopener,noreferrer');
     });
@@ -214,10 +309,14 @@ describe('getBrowseResultsFormatter', () => {
       {
         isAnchor: true,
         value: 'Africa Politics and government 20th century',
+        sourceId: 'sourceId1',
+        typeId: 'typeId1',
         totalRecords: 1,
       },
       {
         value: 'Corporate governance',
+        sourceId: 'sourceId2',
+        typeId: 'typeId2',
         totalRecords: 2,
       }
     ];
@@ -235,9 +334,13 @@ describe('getBrowseResultsFormatter', () => {
 
       // Anchor row
       expect(screen.getByText(anchorRecord.value).tagName.toLowerCase()).toBe('strong');
+      expect(screen.getByText('sourceName1')).toBeInTheDocument();
+      expect(screen.getByText('typeName1')).toBeInTheDocument();
       expect(screen.getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
       // Default row
       expect(screen.getByText(nonAnchorRecord.value).tagName.toLowerCase()).not.toBe('strong');
+      expect(screen.getByText('sourceName2')).toBeInTheDocument();
+      expect(screen.getByText('typeName2')).toBeInTheDocument();
       expect(screen.getByText(nonAnchorRecord.totalRecords).tagName.toLowerCase()).not.toBe('strong');
     });
 
@@ -253,9 +356,83 @@ describe('getBrowseResultsFormatter', () => {
 
       expect(history.location.pathname).toEqual(BROWSE_INVENTORY_ROUTE);
 
-      await act(async () => userEvent.click(screen.getByText(anchorRecord.value)));
+      await act(async () => fireEvent.click(screen.getByText(anchorRecord.value)));
 
       expect(history.location.pathname).toEqual(INVENTORY_ROUTE);
+    });
+  });
+
+  describe('Classification', () => {
+    const classificationNumber = 'BD638 .T46 2018';
+
+    const formatter = getBrowseResultsFormatter({
+      browseOption: browseModeOptions.CLASSIFICATION_ALL,
+      filters: {
+        qindex: 'classificationAll',
+        query: classificationNumber,
+      },
+      data,
+    });
+    const missedMatchRecord = {
+      classificationNumber: 'foo',
+      isAnchor: true,
+      totalRecords: 0,
+    };
+    const contentData = [
+      {
+        classificationNumber,
+        classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+        isAnchor: true,
+        totalRecords: 1,
+      },
+      {
+        classificationNumber: '981. 06',
+        classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+        totalRecords: 2,
+      },
+      {
+        classificationNumber: '"WITH QUOTES"',
+        classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
+        totalRecords: 3,
+      },
+    ];
+    const [anchorRecord] = contentData;
+
+    const renderClassificationList = (params = {}) => renderComponent({
+      visibleColumns: ['classificationNumber', 'numberOfTitles'],
+      contentData,
+      formatter,
+      ...params,
+    });
+
+    describe('when search query coincides with one of the classification numbers in the results', () => {
+      it('should make this number bold', () => {
+        const { getByText } = renderClassificationList();
+
+        expect(getByText(anchorRecord.classificationNumber).tagName.toLowerCase()).toBe('strong');
+        expect(getByText(anchorRecord.totalRecords).tagName.toLowerCase()).toBe('strong');
+      });
+    });
+
+    it('should render \'Missed match item\' row', () => {
+      const { getByText } = renderClassificationList({ contentData: [missedMatchRecord] });
+
+      expect(getByText(missedMatchRecord.classificationNumber)).toBeInTheDocument();
+      expect(getByText(missedMatchText)).toBeInTheDocument();
+    });
+
+    describe('when a call number has double quotes', () => {
+      it('should escape the double quotes in the search parameters', async () => {
+        const { getByText } = renderClassificationList();
+
+        const query = queryString.stringify({
+          selectedBrowseResult: true,
+          qindex: queryIndexes.QUERY_SEARCH,
+          query: 'classifications.classificationNumber=="\\"WITH QUOTES\\""',
+        });
+
+        expect(getByText('"WITH QUOTES"').href).toContain(`${INVENTORY_ROUTE}?${query}`);
+      });
     });
   });
 });

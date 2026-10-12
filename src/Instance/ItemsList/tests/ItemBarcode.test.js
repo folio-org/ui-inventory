@@ -9,6 +9,11 @@ import translationsProperties from '../../../../test/jest/helpers/translationsPr
 import ItemBarcode from '../ItemBarcode';
 import { QUERY_INDEXES } from '../../../constants';
 
+jest.mock('@folio/stripes/components', () => ({
+  ...jest.requireActual('@folio/stripes/components'),
+  TextLink: jest.fn().mockImplementation(({ children, to }) => <a href={to} data-testid="textLink">{children}</a>),
+}));
+
 const getHistory = search => ({
   length: 1,
   action: 'POP',
@@ -26,13 +31,15 @@ const getHistory = search => ({
 });
 
 const itemProp = {
+  id: 'itemId',
   barcode: '11110000'
 };
 
 const itemBarcodeProps = {
   item: itemProp,
-  holdingId: 'testId1',
-  instanceId: 'testId2'
+  holdingId: 'holdingsId',
+  instanceId: 'instanceId',
+  isBarcodeAsHotlink: true,
 };
 
 const searchItem = qIndex => `?qindex=${qIndex}&query=${itemProp.barcode}`;
@@ -41,11 +48,17 @@ const setupItemBarcode = ({
   item,
   holdingId,
   instanceId,
-  history
+  history,
+  isBarcodeAsHotlink,
 }) => {
   const component = (
     <Router history={history}>
-      <ItemBarcode item={item} holdingId={holdingId} instanceId={instanceId} />
+      <ItemBarcode
+        item={item}
+        holdingId={holdingId}
+        instanceId={instanceId}
+        isBarcodeAsHotlink={isBarcodeAsHotlink}
+      />
     </Router>
   );
 
@@ -82,5 +95,25 @@ describe('<ItemBarcode>', () => {
     const { getByText } = setupItemBarcode({ ...itemBarcodeProps, history });
 
     expect(getByText(itemProp.barcode)).not.toHaveAttribute('data-test-highlighter-mark');
+  });
+
+  it('should render barcode as a hotlink', () => {
+    const history = getHistory(searchItem(QUERY_INDEXES.BARCODE));
+    const { getByTestId } = setupItemBarcode({ ...itemBarcodeProps, history });
+
+    expect(getByTestId('textLink')).toBeInTheDocument();
+    expect(getByTestId('textLink').href).toContain('/inventory/view/instanceId/holdingsId/itemId');
+  });
+
+  it('should render barcode as a plain text', () => {
+    const history = getHistory(searchItem(QUERY_INDEXES.BARCODE));
+    const { queryByRole, getByText } = setupItemBarcode({
+      ...itemBarcodeProps,
+      isBarcodeAsHotlink: false,
+      history,
+    });
+
+    expect(queryByRole('button', { name: itemProp.barcode })).not.toBeInTheDocument();
+    expect(getByText(itemProp.barcode)).toBeInTheDocument();
   });
 });

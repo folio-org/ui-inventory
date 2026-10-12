@@ -25,18 +25,16 @@ import {
   NOTE_CHARS_MAX_LENGTH
 } from '../constants';
 
-const NoteFields = props => {
+const NoteFields = ({
+  noteTypeIdField,
+  noteTypeOptions = [],
+  requiredFields = [],
+  renderLegend = true,
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    noteTypeOptions,
-    noteTypeIdField,
-    requiredFields,
-    renderLegend,
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
 
   const noteTypeLabel = formatMessage({ id: 'ui-inventory.noteType' });
   const noteLabel = formatMessage({ id: 'ui-inventory.note' });
@@ -133,14 +131,6 @@ NoteFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-NoteFields.defaultProps = {
-  noteTypeOptions: [],
-  requiredFields: [],
-  renderLegend: true,
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default NoteFields;

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -50,7 +49,7 @@ describe('NatureOfContentField', () => {
   it('click on Add nature of content button and check dropdown length', () => {
     renderNatureOfContentField();
     const natureContentButton = screen.getByText('Add nature of content');
-    userEvent.click(natureContentButton);
+    fireEvent.click(natureContentButton);
     const natureContentDropdown = screen.getAllByRole('option');
 
     // where 1 of options is a default option

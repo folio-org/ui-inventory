@@ -3,80 +3,96 @@ import PropTypes from 'prop-types';
 import { flowRight } from 'lodash';
 
 import { stripesConnect } from '@folio/stripes/core';
+import {
+  filterConfig,
+  renderFilters,
+  segments,
+  withSearchErrors,
+  ResetProvider,
+} from '@folio/stripes-inventory-components';
 
-import withLocation from '../withLocation';
-import withFacets from '../withFacets';
-import withLastSearchTerms from '../withLastSearchTerms';
+import {
+  withLocation,
+  withLastSearchTerms,
+} from '../hocs';
 import { InstancesView } from '../views';
-import { getFilterConfig } from '../filterConfig';
 import { buildManifestObject } from './buildManifestObject';
 import { DataContext } from '../contexts';
 
 class InstancesRoute extends React.Component {
   static propTypes = {
+    // tenantId is used in buildManifestObject()
+    tenantId: PropTypes.string.isRequired, // eslint-disable-line react/no-unused-prop-types
     resources: PropTypes.object.isRequired,
     mutator: PropTypes.object.isRequired,
-    showSingleResult: PropTypes.bool,
     disableRecordCreation: PropTypes.bool,
     onSelectRow: PropTypes.func,
     getParams: PropTypes.func,
-    fetchFacets: PropTypes.func,
     getLastBrowse: PropTypes.func.isRequired,
+    getLastSearch: PropTypes.func.isRequired,
     getLastSearchOffset: PropTypes.func.isRequired,
+    isRequestUrlExceededLimit: PropTypes.bool.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSegment: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
-    showSingleResult: true,
     disableRecordCreation: false,
   };
 
   static manifest = Object.freeze(buildManifestObject());
 
+  handleFilterChange = (onChange) => ({ name, values }) => {
+    onChange({ name, values });
+  };
+
   render() {
     const {
-      showSingleResult,
       onSelectRow,
       disableRecordCreation,
       resources,
       mutator,
       getParams,
-      fetchFacets,
+      getLastSearch,
       getLastBrowse,
       getLastSearchOffset,
       storeLastSearch,
       storeLastSearchOffset,
+      storeLastSegment,
+      isRequestUrlExceededLimit,
     } = this.props;
-    const { segment } = getParams(this.props);
-    const { indexes, renderer } = getFilterConfig(segment);
+    const { segment = segments.instances } = getParams(this.props);
+    const { indexes } = filterConfig[segment];
     const { query, records } = resources;
     const parentResources = { ...resources, records };
 
     return (
       <DataContext.Consumer>
         {data => (
-          <InstancesView
-            parentResources={parentResources}
-            parentMutator={mutator}
-            data={{ ...data, query }}
-            showSingleResult={showSingleResult}
-            onSelectRow={onSelectRow}
-            disableRecordCreation={disableRecordCreation}
-            renderFilters={renderer({
-              ...data,
-              query,
-              onFetchFacets: fetchFacets(data),
-              parentResources,
-            })}
-            segment={segment}
-            searchableIndexes={indexes}
-            fetchFacets={fetchFacets}
-            getLastBrowse={getLastBrowse}
-            getLastSearchOffset={getLastSearchOffset}
-            storeLastSearch={storeLastSearch}
-            storeLastSearchOffset={storeLastSearchOffset}
-          />
+          <ResetProvider>
+            <InstancesView
+              parentResources={parentResources}
+              parentMutator={mutator}
+              data={{ ...data, query }}
+              onSelectRow={onSelectRow}
+              disableRecordCreation={disableRecordCreation}
+              renderFilters={renderFilters({
+                data,
+                query,
+                onFilterChange: this.handleFilterChange,
+              })}
+              segment={segment}
+              searchableIndexes={indexes}
+              getLastSearch={getLastSearch}
+              getLastBrowse={getLastBrowse}
+              getLastSearchOffset={getLastSearchOffset}
+              storeLastSearch={storeLastSearch}
+              storeLastSearchOffset={storeLastSearchOffset}
+              storeLastSegment={storeLastSegment}
+              isRequestUrlExceededLimit={isRequestUrlExceededLimit}
+            />
+          </ResetProvider>
         )}
       </DataContext.Consumer>
     );
@@ -86,6 +102,6 @@ class InstancesRoute extends React.Component {
 export default flowRight(
   stripesConnect,
   withLocation,
-  withFacets,
   withLastSearchTerms,
+  withSearchErrors,
 )(InstancesRoute);

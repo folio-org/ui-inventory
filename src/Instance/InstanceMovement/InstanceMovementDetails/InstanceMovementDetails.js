@@ -1,40 +1,37 @@
-import React, {
-  useCallback,
-  useContext,
-} from 'react';
+import { useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import { Droppable } from 'react-beautiful-dnd';
-import {
-  useStripes,
-} from '@folio/stripes/core';
-
-import DnDContext from '../../DnDContext';
-import {
-  InstanceDetails,
-} from '../../InstanceDetails';
-import {
-  HoldingsListContainer,
-} from '../../HoldingsList';
+import { useStripes } from '@folio/stripes/core';
 
 import InstanceMovementDetailsActions from './InstanceMovementDetailsActions';
+import ViewInstancePane from '../../ViewInstance/ViewInstancePane/ViewInstancePane';
+import { HoldingsList } from '../../HoldingsList';
+
+import { useInstanceMutation } from '../../hooks';
+import useMarcRecordQuery from '../../../hooks/useMarcRecordQuery';
+
+import { INSTANCE_RECORD_TYPE } from '../../../constants';
 
 const InstanceMovementDetails = ({
-  instance,
+  instance = {},
   onClose,
-  hasMarc,
-  id,
+  refetch,
+  id = 'movement-instance-details',
 }) => {
   const stripes = useStripes();
+  const tenantId = instance.tenantId ?? stripes.okapi.tenant;
+
+  const { data: marcRecord } = useMarcRecordQuery(instance.id, INSTANCE_RECORD_TYPE, stripes.okapi.tenant,
+    { enabled: instance.source === 'MARC' });
+
+  const { mutateInstance: mutateEntity } = useInstanceMutation({ tenantId });
+  const mutateInstance = async (entity, { onError }) => {
+    await mutateEntity(entity, { onSuccess: refetch, onError });
+  };
 
   const closeInstance = useCallback(() => {
     onClose(instance);
   }, [instance, onClose]);
-
-  const {
-    activeDropZone,
-    isItemsDroppable,
-  } = useContext(DnDContext);
 
   const getActionMenu = useCallback(({ onToggle }) => {
     if (
@@ -48,57 +45,40 @@ const InstanceMovementDetails = ({
       <InstanceMovementDetailsActions
         onToggle={onToggle}
         instance={instance}
-        hasMarc={hasMarc}
+        hasMarc={Boolean(marcRecord)}
       />
     );
-  }, [instance, hasMarc]);
+  }, [instance, marcRecord]);
 
-  const canMoveHoldings = stripes.hasPerm('ui-inventory.holdings.move');
-  const canMoveItems = stripes.hasPerm('ui-inventory.item.move');
+  const holdingsSection = (
+    <HoldingsList
+      instanceId={instance.id}
+      tenantId={stripes.okapi.tenant}
+      pathToAccordionsState={['holdings']}
+      isItemsMovement
+      isHoldingsMovement
+    />
+  );
 
   return (
-    <InstanceDetails
+    <ViewInstancePane
+      id={id}
       instance={instance}
+      isShared={instance.shared}
+      tenantId={stripes.okapi.tenant}
+      mutateInstance={mutateInstance}
       onClose={closeInstance}
       actionMenu={getActionMenu}
-      data-test-instance-movement-details={instance.id}
-      id={id}
-    >
-      <Droppable
-        droppableId={`${instance.id}`}
-        isDropDisabled={isItemsDroppable || activeDropZone === instance.id || !canMoveHoldings}
-      >
-        {(provided) => (
-          <div
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-            data-test-holdings
-          >
-            <HoldingsListContainer
-              instance={instance}
-              isHoldingsMove={canMoveHoldings}
-              draggable={canMoveItems}
-              droppable={canMoveItems}
-            />
-
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
-    </InstanceDetails>
+      holdingsSection={holdingsSection}
+    />
   );
 };
 
 InstanceMovementDetails.propTypes = {
-  instance: PropTypes.object,
-  hasMarc: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
+  instance: PropTypes.object,
   id: PropTypes.string,
-};
-
-InstanceMovementDetails.defaultProps = {
-  instance: {},
-  id: 'movement-instance-details',
+  refetch: PropTypes.func,
 };
 
 export default InstanceMovementDetails;

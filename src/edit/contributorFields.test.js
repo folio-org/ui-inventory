@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -53,7 +52,7 @@ describe('ContributorFields', () => {
   it('renders all fields correctly', () => {
     renderContributorFields();
     expect(screen.getByText(/Contributors/i)).toBeInTheDocument();
-    userEvent.click(screen.getByText(/Add contributor/i));
+    fireEvent.click(screen.getByText(/Add contributor/i));
     const option = screen.getAllByText('Select type');
     expect(option).toHaveLength(2);
   });

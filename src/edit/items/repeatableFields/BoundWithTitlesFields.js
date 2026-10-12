@@ -34,7 +34,7 @@ const BoundWithTitlesFields = ({
   const [isBoundWithModalOpen, setBoundWithModalOpen] = useState(false);
   const [addedHoldingsHrids, setAddedHoldingsHrids] = useState([]);
   const { boundWithTitles: newBoundWithTitles } = useBoundWithTitlesByHrids(addedHoldingsHrids);
-  const prevBoundWithTitles = usePrevious(newBoundWithTitles);
+  const prevBoundWithTitles = usePrevious(newBoundWithTitles) || [];
 
   useEffect(() => {
     if (!isEqual(prevBoundWithTitles, newBoundWithTitles)) {
@@ -127,6 +127,8 @@ const BoundWithTitlesFields = ({
       </Col>
     </Row>
   );
+
+  if (!item.id) return null;
 
   return (
     <>

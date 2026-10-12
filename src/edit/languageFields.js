@@ -1,7 +1,7 @@
-import React from 'react';
+import { useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'react-final-form-arrays';
-import { Field } from 'react-final-form';
+import { Field, useForm } from 'react-final-form';
 import {
   FormattedMessage,
   useIntl,
@@ -15,18 +15,28 @@ import {
   Label,
 } from '@folio/stripes/components';
 
-const LanguageFields = props => {
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
-
+const LanguageFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
+  const { getState, initialize } = useForm();
   const intl = useIntl();
   const stripes = useStripes();
-  const langOptions = languageOptions(intl, stripes.locale);
 
-  const languageLabel = intl.formatMessage({ id: 'ui-inventory.language' });
+  const langOptions = useMemo(() => languageOptions(intl, stripes.locale), [intl, stripes.locale]);
+  const languageLabel = useMemo(() => intl.formatMessage({ id: 'ui-inventory.language' }), [intl]);
+  const validLanguageCodes = useMemo(() => langOptions.map(opt => opt.value), [langOptions]);
+
+  useEffect(() => {
+    const languages = getState().values?.languages || [];
+    if (languages.some(lang => lang && !validLanguageCodes.includes(lang))) {
+      initialize(values => ({
+        ...values,
+        languages: languages.map(lang => (lang && validLanguageCodes.includes(lang) ? lang : null)),
+      }));
+    }
+  }, []);
 
   const legend = (
     <Label tagName="legend" required>
@@ -40,8 +50,7 @@ const LanguageFields = props => {
       name={field}
       title={field}
       component={Select}
-      placeholder={intl.formatMessage({ id: 'ui-inventory.selectLanguage' })}
-      dataOptions={langOptions}
+      dataOptions={[{ label: intl.formatMessage({ id: 'ui-inventory.selectLanguage' }), value: '' }, ...langOptions]}
       data-test-language-field-count={index}
       required
       disabled={!canEdit}
@@ -67,11 +76,6 @@ LanguageFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-LanguageFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default LanguageFields;

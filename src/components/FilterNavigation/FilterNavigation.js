@@ -1,48 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
+import queryString from 'query-string';
+
 import {
   ButtonGroup,
   Button,
 } from '@folio/stripes/components';
+import {
+  handleSegmentChange,
+  segments,
+} from '@folio/stripes-inventory-components';
 
-import { segments } from '../../constants';
+import { useLastSearchTerms } from '../../hooks';
 
-const FilterNavigation = ({ segment, segmentsSortBy, onChange }) => (
-  <ButtonGroup
-    fullWidth
-    data-test-filters-navigation
-  >
-    {
-      Object.keys(segments).map((name) => {
-        const sort = segmentsSortBy.find(x => x.name === name).sort || '';
+const FilterNavigation = ({
+  data,
+  onChange,
+  segment = segments.instances,
+}) => {
+  const { getLastSearch } = useLastSearchTerms();
 
-        return (
-          <>
+  return (
+    <ButtonGroup
+      fullWidth
+      data-test-filters-navigation
+    >
+      {
+        Object.keys(segments).map((name) => {
+          const searchParams = queryString.parse(getLastSearch(name));
+
+          searchParams.segment = name;
+          if (!searchParams.sort) searchParams.sort = data.displaySettings.defaultSort;
+
+          return (
             <Button
               key={`${name}`}
-              to={`/inventory?segment=${name}${sort !== '' ? '&sort=' : ''}${sort}`}
+              to={{
+                pathname: '/inventory',
+                search: queryString.stringify(searchParams),
+              }}
               buttonStyle={`${segment === name ? 'primary' : 'default'}`}
               id={`segment-navigation-${name}`}
-              onClick={onChange}
+              onClick={() => handleSegmentChange(name, segment, onChange)}
             >
               <FormattedMessage id={`ui-inventory.filters.${name}`} />
             </Button>
-          </>
-        );
-      })
-    }
-  </ButtonGroup>
-);
-
-FilterNavigation.propTypes = {
-  segment: PropTypes.string,
-  segmentsSortBy: PropTypes.arrayOf(PropTypes.object),
-  onChange: PropTypes.func,
+          );
+        })
+      }
+    </ButtonGroup>
+  );
 };
 
-FilterNavigation.defaultProps = {
-  segment: segments.instances,
+FilterNavigation.propTypes = {
+  data: PropTypes.object.isRequired,
+  onChange: PropTypes.func,
+  segment: PropTypes.string,
 };
 
 export default FilterNavigation;

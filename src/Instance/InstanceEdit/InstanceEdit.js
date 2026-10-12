@@ -1,15 +1,20 @@
 import React, {
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
 
 import {
   stripesConnect,
   stripesShape,
+  checkIfUserInMemberTenant,
 } from '@folio/stripes/core';
 import {
   LoadingView,
@@ -28,20 +33,32 @@ import {
 } from '../../utils';
 import useLoadSubInstances from '../../hooks/useLoadSubInstances';
 import useCallout from '../../hooks/useCallout';
+import { useInstanceMutation } from '../hooks';
+
+import css from './InstanceEdit.css';
 
 const InstanceEdit = ({
   instanceId,
   referenceData,
   stripes,
-  mutator,
 }) => {
-  const { identifierTypesById, identifierTypesByName } = referenceData ?? {};
+  const { formatMessage } = useIntl();
+  const {
+    identifierTypesById,
+    identifierTypesByName,
+    instanceDateTypesByCode,
+  } = referenceData ?? {};
   const [httpError, setHttpError] = useState();
   const [initialValues, setInitialValues] = useState();
   const callout = useCallout();
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.instanceEdit);
+  const keepEditing = useRef(false);
+  const { instance, isFetching: isInstanceLoading, refetch: refetchInstance } = useInstance(instanceId);
   const parentInstances = useLoadSubInstances(instance?.parentInstances, 'superInstanceId');
   const childInstances = useLoadSubInstances(instance?.childInstances, 'subInstanceId');
+
+  const setKeepEditing = useCallback((value) => {
+    keepEditing.current = value;
+  }, []);
 
   useEffect(() => {
     setInitialValues({
@@ -53,27 +70,62 @@ const InstanceEdit = ({
 
   const goBack = useGoBack(`/inventory/view/${instanceId}`);
 
-  const onSuccess = useCallback((updatedInstance) => {
+  const onSuccess = useCallback(() => {
+    const message = instance?.shared ? (
+      <FormattedMessage id="ui-inventory.instance.shared.successfulySaved" />
+    ) : (
+      <FormattedMessage
+        id="ui-inventory.instance.successfullySaved"
+        values={{ hrid: instance.hrid }}
+      />
+    );
+
     callout.sendCallout({
       type: 'success',
-      message: <FormattedMessage
-        id="ui-inventory.instance.successfullySaved"
-        values={{ hrid: updatedInstance.hrid }}
-      />,
+      message,
     });
-    goBack();
+
+    if (!keepEditing.current) {
+      goBack();
+    } else {
+      refetchInstance();
+    }
   }, [callout, goBack]);
 
   const onError = async error => {
-    const parsedError = await parseHttpError(error);
-    setHttpError(parsedError);
+    const response = await error.response;
+    const parsedError = await parseHttpError(response);
+    const defaultErrorMessage = formatMessage({ id: 'ui-inventory.communicationProblem' });
+    const err = {
+      errorType: parsedError?.errorType,
+      message: parsedError?.message || parsedError?.errors?.[0]?.message || defaultErrorMessage,
+      status: response?.status,
+    };
+
+    setHttpError(err);
   };
 
-  const onSubmit = useCallback((updatedInstance) => {
-    return mutator.instanceEdit.PUT(marshalInstance(updatedInstance, identifierTypesByName))
-      .then(() => onSuccess(updatedInstance))
-      .catch(onError);
-  }, [identifierTypesByName, onError]);
+  const getErrorModalContent = () => {
+    return (
+      <div className={css.errorModalContent}>
+        {httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+      </div>
+    );
+  };
+
+  const isMemberTenant = checkIfUserInMemberTenant(stripes);
+  const tenantId = (isMemberTenant && instance?.shared) ? stripes.user.user.consortium?.centralTenantId : stripes.okapi.tenant;
+
+  const { mutateInstance } = useInstanceMutation({
+    options: { onSuccess },
+    tenantId,
+  });
+
+  const onSubmit = useCallback(async (initialInstance) => {
+    const updatedInstance = marshalInstance(initialInstance, identifierTypesByName, instanceDateTypesByCode);
+
+    return mutateInstance(updatedInstance).catch(onError);
+  }, [mutateInstance]);
 
   if (isInstanceLoading) return <LoadingView />;
 
@@ -89,12 +141,14 @@ const InstanceEdit = ({
         referenceTables={referenceData}
         stripes={stripes}
         onCancel={goBack}
+        setKeepEditing={setKeepEditing}
+        showKeepEditingButton
       />
       {httpError && !httpError?.errorType &&
         <ErrorModal
           open
           label={<FormattedMessage id="ui-inventory.instance.saveError" />}
-          content={httpError?.status ? `${httpError.status}: ${httpError.message}` : httpError.message}
+          content={getErrorModalContent()}
           onClose={() => setHttpError()}
         />
       }
@@ -114,7 +168,6 @@ InstanceEdit.manifest = Object.freeze({
 
 InstanceEdit.propTypes = {
   instanceId: PropTypes.string.isRequired,
-  mutator: PropTypes.object.isRequired,
   referenceData: PropTypes.object.isRequired,
   stripes: stripesShape.isRequired,
 };

@@ -3,30 +3,31 @@ import PropTypes from 'prop-types';
 import { stripesConnect } from '@folio/stripes/core';
 
 import { ViewSource } from '../../components';
+import MARC_TYPES from '../../components/ViewSource/marcTypes';
+import { useInstance } from '../../common';
 
 const HoldingsMarcContainer = ({
   mutator,
   instanceId,
   holdingsrecordid,
 }) => {
+  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
+  const tenantId = instance?.tenantId;
+
   return (
     <ViewSource
       mutator={mutator}
+      instance={instance}
       instanceId={instanceId}
+      isInstanceLoading={isInstanceLoading}
       holdingsRecordId={holdingsrecordid}
-      isHoldingsRecord
+      marcType={MARC_TYPES.HOLDINGS}
+      tenantId={tenantId}
     />
   );
 };
 
 HoldingsMarcContainer.manifest = Object.freeze({
-  marcInstance: {
-    type: 'okapi',
-    records: 'instances',
-    throwErrors: false,
-    path: 'inventory/instances',
-    accumulate: true,
-  },
   marcRecord: {
     type: 'okapi',
     path: 'source-storage/records/!{holdingsrecordid}/formatted?idType=HOLDINGS',

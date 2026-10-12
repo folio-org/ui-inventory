@@ -3,35 +3,41 @@ import React, {
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-import {
-  useHistory,
-  useLocation,
-} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import { useStripes } from '@folio/stripes/core';
-import {
-  LoadingView,
-} from '@folio/stripes/components';
+import { LoadingView } from '@folio/stripes/components';
 
+import { useNumberGeneratorOptions } from '../../common/hooks';
 import {
   useInstanceQuery,
-  useHolding,
+  useHoldingQuery,
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
 import { useItemMutation } from '../hooks';
+import { switchAffiliation } from '../../utils';
 
 const CreateItem = ({
   referenceData,
   instanceId,
   holdingId,
 }) => {
-  const history = useHistory();
-  const location = useLocation();
+  const {
+    push,
+    location: {
+      search,
+      state: {
+        tenantTo,
+        tenantFrom,
+      } = {},
+    } = {},
+  } = useHistory();
 
-  const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
-  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
+  const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId, { tenantId: tenantTo });
+  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId, { tenantId: tenantTo });
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();
 
@@ -40,17 +46,21 @@ const CreateItem = ({
     holdingsRecordId: holding.id,
   }), [holding.id]);
 
-  const onCancel = useCallback(() => {
-    history.push({
+  const goBack = useCallback(() => {
+    push({
       pathname: `/inventory/view/${instanceId}`,
-      search: location.search,
+      search,
     });
-  }, [location.search, instanceId]);
+  }, [instanceId, search]);
+
+  const onCancel = useCallback(async () => {
+    await switchAffiliation(stripes, tenantFrom, goBack);
+  }, [stripes, tenantFrom]);
 
   const onSuccess = useCallback(async (response) => {
     const { hrid } = await response.json();
 
-    onCancel();
+    await onCancel();
 
     return callout.sendCallout({
       type: 'success',
@@ -75,6 +85,7 @@ const CreateItem = ({
       id={holding.id}
       key={holding.id}
       initialValues={initialValues}
+      numberGeneratorData={numberGeneratorData}
       onSubmit={onSubmit}
       onCancel={onCancel}
       okapi={stripes.okapi}

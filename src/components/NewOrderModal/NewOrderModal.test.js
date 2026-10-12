@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
-import user from '@folio/jest-config-stripes/testing-library/user-event';
+import { render, screen, fireEvent, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../test/jest/__mock__';
 
@@ -46,7 +45,7 @@ describe('NewOrderModal', () => {
   it('should call \'onCancel\' when cancel btn was clicked', () => {
     renderNewOrderModal();
 
-    user.click(screen.getByText(/Cancel/i));
+    fireEvent.click(screen.getByText(/Cancel/i));
 
     expect(defaultProps.onCancel).toHaveBeenCalled();
   });
@@ -54,23 +53,20 @@ describe('NewOrderModal', () => {
   it('should call \'onSubmit\' when create btn was clicked', () => {
     renderNewOrderModal();
 
-    user.click(screen.getByText(/^Create$/i));
+    fireEvent.click(screen.getByText(/^Create$/i));
 
     expect(defaultProps.onSubmit).toHaveBeenCalled();
   });
 
-  it('should call validate \'PONumber\' field on blur', () => {
+  it('should call validate \'PONumber\' field on blur', async () => {
     renderNewOrderModal();
 
     const field = screen.getByLabelText(/PO number/i);
 
-    user.click(field);
-
+    await act(async () => field.focus());
+    fireEvent.change(field, { target: { value: '123' } });
     expect(field).toHaveFocus();
-
-    user.type(field, '123');
-    user.tab();
-
+    await act(async () => field.blur());
     expect(field).not.toHaveFocus();
     expect(defaultProps.validatePONumber).toHaveBeenCalled();
   });

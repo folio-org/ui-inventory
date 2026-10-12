@@ -3,11 +3,15 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
+import { getSourceSuppressor } from '@folio/stripes/util';
 
+import { RECORD_SOURCE } from '../constants';
 import validateNameAndCode from './validateNameAndCode';
 
-import { sourceSuppressor } from '../utils';
 
 class ContributorTypesSettings extends React.Component {
   static propTypes = {
@@ -25,35 +29,43 @@ class ContributorTypesSettings extends React.Component {
 
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.contributor-types');
-    const suppress = sourceSuppressor('marcrelator');
+    const suppress = getSourceSuppressor([
+      RECORD_SOURCE.MARC_RELATOR,
+      RECORD_SOURCE.CONSORTIUM,
+    ]);
 
     return (
       <IntlConsumer>
         {intl => (
-          <this.connectedControlledVocab
-            {...this.props}
-            baseUrl="contributor-types"
-            records="contributorTypes"
-            label={<FormattedMessage id="ui-inventory.contributorTypes" />}
-            labelSingular={intl.formatMessage({ id: 'ui-inventory.contributorType' })}
-            objectLabel={<FormattedMessage id="ui-inventory.contributors" />}
-            visibleFields={['name', 'code', 'source']}
-            columnMapping={{
-              name: intl.formatMessage({ id: 'ui-inventory.name' }),
-              code: intl.formatMessage({ id: 'ui-inventory.code' }),
-              source: intl.formatMessage({ id: 'ui-inventory.source' }),
-            }}
-            readOnlyFields={['source']}
-            itemTemplate={{ source: 'local' }}
-            hiddenFields={['description', 'numberOfObjects']}
-            nameKey="name"
-            // columnWidths={{ 'name': 300, 'code': 50 }}
-            actionSuppressor={{ edit: suppress, delete: suppress }}
-            id="contributor-types"
-            sortby="name"
-            validate={validateNameAndCode}
-            editable={hasPerm}
-          />
+          <TitleManager
+            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+            record={intl.formatMessage({ id: 'ui-inventory.contributorTypes' })}
+          >
+            <this.connectedControlledVocab
+              {...this.props}
+              baseUrl="contributor-types"
+              records="contributorTypes"
+              label={<FormattedMessage id="ui-inventory.contributorTypes" />}
+              labelSingular={intl.formatMessage({ id: 'ui-inventory.contributorType' })}
+              objectLabel={<FormattedMessage id="ui-inventory.contributors" />}
+              visibleFields={['name', 'code', 'source']}
+              columnMapping={{
+                name: intl.formatMessage({ id: 'ui-inventory.name' }),
+                code: intl.formatMessage({ id: 'ui-inventory.code' }),
+                source: intl.formatMessage({ id: 'ui-inventory.source' }),
+              }}
+              readOnlyFields={['source']}
+              itemTemplate={{ source: 'local' }}
+              hiddenFields={['description', 'numberOfObjects']}
+              nameKey="name"
+              // columnWidths={{ 'name': 300, 'code': 50 }}
+              actionSuppressor={{ edit: suppress, delete: suppress }}
+              id="contributor-types"
+              sortby="name"
+              validate={validateNameAndCode}
+              editable={hasPerm}
+            />
+          </TitleManager>
         )}
       </IntlConsumer>
     );

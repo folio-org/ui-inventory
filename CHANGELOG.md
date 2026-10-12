@@ -1,6 +1,721 @@
 # Change history for ui-inventory
 
-## 10.0.0 IN PROGRESS
+## 14.1.0 IN PROGRESS
+
+* Source not displaying in Inventory version history for circ actions taken in different tenant. Fixes UIIN-3617.
+* Place "Manage number generator options" capability checkbox in the `manage` column instead of `view`. Fixes UIIN-3665.
+* Remove button "Generate accession and call numbers" at call number field and add an info popover instead. Refs UIIN-3680.
+* Add number generator settings for Instance Identifier. Refs UIIN-3678.
+* Move menu item "Number generator options" to Section Settings > Inventory > Instances, Holdings, Items. Refs UIIN-3677.
+* Update `Instance status term` field when opening instance after updating. Fixes UIIN-3650.
+* Show "Source" field in "Version history" for a user not having permissions in Central tenant. Fixes UIIN-3686.
+* Update Inventory results list's select/unselect all checkbox label. Refs UIIN-3684.
+* Integrate Button "Generate identifier" in Inventory instance records. Refs UIIN-3679.
+* Update aria-label for action menu buttons based on context. Refs UIIN-3685.
+* Revert UIIN-3377. Make submitting an Item Form default to Save & close behaviour. Refs UIIN-3596.
+* Add Connected Tasks/Jobs to Instance, Holdings, and Item detail pages. Refs UIIN-3706.
+* Add dedicated permission `inventory.instances.item.mark-deleted.delete` for setting instances for deletion. Refs UIIN-3711.
+* Add instance custom links settings. Refs UIIN-3652.
+
+## [14.0.6](https://github.com/folio-org/ui-inventory/tree/v14.0.6) (2026-08-12)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.5...v14.0.6)
+
+* Show "Source" field in "Version history" for a user not having permissions in Central tenant. Fixes UIIN-3686.
+
+## [14.0.5](https://github.com/folio-org/ui-inventory/tree/v14.0.5) (2026-07-31)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.4...v14.0.5)
+
+* Translate all status-action entries in `<ItemStatusMenu>`. Fixes UIIN-3666.
+
+## [14.0.4](https://github.com/folio-org/ui-inventory/tree/v14.0.4) (2026-06-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.3...v14.0.4)
+
+* "Add Bound with and analytics" button is not shown when creating a new item. Fixes UIIN-3631.
+
+## [14.0.3](https://github.com/folio-org/ui-inventory/tree/v14.0.3) (2026-05-29)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.2...v14.0.3)
+
+* Fetch items when holding accordion is open. Fixes UIIN-3658.
+
+## [14.0.2](https://github.com/folio-org/ui-inventory/tree/v14.0.2) (2026-05-21)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.1...v14.0.2)
+
+* Show error message when edit URLs are with invalid UUIDs. Fixes UIIN-3604.
+* ECS | Show child and parent of shared Instance when Instance from Member tenant. Fixes UIIN-3642.
+
+## [14.0.1](https://github.com/folio-org/ui-inventory/tree/v14.0.1) (2026-05-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.0...v14.0.1)
+
+* Fix Tags accordion displaying in Holdings and Items until Tags setting is re-enabled. Fixes UIIN-3602.
+* Make item status in Item details pane header translatable. Fixes UIIN-3632.
+* Item status is displayed in lowercase (“available”) instead of capitalized (“Available”) in the item title. Fixes UIIN-3640.
+* Item-record detail path with invalid UUIDs shows full-screen "Something went wrong". Fixes UIIN-3607.
+* Holdings-record detail path with invalid UUIDs shows never-ending loading spinner. Fixes UIIN-3605.
+
+## [14.0.0](https://github.com/folio-org/ui-inventory/tree/v14.0.0) (2026-04-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.13...v14.0.0)
+
+* Add missing asterisk to call number label in additional call numbers section. Fixes UIIN-3615, UIIN-3618.
+* Move focus on the Instance detail view pane when record is opened. Refs UIIN-3122.
+* Update `orders` and `order-lines` interfaces to `13.0` and `4.0` accordingly. Refs UIIN-3345.
+* Remove extra record from Central tenant after adding `Receiving history` record in local member instance. Fixes UIIN-3211.
+* Display additional order data on Inventory item record. Refs UIIN-3350.
+* Item -> ViewItem: refactor component. Refs UIIN-3267.
+* *BREAKING* Use `/search/resources/jobs` endpoints to get Instances and Holdings UUIDs. Refs UIIN-3366.
+* Adding HRID to the Inventory results list & show columns options. Refs UIIN-1262.
+* Display more detailed error message when updating ownership for holdings fails. Refs UIIN-3339.
+* Remove empty lines in drop-down menus in Settings > Inventory > Number generator options. Refs UIIN-3439.
+* Display `Service point` in the `Circulation history` section in the item view page after check in action. Fixes UIIN-3417.
+* *BREAKING* Update for Split Search & Browse APIs. Refs UIIN-3435.
+* *BREAKING* Bump up okapiInterface version of linked-data to 2.0. Refs UIIN-3428.
+* Effective location in FOLIO Inventory is not updated and shown as inactive. Fixes
+UIIN-3437.
+* Instance -> ViewInstance: refactor component. Refs UIIN-3382.
+* Add missing pane id to instance details pane. Fixes UIIN-3443.
+* Provide hasCentralTenantPerm arg to useInstancePermissions hook. Fixes UIIN-3444.
+* ECS | No request send when user confirms ownership update of item record. Fixes UIIN-3440.
+* "New request" button is missing from the "Actions" dropdown in the Instance details pane. Fixes UIIN-3445.
+* Add additional call numbers to Holdings record. Refs UIIN-3327.
+* Add additional call numbers to Item records. Refs UIIN-3328.
+* ECS: Provide correct tenant to get member tenant holdings for instance. Fixes UIIN-3447.
+* Fix hotkey handlers for Instance details. Fixes UIIN-3448.
+* Classification browse | Add Contributors to results list. Refs UIIN-3368.
+* Open Item record detail view when exact match is found via Keyword search option in Item tab. Refs UIIN-3416.
+* Classification browse | Add Title to results list. Refs UIIN-3367.
+* CallNumberTypes component: refactor class component. Refs UIIN-3389.
+* Fix instance overlaying issues. Fixes UIIN-3450.
+* Display order column in items table when clicking `Move items within an instance` action button. Refs UIIN-3453.
+* Allow tenant to set default columns to display in Inventory results. Refs UIIN-3422.
+* Display default value in Language select when language is incorrect. Fixes UIIN-3451.
+* Correcting the behavior of drop-down menu and checkbox in Settings > Inventory > Number generator options. Refs UIIN-3471.
+* Move permissions for creating export jobs to "Inventory: View instances, holdings, and items" permission. Fixes UIIN-3474.
+* Fix sorting for Items on Instance details page. Fixes UIIN-3478.
+* ECS: Set Held by facet default to current tenant context in Inventory Search. Refs UIIN-2820.
+* Show green message after creating the instance. Fixes UIIN-3446.
+* Fix "Move holdings/items" action item displaying on shared instance. Fixes UIIN-3487.
+* ECS: Set Held by facet default to current tenant context in Inventory Call number Browse. Refs UIIN-3457.
+* Make "data-import-converter-storage" dependency as optional. Refs UIIN-3488.
+* Added a permission to delete records from SRS to a "Inventory: All permissions" and "Inventory: View, create, edit, delete holdings". Fixes UIIN-3434.
+* Change the order of items in the item list when dragging. Refs UIIN-3455.
+* Add missing permissions for instance view. Refs UIIN-3472.
+* Fix quick instance export. Refs UIIN-3504.
+* Escape backslashes in Browse requests. Fixes UIIN-3508.
+* Handle saving items order on dragEnd event. Refs UIIN-3454.
+* Change load animation during import/overlay instance. Refs UIIN-3464.
+* Add a default `source="local"` field to created Loan types. Fixes UIIN-3503.
+* Show order cells as text inputs when invoking “Move items within an instance” action. Refs UIIN-3486.
+* Deleted "Holdings" record displays in Instance "Holdings" accordion after deletion. Fixes UIIN-3498.
+* When duplicating an item order value is also duplicated. Fixes UIIN-3518.
+* Update Call number headers for Item and Holding records. Refs UIIN-3506, UIIN-3505.
+* Move items to another holdings within the same instance is broken. Fixes UIIN-3519.
+* Use of number generator while duplicating a Holdings record. Refs UIIN-3513.
+* Use of number generators while duplicating an Item record. Refs UIIN-3514.
+* Make data-export optional in inventory. Refs UIIN-3525.
+* Changes to Instance search after removing all unnecessary fields from mod-search response. Refs UIIN-3494.
+* Fix application error when trying to expand holding during moving holdings. Fixes UIIN-3521.
+* Apply sorting by Order column when invoking `Move items within an instance` action button. Refs UIIN-3509.
+* Item count in a holding does not automatically update after moving an item from the holding of another instance. Fixes UIIN-3507.
+* Fix items re-ordering using orders text fields. Fixes UIIN-3527.
+* The 'View source' option is disabled after overlaying the instance with 'FOLIO' source. Fixes UIIN-3531.
+* "Something went wrong" error when open "Version history" of edited Item having null in "Source" of Circulation note. Fixes UIIN-3529.
+* When setting an instance for deletion warning banner is not displayed. Fixes UIIN-3532.
+* Update "Edit in Linked Data Editor" handler to make API request. Refs UIIN-3480.
+* Clear Browse filters when switching between browse types. Fixes UIIN-3499.
+* Confirmation alert is not displayed when moving holdings linked to the PO line. Fixes UIIN-3523.
+* Add a success toast when “Stop items movement within an instance” action is invoked. Refs UIIN-3534.
+* Change show time of success message to default after exporting the Instance (MARC). Fixes UIIN-3512.
+* Escape double quotes during switching from Classifications, Call numbers browse. Fixes UIIN-3537.
+* Change default sort for items from `Barcode` to `Order`. Refs UIIN-3533.
+* Fix loading state of tags selection after successfully updated instance. Fixes UIIN-3510.
+* Remove "expandAll=true" parameter from useSearchInstanceByIdQuery hook. Refs UIIN-3524.
+* "Last updated" in view panes displays date in UTC instead of tenant time. Fixes UIIN-3517.
+* Show success toast when “Stop items movement within an instance” action is invoked for drag and dropped movements. Refs UIIN-3556.
+* ECS | Affiliation dropdown does not display available tenants in the “Update Ownership” modal. Fixes UIIN-3535.
+* Escape backslashes in Classification and Item Call number browse to search redirect links. Refs UIIN-3552.
+* ECS | Display item data when user tries to open it from another tenant in the new tab. Fixes UIIN-3528.
+* *BREAKING* Replace dependency on `mod-configuration` with `mod-settings`. Refs UIIN-3219.
+* Provide error message if MARC record could not be set for deletion because it was not found. Refs UIIN-3502.
+* Acquisition accordion does not display PO line link after moving holding until page is refreshed. Fixes UIIN-3554.
+* Wrong message is displayed after updating ownership of item. Fixes UIIN-3560.
+* When moving item within one holding manually, recalculate other item orders based on their position in the list. Fixes UIIN-3539.
+* Handle audit-marc dependency: hide audit button. Refs UIIN-3576.
+* Include additional call numbers in Version History for Inventory Item. Refs UIIN-3558.
+* Include additional call numbers in Version History for Inventory Holdings. Refs UIIN-3540.
+* Define separate routes for Create/Edit/Derive MARC Bibs and Create/Edit MARC Holdings. Refs UIIN-3572.
+* Replace moment with day.js. Refs UIIN-3265.
+* "Order" value of multiple moved Items is randomly changed. Fixes UIIN-3549.
+* Remove 401 error pop-up when user without permissions opens Shared Instance record. Fixes UIIN-3582.
+* Fix barcode encoding in ItemForm checkUniqueBarcode function. Fixes UIIN-3490.
+* *BREAKING* Migrate config values from mod-configuration. Refs UIIN-3426.
+* Make interface dependencies optional (audit-inventory, circulation). Refs UIIN-3592.
+* Improve usage of GET `/users-keycloak/_self` requests in "Inventory" app. Fixes UIIN-3585.
+* Error handling is missing when creating holdings. Fixes UIIN-3591.
+* (ECS) Allow to change back the affiliation to current tenant after an item is opened by barcode search. Fixes UIIN-3574.
+* Manual item reorder places changed item one step down from intended placement. Fixes UIIN-3597.
+* Display additional call number type in Version History for Holdings correctly. Refs UIIN-3595.
+* ECS | Focus is moved to the Instance detail view pane after Tag is added. Fixes UIIN-3600.
+* "Something went wrong" error appears sometimes when user opens Item's detail view pane. Fixes UIIN-3599.
+* Trim the query value before searching for Items when auto-opening Item records. Fixes UIIN-3598.
+* Condtionally evaluate DOM refs before calling `.focus()`. Fixes UIIN-3603.
+* Add `stripes-core.settings.read` permission to app and settings permissions. Refs UIIN-3544.
+* Add missing permission for number generator. Fixes UIIN-3609.
+* Inventory Holdings: Add number generator button "Generate call number" to additional holdings call numbers. Refs UIIN-3606.
+* Inventory Item: Add number generator button "Generate call number" to additional item call numbers. Refs UIIN-3608.
+* Make `circulation-settings` dependency optional. Refs UIIN-3621.
+* User without affiliation in member tenant is not able to see an item record. Fixes UIIN-3614.
+* Item reorder changes are lost if holdings accordion is collapsed before 'stop item movement' invoked. Fixes UIIN-3626.
+* Make pagination for items enabled. Fixes UIIN-3624.
+* User gets "Authorization error" when changing Items "order" manually or via drag and drop. Fixes UIIN-3543.
+* Fix items list data caching issues after remounting ViewInstanceDetails pane. Fixes UIIN-3627.
+* Update label references from "Linked data editor" to "Marigold". Refs UILD-771.
+* The "Action" button remains visible after opening "Version History" pane. Fixes UIIN-3629.
+* Focus on the Close Instance pane button when returning from MARC edit/create/derive page. Fixes UIIN-3570.
+* The page reloads instead of showing "Confirm move" modal when moving holdings to another instance in member tenant. Fixes UIIN-3625.
+
+## [13.0.19](https://github.com/folio-org/ui-inventory/tree/v13.0.19) (2026-09-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.18...v13.0.19)
+
+* Revert UIIN-3377. Make submitting an Item Form default to Save & close behaviour. Refs UIIN-3596.
+
+## [13.0.18](https://github.com/folio-org/ui-inventory/tree/v13.0.18) (2026-07-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.17...v13.0.18)
+
+* Do not show item link, status and "View holding" button for user without affiliation in Member tenant. Fixes UIIN-3675.
+
+## [13.0.17](https://github.com/folio-org/ui-inventory/tree/v13.0.17) (2026-06-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.16...v13.0.17)
+
+* ECS - Render items under Holdings accordion in Inventory instance detail view. Fixes UIIN-3673.
+
+## [13.0.16](https://github.com/folio-org/ui-inventory/tree/v13.0.16) (2026-06-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.15...v13.0.16)
+
+* Render items under Holdings accordion in Inventory instance detail view. Fixes UIIN-3668.
+
+## [13.0.15](https://github.com/folio-org/ui-inventory/tree/v13.0.15) (2026-05-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.14...v13.0.15)
+
+* Reduce the amount of calls when many holdings exist in several tenants. Fixes UIIN-3660.
+
+## [13.0.14](https://github.com/folio-org/ui-inventory/tree/v13.0.14) (2026-04-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.13...v13.0.14)
+
+* `<ViewSource>` - don't load MARC record until Instance has finished loading. Fixes UIIN-3635.
+* `<ViewSource>` - add missing useEffect/useMemo deps to update when instance data is loaded. Fixes UIIN-3641.
+
+## [13.0.13](https://github.com/folio-org/ui-inventory/tree/v13.0.13) (2026-03-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.12...v13.0.13)
+
+* Make FOLIO responsive when the Instance Detail View pane is closed while it is still loading and then opened again. Fixes UIIN-3589.
+
+## [13.0.12](https://github.com/folio-org/ui-inventory/tree/v13.0.12) (2026-01-07)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.11...v13.0.12)
+
+* Reduce the amount of calls `/_self` endpoint. Fixes UIIN-3579.
+
+## [13.0.11](https://github.com/folio-org/ui-inventory/tree/v13.0.11) (2025-11-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.10...v13.0.11)
+
+* Add source URI field to instance full-record display and (disabled) to edit form. Fixes UIIN-3287. Backported in UIIN-3511.
+
+## [13.0.10](https://github.com/folio-org/ui-inventory/tree/v13.0.10) (2025-09-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.9...v13.0.10)
+
+* Fix default staff suppress facet value issues after a merge error. Refs UIIN-3465.
+
+## [13.0.9](https://github.com/folio-org/ui-inventory/tree/v13.0.9) (2025-08-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.8...v13.0.9)
+
+* Hide staff suppressed Instances based on existing permission for Staff suppress facet. Refs UIIN-3465.
+
+## [13.0.8](https://github.com/folio-org/ui-inventory/tree/v13.0.8) (2025-07-16)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.7...v13.0.8)
+
+* Always display "Local" in View Source of MARC Holdings records. Refs UIIN-3433.
+* Support interface `item-storage` `11.0`. Refs UIIN-3429.
+
+## [13.0.7](https://github.com/folio-org/ui-inventory/tree/v13.0.7) (2025-06-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.6...v13.0.7)
+
+* Use current tenant for MARC Holdings requests in View Source. Refs UIIN-3423.
+
+## [13.0.6](https://github.com/folio-org/ui-inventory/tree/v13.0.6) (2025-06-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.5...v13.0.6)
+
+* ECS | Restore Held by Facet in Call number Browse. Refs UIIN-3414.
+
+## [13.0.5](https://github.com/folio-org/ui-inventory/tree/v13.0.5) (2025-05-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.4...v13.0.5)
+
+* Instance/holdings/items form - moved `form` under `Pane` component to suppress form submitting on Enter key click event. Fixes UIIN-3377.
+
+## [13.0.4](https://github.com/folio-org/ui-inventory/tree/v13.0.4) (2025-04-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.3...v13.0.4)
+
+* Hide `Set for deletion` action when `Set for deletion` field value is true. Refs UIIN-3317.
+
+## [13.0.3](https://github.com/folio-org/ui-inventory/tree/v13.0.3) (2025-04-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.1...v13.0.3)
+
+* Add `useSharedInstancesQuery` hook to determine if an instance is shared from a local one to display "Shared" in the version history original card. Fixes UIIN-3279.
+* Call number browse | Remove held by facet for ECS. Refs UIIN-3301.
+* Display "Shared" label for promoted to be shared FOLIO records. Fixes UIIN-3300.
+* Remove default Staff suppress facet settings. Refs UIIN-3302.
+* Use central tenant id in useUsersBatch to retrieve all users. Fixes UIIN-3321.
+
+## [13.0.1](https://github.com/folio-org/ui-inventory/tree/v13.0.1) (2025-04-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v13.0.0...v13.0.1)
+
+* Update instance header after overlaying source bibliographic record process. Fixes UIIN-3282.
+* Missing values in the version history modal for Suppressed from discovery and Staff suppressed fields. Fixed UIIN-3277.
+* Enable MARC-related options for shared MARC instance on member tenant. Fixes UIIN-3292.
+* ECS FOLIO instances: Inventory version history feature toggle/icon. Refs UIIN-3284.
+* Refactor `useAuditDataQuery` hooks to use `useInfiniteQuery` to implement loading indicator to version history panes. Refs UIIN-3286.
+* ECS | "Version history" pane is empty for Shared FOLIO Instance when opened from Member tenant. Fixes UIIN-3280.
+
+## [13.0.0](https://github.com/folio-org/ui-inventory/tree/v13.0.0) (2025-03-14)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v13.0.0)
+
+* ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
+* *BREAKING* Rename quick-marc routes from `bib` to `bibliographic` and `duplicate` to `derive`. Refs UIIN-3120.
+* *BREAKING* Provide necessary props for browse lookup facets. Remove the facets state reset functionality. Refs UIIN-3099.
+* React v19: refactor away from default props for functional components. Refs UIIN-2890.
+* User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
+* React 19: refactor away from react-dom/test-utils. Refs UIIN-2888.
+* Add call number browse settings. Refs UIIN-3116.
+* Add "linked-data 1.0" interface to "optionalOkapiInterfaces". Refs UIIN-3166.
+* Remove hover-over text next to "Effective call number" on the Item record detail view. Refs UIIN-3131.
+* Change import of `exportToCsv` from `stripes-util` to `stripes-components`. Refs UIIN-3025.
+* ECS: Disable opening item details if a user is not affiliated with item's member tenant. Fixes UIIN-3187.
+* Correctly depend on `inflected`. Refs UIIN-3203.
+* Decrease the amount of rerenders in `ConsortialHoldings` component. Fixes UIIN-3196.
+* Sort holdings by location name and call number. Refs UIIN-3207.
+* Remove hover-over text next to "Shelving order" on the Item record detail view. Refs UIIN-3210.
+* CI: Switch to centralized/shared workflow from https://github.com/folio-org/.github. Fixes UIIN-3218.
+* Set correct widths for Call number browse results columns. Fixes UIIN-3229.
+* Display actual instance state (shared or local) when user is using "Drag and drop" to move inventory records. Fixes UIIN-3185.
+* Add Version history button and Version history pane to details view of Item. Refs UIIN-3172.
+* Add Version history button and Version history pane to details view of Holdings. Refs UIIN-3171.
+* Add Version history button and Version history pane to details view of Instance. Refs UIIN-3170.
+* Add new ‘Set for deletion’ flag to display on 3rd pane Instance view. Refs UIIN-3191.
+* Add settings options for using number gernerator for item barcode, accession number and call number. Refs UIIN-2557.
+* Change itemNormalizedCallNumbers to itemFullCallNumbers in getCallNumberQuery. Refs UIIN-3234.
+* *BREAKING* Create Inventory settings to configure number of cards in version history. Refs UIIN-3213.
+* Add ‘Set for deletion’ checkbox field to Instance Edit view. Refs UIIN-3190.
+* MARC Bib > View Source > Display Version History pane with an empty Version History component. Refs UIIN-3235.
+* MARC Bib - Hide version history icon and settings if audit log feature is disabled. Refs UIIN-3237.
+* Instance: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3176.
+* Holdings: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3177.
+* Item: Suppress action menu and disable buttons when click Change log icon. Refs UIIN-3178.
+* Use the name CALL_NUMBERS_SHARED for the Shared facet instead of SHARED. Fixes UIIN-3254.
+* Adapt settings options for using number gernerator. Refs UIIN-2556.
+* Hide version history icon and settings if audit log feature is disabled. Refs UIIN-3231.
+* Provide ids _and `length` param_ when retrieving job profiles. Refs UIIN-3257.
+* Move ‘Set for deletion’ checkbox field to 4th space in top row of Instance Edit view. Refs UIIN-3259.
+* Update Inventory: Set records for deletion permission's effect on ‘Set for deletion’ checkbox in Instance Edit view. Refs UIIN-3260.
+* *BREAKING* Migrate stripes dependencies to their Sunflower versions. Refs UIIN-3223.
+* *BREAKING* Migrate `react-intl` to v7. Refs UIIN-3224.
+* Upgrade `browse` to `2.0`. Refs UIIN-3262.
+* *BREAKING* Use "number generator" for barcode, accession number and call number. Refs UIIN-2546.
+* *BREAKING* Instance: Display all versions in View history fourth pane. Refs UIIN-3173.
+* *BREAKING* MARC bib > View Source > Display Version History. Refs UIIN-3261.
+* "Copy barcode" icon is displayed next to item with no barcode. Fixes UIIN-3141.
+* *BREAKING* Holdings: Display all versions in View history second pane. Refs UIIN-3174.
+* *BREAKING* Item: Display all versions in View history second pane. Refs UIIN-3175.
+* Replace annotations for compatibility with esbuild-loader. Refs UIIN-3271.
+* Make user name hyperlink in version history inactive if user does not have permissions. Refs UIIN-3269.
+* Display Original version card of the audit log with no field changes. Refs UIIN-3270.
+* Change heading of modal generate accession and call number. Refs UIIN-3274.
+* ViewSource - add tenantId to useAuditSettings. Refs UIIN-3266.
+* Enhancement help text on Settings > Inventory > Number generator options. Refs UIIN-3217.
+* Add default value for number of versions counter on "Version history" pane. Fixes UIIN-3283.
+
+## [12.0.15](https://github.com/folio-org/ui-inventory/tree/v12.0.15) (2025-04-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.14...v12.0.15)
+
+* Ramsons CSP - Call number browse | Remove held by facet for ECS. Refs UIIN-3299.
+
+## [12.0.14](https://github.com/folio-org/ui-inventory/tree/v12.0.14) (2025-03-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.13...v12.0.14)
+
+* Use `stripes.okapi.tenant` in order to get persistent id between pages. Fixes UIIN-3251.
+
+## [12.0.13](https://github.com/folio-org/ui-inventory/tree/v12.0.13) (2025-03-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.12...v12.0.13)
+
+* Call Number Browse refactor - backport to Ramsons. Refs UIIN-3228.
+
+## [12.0.12](https://github.com/folio-org/ui-inventory/tree/v12.0.12) (2025-01-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.11...v12.0.12)
+
+* Detail view of created Instance record is not loaded after saving. Fixes UIIN-3194.
+
+## [12.0.11](https://github.com/folio-org/ui-inventory/tree/v12.0.11) (2025-01-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.10...v12.0.11)
+
+* Display failure message during `Update Ownership` action when Item contains Local reference data. Fixes UIIN-3195.
+
+## [12.0.10](https://github.com/folio-org/ui-inventory/tree/v12.0.10) (2025-01-20)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.9...v12.0.10)
+
+* Fix '"location name" is undefined' error when trying to open instance details on ECS. Fixes UIIN-3196.
+* Display `Shared` facet when user opens "Move holdings/items to another instance" modal. Refs UIIN-3198.
+* ECS - Allow 'Move holdings/items to another instance' if instance is shared. Refs UIIN-3188.
+
+## [12.0.9](https://github.com/folio-org/ui-inventory/tree/v12.0.9) (2025-01-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.8...v12.0.9)
+
+* Fix infinite loading animation after cancel edit/duplicate or 'Save & Close' consortial holdings/items. Fixes UIIN-3167.
+
+## [12.0.8](https://github.com/folio-org/ui-inventory/tree/v12.0.8) (2024-12-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.7...v12.0.8)
+
+* Display holdings names in `Consortial holdings` accordion for user without inventory permissions in member tenants. Fixes UIIN-3159.
+* Remove the ability to share local instance when `Inventory: View, create instances` permission is assigned. Fixes UIIN-3166.
+* *BREAKING* Use `browse` `1.5` interface that provides new Call Number Browse endpoints. Refs UIIN-3162.
+* Add `getCallNumberQuery` function to build a query string based on the call number and its type. Refs UIIN-3205.
+
+## [12.0.7](https://github.com/folio-org/ui-inventory/tree/v12.0.7) (2024-12-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.6...v12.0.7)
+
+* Handle `null` `typeIds` in `browse/config/instance-classification` response. Fixes UIIN-3161.
+* Add `limit=1000` to `subject-sources` request to fetch more subject sources. Fixes UIIN-3163.
+
+## [12.0.6](https://github.com/folio-org/ui-inventory/tree/v12.0.6) (2024-12-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.5...v12.0.6)
+
+* Display user's name instead of "Unknown user" in "Last updated" field in "Settings" for member tenant. Fixes UIIN-3144.
+* Set default sorting to URL in componentDidMount and componentDidUpdate if it is missing. Fixes UIIN-3137.
+
+## [12.0.5](https://github.com/folio-org/ui-inventory/tree/v12.0.5) (2024-12-04)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.4...v12.0.5)
+
+* Display informative error message when editing same instance, holdings, item in two tabs. Fixes UIIN-3127.
+* User can edit Source consortium "Holdings sources" in member tenant but not in Consortia manager. Refs UIIN-3147.
+* Set the previously used offset by executing `resultOffset.replace` when changing the segment. Fixes UIIN-3143.
+
+## [12.0.4](https://github.com/folio-org/ui-inventory/tree/v12.0.4) (2024-12-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.3...v12.0.4)
+
+* Add permission for "Share local instance" option on Member tenants. Refs UIIN-3140.
+* Update Linked data API URL to use the new API path. Fixes UIIN-3146.
+
+## [12.0.3](https://github.com/folio-org/ui-inventory/tree/v12.0.3) (2024-11-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.2...v12.0.3)
+
+* Resolve issue with page refresh when moving a holding to an instance. Fixes UIIN-3046.
+
+## [12.0.2](https://github.com/folio-org/ui-inventory/tree/v12.0.2) (2024-11-22)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.1...v12.0.2)
+
+* ECS | Instance details pane does not contain all tenants when user does not have affiliations / permissions in all tenants. Fixes UIIN-3113.
+
+## [12.0.1](https://github.com/folio-org/ui-inventory/tree/v12.0.1) (2024-11-15)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v12.0.0...v12.0.1)
+
+* Run `history.replace` once during component mount and update to avoid URL rewriting. Refs UIIN-3099.
+* ECS | "FOLIO/MARC-shared" source is displayed in manually shared instance record. Fixes UIIN-3115.
+* Allow user to move item to another holdings associated with another instance. Fixes UIIN-3102.
+* Cautiously evaluate tenant permissions to avoid NPEs. Refs UIIN-3124.
+
+## [12.0.0](https://github.com/folio-org/ui-inventory/tree/v12.0.0) (2024-10-31)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.5...v12.0.0)
+
+* Remove unused code related to auto-open record detail view. Refs UIIN-2819.
+* Keyboard shortcuts modal: Add quickMARC shortcuts to modal. Refs UIIN-2795.
+* Create new settings for classification type sorting. Refs UIIN-2775.
+* Add "Display to public" column to receiving history on Holdings. Refs UIIN-2826.
+* Add new browse options for Instance classification numbers. Refs UIIN-2624.
+* Add new Instance search option `Classification, normalized` for the `Instance` toggle and advanced search modal. Refs UIIN-2801.
+* Import `useUserTenantPermissions`, `getUserTenantsPermissions` from `@folio/stripes/core`. Refs UIIN-2837.
+* ECS Member tenant - add `Shared` and `Held by` facets for the `Classification` browse. Refs UIIN-2813.
+* Jest/RTL: Cover CalloutRenderer component with unit tests. Refs UIIN-2665.
+* Jest/RTL: Cover ConnectedTitle component with unit tests. Refs UIIN-2666.
+* Jest/RTL: Cover InstancePlugin component with unit tests. Refs UIIN-2668.
+* Jest/RTL: Cover ImportRecord component with unit test. Refs UIIN-2667.
+* Jest/RTL: Cover MoveHoldingContext component with unit tests. Refs UIIN-2664.
+* Use consolidated locations endpoint to fetch all locations when in central tenant context. Refs UIIN-2811.
+* Change label of eye-readable call number search option in holdings/items. Refs UIIN-2797.
+* Jest/RTL: Cover ModalContent components with unit tests. Refs UIIN-2669.
+* Add callout noting user's active affiliation when it changes after selecting holding or item. Refs UIIN-2831, UIIN-2872.
+* Jest/RTL: Cover LocationSelectionWithCheck components with unit tests. Refs UIIN-2670.
+* Populate Acquisitions accordion on instance when central ordering is active. Refs UIIN-2793.
+* Inventory app: Define and implement shortcut key for editing a quickMARC bib record. Refs UIIN-2896.
+* *BREAKING* Added a new `stripes-inventory-components` dependency. Move some utils to that module. Refs UIIN-2910.
+* Jest/RTL: Cover HRIDHandlingSettings components with unit tests. Refs UIIN-2671.
+* Add classification browse types to facets requests when performing Browse. Fixes UIIN-2897.
+* Import `CheckboxFacet`, `CheckboxFacetList`, `HeldByFacet`, `withFacets`, facets constants, `fieldSearchConfigurations` constant, `queryIndexes` constants, `facetsStore`, and some of the utils from `stripes-inventory-components`. Refs UIIN-2781.
+* Import the new `useFacets` functionality from `stripes-inventory-components`. Refs UIIN-2910.
+* Edit Inventory Instances: Display a Save & keep editing button. Refs UIIN-2457.
+* Edit Inventory Holdings: Display a Save & keep editing button. Refs UIIN-2404.
+* "holdings-storage" API version upgrade. Refs UIIN-2926.
+* Edit Inventory Items: Display a Save & keep editing button. Refs UIIN-2456.
+* Prevent users from editing tags when Instance/Holdings/Item is updated. Fixes UIIN-2941.
+* Instance record > Classification accordion > Display a clipboard icon next to classification number. Refs UIIN-2580.
+* Populate Acquisitions accordion on item when central ordering is active. Refs UIIN-2818.
+* Import facets and the function for building a search query from `stripes-inventory-components`.
+* Add Bound items accordion in item record. Refs UIIN-2760.
+* Edit Inventory Instances: Optimistic locking error displays in pop-up modal instead of banner in the header. Fixes UIIN-2940.
+* Make item barcode column narrower. Fixes UIIN-2925.
+* i18n item status in item edit view. Refs UIIN-2766.
+* Enable "+ New" and "Edit" buttons when user has "Settings (Inventory): Configure single-record import" permission. Refs UIIN-2771.
+* Allow user to view `HRID handling` section when "Settings (Inventory): View list of settings pages" permission is assigned
+and disable fields when "Settings (Inventory): Create, edit and delete HRID handling" permission is not assigned. Refs UIIN-2773.
+* Update "Settings (Inventory): Create, edit, delete statistical codes" permission. Refs UIIN-2772.
+* Focus on record title after closing record details view, on search field after canceling record creation, on close record details view icon after closing quick-marc. Refs UIIN-2962.
+* Include `stripes-inventory-components` and `stripes-marc-components` in `stripesDeps` to include their translations. Refs UIIN-2968.
+* Trigger search from icon in related titles on Instance detail view. Refs UIIN-2943.
+* Enable "View source" option for "LINKED_DATA" source type in "Actions" dropdown. Refs in UIIN-2966.
+* Create a text link for classification numbers based on classification types. Refs UIIN-2907.
+* Add "Edit in Linked Data editor" action for resources with source "LINKED_DATA". Refs UIIN-2963.
+* Clicking on item in Inventory no longer opens the item record in a new tab. Fixes UIIN-2924.
+* Add `skipTrimOnChange` option to `useLocationFilters` hook to prevent unnecessary trims on change. Refs UIIN-2976.
+* Enable 'Edit in Linked Data Editor' option to Action dropdown. Refs UIIN-2965.
+* Wrong statistical code column heading is displayed in instances, holdings, and items. Fixes UIIN-2922.
+* Update "Edit Instance" workform for resources with source "LINKED_DATA". Refs UIIN-2967.
+* Inventory App: Consume {{FormattedTime}} via stripes-component. Refs UIIN-1273.
+* Update request to go to inventory API when Holdings is updated. Refs UIIN-2779.
+* Add barcode values for "Bound pieces data" and update `useBoundPieces` hook query with `bindItemId` to fetch bound pieces correctly. Refs UIIN-2984.
+* Display "New order" action in instance action menu when active affiliation set to central tenant. Refs UIIN-2955.
+* Save Instances UUIDs - When request URI exceeds character limit split request. Refs UIIN-2977.
+* Use `withSearchErrors` HOC and `buildRecordsManifest` to display an error when the request URL is exceeded. Refs UIIN-2970.
+* Edit in Linked Data Editor when source=MARC. Refs UIIN-2978.
+* Display shared instance immediately after the instance was shared. Refs UIIN-2969.
+* Disable Move to button if no items selected or no more holdings exists within an instance. Refs UIIN-2995.
+* Prevent callbacks from being triggered when clicking on the current tab, whether it's lookup mode or a segment. Fixes UIIN-2949.
+* Hide call number type options for Local, Other scheme, and SuDoc for perf environment. Refs UIIN-2923.
+* Edit Inventory Instances: "Save & close" and "Save and keep editing" buttons could be clicked 2 times in a row. Fixes UIIN-2939.
+* Create a new ‘Inventory: Update ownership’ permission to control display of Update ownership action. Refs UIIN-2981.
+* Add inventory permission: Settings (Inventory): Create, edit, delete subject sources. Refs UIIN-3010.
+* Add inventory permission: Settings (Inventory): Create, edit, delete subject types. Refs UIIN-3009.
+* Update required permissions for quick export of instances. Refs UIIN-3003.
+* Add `showSortIndicator` prop to `SearchAndSort` to display sort indicator next to the column names, and add correct `nonInteractiveHeaders`. Refs UIIN-2986.
+* Change casing of `Linked data editor` label. Refs UIIN-3007.
+* MARC bib/holdings | View Source: Add Edit and Export actions. Refs UIIN-3012.
+* Trim call numbers when Creating/Editing/Deriving Holdings/Items. Fixes UIIN-2889.
+* New Inventory Settings: Subject types and Subject sources. Refs UIIN-2822.
+* Disable `Save and keep editing` and `Save & close` buttons when submit the instance form. Fixes UIIN-2939.
+* Remove call number type options for Local, Other scheme, and SuDoc. Refs UIIN-3014.
+* Use the sort option from the new `DisplaySettings` until the user changes it in any available way. Refs UIIN-2722.
+* Rename `Classification` and `Call numbers` sections in browse options. Refs UIIN-2982.
+* Edit/Create -- Subject accordion instance UI changes. Refs UIIN-2944.
+* Add the Date column to the results list. Refs UIIN-1876.
+* Instance Detail/Edit/New: Add new section for Date type, Date 1, & Date 2. Refs UIIN-2849.
+* Add the ability to update ownership of holdings. Refs UIIN-2753.
+* Add the ability to update ownership of items. Refs UIIN-2754.
+* Update user when switching affiliation. Fixes UIIN-2932.
+* Add ability to sort Search results by Date. Refs UIIN-2850.
+* Implement default Date type when not present - No attempt to code. Refs UIIN-3034.
+* Remove 'Overlay' and 'Set for deletion' functions for LINKED_DATA source type. Refs UIIN-3011.
+* Store item IDs in local storage in order to make it visited. Fixes UIIN-2994.
+* View -- Subject accordion instance UI changes. Refs UIIN-2823.
+* Mock `Modal` from `stripes-components`; fix tests. Refs UIIN-3045.
+* Extend permissions for creating, editing and deleting reference data. Fixes UIIN-2586.
+* Update "Barcode" column link in "Bound pieces data" accordion. Refs UIIN-3041.
+* ECS - check for central tenant permissions in Settings > Classification Browse. Fixes UIIN-3038.
+* Display action menu when user has only permission to move holdings/items. Fixes UIIN-3040.
+* Make "Barcode" field wrapping to next row when there are many characters in the value. Fixes UIIN-2958.
+* Fixed "Settings" > "Inventory" page does not load. Fixes UIIN-3053.
+* Display an item that has an open loan whose patron record has been removed. Fixes UIIN-3044.
+* Display "Classification browse" settings for non-consortia. Fixes UIIN-3057.
+* Fix eslint warnings. Refs UIIN-3064.
+* Disable link to POL when it leads to another tenant (instance, holding and item). Refs UIIN-3024.
+* Add code to subject source settings. Refs UIIN-3056.
+* Alter rules for display of 'Edit in Linked data editor' option in Inventory Action drop down. Refs UIIN-3051.
+* Upgrade `inventory` to `14.0` and `instance-storage` to `11.0`. Refs UIIN-3065.
+* Add subject source and subject type to Inventory subject browse results. Refs UIIN-2960.
+* Add filters for subject source and type to Inventory subject browse. Refs UIIN-2961.
+* Update 'Instance relationship' accordion name - VIEW/EDIT/CREATE Instance. Refs UIIN-3081.
+* Create alert to prevent moving holding to another instance if Po Line has multiple holdings. Refs UIIN-3046.
+* Update sub permissions in the `package.json` and upgrade `holdings-storage` to `8.0`. Refs UIIN-3061.
+* ECS - Disallow 'Move items within an instance' and 'Move holdings/items to another instance' if no LOCAL Items/Holdings exist. Refs UIIN-3073.
+* *BREAKING* Update sub permissions in the `package.json` and upgrade `source-storage-records` to `3.3` and `data-import-converter-storage` to `1.5`. Refs UIIN-3086.
+* *BREAKING* Bump `stripes` to `v9.2.0` for Ramsons release. Refs UIIN-2961.
+* Include current location into redirects to Linked data editor. Refs UIIN-3092.
+* Use `ResetProvider` to subscribe and publish the reset event and unsubscribe from it after a segment switch. Refs UIIN-3093.
+* Rename inventory.consortia permissions. Refs UIIN-3076.
+* Disallow displaying shared instances when find instance modal is open. Refs UIIN-3072.
+* ECS: Item affiliation cannot be changed when it is attached to a local order. Refs UIIN-3063.
+* Refactor ui-inventory permissions. Refs UIIN-3087.
+* Disallow displaying shared instances when find instance modal is open. Refs UIIN-3072.
+* Update permission name after Review and cleanup Module Descriptor for ui-requests. Refs UIIN-3058.
+* Browse | Number of titles in Subject browse results does not match the number of instances returned in search. Fixes UIIN-3101.
+* Adjust the URI of a redirect to Linked data editor. Fixes UIIN-3107.
+* Rename "mod-settings.global.*" permissions. Refs UIIN-3109.
+* Suppress edit and delete actions of subject types and sources for `consortium` source. Refs UIIN-3112.
+* Add 'replaces' array to refactored ui permissions. Refs UIIN-3110.
+* Update quick-marc permission name. Refs UIIN-3111.
+* ECS: Prevent Item affiliation ownership change if it is attached to a local PO line. Refs UIIN-3105.
+* Add missing BE permission`source-storage.records.matching.collection.post`. Fixes UIIN-3086.
+* Display correctly `Mark as ...` action items in Item action menu. Fixes UIIN-3114.
+
+## [11.0.5](https://github.com/folio-org/ui-inventory/tree/v11.0.5) (2024-08-29)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.4...v11.0.5)
+
+* Remove call number type options for Local, Other scheme, and SuDoc. Refs UIIN-3014.
+
+## [11.0.4](https://github.com/folio-org/ui-inventory/tree/v11.0.4) (2024-04-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.3...v11.0.4)
+
+* Replace `all` with the `=` operator to get correct results when using the `All` search option. Refs UIIN-2816.
+
+## [11.0.3](https://github.com/folio-org/ui-inventory/tree/v11.0.3) (2024-04-26)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.2...v11.0.3)
+
+* Fetch facets with the same query as `Contributor` records when the search is done by selecting browse result. Refs UIIN-2859.
+* Change the `Effective location` call numbers facet query to not see locations assigned to items with an empty `Effective call number` field. Refs UIIN-2871.
+* Do not remove field from the form when its value is an empty string. Fixes UIIN-2787.
+* Update Permission name for Inventory: Set records for deletion and staff suppress. Refs UIIN-2855.
+
+## [11.0.2](https://github.com/folio-org/ui-inventory/tree/v11.0.2) (2024-04-19)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.1...v11.0.2)
+
+* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2845.
+* Restricted status displays as Order Closed. Fixes UIIN-2821.
+* Add a new "Inventory: Create and download In transit items report" permission. Fixes UIIN-2776.
+* Include mod-search permissions to "Inventory: Module is enabled" UI permission. Refs UIIN-2860.
+
+## [11.0.1](https://github.com/folio-org/ui-inventory/tree/v11.0.1) (2024-04-11)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v11.0.0...v11.0.1)
+
+* Keep query and results list when switching Browse options. Refs UIIN-2802.
+* Set central tenant id in the request when Member tenant deletes a shared record. Fixes UIIN-2784.
+* Apply staff suppress filter for first search in Holdings/Items. Fixes UIIN-2814.
+* Pass tenantId when open holding details during moving holdings/items. Fixes UIIN-2815.
+* ECS - Member consortial accordion is not displaying when a user has affiliations but does not have permission to view holdings. Fixes UIIN-2843.
+
+## [11.0.0](https://github.com/folio-org/ui-inventory/tree/v11.0.0) (2024-03-21)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v11.0.0)
+
+* *BREAKING* Replace imports from quick-marc with stripes-marc-components. Refs UIIN-2636.
+* Make Inventory search and browse query boxes expandable. Refs UIIN-2493.
+* Added support for `containsAny` match option in Advanced search. Refs UIIN-2486.
+* Inventory search/browse: Do not retain checkbox selections when toggling search segment. Refs UIIN-2477.
+* Show Instance record after creating with Fast add option. Refs UIIN-2497.
+* Search box/Browse box- Reset all should shift focus back to search box. Refs UIIN-2514.
+* Updated translations for adding new Instance records. Refs UIIN-2630.
+* Ignored hot key command on edit fields. Refs UIIN-2604.
+* Don't render Fast Add record modal in a `<Paneset>` to re-calculate other `<Pane>`'s widths after closing. Fixes UIIN-2690.
+* "Saving instance failed" modal does not show error message. Fixes UIIN-2686.
+* Browse Lists | Focus updates. Fixes UIIN-2267.
+* Users with data export view only permission. Refs UIIN-2660.
+* Always highlight the first list row after pagination is clicked. Refs UIIN-2708.
+* The quantity of assigned tags to the instance is not displaying in the little tag icon after assigning. Fixes UIIN-2559.
+* Reset search/browse query when user switches affiliation. Refs UIIN-2715.
+* Moving items between holdings records doesn't update correctly in UI. Fixes UIIN-2692.
+* Update permission for Staff suppressed facet. Refs UIIN-2705.
+* Add permission for setting record for deletion. Refs UIIN-2593.
+* Mock ResizeObserver to fix failed tests. Refs UIIN-2738.
+* Fix "Edit in quickMARC" and "View source" options are disabled in the expanded dropdown on the holdings details view. Fixes UIIN-2735.
+* Add Set record for deletion option in Actions menu with Confirmation modal. Refs UIIN-2594.
+* Use `onSave` prop for quickMARC to handle saving records separately. Refs UIIN-2743.
+* Set Inventory settings HTML page title this format - `<<App name>> settings - <<selected page name>> - FOLIO`. Refs UIIN-2713.
+* Add "Display summary" field to item enumeration data accordion. Refs UIIN-2740.
+* Display the 'Holdings detail' page after saving the holding changes. Fixes UIIN-2734.
+* *BREAKING* Bump up okapi interfaces for `pieces` (3.0). Refs UIIN-2761.
+* Action when Set record for deletion option is invoked. Refs UIIN-2595.
+* Detail view not opened for non-local items when one shared record found using "Barcode" search on "Item" tab. Fixes UIIN-2698.
+* Jest/RTL: Cover CreateHoldings component with unit tests. Refs UIIN-2663.
+* Staff suppress facet - use `No` as default value. Hide the facet when users don't have permissions to use it. Refs UIIN-2596.
+* Add a new search option for instances called `LCCN normalization`. Refs UIIN-2245.
+* Add and adjust collapse/expand buttons for consortial instances. Refs UIIN-2711.
+* Increase holdings limit to 5000. Fixes UIIN-2785.
+* User with "Inventory: All permissions" permission only should not be seeing the "Staff suppress" facet. Fixes UIIN-2807.
+
+## [10.0.14](https://github.com/folio-org/ui-inventory/tree/v10.0.14) (2024-04-25)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.13...v10.0.14)
+
+* Include mod-search permissions to "Inventory: Module is enabled" UI permission. Refs UIIN-2860.
+
+## [10.0.13](https://github.com/folio-org/ui-inventory/tree/v10.0.13) (2024-04-18)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.12...v10.0.13)
+
+* ECS: Shared instance cannot be edited from member tenant, even with permissions in both Central and member tenants. Fixes UIIN-2832.
+
+## [10.0.12](https://github.com/folio-org/ui-inventory/tree/v10.0.12) (2024-04-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.11...v10.0.12)
+
+* ECS - Member consortial accordion is not displaying when a user has affiliations but does not have permission to view holdings. Fixes UIIN-2780.
+
+## [10.0.11](https://github.com/folio-org/ui-inventory/tree/v10.0.11) (2024-03-01)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.10...v10.0.11)
+
+* Display Holdings/Item Electronic Access URIs consistent with Instances. Fixes UIIN-2778.
+
+## [10.0.10](https://github.com/folio-org/ui-inventory/tree/v10.0.10) (2024-01-17)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.9...v10.0.10)
+
+* ECS: id of member tenant is undefined when rendering consortial holdings. Fixes UIIN-2724.
+
+## [10.0.9](https://github.com/folio-org/ui-inventory/tree/v10.0.9) (2023-12-29)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.8...v10.0.9)
+
+* ECS: Effective location facet is not showing other member tenants. Fixes UIIN-2728.
+
+## [10.0.8](https://github.com/folio-org/ui-inventory/tree/v10.0.8) (2023-12-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.7...v10.0.8)
+
+* Correctly display location data for holdings and items when tenant is changed. Fixes UIIN-2697.
+* Disable the "Share" button after clicking it once on "Are you sure you want to share this instance?" modal window. Refs UIIN-2704.
+* Users with data export view only permission. Refs UIIN-2660.
+* Refactor CSS away from `color()` function. Refs  UIIN-2716.
+
+## [10.0.7](https://github.com/folio-org/ui-inventory/tree/v10.0.7) (2023-12-06)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.6...v10.0.7)
+
+* Make browse result items that are not anchors and have no records not clickable, and show 0 in number of titles. Fixes UIIN-2699.
+
+## [10.0.6](https://github.com/folio-org/ui-inventory/tree/v10.0.6) (2023-11-24)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.5...v10.0.6)
+
+* "Something went wrong" error appears when user selects Shared Instance as "Child/Parent Instance" for Local Instance without permissions at Central tenant. Fixes UIIN-2695.
+* Inactive Holdings/items on Central tenant when user have affiliation for separate Member with 0 permissions. Fixes UIIN-2689.
+
+## [10.0.5](https://github.com/folio-org/ui-inventory/tree/v10.0.5) (2023-11-22)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.4...v10.0.5)
+
+* Don't include `sort` parameter in requests to facets. Fixes UIIN-2685.
+* Inventory app > Search and Browse Results > Update HTML page title with search term entered. Refs UIIN-2581.
+
+## [10.0.4](https://github.com/folio-org/ui-inventory/tree/v10.0.4) (2023-11-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.3...v10.0.4)
+
+* Fetch sharing of local instance status in the context of member tenant. Refs UIIN-2680.
+* Handle errors when sharing local instances failed. Refs UIIN-2682.
+
+## [10.0.3](https://github.com/folio-org/ui-inventory/tree/v10.0.3) (2023-11-08)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.2...v10.0.3)
+
+* ECS: Show info message when user in member tenant tries to view shared instance details without permission. Refs UIIN-2590.
+* Show only local MARC Authorities when share local instance. Fixes UIIN-2647.
+* Single instance export - MARC files sent to central tenant from member tenant. Fixes UIIN-2613.
+* Fix misspelled Instance notes (all) advanced search query index. Fixes UIIN-2677.
+* Switch from `=` to `==` operator when querying for `holdings-storage/holdings` by hrid. Fixes UIIN-2658.
+
+## [10.0.2](https://github.com/folio-org/ui-inventory/tree/v10.0.2) (2023-11-07)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.1...v10.0.2)
+
+* Enable/disable consortial holdings/item actions based on User permissions. Refs UIIN-2452.
+* Instance. Series heading has vanished in detailed view. Fixes UIIN-2601.
+* Add immediate warning message when a local instance is shared. Refs UIIN-2617.
+* Optimistic locking message not working for instances in non-consortial tenant. Fixes UIIN-2628.
+* User receives an error when searching for an item in the Inventory app. Fixes UIIN-2634.
+* Create new instance success toast no longer shows the instance HRID. Fixes UIIN-2635.
+
+## [10.0.1](https://github.com/folio-org/ui-inventory/tree/v10.0.1) (2023-11-03)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v10.0.0...v10.0.1)
+
+* Instance 3rd pane: Adjust behavior when returning to instance from holdings/item full screen. Refs UIIN-2453.
+* Consortial holdings accordion is not appearing after the sharing of Instance. Fixes UIIN-2629.
+* Reset CheckboxFacet state.more when user resets search form and fewer facet options are loaded. Fixes UIIN-2531.
+* Edit instance success toast no longer shows the instance HRID. Fixes UIIN-2588.
+* Show facet options, if they exist, after clicking the +More button. Refs UIIN-2533.
+* If Shared & Held by facets were selected in the Browse search, then retain them in the Search lookup after clicking the record. Refs UIIN-2608.
+* Remove error message after switch from Instance Edit screen to another app. Fixes UIIN-2600.
+
+## [10.0.0](https://github.com/folio-org/ui-inventory/tree/v10.0.0) (2023-10-13)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.12...v10.0.0)
+
 * Added a new option in the "Actions" dropdown within the Inventory app search page for "+New MARC Bib Record". Refs UIIN-2356.
 * Change the url for the "New MARC Bib Record" page. Refs UIIN-2380.
 * Avoid private paths in stripes-core imports. Refs UIIN-2367.
@@ -33,6 +748,109 @@
 * Quick export from instance detail view. Refs UIIN-2430.
 * Escape quotes to search for Subjects and Contributor. Refs UIIN-2445.
 * Fix Search and Browse navigation and determining if the button is active. Refs UIIN-2444.
+* Scrolling within Inventory facets. Refs UIIN-2377.
+* When removing the dead icons in the Item record, then the displayed text looks inconsistent. Fixes UIIN-1392.
+* Adjust the sentence case for some Inventory action options. Refs UIIN-2436.
+* Adjust the Instance Edit screen header. Refs UIIN-2437.
+* Inventory: Retain Search/Browse query/options/filter and facet selections UNLESS user resets/clear selections. Refs UIIN-2433.
+* Statistical Code dropdown "contains" type ahead functionality needed (Instance/Holdings/Items). Refs UIIN-2466.
+* Fix problem with a large number of items on a single holdings record. Refs UIIN-2478.
+* Decrease rerenders for TargetProfileDetail component to avoid errors when view the target profile. Fixes UIIN-2467.
+* leverage cookie-based authentication in all API requests. Refs UIIN-2282.
+* Restrict modifying and deleting system call number types. Refs UIIN-2385.
+* Prevent editing of shared settings from outside "Consortium manager". Refs UIIN-2482.
+* Add new browse options to limit browse by call number type. Fixes UIIN-2467.
+* Implement Advanced search modal. Refs UIIN-1920.
+* Remove override CSS for TextLink. Refs UIIN-2365.
+* Remove BigTest infrastructure including tests, deps, config. Refs UIIN-2317.
+* Hide Inventory actions related to Local records in Central tenant. Refs UIIN-2491.
+* Add Shared icon to inventory instance results. Refs UIIN-2491.
+* User with limited permissions gets an error modal when navigating to the Inventory app. Fixes UIIN-2490.
+* *BREAKING* Bump `react` to `v18`. Refs UIIN-2508.
+* Add `Shared` facet to Instance/Holdings/Items search. Refs UIIN-2393.
+* Add `Shared` search parameter when the user is redirected to the quick-marc page to identify shared record. Refs UIIN-2517.
+* Instance Edit screen header: add shared/local indication. Refs UIIN-2438.
+* i18n item status in item list. Refs UIIN-2473.
+* Disable "Save & close" button by default in "Create new Item" window. Fixes UIIN-2492.
+* Inventory 2nd pane Actions menu: Adjust New action. Refs UIIN-2439.
+* Add "Local" or "Shared" to flag MARC bib records. Refs UIIN-2522.
+* Edit MARC bib record on Shared Instance. Refs UIIN-2526.
+* Allow for new source values for shadow Instances. Refs UIIN-2459.
+* Update Node.js to v18 in GitHub Actions. Refs UIIN-2520.
+* Fix issue with Relevance sort option. Refs UIIN-2474.
+* Change tenant id to central when opening details of shadow instance. Refs UIIN-2529.
+* "Something went wrong" screen appears when adding Item to Holdings. Fixes UIIN-2534.
+* Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
+* ECS: use mod-search to get tenantId for local/shared instance details. Refs UIIN-2538.
+* Make the 'enabled' argument always boolean when calling useUserTenantPermissions. Refs UIIN-2540.
+* Instance details are not shown on Inventory pane. Fixes UIIN-2541.
+* Enclose the query in quotes to allow for parentheses. Fixes UIIN-2516.
+* Make the isShared prop boolean to avoid crashes when calling methods from undefined. Fixes UIIN-2554.
+* Add advanced search query for facets. Fixes UIIN-2536.
+* Show Effective location facet for all Call Number browse sub-options. Fixes UIIN-2499.
+* Enable pagination/item number information in the Instance's Holding Item list. Fixes UIIN-2530.
+* Adjust behaviour of View source for shared instances. Refs UIIN-2449.
+* Consortial Central Tenant: Handling of Instance Action Menu options. Refs UIIN-2498.
+* ECS: display shadow instances as shared. Refs UIIN-2552.
+* Display correct number of items in the Instance's Holding accordion. Fixes UIIN-2550.
+* Don't reset filters after changing a search option. Fixes UIIN-2566.
+* Fix issue with 'Up' caret on default sort Holdings/Items segments. Refs UIIN-2553.
+* *BREAKING* bump `react-intl` to `v6.4.4`. Refs UIIN-2573.
+* Remove error message when switch between apps. Fixes UIIN-2488.
+* Make the Move actions available regardless of how user navigated to the record. Refs UIIN-2518.
+* Sorting on the Instance's Holdings item table is not working, part 2. Fixes UIIN-2565.
+* Promote a local instance to become a shared instance. Refs UIIN-2460.
+* Consortial Central Tenant: Suppress Holdings detail view Action menu. Refs UIIN-2524.
+* Consortial Central Tenant: Suppress Item detail view Action menu. Refs UIIN-2525.
+* Consortial Central Tenant: Hide Instance Action Menu New Request option. Refs UIIN-2572.
+* Add facet for members with holdings on Instances in Inventory Instances/Holdings/Items search. Refs UIIN-2395.
+* Add Inventory Browse facet for Contributors & Subjects on Shared vs Local Instances. Regs UIIN-2400.
+* Disable View source button for Source = FOLIO instances. Fixes UIIN-2570.
+* Add Inventory Browse facet for Call numbers (item) on Shared vs Not shared Instances. Refs UIIN-2407.
+* Add Browse facet for members with holdings on Instances in Contributors & Subject Browse. Refs UIIN-2415.
+* Add permission to promote a local instance to shared. Refs UIIN-2571.
+* Add `Held By` facet in Call number browse. Refs UIIN-2416.
+* Item barcode redirects to the broken page in circ log. Fixes UIIN-2606.
+* Bump the major versions of @folio/plugin-create-inventory-records optionalDependencies. Refs UIIN-2597.
+* Instance 3rd pane: Add consortial holdings/item accordion. Refs UIIN-2410.
+* Consortial Central Tenant: Handling Holdings and Item actions on the Instance detail view. Refs UIIN-2523.
+* Hide Held by facet in Inventory contributor and subject browse. Refs UIIN-2591.
+* Use `==` for exact phrase search in Advanced Search for all full-text and term fields. Refs UIIN-2612.
+* Provide an instance `tenantId` to the PO line form when creating an order from the instance. Refs UIIN-2614.
+* Bump @folio/stripes-acq-components dependency version to 5.0.0. Refs UIIN-2620.
+* ECS: Check when sharing instance with source=MARC is complete before re-fetching it. Refs UIIN-2605.
+* Update all facets after changing a term or selecting a facet option. Refs UIIN-2610.
+
+## [9.4.12](https://github.com/folio-org/ui-inventory/tree/v9.4.12) (2023-09-21)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.11...v9.4.12)
+
+* Sorting on the Instance's Holdings item table is not working. Fixes UIIN-2528.
+* Sorting on the Instance's Holdings item table is not working, part 2. Fixes UIIN-2565.
+
+## [9.4.11](https://github.com/folio-org/ui-inventory/tree/v9.4.11) (2023-08-02)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.10...v9.4.11)
+
+* User with limited permissions gets an error modal when navigating to the Inventory app. Fixes UIIN-2510.
+
+## [9.4.10](https://github.com/folio-org/ui-inventory/tree/v9.4.10) (2023-07-28)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.9...v9.4.10)
+
+* Introduce server side pagination for large volume of items. Fixes UIIN-2478.
+
+## [9.4.9](https://github.com/folio-org/ui-inventory/tree/v9.4.9) (2023-07-10)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.8...v9.4.9)
+
+* Dedupe ID-list passed to `useBoundWithHoldings`. Further addresses UIIN-2478.
+
+## [9.4.8](https://github.com/folio-org/ui-inventory/tree/v9.4.8) (2023-06-30)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.7...v9.4.8)
+
+* Fix useBoundWithHoldings for 100+ items. Fixes UIIN-2478.
+
+## [9.4.7](https://github.com/folio-org/ui-inventory/tree/v9.4.7) (2023-06-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.6...v9.4.7)
+
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2469.
 
 ## [9.4.6](https://github.com/folio-org/ui-inventory/tree/v9.4.6) (2023-06-19)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.4.5...v9.4.6)
@@ -156,6 +974,12 @@
 * Move @testing-library/* to dev-deps. Refs UIIN-2309.
 * Rename `hrid` qindex for item to avoid collisions with holdings and instances. Fixes UIIN-2443.
 * Reset `<BoundWithModal>` when modal is closed. Fixes UIIN-2401.
+
+## [9.2.9](https://github.com/folio-org/ui-inventory/tree/v9.2.9) (2023-06-27)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.2.8...v9.2.9)
+
+* Use correct reference to item resource. Fixes UIIN-2418.
+* When duplicating an item, the circulation history is duplicated when it should not be. Fixes UIIN-2470.
 
 ## [9.2.0](https://github.com/folio-org/ui-inventory/tree/v9.2.0) (2022-10-27)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v9.1.0...v9.2.0)
@@ -414,6 +1238,7 @@ Inventory causes an error. Refs UIIN-2012.
 * Instance record: Update Instance record Actions menu. Refs UIIN-1625.
 * Add ability to move MARC holdings between instances. Refs UIIN-1633.
 * Make mapped fields read-only for MARC holdings records. Refs UIIN-1639.
+* Fix disabled `Tags` dropdown after adding/removing tag for Item record. Fixes UIIN-3459.
 
 ## [7.1.4](https://github.com/folio-org/ui-inventory/tree/v7.1.4) (2021-08-05)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v7.1.3...v7.1.4)

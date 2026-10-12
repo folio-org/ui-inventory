@@ -6,10 +6,17 @@ import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
 import { Select } from '@folio/stripes/components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
+import { getSourceSuppressor } from '@folio/stripes/util';
 
+import { RECORD_SOURCE } from '../constants';
 import validateNameAndCode from './validateNameAndCode';
 
+const suppress = getSourceSuppressor(RECORD_SOURCE.CONSORTIUM);
+const actionSuppressor = { edit: suppress, delete: suppress };
 
 export const validate = (item, index, items) => {
   const errors = validateNameAndCode(item);
@@ -114,31 +121,37 @@ class StatisticalCodeSettings extends React.Component {
     return (
       <IntlConsumer>
         {intl => (
-          <this.connectedControlledVocab
-            stripes={this.props.stripes}
-            baseUrl="statistical-codes"
-            records="statisticalCodes"
-            formatter={formatter}
-            fieldComponents={fieldComponents}
-            label={<FormattedMessage id="ui-inventory.statisticalCodes" />}
-            labelSingular={intl.formatMessage({ id: 'ui-inventory.statisticalCode' })}
-            objectLabel={<FormattedMessage id="ui-inventory.statisticalCodes" />}
-            visibleFields={['code', 'name', 'statisticalCodeTypeId', 'source']}
-            columnMapping={{
-              code: intl.formatMessage({ id: 'ui-inventory.statisticalCodes' }),
-              name: intl.formatMessage({ id: 'ui-inventory.statisticalCodeNames' }),
-              statisticalCodeTypeId: intl.formatMessage({ id: 'ui-inventory.statisticalCodeTypes' }),
-              source: intl.formatMessage({ id: 'ui-inventory.source' }),
-            }}
-            readOnlyFields={['source']}
-            itemTemplate={{ source: 'local' }}
-            hiddenFields={['description', 'numberOfObjects']}
-            nameKey="name"
-            id="statistical-codes"
-            sortby="code"
-            validate={validate}
-            editable={hasPerm}
-          />
+          <TitleManager
+            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+            record={intl.formatMessage({ id: 'ui-inventory.statisticalCodes' })}
+          >
+            <this.connectedControlledVocab
+              stripes={this.props.stripes}
+              baseUrl="statistical-codes"
+              records="statisticalCodes"
+              formatter={formatter}
+              fieldComponents={fieldComponents}
+              label={<FormattedMessage id="ui-inventory.statisticalCodes" />}
+              labelSingular={intl.formatMessage({ id: 'ui-inventory.statisticalCode' })}
+              objectLabel={<FormattedMessage id="ui-inventory.statisticalCodes" />}
+              visibleFields={['code', 'name', 'statisticalCodeTypeId', 'source']}
+              columnMapping={{
+                code: intl.formatMessage({ id: 'ui-inventory.statisticalCodes' }),
+                name: intl.formatMessage({ id: 'ui-inventory.statisticalCodeNames' }),
+                statisticalCodeTypeId: intl.formatMessage({ id: 'ui-inventory.statisticalCodeTypes' }),
+                source: intl.formatMessage({ id: 'ui-inventory.source' }),
+              }}
+              actionSuppressor={actionSuppressor}
+              readOnlyFields={['source']}
+              itemTemplate={{ source: 'local' }}
+              hiddenFields={['description', 'numberOfObjects']}
+              nameKey="name"
+              id="statistical-codes"
+              sortby="code"
+              validate={validate}
+              editable={hasPerm}
+            />
+          </TitleManager>
         )}
       </IntlConsumer>
     );

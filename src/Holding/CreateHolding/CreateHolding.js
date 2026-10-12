@@ -10,15 +10,15 @@ import {
   stripesConnect,
   stripesShape,
 } from '@folio/stripes/core';
-import {
-  LoadingView,
-} from '@folio/stripes/components';
+import { LoadingView } from '@folio/stripes/components';
 
 import {
   useInstance,
+  useNumberGeneratorOptions,
 } from '../../common/hooks';
-import useCallout from '../../hooks/useCallout';
+import { useCallout } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
+import { switchAffiliation } from '../../utils';
 
 const CreateHolding = ({
   history,
@@ -29,19 +29,27 @@ const CreateHolding = ({
   mutator,
 }) => {
   const callout = useCallout();
-  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId, mutator.holdingInstance);
+  const { instance, isLoading: isInstanceLoading } = useInstance(instanceId);
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const sourceId = referenceData.holdingsSourcesByName?.FOLIO?.id;
+  const tenantFrom = location?.state?.tenantFrom || stripes.okapi.tenant;
 
-  const onCancel = useCallback(() => {
+  const goBack = useCallback(() => {
     history.push({
       pathname: `/inventory/view/${instanceId}`,
       search: location.search,
     });
   }, [location.search, instanceId]);
 
+  const onCancel = useCallback(async () => {
+    await switchAffiliation(stripes, tenantFrom, goBack);
+  }, [stripes, tenantFrom, goBack]);
+
   const onSubmit = useCallback((newHolding) => {
     return mutator.holding.POST(newHolding)
-      .then((holdingsRecord) => {
+      .then(async (holdingsRecord) => {
+        await onCancel();
+
         callout.sendCallout({
           type: 'success',
           message: <FormattedMessage
@@ -49,7 +57,16 @@ const CreateHolding = ({
             values={{ hrid: holdingsRecord.hrid }}
           />,
         });
-        onCancel();
+      })
+      .catch((error) => {
+        const defaultErrorMessage = <FormattedMessage id="ui-inventory.communicationProblem" />;
+
+        error.text().then(text => {
+          callout.sendCallout({
+            type: 'error',
+            message: text || defaultErrorMessage,
+          });
+        });
       });
   }, [onCancel, callout]);
 
@@ -65,6 +82,7 @@ const CreateHolding = ({
       form={instance.id}
       id={instance.id}
       initialValues={initialValues}
+      numberGeneratorData={numberGeneratorData}
       onSubmit={onSubmit}
       onCancel={onCancel}
       okapi={stripes.okapi}
@@ -87,13 +105,13 @@ CreateHolding.manifest = Object.freeze({
     type: 'okapi',
     path: 'holdings-storage/holdings',
     fetch: false,
+    throwErrors: false,
   },
 });
 
 CreateHolding.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-
   instanceId: PropTypes.string.isRequired,
   mutator: PropTypes.object.isRequired,
   referenceData: PropTypes.object.isRequired,

@@ -1,23 +1,25 @@
-import { useQuery } from 'react-query';
+import useChunkedCQLFetch from '../../../hooks/useChunkedCQLFetch';
 
-import { useOkapiKy, useNamespace } from '@folio/stripes/core';
+const useBoundWithHoldings = (boundWithItems, tenantId) => {
+  let holdingsRecordIds = boundWithItems?.map(x => x.holdingsRecordId);
 
-const useBoundWithHoldings = (boundWithItems) => {
-  const ky = useOkapiKy();
-  const [namespace] = useNamespace({ key: 'boundWithHoldings' });
+  // De-dup the list of holdingsRecordIds for efficiency
+  holdingsRecordIds = [...new Set(holdingsRecordIds)];
 
-  const holdingRecordIds = boundWithItems?.map(x => x.holdingsRecordId);
-  const queryIds = holdingRecordIds.join(' or ');
-
-  const { data, isLoading } = useQuery(
-    [namespace, queryIds],
-    () => ky.get(`holdings-storage/holdings?query=id=(${queryIds})`).json(),
-    { enabled: Boolean(queryIds) }
-  );
+  const { items: holdingsRecords, isLoading } = useChunkedCQLFetch({
+    ids: holdingsRecordIds,
+    endpoint: 'holdings-storage/holdings',
+    reduceFunction: (holdingQueries) => (
+      holdingQueries.reduce((acc, curr) => {
+        return [...acc, ...(curr?.data?.holdingsRecords ?? [])];
+      }, [])
+    ),
+    tenantId,
+  });
 
   return {
     isLoading,
-    boundWithHoldings: data?.holdingsRecords || [],
+    boundWithHoldings: holdingsRecords,
   };
 };
 

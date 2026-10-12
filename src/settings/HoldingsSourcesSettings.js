@@ -3,9 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  TitleManager,
+} from '@folio/stripes/core';
+import { getSourceSuppressor } from '@folio/stripes/util';
 
-import { sourceSuppressor } from '../utils';
+import { RECORD_SOURCE } from '../constants';
 
 class HoldingsSourcesSettings extends React.Component {
   static propTypes = {
@@ -23,32 +27,37 @@ class HoldingsSourcesSettings extends React.Component {
 
   render() {
     const hasPerm = this.props.stripes.hasPerm('ui-inventory.settings.holdings-sources');
-    const suppress = sourceSuppressor('folio');
+    const suppress = getSourceSuppressor([RECORD_SOURCE.FOLIO, RECORD_SOURCE.CONSORTIUM]);
 
     return (
       <IntlConsumer>
         {intl => (
-          <this.connectedControlledVocab
-            {...this.props}
-            baseUrl="holdings-sources"
-            records="holdingsRecordsSources"
-            label={<FormattedMessage id="ui-inventory.holdingsSources" />}
-            labelSingular={intl.formatMessage({ id: 'ui-inventory.holdingsSource' })}
-            objectLabel={<FormattedMessage id="ui-inventory.holdingsSources" />}
-            visibleFields={['name', 'source']}
-            columnMapping={{
-              name: intl.formatMessage({ id: 'ui-inventory.name' }),
-              source: intl.formatMessage({ id: 'ui-inventory.source' }),
-            }}
-            readOnlyFields={['source']}
-            itemTemplate={{ source: 'local' }}
-            hiddenFields={['numberOfObjects']}
-            nameKey="name"
-            actionSuppressor={{ edit: suppress, delete: suppress }}
-            id="holdingsSources"
-            sortby="name"
-            editable={hasPerm}
-          />
+          <TitleManager
+            page={intl.formatMessage({ id: 'ui-inventory.settings.inventory.title' })}
+            record={intl.formatMessage({ id: 'ui-inventory.holdingsSources' })}
+          >
+            <this.connectedControlledVocab
+              {...this.props}
+              baseUrl="holdings-sources"
+              records="holdingsRecordsSources"
+              label={<FormattedMessage id="ui-inventory.holdingsSources" />}
+              labelSingular={intl.formatMessage({ id: 'ui-inventory.holdingsSource' })}
+              objectLabel={<FormattedMessage id="ui-inventory.holdingsSources" />}
+              visibleFields={['name', 'source']}
+              columnMapping={{
+                name: intl.formatMessage({ id: 'ui-inventory.name' }),
+                source: intl.formatMessage({ id: 'ui-inventory.source' }),
+              }}
+              readOnlyFields={['source']}
+              itemTemplate={{ source: 'local' }}
+              hiddenFields={['numberOfObjects']}
+              nameKey="name"
+              actionSuppressor={{ edit: suppress, delete: suppress }}
+              id="holdingsSources"
+              sortby="name"
+              editable={hasPerm}
+            />
+          </TitleManager>
         )}
       </IntlConsumer>
     );

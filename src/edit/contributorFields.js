@@ -18,16 +18,15 @@ import {
 
 import PrimaryToggleButton from './components/PrimaryToggleButton';
 
-const ContributorFields = props => {
+const ContributorFields = ({
+  contributorNameTypes = [],
+  contributorTypes = [],
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
 
-  const {
-    contributorNameTypes,
-    contributorTypes,
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
   const contributorNameTypeOptions = contributorNameTypes.map(it => ({
     label: it.name,
     value: it.id,
@@ -153,11 +152,6 @@ ContributorFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-ContributorFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default ContributorFields;

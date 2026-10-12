@@ -3,24 +3,31 @@ import '../../../test/jest/__mock__';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { act, screen } from '@folio/jest-config-stripes/testing-library/react';
+import { act, screen, fireEvent, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 
-import { useLocationFilters } from '@folio/stripes-acq-components';
+import stripesAcqComponents from '@folio/stripes-acq-components';
+import { browseModeOptions, FACETS } from '@folio/stripes-inventory-components';
+import { checkIfUserInMemberTenant } from '@folio/stripes/core';
 
 import {
   renderWithIntl,
   translationsProperties,
 } from '../../../test/jest/helpers';
-import { browseModeOptions } from '../../constants';
 import BrowseInventory from './BrowseInventory';
 import { SearchModeNavigation } from '../../components';
 import { INIT_PAGE_CONFIG } from '../../hooks/useInventoryBrowse';
-import { useLastSearchTerms } from '../../hooks';
+import {
+  useLastSearchTerms,
+  useInventoryBrowse,
+} from '../../hooks';
+
+const { useLocationFilters } = stripesAcqComponents;
 
 const mockGetLastSearch = jest.fn();
 const mockGetLastBrowseOffset = jest.fn().mockImplementation(() => INIT_PAGE_CONFIG);
 const mockStoreLastBrowse = jest.fn();
 const mockStoreLastBrowseOffset = jest.fn();
+const mockFocusPaneTitle = jest.fn();
 
 jest.mock('../../storage');
 jest.mock('@folio/stripes-acq-components', () => ({
@@ -29,7 +36,10 @@ jest.mock('@folio/stripes-acq-components', () => ({
 }));
 jest.mock('../../components', () => ({
   BrowseInventoryFilters: jest.fn(() => <>BrowseInventoryFilters</>),
-  BrowseResultsPane: jest.fn(() => <>BrowseResultsPane</>),
+  BrowseResultsPane: jest.fn(({ paneTitleRef }) => {
+    paneTitleRef.current = { focus: mockFocusPaneTitle };
+    return <>BrowseResultsPane</>;
+  }),
   SearchModeNavigation: jest.fn(() => <>SearchModeNavigation</>),
 }));
 jest.mock('../../hooks', () => ({
@@ -60,6 +70,8 @@ const applySearch = jest.fn();
 const changeSearch = jest.fn();
 const resetFilters = jest.fn();
 const changeSearchIndex = jest.fn();
+const clearFilters = jest.fn();
+const applyLocationFiltersAsync = jest.fn();
 const getFiltersUtils = ({
   filters = {},
   searchQuery = 'searchQuery',
@@ -73,26 +85,25 @@ const getFiltersUtils = ({
   resetFilters,
   changeSearchIndex,
   searchIndex,
+  clearFilters,
+  applyLocationFiltersAsync,
 ];
 
 describe('BrowseInventory', () => {
   beforeEach(() => {
     history = createMemoryHistory();
-    applySearch.mockClear();
-    applyFilters.mockClear();
-    changeSearch.mockClear();
-    resetFilters.mockClear();
-    changeSearchIndex.mockClear();
-    mockGetLastSearch.mockClear();
-    mockGetLastBrowseOffset.mockClear();
-    mockStoreLastBrowse.mockClear();
-    mockStoreLastBrowseOffset.mockClear();
+    jest.clearAllMocks();
     useLocationFilters.mockClear().mockReturnValue(getFiltersUtils());
     useLastSearchTerms.mockClear().mockReturnValue({
       getLastSearch: mockGetLastSearch,
       getLastBrowseOffset: mockGetLastBrowseOffset,
       storeLastBrowse: mockStoreLastBrowse,
       storeLastBrowseOffset: mockStoreLastBrowseOffset,
+    });
+    useInventoryBrowse.mockReturnValue({
+      data: [],
+      isFetched: false,
+      isFetching: false,
     });
   });
 
@@ -150,18 +161,65 @@ describe('BrowseInventory', () => {
     expect(screen.getByText(/SearchModeNavigation/)).toBeInTheDocument();
   });
 
-  it('should call "changeSearchIndex" when browse mode option was changed', async () => {
-    renderBrowseInventory();
+  describe('when browse mode option was changed', () => {
+    it('should call "changeSearchIndex" ', async () => {
+      renderBrowseInventory();
 
-    await act(async () => userEvent.selectOptions(screen.getByRole('combobox'), 'contributors'));
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+      expect(changeSearchIndex).toHaveBeenCalled();
+    });
 
-    expect(changeSearchIndex).toHaveBeenCalled();
+    describe('when the new option is one of Call Number Browse options', () => {
+      describe('and a user is in a member tenant', () => {
+        it('should apply a default value of a current tenant in Held By facet', async () => {
+          renderBrowseInventory();
+
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'callNumbers' } });
+
+          await waitFor(() => expect(applyLocationFiltersAsync).toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku'], false));
+        });
+      });
+
+      describe('and a user is not in a member tenant', () => {
+        it('should not apply a default value of a current tenant in Held By facet', async () => {
+          checkIfUserInMemberTenant.mockReturnValue(false);
+          renderBrowseInventory();
+
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'callNumbers' } });
+
+          await waitFor(() => expect(applyLocationFiltersAsync).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku'], false));
+        });
+      });
+    });
+
+    describe('when the new option is not one of Call Number Browse options', () => {
+      describe('and a user is in a member tenant', () => {
+        it('should not apply a default value of a current tenant in Held By facet', async () => {
+          renderBrowseInventory();
+
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+
+          await waitFor(() => expect(applyLocationFiltersAsync).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku'], false));
+        });
+      });
+
+      describe('and a user is not in a member tenant', () => {
+        it('should not apply a default value of a current tenant in Held By facet', async () => {
+          checkIfUserInMemberTenant.mockReturnValue(false);
+          renderBrowseInventory();
+
+          fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+
+          await waitFor(() => expect(applyLocationFiltersAsync).not.toHaveBeenCalledWith(FACETS.CALL_NUMBERS_HELD_BY, ['diku'], false));
+        });
+      });
+    });
   });
 
   it('should call "changeSearch" when search query was changed', async () => {
     const { container } = renderBrowseInventory();
 
-    await act(async () => userEvent.type(screen.getByRole('searchbox'), 'newQuery'));
+    await act(async () => userEvent.type(screen.getByRole('textbox'), 'newQuery'));
     await act(async () => userEvent.click(container.querySelector('[data-test-single-search-form-submit="true"]')));
 
     expect(applySearch).toHaveBeenCalled();
@@ -177,5 +235,167 @@ describe('BrowseInventory', () => {
     await act(async () => userEvent.click(container.querySelector('[data-test-single-search-form-submit="true"]')));
 
     expect(applySearch).not.toHaveBeenCalled();
+  });
+
+  describe('when changing search term', () => {
+    it('should not be trimmed', async () => {
+      useLocationFilters.mockClear().mockReturnValue(getFiltersUtils({
+        searchQuery: '',
+      }));
+
+      const searchTerm = ' test ';
+
+      renderBrowseInventory();
+
+      await act(async () => userEvent.type(screen.getByRole('textbox'), searchTerm));
+
+      expect(screen.getByRole('textbox').value).toBe(searchTerm);
+    });
+  });
+
+  describe('when a new search query is submitted', () => {
+    it('should focus pane title', async () => {
+      const { getByRole } = renderBrowseInventory();
+
+      userEvent.type(getByRole('textbox'), 'newQuery');
+      userEvent.click(getByRole('button', { name: 'Search' }));
+
+      await waitFor(() => {
+        expect(mockFocusPaneTitle).toHaveBeenCalled();
+      });
+    });
+
+    it('should remove the background from the previously selected record', async () => {
+      const mockDeleteItemToView = jest.fn();
+
+      jest.spyOn(stripesAcqComponents, 'useItemToView').mockReturnValueOnce({
+        deleteItemToView: mockDeleteItemToView,
+      });
+
+      const { getByRole } = renderBrowseInventory();
+
+      userEvent.type(getByRole('textbox'), 'newQuery');
+      userEvent.click(getByRole('button', { name: 'Search' }));
+
+      await waitFor(() => {
+        expect(mockDeleteItemToView).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('when page is mounted without predefined search', () => {
+    it('should focus search option once', async () => {
+      const mockSearchOptionFocus = jest.fn();
+
+      jest.spyOn(stripesAcqComponents, 'SingleSearchForm')
+        .mockImplementation(({ indexRef }) => {
+          indexRef.current = { focus: mockSearchOptionFocus };
+          return <>SingleSearchForm</>;
+        });
+
+      const { rerender } = renderBrowseInventory();
+
+      useInventoryBrowse.mockReturnValue({
+        isFetching: false,
+      });
+
+      renderBrowseInventory({}, rerender);
+
+      expect(mockSearchOptionFocus).toHaveBeenCalledTimes(1);
+
+      jest.spyOn(stripesAcqComponents, 'SingleSearchForm').mockRestore();
+    });
+  });
+
+  describe('when page is mounted and data of last search is loaded', () => {
+    it('should focus search option', async () => {
+      const mockSearchOptionFocus = jest.fn();
+
+      jest.spyOn(stripesAcqComponents, 'SingleSearchForm')
+        .mockImplementation(({ indexRef }) => {
+          indexRef.current = { focus: mockSearchOptionFocus };
+          return <>SingleSearchForm</>;
+        });
+
+      history.push({ search: '?qindex=browseSubjects&query=book' });
+
+      useInventoryBrowse.mockReturnValue({
+        isFetched: false,
+        isFetching: true,
+      });
+
+      const { rerender } = renderBrowseInventory();
+
+      expect(mockSearchOptionFocus).not.toHaveBeenCalled();
+
+      useInventoryBrowse.mockReturnValue({
+        isFetched: true,
+        isFetching: true,
+      });
+
+      renderBrowseInventory({}, rerender);
+
+      expect(mockSearchOptionFocus).not.toHaveBeenCalled();
+
+      useInventoryBrowse.mockReturnValue({
+        isFetched: true,
+        isFetching: false,
+      });
+
+      renderBrowseInventory({}, rerender);
+
+      expect(mockSearchOptionFocus).toHaveBeenCalledTimes(1);
+
+      jest.spyOn(stripesAcqComponents, 'SingleSearchForm').mockRestore();
+    });
+  });
+
+  it('should display search indexes', () => {
+    const { getByText, getAllByText } = renderBrowseInventory();
+
+    expect(getByText('Call numbers (all)')).toBeDefined();
+    expect(getAllByText('Dewey Decimal classification')[0]).toBeDefined();
+    expect(getAllByText('Library of Congress classification')[0]).toBeDefined();
+    expect(getByText('National Library of Medicine classification')).toBeDefined();
+    expect(getByText('Classification (all)')).toBeDefined();
+    expect(getAllByText('Dewey Decimal classification')[1]).toBeDefined();
+    expect(getAllByText('Library of Congress classification')[1]).toBeDefined();
+    expect(getByText('Contributors')).toBeDefined();
+    expect(getByText('Subjects')).toBeDefined();
+  });
+
+  describe('when user clicks on Reset all', () => {
+    it('should move focus to query input', () => {
+      renderBrowseInventory();
+
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+      userEvent.type(screen.getByRole('textbox'), 'test');
+      fireEvent.click(screen.getByRole('button', { name: 'Search' }));
+      fireEvent.click(screen.getByRole('button', { name: 'Reset all' }));
+
+      expect(screen.getByRole('textbox')).toHaveFocus();
+    });
+  });
+
+  describe('when search option is changed', () => {
+    it('should reset itemToView to not highlight the first row', () => {
+      const mockDeleteItemToView = jest.fn();
+
+      jest.spyOn(stripesAcqComponents, 'useItemToView').mockReturnValueOnce({
+        deleteItemToView: mockDeleteItemToView,
+      });
+
+      renderBrowseInventory();
+
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+      expect(mockDeleteItemToView).toHaveBeenCalled();
+    });
+
+    it('should not reset query value', () => {
+      renderBrowseInventory();
+
+      fireEvent.change(screen.getByRole('combobox'), { target: { value: 'contributors' } });
+      expect(screen.getByRole('textbox')).toHaveValue('searchQuery');
+    });
   });
 });

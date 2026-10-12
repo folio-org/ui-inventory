@@ -1,8 +1,4 @@
-import React from 'react';
-import {
-  FormattedMessage,
-  FormattedTime,
-} from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import {
   includes,
   find,
@@ -18,22 +14,37 @@ import {
   omit,
   chunk,
   flatten,
+  pick,
 } from 'lodash';
-import moment from 'moment';
 
-import { FormattedUTCDate } from '@folio/stripes/components';
+import {
+  updateTenant,
+  validateUser,
+  updateUser,
+} from '@folio/stripes/core';
+import {
+  FormattedTime,
+  FormattedUTCDate,
+  NoValue,
+} from '@folio/stripes/components';
+import {
+  segments,
+  LIMIT_MAX,
+  SORT_OPTIONS,
+} from '@folio/stripes-inventory-components';
 
 import {
   itemStatusesMap,
   noValue,
   emptyList,
   indentifierTypeNames,
-  DATE_FORMAT,
-  DATE_TIME_RANGE_FILTER_FORMAT,
-  LIMIT_MAX,
   ERROR_TYPES,
   SINGLE_ITEM_QUERY_TEMPLATES,
+  CONSORTIUM_PREFIX,
+  AUTHORITY_LINKED_FIELDS,
+  VERSION_HISTORY_ENABLED_SETTING,
 } from './constants';
+import { removeItem } from './storage';
 
 export const areAllFieldsEmpty = fields => fields.every(item => (isArray(item)
   ? (isEmpty(item) || item.every(element => !element || element === '-'))
@@ -136,21 +147,6 @@ export function canMarkRequestAsOpen(request) {
     ], status);
 }
 
-export function getCurrentFilters(filtersStr) {
-  if (!filtersStr) {
-    return undefined;
-  }
-
-  return filtersStr
-    .split(',')
-    .reduce((filters, filter) => {
-      const [name, value] = filter.split('.');
-      filters[name] = filters[name] || [];
-      filters[name].push(value);
-      return filters;
-    }, {});
-}
-
 export function parseFiltersToStr(filters) {
   const newFilters = [];
 
@@ -161,46 +157,6 @@ export function parseFiltersToStr(filters) {
 
   return newFilters.join(',');
 }
-
-export const retrieveDatesFromDateRangeFilterString = filterValue => {
-  let dateRange = {
-    startDate: '',
-    endDate: '',
-  };
-
-  if (filterValue) {
-    const [startDateString, endDateString] = filterValue.split(':');
-    const endDate = moment.utc(endDateString);
-    const startDate = moment.utc(startDateString);
-
-    dateRange = {
-      startDate: startDate.isValid()
-        ? startDate.format(DATE_FORMAT)
-        : '',
-      endDate: endDate.isValid()
-        ? endDate.format(DATE_FORMAT)
-        : '',
-    };
-  }
-
-  return dateRange;
-};
-
-
-export const makeDateRangeFilterString = (startDate, endDate) => {
-  return `${startDate}:${endDate}`;
-};
-
-export const buildDateRangeQuery = name => values => {
-  const [startDateString, endDateString] = values[0]?.split(':') || [];
-
-  if (!startDateString || !endDateString) return '';
-
-  const start = moment(startDateString).startOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
-  const end = moment(endDateString).endOf('day').utc().format(DATE_TIME_RANGE_FILTER_FORMAT);
-
-  return `${name}>="${start}" and ${name}<="${end}"`;
-};
 
 // Function which takes a filter name and returns
 // another function which can be used in filter config
@@ -252,20 +208,6 @@ export function filterItemsBy(name) {
 
     return { renderedItems };
   };
-}
-
-export function getQueryTemplate(queryIndex, indexes) {
-  const searchableIndex = indexes.find(({ value }) => value === queryIndex);
-
-  return get(searchableIndex, 'queryTemplate');
-}
-
-export function getIsbnIssnTemplate(queryTemplate, identifierTypes, queryIndex) {
-  const identifierType = identifierTypes
-    .find(({ name }) => name.toLowerCase() === queryIndex);
-  const identifierTypeId = get(identifierType, 'id', 'identifier-type-not-found');
-
-  return template(queryTemplate)({ identifierTypeId });
 }
 
 // Return the instanceRelationshipTypeId corresponding to 'preceding-succeeding'
@@ -380,10 +322,10 @@ export const checkIfArrayIsEmpty = array => (!isEmpty(array)
   : emptyList);
 
 export const convertArrayToBlocks = elements => (!isEmpty(elements)
-  ? elements.map((line, i) => (line ? <div key={i}>{line}</div> : noValue))
-  : noValue);
+  ? elements.map((line, i) => (line ? <div key={i}>{line}</div> : <NoValue />))
+  : <NoValue />);
 
-export const getDate = dateValue => {
+export const getUTCDate = dateValue => {
   return dateValue ? (
     <FormattedUTCDate
       value={dateValue}
@@ -455,10 +397,37 @@ export const getIdentifiers = (identifiers = [], type, identifierTypesById) => {
     }
   });
 
+  if (!result.length) return null;
+
   return (
     <div>
       {result.map((value, index) => <div>{`${value}${index !== result.length - 1 ? ',' : ''}`}</div>)}
     </div>);
+};
+
+/**
+ * Creates an object with identifier type as a key and its value
+ *
+ * @param {String[]} types identifier names
+ * @param {Object} identifierTypesById
+ * @param {Object[]} identifiers
+ *
+ * @returns {Object} Identifier names and its values
+ */
+export const getIdentifiersValues = (types, identifierTypesById, identifiers = []) => {
+  const result = {};
+
+  if (!identifiers.length) return result;
+
+  identifiers.forEach(({ identifierTypeId, value }) => {
+    const ident = identifierTypesById[identifierTypeId];
+
+    if (types.some(type => type === ident?.name) && value) {
+      result[ident.name] = value;
+    }
+  });
+
+  return result;
 };
 
 export const updateOrAddIdentifier = (identifiers, identifierTypeId, value) => {
@@ -608,9 +577,10 @@ export const marshalRelationship = (instance, relationshipName, relationshipIdKe
  *
  * @param instance instance object
  * @param identifierTypesByName object
+ * @param instanceDateTypesByCode object
  *
  */
-export const marshalInstance = (instance, identifierTypesByName) => {
+export const marshalInstance = (instance, identifierTypesByName, instanceDateTypesByCode) => {
   const marshaledInstance = { ...instance };
 
   marshalTitles(marshaledInstance, identifierTypesByName, 'preceding');
@@ -618,6 +588,14 @@ export const marshalInstance = (instance, identifierTypesByName) => {
 
   marshalRelationship(marshaledInstance, 'parentInstances', 'superInstanceId');
   marshalRelationship(marshaledInstance, 'childInstances', 'subInstanceId');
+
+  const { dates } = instance;
+  if (dates && (dates.date1 || dates.date2) && !dates.dateTypeId) {
+    marshaledInstance.dates = {
+      ...dates,
+      dateTypeId: instanceDateTypesByCode['|']?.id
+    };
+  }
 
   return marshaledInstance;
 };
@@ -651,8 +629,6 @@ export const unmarshalInstance = (instance, identifierTypesById) => {
  *
  */
 export const omitFromArray = (array, path) => array.map(title => omit(title, path));
-
-export const sourceSuppressor = sourceValue => term => term.source === sourceValue;
 
 export const getNextSelectedRowsState = (selectedRows, row) => {
   const { id } = row;
@@ -714,17 +690,6 @@ export const batchRequest = (requestFn, items, buildQuery = buildQueryByIds, _pa
 };
 
 /**
- * Accent Fold
- *
- * For example:
- * LÒpez => Lopez
- *
- * Link:
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize
-*/
-export const accentFold = (str = '') => str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-/**
  * Parses http error to json and attaches an error type.
  *
  * @param httpError object
@@ -735,7 +700,7 @@ export const parseHttpError = async httpError => {
   let jsonError = {};
 
   try {
-    if (contentType === 'text/plain') {
+    if (contentType.includes('text/plain')) {
       jsonError.message = await httpError.text();
     } else {
       jsonError = await httpError.json();
@@ -743,7 +708,7 @@ export const parseHttpError = async httpError => {
 
     // Optimistic locking error is currently returned as a plain text
     // https://issues.folio.org/browse/UIIN-1872?focusedCommentId=125438&page=com.atlassian.jira.plugin.system.issuetabpanels%3Acomment-tabpanel#comment-125438
-    if (jsonError.message.match(/optimistic locking/i)) {
+    if (jsonError.message?.match(/optimistic locking/i)) {
       jsonError.errorType = ERROR_TYPES.OPTIMISTIC_LOCKING;
     }
 
@@ -767,5 +732,253 @@ export const buildSingleItemQuery = (qindex, query) => {
     return null;
   }
 
-  return template(queryTemplate, { interpolate: /%{([\s\S]+?)}/g })({ query });
+  return template(queryTemplate, { interpolate: /%{([\s\S]+?)}/g })({ query: query.trim() });
 };
+
+export const isMARCSource = (source) => {
+  return ['MARC', `${CONSORTIUM_PREFIX}MARC`].includes(source);
+};
+
+export const isLinkedDataSource = (source) => {
+  return source === 'LINKED_DATA';
+};
+
+export const isUserInConsortiumMode = stripes => stripes.hasInterface('consortia');
+
+export const isInstanceShadowCopy = (source) => [`${CONSORTIUM_PREFIX}FOLIO`, `${CONSORTIUM_PREFIX}MARC`].includes(source);
+
+/**
+ * hasMemberTenantPermission
+ * return true if permissionName is present in the array of permissions for
+ * the given tenant. permissionName may match a top-level permissionName or a
+ * permission's subPermissions.
+ *
+ * @param {string} permissionName
+ * @param {string} tenantId
+ * @param {array} permissions array of objects shaped like
+ * {
+ *   permissionNames: [{
+ *     permissionName: 'string',
+ *     subPermissions: ['string'],
+ *   }],
+ *   tenantId: 'string'
+ * }
+ *
+ * @returns true if permissions contains a value matching the given permissionName and tenant
+ */
+export const hasMemberTenantPermission = (permissionName, tenantId, permissions = []) => {
+  const tenantPermissions = permissions?.find(permission => permission?.tenantId === tenantId)?.permissionNames || permissions || [];
+
+  const hasPermission = tenantPermissions?.some(tenantPermission => tenantPermission?.permissionName === permissionName);
+
+  if (!hasPermission) {
+    return tenantPermissions.some(tenantPermission => tenantPermission.subPermissions?.includes(permissionName));
+  }
+
+  return hasPermission;
+};
+
+const handleUpdateUser = async (stripes) => {
+  const consortium = stripes.user.user?.consortium;
+
+  if (consortium) {
+    const centralTenant = stripes.user.user.consortium.centralTenantId;
+    const userTenants = stripes.user.user.tenants;
+
+    if (userTenants) {
+      await updateUser(stripes.store, {
+        tenants: userTenants,
+        consortium: {
+          id: consortium.id,
+          centralTenantId: centralTenant,
+        },
+      });
+    }
+  }
+};
+
+export const switchAffiliation = async (stripes, tenantId, move) => {
+  if (stripes.okapi.tenant !== tenantId) {
+    await updateTenant(stripes.okapi, tenantId);
+
+    await validateUser(
+      stripes.okapi.url,
+      stripes.store,
+      tenantId,
+      {
+        token: stripes.okapi.token,
+        user: stripes.user.user,
+        perms: stripes.user.perms,
+      },
+    );
+
+    await handleUpdateUser(stripes);
+
+    move?.();
+  } else {
+    move?.();
+  }
+};
+
+export const getLinkedAuthorityIds = instance => {
+  // Pick fields with authorityId
+  const linkedAuthorities = pick(instance, AUTHORITY_LINKED_FIELDS);
+
+  // Retrieve only authorityId
+  const authorityIdList = AUTHORITY_LINKED_FIELDS.map(field => {
+    return linkedAuthorities[field].filter(auth => !!auth.authorityId).map(auth => auth.authorityId);
+  });
+
+  return flatten(authorityIdList);
+};
+
+export const clearStorage = () => {
+  const namespace = '@folio/inventory';
+
+  removeItem(`${namespace}/search.${segments.instances}.lastSearch`);
+  removeItem(`${namespace}/search.${segments.holdings}.lastSearch`);
+  removeItem(`${namespace}/search.${segments.items}.lastSearch`);
+  removeItem(`${namespace}/browse.lastSearch`);
+  removeItem(`${namespace}/search.${segments.instances}.lastOffset`);
+  removeItem(`${namespace}/search.${segments.holdings}.lastOffset`);
+  removeItem(`${namespace}/search.${segments.items}.lastOffset`);
+  removeItem(`${namespace}/browse.lastOffset`);
+  removeItem(`${namespace}/search.lastSegment`);
+
+  Object.values(segments).forEach((segment) => {
+    removeItem(`${namespace}.${segment}.lastOpenRecord`);
+  });
+};
+
+export const addFilter = (filters, filterNameAndValue) => {
+  return filters ? `${filters},${filterNameAndValue}` : filterNameAndValue;
+};
+
+export const replaceFilter = (filters, filterToReplace, filterToReplaceWith) => {
+  const filtersArray = filters.split(',');
+
+  return filtersArray.reduce((acc, _filter) => {
+    if (_filter === filterToReplace) {
+      return [...acc, filterToReplaceWith];
+    }
+
+    return [...acc, _filter];
+  }, []).join(',');
+};
+
+export const parseEmptyFormValue = value => value;
+
+export const redirectToMarcEditPage = (pathname, instance, location, history) => {
+  const searchParams = new URLSearchParams(location.search);
+
+  searchParams.delete('relatedRecordVersion');
+
+  if (instance.shared) {
+    searchParams.append('shared', instance.shared.toString());
+  }
+
+  history.push({
+    pathname,
+    search: searchParams.toString(),
+  });
+};
+
+export const sendCalloutOnAffiliationChange = (stripes, tenantId, callout) => {
+  if (tenantId && stripes.okapi.tenant !== tenantId) {
+    const name = stripes.user.user.tenants.find(tenant => tenant.id === tenantId)?.name;
+
+    if (name) {
+      callout.sendCallout({
+        type: 'info',
+        message: (
+          <FormattedMessage
+            id="ui-inventory.affiliationChanging.namedNotification"
+            values={{ name }}
+          />
+        ),
+      });
+    } else {
+      callout.sendCallout({
+        type: 'info',
+        message: <FormattedMessage id="ui-inventory.affiliationChanging.notification" />,
+      });
+    }
+  }
+};
+
+export const checkIfCentralOrderingIsActive = centralOrdering => centralOrdering?.settings[0]?.value === 'true';
+
+export const flattenCentralTenantPermissions = (centralTenantPermissions) => {
+  // Set is used to collect unique permission names because subPermissions can duplicate
+  return new Set(centralTenantPermissions?.reduce((acc, currentPermission) => {
+    return [
+      ...acc,
+      currentPermission?.permissionName,
+      ...(currentPermission?.subPermissions || [])
+    ];
+  }, []));
+};
+
+export const getSortOptions = (intl) => {
+  return Object.keys(SORT_OPTIONS).map(option => ({
+    value: SORT_OPTIONS[option],
+    label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option.toLowerCase()}` }),
+  }));
+};
+
+export const omitCurrentAndCentralTenants = (stripes, currentTenant) => {
+  const tenants = stripes?.user?.user?.tenants;
+
+  const currentTenantId = currentTenant || stripes.okapi.tenant;
+  const centralTenantId = stripes.user?.user?.consortium?.centralTenantId;
+
+  return tenants?.filter(tenant => tenant.id !== currentTenantId && tenant.id !== centralTenantId);
+};
+
+export const getIsVersionHistoryEnabled = settings => {
+  return settings?.find(setting => setting.key === VERSION_HISTORY_ENABLED_SETTING)?.value;
+};
+
+export function validateAdditionalCallNumbers(values, errors) {
+  if (values.additionalCallNumbers && values.additionalCallNumbers.length > 0) {
+    const additionalCallNumbersErrors = values.additionalCallNumbers.map(callNumber => {
+      const error = {};
+      if (!callNumber.callNumber || callNumber.callNumber.trim() === '') {
+        error.callNumber = <FormattedMessage id="ui-inventory.selectToContinue" />;
+      }
+      return Object.keys(error).length ? error : undefined;
+    });
+
+    if (additionalCallNumbersErrors.some(error => error !== undefined)) {
+      errors.additionalCallNumbers = additionalCallNumbersErrors;
+    }
+  }
+}
+
+export const handleCallNumberSwap = ({
+  change,
+  getFieldState,
+  fieldNames,
+  additionalCallNumberIndex,
+}) => {
+  const primaryCallNumber = {
+    callNumber: getFieldState(fieldNames.callNumber)?.value || '',
+    prefix: getFieldState(fieldNames.prefix)?.value || '',
+    suffix: getFieldState(fieldNames.suffix)?.value || '',
+    typeId: getFieldState(fieldNames.typeId)?.value || null,
+  };
+
+  const additionalCallNumbers = getFieldState(fieldNames.additionalCallNumbers)?.value || [];
+  const additionalCallNumber = additionalCallNumbers[additionalCallNumberIndex];
+
+  change(fieldNames.callNumber, additionalCallNumber.callNumber);
+  change(fieldNames.prefix, additionalCallNumber.prefix);
+  change(fieldNames.suffix, additionalCallNumber.suffix);
+  change(fieldNames.typeId, additionalCallNumber.typeId);
+
+  const updatedAdditionalCallNumbers = [...additionalCallNumbers];
+  updatedAdditionalCallNumbers[additionalCallNumberIndex] = primaryCallNumber;
+
+  change(fieldNames.additionalCallNumbers, updatedAdditionalCallNumbers);
+};
+

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -48,7 +47,7 @@ describe('DescriptionFields', () => {
   it('adds new TextField on add button click', () => {
     renderDescriptionFields();
     const addButton = screen.getByText('Add description');
-    userEvent.click(addButton);
+    fireEvent.click(addButton);
     const textFields = screen.getAllByText('Physical description');
     expect(textFields).toHaveLength(1);
   });

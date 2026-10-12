@@ -15,20 +15,22 @@ import {
   LoadingView,
 } from '@folio/stripes/components';
 
+import { useNumberGeneratorOptions } from '../../common/hooks';
 import {
   useInstanceQuery,
-  useHolding,
+  useHoldingQuery,
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
 import {
-  useItem,
+  useItemQuery,
   useItemMutation,
 } from '../hooks';
 
 import { itemStatusesMap } from '../../constants';
+import { switchAffiliation } from '../../utils';
 
-const OMITTED_INITIAL_FIELDS = ['id', 'hrid', 'barcode', 'lastCheckIn'];
+const OMITTED_INITIAL_FIELDS = ['id', 'hrid', 'order', 'barcode', 'lastCheckIn'];
 
 const DuplicateItem = ({
   referenceData,
@@ -40,8 +42,9 @@ const DuplicateItem = ({
   const location = useLocation();
 
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
-  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
-  const { isLoading: isItemLoading, item } = useItem(itemId);
+  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId, { tenantId: location?.state?.tenantTo });
+  const { isLoading: isItemLoading, item } = useItemQuery(itemId, { tenant: location?.state?.tenantTo });
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();
 
@@ -53,13 +56,22 @@ const DuplicateItem = ({
     return duplicatedItem;
   }, [item]);
 
-  const onSuccess = useCallback(async (response) => {
-    const { id, hrid } = await response.json();
-
+  const goToDuplicatedItem = useCallback((id) => {
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${id}`,
       search: location.search,
+      state: {
+        tenantTo: location?.state?.tenantTo,
+        tenantFrom: location?.state?.tenantFrom,
+        initialTenantId: location?.state?.initialTenantId,
+      },
     });
+  }, [location.search, instanceId]);
+
+  const onSuccess = useCallback(async (response) => {
+    const { id, hrid } = await response.json();
+
+    await switchAffiliation(stripes, location?.state?.tenantFrom, () => goToDuplicatedItem(id));
 
     return callout.sendCallout({
       type: 'success',
@@ -70,14 +82,23 @@ const DuplicateItem = ({
     });
   }, [callout, instanceId, holdingId]);
 
-  const { mutateItem } = useItemMutation({ onSuccess });
+  const { mutateItem } = useItemMutation({ onSuccess }, { tenantId: location?.state?.tenantTo });
 
-  const onCancel = useCallback(() => {
+  const goBack = useCallback(() => {
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
       search: location.search,
+      state: {
+        tenantTo: location?.state?.tenantTo,
+        tenantFrom: location?.state?.tenantFrom,
+        initialTenantId: location?.state?.initialTenantId,
+      },
     });
   }, [location.search, instanceId, holdingId, itemId]);
+
+  const onCancel = useCallback(async () => {
+    await switchAffiliation(stripes, location?.state?.tenantFrom, goBack);
+  }, [stripes, location?.state?.tenantFrom, goBack]);
 
   const onSubmit = useCallback((values) => {
     if (!values.barcode) {
@@ -95,6 +116,7 @@ const DuplicateItem = ({
       id={holding.id}
       key={holding.id}
       initialValues={initialValues}
+      numberGeneratorData={numberGeneratorData}
       onSubmit={onSubmit}
       onCancel={onCancel}
       okapi={stripes.okapi}

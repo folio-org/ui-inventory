@@ -13,14 +13,12 @@ import {
   TextField,
 } from '@folio/stripes/components';
 
-const EditionFields = props => {
+const EditionFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
 
   const editionLabel = formatMessage({ id: 'ui-inventory.edition' });
 
@@ -58,11 +56,6 @@ EditionFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-EditionFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default EditionFields;

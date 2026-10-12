@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { cloneDeep } from 'lodash';
@@ -7,8 +7,9 @@ import { useStripes } from '@folio/stripes/core';
 import { LoadingView, ErrorModal } from '@folio/stripes/components';
 
 import {
-  useHolding,
+  useHoldingQuery,
   useInstanceQuery,
+  useNumberGeneratorOptions,
 } from '../../common/hooks';
 import {
   useCallout,
@@ -16,7 +17,7 @@ import {
   useHoldingMutation,
 } from '../../hooks';
 import HoldingsForm from '../../edit/holdings/HoldingsForm';
-import withLocation from '../../withLocation';
+import { withLocation } from '../../hocs';
 import { parseHttpError } from '../../utils';
 
 const EditHolding = ({
@@ -28,45 +29,61 @@ const EditHolding = ({
   referenceTables,
 }) => {
   const callout = useCallout();
-  const { search, state: locationState } = location;
+  const {
+    search,
+    state: {
+      backPathname: locationState,
+      initialTenantId,
+    } = {},
+  } = location;
   const stripes = useStripes();
   const [httpError, setHttpError] = useState();
+  const keepEditing = useRef(false);
   const { instance, isLoading: isInstanceLoading } = useInstanceQuery(instanceId);
-  const { holding, isLoading: isHoldingLoading } = useHolding(holdingId);
+  const { holding, isFetching: isHoldingLoading, refetch: refetchHolding } = useHoldingQuery(holdingId);
   const { totalRecords: itemCount, isLoading: isItemsLoading } = useHoldingItemsQuery(holdingId, {
     searchParams: { limit: 1 },
   });
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
 
+  const setKeepEditing = useCallback((value) => {
+    keepEditing.current = value;
+  }, []);
 
   const isMARCRecord = useMemo(() => (
     referenceTables?.holdingsSources?.find(source => source.id === holding?.sourceId)?.name === 'MARC'
   ), [holding]);
 
-  const onCancel = useCallback(() => {
+  const goBack = useCallback(() => {
     history.push({
-      pathname: locationState?.backPathname ?? `/inventory/view/${instanceId}`,
+      pathname: locationState?.backPathname ?? `/inventory/view/${instanceId}/${holdingId}`,
       search,
+      state: { initialTenantId },
     });
-  }, [search, instanceId]);
+  }, [search, instanceId, holdingId]);
 
   const onSuccess = useCallback(() => {
-    onCancel();
+    if (!keepEditing.current) {
+      goBack();
+    } else {
+      refetchHolding();
+    }
 
-    return callout.sendCallout({
+    callout.sendCallout({
       type: 'success',
       message: <FormattedMessage
         id="ui-inventory.holdingsRecord.successfullySaved"
         values={{ hrid: holding?.hrid }}
       />,
     });
-  }, [onCancel, callout]);
+  }, [goBack, refetchHolding, holding, callout]);
 
   const onError = async error => {
     const parsedError = await parseHttpError(error.response);
     setHttpError(parsedError);
   };
 
-  const { mutateHolding } = useHoldingMutation({ onSuccess });
+  const { mutateHolding } = useHoldingMutation(stripes.okapi.tenant, { onSuccess });
 
   const onSubmit = useCallback(holdingValues => {
     const clonedHolding = cloneDeep(holdingValues);
@@ -84,9 +101,10 @@ const EditHolding = ({
       <HoldingsForm
         httpError={httpError}
         location={location}
+        numberGeneratorData={numberGeneratorData}
         initialValues={holding}
         onSubmit={onSubmit}
-        onCancel={onCancel}
+        onCancel={goBack}
         okapi={stripes.okapi}
         instance={instance}
         referenceTables={referenceTables}
@@ -94,6 +112,8 @@ const EditHolding = ({
         itemCount={itemCount}
         goTo={goTo}
         isMARCRecord={isMARCRecord}
+        setKeepEditing={setKeepEditing}
+        showKeepEditingButton
       />
       {httpError && !httpError?.errorType &&
         <ErrorModal

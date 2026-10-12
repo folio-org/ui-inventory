@@ -8,58 +8,92 @@ import {
   size,
   isEmpty,
   noop,
+  uniqBy,
 } from 'lodash';
 import {
   injectIntl,
   FormattedMessage,
 } from 'react-intl';
 import saveAs from 'file-saver';
-import moment from 'moment';
+import classnames from 'classnames';
+import { stringify } from 'query-string';
 
 import {
   Pluggable,
   AppIcon,
   IfPermission,
-  IfInterface,
   CalloutContext,
   stripesConnect,
   withNamespace,
+  checkIfUserInCentralTenant,
+  checkIfUserInMemberTenant,
+  TitleManager,
+  getUserTenantsPermissions,
 } from '@folio/stripes/core';
-import { SearchAndSort } from '@folio/stripes/smart-components';
+import {
+  SearchAndSort,
+  buildUrl,
+} from '@folio/stripes/smart-components';
 import {
   Button,
   Icon,
   Checkbox,
   MenuSection,
   Select,
-  checkScope,
   HasCommand,
   MCLPagingTypes,
   TextLink,
   DefaultMCLRowFormatter,
+  dayjs,
 } from '@folio/stripes/components';
+import {
+  advancedSearchQueryBuilder,
+  queryIndexes,
+  advancedSearchIndexes,
+  segments,
+  OKAPI_TENANT_HEADER,
+  getCurrentFilters,
+  buildSearchQuery,
+  SORT_OPTIONS,
+  SEARCH_COLUMNS,
+  TOGGLEABLE_COLUMNS,
+  getSearchResultsFormatter,
+  SEARCH_COLUMN_MAPPINGS,
+  withReset,
+  getDefaultQindex,
+  FACETS,
+} from '@folio/stripes-inventory-components';
 
+import ViewInstanceRoute from '../../routes/ViewInstanceRoute';
 import FilterNavigation from '../FilterNavigation';
 import SearchModeNavigation from '../SearchModeNavigation';
 import packageInfo from '../../../package';
 import InstanceForm from '../../edit/InstanceForm';
-import ViewInstanceWrapper from '../../ViewInstanceWrapper';
 import formatters from '../../referenceFormatters';
-import withLocation from '../../withLocation';
 import {
-  getCurrentFilters,
+  withLocation,
+  withUseResourcesIds,
+  withSingleRecordImport,
+} from '../../hocs';
+import {
   getNextSelectedRowsState,
   parseFiltersToStr,
   marshalInstance,
   omitFromArray,
   isTestEnv,
   handleKeyCommand,
-  buildSingleItemQuery
+  buildSingleItemQuery,
+  isUserInConsortiumMode,
+  switchAffiliation,
+  getSortOptions,
+  hasMemberTenantPermission,
+  addFilter,
 } from '../../utils';
 import {
   INSTANCES_ID_REPORT_TIMEOUT,
-  SORTABLE_SEARCH_RESULT_LIST_COLUMNS,
-  segments,
+  CONTENT_TYPE_HEADER,
+  OKAPI_TOKEN_HEADER,
+  INSTANCE_RECORD_TYPE,
 } from '../../constants';
 import {
   IdReportGenerator,
@@ -69,42 +103,53 @@ import ErrorModal from '../ErrorModal';
 import CheckboxColumn from './CheckboxColumn';
 import SelectedRecordsModal from '../SelectedRecordsModal';
 import ImportRecordModal from '../ImportRecordModal';
-
-import { buildQuery } from '../../routes/buildManifestObject';
 import {
   getItem,
   setItem,
 } from '../../storage';
-import facetsStore from '../../stores/facetsStore';
+import { applyDefaultStaffSuppressFilter } from '../../routes/buildManifestObject';
 
 import css from './instances.css';
 
 const INITIAL_RESULT_COUNT = 30;
 const RESULT_COUNT_INCREMENT = 30;
 
-const TOGGLEABLE_COLUMNS = ['contributors', 'publishers', 'relation'];
-const NON_TOGGLEABLE_COLUMNS = ['select', 'title'];
+const NON_TOGGLEABLE_COLUMNS = [
+  SEARCH_COLUMNS.SELECT,
+  SEARCH_COLUMNS.TITLE,
+];
 const ALL_COLUMNS = Array.from(new Set([
   ...NON_TOGGLEABLE_COLUMNS,
-  ...TOGGLEABLE_COLUMNS,
+  SEARCH_COLUMNS.CONTRIBUTORS,
+  SEARCH_COLUMNS.PUBLISHERS,
+  SEARCH_COLUMNS.DATE,
+  SEARCH_COLUMNS.RELATION,
+  SEARCH_COLUMNS.HRID,
 ]));
 const VISIBLE_COLUMNS_STORAGE_KEY = 'inventory-visible-columns';
+const SORTABLE_COLUMNS = Object.values(SORT_OPTIONS)
+  .filter(column => column !== SORT_OPTIONS.RELEVANCE);
+const NON_INTERACTIVE_HEADERS = [SEARCH_COLUMNS.SELECT];
 
 class InstancesList extends React.Component {
   static defaultProps = {
-    showSingleResult: true,
+    canUseSingleRecordImport: false,
     segment: segments.instances,
   };
 
   static propTypes = {
+    canUseSingleRecordImport: PropTypes.bool,
     data: PropTypes.object,
     parentResources: PropTypes.object,
     parentMutator: PropTypes.object,
-    showSingleResult: PropTypes.bool,
+    publishOnReset: PropTypes.func.isRequired,
     disableRecordCreation: PropTypes.bool,
+    unsubscribeFromReset: PropTypes.func.isRequired,
     updateLocation: PropTypes.func.isRequired,
     goTo: PropTypes.func.isRequired,
     getParams: PropTypes.func.isRequired,
+    getResourcesIds: PropTypes.func.isRequired,
+    isRequestUrlExceededLimit: PropTypes.bool.isRequired,
     segment: PropTypes.string,
     intl: PropTypes.object,
     match: PropTypes.shape({
@@ -123,9 +168,11 @@ class InstancesList extends React.Component {
     location: PropTypes.shape({
       search: PropTypes.string,
       state: PropTypes.object,
+      pathname: PropTypes.string,
     }),
     stripes: PropTypes.object.isRequired,
     history: PropTypes.shape({
+      push: PropTypes.func,
       listen: PropTypes.func,
       replace: PropTypes.func,
     }),
@@ -133,6 +180,7 @@ class InstancesList extends React.Component {
     getLastSearchOffset: PropTypes.func.isRequired,
     storeLastSearch: PropTypes.func.isRequired,
     storeLastSearchOffset: PropTypes.func.isRequired,
+    storeLastSegment: PropTypes.func.isRequired,
   };
 
   static contextType = CalloutContext;
@@ -144,6 +192,8 @@ class InstancesList extends React.Component {
   constructor(props) {
     super(props);
 
+    this.paneTitleRef = React.createRef();
+
     this.state = {
       showNewFastAddModal: false,
       inTransitItemsExportInProgress: false,
@@ -153,12 +203,10 @@ class InstancesList extends React.Component {
       showErrorModal: false,
       selectedRows: {},
       isSelectedRecordsModalOpened: false,
-      visibleColumns: this.getInitialToggableColumns(),
+      visibleColumns: this.getInitialToggleableColumns(),
       isImportRecordModalOpened: false,
-      optionSelected: '',
       searchAndSortKey: 0,
       segmentsSortBy: this.getInitialSegmentsSortBy(),
-      isSingleResult: this.props.showSingleResult,
       searchInProgress: false,
     };
   }
@@ -166,9 +214,14 @@ class InstancesList extends React.Component {
   componentDidMount() {
     const {
       history,
+      location: _location,
       getParams,
+      data,
+      stripes,
     } = this.props;
+
     const params = getParams();
+    const defaultSort = data.displaySettings.defaultSort;
 
     this.unlisten = history.listen((location) => {
       const hasReset = new URLSearchParams(location.search).get('reset');
@@ -176,64 +229,159 @@ class InstancesList extends React.Component {
       if (hasReset) {
         // imperative way is used because it's no option in SearchAndSort reset/focus filters from outside
         document.getElementById('clickable-reset-all')?.click();
-        document.getElementById('input-inventory-search')?.focus();
+        this.inputRef.current.focus();
 
         history.replace({ search: 'segment=instances' });
       }
     });
 
-    this.processLastSearchTerms();
+    if (params.selectedBrowseResult === 'true') {
+      this.paneTitleRef.current.focus();
+    }
 
-    this.setState({
-      openedFromBrowse: params.selectedBrowseResult === 'true',
-      optionSelected: '',
-    });
+    this.processLastSearchTermsOnMount();
+
+    const searchParams = new URLSearchParams(_location.search);
+
+    if (!params.sort) {
+      searchParams.set('sort', defaultSort);
+    }
+
+    if (!params.query && !params.filters && stripes.user.user?.consortium && checkIfUserInMemberTenant(stripes)) {
+      searchParams.set('filters', addFilter(searchParams.get('filters'), `${FACETS.HELD_BY}.${stripes.okapi.tenant}`));
+      searchParams.set('_isInitial', true);
+    }
+
+    this.redirectToSearchParams(searchParams);
   }
 
   componentDidUpdate(prevProps) {
-    const qindex = this.getQIndexFromParams();
+    const {
+      data,
+      location,
+      segment,
+      parentMutator,
+      getLastSearchOffset,
+      stripes,
+      getParams,
+    } = this.props;
     const sortBy = this.getSortFromParams();
 
     this.storeLastSearchTerms(prevProps);
 
-    // Keep the 'optionSelected' updated with the URL 'qindex'. ESLint
-    // doesn't like this because setState causes a re-render and can
-    // lead to a rendering loop. But the check on state.optionSelected
-    // prevents a loop, so I guess this is OK.
-    if (this.props.segment === segments.instances && qindex && this.state.optionSelected !== qindex) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({ optionSelected: qindex });
+    // change sortBy action only if sort parameter exists. It is absent for a while after reset is hit.
+    if (sortBy && this.state.segmentsSortBy.find(x => x.name === segment && x.sort !== sortBy)) {
+      this.setSegmentSortBy(sortBy);
     }
 
-    if (this.state.segmentsSortBy.find(x => x.name === this.props.segment && x.sort !== sortBy)) {
-      this.setSegmentSortBy(sortBy);
+    const prevId = this.getInstanceIdFromLocation(prevProps.location);
+    const id = this.getInstanceIdFromLocation(this.props.location);
+
+    if (id) {
+      setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, id);
+    } else if (prevId) {
+      setItem(`${this.props.namespace}.${this.props.segment}.lastOpenRecord`, null);
+    }
+
+    const searchParams = new URLSearchParams(location.search);
+
+    let isSortingUpdated = false;
+
+    // `sort` is missing after reset button is hit
+    if (!sortBy) {
+      isSortingUpdated = true;
+      searchParams.set('sort', data.displaySettings.defaultSort);
+    }
+
+    const params = getParams();
+
+    if (!params.query && !params.filters && stripes.user.user?.consortium && checkIfUserInMemberTenant(stripes)) {
+      searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+      searchParams.set('_isInitial', true);
+    }
+
+    if (isSortingUpdated) {
+      this.redirectToSearchParams(searchParams);
+    }
+
+    if (prevProps.segment !== segment) {
+      const lastSearchOffset = getLastSearchOffset(segment);
+
+      parentMutator.resultOffset.replace(lastSearchOffset);
+
+      if (!params.query && !params.filters && stripes.user.user?.consortium && checkIfUserInMemberTenant(stripes)) {
+        searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+        searchParams.set('_isInitial', true);
+
+        this.redirectToSearchParams(searchParams);
+      }
+    }
+
+    if (prevProps.data.displaySettings !== this.props.data.displaySettings) {
+      this.setState({
+        visibleColumns: this.getInitialToggleableColumns(),
+      });
     }
   }
 
   componentWillUnmount() {
     const { parentMutator } = this.props;
+
     this.unlisten();
     parentMutator.records.reset();
+    window.removeEventListener('beforeunload', this.handleBeforeUnload);
   }
+
+  inputRef = React.createRef();
+  indexRef = React.createRef();
 
   extraParamsToReset = {
     selectedBrowseResult: false,
+    _isInitial: false,
     authorityId: '',
   };
 
-  processLastSearchTerms = () => {
+  redirectToSearchParams = (searchParams) => {
+    const {
+      history,
+      location,
+    } = this.props;
+
+    history.replace({
+      pathname: location.pathname,
+      search: searchParams.toString(),
+      state: location.state,
+    });
+  }
+
+  getInstanceIdFromLocation = (location) => {
+    return location.pathname.split('/')[3];
+  };
+
+  getPageTitle = () => {
+    const {
+      data: { query },
+      intl,
+    } = this.props;
+
+    if (!query.query) {
+      return intl.formatMessage({ id: 'ui-inventory.meta.title' });
+    }
+
+    return intl.formatMessage({ id: 'ui-inventory.documentTitle.search' }, { query: query.query });
+  }
+
+  processLastSearchTermsOnMount = () => {
     const {
       getParams,
-      location,
       parentMutator,
       getLastSearchOffset,
-      storeLastSearch,
+      segment: currentSegment,
     } = this.props;
     const params = getParams();
-    const lastSearchOffset = getLastSearchOffset();
+    const lastSearchOffset = getLastSearchOffset(currentSegment);
     const offset = params.selectedBrowseResult === 'true' ? 0 : lastSearchOffset;
 
-    storeLastSearch(location.search);
     parentMutator.resultOffset.replace(offset);
   }
 
@@ -243,20 +391,16 @@ class InstancesList extends React.Component {
       parentResources,
       storeLastSearch,
       storeLastSearchOffset,
+      segment,
     } = this.props;
 
     if (prevProps.location.search !== location.search) {
-      storeLastSearch(location.search);
+      storeLastSearch(location.search, segment);
     }
 
     if (prevProps.parentResources.resultOffset !== parentResources.resultOffset) {
-      storeLastSearchOffset(parentResources.resultOffset);
+      storeLastSearchOffset(parentResources.resultOffset, segment);
     }
-  }
-
-  getQIndexFromParams = () => {
-    const params = new URLSearchParams(this.props.location.search);
-    return params.get('qindex');
   }
 
   getSortFromParams = () => {
@@ -264,14 +408,19 @@ class InstancesList extends React.Component {
     return params.get('sort');
   }
 
-  getInitialToggableColumns = () => {
-    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || TOGGLEABLE_COLUMNS;
+  getInitialToggleableColumns = () => {
+    const { defaultColumns } = this.props.data.displaySettings;
+
+    return getItem(VISIBLE_COLUMNS_STORAGE_KEY) || defaultColumns || TOGGLEABLE_COLUMNS;
   }
 
   getInitialSegmentsSortBy = () => {
-    return Object.keys(segments).map(name => (
-      { name, sort: SORTABLE_SEARCH_RESULT_LIST_COLUMNS.TITLE }
-    ));
+    const { data } = this.props;
+
+    return Object.keys(segments).map(name => ({
+      name,
+      sort: data.displaySettings.defaultSort,
+    }));
   }
 
   getVisibleColumns = () => {
@@ -296,16 +445,11 @@ class InstancesList extends React.Component {
     const filtersStr = parseFiltersToStr(mergedFilters);
     const params = getParams();
 
-    this.setState({
-      openedFromBrowse: false,
-    });
-
-    goTo(path, { ...params, filters: filtersStr });
+    goTo(path, { ...params, _isInitial: false, filters: filtersStr });
   };
 
   onSubmitSearch = () => {
     this.setState({
-      openedFromBrowse: false,
       searchInProgress: true,
     });
   }
@@ -317,17 +461,30 @@ class InstancesList extends React.Component {
   };
 
   createInstance = (instanceData) => {
-    const { data: { identifierTypesByName } } = this.props;
+    const { data: { identifierTypesByName, instanceDateTypesByCode } } = this.props;
 
     // Massage record to add preceeding and succeeding title fields
-    const instance = marshalInstance(instanceData, identifierTypesByName);
+    const instance = marshalInstance(instanceData, identifierTypesByName, instanceDateTypesByCode);
 
     // POST item record
     return this.props.parentMutator.records.POST(instance);
   };
 
   onCreate = (instance) => {
-    return this.createInstance(instance).then(() => this.closeNewInstance());
+    const { sendCallout } = this.context;
+
+    return this.createInstance(instance).then((response) => {
+      sendCallout({
+        type: 'success',
+        message: (
+          <FormattedMessage
+            id="ui-inventory.instance.successfullySaved"
+            values={{ hrid: response.hrid }}
+          />
+        ),
+      });
+      this.closeNewInstance();
+    });
   }
 
   openCreateInstance = () => {
@@ -336,7 +493,7 @@ class InstancesList extends React.Component {
 
   openCreateMARCRecord = () => {
     const searchParams = new URLSearchParams(this.props.location.search);
-    this.props.goTo(`/inventory/quick-marc/create-bib?${searchParams}`);
+    this.props.goTo(`/inventory/quick-marc/create-bibliographic?${searchParams}`);
   }
 
   copyInstance = (instance) => {
@@ -371,27 +528,49 @@ class InstancesList extends React.Component {
   }
 
   refocusOnInputSearch = (segment) => {
+    const { storeLastSegment } = this.props;
+
     // when navigation button is clicked to change the search segment
     // the focus stays on the button so refocus back on the input search.
     // https://issues.folio.org/browse/UIIN-1358
-    if (segment !== segments.instances) {
-      this.setState({
-        optionSelected: ''
-      });
+    storeLastSegment(segment);
+    this.inputRef.current.focus();
+  }
+
+  handleSearchSegmentChange = (segment) => {
+    const {
+      unsubscribeFromReset,
+    } = this.props;
+
+    this.refocusOnInputSearch(segment);
+    this.setState({ selectedRows: {} });
+    unsubscribeFromReset();
+  }
+
+  onSearchModeSwitch = () => {
+    const {
+      namespace,
+      location: { pathname },
+      segment,
+    } = this.props;
+
+    const id = pathname.split('/')[3];
+
+    if (id) {
+      setItem(`${namespace}.${segment}.lastOpenRecord`, id);
     }
-    facetsStore.getState().resetFacetSettings();
-    document.getElementById('input-inventory-search').focus();
   }
 
   renderNavigation = () => (
     <>
       <SearchModeNavigation
         search={this.props.getLastBrowse()}
+        onSearchModeSwitch={this.onSearchModeSwitch}
       />
       <FilterNavigation
+        data={this.props.data}
         segment={this.props.segment}
-        segmentsSortBy={this.state.segmentsSortBy}
-        onChange={this.refocusOnInputSearch}
+        onChange={this.handleSearchSegmentChange}
       />
     </>
   );
@@ -436,19 +615,17 @@ class InstancesList extends React.Component {
 
   generateInstancesIdReport = async (sendCallout) => {
     const { instancesIdExportInProgress } = this.state;
+    const {
+      data,
+      getResourcesIds,
+    } = this.props;
 
     if (instancesIdExportInProgress) return;
 
     this.setState({ instancesIdExportInProgress: true }, async () => {
-      const {
-        reset,
-        GET,
-      } = this.props.parentMutator.recordsToExportIDs;
       let infoCalloutTimer;
 
       try {
-        reset();
-
         infoCalloutTimer = setTimeout(() => {
           sendCallout({
             type: 'info',
@@ -456,14 +633,16 @@ class InstancesList extends React.Component {
           });
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
-        const items = await GET();
-
-        clearTimeout(infoCalloutTimer);
+        const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
 
         const report = new IdReportGenerator('SearchInstanceUUIDs');
 
+        const items = await getResourcesIds(query, 'INSTANCE');
+
+        clearTimeout(infoCalloutTimer);
+
         if (!isEmpty(items)) {
-          report.toCSV(items, record => record.id);
+          report.toCSV(uniqBy(items, 'id'), record => record.id);
         }
       } catch (error) {
         clearTimeout(infoCalloutTimer);
@@ -491,7 +670,7 @@ class InstancesList extends React.Component {
       await this.props.parentMutator.quickExport.POST({
         uuids: instanceIds,
         type: 'uuid',
-        recordType: 'INSTANCE'
+        recordType: INSTANCE_RECORD_TYPE,
       });
       new IdReportGenerator('QuickInstanceExport').toCSV(instanceIds);
     } catch (error) {
@@ -508,8 +687,8 @@ class InstancesList extends React.Component {
     if (!isTestEnv()) {
       const { data } = this.props;
 
-      const query = buildQuery(data.query, {}, data, { log: noop }, this.props);
-      const fileName = `SearchInstanceCQLQuery${moment().format()}.cql`;
+      const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
+      const fileName = `SearchInstanceCQLQuery${dayjs().format()}.cql`;
 
       saveAs(new Blob([query], { type: 'text/plain;charset=utf-8;' }), fileName);
     }
@@ -521,21 +700,43 @@ class InstancesList extends React.Component {
     });
   }
 
+  focusSearchField = () => {
+    setTimeout(() => {
+      this.inputRef.current?.focus();
+    });
+  }
+
+  handleFastAddModalClose = ({ instanceRecord } = {}) => {
+    const {
+      history,
+      location,
+    } = this.props;
+
+    if (instanceRecord?.id) {
+      history.push({
+        pathname: `/inventory/view/${instanceRecord.id}`,
+        search: location.search,
+      });
+    } else {
+      this.focusSearchField();
+    }
+
+    this.toggleNewFastAddModal();
+  }
+
   generateHoldingsIdReport = async (sendCallout) => {
+    const {
+      data,
+      getResourcesIds,
+    } = this.props;
     const { holdingsIdExportInProgress } = this.state;
 
     if (holdingsIdExportInProgress) return;
 
     this.setState({ holdingsIdExportInProgress: true }, async () => {
-      const {
-        reset,
-        GET,
-      } = this.props.parentMutator.holdingsToExportIDs;
       let infoCalloutTimer;
 
       try {
-        reset();
-
         infoCalloutTimer = setTimeout(() => {
           sendCallout({
             type: 'info',
@@ -543,7 +744,9 @@ class InstancesList extends React.Component {
           });
         }, INSTANCES_ID_REPORT_TIMEOUT);
 
-        const items = await GET();
+        const query = buildSearchQuery(applyDefaultStaffSuppressFilter)(data.query, {}, data, { log: noop }, this.props);
+
+        const items = await getResourcesIds(query, 'HOLDINGS');
 
         clearTimeout(infoCalloutTimer);
 
@@ -560,7 +763,7 @@ class InstancesList extends React.Component {
           message: <FormattedMessage id="ui-inventory.saveHoldingsUIIDS.error" />,
         });
       } finally {
-        this.setState({ instancesIdExportInProgress: false });
+        this.setState({ holdingsIdExportInProgress: false });
       }
     });
   };
@@ -604,26 +807,33 @@ class InstancesList extends React.Component {
   setSegmentSortBy = (sortBy) => {
     const { segment } = this.props;
 
-    const segmentsSortBy = this.state.segmentsSortBy.map((key) => {
-      if (key.name === segment) {
-        key.sort = sortBy;
+    this.setState(prevState => ({
+      segmentsSortBy: prevState.segmentsSortBy.map((key) => {
+        if (key.name === segment) {
+          key.sort = sortBy;
+          return key;
+        }
         return key;
-      }
-      return key;
-    });
-
-    this.setState({
-      segmentsSortBy
-    });
+      }),
+    }));
   }
 
   getActionMenu = ({ onToggle }) => {
-    const { parentResources, intl, segment } = this.props;
+    const {
+      canUseSingleRecordImport,
+      parentResources,
+      intl,
+      segment,
+      stripes,
+      isRequestUrlExceededLimit,
+    } = this.props;
     const { inTransitItemsExportInProgress } = this.state;
     const selectedRowsCount = size(this.state.selectedRows);
     const isInstancesListEmpty = isEmpty(get(parentResources, ['records', 'records'], []));
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
+    const canExportMarc = stripes.hasInterface('data-export') && stripes.hasPerm('ui-data-export.edit');
+    const canCreateItemsInTransitReport = stripes.hasPerm('ui-inventory.items.in-transit-report.create');
 
     const buildOnClickHandler = onClickHandler => {
       return () => {
@@ -653,19 +863,6 @@ class InstancesList extends React.Component {
       goTo(path, { ...queryParams });
     };
 
-    const sortOptions = Object.values(SORTABLE_SEARCH_RESULT_LIST_COLUMNS).map(option => ({
-      value: option,
-      label: intl.formatMessage({ id: `ui-inventory.actions.menuSection.sortBy.${option}` }),
-    }));
-
-    const sortByOptions = [
-      {
-        value: '',
-        label: intl.formatMessage({ id: 'ui-inventory.actions.menuSection.sortBy.relevance' }),
-      },
-      ...sortOptions,
-    ];
-
     const getSortByValue = () => {
       return this.state.segmentsSortBy.find(x => x.name === segment).sort?.replace('-', '') || '';
     };
@@ -674,33 +871,32 @@ class InstancesList extends React.Component {
       <>
         <MenuSection label={intl.formatMessage({ id: 'ui-inventory.actions' })} id="actions-menu-section">
           <IfPermission perm="ui-inventory.instance.create">
-            <Button
-              buttonStyle="dropdownItem"
-              id="clickable-newinventory"
-              onClick={buildOnClickHandler(this.openCreateInstance)}
-            >
-              <Icon
-                icon="plus-sign"
-                size="medium"
-                iconClassName={css.actionIcon}
-              />
-              <FormattedMessage id="stripes-smart-components.new" />
-            </Button>
+            {this.getActionItem({
+              id: 'clickable-newinventory',
+              icon: checkIfUserInCentralTenant(stripes) ? 'graph' : 'plus-sign',
+              messageId: !isUserInConsortiumMode(stripes)
+                ? 'stripes-smart-components.new'
+                : (checkIfUserInCentralTenant(stripes) ? 'ui-inventory.newSharedRecord' : 'ui-inventory.newLocalRecord'),
+              onClickHandler: buildOnClickHandler(this.openCreateInstance),
+            })}
           </IfPermission>
-          <Pluggable
-            id="clickable-create-inventory-records"
-            onClose={this.toggleNewFastAddModal}
-            open={this.state.showNewFastAddModal} // control the open modal via state var
-            renderTrigger={() => (
-              this.getActionItem({
-                id: 'new-fast-add-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.newFastAddRecord',
-                onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
-              })
-            )}
-            type="create-inventory-records"
-          />
+          {!checkIfUserInCentralTenant(stripes) && (
+            <Pluggable
+              id="clickable-create-inventory-records"
+              onClose={this.handleFastAddModalClose}
+              renderInPaneset={false}
+              open={this.state.showNewFastAddModal} // control the open modal via state var
+              renderTrigger={() => (
+                this.getActionItem({
+                  id: 'new-fast-add-record',
+                  icon: 'lightning',
+                  messageId: 'ui-inventory.newFastAddRecord',
+                  onClickHandler: buildOnClickHandler(this.toggleNewFastAddModal),
+                })
+              )}
+              type="create-inventory-records"
+            />
+          )}
           <IfPermission perm="ui-quick-marc.quick-marc-editor.create">
             <Button
               buttonStyle="dropdownItem"
@@ -723,7 +919,7 @@ class InstancesList extends React.Component {
               icon: 'report',
               messageId: 'ui-inventory.exportInProgress',
             }) :
-            this.getActionItem({
+            canCreateItemsInTransitReport && !checkIfUserInCentralTenant(stripes) && this.getActionItem({
               id: 'dropdown-clickable-get-report',
               icon: 'report',
               messageId: 'ui-inventory.inTransitReport',
@@ -735,7 +931,7 @@ class InstancesList extends React.Component {
             icon: 'save',
             messageId: 'ui-inventory.saveInstancesUIIDS',
             onClickHandler: buildOnClickHandler(this.generateInstancesIdReport),
-            isDisabled: isInstancesListEmpty,
+            isDisabled: isInstancesListEmpty && !isRequestUrlExceededLimit,
           })}
           {segment === 'holdings' && this.getActionItem({
             id: 'dropdown-clickable-get-holdings-uiids',
@@ -751,23 +947,19 @@ class InstancesList extends React.Component {
             onClickHandler: buildOnClickHandler(this.generateCQLQueryReport),
             isDisabled: isInstancesListEmpty,
           })}
-          {this.getActionItem({
+          {canExportMarc && this.getActionItem({
             id: 'dropdown-clickable-export-marc',
             icon: 'download',
             messageId: 'ui-inventory.exportInstancesInMARC',
             onClickHandler: buildOnClickHandler(this.triggerQuickExport),
             isDisabled: !selectedRowsCount,
           })}
-          <IfInterface name="copycat-imports">
-            <IfPermission perm="copycat.profiles.collection.get">
-              {this.getActionItem({
-                id: 'dropdown-clickable-import-record',
-                icon: 'lightning',
-                messageId: 'ui-inventory.copycat.import',
-                onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
-              })}
-            </IfPermission>
-          </IfInterface>
+          {canUseSingleRecordImport && this.getActionItem({
+            id: 'dropdown-clickable-import-record',
+            icon: 'lightning',
+            messageId: 'ui-inventory.copycat.import',
+            onClickHandler: buildOnClickHandler(() => this.setState({ isImportRecordModalOpened: true })),
+          })}
           {this.getActionItem({
             id: 'dropdown-clickable-show-selected-records',
             icon: 'eye-open',
@@ -782,7 +974,7 @@ class InstancesList extends React.Component {
         >
           <Select
             data-testid="sort-by-selection"
-            dataOptions={sortByOptions}
+            dataOptions={getSortOptions(intl)}
             value={getSortByValue()}
             onChange={setSortedColumn}
           />
@@ -821,6 +1013,20 @@ class InstancesList extends React.Component {
     return parentResources.records.records.every(({ id }) => Object.keys(selectedRows).includes(id));
   };
 
+  getCheckColumnLabel = () => {
+    const { intl, parentResources } = this.props;
+    const { selectedRows } = this.state;
+
+    const rowCount = parentResources.records.records.length;
+    const unselectedRowCount = rowCount - parentResources.records.records.filter(({ id }) => Object.keys(selectedRows).includes(id)).length;
+
+    if (this.getIsAllRowsSelected()) {
+      return intl.formatMessage({ id: 'ui-inventory.instances.rows.unselectAll' }, { count: rowCount });
+    }
+
+    return intl.formatMessage({ id: 'ui-inventory.instances.rows.selectAll' }, { count: unselectedRowCount });
+  };
+
   toggleAllRows = () => {
     const { parentResources } = this.props;
     const { selectedRows } = this.state;
@@ -846,11 +1052,11 @@ class InstancesList extends React.Component {
     const { intl } = this.props;
 
     const columnMapping = {
-      callNumber: intl.formatMessage({ id: 'ui-inventory.instances.columns.callNumber' }),
+      ...SEARCH_COLUMN_MAPPINGS,
       select: !this.state.isSelectedRecordsModalOpened && (
         <Checkbox
           checked={this.getIsAllRowsSelected()}
-          aria-label={intl.formatMessage({ id: 'ui-inventory.instances.rows.select' })}
+          aria-label={this.getCheckColumnLabel()}
           onChange={() => this.toggleAllRows()}
         />
       ),
@@ -858,11 +1064,7 @@ class InstancesList extends React.Component {
       contributors: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributors' }),
       publishers: intl.formatMessage({ id: 'ui-inventory.instances.columns.publishers' }),
       relation: intl.formatMessage({ id: 'ui-inventory.instances.columns.relation' }),
-      numberOfTitles: intl.formatMessage({ id: 'ui-inventory.instances.columns.numberOfTitles' }),
-      subject: intl.formatMessage({ id: 'ui-inventory.subject' }),
-      contributor: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributor' }),
-      contributorType: intl.formatMessage({ id: 'ui-inventory.instances.columns.contributorType' }),
-      relatorTerm: intl.formatMessage({ id: 'ui-inventory.instances.columns.relatorTerm' }),
+      hrid: intl.formatMessage({ id: 'ui-inventory.instances.columns.instanceHRID' }),
     };
 
     return columnMapping;
@@ -877,12 +1079,31 @@ class InstancesList extends React.Component {
   };
 
   handleResetAll = () => {
+    const {
+      publishOnReset,
+      stripes,
+      segment,
+      history,
+    } = this.props;
+
     this.setState({
       selectedRows: {},
-      optionSelected: '',
     });
 
-    facetsStore.getState().resetFacetSettings();
+    this.inputRef.current.focus();
+    publishOnReset();
+
+    if (checkIfUserInMemberTenant(stripes)) {
+      const searchParams = new URLSearchParams();
+
+      searchParams.set('filters', `${FACETS.HELD_BY}.${stripes.okapi.tenant}`);
+      searchParams.set('_isInitial', true);
+      searchParams.set('segment', segment);
+
+      history.push({
+        search: searchParams.toString(),
+      });
+    }
   }
 
   handleSelectedRecordsModalSave = selectedRecords => {
@@ -927,17 +1148,30 @@ class InstancesList extends React.Component {
     return `${defaultCellStyle} ${css.cellAlign}`;
   }
 
+  translateSearchOptionLabel = ({ label, value }) => {
+    const { intl } = this.props;
+
+    return {
+      label: intl.formatMessage({ id: label }),
+      value,
+    };
+  }
+
   findAndOpenItem = async (instance) => {
     const {
       parentResources,
-      parentMutator: { itemsByQuery },
-      goTo,
+      parentMutator: {
+        itemsByQuery,
+        fullInstanceQuery,
+      },
       getParams,
+      stripes,
+      history,
     } = this.props;
     const { query, qindex } = parentResources?.query ?? {};
     const { searchInProgress } = this.state;
 
-    if (!searchInProgress) {
+    if (!searchInProgress || !instance?.id) {
       return instance;
     }
 
@@ -947,8 +1181,43 @@ class InstancesList extends React.Component {
       this.setState({ searchInProgress: false });
     }
 
+    // Inventory search doesn't use `expandAll=true`, and so `instance` here has a very limited
+    // set of properties, and `items` is not included. SO we need to make a request for a full Instance
+    const fullInstance = await fullInstanceQuery.GET({
+      params: {
+        query: `id=="${instance?.id}"`,
+        include: 'items.id,items.tenantId',
+      },
+      headers: {
+        [OKAPI_TENANT_HEADER]: instance.tenantId,
+        [CONTENT_TYPE_HEADER]: 'application/json',
+        ...(stripes.okapi.token && { [OKAPI_TOKEN_HEADER]: stripes.okapi.token }),
+      },
+    });
+
+    const tenantItemBelongsTo = fullInstance[0]?.items?.[0]?.tenantId || stripes.okapi.tenant;
+
+    // if a user is not affiliated with the item's member tenant then item details cannot be open
+    if (isUserInConsortiumMode(stripes)) {
+      const tenants = stripes.user.user.tenants || [];
+      const isUserAffiliatedWithMemberTenant = tenants.find(tenant => tenant?.id === tenantItemBelongsTo);
+      const userTenantPermissions = await getUserTenantsPermissions(stripes, [tenantItemBelongsTo]);
+      const canMemberTenantViewItems = hasMemberTenantPermission('ui-inventory.instance.view', tenantItemBelongsTo, userTenantPermissions);
+
+      if (isEmpty(isUserAffiliatedWithMemberTenant) || !canMemberTenantViewItems) {
+        return instance;
+      }
+    }
+
     itemsByQuery.reset();
-    const items = await itemsByQuery.GET({ params: { query: itemQuery } });
+    const items = await itemsByQuery.GET({
+      params: { query: itemQuery },
+      headers: {
+        [OKAPI_TENANT_HEADER]: tenantItemBelongsTo,
+        [CONTENT_TYPE_HEADER]: 'application/json',
+        ...(stripes.okapi.token && { [OKAPI_TOKEN_HEADER]: stripes.okapi.token }),
+      },
+    });
 
     this.setState({ searchInProgress: false });
 
@@ -959,7 +1228,21 @@ class InstancesList extends React.Component {
     }
 
     const { id, holdingsRecordId } = items[0];
-    goTo(`/inventory/view/${instance.id}/${holdingsRecordId}/${id}`, getParams());
+    const search = stringify(getParams());
+
+    const navigateToItemView = () => {
+      history.push({
+        pathname: `/inventory/view/${instance?.id}/${holdingsRecordId}/${id}`,
+        search,
+        state: {
+          tenantTo: tenantItemBelongsTo,
+          tenantFrom: stripes.okapi.tenant,
+          initialTenantId: stripes.okapi.tenant,
+        },
+      });
+    };
+
+    await switchAffiliation(stripes, tenantItemBelongsTo, navigateToItemView);
 
     return null;
   }
@@ -976,10 +1259,38 @@ class InstancesList extends React.Component {
     return this.findAndOpenItem(instance);
   }
 
+  handleCloseNewRecord = (e) => {
+    const {
+      location,
+      match: {
+        path,
+      },
+      history,
+    } = this.props;
+
+    e?.preventDefault();
+
+    const url = buildUrl(location, { layer: null }, path);
+
+    history.push(url);
+    this.focusSearchField();
+  }
+
+  handleDismissDetail = (resetSelectedItem) => {
+    const { location } = this.props;
+    const id = this.getInstanceIdFromLocation(location);
+
+    resetSelectedItem();
+    // focus on the title of the closed record in the results list
+    document.getElementById(`record-title-${id}`)?.focus();
+  }
+
   render() {
     const {
+      canUseSingleRecordImport,
       disableRecordCreation,
       intl,
+      isRequestUrlExceededLimit,
       data,
       parentResources,
       parentMutator,
@@ -990,19 +1301,19 @@ class InstancesList extends React.Component {
       },
       namespace,
       stripes,
+      segment,
     } = this.props;
     const {
       isSelectedRecordsModalOpened,
       isImportRecordModalOpened,
-      openedFromBrowse,
       selectedRows,
       searchAndSortKey,
-      isSingleResult
     } = this.state;
 
     const itemToView = getItem(`${namespace}.position`);
 
     const resultsFormatter = {
+      ...getSearchResultsFormatter(data),
       'select': ({
         id,
         ...rowData
@@ -1022,39 +1333,54 @@ class InstancesList extends React.Component {
         title,
         discoverySuppress,
         isBoundWith,
+        shared,
         staffSuppress,
         id,
       }) => {
         return (
-          <AppIcon
-            size="small"
-            app="inventory"
-            iconKey="instance"
-            iconAlignment="baseline"
-          >
-            <TextLink
-              to={this.getRowURL(id)}
-            >
-              {title}
-            </TextLink>
-            {(isBoundWith) &&
+          <div className={css.titleContainer}>
             <AppIcon
               size="small"
-              app="@folio/inventory"
-              iconKey="bound-with"
-              iconClassName={css.boundWithIcon}
-            />
-        }
-            {(discoverySuppress || staffSuppress) &&
-            <span className={css.warnIcon}>
+              app="inventory"
+              iconKey="instance"
+              iconAlignment="baseline"
+            >
+              <TextLink
+                id={`record-title-${id}`}
+                to={this.getRowURL(id)}
+              >
+                {title}
+              </TextLink>
+              {(isBoundWith) &&
+                <AppIcon
+                  size="small"
+                  app="@folio/inventory"
+                  iconKey="bound-with"
+                  iconClassName={css.boundWithIcon}
+                />
+              }
+              {(discoverySuppress || staffSuppress) &&
+                <span className={css.warnIcon}>
+                  <Icon
+                    size="medium"
+                    icon="exclamation-circle"
+                    status="warn"
+                  />
+                </span>
+              }
+            </AppIcon>
+            {shared &&
               <Icon
                 size="medium"
-                icon="exclamation-circle"
-                status="warn"
+                icon="graph"
+                iconRootClass={css.sharedIconRoot}
+                iconClassName={classnames(
+                  css.sharedIcon,
+                  { [css.sharedIconLight]: getItem(`${namespace}.${segment}.lastOpenRecord`) === id }
+                )}
               />
-            </span>
-        }
-          </AppIcon>
+            }
+          </div>
         );
       },
       'relation': r => formatters.relationsFormatter(r, data.instanceRelationshipTypes),
@@ -1066,29 +1392,9 @@ class InstancesList extends React.Component {
     const visibleColumns = this.getVisibleColumns();
     const columnMapping = this.getColumnMapping();
 
-    const onChangeIndex = (e) => {
-      const qindex = e.target.value;
+    const searchOptions = searchableIndexes.map(this.translateSearchOptionLabel);
 
-      this.setState({ optionSelected: qindex });
-
-      parentMutator.query.update({
-        qindex,
-        filters: '',
-        ...this.extraParamsToReset,
-      });
-
-      this.setState({ isSingleResult: true });
-    };
-
-    const formattedSearchableIndexes = searchableIndexes.map(index => {
-      const { prefix = '' } = index;
-      let label = index.label;
-      if (index.label.includes('ui-inventory')) {
-        label = prefix + intl.formatMessage({ id: index.label });
-      }
-
-      return { ...index, label };
-    });
+    const advancedSearchOptions = advancedSearchIndexes[segment].map(this.translateSearchOptionLabel);
 
     const shortcuts = [
       {
@@ -1101,29 +1407,49 @@ class InstancesList extends React.Component {
       },
     ];
 
+    const checkScope = () => {
+      const ignoreElements = ['TEXTAREA', 'INPUT'];
+
+      return !ignoreElements.includes(document.activeElement.tagName);
+    };
+
     return (
       <HasCommand
         commands={shortcuts}
         isWithinScope={checkScope}
         scope={document.body}
       >
+        <TitleManager page={this.getPageTitle()} />
         <div data-test-inventory-instances className={css.inventoryInstances}>
           <SearchAndSort
             key={searchAndSortKey}
             actionMenu={this.getActionMenu}
+            actionMenuToggleProps={{
+              'aria-label': intl.formatMessage({ id: 'ui-inventory.actions.resultsList' }),
+            }}
             packageInfo={packageInfo}
             objectName="inventory"
             maxSortKeys={1}
             renderNavigation={this.renderNavigation}
-            searchableIndexes={formattedSearchableIndexes}
-            selectedIndex={get(data.query, 'qindex')}
+            searchableIndexes={searchOptions}
+            advancedSearchIndex={queryIndexes.ADVANCED_SEARCH}
+            advancedSearchOptions={advancedSearchOptions}
+            advancedSearchQueryBuilder={advancedSearchQueryBuilder}
+            // query.qindex is empty by default when switching between segments so we need to pass some default value here
+            selectedIndex={get(data.query, 'qindex') || getDefaultQindex(segment)}
             searchableIndexesPlaceholder={null}
             initialResultCount={INITIAL_RESULT_COUNT}
+            initiallySelectedRecord={getItem(`${namespace}.${segment}.lastOpenRecord`)}
+            inputType="textarea"
+            inputRef={this.inputRef}
+            indexRef={this.indexRef}
+            isCursorAtEnd
+            isRequestUrlExceededLimit={isRequestUrlExceededLimit}
             resultCountIncrement={RESULT_COUNT_INCREMENT}
-            viewRecordComponent={ViewInstanceWrapper}
+            viewRecordComponent={ViewInstanceRoute}
             editRecordComponent={InstanceForm}
-            onChangeIndex={onChangeIndex}
             onSelectRow={this.onSelectRow}
+            paneTitleRef={this.paneTitleRef}
             newRecordInitialValues={(this.state && this.state.copiedInstance) ? this.state.copiedInstance : {
               discoverySuppress: false,
               staffSuppress: false,
@@ -1131,20 +1457,14 @@ class InstancesList extends React.Component {
               source: 'FOLIO',
             }}
             visibleColumns={visibleColumns}
-            nonInteractiveHeaders={['select']}
+            nonInteractiveHeaders={NON_INTERACTIVE_HEADERS}
             columnMapping={columnMapping}
             columnWidths={{
-              callNumber: '15%',
-              subject: '50%',
-              contributor: '50%',
               contributors: {
                 max: '400px',
               },
-              numberOfTitles: '15%',
               select: '30px',
               title: '40%',
-              contributorType: '15%',
-              relatorTerm: '15%',
             }}
             getCellClass={this.formatCellStyles}
             customPaneSub={this.renderPaneSub()}
@@ -1160,11 +1480,11 @@ class InstancesList extends React.Component {
             detailProps={{
               referenceTables: data,
               onCopy: this.copyInstance,
-              openedFromBrowse,
+              focusTitleOnInstanceLoad: true,
             }}
             basePath={path}
             path={`${path}/(view|viewsource)/:id/:holdingsrecordid?/:itemid?`}
-            showSingleResult={isSingleResult}
+            showSingleResult
             renderFilters={renderFilters}
             onFilterChange={this.onFilterChangeHandler}
             onSubmitSearch={this.onSubmitSearch}
@@ -1173,12 +1493,15 @@ class InstancesList extends React.Component {
             extraParamsToReset={this.extraParamsToReset}
             hasNewButton={false}
             onResetAll={this.handleResetAll}
-            sortableColumns={['title', 'contributors']}
+            showSortIndicator
+            sortableColumns={SORTABLE_COLUMNS}
             syncQueryWithUrl
             resultsVirtualize={false}
             resultsOnMarkPosition={this.onMarkPosition}
             resultsOnResetMarkedPosition={this.resetMarkedPosition}
             resultsCachedPosition={itemToView}
+            onCloseNewRecord={this.handleCloseNewRecord}
+            onDismissDetail={this.handleDismissDetail}
           />
         </div>
         <ErrorModal
@@ -1195,16 +1518,14 @@ class InstancesList extends React.Component {
           onSave={this.handleSelectedRecordsModalSave}
           onCancel={this.handleSelectedRecordsModalCancel}
         />
-        <IfInterface name="copycat-imports">
-          <IfPermission perm="copycat.profiles.collection.get">
-            <ImportRecordModal
-              isOpen={isImportRecordModalOpened}
-              currentExternalIdentifier={undefined}
-              handleSubmit={this.handleImportRecordModalSubmit}
-              handleCancel={this.handleImportRecordModalCancel}
-            />
-          </IfPermission>
-        </IfInterface>
+        {canUseSingleRecordImport && (
+          <ImportRecordModal
+            isOpen={isImportRecordModalOpened}
+            currentExternalIdentifier={undefined}
+            handleSubmit={this.handleImportRecordModalSubmit}
+            handleCancel={this.handleImportRecordModalCancel}
+          />
+        )}
       </HasCommand>
     );
   }
@@ -1213,4 +1534,7 @@ class InstancesList extends React.Component {
 export default withNamespace(flowRight(
   injectIntl,
   withLocation,
+  withSingleRecordImport,
+  withReset,
+  withUseResourcesIds,
 )(stripesConnect(InstancesList)));

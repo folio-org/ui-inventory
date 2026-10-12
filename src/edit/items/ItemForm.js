@@ -3,6 +3,7 @@ import {
   get,
   cloneDeep,
   uniqBy,
+  noop
 } from 'lodash';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
@@ -12,6 +13,7 @@ import {
 import { OnChange } from 'react-final-form-listeners';
 import { withRouter } from 'react-router';
 
+import { NumberGeneratorModalButton } from '@folio/service-interaction';
 import {
   Paneset,
   Pane,
@@ -20,6 +22,7 @@ import {
   Col,
   Accordion,
   Button,
+  Headline,
   KeyValue,
   TextField,
   Select,
@@ -31,25 +34,41 @@ import {
   AccordionStatus,
   checkScope,
   HasCommand,
+  InfoPopover,
   collapseAllSections,
   expandAllSections,
 } from '@folio/stripes/components';
 import {
   AppIcon,
+  IntlConsumer,
 } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
 import {
   ViewMetaData,
 } from '@folio/stripes/smart-components';
-import { effectiveCallNumber } from '@folio/stripes/util';
+import {
+  effectiveCallNumber,
+  escapeCqlWildcards,
+} from '@folio/stripes/util';
 
+import {
+  ACCESSION_NUMBER_SETTING,
+  BARCODE_SETTING,
+  CALL_NUMBER_SETTING,
+  NUMBER_GENERATOR_OPTIONS_ON_EDITABLE,
+  NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE,
+} from '../../settings/NumberGeneratorSettings/constants';
 import OptimisticLockingBanner from '../../components/OptimisticLockingBanner';
 import ElectronicAccessFields from '../electronicAccessFields';
 import { memoize, mutators } from '../formUtils';
-import { handleKeyCommand, validateOptionalField } from '../../utils';
+import {
+  handleCallNumberSwap,
+  handleKeyCommand,
+  validateAdditionalCallNumbers,
+  validateOptionalField
+} from '../../utils';
 import { LocationSelectionWithCheck } from '../common';
 import AdministrativeNoteFields from '../administrativeNoteFields';
-import styles from './ItemForm.css';
 import { RemoteStorageWarning } from './RemoteStorageWarning';
 import {
   BoundWithTitlesFields,
@@ -59,6 +78,10 @@ import {
 } from './repeatableFields';
 import StatisticalCodeFields from '../statisticalCodeFields';
 import NoteFields from '../noteFields';
+import AdditionalCallNumbersItemLevelFields from './repeatableFields/AdditionalCallNumbersItemLevelFields';
+
+import styles from './ItemForm.css';
+import { itemStatusesMap } from '../../constants';
 
 function validate(values) {
   const errors = {};
@@ -86,15 +109,24 @@ function validate(values) {
     }
   });
 
+  validateAdditionalCallNumbers(values, errors);
+
   return errors;
 }
 
 function checkUniqueBarcode(okapi, barcode) {
-  return fetch(`${okapi.url}/inventory/items?query=(barcode=="${barcode}")`,
+  const encodedBarcode = escapeCqlWildcards(barcode);
+  const cql = `barcode=="${encodedBarcode}"`;
+  const query = encodeURIComponent(cql);
+
+  return fetch(`${okapi.url}/item-storage/items?limit=0&query=${query}`,
     {
-      headers: { 'X-Okapi-Tenant': okapi.tenant,
-        'X-Okapi-Token': okapi.token,
-        'Content-Type': 'application/json' }
+      headers: {
+        'X-Okapi-Tenant': okapi.tenant,
+        'Content-Type': 'application/json',
+        ...(okapi.token && { 'X-Okapi-Token': okapi.token }),
+      },
+      credentials: 'include',
     });
 }
 
@@ -118,6 +150,30 @@ function validateBarcode(props) {
     return '';
   });
 }
+
+const ITEM_STATUSES_TRANSLATIONS_ID_MAP = {
+  [itemStatusesMap.AGED_TO_LOST]: 'stripes-inventory-components.item.status.agedToLost',
+  [itemStatusesMap.AVAILABLE]: 'stripes-inventory-components.item.status.available',
+  [itemStatusesMap.AWAITING_PICKUP]: 'stripes-inventory-components.item.status.awaitingPickup',
+  [itemStatusesMap.AWAITING_DELIVERY]: 'stripes-inventory-components.item.status.awaitingDelivery',
+  [itemStatusesMap.CHECKED_OUT]: 'stripes-inventory-components.item.status.checkedOut',
+  [itemStatusesMap.CLAIMED_RETURNED]: 'stripes-inventory-components.item.status.claimedReturned',
+  [itemStatusesMap.DECLARED_LOST]: 'stripes-inventory-components.item.status.declaredLost',
+  [itemStatusesMap.IN_PROCESS]: 'stripes-inventory-components.item.status.inProcess',
+  [itemStatusesMap.IN_PROCESS_NON_REQUESTABLE]: 'stripes-inventory-components.item.status.inProcessNonRequestable',
+  [itemStatusesMap.IN_TRANSIT]: 'stripes-inventory-components.item.status.inTransit',
+  [itemStatusesMap.INTELLECTUAL_ITEM]: 'stripes-inventory-components.item.status.intellectualItem',
+  [itemStatusesMap.LONG_MISSING]: 'stripes-inventory-components.item.status.longMissing',
+  [itemStatusesMap.LOST_AND_PAID]: 'stripes-inventory-components.item.status.lostAndPaid',
+  [itemStatusesMap.MISSING]: 'stripes-inventory-components.item.status.missing',
+  [itemStatusesMap.ON_ORDER]: 'stripes-inventory-components.item.status.onOrder',
+  [itemStatusesMap.ORDER_CLOSED]: 'stripes-inventory-components.item.status.orderClosed',
+  [itemStatusesMap.PAGED]: 'stripes-inventory-components.item.status.paged',
+  [itemStatusesMap.RESTRICTED]: 'stripes-inventory-components.item.status.restricted',
+  [itemStatusesMap.UNAVAILABLE]: 'stripes-inventory-components.item.status.unavailable',
+  [itemStatusesMap.UNKNOWN]: 'stripes-inventory-components.item.status.unknown',
+  [itemStatusesMap.WITHDRAWN]: 'stripes-inventory-components.item.status.withdrawn',
+};
 
 class ItemForm extends React.Component {
   constructor(props) {
@@ -143,6 +199,23 @@ class ItemForm extends React.Component {
     });
   };
 
+  handleCallNumberSwap = (additionalCallNumberIndex) => {
+    const { form: { change, getFieldState } } = this.props;
+
+    handleCallNumberSwap({
+      change,
+      getFieldState,
+      fieldNames: {
+        callNumber: 'itemLevelCallNumber',
+        prefix: 'itemLevelCallNumberPrefix',
+        suffix: 'itemLevelCallNumberSuffix',
+        typeId: 'itemLevelCallNumberTypeId',
+        additionalCallNumbers: 'additionalCallNumbers',
+      },
+      additionalCallNumberIndex,
+    });
+  };
+
   setItemDamagedStatusDate = () => {
     this.props.form.change('itemDamagedStatusDate', new Date());
   }
@@ -153,13 +226,23 @@ class ItemForm extends React.Component {
     this.props.form.change('boundWithTitles', boundWithTitles);
   }
 
+  handleSaveClick = (e, keepEditing = false) => {
+    const {
+      handleSubmit,
+      setKeepEditing,
+    } = this.props;
+
+    setKeepEditing(keepEditing);
+    handleSubmit(e);
+  }
+
   getFooter = () => {
     const {
       onCancel,
-      handleSubmit,
       pristine,
       submitting,
       copy,
+      showKeepEditingButton,
     } = this.props;
 
     const cancelButton = (
@@ -172,13 +255,24 @@ class ItemForm extends React.Component {
         <FormattedMessage id="ui-inventory.cancel" />
       </Button>
     );
+    const saveAndKeepEditingButton = (
+      <Button
+        buttonStyle="default mega"
+        type="button"
+        buttonClass={styles.saveAndKeepEditingButton}
+        disabled={(pristine || submitting) && !copy}
+        onClick={(e) => this.handleSaveClick(e, true)}
+      >
+        <FormattedMessage id="stripes-components.saveAndKeepEditing" />
+      </Button>
+    );
     const saveButton = (
       <Button
         id="clickable-save-item"
         buttonStyle="primary mega"
         type="submit"
         disabled={(pristine || submitting) && !copy}
-        onClick={handleSubmit}
+        onClick={(e) => this.handleSaveClick(e, false)}
       >
         <FormattedMessage id="stripes-components.saveAndClose" />
       </Button>
@@ -187,13 +281,20 @@ class ItemForm extends React.Component {
     return (
       <PaneFooter
         renderStart={cancelButton}
-        renderEnd={saveButton}
+        renderEnd={(
+          <>
+            {showKeepEditingButton && saveAndKeepEditingButton}
+            {saveButton}
+          </>
+        )}
       />
     );
   };
 
   render() {
     const {
+      form: { change },
+      numberGeneratorData,
       onCancel,
       initialValues,
       instance,
@@ -309,6 +410,53 @@ class ItemForm extends React.Component {
       },
     ];
 
+    const isBarcodeDisabled = numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE;
+    const isAccessionNumberDisabled = numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE;
+    const isCallNumberDisabled = numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_NOT_EDITABLE;
+
+    const showNumberGeneratorForAccessionNumber = isAccessionNumberDisabled ||
+      numberGeneratorData?.[ACCESSION_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
+    const showNumberGeneratorForBarcode = isBarcodeDisabled ||
+      numberGeneratorData?.[BARCODE_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
+    const showNumberGeneratorForCallNumber = isCallNumberDisabled ||
+      numberGeneratorData?.[CALL_NUMBER_SETTING] === NUMBER_GENERATOR_OPTIONS_ON_EDITABLE;
+
+    const renderSharedNumberGenerator = () => {
+      return (
+        <NumberGeneratorModalButton
+          buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />}
+          callback={(generated) => {
+            change('accessionNumber', generated);
+            change('itemLevelCallNumber', generated);
+          }}
+          generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />}
+          generator="inventory_accessionNumber"
+          id="inventoryAccessionNumberAndCallNumber"
+          modalProps={{
+            label: <FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumber" />
+          }}
+          renderTop={() => (
+            <p><FormattedMessage id="ui-inventory.numberGenerator.generateAccessionAndCallNumberWarning" /></p>
+          )}
+        />
+      );
+    };
+
+    const callNumberLabel = (
+      <>
+        <FormattedMessage id="ui-inventory.callNumber" />
+        {numberGeneratorData?.useSharedNumber &&
+          <InfoPopover content={
+            <>
+              <FormattedMessage id="ui-inventory.numberGenerator.callNumberInfo.title" tagName="p" />
+              <FormattedMessage id="ui-inventory.numberGenerator.callNumberInfo.accessionAndCallNumber" tagName="p" />
+              <FormattedMessage id="ui-inventory.numberGenerator.callNumberInfo.additionalCallNumber" tagName="p" />
+            </>
+          }
+          />}
+      </>
+    );
+
     return (
       <form
         data-test-item-page-type={initialValues.id ? 'edit' : 'create'}
@@ -420,7 +568,6 @@ class ItemForm extends React.Component {
                         />
                       </Col>
                     </Row>
-                    <br />
                     <Row>
                       <Col sm={2}>
                         <Field
@@ -434,6 +581,7 @@ class ItemForm extends React.Component {
                       </Col>
                       <Col sm={2}>
                         <Field
+                          disabled={isBarcodeDisabled}
                           label={<FormattedMessage id="ui-inventory.barcode" />}
                           name="barcode"
                           id="additem_barcode"
@@ -442,15 +590,42 @@ class ItemForm extends React.Component {
                           autoFocus
                           fullWidth
                         />
+                        {showNumberGeneratorForBarcode &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />}
+                            callback={(generated) => change('barcode', generated)}
+                            id="inventoryBarcode"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />}
+                            generator="inventory_itemBarcode"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateBarcode" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field
+                          disabled={isAccessionNumberDisabled}
                           label={<FormattedMessage id="ui-inventory.accessionNumber" />}
                           name="accessionNumber"
                           id="additem_accessionnumber"
                           component={TextField}
                           fullWidth
                         />
+                        {numberGeneratorData?.useSharedNumber ?
+                          renderSharedNumberGenerator() :
+                          showNumberGeneratorForAccessionNumber &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
+                            callback={(generated) => change('accessionNumber', generated)}
+                            id="inventoryAccessionNumber"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />}
+                            generator="inventory_accessionNumber"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateAccessionNumber" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field
@@ -518,6 +693,11 @@ class ItemForm extends React.Component {
                       </Col>
                     </Row>
                     <Row>
+                      <Col sm={4}>
+                        <Headline size="large" tag="h3"><FormattedMessage id="ui-inventory.primaryItemCallNumber" /></Headline>
+                      </Col>
+                    </Row>
+                    <Row>
                       <Col sm={2}>
                         <FormattedMessage id="ui-inventory.selectCallNumberType">
                           {([label]) => (
@@ -538,19 +718,37 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumberPrefix"
                           id="additem_callnumberprefix"
                           component={TextArea}
+                          format={v => v?.trim()}
+                          formatOnBlur
                           rows={1}
                           fullWidth
                         />
                       </Col>
                       <Col sm={2}>
                         <Field
-                          label={<FormattedMessage id="ui-inventory.callNumber" />}
+                          label={callNumberLabel}
                           name="itemLevelCallNumber"
                           id="additem_callnumber"
                           component={TextArea}
+                          disabled={isCallNumberDisabled}
+                          format={v => v?.trim()}
+                          formatOnBlur
                           rows={1}
                           fullWidth
                         />
+                        {!numberGeneratorData?.useSharedNumber &&
+                          showNumberGeneratorForCallNumber &&
+                          <NumberGeneratorModalButton
+                            buttonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            callback={(generated) => change('itemLevelCallNumber', generated)}
+                            id="inventoryCallNumber"
+                            generateButtonLabel={<FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />}
+                            generator="inventory_callNumber"
+                            modalProps={{
+                              label: <FormattedMessage id="ui-inventory.numberGenerator.generateCallNumber" />
+                            }}
+                          />
+                        }
                       </Col>
                       <Col sm={2}>
                         <Field
@@ -558,8 +756,20 @@ class ItemForm extends React.Component {
                           name="itemLevelCallNumberSuffix"
                           id="additem_callnumbersuffix"
                           component={TextArea}
+                          format={v => v?.trim()}
+                          formatOnBlur
                           rows={1}
                           fullWidth
+                        />
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col sm={10}>
+                        <AdditionalCallNumbersItemLevelFields
+                          callNumberTypeOptions={callNumberTypeOptions}
+                          onSwap={this.handleCallNumberSwap}
+                          showNumberGenerator={showNumberGeneratorForCallNumber}
+                          isCallNumberDisabled={isCallNumberDisabled}
                         />
                       </Col>
                     </Row>
@@ -587,6 +797,18 @@ class ItemForm extends React.Component {
                     id="acc03"
                     label={<FormattedMessage id="ui-inventory.enumerationData" />}
                   >
+                    <Row>
+                      <Col sm={3}>
+                        <Field
+                          label={<FormattedMessage id="ui-inventory.displaySummary" />}
+                          name="displaySummary"
+                          id="additem_displaySummary"
+                          component={TextField}
+                          rows={1}
+                          fullWidth
+                        />
+                      </Col>
+                    </Row>
                     <Row>
                       <Col sm={3}>
                         <Field
@@ -755,14 +977,20 @@ class ItemForm extends React.Component {
                     </Row>
                     <Row>
                       <Col sm={2}>
-                        <Field
-                          label={<FormattedMessage id="ui-inventory.status" />}
-                          name="status.name"
-                          id="additem_status"
-                          component={TextField}
-                          disabled
-                          fullWidth
-                        />
+                        <IntlConsumer>
+                          {intl => (
+                            <Field
+                              label={<FormattedMessage id="ui-inventory.status" />}
+                              name="status.name"
+                              id="additem_status"
+                              component={TextField}
+                              format={value => (ITEM_STATUSES_TRANSLATIONS_ID_MAP[value] ? intl.formatMessage({ id: ITEM_STATUSES_TRANSLATIONS_ID_MAP[value] }) : value)}
+                              parse={value => value}
+                              disabled
+                              fullWidth
+                            />
+                          )}
+                        </IntlConsumer>
                       </Col>
                     </Row>
                     <Row>
@@ -846,8 +1074,11 @@ ItemForm.propTypes = {
   initialValues: PropTypes.object,
   instance: PropTypes.object,
   holdingsRecord: PropTypes.object,
+  numberGeneratorData: PropTypes.object,
   referenceTables: PropTypes.object.isRequired,
   copy: PropTypes.bool,
+  setKeepEditing: PropTypes.func,
+  showKeepEditingButton: PropTypes.bool,
   stripes: PropTypes.shape({
     connect: PropTypes.func.isRequired,
   }).isRequired,
@@ -861,6 +1092,8 @@ ItemForm.propTypes = {
 
 ItemForm.defaultProps = {
   initialValues: {},
+  setKeepEditing: noop,
+  showKeepEditingButton: false,
 };
 
 export default withRouter(stripesFinalForm({

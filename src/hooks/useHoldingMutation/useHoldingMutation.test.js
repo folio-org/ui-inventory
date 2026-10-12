@@ -2,7 +2,7 @@ import '../../../test/jest/__mock__';
 
 import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import { useOkapiKy } from '@folio/stripes/core';
 
@@ -19,7 +19,7 @@ const wrapper = ({ children }) => (
 
 describe('useHoldingMutation', () => {
   it('should make post request when id is not provided', async () => {
-    const postMock = jest.fn();
+    const postMock = jest.fn().mockReturnValue({ json: jest.fn() });
 
     useOkapiKy.mockClear().mockReturnValue({
       post: postMock,
@@ -30,13 +30,13 @@ describe('useHoldingMutation', () => {
       { wrapper },
     );
 
-    await result.current.mutateHolding({ barcode: 'barcode' });
+    await act(async () => { result.current.mutateHolding({ barcode: 'barcode' }); });
 
     expect(postMock).toHaveBeenCalled();
   });
 
   it('should make put request when id is provided', async () => {
-    const putMock = jest.fn();
+    const putMock = jest.fn().mockReturnValue({ json: jest.fn() });
 
     useOkapiKy.mockClear().mockReturnValue({
       put: putMock,
@@ -47,9 +47,7 @@ describe('useHoldingMutation', () => {
       { wrapper },
     );
 
-    await result.current.mutateHolding({
-      id: 'holdingId',
-    });
+    await act(async () => { result.current.mutateHolding({ id: 'holdingId' }); });
 
     expect(putMock).toHaveBeenCalled();
   });

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -51,7 +50,7 @@ describe('ElectronicAccessFields', () => {
   it('click on Add electronic access button and check the fields', () => {
     renderElectronicAccessFields();
     const electronicButton = screen.getByText('Add electronic access');
-    userEvent.click(electronicButton);
+    fireEvent.click(electronicButton);
     const relationshipDropdown = screen.getAllByRole('option');
 
     // where 1 of options is a default option
@@ -65,20 +64,20 @@ describe('ElectronicAccessFields', () => {
   it('click on Materials Text Field and enter text', () => {
     renderElectronicAccessFields();
     const electronicButton = screen.getByText('Add electronic access');
-    userEvent.click(electronicButton);
+    fireEvent.click(electronicButton);
     const myMaterialsText = screen.getByRole('textbox', { name: 'Materials specified' });
     expect(myMaterialsText).toHaveValue('');
-    userEvent.type(myMaterialsText, 'Entered text inside Materials specified text field');
+    fireEvent.change(myMaterialsText, { target: { value: 'Entered text inside Materials specified text field' } });
     expect(myMaterialsText).toHaveValue('Entered text inside Materials specified text field');
   });
 
   it('click on URL public note Text Field and enter text', () => {
     renderElectronicAccessFields();
     const electronicButton = screen.getByText('Add electronic access');
-    userEvent.click(electronicButton);
+    fireEvent.click(electronicButton);
     const myURLText = screen.getByRole('textbox', { name: 'URL public note' });
     expect(myURLText).toHaveValue('');
-    userEvent.type(myURLText, 'Entered text inside URL public note text field');
+    fireEvent.change(myURLText, { target: { value: 'Entered text inside URL public note text field' } });
     expect(myURLText).toHaveValue('Entered text inside URL public note text field');
   });
 });

@@ -1,3 +1,5 @@
+import { OKAPI_TENANT_HEADER } from '@folio/stripes-inventory-components';
+
 export const isItemsSelected = (items, selectedItemsMap) => {
   return items.every((item) => Boolean(
     selectedItemsMap[item.holdingsRecordId] && selectedItemsMap[item.holdingsRecordId][item.id]
@@ -34,4 +36,39 @@ export const selectItems = (prevItemsMap, holdingId, items) => {
     ...prevItemsMap,
     [holdingId]: newHolding,
   };
+};
+
+export const navigateToItemCreatePage = (history, location, instanceId, holding, tenantTo, tenantFrom) => {
+  history.push({
+    pathname: `/inventory/create/${instanceId}/${holding.id}/item`,
+    search: location.search,
+    state: {
+      tenantTo,
+      tenantFrom,
+    },
+  });
+};
+
+export const navigateToHoldingsViewPage = (history, location, instanceId, holding, tenantTo, tenantFrom) => {
+  history.push({
+    pathname: `/inventory/view/${instanceId}/${holding.id}`,
+    search: location.search,
+    state: {
+      tenantTo,
+      tenantFrom,
+      initialTenantId: tenantFrom,
+    },
+  });
+};
+
+export const extendKyWithTenant = (ky, tenantId) => {
+  return ky.extend({
+    hooks: {
+      beforeRequest: [
+        request => {
+          request.headers.set(OKAPI_TENANT_HEADER, tenantId);
+        },
+      ],
+    },
+  });
 };

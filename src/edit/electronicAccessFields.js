@@ -16,15 +16,16 @@ import {
   Label,
 } from '@folio/stripes/components';
 
-const ElectronicAccessFields = props => {
+import { parseEmptyFormValue } from '../utils';
+
+const ElectronicAccessFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+  relationship = [],
+}) => {
   const { formatMessage } = useIntl();
 
-  const {
-    relationship,
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
   const relationshipOptions = relationship.map(it => ({
     label: it.name,
     value: it.id,
@@ -82,6 +83,7 @@ const ElectronicAccessFields = props => {
           aria-label={uriLabel}
           name={`${field}.uri`}
           component={TextArea}
+          parse={parseEmptyFormValue}
           rows={1}
           disabled={!canEdit}
         />
@@ -122,13 +124,7 @@ const ElectronicAccessFields = props => {
       component={RepeatableField}
       legend={<FormattedMessage id="ui-inventory.electronicAccess" />}
       addLabel={<FormattedMessage id="ui-inventory.addElectronicAccess" />}
-      onAdd={fields => fields.push({
-        relationshipId: '',
-        uri: '',
-        linkText: '',
-        materialsSpecification: '',
-        publicNote: '',
-      })}
+      onAdd={fields => fields.push({ uri: '' })}
       headLabels={headLabels}
       renderField={renderField}
       canAdd={canAdd}
@@ -142,13 +138,6 @@ ElectronicAccessFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-
-ElectronicAccessFields.defaultProps = {
-  relationship: [],
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default ElectronicAccessFields;

@@ -1,203 +1,214 @@
-import React, {
-  useMemo,
+import {
   useCallback,
+  useMemo,
   useState,
   useEffect,
   useContext,
 } from 'react';
 import PropTypes from 'prop-types';
-import {
-  FormattedMessage,
-  useIntl,
-} from 'react-intl';
-import { isEmpty, keyBy } from 'lodash';
+import { useIntl } from 'react-intl';
+import { keyBy } from 'lodash';
 
 import {
-  Checkbox,
-  Icon,
+  MCLPagingTypes,
   MultiColumnList,
 } from '@folio/stripes/components';
 
-import { noValue } from '../../constants';
-import { checkIfArrayIsEmpty } from '../../utils';
+import ItemRow from './ItemRow';
+import DraggableItemsList, {
+  draggableVisibleColumns,
+  getDraggableColumnMapping,
+  getDraggableFormatter,
+} from './DraggableItemsList';
 
-import ItemBarcode from './ItemBarcode';
-import ItemsListRow from './ItemsListRow';
 import {
-  sortItems,
-} from './utils';
+  useSelection,
+  useInventoryActions,
+  useInventoryState,
+} from '../../dnd';
+import {
+  useHoldingItemsQuery,
+  useHoldingsFromStorage,
+  useOrderManagement,
+} from '../../hooks';
+import { OrderManagementContext } from '../../contexts';
+import useReferenceData from '../../hooks/useReferenceData';
 import useBoundWithHoldings from '../../Holding/ViewHolding/HoldingBoundWith/useBoundWithHoldings';
 
-import { DataContext } from '../../contexts';
+import {
+  DEFAULT_ITEM_TABLE_SORTBY_FIELD,
+  ITEM_TABLE_PAGE_AMOUNT,
+} from '../../constants';
+import {
+  getColumnMapping,
+  getColumnWidths,
+  getFormatter,
+  getTableAria,
+  getVisibleColumns,
+} from './utils';
 
-const getTableAria = (intl) => intl.formatMessage({ id: 'ui-inventory.items' });
-const getFormatter = (
-  intl,
-  locationsById,
-  holding,
-  holdingsMapById,
-  selectItemsForDrag,
-  ifItemsSelected,
-) => ({
-  'dnd': () => (
-    <Icon
-      icon="drag-drop"
-      size="small"
-    />
-  ),
-  'select': (item) => (
-    <FormattedMessage id="ui-inventory.moveItems.selectItem">
-      {
-        ([ariaLabel]) => (
-          <span data-test-select-item>
-            <Checkbox
-              id={`select-item-${item.id}`}
-              aria-label={ariaLabel}
-              checked={ifItemsSelected([item])}
-              onChange={() => selectItemsForDrag([item])}
-            />
-          </span>
-        )
-      }
-    </FormattedMessage>
-  ),
-  'barcode': item => {
-    return (
-      item.id && (
-      <>
-        <ItemBarcode
-          item={item}
-          holdingId={item.holdingsRecordId}
-          instanceId={holdingsMapById[item.holdingsRecordId]?.instanceId}
-        />
-        {item.discoverySuppress &&
-        <span>
-          <Icon
-            size="medium"
-            icon="exclamation-circle"
-            status="warn"
-          />
-        </span>
-        }
-      </>)
-    ) || noValue;
-  },
-  'status': x => x.status?.name || noValue,
-  'copyNumber': ({ copyNumber }) => copyNumber || noValue,
-  'materialType': x => x.materialType?.name || noValue,
-  'loanType': x => x.temporaryLoanType?.name || x.permanentLoanType?.name || noValue,
-  'effectiveLocation': x => {
-    const effectiveLocation = locationsById[x.effectiveLocation?.id];
-    return effectiveLocation?.isActive ?
-      effectiveLocation?.name || noValue :
-      intl.formatMessage(
-        { id: 'ui-inventory.inactive.gridCell' },
-        { location: effectiveLocation?.name }
-      );
-  },
-  'enumeration': x => x.enumeration || noValue,
-  'chronology': x => x.chronology || noValue,
-  'volume': x => x.volume || noValue,
-  'yearCaption': x => x.yearCaption?.join(', ') || noValue,
-});
-const getColumnMapping = (intl, holdingsRecordId, items, ifItemsSelected, selectItemsForDrag) => ({
-  'dnd': '',
-  'select': (
-    <span data-test-select-all-items>
-      <Checkbox
-        id={`select-all-items-${holdingsRecordId}`}
-        aria-label={intl.formatMessage({ id: 'ui-inventory.moveItems.selectAll' })}
-        checked={ifItemsSelected(items)}
-        onChange={() => selectItemsForDrag(items)}
-      />
-    </span>
-  ),
-  'barcode': intl.formatMessage({ id: 'ui-inventory.item.barcode' }),
-  'status': intl.formatMessage({ id: 'ui-inventory.status' }),
-  'copyNumber': intl.formatMessage({ id: 'ui-inventory.copyNumber' }),
-  'materialType': intl.formatMessage({ id: 'ui-inventory.materialType' }),
-  'loanType': intl.formatMessage({ id: 'ui-inventory.loanType' }),
-  'effectiveLocation': intl.formatMessage({ id: 'ui-inventory.effectiveLocationShort' }),
-  'enumeration': intl.formatMessage({ id: 'ui-inventory.enumeration' }),
-  'chronology': intl.formatMessage({ id: 'ui-inventory.chronology' }),
-  'volume': intl.formatMessage({ id: 'ui-inventory.volume' }),
-  'yearCaption': intl.formatMessage({ id: 'ui-inventory.yearCaption' }),
-});
-const visibleColumns = [
-  'barcode',
-  'status',
-  'copyNumber',
-  'loanType',
-  'effectiveLocation',
-  'enumeration',
-  'chronology',
-  'volume',
-  'yearCaption',
-  'materialType',
-];
-const dragVisibleColumns = ['dnd', 'select', ...visibleColumns];
 const rowMetadata = ['id', 'holdingsRecordId'];
-const pageAmount = 200;
 
 const ItemsList = ({
+  id,
+  instanceId,
   holding,
-  items,
-  draggable,
-  isItemsDragSelected,
-  selectItemsForDrag,
-  getDraggingItems,
+  tenantId,
+  isBarcodeAsHotlink,
+  isItemsMovement = false,
+  pathToAccordionsState,
 }) => {
-  const { boundWithHoldings: holdings, isLoading } = useBoundWithHoldings(items);
-  const holdingsMapById = keyBy(holdings, 'id');
   const intl = useIntl();
+
+  const state = useInventoryState();
+  const actions = useInventoryActions();
+
+  const {
+    toggleItem: selectItemForDrag,
+    toggleAllItems: selectAllItemsForDrag,
+    isItemsDragSelected: ifItemsSelected,
+  } = useSelection();
+
+  const [accordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
+  const pathToAccordion = [...pathToAccordionsState, holding?.id];
+  const accId = pathToAccordion.join('.');
+  const memberTenantAccId = `${tenantId}.${instanceId}`;
+  const isMemberAccOpen = accordionStatus[memberTenantAccId];
+  const isHoldingAccOpen = accordionStatus[accId];
+
+  const [offset, setOffset] = useState(0);
+  const [sortByQuery, setSortByQuery] = useState(DEFAULT_ITEM_TABLE_SORTBY_FIELD);
+  const searchParams = useMemo(() => ({
+    sortBy: isItemsMovement ? 'order' : sortByQuery,
+    limit: 200,
+    offset,
+  }), [isItemsMovement, sortByQuery, offset]);
+
+  const { items, isFetching } = useHoldingItemsQuery(
+    holding.id,
+    {
+      searchParams,
+      key: 'items',
+      tenantId,
+      enabled: isHoldingAccOpen && isMemberAccOpen,
+    },
+  );
+  const { totalRecords: total = 0 } = useHoldingItemsQuery(
+    holding.id,
+    {
+      searchParams: { limit: 0 },
+      key: 'itemCount',
+      tenantId,
+      enabled: isHoldingAccOpen && isMemberAccOpen,
+    },
+  );
+  const { boundWithHoldings: holdings } = useBoundWithHoldings(items, tenantId);
+  const { registerOrderManagement } = useContext(OrderManagementContext);
+
+  const {
+    handleOrderChange,
+    applyOrderChanges,
+    resetOrderChanges,
+    hasPendingChanges,
+    validationErrors,
+    dirtyItemsMap,
+    initializeOriginalOrders,
+    updateOriginalOrders,
+    handleDndReorder,
+  } = useOrderManagement({ holdingId: holding.id, tenantId });
+
+  // Register order management functions with context
+  useEffect(() => {
+    registerOrderManagement(holding.id, {
+      applyOrderChanges,
+      resetOrderChanges,
+      hasPendingChanges,
+      updateOriginalOrders,
+      handleDndReorder,
+    });
+  }, [registerOrderManagement, holding.id, applyOrderChanges, resetOrderChanges, hasPendingChanges, updateOriginalOrders, handleDndReorder]);
+
+  const contentData = useMemo(
+    () => state.holdings[holding?.id]?.itemIds.map(itemId => state.items[itemId]) || [],
+    [state.holdings, state.items],
+  );
+  const holdingsMapById = keyBy(holdings, 'id');
+
   const [itemsSorting, setItemsSorting] = useState({
     isDesc: false,
-    column: 'barcode',
+    column: DEFAULT_ITEM_TABLE_SORTBY_FIELD,
   });
-  const [records, setRecords] = useState([]);
-  const [paginatedItems, setPaginatedItems] = useState([]);
-  const { locationsById } = useContext(DataContext);
+
+  useEffect(() => {
+    if (items?.length && !isFetching) {
+      actions.setItemsToHolding(holding.id, instanceId, items);
+      // Initialize original orders when items are loaded
+      initializeOriginalOrders(items);
+    }
+  }, [items, isFetching]);
+
+  const { locationsById } = useReferenceData();
+  const pagingCanGoPrevious = offset > 0;
+  const pagingCanGoNext = offset < total && total - offset > ITEM_TABLE_PAGE_AMOUNT;
 
   const ariaLabel = useMemo(() => getTableAria(intl), []);
   const columnMapping = useMemo(
-    () => getColumnMapping(intl, holding.id, records, isItemsDragSelected, selectItemsForDrag),
-    [holding.id, records, isItemsDragSelected, selectItemsForDrag],
+    () => {
+      const draggableColMapping = getDraggableColumnMapping({
+        intl,
+        items: contentData,
+        holdingsRecordId: holding.id,
+        ifItemsSelected,
+        selectAllItemsForDrag,
+        isFetching,
+      });
+      const colMapping = getColumnMapping(intl);
+
+      return {
+        ...colMapping,
+        ...(isItemsMovement ? draggableColMapping : {}),
+      };
+    },
+    [isItemsMovement, holding.id, contentData, ifItemsSelected, selectAllItemsForDrag],
   );
   const formatter = useMemo(
-    () => getFormatter(intl, locationsById, holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected),
-    [holding, holdingsMapById, selectItemsForDrag, isItemsDragSelected],
+    () => {
+      const dndFormatter = getDraggableFormatter({
+        holdingId: id,
+        selectItemForDrag,
+        ifItemsSelected,
+        onOrderChange: handleOrderChange,
+        validationErrors,
+        changedOrdersMap: dirtyItemsMap,
+        isFetching,
+      });
+      const f = getFormatter(
+        intl,
+        id,
+        locationsById,
+        holdingsMapById,
+        isBarcodeAsHotlink,
+        isFetching,
+        tenantId,
+      );
+
+      return {
+        ...f,
+        ...(isItemsMovement ? dndFormatter : {}),
+      };
+    },
+    [isItemsMovement, holdingsMapById, selectItemForDrag, ifItemsSelected, handleOrderChange, validationErrors, dirtyItemsMap],
   );
-  const rowProps = useMemo(() => ({
-    draggable,
-    isItemsDragSelected,
-    getDraggingItems,
-  }), [draggable, isItemsDragSelected, getDraggingItems]);
-
-  const onNeedMoreData = (amount, index) => {
-    const data = new Array(index);
-    // slice original records array to extract 'pageAmount' of records
-    const recordSlice = records.slice(index, index + amount);
-    // push it at the end of the sparse array
-    data.push(...recordSlice);
-
-    setPaginatedItems(data);
+  const onNeedMoreData = (askAmount, _index, _firstIndex, direction) => {
+    const amount = (direction === 'next') ? askAmount : -askAmount;
+    setOffset(offset + amount);
   };
-
-  useEffect(() => {
-    setRecords(checkIfArrayIsEmpty(sortItems(items, itemsSorting)));
-  }, [items, itemsSorting]);
-
-  useEffect(() => {
-    if (records?.length) {
-      setPaginatedItems(records.slice(0, pageAmount));
-    }
-  }, [records]);
 
   // NOTE: in order to sort on a particular column, it must be registered
   // as a sorter in '../utils'. If it's not, there won't be any errors;
   // sorting on that column simply won't work.
   const onHeaderClick = useCallback((e, { name: column }) => {
-    if (['dnd', 'select'].includes(column)) return;
+    if (['dnd', 'select'].includes(column) || isItemsMovement) return;
 
     const isChangeDirection = itemsSorting.column === column;
 
@@ -207,46 +218,81 @@ const ItemsList = ({
     };
 
     setItemsSorting(newItemsSorting);
+    setSortByQuery(`${newItemsSorting.isDesc ? '-' : ''}${newItemsSorting.column}`);
   }, [itemsSorting]);
 
-  if ((!draggable && isEmpty(items)) || isLoading) return null;
+  const visibleColumns = useMemo(
+    () => (isItemsMovement ? draggableVisibleColumns : getVisibleColumns()),
+    [isItemsMovement, draggableVisibleColumns],
+  );
+  const nonInteractiveHeaders = useMemo(
+    () => (isItemsMovement ? getVisibleColumns() : ['loanType', 'effectiveLocation', 'materialType']),
+    [isItemsMovement],
+  );
 
-  return (
+  const renderFormatter = (props) => {
+    return (
+      <ItemRow
+        draggable={isItemsMovement}
+        holdingId={holding.id}
+        {...props}
+      />
+    );
+  };
+
+  const itemsListElement = (
     <MultiColumnList
       id={`list-items-${holding.id}`}
       columnIdPrefix={`list-items-${holding.id}`}
-      contentData={paginatedItems}
+      contentData={contentData}
       rowMetadata={rowMetadata}
       formatter={formatter}
-      visibleColumns={draggable ? dragVisibleColumns : visibleColumns}
+      visibleColumns={visibleColumns}
       columnMapping={columnMapping}
       ariaLabel={ariaLabel}
       interactive={false}
       onNeedMoreData={onNeedMoreData}
-      pagingType="prev-next"
-      totalCount={items.length}
+      columnWidths={getColumnWidths()}
+      pagingType={MCLPagingTypes.PREV_NEXT}
+      totalCount={total}
+      nonInteractiveHeaders={nonInteractiveHeaders}
       onHeaderClick={onHeaderClick}
       sortDirection={itemsSorting.isDesc ? 'descending' : 'ascending'}
       sortedColumn={itemsSorting.column}
-      rowFormatter={ItemsListRow}
-      pageAmount={pageAmount}
-      rowProps={rowProps}
+      rowFormatter={renderFormatter}
+      pageAmount={ITEM_TABLE_PAGE_AMOUNT}
+      pagingCanGoPrevious={pagingCanGoPrevious}
+      pagingCanGoNext={pagingCanGoNext}
+      pagingOffset={offset}
+      loading={isFetching}
     />
   );
+
+  if (isItemsMovement) {
+    return (
+      <DraggableItemsList
+        itemId={id}
+        isItemsMovement={isItemsMovement}
+        holding={holding}
+        contentData={contentData}
+        isFetching={isFetching}
+      >
+        {itemsListElement}
+      </DraggableItemsList>
+    );
+  }
+
+  return itemsListElement;
 };
 
 ItemsList.propTypes = {
+  id: PropTypes.string,
+  instanceId: PropTypes.string.isRequired,
   holding: PropTypes.object.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object),
-
-  draggable: PropTypes.bool,
-  selectItemsForDrag: PropTypes.func.isRequired,
-  isItemsDragSelected: PropTypes.func.isRequired,
-  getDraggingItems: PropTypes.func.isRequired,
-};
-
-ItemsList.defaultProps = {
-  items: [],
+  tenantId: PropTypes.string.isRequired,
+  isBarcodeAsHotlink: PropTypes.bool,
+  isItemsMovement: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ItemsList;

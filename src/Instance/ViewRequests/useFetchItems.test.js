@@ -1,4 +1,4 @@
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import useFetchItems from './useFetchItems';
 import { batchFetchItems } from './utils';
 
@@ -21,18 +21,20 @@ describe('useFetchItems', () => {
     const instanceHoldings = ['item1', 'item2'];
     const items = ['item1', 'item2'];
     batchFetchItems.mockResolvedValueOnce(items);
-    const { result, waitForNextUpdate } = renderHook(() => useFetchItems(mutatorItems, instanceHoldings));
+    const { result } = renderHook(() => useFetchItems(mutatorItems, instanceHoldings));
     expect(batchFetchItems).toHaveBeenCalledWith(mutatorItems, instanceHoldings);
-    await waitForNextUpdate();
-    expect(result.current).toEqual(items);
+    await waitFor(() => {
+      expect(result.current).toEqual(items);
+    });
   });
   it('should set items to empty array when batchFetchItems fails', async () => {
     const mutatorItems = jest.fn();
     const instanceHoldings = ['item1', 'item2'];
     batchFetchItems.mockRejectedValueOnce(new Error('Failed to fetch items'));
-    const { result, waitForNextUpdate } = renderHook(() => useFetchItems(mutatorItems, instanceHoldings));
+    const { result } = renderHook(() => useFetchItems(mutatorItems, instanceHoldings));
     expect(batchFetchItems).toHaveBeenCalledWith(mutatorItems, instanceHoldings);
-    await waitForNextUpdate();
-    expect(result.current).toEqual([]);
+    await waitFor(() => {
+      expect(result.current).toEqual([]);
+    });
   });
 });

@@ -1,45 +1,51 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { noop } from 'lodash';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
-import { act } from 'react-dom/test-utils';
-import { screen, waitFor } from '@folio/jest-config-stripes/testing-library/react';
+
+import { useLocationsQuery } from '@folio/stripes-inventory-components';
+import { screen, waitFor, fireEvent, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../../../test/jest/__mock__';
-
-import DataContext from '../../../contexts/DataContext';
 
 import renderWithIntl from '../../../../test/jest/helpers/renderWithIntl';
 import translations from '../../../../test/jest/helpers/translationsProperties';
 import { items as itemsFixture } from '../../../../test/fixtures/items';
+import { useHoldingItemsQuery } from '../../../hooks';
+
 import HoldingAccordion from './HoldingAccordion';
-import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
 
 jest.mock('../../../hooks/useHoldingItemsQuery', () => jest.fn());
+jest.mock('../../../hooks', () => ({
+  ...jest.requireActual('../../../hooks'),
+  useHoldingItemsQuery: jest.fn(),
+}));
+
+useLocationsQuery.mockReturnValue({
+  locations: [
+    {
+      id: 'inactiveLocation',
+      name: 'Location 1',
+      isActive: false,
+    },
+  ],
+});
 
 const HoldingAccordionSetup = () => (
   <Router>
-    <DataContext.Provider value={{ locationsById: {} }}>
-      <HoldingAccordion
-        holding={{
-          id: '123',
-          permanentLocation: { id: 'inactiveLocation' },
-        }}
-        holdings={[]}
-        locationsById={[
-          {
-            id: 'inactiveLocation',
-            name: 'Location 1',
-            isActive: false,
-          },
-        ]}
-        onViewHolding={noop}
-        onAddItem={noop}
-        withMoveDropdown={false}
-      >
-        <></>
-      </HoldingAccordion>
-    </DataContext.Provider>
+    <HoldingAccordion
+      holding={{
+        id: '123',
+        permanentLocation: { id: 'inactiveLocation' },
+      }}
+      holdings={[]}
+      onViewHolding={noop}
+      onAddItem={noop}
+      withMoveDropdown={false}
+      instanceId="instanceId"
+      pathToAccordionsState={['holdings']}
+    >
+      <></>
+    </HoldingAccordion>
   </Router>
 );
 
@@ -66,13 +72,17 @@ describe('HoldingAccordion', () => {
     });
   });
 
+  it('should render closed holdings accordion by default', () => {
+    expect(screen.getByRole('button', { name: /holdings: inactive >/i, expanded: false })).toBeInTheDocument();
+  });
+
   it('should render items counter', () => {
     expect(screen.getByText('3')).toBeInTheDocument();
   });
 
   describe('opening accordion', () => {
     beforeEach(() => {
-      userEvent.click(screen.getByText(/Holdings:/));
+      fireEvent.click(screen.getByText(/Holdings:/));
     });
 
     it('should hide item counter', async () => {

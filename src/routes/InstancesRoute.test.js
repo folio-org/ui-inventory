@@ -1,14 +1,12 @@
-import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import {
   screen,
   getByText,
   getByRole,
   getAllByRole,
-  waitForElementToBeRemoved,
   waitFor,
+  fireEvent,
 } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
 import { noop } from 'lodash';
 
 import '../../test/jest/__mock__';
@@ -19,11 +17,12 @@ import {
   Layer,
   Paneset
 } from '@folio/stripes/components';
+import { SORT_OPTIONS } from '@folio/stripes-inventory-components';
 
 import renderWithIntl from '../../test/jest/helpers/renderWithIntl';
 import OverlayContainer from '../../test/helpers/OverlayContainer';
 import translationsProperties from '../../test/jest/helpers/translationsProperties';
-import { instances as instancesFixture } from '../../test/fixtures/instances';
+import { instancesExpanded as instancesExpandedFixture } from '../../test/fixtures/instancesExpanded';
 import { items as callNumbers } from '../../test/fixtures/callNumbers';
 import { QUICK_EXPORT_LIMIT } from '../constants';
 import { DataContext, LastSearchTermsContext } from '../contexts';
@@ -39,10 +38,13 @@ const stripesStub = {
   logger: { log: noop },
   locale: 'en-US',
   plugins: {},
+  okapi: {
+    tenant: 'diku',
+  },
 };
 
 const InstancesRouteSetup = ({
-  instances = instancesFixture,
+  instances = instancesExpandedFixture,
   sendCallout = noop,
   quickExportPOST = noop,
 } = {}) => (
@@ -57,7 +59,10 @@ const InstancesRouteSetup = ({
             instanceFormats: [],
             modesOfIssuance: [],
             natureOfContentTerms: [],
-            tagsRecords: [],
+            displaySettings: {
+              defaultSort: SORT_OPTIONS.TITLE,
+            },
+            instanceDateTypes: [],
           }}
           >
             <LastSearchTermsContext.Provider value={{
@@ -69,57 +74,55 @@ const InstancesRouteSetup = ({
               storeLastBrowse: jest.fn(),
               storeLastSearchOffset: jest.fn(),
               storeLastBrowseOffset: jest.fn(),
+              storeLastSegment: jest.fn(),
             }}
             >
-              <Paneset>
-                <Layer
-                  isOpen
-                  contentLabel="label"
-                >
-                  <OverlayContainer />
-                  <InstancesRoute
-                    resources={{
-                      query: {
-                        query: '',
-                        sort: 'title',
-                      },
-                      records: {
-                        hasLoaded: true,
-                        resource: 'records',
-                        records: instances,
-                        other: { totalRecords: instances.length },
-                      },
-                      recordsBrowseCallNumber : {
-                        hasLoaded: true,
-                        resource: 'records',
-                        records: callNumbers,
-                        other: {
-                          totalRecords: callNumbers.length
+              <div id="ModuleContainer">
+                <Paneset>
+                  <Layer
+                    isOpen
+                    contentLabel="label"
+                  >
+                    <OverlayContainer />
+                    <InstancesRoute
+                      tenantId="diku"
+                      resources={{
+                        query: {
+                          query: '',
+                          sort: 'title',
                         },
-                      },
-                      facets: {
-                        hasLoaded: true,
-                        resource: 'facets',
-                        records: [],
-                        other: { totalRecords: 0 },
-                      },
-                      resultCount: instances.length,
-                      resultOffset: 0,
-                    }}
-                    mutator={{
-                      quickExport: { POST: quickExportPOST },
-                      resultCount: { replace: noop },
-                      resultOffset: { replace: noop },
-                      query: {
-                        update: jest.fn(),
-                        replace: jest.fn(),
-                      },
-                      browseModeRecords: { reset: jest.fn() },
-                      records: { reset: jest.fn() },
-                    }}
-                  />
-                </Layer>
-              </Paneset>
+                        records: {
+                          hasLoaded: true,
+                          resource: 'records',
+                          records: instances,
+                          other: { totalRecords: instances.length },
+                        },
+                        recordsBrowseCallNumber : {
+                          hasLoaded: true,
+                          resource: 'records',
+                          records: callNumbers,
+                          other: {
+                            totalRecords: callNumbers.length
+                          },
+                        },
+                        resultCount: instances.length,
+                        resultOffset: 0,
+                      }}
+                      mutator={{
+                        quickExport: { POST: quickExportPOST },
+                        resultCount: { replace: noop },
+                        resultOffset: { replace: noop },
+                        query: {
+                          update: jest.fn(),
+                          replace: jest.fn(),
+                        },
+                        browseModeRecords: { reset: jest.fn() },
+                        records: { reset: jest.fn() },
+                      }}
+                    />
+                  </Layer>
+                </Paneset>
+              </div>
             </LastSearchTermsContext.Provider>
           </DataContext.Provider>
         </ModuleHierarchyProvider>
@@ -149,7 +152,7 @@ describe('InstancesRoute', () => {
     });
 
     it('should have proper list results size', () => {
-      expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(3);
+      expect(document.querySelectorAll('#pane-results-content .mclRowContainer > [role=row]').length).toEqual(4);
     });
 
     it('should render nothing for select row column header', () => {
@@ -168,7 +171,7 @@ describe('InstancesRoute', () => {
 
     describe('opening action menu', () => {
       beforeEach(() => {
-        userEvent.click(screen.getByRole('button', { name: 'Actions' }));
+        fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
       });
 
       it('should not display exceeded quick export limit warning', () => {
@@ -190,11 +193,11 @@ describe('InstancesRoute', () => {
       beforeEach(() => {
         selectRowCheckboxes = screen.getAllByRole('checkbox', { name: 'Select instance' });
 
-        userEvent.click(selectRowCheckboxes[1]);
+        fireEvent.click(selectRowCheckboxes[0]);
       });
 
       it('should display checked select row checkbox', () => {
-        expect(selectRowCheckboxes[1]).toBeChecked();
+        expect(selectRowCheckboxes[0]).toBeChecked();
       });
 
       it('should display selected rows count message in the sub header', () => {
@@ -203,27 +206,27 @@ describe('InstancesRoute', () => {
 
       describe('selecting one more row and clicking on show selected records action button', () => {
         beforeEach(() => {
-          userEvent.click(selectRowCheckboxes[2]);
-          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-          userEvent.click(screen.getByRole('button', { name: 'Show selected records' }));
+          fireEvent.click(selectRowCheckboxes[1]);
+          fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Show selected records' }));
         });
 
         it('should open selected records modal', () => {
-          expect(screen.getByRole('document', { label: 'Selected records' })).toBeInTheDocument();
+          expect(screen.getByTestId('selected-record-modal')).toBeInTheDocument();
         });
 
         it('should have correct heading', () => {
-          expect(screen.getByRole('heading', { name: 'Selected records' })).toBeInTheDocument();
+          expect(screen.getByText('Selected records', { selector: 'h1' })).toBeInTheDocument();
         });
 
         it('should display correct amount of records in modal', () => {
-          const modal = screen.getByRole('document', { label: 'Selected records' });
+          const modal = screen.getByTestId('selected-record-modal');
 
           expect(modal.querySelectorAll('.mclRowContainer > [role=row]').length).toEqual(2);
         });
 
         it('should display correct data in list', () => {
-          const modal = screen.getByRole('document', { label: 'Selected records' });
+          const modal = screen.getByTestId('selected-record-modal');
           const row = modal.querySelector('.mclRowContainer > [role=row]');
           const cells = getAllByRole(row, 'gridcell');
 
@@ -234,7 +237,7 @@ describe('InstancesRoute', () => {
         });
 
         it('should have all rows selected', () => {
-          const modal = screen.getByRole('document', { label: 'Selected records' });
+          const modal = screen.getByTestId('selected-record-modal');
           const selectRowCheckboxesInModal = getAllByRole(modal, 'checkbox', { name: 'Select instance' });
 
           selectRowCheckboxesInModal.forEach(checkbox => expect(checkbox).toBeChecked());
@@ -242,35 +245,32 @@ describe('InstancesRoute', () => {
 
         describe('unselecting rows in the modal', () => {
           beforeEach(() => {
-            const modal = screen.getByRole('document', { label: 'Selected records' });
+            const modal = screen.getByTestId('selected-record-modal');
             const selectRowCheckboxesInModal = getAllByRole(modal, 'checkbox', { name: 'Select instance' });
 
-            selectRowCheckboxesInModal.forEach(userEvent.click);
+            selectRowCheckboxesInModal.forEach(fireEvent.click);
           });
 
           it('should preserve the selected state for the corresponding rows in the results list after close of the modal upon click on cancel button', async () => {
-            userEvent.click(screen.getByRole('button', { name: 'Cancel' }));
+            const cancelBt = await screen.findByText(/cancel/i);
+            fireEvent.click(cancelBt);
 
-            await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
-
+            expect(selectRowCheckboxes[0]).toBeChecked();
             expect(selectRowCheckboxes[1]).toBeChecked();
-            expect(selectRowCheckboxes[2]).toBeChecked();
           });
 
           it('should unselect corresponding rows in the results list after close of the modal upon click on save button', async () => {
-            userEvent.click(screen.getByRole('button', { name: 'Save & close' }));
+            fireEvent.click(screen.getByRole('button', { name: 'Save & close' }));
 
-            await waitForElementToBeRemoved(() => screen.getByRole('document', { label: 'Selected records' }));
-
+            expect(selectRowCheckboxes[0]).not.toBeChecked();
             expect(selectRowCheckboxes[1]).not.toBeChecked();
-            expect(selectRowCheckboxes[2]).not.toBeChecked();
           });
         });
       });
 
       describe('selecting more than one row', () => {
         beforeEach(() => {
-          userEvent.click(selectRowCheckboxes[2]);
+          fireEvent.click(selectRowCheckboxes[1]);
         });
 
         it('should display selected rows count message (plural form) in the sub header', () => {
@@ -278,8 +278,8 @@ describe('InstancesRoute', () => {
         });
 
         it('should not initiate display of error callout and make an API call upon click on export instances (MARC) button', () => {
-          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-          userEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
 
           expect(quickExportAPICallMock).toBeCalled();
           expect(sendCalloutMock).not.toBeCalled();
@@ -287,8 +287,8 @@ describe('InstancesRoute', () => {
 
         it('should initiate display of error callout and make an API call upon click on export instances (MARC) button with API request set up to fail', async () => {
           quickExportAPICallMock.mockImplementationOnce(Promise.reject.bind(Promise));
-          userEvent.click(screen.getByRole('button', { name: 'Actions' }));
-          userEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
+          fireEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
 
           expect(quickExportAPICallMock).toBeCalled();
 
@@ -354,7 +354,7 @@ describe('InstancesRoute', () => {
           });
 
           it('should preserve the selected state for the previously selected row', () => {
-            expect(selectRowCheckboxes[1]).toBeChecked();
+            expect(selectRowCheckboxes[0]).toBeChecked();
           });
 
           it('should display selected rows count message in the sub header', () => {
@@ -365,4 +365,3 @@ describe('InstancesRoute', () => {
     });
   });
 });
-

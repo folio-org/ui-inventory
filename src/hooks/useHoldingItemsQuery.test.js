@@ -3,7 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook, act } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -28,6 +28,8 @@ describe('useHoldingItemsQuery', () => {
   }));
 
   beforeEach(() => {
+    queryClient.clear();
+    mockGet.mockClear();
     useOkapiKy.mockClear().mockReturnValue({
       get: mockGet,
       extend: jest.fn().mockReturnValue({ get: mockGet }),
@@ -38,19 +40,99 @@ describe('useHoldingItemsQuery', () => {
     const limit = 5;
     const id = items[0].holdingsRecordId;
 
-    const { result, waitFor } = renderHook(() => useHoldingItemsQuery(id, { searchParams: { limit } }), { wrapper });
+    const { result } = renderHook(() => useHoldingItemsQuery(id, { searchParams: { limit } }), { wrapper });
 
-    await waitFor(() => !result.current.isFetching);
+    await act(() => !result.current.isFetching);
 
     expect(result.current.items).toEqual(items.slice(0, limit));
     expect(mockGet).toHaveBeenCalledWith(
       'inventory/items-by-holdings-id',
       {
         searchParams: {
+          offset: 0,
           limit,
-          query: `holdingsRecordId==${id}`
+          query: `holdingsRecordId==${id} sortby order/sort.ascending`
         }
       }
     );
+  });
+
+  describe('when sortBy param is provided', () => {
+    it('should fetch items with certain sortby param', async () => {
+      const limit = 5;
+      const id = items[0].holdingsRecordId;
+
+      const { result } = renderHook(() => useHoldingItemsQuery(id, {
+        searchParams: {
+          limit,
+          sortBy: '-status',
+        }
+      }), { wrapper });
+
+      await act(() => !result.current.isFetching);
+
+      expect(result.current.items).toEqual(items.slice(0, limit));
+      expect(mockGet).toHaveBeenCalledWith(
+        'inventory/items-by-holdings-id',
+        {
+          searchParams: {
+            offset: 0,
+            limit,
+            query: `holdingsRecordId==${id} sortby status.name/sort.descending`
+          }
+        }
+      );
+    });
+  });
+
+  describe('when sortBy param is order', () => {
+    it('should fetch items with order sortby param', async () => {
+      const limit = 5;
+      const id = items[0].holdingsRecordId;
+
+      const { result } = renderHook(() => useHoldingItemsQuery(id, {
+        searchParams: {
+          limit,
+          sortBy: 'order',
+        }
+      }), { wrapper });
+
+      await act(() => !result.current.isFetching);
+
+      expect(result.current.items).toEqual(items.slice(0, limit));
+      expect(mockGet).toHaveBeenCalledWith(
+        'inventory/items-by-holdings-id',
+        {
+          searchParams: {
+            offset: 0,
+            limit,
+            query: `holdingsRecordId==${id} sortby order/number/sort.ascending`
+          }
+        }
+      );
+    });
+  });
+
+  it('refetches on remount when query is stale', async () => {
+    const id = items[0].holdingsRecordId;
+    const searchParams = { limit: 5, offset: 0 };
+
+    const { unmount } = renderHook(
+      () => useHoldingItemsQuery(id, { searchParams }),
+      { wrapper }
+    );
+
+    await act(() => !queryClient.isFetching());
+    expect(mockGet).toHaveBeenCalledTimes(1);
+
+    unmount();
+
+    renderHook(
+      () => useHoldingItemsQuery(id, { searchParams }),
+      { wrapper }
+    );
+
+    await act(() => !queryClient.isFetching());
+    expect(mockGet).toHaveBeenCalledTimes(2);
   });
 });

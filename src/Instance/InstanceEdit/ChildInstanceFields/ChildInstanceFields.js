@@ -8,11 +8,11 @@ import { RepeatableField } from '@folio/stripes/components';
 import InstanceField from '../InstanceField';
 
 const ChildInstanceFields = ({
-  canAdd,
-  canEdit,
-  canDelete,
-  isDisabled,
-  relationshipTypes,
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+  isDisabled = false,
+  relationshipTypes = [],
 }) => (
   <FieldArray
     addLabel={<FormattedMessage id="ui-inventory.addChildInstance" />}
@@ -42,13 +42,6 @@ ChildInstanceFields.propTypes = {
   canDelete: PropTypes.bool,
   isDisabled: PropTypes.bool,
   relationshipTypes: PropTypes.arrayOf(PropTypes.object),
-};
-
-ChildInstanceFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
-  isDisabled: false,
 };
 
 export default ChildInstanceFields;

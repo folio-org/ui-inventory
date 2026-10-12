@@ -17,6 +17,6 @@ InstancesView.propTypes = {
 export default memo(InstancesView, (prevProps, nextProps) => {
   return isEqual(prevProps.data, nextProps.data) &&
     isEqual(prevProps.parentResources.records, nextProps.parentResources.records) &&
-    isEqual(prevProps.parentResources.facets, nextProps.parentResources.facets) &&
+    prevProps.isRequestUrlExceededLimit === nextProps.isRequestUrlExceededLimit &&
     prevProps.segment === nextProps.segment;
 });

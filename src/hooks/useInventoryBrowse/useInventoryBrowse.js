@@ -1,8 +1,9 @@
-import queryString from 'query-string';
-import { useCallback } from 'react';
+import {
+  useCallback,
+  useRef,
+} from 'react';
 import { useQuery } from 'react-query';
-import { useLocation } from 'react-router-dom';
-import { noop } from 'lodash';
+import noop from 'lodash/noop';
 
 import {
   useNamespace,
@@ -12,14 +13,15 @@ import {
   buildFilterQuery,
   getFiltersCount,
 } from '@folio/stripes-acq-components';
+import { escapeCqlValue } from '@folio/stripes/util';
+import { FACETS_TO_REQUEST } from '@folio/stripes-inventory-components';
 
 import {
   BROWSE_RESULTS_COUNT,
-  FACETS_TO_REQUEST,
+  INDEXES_WITH_CALL_NUMBER_TYPE_PARAM,
   PAGE_DIRECTIONS,
   undefinedAsString,
 } from '../../constants';
-import usePrevious from '../usePrevious';
 import {
   INITIAL_SEARCH_PARAMS_MAP,
   PAGINATION_SEARCH_PARAMS_MAP,
@@ -31,18 +33,19 @@ import {
 const isPrevious = (direction) => direction === PAGE_DIRECTIONS.prev;
 
 const getInitialPageQuery = (query, qindex) => {
+  const escapedQuery = escapeCqlValue(query);
   return regExp.test(query)
     ? query
     : [
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}>="${query.replace(/"/g, '\\"')}"`,
-      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}<"${query.replace(/"/g, '\\"')}"`
+      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}>="${escapedQuery}"`,
+      `${INITIAL_SEARCH_PARAMS_MAP[qindex]}<"${escapedQuery}"`
     ].join(' or ');
 };
 
 const getUpdatedPageQuery = (direction, anchor) => (_query, qindex) => {
   const param = PAGINATION_SEARCH_PARAMS_MAP[qindex];
-
-  return `${param} ${isPrevious(direction) ? '<' : '>'} "${anchor.replace(/"/g, '\\"')}"`;
+  const escapedString = escapeCqlValue(anchor);
+  return `${param} ${isPrevious(direction) ? '<' : '>'} "${escapedString}"`;
 };
 
 const useInventoryBrowse = ({
@@ -51,8 +54,8 @@ const useInventoryBrowse = ({
   options = {},
 }) => {
   const ky = useOkapiKy();
-  const { search } = useLocation();
   const [namespace] = useNamespace();
+  const prevSearchIndex = useRef();
   const { pageConfig = [], setPageConfig = noop } = pageParams;
 
   const normalizedFilters = {
@@ -69,24 +72,28 @@ const useInventoryBrowse = ({
     ...otherFilters
   } = normalizedFilters;
 
+  const shouldAddCallNumberType = filters.query && INDEXES_WITH_CALL_NUMBER_TYPE_PARAM.includes(filters.qindex);
+
   const baseSearchParams = {
     highlightMatch: !!searchQuery && !regExp.test(searchQuery),
     limit: BROWSE_RESULTS_COUNT,
     precedingRecordsCount: PRECEDING_RECORDS_COUNT,
+    ...(shouldAddCallNumberType && { callNumberType: qindex }),
   };
 
   const path = PATH_MAP[qindex];
-  const prevSearchIndex = usePrevious(qindex || queryString.parse(search).qindex);
-  const hasFilters = getFiltersCount(normalizedFilters) > 0;
+  const hasFilters = getFiltersCount(otherFilters) > 0;
+  const hasSearchParameters = getFiltersCount(filters) > 0;
 
   const {
     data = {},
+    isFetched,
     isFetching,
     isLoading,
   } = useQuery(
-    [namespace, filters, qindex, prevSearchIndex, pageConfig],
+    [namespace, filters, qindex, pageConfig],
     async () => {
-      if (!hasFilters) return {};
+      if (!hasSearchParameters) return {};
 
       const [pageNumber, direction, anchor] = pageConfig;
 
@@ -100,6 +107,8 @@ const useInventoryBrowse = ({
         undefined,
         false,
       );
+
+      prevSearchIndex.current = qindex;
 
       return ky.get(path, {
         searchParams: {
@@ -125,6 +134,7 @@ const useInventoryBrowse = ({
 
   return {
     data: data.items,
+    isFetched,
     isFetching,
     isLoading,
     pagination: {

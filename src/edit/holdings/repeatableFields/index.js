@@ -4,3 +4,4 @@ export { default as HoldingsStatementForIndexesFields } from './HoldingsStatemen
 export { default as HoldingsStatementForSupplementsFields } from './HoldingsStatementForSupplementsFields';
 export { default as NoteFields } from './NoteFields';
 export { default as ReceivingHistoryFields } from './ReceivingHistoryFields';
+export { default as AdditionalCallNumbersFields } from './AdditionalCallNumbersFields';

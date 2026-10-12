@@ -1,4 +1,4 @@
-import { renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 import { DataContext } from '../contexts';
 import useReferenceData from './useReferenceData';
 

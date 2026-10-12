@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import '../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../test/jest/helpers/renderWithRouter';
@@ -40,10 +39,10 @@ describe('PublicationRangeFields', () => {
   test('Click on Add range button and enter value in Publication Range text field', async () => {
     renderPublicationRangeFields();
     const rangeButton = screen.getByText('Add range');
-    userEvent.click(rangeButton);
+    fireEvent.click(rangeButton);
     const myText = screen.getByRole('textbox', { name: 'Publication range' });
     expect(myText).toHaveValue('');
-    userEvent.type(myText, 'Enter text for Publication Range text field');
+    fireEvent.change(myText, { target: { value: 'Enter text for Publication Range text field' } });
     expect(myText).toHaveValue('Enter text for Publication Range text field');
   });
 });

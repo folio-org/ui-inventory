@@ -9,17 +9,14 @@ import {
   useLocation,
 } from 'react-router-dom';
 
+import { useNamespace } from '@folio/stripes/core';
 import {
   MCLPagingTypes,
   MultiColumnList,
 } from '@folio/stripes/components';
-import {
-  useItemToView,
-} from '@folio/stripes-acq-components';
+import { useItemToView } from '@folio/stripes-acq-components';
 
-import {
-  BROWSE_RESULTS_COUNT,
-} from '../../constants';
+import { BROWSE_RESULTS_COUNT } from '../../constants';
 import { DataContext } from '../../contexts';
 import {
   COLUMNS_MAPPING,
@@ -49,7 +46,9 @@ const BrowseResultsList = ({
     onNeedMoreData,
   },
   totalRecords,
+  filters,
 }) => {
+  const [namespace] = useNamespace();
   const data = useContext(DataContext);
   const { search } = useLocation();
   const {
@@ -75,7 +74,7 @@ const BrowseResultsList = ({
       id={listId}
       totalCount={totalRecords}
       contentData={browseData}
-      formatter={getBrowseResultsFormatter({ data, browseOption })}
+      formatter={getBrowseResultsFormatter({ data, browseOption, filters, namespace })}
       visibleColumns={VISIBLE_COLUMNS_MAP[browseOption]}
       isEmptyMessage={isEmptyMessage}
       isSelected={isSelected}
@@ -100,7 +99,8 @@ const BrowseResultsList = ({
 };
 
 BrowseResultsList.propTypes = {
-  browseData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  browseData: PropTypes.arrayOf(PropTypes.object),
+  filters: PropTypes.object.isRequired,
   isEmptyMessage: PropTypes.node.isRequired,
   isLoading: PropTypes.bool,
   pagination: PropTypes.shape({

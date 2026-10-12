@@ -1,6 +1,5 @@
 import React from 'react';
-import { waitFor } from '@folio/jest-config-stripes/testing-library/react';
-import { act, renderHook } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import { act, renderHook, waitFor } from '@folio/jest-config-stripes/testing-library/react';
 import { useConfirmationModal } from './useConfirmationModal';
 
 describe('useConfirmationModal', () => {

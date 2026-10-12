@@ -4,7 +4,7 @@ jest.mock('@folio/stripes/smart-components', () => ({
   ...jest.requireActual('@folio/stripes/smart-components'),
   LocationLookup: () => <div>LocationLookup</div>,
   ViewMetaData: () => <div>ViewMetaData</div>,
-  ControlledVocab: () => <div>ControlledVocab</div>,
+  ControlledVocab: jest.fn(() => <div>ControlledVocab</div>),
   ConfigManager: (props) => {
     const { getInitialValues, onBeforeSave, children } = props;
     const component =
@@ -16,6 +16,7 @@ jest.mock('@folio/stripes/smart-components', () => ({
       </div>;
     return component;
   },
+  ClipCopy: () => <button type="button">ClipCopy</button>,
   useRemoteStorageMappings: () => {
     return ({
       'holdings-id-1': {
@@ -29,6 +30,13 @@ jest.mock('@folio/stripes/smart-components', () => ({
         'description': 'Storage B description'
       }
     });
-  }
+  },
+  SearchAndSort: jest.fn(props => {
+    const RealSearchAndSort = jest.requireActual('@folio/stripes/smart-components').SearchAndSort;
+    return <RealSearchAndSort {...props} />;
+  }),
+  withTags: Component => (props) => {
+    return <Component {...props} tagsEnabled />;
+  },
 }), { virtual: true });
 

@@ -1,10 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import queryString from 'query-string';
 
 import { useStripes } from '@folio/stripes/core';
 import {
@@ -12,15 +13,16 @@ import {
   ErrorModal,
 } from '@folio/stripes/components';
 
+import { useNumberGeneratorOptions } from '../../common/hooks';
 import {
   useInstanceQuery,
-  useHolding,
+  useHoldingQuery,
 } from '../../common';
 import ItemForm from '../../edit/items/ItemForm';
 import useCallout from '../../hooks/useCallout';
 import { parseHttpError } from '../../utils';
 import {
-  useItem,
+  useItemQuery,
   useItemMutation,
   useBoundWithsMutation,
 } from '../hooks';
@@ -34,22 +36,36 @@ const EditItem = ({
   const history = useHistory();
   const location = useLocation();
   const [httpError, setHttpError] = useState();
+  const keepEditing = useRef(false);
   const { isLoading: isInstanceLoading, instance } = useInstanceQuery(instanceId);
-  const { isLoading: isHoldingLoading, holding } = useHolding(holdingId);
-  const { isLoading: isItemLoading, item } = useItem(itemId);
+  const { isLoading: isHoldingLoading, holding } = useHoldingQuery(holdingId, { tenantId: location?.state?.tenantTo });
+  const { isFetching: isItemLoading, item, refetch: refetchItem } = useItemQuery(itemId, { tenant: location?.state?.tenantTo });
+  const { data: numberGeneratorData } = useNumberGeneratorOptions();
   const callout = useCallout();
   const stripes = useStripes();
+  const queryParams = queryString.parse(location.search);
 
-  const onCancel = useCallback(() => {
+  const setKeepEditing = useCallback((value) => {
+    keepEditing.current = value;
+  }, []);
+
+  const goBack = useCallback(() => {
     history.push({
       pathname: `/inventory/view/${instanceId}/${holdingId}/${itemId}`,
       search: location.search,
+      state: {
+        tenantTo: queryParams?.tenantTo || stripes.okapi.tenant,
+        initialTenantId: location?.state?.initialTenantId,
+      },
     });
   }, [location.search, instanceId, holdingId, itemId]);
 
-
   const onSuccess = useCallback(() => {
-    onCancel();
+    if (!keepEditing.current) {
+      goBack();
+    } else {
+      refetchItem();
+    }
 
     return callout.sendCallout({
       type: 'success',
@@ -58,7 +74,7 @@ const EditItem = ({
         values={{ hrid: item.hrid }}
       />,
     });
-  }, [callout, instanceId, holdingId]);
+  }, [goBack, refetchItem, callout, item]);
 
   const onError = async error => {
     const parsedError = await parseHttpError(error.response);
@@ -66,7 +82,7 @@ const EditItem = ({
     setHttpError(parsedError);
   };
 
-  const { mutateItem } = useItemMutation({ onSuccess });
+  const { mutateItem } = useItemMutation({ onSuccess }, { tenantId: location?.state?.tenantTo });
 
   const { mutateBoundWiths } = useBoundWithsMutation();
 
@@ -114,14 +130,17 @@ const EditItem = ({
         id={holding.id}
         key={holding.id}
         initialValues={item}
+        numberGeneratorData={numberGeneratorData}
         onSubmit={onSubmit}
-        onCancel={onCancel}
+        onCancel={goBack}
         okapi={stripes.okapi}
         instance={instance}
         holdingsRecord={holding}
         referenceTables={referenceData}
         intl={stripes.intl}
         stripes={stripes}
+        setKeepEditing={setKeepEditing}
+        showKeepEditingButton
       />
       {httpError && !httpError?.errorType &&
         <ErrorModal

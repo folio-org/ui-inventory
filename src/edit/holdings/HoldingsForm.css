@@ -1,3 +1,7 @@
-.holdingsForm{
+.holdingsForm {
   height: 100%;
+}
+
+.saveAndKeepEditingButton {
+  margin-right: 0.8rem;
 }

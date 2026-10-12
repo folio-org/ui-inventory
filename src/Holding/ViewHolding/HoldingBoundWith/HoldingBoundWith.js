@@ -8,15 +8,19 @@ import {
   MultiColumnList,
 } from '@folio/stripes/components';
 
-import { IntlConsumer } from '@folio/stripes/core';
+import {
+  IntlConsumer,
+  useStripes,
+} from '@folio/stripes/core';
 import { noValue } from '../../../constants';
 import { checkIfArrayIsEmpty } from '../../../utils';
 import useBoundWithItems from './useBoundWithItems';
 import useBoundWithHoldings from './useBoundWithHoldings';
 
 const HoldingBoundWith = ({ boundWithParts }) => {
+  const { okapi: { tenant: tenantId } } = useStripes();
   const { boundWithItems } = useBoundWithItems(boundWithParts);
-  const { isLoading, boundWithHoldings } = useBoundWithHoldings(boundWithItems);
+  const { isLoading, boundWithHoldings } = useBoundWithHoldings(boundWithItems, tenantId);
   const boundWithHoldingsMapById = keyBy(boundWithHoldings, 'id');
   const data = boundWithItems?.map(boundWithItem => ({
     item: boundWithItem,

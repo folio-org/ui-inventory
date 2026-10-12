@@ -1,9 +1,13 @@
 import React from 'react';
 import { noop, keyBy } from 'lodash';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Button } from '@folio/stripes-testing';
 
 import '../../../../test/jest/__mock__';
+
+import {
+  fireEvent,
+  screen,
+} from '@folio/jest-config-stripes/testing-library/react';
 
 import { StripesContext } from '@folio/stripes/core';
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -66,21 +70,17 @@ describe('ChildInstanceFields', () => {
   });
 
   describe('change child instance', () => {
-    beforeEach(async () => {
-      await Button('+').click();
-    });
-
     it('should change instance', () => {
+      fireEvent.click(screen.getByRole('button', { name: '+' }));
+
       expect(document.querySelectorAll('[data-test="instance-title-0"] .kvValue')[0].innerHTML).toEqual('new instance');
     });
   });
 
   describe('add child instance', () => {
-    beforeEach(async () => {
-      await Button('Add child instance').click();
-    });
+    it('should add child instance', async () => {
+      fireEvent.click(screen.getByRole('button', { name: 'Add child instance' }));
 
-    it('should add child instance', () => {
       expect(document.querySelectorAll('#clickable-add-child-instance li').length).toEqual(2);
     });
   });

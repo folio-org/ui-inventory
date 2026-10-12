@@ -1,7 +1,9 @@
 import React from 'react';
 import { Form } from 'react-final-form';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import { cleanup } from '@folio/jest-config-stripes/testing-library/react-hooks';
+import {
+  screen,
+  cleanup,
+} from '@folio/jest-config-stripes/testing-library/react';
 import '../../../test/jest/__mock__';
 import { renderWithIntl, translationsProperties } from '../../../test/jest/helpers';
 import { RemoteStorageWarning } from './RemoteStorageWarning';

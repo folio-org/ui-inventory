@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 import '../../../../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
 import renderWithRouter from '../../../../../test/jest/helpers/renderWithRouter';
@@ -40,7 +39,7 @@ describe('HoldingsStatementFields', () => {
 
   test('Text boxes length should be 3', async () => {
     renderHoldingsStatementFields();
-    userEvent.click(screen.getByText('Add holdings statement'));
+    fireEvent.click(screen.getByText('Add holdings statement'));
     const notes = await screen.findAllByRole('textbox');
     expect(notes).toHaveLength(3);
   });

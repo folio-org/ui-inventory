@@ -16,9 +16,9 @@ import {
 } from '@folio/stripes/components';
 
 const HoldingsStatementFields = ({
-  canAdd,
-  canEdit,
-  canDelete,
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
 }) => {
   const { formatMessage } = useIntl();
 
@@ -101,12 +101,6 @@ HoldingsStatementFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-
-HoldingsStatementFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default HoldingsStatementFields;

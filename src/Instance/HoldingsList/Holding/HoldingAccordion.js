@@ -1,21 +1,80 @@
-import React, {
-  useState,
-  useContext,
-} from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { useRef } from 'react';
+import {
+  FormattedMessage,
+  useIntl,
+} from 'react-intl';
+import { keyBy } from 'lodash';
 
 import {
   Accordion,
+  DefaultAccordionHeader,
   Row,
   Col,
+  Checkbox,
   Icon,
 } from '@folio/stripes/components';
+import { useLocationsQuery } from '@folio/stripes-inventory-components';
 
-import { DataContext } from '../../../contexts';
-import { callNumberLabel } from '../../../utils';
-import HoldingButtonsGroup from './HoldingButtonsGroup';
-import useHoldingItemsQuery from '../../../hooks/useHoldingItemsQuery';
+import { HoldingButtonsGroup } from './HoldingButtonsGroup';
+import HoldingAccordionLabel from './HoldingAccordionLabel';
+
+import { useHoldingItemsQuery, useHoldingsFromStorage } from '../../../hooks';
+
+const CustomAccordionHeader = ({
+  withMoveHoldingCheckbox = false,
+  isHoldingSelected = false,
+  onSelectHolding,
+  dragHandleAttributes,
+  dragHandleListeners,
+  ref,
+  ...headerProps
+}) => {
+  const intl = useIntl();
+
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      width: '100%',
+    }}
+    >
+      {withMoveHoldingCheckbox && (
+        <>
+          <div
+            style={{
+              width: '40px',
+              cursor: 'grab',
+              padding: '4px',
+              borderRadius: '4px',
+              transition: 'background-color 0.2s ease',
+            }}
+            ref={ref}
+            {...dragHandleListeners}
+            {...dragHandleAttributes}
+          >
+            <Icon
+              icon="drag-drop"
+              size="small"
+            />
+          </div>
+          <span style={{ marginRight: '10px' }}>
+            <Checkbox
+              aria-label={intl.formatMessage({ id: 'ui-inventory.moveEntity.selectHolding' })}
+              checked={isHoldingSelected}
+              onClick={e => {
+                e.stopPropagation();
+                onSelectHolding(e.target?.checked);
+              }}
+            />
+          </span>
+        </>
+      )}
+      <DefaultAccordionHeader {...headerProps} />
+    </div>
+  );
+};
 
 const HoldingAccordion = ({
   children,
@@ -23,37 +82,62 @@ const HoldingAccordion = ({
   holdings,
   onViewHolding,
   onAddItem,
-  withMoveDropdown,
+  tenantId,
+  instanceId,
+  isHoldingSelected,
+  onSelectHolding,
+  showViewHoldingsButton,
+  showAddItemButton,
+  pathToAccordionsState,
+  withMoveHoldingCheckbox = false,
+  withMoveDropdown = false,
+  dragHandleAttributes,
+  dragHandleListeners,
+  ref,
 }) => {
+  const hasBeenOpenedRef = useRef(false);
   const searchParams = {
     limit: 0,
+    offset: 0,
   };
 
-  const { locationsById } = useContext(DataContext);
-  const labelLocation = locationsById[holding.permanentLocationId];
+  const [accordionStatus] = useHoldingsFromStorage({ defaultValue: {} });
+  const pathToAccordion = [...pathToAccordionsState, holding?.id];
+  const memberTenantAccId = `${tenantId}.${instanceId}`;
+  const isMemberAccOpen = accordionStatus[memberTenantAccId];
+
+  const { totalRecords, isFetching } = useHoldingItemsQuery(
+    holding?.id,
+    {
+      searchParams,
+      key: 'itemCount',
+      tenantId,
+      enabled: isMemberAccOpen,
+    },
+  );
+  const { locations } = useLocationsQuery({ tenantId });
+
+  if (!locations) return null;
+
+  const locationsById = keyBy(locations, 'id');
+  const labelLocation = locationsById[holding?.permanentLocationId];
   const labelLocationName = labelLocation?.name ?? '';
-  const [open, setOpen] = useState(false);
-  const [openFirstTime, setOpenFirstTime] = useState(false);
-  const { totalRecords, isFetching } = useHoldingItemsQuery(holding.id, { searchParams, key: 'itemCount' });
 
-  const handleAccordionToggle = () => {
-    if (!open && !openFirstTime) {
-      setOpenFirstTime(true);
-    }
-
-    setOpen(!open);
-  };
-
-  const holdingButtonsGroup = <HoldingButtonsGroup
-    holding={holding}
-    holdings={holdings}
-    itemCount={isFetching ? null : totalRecords}
-    locationsById={locationsById}
-    onViewHolding={onViewHolding}
-    onAddItem={onAddItem}
-    withMoveDropdown={withMoveDropdown}
-    isOpen={open}
-  />;
+  const holdingButtonsGroup = isOpen => (
+    <HoldingButtonsGroup
+      holding={holding}
+      holdings={holdings}
+      itemCount={isFetching ? null : totalRecords}
+      locationsById={locationsById}
+      onViewHolding={onViewHolding}
+      onAddItem={onAddItem}
+      withMoveDropdown={withMoveDropdown}
+      isOpen={isOpen}
+      tenantId={tenantId}
+      showViewHoldingsButton={showViewHoldingsButton}
+      showAddItemButton={showAddItemButton}
+    />
+  );
 
   const location = labelLocation?.isActive ?
     labelLocationName :
@@ -64,54 +148,73 @@ const HoldingAccordion = ({
       }}
     />;
 
+  const accId = pathToAccordion.join('.');
+  const accordionLabel = (
+    <HoldingAccordionLabel
+      location={location}
+      holding={holding}
+    />
+  );
+  const accHeader = (headerProps) => {
+    return (
+      <CustomAccordionHeader
+        {...headerProps}
+        withMoveHoldingCheckbox={withMoveHoldingCheckbox}
+        isHoldingSelected={isHoldingSelected}
+        onSelectHolding={onSelectHolding}
+        dragHandleAttributes={dragHandleAttributes}
+        dragHandleListeners={dragHandleListeners}
+        ref={ref}
+      />
+    );
+  };
+
   return (
     <Accordion
-      id={holding.id}
-      open={open}
-      onToggle={handleAccordionToggle}
-      label={(
-        <>
-          <FormattedMessage
-            id="ui-inventory.holdingsHeader"
-            values={{
-              location,
-              callNumber: callNumberLabel(holding),
-              copyNumber: holding.copyNumber,
-            }}
-          />
-          {holding.discoverySuppress &&
-          <span>
-            <Icon
-              size="medium"
-              icon="exclamation-circle"
-              status="warn"
-            />
-          </span>
-          }
-        </>
-      )}
-      displayWhenOpen={holdingButtonsGroup}
-      displayWhenClosed={holdingButtonsGroup}
+      id={accId}
+      header={accHeader}
+      label={accordionLabel}
+      displayWhenOpen={holdingButtonsGroup(true)}
+      displayWhenClosed={holdingButtonsGroup(false)}
+      closedByDefault
     >
-      {
-        (open || openFirstTime) &&
-        <Row>
-          <Col sm={12}>
-            {children}
-          </Col>
-        </Row>
-      }
+      {open => {
+        if (open) {
+          hasBeenOpenedRef.current = true;
+        }
+
+        if (!hasBeenOpenedRef.current) return null;
+
+        return (
+          <Row>
+            <Col
+              sm={12}
+              style={{ display: open ? 'block' : 'none' }}
+            >
+              {children}
+            </Col>
+          </Row>
+        );
+      }}
     </Accordion>
   );
 };
 
 HoldingAccordion.propTypes = {
+  children: PropTypes.oneOf([PropTypes.node, PropTypes.func]),
   holding: PropTypes.object.isRequired,
+  holdings: PropTypes.arrayOf(PropTypes.object),
   onViewHolding: PropTypes.func.isRequired,
   onAddItem: PropTypes.func.isRequired,
-  holdings: PropTypes.arrayOf(PropTypes.object),
+  tenantId: PropTypes.string,
+  instanceId: PropTypes.string,
+  isHoldingSelected: PropTypes.bool,
+  onSelectHolding: PropTypes.func,
+  showViewHoldingsButton: PropTypes.bool,
+  showAddItemButton: PropTypes.bool,
+  pathToAccordionsState: PropTypes.arrayOf(PropTypes.string),
+  withMoveHoldingCheckbox: PropTypes.bool,
   withMoveDropdown: PropTypes.bool,
-  children: PropTypes.object,
 };
 
 export default HoldingAccordion;

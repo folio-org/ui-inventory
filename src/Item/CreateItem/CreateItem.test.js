@@ -1,13 +1,14 @@
 import '../../../test/jest/__mock__';
 
-import { MemoryRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { render, screen } from '@folio/jest-config-stripes/testing-library/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { createMemoryHistory } from 'history';
 
 import { instance } from '../../../test/fixtures/instance';
 import {
   useInstanceQuery,
-  useHolding,
+  useHoldingQuery,
 } from '../../common/hooks';
 import CreateItem from './CreateItem';
 
@@ -16,8 +17,18 @@ jest.mock('../../hooks/useCallout', () => jest.fn().mockReturnValue({ sendCallou
 jest.mock('../../common/hooks', () => ({
   ...jest.requireActual('../../common/hooks'),
   useInstanceQuery: jest.fn().mockReturnValue({ instance: {}, isLoading: false }),
-  useHolding: jest.fn().mockReturnValue({ holding: {}, isLoading: false }),
+  useHoldingQuery: jest.fn().mockReturnValue({ holding: {}, isLoading: false }),
 }));
+
+const history = createMemoryHistory();
+history.location = {
+  pathname: '/testPathName',
+  search: '?filters=test1',
+  state: {
+    tenantTo: 'testTenantToId',
+    tenantFrom: 'testTenantFromId',
+  }
+};
 
 const defaultProps = {
   instanceId: instance.id,
@@ -28,11 +39,11 @@ const defaultProps = {
 const queryClient = new QueryClient();
 
 const wrapper = ({ children }) => (
-  <MemoryRouter>
+  <Router history={history}>
     <QueryClientProvider client={queryClient}>
       {children}
     </QueryClientProvider>
-  </MemoryRouter>
+  </Router>
 );
 
 const renderCreateItem = (props = {}) => render(
@@ -47,7 +58,7 @@ const renderCreateItem = (props = {}) => render(
 describe('CreateItem', () => {
   beforeEach(() => {
     useInstanceQuery.mockClear();
-    useHolding.mockClear();
+    useHoldingQuery.mockClear();
   });
 
   it('should render ItemForm', () => {

@@ -7,7 +7,12 @@ import { RepeatableField } from '@folio/stripes/components';
 
 import { TitleField } from '../components';
 
-const SucceedingTitles = ({ canAdd, canEdit, canDelete, isDisabled }) => (
+const SucceedingTitles = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+  isDisabled = false,
+}) => (
   <FieldArray
     addLabel={<FormattedMessage id="ui-inventory.addSucceedingTitle" />}
     legend={<FormattedMessage id="ui-inventory.succeedingTitles" />}
@@ -34,13 +39,6 @@ SucceedingTitles.propTypes = {
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
   isDisabled: PropTypes.bool,
-};
-
-SucceedingTitles.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
-  isDisabled: false,
 };
 
 export default SucceedingTitles;

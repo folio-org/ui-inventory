@@ -1,15 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
+import { OrderManagementProvider } from '../providers';
 import { InstanceMovementContainer } from '../Instance';
 
 const InstanceMovementRoute = ({ match }) => {
   return (
-    <InstanceMovementContainer
-      idFrom={match.params.idFrom}
-      idTo={match.params.idTo}
-    />
+    <OrderManagementProvider>
+      <InstanceMovementContainer
+        idFrom={match.params.idFrom}
+        idTo={match.params.idTo}
+      />
+    </OrderManagementProvider>
   );
 };
 

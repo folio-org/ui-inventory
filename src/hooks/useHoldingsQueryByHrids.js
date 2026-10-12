@@ -10,7 +10,7 @@ const useHoldingsQueryByHrids = (holdingsRecordHrids) => {
 
   const { isLoading, data } = useQuery(
     [namespace, queryHrids],
-    () => ky.get(`holdings-storage/holdings?query=hrid=(${queryHrids})`).json(),
+    () => ky.get(`holdings-storage/holdings?query=hrid==(${queryHrids})`).json(),
     { enabled: Boolean(queryHrids) },
   );
 

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -48,7 +47,7 @@ describe('administrativeNoteFields', () => {
 
   test('adds new note', async () => {
     renderAdministrativeNoteFields();
-    userEvent.click(screen.getByText(/add administrative note/i));
+    fireEvent.click(screen.getByText(/add administrative note/i));
     const notes = await screen.findAllByRole('textbox');
     expect(notes).toHaveLength(2);
   });

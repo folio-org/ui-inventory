@@ -13,14 +13,12 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-const PublicationFrequencyFields = props => {
+const PublicationFrequencyFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
 
   const publicationFrequencyLabel = formatMessage({ id: 'ui-inventory.publicationFrequency' });
 
@@ -59,11 +57,6 @@ PublicationFrequencyFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-PublicationFrequencyFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default PublicationFrequencyFields;

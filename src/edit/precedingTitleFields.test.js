@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 import stripesFinalForm from '@folio/stripes/final-form';
@@ -45,7 +44,7 @@ describe('precedingTitleFields', () => {
   });
   it('click Add preceding title button', () => {
     renderPrecedingTitles();
-    userEvent.click(screen.getByText(/Add preceding title/i));
+    fireEvent.click(screen.getByText(/Add preceding title/i));
     expect(screen.getAllByText(/Instance HRID/i).length).toBe(1);
   });
 });

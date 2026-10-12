@@ -13,14 +13,12 @@ import {
   TextArea,
 } from '@folio/stripes/components';
 
-const SeriesFields = props => {
+const SeriesFields = ({
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+}) => {
   const { formatMessage } = useIntl();
-
-  const {
-    canAdd,
-    canEdit,
-    canDelete,
-  } = props;
 
   const seriesStatementsLabel = formatMessage({ id: 'ui-inventory.seriesStatements' });
 
@@ -59,11 +57,6 @@ SeriesFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-SeriesFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default SeriesFields;

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
-import { screen } from '@folio/jest-config-stripes/testing-library/react';
-import userEvent from '@folio/jest-config-stripes/testing-library/user-event';
+import { screen, fireEvent } from '@folio/jest-config-stripes/testing-library/react';
 
 import '../../test/jest/__mock__';
 
@@ -48,7 +47,7 @@ describe('LanguageFields', () => {
     it('dropdown with language list should be rendered', () => {
       renderLanguageFields();
       const addButton = screen.getByText(/Add language/i);
-      userEvent.click(addButton);
+      fireEvent.click(addButton);
 
       expect(screen.getByRole('combobox', { name: 'Language' })).toBeInTheDocument();
     });

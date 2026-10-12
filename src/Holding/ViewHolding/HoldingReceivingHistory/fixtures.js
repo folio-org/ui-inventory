@@ -8,6 +8,7 @@ export const piece = {
 
 export const receivingHistory = [
   {
+    displaySummary: 'test summary',
     enumeration: 'en2',
     chronology: '2020 Sept',
   },

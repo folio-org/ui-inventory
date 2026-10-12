@@ -1,0 +1,9 @@
+@import '@folio/stripes-components/lib/variables';
+
+.marginBottomGutter {
+  margin-bottom: var(--gutter);
+}
+
+.greyLabel {
+  color: var(--checkable-disabled-fill);
+}

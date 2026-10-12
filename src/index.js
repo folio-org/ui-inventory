@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, {
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import {
   Route,
-  Switch, useHistory,
+  Switch,
+  useHistory,
 } from 'react-router-dom';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { AppContextMenu } from '@folio/stripes/core';
+import {
+  AppContextMenu,
+  coreEvents,
+  useStripes,
+} from '@folio/stripes/core';
 import {
   checkScope,
   CommandList,
@@ -27,7 +34,11 @@ import {
   InstanceMarcRoute,
   InstanceEditRoute,
   ItemRoute,
-  QuickMarcRoute,
+  CreateMarcBibRoute,
+  EditMarcBibRoute,
+  DeriveMarcBibRoute,
+  CreateMarcHoldingRoute,
+  EditMarcHoldingsRoute,
   CreateItemRoute,
   CreateHoldingRoute,
   ViewRequestsRoute,
@@ -39,12 +50,36 @@ import {
   BrowseRoute,
 } from './routes';
 import Settings from './settings';
-import { DataProvider, HoldingsProvider, LastSearchTermsProvider } from './providers';
+import {
+  DataProvider,
+  HoldingsProvider,
+  LastSearchTermsProvider,
+} from './providers';
+import { EVENTS } from './constants';
+import { clearStorage } from './utils';
 
 const InventoryRouting = (props) => {
+  const stripes = useStripes();
   const history = useHistory();
   const [isShortcutsModalOpen, setIsShortcutsModalOpen] = useState(false);
   const { showSettings, match: { path } } = props;
+
+  const keyboardShortcuts = [...defaultKeyboardShortcuts];
+
+  keyboardShortcuts.splice(10, 0, {
+    label: (<FormattedMessage id="ui-inventory.shortcut.editMARC" />),
+    name: 'editMARC',
+    shortcut: 'ctrl+shift+e',
+  }, {
+    label: <FormattedMessage id="ui-inventory.shortcut.nextSubfield" />,
+    name: 'NEXT_SUBFIELD',
+    shortcut: 'Ctrl + ]',
+  },
+  {
+    label: <FormattedMessage id="ui-inventory.shortcut.prevSubfield" />,
+    name: 'PREV_SUBFIELD',
+    shortcut: 'Ctrl + [',
+  });
 
   const focusSearchField = () => {
     const el = document.getElementById('input-inventory-search');
@@ -75,7 +110,7 @@ const InventoryRouting = (props) => {
     <DataProvider>
       <HoldingsProvider>
         <LastSearchTermsProvider>
-          <CommandList commands={defaultKeyboardShortcuts}>
+          <CommandList commands={keyboardShortcuts}>
             <HasCommand
               commands={shortcuts}
               isWithinScope={checkScope}
@@ -136,8 +171,24 @@ const InventoryRouting = (props) => {
                   component={DuplicateItemRoute}
                 />
                 <Route
-                  path={`${path}/quick-marc`}
-                  component={QuickMarcRoute}
+                  path={`${path}/quick-marc/create-bibliographic`}
+                  component={CreateMarcBibRoute}
+                />
+                <Route
+                  path={`${path}/quick-marc/edit-bibliographic/:externalId`}
+                  component={EditMarcBibRoute}
+                />
+                <Route
+                  path={`${path}/quick-marc/derive-bibliographic/:externalId`}
+                  component={DeriveMarcBibRoute}
+                />
+                <Route
+                  path={`${path}/quick-marc/create-holdings/:instanceId`}
+                  component={CreateMarcHoldingRoute}
+                />
+                <Route
+                  path={`${path}/quick-marc/edit-holdings/:instanceId/:externalId`}
+                  component={EditMarcHoldingsRoute}
                 />
                 <Route
                   path={`${path}/viewsource/:id/:holdingsrecordid`}
@@ -148,7 +199,7 @@ const InventoryRouting = (props) => {
                   component={InstanceMarcRoute}
                 />
                 <Route
-                  path={`${path}/edit/:id/instance`}
+                  path={`${path}/instance/edit/:id`}
                   component={InstanceEditRoute}
                 />
                 <Route
@@ -181,14 +232,14 @@ const InventoryRouting = (props) => {
                 />
                 <Route
                   path={path}
-                  component={InstancesRoute}
+                  render={renderProps => <InstancesRoute tenantId={stripes.okapi.tenant} {...renderProps} />}
                 />
               </Switch>
             </HasCommand>
           </CommandList>
           {isShortcutsModalOpen && (
             <KeyboardShortcutsModal
-              allCommands={defaultKeyboardShortcuts}
+              allCommands={keyboardShortcuts}
               onClose={toggleModal}
             />
           )}
@@ -196,6 +247,12 @@ const InventoryRouting = (props) => {
       </HoldingsProvider>
     </DataProvider>
   );
+};
+
+InventoryRouting.eventHandler = (event) => {
+  if ([coreEvents.LOGIN, EVENTS.SWITCH_ACTIVE_AFFILIATION].includes(event)) {
+    clearStorage();
+  }
 };
 
 InventoryRouting.propTypes = {

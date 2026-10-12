@@ -5,13 +5,17 @@ import { AppIcon } from '@folio/stripes/core';
 import {
   TextLink,
   Tooltip,
+  NoValue,
 } from '@folio/stripes/components';
-
 import {
   browseModeOptions,
+} from '@folio/stripes-inventory-components';
+
+import {
   INVENTORY_ROUTE,
 } from '../../constants';
 import {
+  getFullCallNumber,
   getSearchParams,
   isRowPreventsClick,
 } from './utils';
@@ -31,9 +35,12 @@ const getTargetRecord = (
   item,
   row,
   browseOption,
+  filters,
+  namespace,
+  data,
 ) => {
   const record = getFullMatchRecord(item, row.isAnchor);
-  const searchParams = getSearchParams(row, browseOption);
+  const searchParams = getSearchParams(row, browseOption, filters, data);
   const isNotClickable = isRowPreventsClick(row, browseOption);
 
   if (isNotClickable) return record;
@@ -47,7 +54,9 @@ const getTargetRecord = (
   };
 
   return (
-    <TextLink to={toParams}>
+    <TextLink
+      to={toParams}
+    >
       {record}
     </TextLink>
   );
@@ -98,37 +107,63 @@ const renderMarcAuthoritiesLink = (authorityId, content) => {
 const getBrowseResultsFormatter = ({
   data,
   browseOption,
+  filters,
+  namespace,
 }) => {
-  return {
-    title: r => getFullMatchRecord(r.instance?.title, r.isAnchor),
-    subject: r => {
-      if (r?.totalRecords) {
-        const subject = getTargetRecord(r?.value, r, browseOption);
-        if (browseOption === browseModeOptions.SUBJECTS && r.authorityId) {
-          return renderMarcAuthoritiesLink(r.authorityId, subject);
-        }
+  const commonTargetRecordArgs = [browseOption, filters, namespace, data];
 
-        return subject;
+  return {
+    title: r => getFullMatchRecord(r.instanceTitle, r.isAnchor),
+    subject: r => {
+      if (!r?.totalRecords && r?.isAnchor) {
+        return <MissedMatchItem query={r?.value} />;
       }
-      return <MissedMatchItem query={r?.value} />;
+
+      const subject = getTargetRecord(r?.value, r, ...commonTargetRecordArgs);
+      if (browseOption === browseModeOptions.SUBJECTS && r.authorityId) {
+        return renderMarcAuthoritiesLink(r.authorityId, subject);
+      }
+
+      return subject;
+    },
+    subjectSource: r => {
+      const sourceId = r?.sourceId;
+      const sourceName = data?.subjectSources.find(source => source.id === sourceId)?.name;
+
+      return sourceName || <NoValue />;
+    },
+    subjectType: r => {
+      const typeId = r?.typeId;
+      const typeName = data?.subjectTypes.find(source => source.id === typeId)?.name;
+
+      return typeName || <NoValue />;
     },
     callNumber: r => {
-      if (r?.instance || r?.totalRecords) {
-        return getTargetRecord(r?.fullCallNumber, r, browseOption);
+      const fullCallNumber = getFullCallNumber(r);
+
+      if (r?.totalRecords) {
+        return getTargetRecord(fullCallNumber, r, ...commonTargetRecordArgs);
       }
       return <MissedMatchItem query={r.fullCallNumber} />;
     },
-    contributor: r => {
+    classificationNumber: r => {
       if (r?.totalRecords) {
-        const fullMatchRecord = getTargetRecord(r.name, r, browseOption);
-
-        if (browseOption === browseModeOptions.CONTRIBUTORS && r.authorityId) {
-          return renderMarcAuthoritiesLink(r.authorityId, fullMatchRecord);
-        }
-
-        return fullMatchRecord;
+        return getTargetRecord(r?.classificationNumber, r, ...commonTargetRecordArgs);
       }
-      return <MissedMatchItem query={r.name} />;
+      return <MissedMatchItem query={r.classificationNumber} />;
+    },
+    contributor: r => {
+      if (!r?.totalRecords && r?.isAnchor) {
+        return <MissedMatchItem query={r.name} />;
+      }
+
+      const fullMatchRecord = getTargetRecord(r.name, r, ...commonTargetRecordArgs);
+
+      if (browseOption === browseModeOptions.CONTRIBUTORS && r.authorityId) {
+        return renderMarcAuthoritiesLink(r.authorityId, fullMatchRecord);
+      }
+
+      return fullMatchRecord;
     },
     contributorType: r => data.contributorNameTypes.find(nameType => nameType.id === r.contributorNameTypeId)?.name || '',
     relatorTerm: r => {
@@ -140,7 +175,8 @@ const getBrowseResultsFormatter = ({
         return [...acc, data.contributorTypes.find(type => type.id === contributorTypeId)?.name || ''];
       }, []).filter(name => !!name).join(', ');
     },
-    numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.value && r?.totalRecords > 0)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+    numberOfTitles: r => ((r?.instance || r?.totalRecords) || (r?.value && !r?.isAnchor) || (r?.name && !r?.isAnchor)) && getFullMatchRecord(r?.totalRecords, r.isAnchor),
+    contributors: r => r.instanceContributors?.join(' ; '),
   };
 };
 

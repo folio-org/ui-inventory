@@ -6,18 +6,19 @@ import {
   useIntl,
 } from 'react-intl';
 import PropTypes from 'prop-types';
+import { escapeRegExp } from 'lodash';
 
 import {
   RepeatableField,
   Label,
-  Select,
+  Selection,
 } from '@folio/stripes/components';
 
 const StatisticalCodeFields = ({
-  canAdd,
-  canEdit,
-  canDelete,
-  statisticalCodeOptions,
+  canAdd = true,
+  canEdit = true,
+  canDelete = true,
+  statisticalCodeOptions = [],
 }) => {
   const { formatMessage } = useIntl();
 
@@ -29,15 +30,18 @@ const StatisticalCodeFields = ({
     </Label>
   );
 
+  const onFilter = (value, data) => data.filter(o => new RegExp(escapeRegExp(value), 'i').test(o.label));
+
   const renderField = field => (
     <Field
       aria-label={statisticalCodeLabel}
       name={field}
-      component={Select}
+      component={Selection}
       placeholder={formatMessage({ id: 'ui-inventory.selectCode' })}
       validate={value => (!value ? formatMessage({ id: 'ui-inventory.selectToContinue' }) : undefined)}
       dataOptions={statisticalCodeOptions}
       disabled={!canEdit}
+      onFilter={onFilter}
     />
   );
 
@@ -60,12 +64,6 @@ StatisticalCodeFields.propTypes = {
   canAdd: PropTypes.bool,
   canEdit: PropTypes.bool,
   canDelete: PropTypes.bool,
-};
-
-StatisticalCodeFields.defaultProps = {
-  canAdd: true,
-  canEdit: true,
-  canDelete: true,
 };
 
 export default StatisticalCodeFields;
