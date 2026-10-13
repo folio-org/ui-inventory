@@ -27,7 +27,6 @@ import errorResponseNotifications from './errorResponseNotifications';
 import css from './InstanceCustomLinks.css';
 
 const suppress = getSourceSuppressor(RECORD_SOURCE.CONSORTIUM);
-const actionSuppressor = { edit: suppress, delete: suppress };
 const columnWidths = {
   name: '15%',
   linkText: '15%',
@@ -90,7 +89,16 @@ export const InstanceCustomLinksSettings = ({ resources, dataKey: _dataKey, ...p
   const callout = useCallout();
 
   const ConnectedControlledVocab = useMemo(() => stripes.connect(ControlledVocab), [stripes]);
-  const hasPerm = stripes.hasPerm('ui-inventory.settings.instance-custom-links');
+  const canEdit = stripes.hasPerm('ui-inventory.settings.instance-custom-links.edit');
+  const canCreate = stripes.hasPerm('ui-inventory.settings.instance-custom-links.create');
+  const canDelete = stripes.hasPerm('ui-inventory.settings.instance-custom-links.delete');
+  const actionSuppressor = useMemo(() => {
+    return {
+      edit: item => !canEdit || suppress(item),
+      delete: item => !canDelete || suppress(item),
+    };
+  }, [canEdit, canDelete]);
+
   const records = resources?.instanceCustomLinksList?.records;
   const atLimit = (records?.length ?? 0) >= CUSTOM_LINKS_LIMIT;
 
@@ -135,7 +143,8 @@ export const InstanceCustomLinksSettings = ({ resources, dataKey: _dataKey, ...p
             nameKey="name"
             id="instanceCustomLinks"
             sortby="name"
-            editable={hasPerm}
+            editable={canEdit || canCreate || canDelete}
+            canCreate={canCreate}
             hideCreateButton={atLimit}
             formatter={formatter}
             validate={item => validator(item)}

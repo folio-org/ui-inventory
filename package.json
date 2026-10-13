@@ -461,16 +461,51 @@
         "visible": true
       },
       {
-        "permissionName": "ui-inventory.settings.instance-custom-links",
-        "displayName": "Settings (Inventory): Create, edit, delete instance custom links",
+        "permissionName": "ui-inventory.settings.instance-custom-links.view",
+        "displayName": "Settings (Inventory): View instance custom links",
         "subPermissions": [
           "inventory-storage.instance-custom-links.collection.get",
-          "inventory-storage.instance-custom-links.item.delete",
           "inventory-storage.instance-custom-links.item.get",
-          "inventory-storage.instance-custom-links.item.post",
-          "inventory-storage.instance-custom-links.item.put",
           "settings.inventory.enabled",
           "users.collection.get"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.instance-custom-links.edit",
+        "displayName": "Settings (Inventory): Edit instance custom links",
+        "subPermissions": [
+          "ui-inventory.settings.instance-custom-links.view",
+          "inventory-storage.instance-custom-links.item.put"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.instance-custom-links.create",
+        "displayName": "Settings (Inventory): Create instance custom links",
+        "subPermissions": [
+          "ui-inventory.settings.instance-custom-links.view",
+          "inventory-storage.instance-custom-links.item.post"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.instance-custom-links.delete",
+        "displayName": "Settings (Inventory): Delete instance custom links",
+        "subPermissions": [
+          "ui-inventory.settings.instance-custom-links.view",
+          "inventory-storage.instance-custom-links.item.delete"
+        ],
+        "visible": true
+      },
+      {
+        "permissionName": "ui-inventory.settings.instance-custom-links.manage",
+        "displayName": "Settings (Inventory): Manage instance custom links",
+        "replaces": ["ui-inventory.settings.instance-custom-links"],
+        "subPermissions": [
+          "ui-inventory.settings.instance-custom-links.edit",
+          "ui-inventory.settings.instance-custom-links.create",
+          "ui-inventory.settings.instance-custom-links.delete"
         ],
         "visible": true
       },

@@ -44,7 +44,10 @@ const buildRecords = (count) => Array.from({ length: count }, (_, i) => ({
   show: true,
 }));
 
-const renderInstanceCustomLinksSettings = ({ records = [], hasPerm = true } = {}) => {
+const PERM_PREFIX = 'ui-inventory.settings.instance-custom-links';
+const ALL_PERMS = ['view', 'edit', 'create', 'delete'].map(action => `${PERM_PREFIX}.${action}`);
+
+const renderInstanceCustomLinksSettings = ({ records = [], perms = ALL_PERMS } = {}) => {
   const mutator = {
     values: { POST, PUT: jest.fn(), DELETE: jest.fn() },
     activeRecord: { update: jest.fn() },
@@ -52,7 +55,7 @@ const renderInstanceCustomLinksSettings = ({ records = [], hasPerm = true } = {}
   };
 
   useStripes.mockReturnValue(buildStripes({
-    hasPerm: () => hasPerm,
+    hasPerm: perm => perms.includes(perm),
     connect: Component => props => (
       <Component
         resources={{ values: { records, isPending: false }, updaters: { records: [] } }}
@@ -190,12 +193,82 @@ describe('InstanceCustomLinksSettings', () => {
       expect(getNewButton()).not.toBeInTheDocument();
     });
 
-    it('is hidden when the user lacks permission to edit', async () => {
-      renderInstanceCustomLinksSettings({ records: buildRecords(1), hasPerm: false });
+    it('is hidden when the user lacks the create permission', async () => {
+      renderInstanceCustomLinksSettings({
+        records: buildRecords(1),
+        perms: [`${PERM_PREFIX}.edit`, `${PERM_PREFIX}.delete`],
+      });
 
       await screen.findByText('Link name 0');
 
       expect(getNewButton()).not.toBeInTheDocument();
+    });
+
+    it('is shown with only the create permission', async () => {
+      renderInstanceCustomLinksSettings({
+        records: buildRecords(1),
+        perms: [`${PERM_PREFIX}.create`],
+      });
+
+      await screen.findByText('Link name 0');
+
+      expect(getNewButton()).toBeInTheDocument();
+    });
+  });
+
+  describe('row actions', () => {
+    const getEditButtons = () => screen.queryAllByRole('button', { name: 'Edit this item' });
+    const getDeleteButtons = () => screen.queryAllByRole('button', { name: 'Delete this item' });
+
+    it('shows edit and delete buttons for every row with all permissions', async () => {
+      renderInstanceCustomLinksSettings({ records: buildRecords(2) });
+
+      await screen.findByText('Link name 0');
+
+      expect(getEditButtons()).toHaveLength(2);
+      expect(getDeleteButtons()).toHaveLength(2);
+    });
+
+    it('shows only edit buttons with only the edit permission', async () => {
+      renderInstanceCustomLinksSettings({ records: buildRecords(2), perms: [`${PERM_PREFIX}.edit`] });
+
+      await screen.findByText('Link name 0');
+
+      expect(getEditButtons()).toHaveLength(2);
+      expect(getDeleteButtons()).toHaveLength(0);
+      expect(getNewButton()).not.toBeInTheDocument();
+    });
+
+    it('shows only delete buttons with only the delete permission', async () => {
+      renderInstanceCustomLinksSettings({ records: buildRecords(2), perms: [`${PERM_PREFIX}.delete`] });
+
+      await screen.findByText('Link name 0');
+
+      expect(getEditButtons()).toHaveLength(0);
+      expect(getDeleteButtons()).toHaveLength(2);
+      expect(getNewButton()).not.toBeInTheDocument();
+    });
+
+    it('shows no actions with only the view permission', async () => {
+      renderInstanceCustomLinksSettings({ records: buildRecords(2), perms: [`${PERM_PREFIX}.view`] });
+
+      await screen.findByText('Link name 0');
+
+      expect(getEditButtons()).toHaveLength(0);
+      expect(getDeleteButtons()).toHaveLength(0);
+      expect(getNewButton()).not.toBeInTheDocument();
+      expect(screen.queryByText('Actions')).not.toBeInTheDocument();
+    });
+
+    it('hides edit and delete for consortium-sourced links regardless of permissions', async () => {
+      const [local, shared] = buildRecords(2);
+
+      renderInstanceCustomLinksSettings({ records: [local, { ...shared, source: 'consortium' }] });
+
+      await screen.findByText(local.name);
+
+      expect(getEditButtons()).toHaveLength(1);
+      expect(getDeleteButtons()).toHaveLength(1);
     });
   });
 
@@ -226,7 +299,7 @@ describe('InstanceCustomLinksSettings', () => {
       ['name is over 150 characters', { name: 'a'.repeat(151) }, 'Name cannot be more than 150 characters.'],
       ['link text is over 40 characters', { linkText: 'a'.repeat(41) }, 'Link text cannot be more than 40 characters.'],
       ['link text is only whitespace', { linkText: '   ' }, 'Link cannot be a blank string.'],
-      ['link has no http(s) protocol', { link: 'ftp://example.com' }, 'Link must be HTTP or HTTPS.'],
+      ['link has no http(s) protocol', { link: 'ftp://example.com' }, 'Link must contain a valid protocol.'],
       ['link has an unknown parameter', { link: 'https://example.com/{{bogus}}' }, 'Link must contain a valid parameter when provided.'],
       ['link is over 1000 characters', { link: `https://${'a'.repeat(1000)}` }, 'Link cannot be more than 1000 characters.'],
     ])('rejects the item when %s', async (_description, override, message) => {

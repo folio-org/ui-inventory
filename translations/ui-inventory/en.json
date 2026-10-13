@@ -979,7 +979,7 @@
   "instanceCustomLinks.error.linkTextTooLong": "Link text cannot be more than 40 characters.",
   "instanceCustomLinks.error.linkRequired": "Link is required.",
   "instanceCustomLinks.error.linkTooLong": "Link cannot be more than 1000 characters.",
-  "instanceCustomLinks.error.linkProtocol": "Link must be HTTP or HTTPS.",
+  "instanceCustomLinks.error.linkProtocol": "Link must contain a valid protocol.",
   "instanceCustomLinks.error.linkUnique": "Error saving data. Link must be unique.",
   "instanceCustomLinks.error.linkParameter": "Link must contain a valid parameter when provided.",
   "instanceCustomLinks.error.tooMany": "Error saving data. Only 10 custom links per tenant allowed."

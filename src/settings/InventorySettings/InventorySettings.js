@@ -144,7 +144,7 @@ const InventorySettings = (props) => {
             route: 'customlinks',
             label: <FormattedMessage id="ui-inventory.instanceCustomLinks" />,
             component: InstanceCustomLinksSettings,
-            perm: addPerm('ui-inventory.settings.instance-custom-links'),
+            perm: addPerm('ui-inventory.settings.instance-custom-links.view'),
           },
           {
             route: 'formats',
