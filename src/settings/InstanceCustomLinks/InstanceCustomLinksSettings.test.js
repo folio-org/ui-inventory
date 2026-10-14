@@ -298,10 +298,10 @@ describe('InstanceCustomLinksSettings', () => {
       ['link is empty', { link: '' }, 'Link is required.'],
       ['name is over 150 characters', { name: 'a'.repeat(151) }, 'Name cannot be more than 150 characters.'],
       ['link text is over 40 characters', { linkText: 'a'.repeat(41) }, 'Link text cannot be more than 40 characters.'],
-      ['link text is only whitespace', { linkText: '   ' }, 'Link cannot be a blank string.'],
+      ['link text is only whitespace', { linkText: '   ' }, 'Link text cannot be a blank string.'],
       ['link has no http(s) protocol', { link: 'ftp://example.com' }, 'Link must contain a valid protocol.'],
       ['link has an unknown parameter', { link: 'https://example.com/{{bogus}}' }, 'Link must contain a valid parameter when provided.'],
-      ['link is over 1000 characters', { link: `https://${'a'.repeat(1000)}` }, 'Link cannot be more than 1000 characters.'],
+      ['link is over 1000 characters', { link: `https://${'a'.repeat(1000)}` }, 'Link cannot be more than 1,000 characters.'],
     ])('rejects the item when %s', async (_description, override, message) => {
       renderInstanceCustomLinksSettings();
       await openNewRow();

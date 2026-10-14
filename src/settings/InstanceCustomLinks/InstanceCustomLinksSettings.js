@@ -4,6 +4,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import { ControlledVocab } from '@folio/stripes/smart-components';
+import { validateCustomLink } from '@folio/stripes-acq-components';
 import {
   Checkbox,
   Layer,
@@ -19,9 +20,6 @@ import {
   RECORD_SOURCE,
 } from '../../constants';
 import { useCallout } from '../../hooks';
-import validateName from './validateName';
-import validateLinkText from './validateLinkText';
-import validateLink from './validateLink';
 import errorResponseNotifications from './errorResponseNotifications';
 
 import css from './InstanceCustomLinks.css';
@@ -40,18 +38,6 @@ const formatHeader = (id) => {
       <FormattedMessage id={id} /> <span className={css.required}>*</span>
     </>
   );
-};
-
-const validator = (item) => {
-  const nameErrors = validateName(item);
-  const linkTextErrors = validateLinkText(item);
-  const linkErrors = validateLink(item);
-
-  return {
-    ...linkErrors,
-    ...linkTextErrors,
-    ...nameErrors
-  };
 };
 
 const getFieldComponents = (intl) => ({
@@ -147,7 +133,7 @@ export const InstanceCustomLinksSettings = ({ resources, dataKey: _dataKey, ...p
             canCreate={canCreate}
             hideCreateButton={atLimit}
             formatter={formatter}
-            validate={item => validator(item)}
+            validate={item => validateCustomLink(item)}
             fieldComponents={fieldComponents}
             dismissPane={handleClose}
             getCustomErrorMessages={getCustomErrorMessages}
