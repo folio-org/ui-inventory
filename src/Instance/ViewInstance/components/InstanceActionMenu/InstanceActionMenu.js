@@ -41,6 +41,7 @@ const InstanceActionMenu = ({
   requests,
   numberOfRequests,
   onCopy,
+  customLinks,
 }) => {
   const intl = useIntl();
   const stripes = useStripes();
@@ -96,6 +97,7 @@ const InstanceActionMenu = ({
     handleDuplicateInstanceMarc,
     handleCreateHoldingsMarc,
     handleEditInLinkedDataEditor,
+    handleCustomLink,
   } = useInstanceActions({
     marcRecord,
     callout,
@@ -315,6 +317,25 @@ const InstanceActionMenu = ({
         </MenuSection>
       )}
 
+      {customLinks?.length > 0 && (
+        <MenuSection
+          id="instance-custom-links-menu-section"
+          label={intl.formatMessage({ id: 'ui-inventory.instanceCustomLinks' })}
+        >
+          { customLinks.map(customLink => {
+            return (
+              <ActionItem
+                key={customLink.id}
+                id={customLink.id}
+                icon="external-link"
+                messageId={intl.formatMessage({ id: 'ui-inventory.instanceCustomLinks.viewIn' }, { linkText: customLink.label })}
+                onClickHandler={() => buildOnClickHandler(() => handleCustomLink(customLink.link))}
+              />
+            );
+          })}
+        </MenuSection>
+      )}
+
       <Pluggable
         id="copyright-permissions-checker"
         toggle={toggleCopyrightModal}
@@ -347,6 +368,7 @@ InstanceActionMenu.propTypes = {
   requests: PropTypes.arrayOf(PropTypes.object),
   numberOfRequests: PropTypes.number,
   onCopy: PropTypes.func,
+  customLinks: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default InstanceActionMenu;
