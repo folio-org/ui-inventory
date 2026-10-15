@@ -187,7 +187,7 @@ const useInstanceActions = ({
   }, [instance, canBeOpenedInLinkedData, instanceId]);
 
   const handleCustomLink = useCallback((customLink) => {
-    window.location.assign(customLink);
+    window.open(customLink, '_blank');
   }, [instance, instanceId]);
 
   return {

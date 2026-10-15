@@ -365,19 +365,8 @@ describe('useInstanceActions', () => {
   });
 
   describe('handleCustomLink', () => {
-    const originalLocation = window.location;
+    const windowOpenSpy = jest.spyOn(window, 'open');
 
-    beforeEach(() => {
-      delete window.location;
-
-      window.location = new URL('http://localhost');
-
-      window.location.assign = jest.fn();
-    });
-
-    afterEach(() => {
-      window.location = originalLocation;
-    });
 
     it('updates browser location', () => {
       const customLink = 'https://example.com';
@@ -385,7 +374,7 @@ describe('useInstanceActions', () => {
 
       result.current.handleCustomLink(customLink);
 
-      expect(window.location.assign).toHaveBeenCalledWith(customLink);
+      expect(windowOpenSpy).toHaveBeenCalledWith(customLink, '_blank');
     });
   });
 });
