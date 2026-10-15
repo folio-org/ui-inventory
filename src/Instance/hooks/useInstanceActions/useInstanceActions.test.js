@@ -363,4 +363,18 @@ describe('useInstanceActions', () => {
       expect(exportRecords).toHaveBeenCalledWith({ uuids: ['inst1'], recordType: expect.any(String) });
     });
   });
+
+  describe('handleCustomLink', () => {
+    const windowOpenSpy = jest.spyOn(window, 'open');
+
+
+    it('updates browser location', () => {
+      const customLink = 'https://example.com';
+      const { result } = renderHook(() => useInstanceActions({ marcRecord, callout, instance, onCopy }));
+
+      result.current.handleCustomLink(customLink);
+
+      expect(windowOpenSpy).toHaveBeenCalledWith(customLink, '_blank');
+    });
+  });
 });
