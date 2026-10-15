@@ -1153,9 +1153,7 @@
     "react-dom": "^18.2.0",
     "react-intl": "^7.1.5",
     "react-query": "^3.6.0",
-    "react-redux": "^8.0.5",
     "react-router-dom": "^5.0.1",
-    "redux": "^4.2.1",
     "regenerator-runtime": "^0.13.3",
     "sinon": "^7.0.0",
     "zustand": "^4.1.1"
@@ -1177,10 +1175,12 @@
     "prop-types": "^15.5.10",
     "query-string": "^5.0.0",
     "react-copy-to-clipboard": "^5.0.1",
+    "react-redux": "^8.0.5",
     "react-final-form": "^6.5.6",
     "react-final-form-arrays": "^3.1.0",
     "react-final-form-listeners": "^1.0.2",
     "react-router-prop-types": "^1.0.4",
+    "redux": "^4.2.1",
     "redux-form": "^8.3.7",
     "use-session-storage-state": "^18.2.0"
   },
