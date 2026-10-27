@@ -72,7 +72,6 @@ const ItemDetailsContent = ({
     itemNotes,
     loanAndAvailability,
     electronicAccess,
-    circulationHistory,
     boundWithTitles,
     initialAccordionsState,
   } = useItemDetailsData({
@@ -180,7 +179,7 @@ const ItemDetailsContent = ({
             refLookup={refLookup}
             electronicAccessRelationships={referenceTables.electronicAccessRelationships}
           />
-          <CirculationHistory circulationHistory={circulationHistory} />
+          <CirculationHistory itemId={item.id} />
           <BoundWithAndAnalytics boundWithTitles={boundWithTitles} />
           <BoundPiecesData
             itemId={item.id}

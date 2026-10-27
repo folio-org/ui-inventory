@@ -15,8 +15,10 @@ import {
 
 import ItemDetailsContent from './ItemDetailsContent';
 import useItemDetailsData from '../../../hooks/useItemDetailsData';
+import useItemCheckInsQuery from '../../../hooks/useItemCheckInsQuery';
 
 jest.mock('../../../hooks/useItemDetailsData', () => jest.fn());
+jest.mock('../../../hooks/useItemCheckInsQuery', () => jest.fn());
 
 const mockItem = {
   id: 'itemId',
@@ -65,7 +67,6 @@ const mockItemDetailsData = {
   condition: {},
   loanAndAvailability: {},
   electronicAccess: { electronicAccess: [] },
-  circulationHistory: {},
   boundWithTitles: [],
   initialAccordionsState: {},
 };
@@ -102,6 +103,14 @@ describe('ItemDetailsContent', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     useItemDetailsData.mockReturnValue(mockItemDetailsData);
+    useItemCheckInsQuery.mockReturnValue({
+      checkIns: [],
+      totalRecords: 0,
+      isFetching: false,
+      offset: 0,
+      setOffset: jest.fn(),
+      limit: 100,
+    });
   });
 
   it('should render with no axe errors', async () => {

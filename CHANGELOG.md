@@ -17,6 +17,7 @@
 * Add dedicated permission `inventory.instances.item.mark-deleted.delete` for setting instances for deletion. Refs UIIN-3711.
 * Add instance custom links settings. Refs UIIN-3652.
 * Add custom links to instance action menu. Refs UIIN-3653.
+* Update Circulation History table in Inventory Item View. Refs UIIN-3709.
 
 ## [14.0.6](https://github.com/folio-org/ui-inventory/tree/v14.0.6) (2026-08-12)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.5...v14.0.6)
