@@ -1,6 +1,7 @@
 # Change history for ui-inventory
 
-## [14.0.7] (IN PROGRESS)
+## [14.0.7](https://github.com/folio-org/ui-inventory/tree/v14.0.7) (2026-10-28)
+[Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.6...v14.0.7)
 
 * Revert UIIN-3377. Make submitting an Item Form default to Save & close behaviour. Refs UIIN-3717.
 
