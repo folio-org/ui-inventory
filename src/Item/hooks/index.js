@@ -1,3 +1,4 @@
+export { default as useItemCheckInsQuery } from './useItemCheckInsQuery';
 export { default as useItemQuery } from './useItemQuery';
 export { default as useItemMutation } from './useItemMutation';
 export { default as useBoundWithsMutation } from './useBoundWithsMutation';

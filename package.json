@@ -671,6 +671,7 @@
           "circulation.loans.collection.get",
           "circulation.loans.collection.get",
           "circulation.requests.collection.get",
+          "circulation.check-ins.collection.get",
           "configuration.entries.collection.get",
           "circulation.settings.collection.get",
           "inventory.config.instances.blocked-fields.get",

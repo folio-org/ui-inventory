@@ -13,8 +13,6 @@ import { FormattedMessage } from 'react-intl';
 import { NoValue } from '@folio/stripes/components';
 
 import useItemOpenLoansQuery from '../useItemOpenLoansQuery';
-import useItemServicePointsQuery from '../useItemServicePointsQuery';
-import useStaffMembersQuery from '../../../hooks/useStaffMembersQuery';
 
 import {
   areAllFieldsEmpty,
@@ -33,10 +31,7 @@ const useItemDetailsData = ({
 }) => {
   const { locationsById } = referenceTables;
 
-  const { servicePoints } = useItemServicePointsQuery(item.lastCheckIn?.servicePointId);
-  const { staffMembers } = useStaffMembersQuery(item.lastCheckIn?.staffMemberId);
   const { openLoans } = useItemOpenLoansQuery(item.id);
-  const staffMember = staffMembers[0];
 
   const openLoan = openLoans.loans?.[0];
 
@@ -172,16 +167,6 @@ const useItemDetailsData = ({
     electronicAccess: item?.electronicAccess || [],
   }), [item]);
 
-  const circulationHistory = useMemo(() => ({
-    checkInDate: getDateWithTime(item?.lastCheckIn?.dateTime),
-    servicePointName: item?.lastCheckIn?.dateTime && servicePoints[0]?.name,
-    source: staffMember?.id && (
-      <Link to={`/users/view/${staffMember.id}`}>
-        {`${staffMember.personal.lastName}, ${staffMember.personal.firstName} ${staffMember.personal.middleName || ''}`}
-      </Link>
-    )
-  }), [item, staffMember, servicePoints]);
-
   const initialAccordionsState = {
     acc01: !areAllFieldsEmpty(values(administrativeData)),
     acc02: !areAllFieldsEmpty(values(itemData)),
@@ -191,7 +176,7 @@ const useItemDetailsData = ({
     acc06: !areAllFieldsEmpty(values(loanAndAvailability)),
     acc07: !areAllFieldsEmpty([...values(holdingLocation), ...values(itemLocation)]),
     acc08: !areAllFieldsEmpty(values(electronicAccess)),
-    acc09: !areAllFieldsEmpty(values(circulationHistory)),
+    acc09: true,
     acc10: !areAllFieldsEmpty(values(item.boundWithTitles)),
     itemAcquisitionAccordion: true,
   };
@@ -205,7 +190,6 @@ const useItemDetailsData = ({
     itemNotes: itemNotes.notes,
     loanAndAvailability,
     electronicAccess,
-    circulationHistory,
     initialAccordionsState,
     boundWithTitles: item.boundWithTitles,
   };
