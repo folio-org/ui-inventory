@@ -17,6 +17,7 @@
 * Add dedicated permission `inventory.instances.item.mark-deleted.delete` for setting instances for deletion. Refs UIIN-3711.
 * Add instance custom links settings. Refs UIIN-3652.
 * Add custom links to instance action menu. Refs UIIN-3653.
+* Use classification ID for redirect from browse to search. Refs UIIN-3516.
 
 ## [14.0.7](https://github.com/folio-org/ui-inventory/tree/v14.0.7) (2026-10-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.6...v14.0.7)
