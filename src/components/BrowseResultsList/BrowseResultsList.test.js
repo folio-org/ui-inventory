@@ -212,6 +212,7 @@ describe('BrowseResultsList', () => {
             },
             browseData: [
               {
+                id: '7a9360bd-f200-4e1e-a11c-998d89d6de71',
                 classificationNumber,
                 classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
                 isAnchor: true,
@@ -222,7 +223,7 @@ describe('BrowseResultsList', () => {
 
           fireEvent.click(screen.getByText(classificationNumber));
 
-          const query = 'classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22&selectedBrowseResult=true';
+          const query = 'classificationId%3D%3D%227a9360bd-f200-4e1e-a11c-998d89d6de71%22&selectedBrowseResult=true';
 
           expect(history.location.search).toBe(`?filters=shared.true%2Cshared.false&qindex=querySearch&query=${query}`);
         });
@@ -252,6 +253,7 @@ describe('BrowseResultsList', () => {
             },
             browseData: [
               {
+                id: '7a9360bd-f200-4e1e-a11c-998d89d6de71',
                 classificationNumber,
                 classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
                 isAnchor: true,
@@ -263,7 +265,7 @@ describe('BrowseResultsList', () => {
           fireEvent.click(screen.getByText(classificationNumber));
 
           const classificationTypeQuery = '%20and%20%28classifications.classificationTypeId%3D%3D%22id-dewey%22%29';
-          const query = `classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22${classificationTypeQuery}&selectedBrowseResult=true`;
+          const query = `classificationId%3D%3D%227a9360bd-f200-4e1e-a11c-998d89d6de71%22${classificationTypeQuery}&selectedBrowseResult=true`;
 
           expect(history.location.search).toBe(`?filters=shared.true%2Cshared.false&qindex=querySearch&query=${query}`);
         });
@@ -293,6 +295,7 @@ describe('BrowseResultsList', () => {
             },
             browseData: [
               {
+                id: '7a9360bd-f200-4e1e-a11c-998d89d6de71',
                 classificationNumber,
                 classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
                 isAnchor: true,
@@ -304,7 +307,7 @@ describe('BrowseResultsList', () => {
           fireEvent.click(screen.getByText(classificationNumber));
 
           const classificationTypesQuery = '%20and%20%28classifications.classificationTypeId%3D%3D%22id-lc%22%20or%20classifications.classificationTypeId%3D%3D%22id-lc-local%22%29';
-          const query = `classifications.classificationNumber%3D%3D%22BD638%20.T46%202018%22${classificationTypesQuery}&selectedBrowseResult=true`;
+          const query = `classificationId%3D%3D%227a9360bd-f200-4e1e-a11c-998d89d6de71%22${classificationTypesQuery}&selectedBrowseResult=true`;
 
           expect(history.location.search).toBe(`?filters=shared.true%2Cshared.false&qindex=querySearch&query=${query}`);
         });

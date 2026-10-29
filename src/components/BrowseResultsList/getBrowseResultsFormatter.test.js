@@ -380,17 +380,20 @@ describe('getBrowseResultsFormatter', () => {
     };
     const contentData = [
       {
+        id: '7a9360bd-f200-4e1e-a11c-998d89d6de71',
         classificationNumber,
         classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
         isAnchor: true,
         totalRecords: 1,
       },
       {
+        id: '3c1f5e2a-8b4d-4a6e-9f10-2d7b6c8e4a35',
         classificationNumber: '981. 06',
         classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
         totalRecords: 2,
       },
       {
+        id: '9d2e4b7c-1a3f-4c58-b6e9-5f0a8d3c7b12',
         classificationNumber: '"WITH QUOTES"',
         classificationTypeId: '42471af9-7d25-4f3a-bf78-60d29dcf463b',
         totalRecords: 3,
@@ -419,20 +422,6 @@ describe('getBrowseResultsFormatter', () => {
 
       expect(getByText(missedMatchRecord.classificationNumber)).toBeInTheDocument();
       expect(getByText(missedMatchText)).toBeInTheDocument();
-    });
-
-    describe('when a call number has double quotes', () => {
-      it('should escape the double quotes in the search parameters', async () => {
-        const { getByText } = renderClassificationList();
-
-        const query = queryString.stringify({
-          selectedBrowseResult: true,
-          qindex: queryIndexes.QUERY_SEARCH,
-          query: 'classifications.classificationNumber=="\\"WITH QUOTES\\""',
-        });
-
-        expect(getByText('"WITH QUOTES"').href).toContain(`${INVENTORY_ROUTE}?${query}`);
-      });
     });
   });
 });
