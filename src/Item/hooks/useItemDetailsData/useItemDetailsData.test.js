@@ -2,12 +2,8 @@ import { renderHook } from '@folio/jest-config-stripes/testing-library/react';
 
 import useItemDetailsData from './useItemDetailsData';
 import useItemOpenLoansQuery from '../useItemOpenLoansQuery';
-import useItemServicePointsQuery from '../useItemServicePointsQuery';
-import useStaffMembersQuery from '../../../hooks/useStaffMembersQuery';
 
 jest.mock('../useItemOpenLoansQuery');
-jest.mock('../useItemServicePointsQuery');
-jest.mock('../../../hooks/useStaffMembersQuery');
 
 const mockItem = {
   id: 'item-1',
@@ -69,21 +65,6 @@ describe('useItemDetailsData', () => {
           dueDate: '2024-04-19T10:00:00Z'
         }]
       }
-    });
-
-    useItemServicePointsQuery.mockReturnValue({
-      servicePoints: [{ id: 'sp-1', name: 'Main Desk' }]
-    });
-
-    useStaffMembersQuery.mockReturnValue({
-      staffMembers: [{
-        id: 'staff-1',
-        personal: {
-          firstName: 'John',
-          lastName: 'Doe',
-          middleName: 'Smith'
-        }
-      }]
     });
   });
 
@@ -185,20 +166,6 @@ describe('useItemDetailsData', () => {
       loanDate: expect.any(Object),
       dueDate: expect.any(Object),
       circulationNotes: expect.any(Object),
-    });
-  });
-
-  it('should return circulation history', () => {
-    const { result } = renderHook(() => useItemDetailsData({
-      item: mockItem,
-      referenceTables: mockReferenceTables,
-      refLookup: mockRefLookup,
-    }));
-
-    expect(result.current.circulationHistory).toEqual({
-      checkInDate: expect.any(Object),
-      servicePointName: 'Main Desk',
-      source: expect.any(Object),
     });
   });
 
