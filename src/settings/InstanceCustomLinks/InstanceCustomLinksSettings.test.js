@@ -139,7 +139,7 @@ describe('InstanceCustomLinksSettings', () => {
       expect(screen.getByText('https://example.com/1')).toBeInTheDocument();
     });
 
-    it('shows a disabled checkbox reflecting each link\'s show value', async () => {
+    it('shows an icon depending on the link\'s show value', async () => {
       const [shown, hidden] = buildRecords(2);
 
       renderInstanceCustomLinksSettings({ records: [shown, { ...hidden, show: false }] });
@@ -147,9 +147,8 @@ describe('InstanceCustomLinksSettings', () => {
       const shownRow = (await screen.findByText(shown.name)).closest('[role="row"]');
       const hiddenRow = screen.getByText(hidden.name).closest('[role="row"]');
 
-      expect(within(shownRow).getByRole('checkbox', { name: 'Show' })).toBeChecked();
-      expect(within(shownRow).getByRole('checkbox')).toBeDisabled();
-      expect(within(hiddenRow).getByRole('checkbox')).not.toBeChecked();
+      expect(within(shownRow).getByTestId('formatter-column-show')).toBeInTheDocument();
+      expect(within(hiddenRow).queryByTestId('formatter-column-show')).not.toBeInTheDocument();
     });
   });
 
