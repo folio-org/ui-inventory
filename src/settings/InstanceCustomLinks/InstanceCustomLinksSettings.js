@@ -7,6 +7,7 @@ import { ControlledVocab } from '@folio/stripes/smart-components';
 import { validateCustomLink } from '@folio/stripes-acq-components';
 import {
   Checkbox,
+  Icon,
   Layer,
   Paneset,
 } from '@folio/stripes/components';
@@ -32,14 +33,6 @@ const columnWidths = {
   show: '5%'
 };
 
-const formatHeader = (id) => {
-  return (
-    <>
-      <FormattedMessage id={id} /> <span className={css.required}>*</span>
-    </>
-  );
-};
-
 const getFieldComponents = (intl) => ({
   'show': ({ fieldProps }) => (
     <div className={css.showField}>
@@ -55,13 +48,12 @@ const getFieldComponents = (intl) => ({
 
 const getFormatter = (intl) => ({
   'show': ({ show }) => (
-    <div className={css.showField}>
-      <Checkbox
-        checked={show}
-        aria-label={intl.formatMessage({ id: 'ui-inventory.show' })}
-        disabled
-      />
-    </div>
+    show ?
+      <div className={css.showField} data-testid="formatter-column-show">
+        <Icon icon="check-circle" aria-label={intl.formatMessage({ id: 'ui-inventory.show' })} />
+      </div>
+      :
+      null
   )
 });
 
@@ -117,9 +109,9 @@ export const InstanceCustomLinksSettings = ({ resources, dataKey: _dataKey, ...p
             objectLabel={<FormattedMessage id="ui-inventory.instanceCustomLinks" />}
             visibleFields={['name', 'linkText', 'link', 'show']}
             columnMapping={{
-              name: formatHeader('ui-inventory.name'),
-              linkText: formatHeader('ui-inventory.linkText'),
-              link: formatHeader('ui-inventory.link'),
+              name: intl.formatMessage({ id: 'ui-inventory.name' }),
+              linkText: intl.formatMessage({ id: 'ui-inventory.linkText' }),
+              link: intl.formatMessage({ id: 'ui-inventory.link' }),
               show: intl.formatMessage({ id: 'ui-inventory.show' }),
             }}
             actionSuppressor={actionSuppressor}
