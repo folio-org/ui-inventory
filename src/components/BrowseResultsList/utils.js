@@ -80,7 +80,7 @@ const getClassificationQuery = (qindex, data, row) => {
     return '';
   }
 
-  let query = `classifications.classificationNumber=="${escapeCqlValue(row.classificationNumber)}"`;
+  let query = `classificationId=="${escapeCqlValue(row.id)}"`;
 
   const classificationBrowseConfigId = browseClassificationIndexToId[qindex];
 
