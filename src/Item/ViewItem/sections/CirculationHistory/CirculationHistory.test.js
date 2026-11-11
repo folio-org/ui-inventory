@@ -17,18 +17,31 @@ const mockCheckIns = [
   {
     id: 'check-in-1',
     occurredDateTime: '2026-10-14T09:54:00Z',
-    inHouseUse: true,
-    staffMember: { personal: { firstName: 'Margaret', lastName: 'Simpson' } },
-    servicePoint: { id: 'sp-1', name: 'Reference Desk' },
+    object: 'In-house use',
+    action: 'Recorded',
+    source: 'Margaret Simpson',
+    servicePointName: 'Reference Desk',
   },
   {
     id: 'check-in-2',
     occurredDateTime: '2026-10-13T16:05:00Z',
-    inHouseUse: false,
-    staffMember: { personal: { firstName: 'Todd', lastName: 'Flanders' } },
-    servicePoint: { id: 'sp-2', name: 'Circ Desk 1' },
+    object: null,
+    action: 'Checked in',
+    source: 'Todd Flanders',
+    servicePointName: 'Circ Desk 1',
   },
 ];
+
+const mockSetOffset = jest.fn();
+
+const defaultHookReturn = {
+  checkIns: mockCheckIns,
+  totalRecords: 2,
+  isFetching: false,
+  offset: 0,
+  setOffset: mockSetOffset,
+  limit: 100,
+};
 
 const renderCirculationHistory = (itemId = 'item-id') => {
   return renderWithIntl(<CirculationHistory itemId={itemId} />, translationsProperties);
@@ -36,14 +49,8 @@ const renderCirculationHistory = (itemId = 'item-id') => {
 
 describe('CirculationHistory', () => {
   beforeEach(() => {
-    useItemCheckInsQuery.mockReturnValue({
-      checkIns: mockCheckIns,
-      totalRecords: 2,
-      isFetching: false,
-      offset: 0,
-      setOffset: jest.fn(),
-      limit: 100,
-    });
+    mockSetOffset.mockClear();
+    useItemCheckInsQuery.mockReturnValue(defaultHookReturn);
   });
 
   it('should be rendered with no axe errors', async () => {
@@ -67,37 +74,27 @@ describe('CirculationHistory', () => {
     expect(screen.getByText('Service point')).toBeInTheDocument();
   });
 
-  it('should render in-house use check-in row correctly', () => {
+  it('should render check-in row data from API response fields', () => {
     renderCirculationHistory();
 
     expect(screen.getByText('In-house use')).toBeInTheDocument();
     expect(screen.getByText('Recorded')).toBeInTheDocument();
-    expect(screen.getByText('Simpson, Margaret')).toBeInTheDocument();
+    expect(screen.getByText('Margaret Simpson')).toBeInTheDocument();
     expect(screen.getByText('Reference Desk')).toBeInTheDocument();
-  });
-
-  it('should render regular check-in row correctly', () => {
-    renderCirculationHistory();
-
     expect(screen.getByText('Checked in')).toBeInTheDocument();
-    expect(screen.getByText('Flanders, Todd')).toBeInTheDocument();
+    expect(screen.getByText('Todd Flanders')).toBeInTheDocument();
     expect(screen.getByText('Circ Desk 1')).toBeInTheDocument();
   });
 
   it('should render one empty row with dashes when there are no check-ins', () => {
     useItemCheckInsQuery.mockReturnValue({
+      ...defaultHookReturn,
       checkIns: [],
       totalRecords: 0,
-      isFetching: false,
-      offset: 0,
-      setOffset: jest.fn(),
-      limit: 100,
     });
 
     renderCirculationHistory();
 
-    expect(screen.getByText('Circulation history')).toBeInTheDocument();
-    // All five cells in the placeholder row should render as NoValue (-)
     const noValueCells = screen.getAllByText('-');
     expect(noValueCells.length).toBeGreaterThanOrEqual(5);
   });
