@@ -58,11 +58,21 @@ describe('useItemCheckInsQuery', () => {
     expect(result.current.totalRecords).toBe(0);
   });
 
-  it('should expose pagination controls', () => {
+  it('should expose pagination controls with correct initial values', () => {
     const { result } = renderHook(() => useItemCheckInsQuery('item-id'), { wrapper });
 
     expect(result.current.offset).toBe(0);
     expect(typeof result.current.setOffset).toBe('function');
     expect(result.current.limit).toBe(100);
+  });
+
+  it('should update offset when setOffset is called', async () => {
+    const { result } = renderHook(() => useItemCheckInsQuery('item-id'), { wrapper });
+
+    await act(async () => {
+      result.current.setOffset(100);
+    });
+
+    expect(result.current.offset).toBe(100);
   });
 });
