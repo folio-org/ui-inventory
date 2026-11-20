@@ -20,7 +20,7 @@
 * Update Circulation History table in Inventory Item View. Refs UIIN-3709.
 * Use classification ID for redirect from browse to search. Refs UIIN-3516.
 * Update Circulation History table in Inventory Item View. Refs UIIN-3715.
-* Prevent auto-opening Items when searching Instances by ISBN. Refs UIIN-3718.
+* Prevent auto-opening Items when searching Instances by ISBN/ISSN. Refs UIIN-3718.
 
 ## [14.0.7](https://github.com/folio-org/ui-inventory/tree/v14.0.7) (2026-10-28)
 [Full Changelog](https://github.com/folio-org/ui-inventory/compare/v14.0.6...v14.0.7)

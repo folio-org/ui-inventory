@@ -200,7 +200,6 @@ export const SYSTEM_USER_NAME = 'System';
 export const SINGLE_ITEM_QUERY_TEMPLATES = {
   [queryIndexes.ITEMS_KEYWORD]: 'hrid=="%{query}" or id=="%{query}" or barcode=="%{query}"',
   [queryIndexes.ITEMS_BARCODE]: 'barcode=="%{query}"',
-  [queryIndexes.ISSN]: 'issn=="%{query}"',
   [queryIndexes.ITEM_HRID]: 'hrid=="%{query}"',
   [queryIndexes.ITEM_ID]: 'id=="%{query}"',
 };
