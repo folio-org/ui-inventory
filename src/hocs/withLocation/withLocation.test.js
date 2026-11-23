@@ -57,28 +57,28 @@ describe('withLocation', () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
     fireEvent.click(getByText('updateLocation'));
     await waitFor(() => {
-      expect(mockReplace).toBeCalledWith('/newTestPath?filters=test1&qindex=test&query=test2&sort=test3');
+      expect(mockReplace).toHaveBeenCalledWith('/newTestPath?filters=test1&qindex=test&query=test2&sort=test3');
     });
   });
   it('updateLocation with only newParams, history.push should be called', async () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
     fireEvent.click(getByText('updateLocation_with_newParams'));
     await waitFor(() => {
-      expect(mockPush).toBeCalledWith('/testPathName?filters=test1&qindex=test&query=test2&sort=test3');
+      expect(mockPush).toHaveBeenCalledWith('/testPathName?filters=test1&qindex=test&query=test2&sort=test3');
     });
   });
   it('goTo funtion to be called', async () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
     fireEvent.click(getByText('goTo'));
     await waitFor(() => {
-      expect(mockPush).toBeCalledWith('/gotoTestPath?0=t&1=e&2=s&3=t&4=P&5=a&6=r&7=a&8=m&9=s');
+      expect(mockPush).toHaveBeenCalledWith('/gotoTestPath?0=t&1=e&2=s&3=t&4=P&5=a&6=r&7=a&8=m&9=s');
     });
   });
   it('goTo funtion with only path to be called', async () => {
     const { getByText } = render(<Router history={history}><WrappedComponent /></Router>);
     fireEvent.click(getByText('goTo_with_path'));
     await waitFor(() => {
-      expect(mockPush).toBeCalledWith('/gotoTestPath');
+      expect(mockPush).toHaveBeenCalledWith('/gotoTestPath');
     });
   });
   it('getParams funtion to be called', () => {

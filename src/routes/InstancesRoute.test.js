@@ -281,8 +281,8 @@ describe('InstancesRoute', () => {
           fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
           fireEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
 
-          expect(quickExportAPICallMock).toBeCalled();
-          expect(sendCalloutMock).not.toBeCalled();
+          expect(quickExportAPICallMock).toHaveBeenCalled();
+          expect(sendCalloutMock).not.toHaveBeenCalled();
         });
 
         it('should initiate display of error callout and make an API call upon click on export instances (MARC) button with API request set up to fail', async () => {
@@ -290,10 +290,10 @@ describe('InstancesRoute', () => {
           fireEvent.click(screen.getByRole('button', { name: 'Show results list actions' }));
           fireEvent.click(screen.getByRole('button', { name: 'Export instances (MARC)' }));
 
-          expect(quickExportAPICallMock).toBeCalled();
+          expect(quickExportAPICallMock).toHaveBeenCalled();
 
           await waitFor(() => {
-            expect(sendCalloutMock).toBeCalledWith(expect.objectContaining({ type: 'error' }));
+            expect(sendCalloutMock).toHaveBeenCalledWith(expect.objectContaining({ type: 'error' }));
             expect(sendCalloutMock.mock.calls[0][0].message.props.id).toBe('ui-inventory.communicationProblem');
           });
         });

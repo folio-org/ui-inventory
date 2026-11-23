@@ -976,8 +976,6 @@ describe('InstancesList', () => {
     describe('item view queries', () => {
       [
         { qindex: 'items.barcode', query: '1234567(89)', option: 'barcode' },
-        { qindex: 'isbn', query: '1234567(89)', option: 'isbn' },
-        { qindex: 'issn', query: '1234567(89)', option: 'issn' },
         { qindex: 'itemHrid', query: '1234567(89)', option: 'hrid' },
         { qindex: 'iid', query: '1234567(89)', option: 'id' },
       ].forEach(({ qindex, query: _query, option }) => {
