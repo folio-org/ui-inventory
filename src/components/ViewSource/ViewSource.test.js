@@ -133,7 +133,7 @@ describe('ViewSource', () => {
     });
 
     it('should call goBack', () => {
-      expect(mockGoBack).toBeCalledTimes(1);
+      expect(mockGoBack).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -149,14 +149,14 @@ describe('ViewSource', () => {
     });
 
     it('should initiate useGoBack with correct path', () => {
-      expect(useGoBack).toBeCalledWith('/inventory/view/instance-id');
+      expect(useGoBack).toHaveBeenCalledWith('/inventory/view/instance-id');
     });
 
     describe('when MarcView is closed', () => {
       it('should call onClose with correct url', async () => {
         await waitFor(() => expect(screen.getByText('MarcView')).toBeInTheDocument());
         act(() => fireEvent.click(screen.getByText('MarcView')));
-        expect(mockGoBack).toBeCalledTimes(1);
+        expect(mockGoBack).toHaveBeenCalledTimes(1);
       });
     });
   });

@@ -38,7 +38,7 @@ describe('ActionItem', () => {
 
     fireEvent.click(button);
 
-    expect(mockOnClickHandler).toBeCalled();
+    expect(mockOnClickHandler).toHaveBeenCalled();
   });
 
   it('should be disabled when disabled prop is true', () => {
